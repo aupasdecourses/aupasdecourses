@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Pmainguet_Bundle>
+            <version>0.0.1</version>
+        </Pmainguet_Bundle>
+    </modules>
+    <global>
+        <blocks>
+            <bundle>
+                <rewrite>
+                    <catalog_product_view_type_bundle_option_checkbox>Pmainguet_Bundle_Block_Catalog_Product_View_Type_Bundle_Option_Checkbox</catalog_product_view_type_bundle_option_checkbox>
+                </rewrite>
+            </bundle>
+            <pm_bundle>
+                <class>Pmainguet_Bundle_Block</class>
+            </pm_bundle>
+        </blocks>
+    </global>
+</config>

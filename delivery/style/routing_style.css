@@ -1,0 +1,214 @@
+/*
+Theme Name: OptiMap
+Theme URI: http://gebweb.net/optimap
+Description: The TSP Google Maps Optimizer Layout
+Version: 2.0
+*/
+
+
+table.mainTable {
+    width: 100%;
+}
+
+table.mainTable td.right {
+    width: 100%;
+}
+
+table.buttonTable {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    border: thin none black;
+    border-collapse: collapse;
+    border-spacing: 10px;
+}
+
+table.buttonTable td {
+    height: 30px;
+    width: 100px;
+}
+
+div.my_textual_div {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.myMap {
+    width: 100%;
+    height: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.myButton {
+    width: 100px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+div.pathData {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+table.gebddir {
+    text-align: left;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;    
+    border: thin none black;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table.gebddir td {
+    padding: 0;
+}
+
+table.gebddir tr.heading {
+    height: 40px;
+}
+
+table.gebddir tr.text {
+    height: 30px;
+}
+
+table.gebddir td.heading {
+    background: #a7a7a7;
+    margin-left: 10px;
+}
+
+table.gebddir td.even {
+    background: #fff;
+}
+
+table.gebddir td.odd {
+    background: #e7e7e7;
+}
+
+div.centered-directions {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background: #a7a7a7;
+}
+
+div.left-shift {
+    margin-right: 40px;
+    margin-top: auto;
+    text-align: right;
+}
+
+div.right-shift {
+    margin-left: 40px;
+}
+
+div.middleCell {
+    margin-left: 10pt;
+    margin-right: 10pt;
+}
+
+span.red {
+    color: #ca0000;
+}
+
+textarea {
+    width: 100%;
+}
+
+input[type="text"] {
+    width: 180pt;
+}
+
+input.calcButton {
+    width: 200pt;
+}
+
+#sortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#sortable li {
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 0.75em;
+    text-align: left;
+}
+
+ul.unsortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+ul.unsortable li {
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 0.75em;
+    text-align: left;
+}
+
+table.dragTable td {
+    vertical-align: middle;
+}
+
+table.dragTable td.left {
+    width: 27px;
+}
+
+table.dragTable td.middle {
+    width: 200px;
+}
+
+table.dragTable td.right {
+    width: 27px;
+}
+
+button.ui-button-icon-only {
+    height: 100%;
+}
+
+.ui-accordion .ui-accordion-header a {
+    padding: 0.5em 0.5em 0.5em 0.7em;
+    display: block;
+    font-size: 1em;
+}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+    text-decoration: none;
+    color: #206231;
+}
+
+#destination-div, #options-div, #export-div, #edit-div, #help-div{
+    padding: 20px;
+}
+
+#destination-div label, #options-div label, #export-div label, #edit-div label, #help-div label{
+    display:block;
+}
+
+#destination-div{
+    max-height: 500px;
+}
+
+#options-div{
+    max-height: 150px;
+}
+
+#export-div{
+    max-height: 350px;
+}
+
+.button_itineraire{
+    padding:10px;
+}

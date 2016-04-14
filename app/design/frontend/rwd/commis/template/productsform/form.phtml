@@ -1,0 +1,56 @@
+<?php $breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
+        
+$breadcrumbs->addCrumb('home', array('label'=>Mage::helper('cms')->__('Home'), 'link'=>Mage::getBaseUrl()));
+ 
+$breadcrumbs->addCrumb('produit-manquant', array('label'=>'Produit manquant'));
+ 
+echo $this->getLayout()->getBlock('breadcrumbs')->toHtml();?>
+<div class="page-title">
+    <h1>Vous ne trouvez pas ce que vous cherchez ?</h1>
+</div>
+<div class="box simple_contact">
+    <p>Vous avez besoin d'un produit et vous ne le trouvez pas sur le site ?<br/> Nous vous remercions de prendre quelques instants pour remplir ce formulaire, et nous ferons tout pour les rendre rapidement disponible sur la plateforme Au Pas De Courses.</p>
+    <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+    <form id="products_form" name="products_form" action="<?php echo $this->getUrl('products-form/') ?>index/sendemail" method="post">
+        <fieldset class="group-select">
+            <ul>
+                <li>
+                    <div class="input-box">
+                        <label for="name"><?php echo $this->__('Votre nom ') ?><span class="required"></span></label><br />
+                        <input name="name" id="name" title="Name" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="email"><?php echo $this->__('Votre email ') ?><span class="required"></span></label><br />
+                        <input name="email" id="email" title="Email" value="" class="required-entry input-text validate-email" type="text" />
+                    </div>
+                </li>
+                    <div class="clear"></div>
+                <li>
+                    <div class="input-box">
+                        <label for="nom-produits"><?php echo $this->__('Nom du ou des Produits ') ?><span class="required"></span></label><br />
+                        <input name="nom-produits" id="nom-produits" title="Nom du ou des Produits" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="comment"><?php echo $this->__('Commentaires ') ?></label><br />
+                        <textarea name="comment" id="comment" title="Comment" class="validate-no-html-tags input-text" style="height:100px;" cols="50" rows="3"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <span class="required">* Champs obligatoires</span>
+                </li>
+            </ul>
+        </fieldset>
+        <div class="button-set" style="margin-top:10px">
+            <button class="button" type="submit"><span><?php echo $this->__('Envoyez')?></span></button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+        var customForm = new VarienForm('products_form');
+    //]]>
+</script>

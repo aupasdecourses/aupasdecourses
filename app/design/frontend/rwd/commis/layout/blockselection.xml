@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+    <layout version="0.1.0">
+        <default>
+        </default>
+        <cms_index_index>
+        </cms_index_index>
+        <catalog_category_layered>
+		</catalog_category_layered>
+    </layout>

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="page-header"><h2>Liste des Commerçants</h2></div>
+      <div class="text_accueil">
+	       <p>Cliquez sur un nom pour avoir accès à la liste des commandes par commerçant.</p>
+      </div>  
+      <center><button id="all_button" type="button" class="btn btn-success btn-lg" style="margin-bottom:10px;">Ouvrir tous</button></center>
+      <div class="liste_commercant">
+        <?php 
+        $cat=liste_commercant_id();
+          foreach($cat as $id=>$name){?>
+                <a href="index.php?module=commande&action=view&id=<?php echo $id;?>" target="_blank"><button type="button" class="btn btn-default btn-lg btn-block" style="margin-bottom:10px;"><?php echo $name;?></button></a>
+            <?php
+          }
+        ?>
+      </div>
+      </div>
+    <div class="col-md-4"></div>
+  </div>
+  <script>
+    $('#all_button').on("click",function(e){
+      var links=$('.liste_commercant').find('a');
+      var go = confirm("Ouvrir les "+links.length+" pages commerçant?");
+        if (go) {
+          links.each(function() {
+             window.open($(this).attr('href'), '_blank');
+
+          });
+        }
+    });
+  </script>
+
+
+<!--le div fermant le container se trouve dans le fichier footer.php-->

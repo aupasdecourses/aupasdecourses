@@ -1,0 +1,59 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+
+$list = array();
+$fields = Mage::helper('amdeliverydate')->whatShow('order_email', $this->_getStoreId(), 'include');
+if (is_array($fields) && !empty($fields)) {
+    $deliveryDate = $this->getDeliveryDate();
+    foreach ($fields as $field) {
+        $value = $deliveryDate->getData($field);
+        if ('date' == $field) {
+            $label = $this->__('Delivery Date') . ':';
+            if ($value
+                && '0000-00-00' != $value
+                && '1970-01-01' != $value) {
+                $value = date(Mage::helper('amdeliverydate')->getPhpFormat($this->_getStoreId()), strtotime($value));
+            } else {
+                $value = '';
+            }
+        } elseif ('time' == $field) {
+            $label = $this->__('Delivery Time Interval') . ':';
+        } elseif ('comment' == $field) {
+            $label = $this->__('Delivery Comments') . ':';
+            $value = nl2br(htmlentities(preg_replace('/\$/','\\\$', $value), ENT_COMPAT, "UTF-8"));
+        }
+        if ($value) {
+            $list[$label] = $value;
+        }
+    }
+}
+
+if (!empty($list)): ?>
+<table cellspacing="0" cellpadding="2" width="100%" border="0">
+    <thead>
+        <tr>
+            <th colspan="2" bgcolor="#EAEAEA" style="font-size:13px; padding:5px 9px 6px 9px; line-height:1em; text-align: left;">
+                <?php echo $this->__('Delivery Date') . ':'; ?>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($list as $label => $value): ?>
+            <tr>
+                <td style="padding: 5px; border-left: 1px solid #EAEAEA;" valign="top"><label><?php echo $this->__($label); ?></label></td>
+                <td style="padding: 5px; border-right: 1px solid #EAEAEA;">
+                    <?php echo $value; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <tr>
+            <td colspan="2" style="border-bottom: 1px solid #EAEAEA; border-left: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA;"></td>
+        </tr>
+    </tbody>
+</table>
+<br /><br />
+<?php endif; ?>

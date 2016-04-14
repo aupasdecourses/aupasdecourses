@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Pmainguet_Pdfcustomer>
+			<version>0.0.1</version>
+		</Pmainguet_Pdfcustomer>
+	</modules>
+	<frontend>
+        <routers>
+            <pdfcustomer>
+                <use>standard</use>
+                <args>
+                    <module>Pmainguet_Pdfcustomer</module>
+                    <frontName>pdfcustomer</frontName>
+                </args>
+            </pdfcustomer>
+        </routers>
+    </frontend>
+</config>

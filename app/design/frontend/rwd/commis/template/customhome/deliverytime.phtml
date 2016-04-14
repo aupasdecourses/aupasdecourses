@@ -1,0 +1,33 @@
+<?php
+	//Version for Amasty Delivery Module
+	if(Mage::helper('core')->isModuleEnabled('amdeliverydate')){
+		$hlp = Mage::helper('amdeliverydate');
+		$storeId = $this->getCurrentStore();
+		$options = $hlp->getTIntervals($storeId);
+		$count=1;
+		foreach($options as $timeint){
+			if($timeint<>''){
+				if($count%2<>1){
+					echo $timeint.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+				}else{
+					echo $timeint.'</br>';
+				}
+			}
+			$count+=1;
+		}
+	}
+
+	//Version for Mage World Delivery Module
+	if(Mage::helper('core')->isModuleEnabled('MW_Ddate')){
+		$hlp = Mage::helper('ddate');
+		$storeId = $this->getCurrentStore();
+		$options = $hlp->getDtime($storeId);
+		$count=1;
+		foreach($options as $timeint){
+			if($timeint<>''){
+					echo '<span style="display:block;float:left;width:50%;padding-top:5px;padding-bottom:0px;">'.$timeint->getInterval().'</span>';
+			}
+			$count+=1;
+		}
+	}
+?>

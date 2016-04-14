@@ -1,0 +1,8 @@
+a:5:{i:0;s:16:"Invalid form key";i:1;s:851:"#0 /home/aupasdecln/www/app/code/core/Mage/Checkout/controllers/CartController.php(635): Mage::throwException('Invalid form ke...')
+#1 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Action.php(418): Mage_Checkout_CartController->ajaxUpdateAction()
+#2 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Router/Standard.php(250): Mage_Core_Controller_Varien_Action->dispatch('ajaxUpdate')
+#3 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#4 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(354): Mage_Core_Controller_Varien_Front->dispatch()
+#5 /home/aupasdecln/www/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#6 /home/aupasdecln/www/index.php(90): Mage::run('', 'store')
+#7 {main}";s:3:"url";s:108:"/batignolles/checkout/cart/ajaxUpdate/id/353/uenc/aHR0cHM6Ly93d3cuYXVwYXNkZWNvdXJzZXMuY29tL2JhdGlnbm9sbGVzLw";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:11:"batignolles";}

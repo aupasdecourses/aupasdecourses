@@ -1,0 +1,64 @@
+<?php 
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+$_referrals = $this->getReferrals(); 
+
+?>
+
+<ul class="links">
+	<li class="first"><a title="Invitations" href="<?php echo $this->getUrl('*/invitation') ?>"><?php echo $this->__('Invitations'); ?></a></li>
+	<li><b><?php echo $this->__('My Referrals'); ?></b></li>
+	<li><a title="My Credits" href="<?php echo $this->getUrl('*/credit') ?>"><?php echo $this->__('My Credits'); ?></a></li>
+	<li><a title="My Payments" href="<?php echo $this->getUrl('*/payment') ?>"><?php echo $this->__('My Payments'); ?></a></li>
+</ul>
+<br /><br />
+
+<?php  echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My Referrals') ?></h1>
+</div>
+<p>Vous retrouvez ici l'ensemble des demandes de parrainages que vous avez envoyé à vos proches.</p>
+<p>N'hésitez pas à relancer ceux qui n'auraient pas encore profiter de leurs avantages filleuls!</p>
+<?php echo $this->getPagerHtml(); ?>
+<?php if($_referrals->getSize()): ?>
+    <table class="data-table table table-striped">
+        <col width="1" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Email') ?></th>
+                <th><?php echo $this->__('First Send Date') ?></th>
+                <th><?php echo $this->__('Friend') ?></th>
+                <th><?php echo $this->__('Join Date') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($_referrals as $_referral): ?>
+            <tr>
+                <td><?php echo $_referral->getEmail() ?></td>
+                <td><?php echo Mage::helper('core')->formatDate($_referral->getSendDate(), 'short', false) ?></td>
+                <td><?php echo $_referral->getFriendName() ?></td>
+                <td><?php echo $_referral->getJoinDate() ? Mage::helper('core')->formatDate($_referral->getJoinDate(), 'short', false) : 'N/A' ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have no referrals.'); ?></p>
+<?php endif; ?>
+
+
+
+
+
+

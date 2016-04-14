@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+* @category   Excellence
+* @package    Excellence_Ajax
+* @author     ModuleCreator
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+    <modules>
+        <Pmainguet_Ajaxlp>
+            <version>0.1.0</version>
+        </Pmainguet_Ajaxlp>
+    </modules>
+    <frontend>
+        <routers>
+            <ajaxlp>
+                <use>standard</use>
+                <args>
+                    <module>Pmainguet_Ajaxlp</module>
+                    <frontName>ajaxlandingpage</frontName>
+                </args>
+            </ajaxlp>
+        </routers>
+    </frontend>
+</config>

@@ -1,0 +1,408 @@
+<?php
+	if(!isset($_GET['date'])){
+		$_GET['date']=date("Y-m-d");
+	}
+?> 
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+    <div class="page-header">
+      <h2><?php 
+      echo liste_commercant_id()[$_GET['id']]?></h2>
+    </div>
+    <?php
+    	$orders=orders_fortheday($_GET['date'],$_GET['id']);
+    	$date=datetime_filter('date');
+    	$horaire=datetime_filter('time');
+		?>
+
+		<div class="row">
+		<p id="warning-message" class="bg-warning hidden">Attention: Seules les commandes à l'état "Processing" ou "Complete" (datant de moins d'un mois) sont affichées.</p>
+		<p id="send-message" style="display:none;"></p>
+			<div class="col-md-4" style="margin-bottom: 20px;">
+
+			<?php //Dropdown liste date
+			echo '<label class="control-label">Date: </label><select id="date-dropdown" class="form-control">';
+	    		echo '<option>Select date</option>';
+	    		foreach($date as $d){
+	    			echo '<option ';
+	    			if(isset($_GET['date']) && $_GET['date']==$d){echo "selected";}
+	    			echo '>'.$d.'</option>';
+	    		}
+	    	echo '</select>';?>
+
+	    	</div>
+	    </div>
+	    <div class="row" style="margin-bottom:10px;">
+			<div class="col-md-12">
+		      <a id="printmail" href="" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Télécharger PDF</button></a>
+		      <a id="sendemail" href="" style="float:left;margin-left:10px;"><button type="button" class="btn btn-primary btn-lg ">Envoyer email</button></a>
+		      <span id="sendemail-please-wait" class="please-wait" style="display:none;">
+	            <i class="fa fa-spinner fa-2x fa-spin" style="margin-top:5px;margin-left:10px;"></i>
+	          </span>
+	          <span id="sendemail-success" class="please-wait" style="display:none;">
+	            <i class="fa fa-2x fa-check" style="margin-top:5px;margin-left:10px;color:green;"></i>
+	          </span>
+		       <a id="retour_liste" href="index.php?module=commercant&action=view"><button type="button" class="btn btn-default btn-lg" style="float:right;">Retour à la liste des commerçants</button></a>
+		    </div>
+	    </div>
+
+    	<?php //Affichage information des commandes
+
+    	if(isset($_GET['date'])){
+
+    	//index pour les noms des tables
+    	$index=0;
+    	$nbecommande = 0;
+    	
+    	if($orders->count()>0){
+
+    	foreach($horaire as $h){
+    		if(isset($_GET['date'])){echo '<h3>Créneau de livraison: '.$h.'</h3>';}
+    	foreach($orders as $order){
+    		//if(in_array($order->getIncrementId(),$orders_tab)){
+    			if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
+    				if($order->getData('dtime')==$h){
+    					$nbecommande+=1;
+    		?>
+		    <div class="row">
+		      <div class="col-md-12 order-box">
+				<div class="col-md-3 infos_client">
+					<div class="order-ref"><?php echo 'Commande #<span>'.$order->getData('increment_id').'</span>';?></div>
+					<dl class="dl-vertical">
+					  <dt>Statut</dt>
+					  <dd class="statut"><?php echo $order->getStatusLabel();?></dd>
+					  <dt>Client</dt>
+					  <dd class="name"><?php echo $order->getShippingAddress()->getData('firstname').' '.$order->getShippingAddress()->getData('lastname');?></dd>
+					  <dt>Date Prise de Commande</dt>
+					  <dd class="order_date"><?php echo $order->getData('created_at');?></dd>
+					  <dt>Date Livraison</dt>
+					  <?php if($_GET['date']<=AMASTY_MW_DATE):?>
+						  <dd class="delivery_date"><?php echo $order->getData('delivery_date');?></dd>
+						  <dt>Horaire livraison</dt>
+						  <dd class="delivery_time"><?php echo $order->getData('delivery_time');?></dd>
+					  <?php else:?>
+						  <dd class="delivery_date"><?php echo $order->getData('ddate');?></dd>
+						  <dt>Horaire livraison</dt>
+						  <dd class="delivery_time"><?php echo $order->getData('dtime');?></dd>
+					  <?php endif;?>
+					  <dt>Remplacement pour produit équivalent possible</dt>
+					  <dd class="remplacement"><?php echo produit_equivalent_label($order);?></dd>
+					</dl>
+				</div>
+				<div class="col-md-9 table-responsive bypassme">
+					<table id="infocommande_<?php echo $index;$index+=1;?>" class="table table-striped table-condensed">
+					   <thead>
+					      <tr>
+							<th>Nom du Produit</th>
+							<th>Prix à l'unité</th>
+							<th>Quantité</th>
+							<th>Description Unitaire</th>
+							<th>Prix Unitaire</th>
+							<th>Prix Total</th>
+							<th>Commentaires</th>
+							<!-- <th>SKU</th> -->
+							<!--<th>Référence</th>-->
+					      </tr>
+					    </thead>
+					    <tbody>
+						    <?php
+						    	$ordered_items = $order->getAllItems();
+						    	$tot_qty=0;
+						    	$sum=0;
+						      	foreach($ordered_items as $item){
+						      		//récupère l'information 'commerçant' dans sales_flat_order_item pour les commandes après 11-06-2015
+							      	$product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
+							      	// if($product->getCommercant()==$_GET['id'] OR $item->getCommercant()==$_GET['id']){
+							      	 if($item->getCommercant()==$_GET['id']){
+										echo '<tr class="item">';
+											echo '<td class="col-md-3 produit"><a href="'.$product->getProductUrl().'">'.$item->getName().'</a></td>';
+											if($item->getPrixKiloSite()<>""){
+												echo '<td class="col-md-1 prix_unite">'.$item->getPrixKiloSite().'</td>';
+											}else{
+												echo '<td class="col-md-1 prix_unite">'.$product->getPrixKiloSite().'</td>';
+											}
+											echo '<td class="col-md-1 quantite_facturee" style="font-weight:bold;font-size:16px">'.round($item->getQtyOrdered(),0).' x'.'</td>';
+											if($item->getShortDescription()<>NULL || $item->getShortDescription()<>""){
+												$description=$item->getShortDescription();
+											}else{
+												$description=$product->getShortDescription();
+											}
+
+											echo '<td class="col-md-2 description" style="font-weight:bold;font-size:16px">'.$description.'</td>';
+											echo '<td class="col-md-1 prix_unitaire">'.round($item->getPriceInclTax(),2).' €</td>';
+											echo '<td class="col-md-1 prix_total">'.round($item->getRowTotalInclTax(),2).' €</td>';
+											$item_options=$item->getProductOptions()['options'];
+
+											echo '<td class="col-md-3 commentaires">';
+
+											if($item_options<>NULL){
+												foreach($item_options as $opt){
+													if($opt!==array()){
+														echo $opt['label'].' '.$opt['value'].'</br';
+													}
+												}
+											}
+
+											echo $item->getData('item_comment').'</td>';
+											// echo '<td class="col-md-2 sku">'.$item->getSku().'</td>';
+											//echo '<td class="col-md-1 reference">'.$product->getData('reference_interne_magasin').'</td>';
+										echo '</tr>';
+									$tot_qty+=$item->getQtyOrdered();
+									$sum+=$item->getRowTotalInclTax();
+									}
+						     	 }?>
+						     	 <tr class="info">
+									<td colspan="2"><strong>Total</strong></td>
+						     	 	<td><?php echo round($tot_qty,0)?></td>
+						     	 	<td colspan="2"></td>
+						     	 	<td><?php echo round($sum,2).' €'?></td>
+						     	 	<td></td>
+						     	 </tr>
+					    </tbody>
+					  </table>
+				</div>
+				</div>
+		    </div>
+		   <?php
+		  }}}}}else{
+		  ?>
+		  <div class="row">
+		  	<div class="col-xs-12">
+		  		Aucune commande ce jour
+		  	</div>
+		  </div>
+		  <?php }}?>
+  </div>
+</body>
+<script src="/delivery/libs/js/jspdf.plugin.autotable.js"></script>
+<script src="/delivery/libs/js/html2canvas.js"></script>
+<script>
+function generatePDF() {  
+
+	//Function to generate header and footer
+	function header(date_livraison, commercant){
+		doc.setFontSize(8);
+		doc.text(20,20,'Commande Au Pas De Courses - '+commercant+' pour le '+date_livraison);
+		doc.setLineWidth(0.5);
+		doc.line(20, 25, 822, 25);
+	};
+
+	function footer(dt){
+		doc.setFontSize(8);
+		doc.setLineWidth(0.5);
+		doc.line(20, 560, 822, 560);
+		doc.text(20,570, 'Généré le: ' + dt);
+		doc.text(800,570, 'page ' + doc.page);
+		doc.page ++;
+	};
+
+	function reminder(){
+		// doc.setFontSize(16);
+		// doc.rect(400, 70, 400, 450);
+		// positiong=420;
+		// positionh=105;
+		// cutd=360;
+		// doc.text(positiong,positionh,'Recommandations');
+		// doc.setFontSize(13);
+		// lines = doc.splitTextToSize('1. Vérifier le prix à l\'unité. En cas de grande variation, nous prévenir. Si la différence de prix à l\'unité est faible, adapter le poids du produit pour respecter le prix total de ce dernier.', cutd);
+		// doc.text(positiong,positionh+30,lines);
+		// lines = doc.splitTextToSize('Dans tous les cas, pensez à signaler les variations aux équipes Au Pas De Courses.', cutd);
+		// doc.text(positiong,positionh+110,lines);
+		// lines = doc.splitTextToSize('2. Respecter le poids indiqué pour chaque produit. Veillez à ne pas le dépasser.', cutd);
+		// doc.text(positiong,positionh+150,lines);
+		// // lines = doc.splitTextToSize('3. Essayez autant que possible à ne pas compenser la différence de poids en jouant avec la quantité d\'un autre produit.', cutd);
+		// // doc.text(positiong,positionh+190,lines);
+		// lines = doc.splitTextToSize('3. Merci d\'indiquer clairement le numéro de commande (uniquement les 3 derniers chiffres) sur le sac et sur le ticket de caisse.',cutd);
+		// doc.text(positiong,positionh+190,lines);
+	}
+
+	//Configuration générale du PDF
+	var doc = new jsPDF('l','pt','a4');
+	doc.page=1;
+	var margin_left = 20;
+	var line_height = 20;
+	var base_font_size = 12;
+	var date_livraison = $('#date-dropdown').find(":selected").text();
+	var dt = new Date();
+	var commercant = $(".page-header").children("h2").text();
+	doc.setProperties({
+		title: 'Commandes Au Pas De Courses - '+commercant+' - '+date_livraison,
+		subject: 'Commande du jour Au Pas De Courses',
+		author: 'Pierre Mainguet',
+		keywords: 'AU PAS DE COURSES, commandes, generated, javascript, web 2.0, ajax',
+		creator: 'AU PAS DE COURSES'
+	});
+
+	//Page de Garde - Nombre de commande du jour et liste des orders increment_id du jour
+
+	header(date_livraison, commercant);
+
+	var nb_orders = 0, orders_incrementid=[];
+	$('.order-box').each(function(index){
+		orders_incrementid.push($(this).children('.infos_client').children('.order-ref').children('span').text());
+		nb_orders+=1;
+	});
+
+	var position_title = 150;
+	doc.setFontSize(base_font_size/(.75)^2);
+	doc.text(margin_left*2,position_title,'Commandes AU PAS DE COURSES');
+	doc.setFontSize(base_font_size/(.75)^2-2);
+	doc.text(margin_left*2,position_title+line_height,'A '+commercant+' pour le '+date_livraison);
+	if(nb_orders>0){
+		doc.setFontSize(base_font_size/.75);
+		doc.text(margin_left*2,position_title+2*line_height+20,'Nombre de commandes: '+nb_orders);
+		doc.setFontSize(base_font_size);
+		$.each(orders_incrementid,function(index){
+			doc.text(margin_left*2,position_title+(3+index)*line_height+20,'Commande n°'+(index+1)+': '+this);
+		});
+	}else{
+		doc.setFontSize(base_font_size/.75^2);
+		doc.setTextColor(255,0,0);
+		doc.text(margin_left*2,position_title+2*line_height+20,'Vous n\'avez pas de commande pour cette date');
+		doc.setTextColor(0,0,0);
+	}
+	reminder();
+
+	footer(dt);
+
+	if(nb_orders>0){
+		doc.addPage();
+	}
+
+	//Création des pages commande (1 par commande)
+
+	var len = $('.order-box').length;
+   $('.order-box').each(function(index){
+   		header(date_livraison, commercant);
+   		doc.setFontSize(base_font_size);
+   		
+   		//Numéro de commande
+   		doc.setFontType("bold");
+   		doc.setFontSize(base_font_size/(.75)^2);
+   		var text ='Commande n° ';
+   		doc.text(margin_left, 40+line_height,text);
+   		var w = 150;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+line_height,$(this).children('.infos_client').children('.order-ref').children('span').text());
+		doc.setFontSize(base_font_size);
+
+		//Nom du client
+		doc.setFontType("bold");
+   		text ='Nom du client: ';
+   		doc.text(margin_left, 40+2*line_height,text);
+   		w = doc.getStringUnitWidth(text) * base_font_size;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+2*line_height,$(this).children('.infos_client').children('dl').children('dd.name').text());  
+
+		//Date de commande
+		doc.setFontType("bold");
+   		text ='Date Prise de Commande: ';
+   		doc.text(margin_left, 40+3*line_height,text);
+   		w = doc.getStringUnitWidth(text) * base_font_size;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+3*line_height,$(this).children('.infos_client').children('dl').children('dd.order_date').text());
+
+		//Date de livraison
+		doc.setFontType("bold");
+   		text ='Date Livraison: ';
+   		doc.text(margin_left, 40+4*line_height,text);
+   		w = doc.getStringUnitWidth(text) * base_font_size;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+4*line_height,$(this).children('.infos_client').children('dl').children('dd.delivery_date').text());
+
+		//Créneau de livraison
+		doc.setFontType("bold");
+   		text ='Créneau Livraison: ';
+   		doc.text(margin_left, 40+5*line_height,text);
+   		w = doc.getStringUnitWidth(text) * base_font_size;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+5*line_height,$(this).children('.infos_client').children('dl').children('dd.delivery_time').text());
+
+		//Produit équivalent
+		doc.setFontType("bold");
+   		text ='Remplacement pour produit équivalent possible: ';
+   		doc.text(margin_left, 40+6*line_height,text);
+   		w = doc.getStringUnitWidth(text) * base_font_size;
+   		doc.setFontType('normal');
+		doc.text(margin_left+w,40+6*line_height,$(this).children('.infos_client').children('dl').children('dd.remplacement').text());
+
+		//Liste des produits commandés
+		doc.setFontType("bold");
+   		text ='Liste des produits commandés:';
+   		doc.text(margin_left, 40+7*line_height,text);
+   		doc.setFontType('normal');
+
+		var items = doc.autoTableHtmlToJson(document.getElementById("infocommande_"+index));
+		
+		var options = {
+		    padding: 5, // Horizontal cell padding
+		    fontSize: 11,
+		    lineHeight: line_height+10,
+		    margins: { horizontal: 2*margin_left, top: 40+8*line_height, bottom: 10 },
+		    overflow: 'linebreak',
+		    overflowColumns: ['Nom du Produit', 'Description Unitaire', 'Commentaires']
+		 };
+
+		doc.autoTable(false, items,options);
+
+		footer(dt);
+		if (index < len - 1) {
+           doc.addPage();
+        }
+	});
+
+//Create filename
+var filename= 'APDC-'+commercant+'-'+date_livraison+'.pdf';
+filename=filename.split(' ').join('-');
+
+array={filename:filename,doc:doc};
+
+return array;
+
+}
+
+$('#sendemail').on("click",function(e){
+	e.preventDefault();
+	array=generatePDF();
+	var commercant=$(".page-header").children("h2").text();
+
+	$('#sendemail-please-wait').css('display', 'inline-block');
+
+	//Save file to server
+	var pdf = btoa(array['doc'].output()); 
+	$.ajax({
+	  method: "POST",
+	  url: "uploadpdf.php",
+	  data: {
+	  	commercant:commercant,
+	  	filename:array['filename'],
+	  	pdf: pdf,
+	  	id_commercant:<?php echo json_encode($_GET['id']); ?>,
+	  	nbecommande:<?php echo json_encode($nbecommande); ?>
+	  },
+	}).done(function(msg){
+	   $('#sendemail-please-wait').css('display', 'none');
+	   $('#sendemail-success').show(0).delay(2000).fadeOut("slow");
+	   $('#send-message').html(msg);
+	   $('#send-message').addClass('bg-success bg-warning').show();
+	});
+});
+
+$('#printmail').on("click",function(e){
+	e.preventDefault();
+
+	array=generatePDF();
+	array['doc'].save(array['filename']); 
+});
+
+</script>
+<script type="text/javascript">
+
+$(function(){
+  $("#date-dropdown").change(function(){
+    	window.location='index.php?module=commande&action=view&id='+ <?php echo $_GET['id'] ?> + '&date=' + this.value;
+    	$("#warning-message").removeClass("hidden");
+  });
+});
+
+</script>

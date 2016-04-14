@@ -1,0 +1,5 @@
+##Access limited
+AuthName "Merci de bien vouloir saisir le mot de passe pour accéder au contenu"
+AuthType Basic
+AuthUserFile "/home/aupasdecln/www/magmi/.htpasswrd"
+Require valid-user

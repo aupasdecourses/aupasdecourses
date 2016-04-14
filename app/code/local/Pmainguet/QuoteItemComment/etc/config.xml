@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Pmainguet_QuoteItemComment>
+            <version>0.1.0</version>
+        </Pmainguet_QuoteItemComment>
+    </modules>
+    <global>
+         <blocks>
+            <quoteitemcomment>
+                <class>Pmainguet_QuoteItemComment_Block</class>
+            </quoteitemcomment>
+            <adminhtml>
+                <rewrite>
+                    <sales_items_abstract>Pmainguet_QuoteItemComment_Block_Adminhtml_Sales_Items_Abstract</sales_items_abstract>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <item_comment>
+                    <to_order_item>*</to_order_item>
+                </item_comment>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <item_comment>
+                    <to_quote_item>*</to_quote_item>
+                </item_comment>
+            </sales_convert_order_item>
+        </fieldsets>
+        <models>
+                <!-- Pas obligé de le mettre si seulement rewrite -->
+                 <pmainguet_quoteitemcomment>
+                    <class>Pmainguet_QuoteItemComment_Model</class>
+                </pmainguet_quoteitemcomment> 
+                <!--- Attention à la syntaxe <nom_core_dossier><rewrite><nom_class_php> -->
+                <checkout>
+                    <rewrite>
+                        <cart>Pmainguet_QuoteItemComment_Model_Cart</cart>
+                    </rewrite>
+                </checkout>
+        </models>
+        <!-- <events>
+            <sales_quote_item_set_product>
+                <observers>
+                    <pmainguet_quoteitemcomment>
+                        <class>pmainguet_quoteitemcomment/observer</class>
+                        <method>update</method>
+                    </pmainguet_quoteitemcomment>
+                </observers>
+            </sales_quote_item_set_product>
+        </events> -->
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <item_comment>
+                    <file>pmainguet/itemcomments.xml</file>
+                </item_comment>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

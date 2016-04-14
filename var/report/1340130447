@@ -1,0 +1,11 @@
+a:5:{i:0;s:124:"Invalid cron expression: */5 * * * *  /usr/local/bin/php.ORIG.5 -c /usr/local/lib/php.ini /homez.239/aupasdecln/www/cron.php";i:1;s:1303:"#0 /home/aupasdecln/www/app/code/core/Mage/Cron/Model/Schedule.php(68): Mage::exception('Mage_Cron', 'Invalid cron ex...')
+#1 /home/aupasdecln/www/app/code/core/Mage/Cron/Model/Observer.php(183): Mage_Cron_Model_Schedule->setCronExpr('*/5 * * * *  /u...')
+#2 /home/aupasdecln/www/app/code/community/Aoe/Scheduler/Model/Observer.php(167): Mage_Cron_Model_Observer->_generateJobs(Array, Array)
+#3 /home/aupasdecln/www/app/code/core/Mage/Cron/Model/Observer.php(137): Aoe_Scheduler_Model_Observer->_generateJobs(Object(Mage_Core_Model_Config_Element), Array)
+#4 /home/aupasdecln/www/app/code/community/Aoe/Scheduler/Model/Observer.php(179): Mage_Cron_Model_Observer->generate()
+#5 /home/aupasdecln/www/app/code/community/Aoe/Scheduler/Model/Observer.php(115): Aoe_Scheduler_Model_Observer->generate()
+#6 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(1338): Aoe_Scheduler_Model_Observer->dispatch(Object(Varien_Event_Observer))
+#7 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(1317): Mage_Core_Model_App->_callObserverMethod(Object(Aoe_Scheduler_Model_Observer), 'dispatch', Object(Varien_Event_Observer))
+#8 /home/aupasdecln/www/app/Mage.php(448): Mage_Core_Model_App->dispatchEvent('default', Array)
+#9 /home/aupasdecln/www/cron.php(78): Mage::dispatchEvent('default')
+#10 {main}";s:3:"url";s:9:"/cron.php";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:5:"admin";}

@@ -1,0 +1,61 @@
+<?php 
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+
+$output = '';
+$fields = Mage::helper('amdeliverydate')->whatShow('order_info', $this->_getStoreId());
+if (is_array($fields) && !empty($fields)) {
+    $deliveryDate = $this->getDeliveryDate();
+    $colspan = false;
+    foreach ($fields as $field) {
+        $value = $deliveryDate->getData($field);
+        if ('date' == $field) {
+            $label = $this->__('Delivery Date') . ': ';
+            if ($value
+                && '0000-00-00' != $value
+                && '1970-01-01' != $value) {
+                $value = date(Mage::helper('amdeliverydate')->getPhpFormat($this->_getStoreId()), strtotime($value));
+                $output .= '<tr><td style="padding-left: 0;">' . $label . '</td><td><b>' . $value . '</b></td></tr>';
+                $colspan = true;
+            }
+        } elseif ('time' == $field) {
+            $label = $this->__('Delivery Time Interval') . ':';
+            if ($value) {
+                $output .= '<tr><td style="padding-left: 0;">' . $label . '</td><td><strong>' . $value . '</strong></td></tr>';
+                $colspan = true;
+            }
+        } elseif ('comment' == $field) {
+            $label = $this->__('Delivery Comments') . ':<br />';
+            if ($value) {
+                $value = nl2br(htmlentities(preg_replace('/\$/','\\\$', $value), ENT_COMPAT, "UTF-8"));
+                if ($colspan) {
+                    $output .= '<tr><td colspan="2" style="padding-left: 0;">';
+                } else {
+                    $output .= '<tr><td>';
+                }
+                $output .= '<p align="justify">' . $label . '<i>' .$value . '</i></p></td></tr>';
+            }
+        }
+    }
+}
+if ($output) { ?>
+<!-- BEGIN Order View `Amasty: Delivery Date` -->
+    <div class="col2-set order-info-box">
+        <div class="col-1">
+            <div class="box">
+                <div class="box-title">
+                    <h2><?php echo $this->__('Delivery Date') ?></h2>
+                </div>
+                <div class="box-content">
+                    <table border="0">
+                    <?php echo $output; ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- END Order View `Amasty: Delivery Date` -->
+<?php } ?>

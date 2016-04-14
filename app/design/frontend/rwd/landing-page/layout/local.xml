@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/*
+ * Commis
+ * www.petitcommis.fr
+ *
+ * @description  Layout modifications
+ * @author       Author Name
+ * @package      packagename_default
+ *
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+            <block type="page/html_head" name="head" as="head"/>
+        </reference>
+        <reference name="head">
+            <!-- Sets viewport meta tag using text block -->
+            <block type="core/text" name="head.viewport">
+                <action method="setText"><text><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />]]>&#10;</text></action>
+            </block>
+                <!-- =========================
+                      FAV AND TOUCH ICONS  
+                ============================== -->
+                <action method="addItem"><rel>skin_icon</rel><href>images/favicon.ico'</href></action>
+                <!-- =========================
+                 STYLESHEETS   
+                ============================== -->
+                <!-- BOOTSTRAP -->
+                <action method="addItem"><rel>skin_css</rel><href>bootstrap/bootstrap.min.css</href></action>
+                <!-- FONT ICONS -->
+                <action method="addItem"><rel>skin_css</rel><href>assets/elegant-icons/style.css</href></action>
+                <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css</href></action>
+                <!-- WEB FONTS -->
+                <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
+                <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Montserrat:400,700</href><type>text/css</type></action>
+                <!-- CAROUSEL AND LIGHTBOX -->
+                <action method="addItem"><rel>skin_css</rel><href>css/nivo_themes/default/default.css</href></action>
+                <!-- ANIMATIONS -->
+                <action method="addItem"><rel>skin_css</rel><href>css/animate.min.css</href></action>
+                <!-- CUSTOM STYLESHEETS -->
+                <action method="addItem"><rel>skin_css</rel><href>css/styles.css</href></action>
+                <!-- COLORS -->
+                <action method="addItem"><rel>skin_css</rel><href>css/colors/green.css</href></action>
+                <!-- RESPONSIVE FIXES -->
+                <action method="addItem"><rel>skin_css</rel><href>css/responsive.css</href></action>
+                <action method="addItem"><rel>skin_css</rel><href>css/custom.css</href></action>
+                <!-- OWL CARROUSEL -->
+                <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>
+                <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>
+                    <!-- =========================
+                     SCRIPTS   
+                ============================== -->
+                <!-- JQUERY -->
+                <action method="removeItem"><type>js</type><name>mgt_developertoolbar/jquery-1.7.2.min.js</name></action>
+                <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+                <action method="addItem"><rel>js</rel><href>googleanalytics/ga.js</href></action>
+                <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+                <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+                <action method="addItem"><rel>skin_js</rel><href>bootstrap/bootstrap.min.js</href></action>
+                <block type="core/text" name="ie_fallback">
+                    <action method="setText">
+                        <text><![CDATA[<!--[if lte IE 7]><script src="lte-ie7.js"></script><![endif]--><!--[if lt IE 9]><script src="js/html5shiv.js"></script><script src="js/respond.min.js"></script><![endif]-->]]></text>
+                    </action>
+                </block>  
+                <!-- OTHERS -->
+                <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/smoothscroll.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.scrollTo.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.localScroll.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/nivo-lightbox.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/simple-expand.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/wow.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.stellar.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/retina.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.nav.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/matchMedia.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.ajaxchimp.min.js</href></action>
+                <action method="addItem"><rel>skin_js</rel><href>js/jquery.fitvids.js</href></action>
+                <action method="addItem"><rel>js</rel><href>tawkto/tawkto.js</href></action>
+                <!-- =========================
+                     END SCRIPTS   
+                ============================== -->
+        </reference>
+    </default>
+     <!-- Homepage -->
+     <cms_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/homepage.phtml</template></action>
+        </reference>
+    </cms_index_index>
+</layout>

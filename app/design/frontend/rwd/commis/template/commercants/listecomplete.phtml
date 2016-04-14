@@ -1,0 +1,57 @@
+<div class="row hp-section">
+	<div class="col-md-12">
+		<div class="page-title">
+			<h2 class="subtitle">Vos Commer&ccedil;ants</h2>
+		</div>
+		<div class="row">
+			<div class="commercants-intro col-md-12">
+				<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'resource/commercant.png';?>" alt="" />
+				<p><?php echo $this->getChildHtml('texte-intro-liste-commercants')?></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="commercant_announcment">
+				<a class="btn brown" href="">Il manque un commerçant, dites le nous!</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="commercants-main products-grid col-md-12">
+				<?php
+					
+					//get array of categories
+					$storeCode = Mage::app()->getStore()->getCode();
+					$helper= Mage::helper('catalog/category');
+					$cat_list= $helper->getStoreCategories();
+
+					foreach($cat_list as $cat){
+					    $cat = Mage::getModel('catalog/category')->load($cat->getId());
+						?>
+						<div class="row">
+							<div class="page-title col-xs-12">
+							    <h2><a href="<?php $helper->getCategoryUrl($cat) ?>"><?php echo $cat->getName() ?></a></h2>
+							</div>
+					<?php
+						//récupération des catégories filles
+						$children_cat=$cat->getChildrenCategories();
+
+						foreach($children_cat as $children){
+							$fiches=$this->gettable()->getCollection();
+							$fiches->addFieldToFilter('attribute_label', array('in' =>array($children->getName())));
+							$fiches->setOrder('commercant_id','asc');
+
+							foreach($fiches as $fiche){?>
+								<div class="commercant-item col-md-4 col-sm-6 col-xs-12">
+						            <a class="product-image" href="<?php $this->lienCatCommercant($fiche)?>" title="<?php echo $fiche->getAttributeLabel();?>">
+						                <img src="<?php echo $fiche->getLogo();?>" width="100%" alt="<?php echo $fiche->getAttributeLabel(); ?>" title="<?php echo $fiche->getAttributeLabel(); ?>" />
+						            </a>
+						            <h3 class="product-name"><a href="<?php $this->lienCatCommercant($fiche)?>" title=""><?php echo $fiche->getAttributeLabel(); ?></a></h3>
+						            <h4 class="product-name"><?php echo $fiche->getAdresse(); ?></h4>
+						        </div> 
+						<?php }
+						}?>
+						</div>
+					<?php }?>
+			</div>
+		</div>
+	</div>
+</div>

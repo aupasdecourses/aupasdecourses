@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+-->
+<layout>
+
+	<awodev_aworewards_adminhtml_dashboard_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/jquery.fancybox.pack.js</js></action>
+			<action method="addCss"><css>css/awodev/jquery.fancybox.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_dashboard" name="awodev_aworewards_dashboard" template="awodev/aworewards/dashboard.phtml" />
+		</reference>
+	</awodev_aworewards_adminhtml_dashboard_index>
+
+
+
+	<awodev_aworewards_adminhtml_rule_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+		</reference>
+		<reference name="content">
+			<!-- We also reference our block by namespacename_modulename/adminhtml_controllername, and name it uniquely -->
+			<block type="awodev_aworewards/adminhtml_rule" name="awodev_aworewards_rule" />
+		</reference>
+	</awodev_aworewards_adminhtml_rule_index>
+	<awodev_aworewards_adminhtml_rule_edit>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/select2.min.js</js></action>
+			<action method="addCss"><css>css/awodev/select2.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_rule" name="awodev_aworewards_rule_edit" template="awodev/aworewards/rule.phtml"   />
+		</reference>
+	</awodev_aworewards_adminhtml_rule_edit>
+	
+	
+	<awodev_aworewards_adminhtml_invitation_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_invitation" name="awodev_aworewards_invitation" />
+		</reference>
+	</awodev_aworewards_adminhtml_invitation_index>
+	<awodev_aworewards_adminhtml_invitation_edit>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/select2.min.js</js></action>
+			<action method="addCss"><css>css/awodev/select2.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_invitation" name="awodev_aworewards_invitation_edit" template="awodev/aworewards/invitation.phtml"   />
+		</reference>
+	</awodev_aworewards_adminhtml_invitation_edit>
+	
+	
+	
+	<awodev_aworewards_adminhtml_referral_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_referral" name="awodev_aworewards_referral" />
+		</reference>
+	</awodev_aworewards_adminhtml_referral_index>
+	<awodev_aworewards_adminhtml_referral_edit>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/jquery-ui.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.ui.autocomplete.ext.js</js></action>
+			<action method="addJs"><js>awodev/select2.min.js</js></action>
+			<action method="addCss"><css>css/awodev/jquery-ui.css</css></action>
+			<action method="addCss"><css>css/awodev/select2.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_referral" name="awodev_aworewards_referral_edit" template="awodev/aworewards/referral.phtml"   />
+		</reference>
+	</awodev_aworewards_adminhtml_referral_edit>
+	
+
+	<awodev_aworewards_adminhtml_credit_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_credit" name="awodev_aworewards_credit" />
+		</reference>
+	</awodev_aworewards_adminhtml_credit_index>
+	<awodev_aworewards_adminhtml_credit_new>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/jquery-ui.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.ui.autocomplete.ext.js</js></action>
+			<action method="addJs"><js>awodev/select2.min.js</js></action>
+			<action method="addCss"><css>css/awodev/jquery-ui.css</css></action>
+			<action method="addCss"><css>css/awodev/select2.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_credit" name="awodev_aworewards_credit_edit" template="awodev/aworewards/credit.phtml"   />
+		</reference>
+	</awodev_aworewards_adminhtml_credit_new>
+	
+	<awodev_aworewards_adminhtml_payment_index>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/jquery.fancybox.pack.js</js></action>
+			<action method="addCss"><css>css/awodev/jquery.fancybox.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_payment" name="awodev_aworewards_payment" />
+		</reference>
+	</awodev_aworewards_adminhtml_payment_index>
+	<awodev_aworewards_adminhtml_payment_details>
+		<remove name="head" />
+		<remove name="right" />
+		<remove name="left" />
+		<remove name="header" />
+		<remove name="footer" />
+		<remove name="menu" />
+		<remove name="notifications" />
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_payment" name="awodev_aworewards_payment"  template="awodev/aworewards/payment.phtml" />
+		</reference>
+	</awodev_aworewards_adminhtml_payment_details>
+	<awodev_aworewards_adminhtml_dashboard_blockcode>
+		<remove name="right" />
+		<remove name="left" />
+		<remove name="header" />
+		<remove name="footer" />
+		<remove name="menu" />
+		<remove name="notifications" />
+        <reference name="head">
+			<action method="addJs"><js>awodev/jquery.min.js</js></action>
+			<action method="addJs"><js>awodev/jquery.noconflict.js</js></action>
+			<action method="addJs"><js>awodev/jquery-ui.min.js</js></action>
+			<action method="addJs"><js>awodev/select2.min.js</js></action>
+			<action method="addJs"><js>awodev/select2.sortable.js</js></action>
+			<action method="addCss"><css>css/awodev/select2.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_dashboard" name="awodev_aworewards_blockcode"  template="awodev/aworewards/blockcode.phtml" />
+		</reference>
+	</awodev_aworewards_adminhtml_dashboard_blockcode>
+
+	<awodev_aworewards_adminhtml_license_edit>
+        <reference name="head">
+			<action method="addCss"><css>css/awodev/aworewards/style.css</css></action>
+		</reference>
+		<reference name="content">
+			<block type="awodev_aworewards/adminhtml_license" name="awodev_aworewards_license_edit" template="awodev/aworewards/license.phtml"   />
+		</reference>
+	</awodev_aworewards_adminhtml_license_edit>
+
+	<adminhtml_customer_edit>
+		<update handle="customer_edit_tabs"/>
+		<reference name="customer_edit_tabs">
+			<action method="addTab">
+				<name>customer_edit_tab_aworewards</name>
+				<block>awodev_aworewards/adminhtml_customer_tab_rewards</block>
+			</action>
+		</reference>
+	</adminhtml_customer_edit>
+
+
+</layout>
+	
+

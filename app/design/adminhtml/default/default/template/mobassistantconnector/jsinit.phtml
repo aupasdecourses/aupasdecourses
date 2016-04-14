@@ -1,0 +1,105 @@
+<?php
+    $password = Mage::getStoreConfig('mobassistantconnectorinfosec/emoaccess/password');
+    $login = Mage::getStoreConfig('mobassistantconnectorinfosec/emoaccess/login');
+    $store_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+    $store_url = str_replace('http://', '', $store_url);
+    $store_url = str_replace('https://', '', $store_url);
+    preg_replace('/\/*$/i', '', $store_url);
+    $array['url'] = $store_url;
+    $array['login'] = $login;
+    $array['password'] = $password;
+    $store_url = base64_encode(json_encode($array));
+    $qr_url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" . $store_url . "&choe=UTF-8";
+?>
+
+<script type="text/javascript">
+    var password = "";
+    var login = "";
+    var password_changed = "";
+    var login_changed = "";
+
+    window.onload = function ()
+    {
+        var elem_div0 = document.createElement("div");
+        var elem = document.createElement("img");
+        var elem_div_main = document.createElement("div");
+        var elem_p = document.createElement("p");
+        var elem_p_span = document.createElement("span");
+        var mobassistantconnectorinfosec_emoaccess_password = document.getElementById('mobassistantconnectorinfosec_emoaccess_password');
+        var mobassistantconnectorinfosec_emoaccess_login = document.getElementById('mobassistantconnectorinfosec_emoaccess_login');
+        var mobassistantconnectorinfosec_emoqr = document.getElementById("mobassistantconnectorinfosec_emoqr");
+
+
+        window.password = mobassistantconnectorinfosec_emoaccess_password.value;
+        window.login = mobassistantconnectorinfosec_emoaccess_login.value;
+
+        mobassistantconnectorinfosec_emoaccess_password.setAttribute("onkeyup" , "changeQRCode()");
+        mobassistantconnectorinfosec_emoaccess_login.setAttribute("onkeyup" , "changeQRCode()");
+
+        elem_div0.setAttribute("id", "mobassistantconnectorinfosec_div0");
+        mobassistantconnectorinfosec_emoqr.appendChild(elem_div0);
+        var mobassistantconnectorinfosec_div0 = document.getElementById("mobassistantconnectorinfosec_div0");
+        mobassistantconnectorinfosec_div0.style.position="relative";
+        mobassistantconnectorinfosec_div0.style.width="300px";
+        mobassistantconnectorinfosec_div0.style.height="300px";
+        mobassistantconnectorinfosec_div0.style.zIndex="800";
+
+        elem.src = "<?php echo $qr_url; ?>";
+        elem.setAttribute("height", "300");
+        elem.setAttribute("width", "300");
+        elem.setAttribute("alt", "QR Code");
+        elem.setAttribute("id", "mobassistantconnectorinfosec_qr_code");
+        mobassistantconnectorinfosec_div0.appendChild(elem);
+
+        elem_div_main.setAttribute("class", "form-list");
+        elem_div_main.setAttribute("id", "mobassistantconnectorinfosec_div_main");
+        mobassistantconnectorinfosec_emoqr.appendChild(elem_div_main);
+        var mobassistantconnectorinfosec_div_main = document.getElementById("mobassistantconnectorinfosec_div_main");
+
+        elem_p.setAttribute("id", "mobassistantconnectorinfosec_qr_p_note");
+        elem_p.setAttribute("class", "note");
+        mobassistantconnectorinfosec_div_main.appendChild(elem_p);
+        mobassistantconnectorinfosec_div_main.style.paddingLeft="25px";
+        mobassistantconnectorinfosec_div_main.style.marginTop="-5px";
+
+        elem_p_span.setAttribute("id", "mobassistantconnectorinfosec_qr_p_span_note");
+        document.getElementById("mobassistantconnectorinfosec_qr_p_note").appendChild(elem_p_span);
+
+        document.getElementById("mobassistantconnectorinfosec_qr_p_span_note").innerHTML = 'Store URL and access details (login and password) for Mobile Assistant Connector are encoded in this QR code. Scan it with special option available on connection settings page of Magento Mobile Assistant to autofill acess settings and connect to your Magento store.';
+    }
+
+    function changeQRCode() {
+        var elem_div_change = document.createElement("div");
+        var mobassistantconnectorinfosec_qr_code = document.getElementById('mobassistantconnectorinfosec_qr_code');
+        var mobassistantconnectorinfosec_elem_div_change = document.getElementById('mobassistantconnectorinfosec_elem_div_change');
+        window.password_changed = document.getElementById('mobassistantconnectorinfosec_emoaccess_password').value;
+        window.login_changed = document.getElementById('mobassistantconnectorinfosec_emoaccess_login').value;
+
+        if (window.password == password_changed && window.login == login_changed) {
+            mobassistantconnectorinfosec_qr_code.style.opacity = "1";
+            mobassistantconnectorinfosec_elem_div_change.style.display = "none";
+        } else {
+            if (mobassistantconnectorinfosec_elem_div_change) {
+                mobassistantconnectorinfosec_qr_code.style.opacity = "0.1";
+                mobassistantconnectorinfosec_elem_div_change.style.display = "block";
+            } else {
+                mobassistantconnectorinfosec_qr_code.style.opacity = "0.1";
+
+                elem_div_change.setAttribute("id", "mobassistantconnectorinfosec_elem_div_change");
+                document.getElementById("mobassistantconnectorinfosec_div0").appendChild(elem_div_change);
+                var mobassistantconnectorinfosec_elem_div_change = document.getElementById('mobassistantconnectorinfosec_elem_div_change');
+                mobassistantconnectorinfosec_elem_div_change.innerHTML = "Login details have been changed. Save changes for code to be regenerated";
+                mobassistantconnectorinfosec_elem_div_change.style.position="absolute";
+                mobassistantconnectorinfosec_elem_div_change.style.width="150px";
+                mobassistantconnectorinfosec_elem_div_change.style.top="36%";
+                mobassistantconnectorinfosec_elem_div_change.style.zIndex="1000";
+                mobassistantconnectorinfosec_elem_div_change.style.left="25%";
+                mobassistantconnectorinfosec_elem_div_change.style.color="red";
+                mobassistantconnectorinfosec_elem_div_change.style.textAlign="center";
+                mobassistantconnectorinfosec_elem_div_change.style.fontWeight="bold";
+                mobassistantconnectorinfosec_elem_div_change.style.textShadow="0 0 1px #fff";
+                mobassistantconnectorinfosec_elem_div_change.style.display = "block";
+            }
+        }
+    }
+</script>

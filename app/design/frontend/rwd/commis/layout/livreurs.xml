@@ -1,0 +1,11 @@
+<layout version="0.1.0">
+  <default>
+    <reference name="content">
+    </reference>
+  </default>
+  <frontendrouteur_index_index>
+    <reference name="content">
+      <block type="livreurs/monblock" name="afficher_monblock" template="livreurs/afficher.phtml"/>
+    </reference>
+  </frontendrouteur_index_index>
+</layout>

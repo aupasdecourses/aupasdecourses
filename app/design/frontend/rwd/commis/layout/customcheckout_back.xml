@@ -1,0 +1,52 @@
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <!-- Merge Billing & Shipping -->
+        <reference name="checkout.onepage.billing"> <!-- Change the template of billing block  -->
+            <action method="setTemplate"><template>customcheckout/persistent/checkout/onepage/billing.phtml</template></action>
+        </reference>
+        <!-- Merge Shipping Method & Ddate -->
+        <reference name="checkout.onepage.shipping_method"> <!-- Change the template of billing block  -->
+            <action method="setTemplate"><template>customcheckout/checkout/onepage/shipping_method.phtml</template></action>
+            <block type="customcheckout/deliverycheck_check" name="deliverycheck" template="customcheckout/deliverycheck/check.phtml"/>
+            <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="customcheckout/checkout/onepage/ddate.phtml"/>
+        </reference>
+        <!-- Merge Payment & Review -->
+        <remove name="checkout.onepage.review"/>
+        <reference name="checkout.onepage.payment"> <!-- Change the template of billing block  -->
+            <action method="setTemplate"><template>customcheckout/checkout/onepage/payment.phtml</template></action>
+            <block type="checkout/onepage_review_info" name="root1" template="customcheckout/checkout/onepage/review/info.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>customcheckout/checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>customcheckout/checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>customcheckout/checkout/onepage/review/item.phtml</template></action>
+                <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="customcheckout/checkout/onepage/review/totals.phtml"/>
+                <block type="customcheckout/deliverycheck_check" name="deliverycheck_review"/>
+            </block>
+            <block type="core/template" name="ajaxcoupon" after="root1" template="customcheckout/ajaxcoupon/ajaxcoupon.phtml"/>
+        </reference>
+        <!--update shipping totals template-->
+        <reference name="shipping_total_renderer">
+            <action method="setTemplate"><template>customcheckout/tax/checkout/shipping.phtml</template></action>
+        </reference>
+        <reference name="checkout.onepage.shipping_method.available">
+            <action method="setTemplate"><template>customcheckout/checkout/onepage/shipping_method/available.phtml</template></action>
+        </reference>
+    </checkout_onepage_index>
+    <checkout_onepage_shippingmethod>
+        <remove name="root"/>
+         <block type="checkout/onepage_shipping_method_available" name="root1" output="toHtml" template="customcheckout/checkout/onepage/shipping_method/available.phtml"/>
+    </checkout_onepage_shippingmethod>
+    <checkout_onepage_paymentmethod>
+        <reference name="root">
+            <action method="setTemplate"><template>customcheckout/checkout/onepage/payment/methods.phtml</template></action>
+        </reference>
+    </checkout_onepage_paymentmethod>
+    <pmainguet_customcheckout_ajaxcoupon_index_customcouponpost translate="label">
+        <remove name="roots"/>
+        <block type="core/template" name="ajaxcoupon" template="customcheckout/ajaxcoupon/ajaxcoupon.phtml"/>
+    </pmainguet_customcheckout_ajaxcoupon_index_customcouponpost>
+    <hipay_mapi_payment>
+        <reference name="hipaypayment.redirect">
+            <action method="setTemplate"><template>customcheckout/hipay/payment.phtml</template></action>
+        </reference>
+    </hipay_mapi_payment>
+</layout>

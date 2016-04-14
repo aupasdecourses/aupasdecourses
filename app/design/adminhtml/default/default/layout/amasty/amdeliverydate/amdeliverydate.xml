@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+-->
+<layout>
+    <amdeliverydate_adminhtml_order_edit>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </amdeliverydate_adminhtml_order_edit>
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+    <adminhtml_sales_order_edit_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_order_edit_index>
+    <adminhtml_sales_order_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_order_index>
+    <adminhtml_sales_order_grid>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_order_grid>
+    <adminhtml_sales_invoice_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_invoice_index>
+    <adminhtml_sales_invoice_grid>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_invoice_grid>
+    <adminhtml_sales_shipment_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_shipment_index>
+    <adminhtml_sales_shipment_grid>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>amasty/amdeliverydate/deliverydate.js</name><params/></action>
+        </reference>
+    </adminhtml_sales_shipment_grid>
+</layout>

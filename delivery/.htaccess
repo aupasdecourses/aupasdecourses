@@ -1,0 +1,12 @@
+Order Deny,Allow
+Deny from all
+
+<Files *>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<FilesMatch ".*\.(phtml|css|js|png|json)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

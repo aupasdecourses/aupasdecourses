@@ -1,0 +1,7 @@
+<layout version="0.1.0">
+    <commercants_index_index>
+        <reference name="content">
+            <block type="commercants/fiche" template="commercants/listecomplete.phtml" name="liste_commercants"></block>
+        </reference>
+    </commercants_index_index>
+</layout>

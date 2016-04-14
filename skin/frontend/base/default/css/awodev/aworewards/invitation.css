@@ -1,0 +1,103 @@
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+/* INVITATION VERTICAL TABS */
+
+
+
+
+.hide2 { display:none; }
+
+#invitationtab {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+#invitationtab > ul > li {
+    width: 110px;
+    height: 110px;
+    background-color: #fff !important;
+    list-style-type: none;
+    display: block;
+    text-align: center;
+    margin: auto !important;
+    padding-bottom: 10px !important;
+    border: 1px solid #fff;
+    position: relative;
+    border-right: none;
+    opacity: .3;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+	box-sizing: initial;
+	-moz-box-sizing: initial;
+}
+#invitationtab > ul > li.facebook { background: url('../../../images/awodev/aworewards/menu_facebook.png') no-repeat center center; }
+#invitationtab > ul > li.twitter { background: url('../../../images/awodev/aworewards/menu_twitter.png') no-repeat center center; }
+#invitationtab > ul > li.support { background: url('../../../images/awodev/aworewards/menu_email.png') no-repeat center center; }
+
+
+#invitationtab > ul > li.selected {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    border: 1px solid #ddd;
+    border-right: none;
+    z-index: 10;
+    background-color: #fafafa !important;
+    position: relative;
+}
+#invitationtab > ul {
+    float: left;
+    width: 110px;
+    text-align: left;
+    display: block;
+    margin: auto 0 !important;
+    padding: 0 !important;
+    position: relative;
+    top: 30px;
+}
+#invitationtab > div {
+    background-color: #fafafa;
+    margin-left: 110px;
+    border: 1px solid #ddd;
+    min-height: 500px;
+    padding: 12px;
+    position: relative;
+    z-index: 9;
+    -moz-border-radius: 20px;
+}
+#invitationtab > div.onlyone {
+    margin-left: 0;
+}
+#invitationtab > div > h4 {
+    color: #800;
+    font-size: 1.2em;
+    border-bottom: 1px dotted #800;
+    padding-top: 5px;
+    margin-top: 0;
+}
+
+#invitationtab img { display:inline; }
+
+.personalmsg textarea {
+	width:90% !important;
+	height: auto !important;
+}
+
+
+.personalmsg { margin-left:5px;padding:5px;background-color:#EEEBEB;border:1px solid #EDE8E8; } 
+
+
+#email_container {padding-left:60px;}
+.emails_imported { padding-left:14px; }
+.getter_link { padding-bottom:5px; }
+.getter_link span,.getter_link img { vertical-align: middle; }
+.getter_link img { height:25px; }
+.getter_link a { text-decoration: none; }
+#email_upload_block { padding-left:30px;}
+
+

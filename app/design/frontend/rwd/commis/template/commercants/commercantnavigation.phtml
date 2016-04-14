@@ -1,0 +1,54 @@
+<?php
+	    //On filtre avec la catégorie en cours		
+	    $current_cat=Mage::registry('current_category')->getName();
+	    $current_catId=Mage::registry('current_category')->getId();
+	    $fiches=$this->getListPerCat($current_catId)
+							->setCurPage(1)
+							->setPageSize(6);?>
+
+			<div class="row">
+				<div class="page-title col-xs-12">
+				    <h2 class="subtitle"><?php echo $current_cat ?></h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="commercants-intro col-xs-12">
+					<p><?php 
+						echo Mage::getModel('catalog/category')->load($current_catId)->getDescription();
+					?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="commercants-main products-grid col-xs-12">
+			<?php 	
+					foreach ($fiches as $fiche){
+						$fiche=Mage::getModel('catalog/category')->load($fiche->getId());
+						$_NameStripped = $this->stripTags($fiche->getName(), null, true);
+						$_thumbnail=$fiche->getThumbnail();
+						$src = Mage::getBaseUrl('media').'catalog/category/'.$_thumbnail;
+						$_name=$fiche->getName();
+						$_adresse=$fiche->getData('adresse_commercant');
+						$url=$fiche->getUrl();
+
+						?>
+						<div class="commercant-item col-md-4 col-sm-6 col-xs-12">
+				            <a class="product-image" href="<?php echo $url;?>" title="<?php echo $_NameStripped;?>">
+				                <img src="<?php echo $src;?>" width="100%" alt="<?php echo $_NameStripped; ?>" title="<?php echo $_NameStripped; ?>" />
+				            </a>
+				            <h3 class="product-name"><a href="<?php echo $url;?>" title=""><?php echo $_name; ?></a></h3>
+				            <span><?php echo $_adresse; ?></span>
+				        </div>     
+						
+			<?php }?>
+						<!-- Commerçants à venir -->
+						<div class="commercant-item col-md-4 col-sm-6 col-xs-12">
+				            <a class="product-image" href="<?php echo Mage::getBaseUrl().'commercant-form/'?>" title="A venir">
+				                <img src="<?php echo Mage::getBaseUrl('media').'resource/commerçant_dummy.png'?>" width="100%" alt="" title="" />
+				            </a>
+				            <h3 class="product-name" style="text-align:center;"><a href="<?php echo Mage::getBaseUrl().'commercant-form/'?>">Suggérez-nous votre commerçant,<br/>Cliquez ici!</a></h3>
+				        </div>  
+				</div>
+			</div>
+		
+		

@@ -1,0 +1,60 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+
+$currentStore = $this->getCurrentStore();
+?>
+<style>
+#amdeliverydate .required {
+    color: #EB340A;
+}
+
+#amdeliverydate label {
+    margin: 0;
+}
+
+#amdeliverydate .field-row {
+    margin-bottom: 10px;
+}
+
+p.note {
+    margin: 0;
+    padding: 0 0 0 13px;
+    background: url(<?php echo $this->getSkinUrl('images/amasty/amdeliverydate/note_bg.gif') ?>) 1px 6px no-repeat;
+    font-size: 11px;
+}
+</style>
+<script type="text/javascript">
+    var amDeliverydateConditionObj = new amDeliverydateCondition({
+        'shipping_methods': <?php print Mage::helper('core')->jsonEncode($this->getShippingMethods()); ?>,
+        'selector': <?php print Mage::helper('core')->jsonEncode($this->getSelector()); ?>
+    });
+    amDeliverydateConditionObj.check();
+</script>
+<ul class="form-list">
+    <?php foreach ($this->getFormElements() as $element): ?>
+    <li class="fields">
+        <?php if ($comment = Mage::getStoreConfig('amdeliverydate/general/comment', $currentStore)): ?>
+            <?php if ('as_is' == Mage::getStoreConfig('amdeliverydate/general/comment_style', $currentStore)): ?>
+                <div><?php echo $comment; ?></div>
+            <?php else: ?>
+                <ul class="messages">
+                    <li class="notice-msg">
+                        <ul>
+                            <li>
+                                <?php echo $comment; ?>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            <?php endif; ?>
+        <?php endif; ?>
+        <div class="input-box">
+        <?php echo $element->toHtml(); ?>
+        </div>
+    </li>
+    <?php endforeach; ?>
+</ul>

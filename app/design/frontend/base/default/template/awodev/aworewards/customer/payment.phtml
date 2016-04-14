@@ -1,0 +1,69 @@
+<?php
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+$_payments = $this->getPayments(); 
+
+?>
+
+<ul class="links">
+	<li class="first"><a title="Invitations" href="<?php echo $this->getUrl('*/invitation') ?>"><?php echo $this->__('Invitations'); ?></a></li>
+	<li><a title="My Referrals" href="<?php echo $this->getUrl('*/referral') ?>"><?php echo $this->__('My Referrals'); ?></a></li>
+	<li><a title="My Credits" href="<?php echo $this->getUrl('*/credit') ?>"><?php echo $this->__('My Credits'); ?></a></li>
+	<li><b><?php echo $this->__('My Payments'); ?></b></li>
+</ul>
+<br /><br />
+
+<?php  echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My Payments') ?></h1>
+</div>
+
+
+<?php echo $this->getPagerHtml(); ?>
+<?php if($_payments->getSize()): ?>
+<table class="data-table">
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Entry Date') ?></th>
+            <th><?php echo $this->__('Payment Type') ?></th>
+            <th><?php echo $this->__('Details') ?></th>
+            <th><?php echo $this->__('Paid') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($_payments as $_payment): ?>
+        <tr>
+			<td><?php echo Mage::helper('core')->formatDate($_payment->getPaymentDate(), 'short', false) ?></td>
+			<td><?php echo $_payment->getPaymentType() ? Mage::helper('awodev_aworewards')->vars('payment_type',$_payment->getPaymentType()) : '' ?></td>
+			<td><?php $details = $_payment->getPaymentDetails();
+					if($_payment->getPaymentType()=='paypal') {
+						$a = explode('|',$details);
+						$details = @$a[1];
+					}
+					echo $details; ?></td>
+			<td><?php echo $_payment->getAmountPaid() ? round($_payment->getAmountPaid()) : '---' ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have no payments.'); ?></p>
+<?php endif; ?>
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://www.aupasdecourses.com/sitemap.xml.gz
+Sitemap: http://www.aupasdecourses.com/sitemap.xml.gz.gz

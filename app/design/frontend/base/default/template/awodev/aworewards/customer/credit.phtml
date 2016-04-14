@@ -1,0 +1,123 @@
+<?php 
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+$_credits = $this->getCredits(); 
+$_points = $this->getPointTotal();
+?>
+
+<ul class="links">
+	<li class="first"><a title="Invitations" href="<?php echo $this->getUrl('*/invitation') ?>"><?php echo $this->__('Invitations'); ?></a></li>
+	<li><a title="My Referrals" href="<?php echo $this->getUrl('*/referral') ?>"><?php echo $this->__('My Referrals'); ?></a></li>
+	<li><b><?php echo $this->__('My Credits'); ?></b></li>
+	<li><a title="My Payments" href="<?php echo $this->getUrl('*/payment') ?>"><?php echo $this->__('My Payments'); ?></a></li>
+</ul>
+<br /><br />
+
+
+<?php  echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My Credits') ?></h1>
+</div>
+<?php if($_credits->getSize()): ?>
+<div><b><?php echo $this->__('Total Points') ?>:</b> <?php echo number_format($_points['total'],2) ?></div>
+<div><b><?php echo $this->__('Claimed Points') ?>:</b> <?php echo number_format($_points['claimed'],2) ?></div>
+<div><b><?php echo $this->__('Unclaimed Points') ?>:</b> <?php echo number_format($_points['unclaimed'],2) ?></div>
+
+<?php if($this->is_payout_coupon()) { ?>
+	<div>
+		<form name="frmpaycoupon" method="post" action="<?php echo $this->getUrl('*/*/paycoupon') ?>" onsubmit="return couponsubmitbutton();">
+			<button type="submit"  style="width:200px;" name="task_couponpayout" class="payment">&nbsp;
+				<?php echo $this->__('Request Coupon Payment') ?>&nbsp;
+			</button>
+		</form>
+	</div>
+<?php } ?>
+<?php if($this->is_payout_paypal()) { ?>
+	<div>
+		<form name="frmpaypaypal" method="post" action="<?php echo $this->getUrl('*/*/paypaypal') ?>" onsubmit="return paypalpayout_submit();">
+			<div><input type="button" style="width:200px;" value="<?php echo $this->__('Paypal Payout Request') ?>" onclick="paypalpayout()"></div>
+			<div id="paypal_payout_form" style="display:none;padding:10px;margin:10px 0;border:1px solid #cccccc;">
+				<div><?php echo $this->__('Paypal Email') ?> <input type="text" name="paypal_email" value="" /></div>
+				<div><?php echo $this->getPaypalWarning(); ?></div>
+				<input type="submit" id="id_submit_paypal" value="<?php echo $this->__('Submit') ?>" />
+				<span style="display:none" id="img_loading"><img src="<?php echo $this->getSkinUrl('images/awodev/aworewards/loading.gif'); ?>" /></span>
+			</div>
+		</form>
+	</div>
+<?php } ?>
+
+<br />
+
+
+<?php echo $this->getPagerHtml(); ?>
+
+<table class="data-table">
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Rule Type') ?></th>
+            <th><?php echo $this->__('Credit Type') ?></th>
+            <th><?php echo $this->__('Coupon Code') ?></th>
+            <th><?php echo $this->__('Points') ?></th>
+            <th><?php echo $this->__('Paid') ?></th>
+            <th><?php echo $this->__('Timestamp') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($_credits as $_credit): ?>
+        <tr>
+			<td><?php echo $_credit->getRuleType() ? Mage::helper('awodev_aworewards')->vars('rule_type',$_credit->getRuleType()) : '' ?></td>
+			<td><?php echo $_credit->getCreditType() ? Mage::helper('awodev_aworewards')->vars('credit_type',$_credit->getCreditType()) : '' ?></td>
+			<td><?php echo $_credit->getCouponId() ? $_credit->getPaymentDetails() : '---' ?></td>
+			<td><?php echo $_credit->getPoints() ? round($_credit->getPoints()) : '---' ?></td>
+			<td><?php echo $_credit->getPointsPaid() ? round($_credit->getPointsPaid()) : '---' ?></td>
+			<td><?php echo Mage::helper('core')->formatDate($_credit->getTimestamp(), 'short', false) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have no credits.'); ?></p>
+<?php endif; ?>
+
+
+<script language="javascript" type="text/javascript">
+
+function couponsubmitbutton() {
+	if(confirm("<?php echo $this->__('Are you sure you want to request payment?'); ?>")) {
+		return true;
+	}
+	return false
+}
+
+
+
+function paypalpayout() { document.getElementById('paypal_payout_form').style.display = 'inline-block'; }
+function paypalpayout_submit() {
+	if(confirm("<?php echo $this->__('Are you sure you want to request payment?'); ?>")) {
+		document.getElementById('id_submit_paypal').disabled = true;
+		document.getElementById('img_loading').style.display = '';
+		return true;
+	}
+	return false;
+}
+
+</script>
+
+
+
+
+

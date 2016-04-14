@@ -1,0 +1,286 @@
+<!-- DataTables -->
+<style>
+img.modal{
+	display:none;
+	position:relative;
+	margin-left:10px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+  	<div class="row">
+	    <div class="page-header col-xs-12">
+	    	<h1>Sélectionner une commande</h1><hr>
+			<label class="control-label">Remboursement de la commande n°: </label>
+			<select id="incrementid-dropdown" class="form-control">
+				<option>Selectionner le numéro de commande</option>
+	    		<?php foreach($orderid_array as $id => $d){
+	    			echo '<option ';
+	    			if($_GET['increment_id']==$id){echo "selected";}
+	    			echo '>'.$id.'</option>';
+	    		}?>
+	    	</select>
+	    </div>
+	    <!--Start main conditionnal-->
+	    <?php if(isset($orderid)&& $orderid!=""){
+	    	$refund_items=Mage::getSingleton('pmainguet_delivery/refund_items');
+	    	?>
+	    	<?php if($check!=NULL || $check!=""){?><div id="warning-message" class="bg-warning col-xs-12">Attention! Cette commande a déjà des données renseignées dans Magento.</div><?php } ?>
+	</div>
+    <div class="row">
+	    <div id="ticketcommercant" class="col-xs-12">
+	    	<h1>Tickets commerçants</h1><hr>
+			<div class="input-group">
+				<form role="form" id="formticket" enctype="multipart/form-data"  onsubmit="return submitFormTicket(this);">
+				 	<div class="form-group">
+				 		<label><input type="file" name="imageticket" id="imageticket" required></label>
+				 	</div>
+				 	<div class="form-group">
+				 		<input class="btn btn-lg btn-success" value="Uploader ticket(s)" type="submit" name="submitticket" id="submitticket">
+				 		<label><input  type="checkbox" name="supimageticket" id="supimageticket" value="delete"> Ecraser la photo existante ?</label>
+				 	</div>
+				 	<?php include('global/views/ajaxloader.php');?>
+				</form>
+			</div>
+	    </div>
+		<div id="uploaded_images" class="col-xs-12">
+			<div class="col-sm-12">
+				<div class="row" id="uploaded_ticket_div">
+					<?php foreach($collection_attach as $c){
+			  			$array=explode(";",$c->getData('ticket_commercant'));
+		  				foreach($array as $a){
+			  				echo '<a target="_blank"  href="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"><img id="uploaded_ticket" class="img-responsive center-block" src="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"></a>';
+			  			}
+				  	}?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="infocommande" class="col-xs-12">
+			<div class="row">
+				<h1>Calcul remboursement</h1><hr>
+		    	<div id="filter"><label>Sélectionnez le commerçant:</label></div>
+		    </div>
+		    <div class="row">
+		    	<div id="data" class="table-responsive">
+			    	<table class="display no-wrap" id="data_commande">
+				    	 <thead style="background:#FFF">
+					      <tr>
+					      	<th class="sort">Commerçant</th>
+							<th>Produit</th>
+							<th>Description</th>
+							<th>Prix Unité</th>
+							<th class="float">Quantité</th>
+							<th class="float">Total com.</th>
+							<th class="float" id="prixfinal">Total ticket</th>
+							<th class="float" id="diffprixfinal">A rembourser</th>
+							<th>Sur ticket</th>
+							<th>Commentaires</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+						    <?php
+						    	if(isset($_GET['increment_id'])){
+							    	$ordered_items = $order->getAllItems();
+									$sorted_items = array();
+									  foreach ($ordered_items as $item) {
+									      if (!$item->isDeleted()) {
+									          $sorted_items[] =  $item;
+									      }
+									  }
+
+							    	$tot_qty=0;
+							    	$sum=0;
+							      	foreach($sorted_items as $item){
+							      		$itemid=$item->getProduct()->getId();
+								      	$product = Mage::getModel('catalog/product')->load($itemid);
+								      	$refund_item=$refund_items->load($item->getId(), 'order_item_id');
+
+											echo '<tr class="order_item" id="'.$item->getId().'">';
+												echo '<td class="col-sm-2 sort commercant">'.$product->getAttributeText('commercant').'</td>';
+												echo '<td class="col-sm-2 name"><a href="'.$product->getProductUrl().'">'.$item->getName().'</a></td>';
+												if($item->getShortDescription()<>NULL || $item->getShortDescription()<>""){
+													$description=$item->getShortDescription();
+												}else{
+													$description=$product->getShortDescription();
+												}
+												echo '<td class="col-sm-2 description">'.$description.'</td>';
+												if($item->getPrixKiloSite()<>""){
+													echo '<td class="prix_unite col-sm-1 prixkilosite" style="text-align:center;">'.$item->getPrixKiloSite().'</td>';
+												}else{
+													echo '<td class="prix_unite col-sm-1 prixkilosite" style="text-align:center;">'.$product->getPrixKiloSite().'</td>';
+												}
+												echo '<td class="col-sm-1 qty" style="text-align:center;">'.round($item->getQtyOrdered(),0).'</td>';
+												//prix initial
+												$prixinitial=round($item->getRowTotalInclTax(),2);
+												echo '<td class="col-sm-1 prixinitial" style="text-align:center;">'.$prixinitial.'</td>';
+												//prix final
+												if($refund_item->getOrderItemId()-$item->getId()==0){
+													$prixfinal=round($refund_item->getPrixFinal(),2);
+												}else{
+													$prixfinal=round($item->getRowTotalInclTax(),2);
+												}
+												echo '<td class="col-sm-1 prixfinal" style="text-align:center;"><input type="text" name="'.$itemid.'-prixfinal" class="prixfinal" style="width:60px" value="'.$prixfinal.'"></td>';
+												$diff=$prixinitial-$prixfinal;
+												echo '<td class="diffprixfinal" style="text-align:center;">'.$diff.'</td>';
+												if ($refund_item->getOrderItemId()-$item->getId()==0 && $refund_item->getInTicket()){
+													echo '<td class="col-sm-1 in-ticket" style="text-align:center;"><input type="checkbox" style="width: 30px;height: 30px" checked></td>';
+												}else{
+													echo '<td class="col-sm-1 in-ticket" style="text-align:center;"><input type="checkbox" style="width: 30px;height: 30px"></td>';
+												}
+												if ($refund_item->getOrderItemId()-$item->getId()==0 && $refund_item->getComment()){
+												echo '<td class="col-sm-1 comment"><input type="text" name="'.$itemid.'-comment" class="comment" value="'.$refund_item->getComment().'"></td>';
+											}else{
+												echo '<td class="col-sm-1 comment"><input type="text" name="'.$itemid.'-comment" class="comment" value=""></td>';
+											}
+											echo '</tr>';
+										$tot_qty+=$item->getQtyOrdered();
+										$sum+=$item->getRowTotalInclTax();
+									}
+									}else{?>
+										<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+									<?php
+						     	 }?>
+					    </tbody>
+					    <tfoot style="background:#FFF">
+					    	<tr>
+						     	 	<th colspan=4><strong>Total</strong></th>
+						     	 	<th id="total_qty"></th>
+						     	 	<th id="total_commande"></th>
+						     	 	<th id="total_ticket"></th>
+						     	 	<th id="total_remboursement"></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						    </tr>
+						</tfoot>
+			    	</table>
+		    	</div><!-- End data table-->
+		    	<div class="explication">Nota: une valeur positive de la colonne à rembourser, signifie un remboursement à réaliser. Une valeur négative signifie que la différence est au bénéfice du client (pas de remboursement à faire). NOTE VALABLE POUR LES COMMANDES APRES LA 2016000285 (inverse avant).</div>
+		    </div>
+		    <div class="row">
+	    		<div class="col-xs-12" id="uploaded_remb_div">
+					<!--Thumbnail image client-->
+					<?php foreach($collection_attach as $c){
+				  			$a=$c->getData('screenshot');
+		  					echo '<a target="_blank" href="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"><img class="img-responsive center-block" id="uploaded_remb" src="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'" style="width:200px"></a>';
+		  					echo "<p style='text-align:center;font-size:12px'><i>Image tableau pour client (click to enlarge)</i></p>";
+				  	}?>
+				</div>
+		    	<div class="col-xs-12">
+			    	<form role="form" id="form_db" onsubmit="return datamergedbbsshot(this);">
+				 		<div class="form-group">
+				 			<button class="btn btn-lg btn-success" type="submit" name="submitddb" id="submitddb">Enregistrer dans la BDD</button>
+				 			<label><input type="checkbox" name="supsubmit" id="supsubmit" value="delete" /> Ecraser les valeurs existantes ?</label>
+				 			<?php include('global/views/ajaxloader.php');?>
+				 		</div>
+					</form>
+				</div>
+			</div>
+    	</div>
+	</div>
+	<div class="row">
+	  <div class="form-group col-xs-12">
+	    <h1>Commentaires</h1><hr>
+	    <div class="input-group col-xs-12">
+		  	<form role="form" id="formcomments" onsubmit="return submitCommentTicket(this);">
+				<div class="form-group col-xs-3">
+					<label for="comment_remboursement">Commentaires Remboursement (visible par le client):</label>
+				  	<textarea class="form-control" rows="5" id="comment_remboursement"><?php foreach($collection_attach as $c){echo $c->getData('remboursements');}?></textarea>
+				</div>
+				<div class="form-group col-xs-3">
+			  		<label for="comment_ticket">Commentaires Commande (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_commande"><?php foreach($collection_attach as $c){echo $c->getData('commentaires_commande');}?></textarea>
+				</div>
+				<div class="form-group col-xs-3">
+			  		<label for="comment_ticket">Commentaires Tickets (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_ticket"><?php foreach($collection_attach as $c){echo $c->getData('commentaires_ticket');}?></textarea>
+				</div>
+				<div class="form-group col-xs-3">
+			  		<label for="comment_ticket">Commentaires Frais Livraison (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_fraislivraison"><?php foreach($collection_attach as $c){echo $c->getData('commentaires_fraislivraison');}?></textarea>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-success" type="submit" name="submitcomments" id="submitcomments">Enregistrer commentaires</button>
+					<label><input type="checkbox" name="supcomments" id="supcomments" value="delete" /> Ecraser les commentaires existants ?</label>
+					<?php include('global/views/ajaxloader.php');?>
+				</div>
+			</form>
+		</div>
+	  </div>
+	</div>
+	<div class="row" id="invoice-credit-memo">
+		<div class="col-xs-12">
+			<h1>Création Facture & Credit Memo</h1><hr>
+			<div id="credit-memo-list">
+				<ul>
+				<?php
+					$sa=round($order->getShippingInclTax(),2).'€';
+					$tc=round($order->getGrandTotal() - $sa,2).'€';
+					$tr=round($order->getTotalRefunded(),2).'€';
+				?>
+					<li>Total produit commandés: <?php echo $tc;?></li>
+					<li>Frais de livraison: <?php echo $sa;?></li>
+					<?php if($order->getTotalRefunded()>0):?>
+						<li>Total à rembourser: <?php echo $tr;?></li>
+					<?php elseif($order->getTotalRefunded()<0):?>
+						<li>Trop perçu par le client: <?php echo $tr;?> (pas de remboursement à faire)</li>
+					<?php endif;?>
+				  <li>Liste des avoirs émis:<ul>
+					<?php
+					$collection_credit = Mage::getResourceModel('sales/order_creditmemo_collection')
+	            ->addAttributeToFilter('order_id',$orderid);
+					foreach($collection_credit as $item) {
+						echo '<li>'.$item->getIncrementId().' - (valeur de '.round($item->getGrandTotal(),2).'€)';
+		    			$creditMessage = Mage::getResourceModel('sales/order_creditmemo_comment_collection')
+		                   ->addAttributeToFilter('parent_id', $item->getEntityId());
+		    			foreach($creditMessage as $message) {
+		            		echo ' - '.$message->getComment();
+		    			}
+		    			echo '</li>';
+					}?>
+				</ul></li></ul>
+			</div>
+			<form role="form" id="form_credit" onsubmit="return creditmemo(this);">
+				<?php if($collection_credit->count()==0){?>
+			 		<div class="form-group">
+			 			<button class="btn btn-lg btn-success" type="submit" name="submitcredit" id="submitcredit">Enregistrer Facture & Credit Memo</button>
+			 			<label><input type="checkbox" name="confirmcredit" id="confirmcredit" value="create" /> Souhaitez vous vraiment créer un credit memo ?</label>
+			 			<?php include('global/views/ajaxloader.php');?>
+			 		</div>
+		 		<?php }else{?>
+				<div><strong>Avoir déjà émis, voir Magento pour émettre de nouveau</strong></div>
+				<?php }?>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>Remboursement HiPay</h1><hr>
+	 		<div class="form-group">
+	 			<a class="btn btn-lg btn-success" href="https://www.hipaywallet.com/auth" target="_blank">Se connecter à HiPay</a>
+	 		</div>
+		</div>
+	</div>	
+	<div class="row" id="cloture-commande">
+		<?php if($orderstatus<>"Complete"):?>
+		<div class="col-xs-12">
+			<h1>Cloturer commande</h1><hr>
+			<div id="order-status">Statut actuel: <?php echo $orderstatus;?></div>
+	 		<form role="form" id="formcloture" onsubmit="return submitCloseOrder(this);">
+	 			<div class="form-group">
+	 				<button class="btn btn-lg btn-success" type="submit" name="submitclose">Cloturer commande</button>
+	 				<label><input type="checkbox" name="confirmclose" id="confirmclose" value="delete" /> Souhaitez vous vraiment cloturer la commande ?</label>
+	 				<?php include('global/views/ajaxloader.php');?>
+	 			</div>
+	 		</form>
+		</div>
+		<?php endif;?>	
+	</div>
+<!-- End main conditionnal -->
+<?php }?></div>
+</body>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js').'delivery/calcops.js';?>"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js').'delivery/calcajax.js';?>"></script>

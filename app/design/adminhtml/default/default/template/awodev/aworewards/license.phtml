@@ -1,0 +1,98 @@
+<?php
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+ 
+$license = $this->getLicense();
+$_menu = Mage::helper("awodev_aworewards")->getMenu();
+?>
+
+
+
+<style>
+table.admintable td.key { white-space:nowrap; width:auto; }
+table.admintable td.key2 { background-color:#ffffff;}
+table.admintable td input.readonly, table.admintable td textarea.readonly  { background-color:#ffffff; }
+</style>
+
+
+<ul class="links">
+	<?php 
+	$is_first = true;
+	foreach($_menu as $item) {
+		$first_html = '';
+		if($is_first) {
+			$is_first = false;
+			$first_html = 'class="first"';
+		}
+		echo '<li '.$first_html.'>
+				'.(!$item['is_current'] ? '<a href="'.$item['url'].'">' : '').'
+					'.$item['label'].'
+				'.(!$item['is_current'] ? '</a>' : '').'
+			</li>';
+	}
+	?>
+</ul>
+<div style="clear:both;"></div>
+
+<div class="content-header">
+	<table cellspacing="0" class="grid-header">
+		<tr>
+			<td><h3><?=$this->__('License')?></h3></td>
+			<td class="a-right">
+				<?php if(!empty($license->license)) { ?>
+					<button style="" onclick="confirmSetLocation('Are you sure?', '<?php echo $this->getUrl('*/*/delete' ); ?>')" class="scalable delete" type="button" title="<?php echo $this->__( 'Delete' ); ?>"><span><?php echo $this->__( 'Delete' ); ?></span></button>
+				<?php } ?>
+				<?php if(!empty($license->expiration) && $license->expiration<time()) { ?>
+					<button onclick="setLocation('<?php echo $this->getUrl('*/*/updateexpired' ); ?>')" class="scalable save" type="button"><span><?php echo $this->__( 'Update Expired License' ); ?></span></button>
+				<?php } ?>
+				<?php if(empty($license->local_key) && empty($license->license)) { /*activate*/ ?>
+					<button onclick="edit_form.task.value='activate';edit_form.submit()" class="scalable save" type="button"><span><?php echo $this->__( 'Activate' ); ?></span></button>
+				<?php } elseif($license->ispermanent!='yes') { /*updatelocalkey*/ ?>
+					<button onclick="edit_form.task.value='updatelocalkey';edit_form.submit()" class="scalable save" type="button"><span><?php echo $this->__( 'Update Local Key' ); ?></span></button>
+				<?php } ?>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="entry-edit">
+
+
+<form id="edit_form" name="edit_form" method="post" action="<?=$this->getUrl('*/*/save')?>">
+
+	<fieldset>
+				
+		<table class="admintable">
+		<?php if($license->ispermanent=='yes') { ?>
+		<tr><td class="key" colspan="2" style="font-size:1.25em;font-weight:bold;"><label><?php echo $this->__( 'Permanent license' ); ?></label><br /><br /></td></tr>
+		<?php } ?>
+		<tr><td class="key"><label><?php echo $this->__( 'Website' ); ?></label></td>
+			<td><input type="text" size="75" name="website" value="<?php echo $license->website; ?>" <?php if($license->ispermanent=='yes') echo 'READONLY DISABLED class="readonly"'; ?>></td>
+		</tr>
+		<tr><td class="key"><label><?php echo $this->__( 'License' ); ?></label></td>
+			<td><input type="text" size="75" name="license" value="<?php echo $license->license; ?>" <?php if($license->ispermanent=='yes') echo 'READONLY DISABLED class="readonly"'; ?>></td>
+		</tr>
+		<?php if(!empty($license->license)) { ?>
+		<tr valign="top"><td class="key"><label><?php echo $this->__( 'Local Key' ); ?></label></td>
+			<td><textarea rows=20 cols=130 name="local_key" <?php if($license->ispermanent=='yes') echo 'READONLY DISABLED class="readonly"'; ?>><?php echo $license->local_key; ?></textarea></td>
+		</tr>
+		<?php } ?>
+		</table>
+		
+	</fieldset>
+
+
+	<input name="task" type="hidden" value="" />
+	<input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />
+</form>
+
+
+
+
+</div>
+
+

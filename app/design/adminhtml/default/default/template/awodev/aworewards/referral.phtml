@@ -1,0 +1,55 @@
+<?php
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+?>
+
+
+<script language="javascript" type="text/javascript">
+<!--
+
+jQuery(document).ready(function() {
+
+	jQuery( "#affiliate" )
+		.autocomplete({
+			source: function( request, response ) {
+				jQuery.getJSON( 
+					"<?php echo Mage::helper("adminhtml")->getUrl("*/adminhtml_ajax"); ?>", 
+					{ task:"ajax_user",term: request.term }, 
+					response 
+				);
+			},
+			minLength: 2,
+			selectFirst: true,
+			delay:0,
+			select: function( event, ui ) { if(ui.item) document.edit_form.user_id.value = ui.item.id; }
+		})
+		.attr("parameter_id", document.edit_form.user_id.value)
+		.bind("empty_value", function(event){ document.edit_form.user_id.value = ''; })
+		.bind("check_user", function(event){ 
+			var html = jQuery.ajax({ 
+				url: "<?php echo Mage::helper("adminhtml")->getUrl("*/adminhtml_ajax"); ?>", 
+				data: "task=ajax_user&term="+jQuery('#affiliate').val(),
+				//async: false ,
+				success: function(rtn){ 
+					user_id = rtn*1;
+					if(isNaN(user_id) || user_id<=0) {
+						doc
+						ument.edit_form.user_id.value = ''; 
+						jQuery('#affiliate').val('');
+					}
+				}
+			}).responseText
+		})
+	;
+});
+
+
+
+//-->
+</script>
+
+

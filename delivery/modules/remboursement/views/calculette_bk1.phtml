@@ -1,0 +1,510 @@
+<!-- DataTables -->
+<style>
+img.modal{
+	display:none;
+	position:relative;
+	margin-left:10px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+<?php
+			//récupération de la liste des commandes (numéro et date)
+			$orderid_array=get_list_orderid();
+			krsort($orderid_array);
+
+    		//Récupération des données de la commande si spécifié
+    		if(isset($_GET['increment_id'])){
+    			$select_id=$_GET['increment_id'];			
+    			$order=Mage::getModel('sales/order')->loadByIncrementId($select_id);
+    			$orderid=$order->getId();
+
+    			//Vérifie si on n'a pas déjà entré d'infos dans Order Attachments
+    			$check=Mage::getModel('amorderattach/order_field')->getCollection()->addFieldToFilter('order_id', $orderid)->getFirstItem()->getId();
+    		}else{
+    			$select_id='';
+    		}
+?>
+<?php if ($check!=NULL){
+	$collection=Mage::getModel('amorderattach/order_field')->getCollection()->addFieldToFilter('order_id', $orderid);
+	}?>
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+  	<div class="row">
+	    <div class="page-header col-xs-12">
+	    	<h1>Sélectionner une commande</h1><hr>
+			<label class="control-label">Remboursement de la commande n°: </label>
+			<select id="incrementid-dropdown" class="form-control">
+				<option>Selectionner le numéro de commande</option>
+	    		<?php foreach($orderid_array as $id => $d){
+	    			echo '<option ';
+	    			if($_GET['increment_id']==$id){echo "selected";}
+	    			echo '>'.$id.'</option>';
+	    		}?>
+	    	</select>
+	    </div>
+	    <?php if(isset($orderid)&& $orderid!=""){?>
+	    	<?php if($check!=NULL){?><div id="warning-message" class="bg-warning col-xs-12">Attention! Cette commande a déjà des données renseignées dans Magento.</div><?php } ?>
+	</div>
+    <div class="row">
+	    <div id="ticketcommercant" class="col-xs-12">
+	    	<h1>Tickets commerçants</h1><hr>
+			<h1><small>Uploader images</small></h1>
+			<div class="input-group">
+				<form role="form" id="formticket" enctype="multipart/form-data"  onsubmit="return submitFormTicket(this);">
+				 	<div class="form-group">
+				 		<label><input type="file" name="imageticket" id="imageticket" required></label>
+				 	</div>
+				 	<div class="form-group">
+				 		<label><input  type="checkbox" name="supimageticket" id="supimageticket" value="delete"> Ecraser la photo existante ?</label>
+				 	</div>
+				 	<input class="btn btn-lg btn-success" value="Uploader ticket(s)" type="submit" name="submitticket" id="submitticket">
+				 	<img class="modal" src="ajax-loader.gif"/>
+				</form>
+			</div>
+	    </div>
+		<div id="uploaded_images" class="col-xs-12">
+			<div class="col-sm-12">
+				<div class="row">
+					<?php if($check!=NULL){
+				  		foreach($collection as $c){
+				  			echo "<h1><small>Ticket(s) uploadé(s)</small></h1>";
+				  			$array=explode(";",$c->getData('ticket_commercant'));
+			  				foreach($array as $a){
+				  				if($a!=""){
+				  					echo '<a target="_blank" href="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"><img class="img-responsive center-block" src="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"></a>';
+				  				}else{
+				  					echo "Aucun";
+				  				}
+				  			}
+				  		}}
+				  	?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="infocommande" class="col-xs-12">
+			<div class="row">
+				<h1>Calcul remboursement</h1><hr>
+		    	<div id="filter"><label>Sélectionnez le commerçant:</label></div>
+		    </div>
+		    <div class="row">
+		    	<div id="data" class="table-responsive">
+			    	<table class="display no-wrap" id="data_commande">
+				    	 <thead style="background:#FFF">
+					      <tr>
+					      	<th class="sort">Commerçant</th>
+							<th>Produit</th>
+							<th>Description</th>
+							<th>Prix à l'unité</th>
+							<th>Prix Unitaire</th>
+							<th class="float">Quantité facturée</th>
+							<th class="float">Prix total</th>
+							<th class="float" id="prixfinal">Prix final</th>
+							<th class="float" id="diffprixfinal">A rembourser</th>
+							<th>OK ?</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+						    <?php
+						    	if(isset($_GET['increment_id'])){
+							    	$ordered_items = $order->getAllItems();
+									$sorted_items = array();
+									  foreach ($ordered_items as $item) {
+									      if (!$item->isDeleted()) {
+									          $sorted_items[] =  $item;
+									      }
+									  }
+
+							    	$tot_qty=0;
+							    	$sum=0;
+							      	foreach($sorted_items as $item){
+							      		$itemid=$item->getProduct()->getId();
+								      	$product = Mage::getModel('catalog/product')->load($itemid);
+											echo '<tr>';
+												echo '<td class="col-sm-2 sort">'.$product->getAttributeText('commercant').'</td>';
+												echo '<td class="col-sm-2"><a href="'.$product->getProductUrl().'">'.$item->getName().'</a></td>';
+												if($item->getShortDescription()<>NULL || $item->getShortDescription()<>""){
+													$description=$item->getShortDescription();
+												}else{
+													$description=$product->getShortDescription();
+												}
+												echo '<td class="col-sm-2">'.$description.'</td>';
+												if($item->getPrixKiloSite()<>""){
+													echo '<td class="prix_unite col-sm-1" style="text-align:center;">'.$item->getPrixKiloSite().'</td>';
+												}else{
+													echo '<td class="prix_unite col-sm-1" style="text-align:center;">'.$product->getPrixKiloSite().'</td>';
+												}
+												echo '<td class="col-sm-1" style="text-align:center;">'.round($item->getPriceInclTax(),2).'</td>';
+												echo '<td class="col-sm-1" style="text-align:center;">'.round($item->getQtyOrdered(),0).'</td>';
+												echo '<td class="col-sm-1" style="text-align:center;">'.round($item->getRowTotalInclTax(),2).'</td>';
+												echo '<td class="col-sm-1" style="text-align:center;"><input type="text" name="'.$itemid.'-prixfinal" class="prixfinal" style="width:60px" value="'.round($item->getRowTotalInclTax(),2).'"></td>';
+												echo '<td class="diffprixfinal" style="text-align:center;">0</td>';
+												echo '<td class="col-sm-1" style="text-align:center;"><input type="checkbox" style="width: 30px;height: 30px"></td>';
+											echo '</tr>';
+										$tot_qty+=$item->getQtyOrdered();
+										$sum+=$item->getRowTotalInclTax();
+									}
+									}else{?>
+										<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+									<?php
+						     	 }?>
+					    </tbody>
+					    <tfoot style="background:#FFF">
+					    	<tr>
+						     	 	<th colspan=4><strong>Total</strong></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						     	 	<th></th>
+						    </tr>
+						</tfoot>
+			    	</table>
+		    	</div>
+		    </div>
+			<div class="input-group col-xs-12">
+				<form role="form" id="formticket" enctype="multipart/form-data"  onsubmit="return screenshot(this);">
+			 		<div class="form-group">
+			 			<input class="btn btn-lg btn-success" value="Enregistrer la table" type="submit" name="submitscreenshot" id="submitscreenshot"/>
+			 		</div>
+			 		<label><input type="checkbox" name="supscreenshot" id="supscreenshot" value="delete" /> Ecraser la table existante ?</label>
+			 		<img class="modal" src="ajax-loader.gif"/>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+			<?php if($check!=NULL){
+		  		foreach($collection as $c){
+		  			echo "<h1><small>Calcul remboursement (image uploadée)</small></h1>";
+		  			$a=$c->getData('screenshot');
+		  			if($a!=""){
+		  					echo '<a target="_blank" href="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"><img class="img-responsive center-block" src="'.Mage::getBaseUrl('media').DS.'attachments'.DS.$a.'"></a>';
+		  				}else{
+		  					echo "Aucun";
+		  				}
+		  		}}
+		  	?>
+		  	</div>
+		</div>
+	</div>		
+	<div class="row">
+	  <div class="form-group col-xs-12">
+	    <h1>Commentaires</h1><hr>
+	    <div class="input-group col-xs-12">
+		  	<form role="form" id="formcomments" enctype="multipart/form-data"  onsubmit="return submitCommentTicket(this);">
+				<div class="form-group">
+					<label for="comment_remboursement">Commentaires Remboursement (visible par le client):</label>
+				  	<textarea class="form-control" rows="5" id="comment_remboursement"><?php if($check!=NULL){foreach($collection as $c){echo $c->getData('remboursements');}}?></textarea>
+				</div>
+				<div class="form-group">
+			  		<label for="comment_ticket">Commentaires Commande (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_commande"><?php if($check!=NULL){foreach($collection as $c){echo $c->getData('commentaires_commande');}}?></textarea>
+				</div>
+				<div class="form-group">
+			  		<label for="comment_ticket">Commentaires Tickets (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_ticket"><?php if($check!=NULL){foreach($collection as $c){echo $c->getData('commentaires_ticket');}}?></textarea>
+				</div>
+				<div class="form-group">
+			  		<label for="comment_ticket">Commentaires Frais Livraison (non visible par le client):</label>
+			  		<textarea class="form-control" rows="5" id="comment_fraislivraison"><?php if($check!=NULL){foreach($collection as $c){echo $c->getData('commentaires_fraislivraison');}}?></textarea>
+				</div>
+				<div class="form-group">
+					<input style="margin-top:20px;" class="btn btn-lg btn-success" value="Enregistrer commentaires" type="submit" name="submitcomments" id="submitcomments"/>
+				</div>
+				<div class="form-group">
+					<label><input type="checkbox" name="supcomments" id="supcomments" value="delete" /> Ecraser les commentaires existants ?</label>
+					<img class="modal" src="ajax-loader.gif"/>
+				</div>
+			</form>
+		</div>
+	  </div>
+	</div>
+	  <!-- <div style="margin-bottom:20px;">
+	  		<?php if(isset($orderid)&& $orderid!=""){?>
+		  		<a class="btn btn-lg btn-success" href="<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/sales_order_creditmemo/new/",array("order_id"=>$orderid));?>" target="_blank">2. Créer Avoir</a>
+		  		<a class="btn btn-lg btn-success" href="https://www.hipaywallet.com/account/identification" target="_blank">3. Ouvrir HiPay</a>
+		  	<?php } ?>
+	  </div>
+	<?php } ?> -->
+</body>
+<script>
+
+//Self-invoking functions
+$(function(){
+  
+	//Lorsque l'on sélectionne un increment id dans le menu déroulant, requete pour récupérer la commande correspondante et l'afficher
+	$("#incrementid-dropdown").change(function(){
+		window.location='index.php?module=remboursement&action=view&increment_id=' + this.value;
+	    $("#warning-message").removeClass("hidden");
+	});
+
+	//Fonction calculant la différence entre le prix final et le prix initial des produits
+	function price_difference(){
+
+		// var limite_prix=5;
+		// var diff_max_prix=0.5;
+		// var diff_max_percent=0.10;
+
+		$('input.prixfinal').each(function(){
+			totalprice=$(this).parent().parent().children("td")[6];
+			totalprice=parseFloat($(totalprice).text());
+			if($(this).val()!=""){
+				valeur=$(this).val().replace(/\,/g, '.');
+				valeur=parseFloat(valeur);
+				diff=parseFloat(valeur)-totalprice;
+
+				//Mise à jour de la colonne Diff Prix final pour la ligne correspondante
+				$(this).parent().parent().children('.diffprixfinal').html(diff.toFixed(2));
+
+				//Mise à jour de la colonne Diff Prix CGV pour la ligne correspondante
+				// if(totalprice>limite_prix){
+				// 	if(Math.abs(diff)>diff_max_prix){
+				// 		$(this).parent().parent().children('.diffprixcgv').html(diff.toFixed(2));
+				// 	}else{
+				// 		$(this).parent().parent().children('.diffprixcgv').html(0);
+				// 	}
+				// }else{
+				// 	if(Math.abs(diff/totalprice)>diff_max_percent){
+				// 		$(this).parent().parent().children('.diffprixcgv').html(diff.toFixed(2));
+				// 	}else{
+				// 		$(this).parent().parent().children('.diffprixcgv').html(0);
+				// 	}
+				// }
+			}
+		});
+	}
+
+	//Mise à jour des totaux des colonnes Prix Final / Diff Prix final et Diff Prix CGV (prise en compte uniquement des données affichées)
+	function updatetotals(){
+		
+		var sumPrixFinal=0;
+		var sumDiffPrixFinal=0;
+		var sumDiffPrixCGV=0;
+		var table = $('#data_commande').DataTable();
+
+		//prixfinal
+		var column = table.column('#prixfinal',{page:'current'});
+		 $('input.prixfinal').each(function(){
+		 	valeur=$(this).val().replace(/\,/g, '.').replace("",0);
+			sumPrixFinal+=parseFloat(valeur);
+		});
+		 $( column.footer() ).html(sumPrixFinal.toFixed(2));
+
+		 //diffprixfinal
+		 var column = table.column('#diffprixfinal',{page:'current'});
+		 $('td.diffprixfinal').each(function(){
+			sumDiffPrixFinal+=parseFloat($(this).text());
+		});
+		 $( column.footer() ).html(sumDiffPrixFinal.toFixed(2));
+
+		 //diff prix CGV
+		//  var column = table.column('#diffprixCGV',{page:'current'});
+		//  $('td.diffprixcgv').each(function(){
+		// 	sumDiffPrixCGV+=parseFloat($(this).text());
+		// });
+		//  $( column.footer() ).html(sumDiffPrixCGV.toFixed(2));
+	}
+
+	/*-----------------------------------------------*/
+	/*      UPDATE EN FOCNTION D'EVENEMENTS          */
+	/*-----------------------------------------------*/
+
+	//Mise à jour lorsque qu'input prix final modifié 
+	$('input').each(function() {
+	   var elem = $(this);
+	   // Save current value of element
+	   elem.data('oldVal', elem.val());
+	   // Look for changes in the value
+	   elem.bind("propertychange change click keyup input paste", function(event){
+	      // If value has changed...
+	      if (elem.data('oldVal') != elem.val()) {
+	       // Updated stored value
+	       elem.data('oldVal', elem.val());
+	       price_difference();
+	       updatetotals();
+	     }
+	   });
+	 });
+
+	//Mise à jour lorsque clic sur le tableau
+	$('#data_commande').on('click', 'tr', function () {
+		updatetotals();
+	});
+
+	//Mise à jour lorsque dessin du tableau
+	$('#data_commande').on('draw.dt', function () {
+		updatetotals();
+	} );
+
+	//Screenshot function
+
+	
+	
+});
+
+//Fonction se lance lorsque la page a chargé
+$(document).ready(function() {
+	//Setup de la table de données
+    var table=$('#data_commande').DataTable({
+    	"pageLength": -1,
+    	"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "Tous"] ],
+    	initComplete: function () {
+            this.api().columns(['.sort']).every(function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $('#filter') )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            });
+        },
+
+        "footerCallback": function ( row, data, start, end, display ) {
+        	var sumPrixTotal=0;
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+ 			this.api().columns(['.float']).every(function (){
+ 				var index = this.index();
+	 
+	            // Total over this page
+	            pageTotal = api
+	                .column( index, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+
+	            pageTotal=pageTotal.toFixed(2);
+
+	            // Update footer
+	            $( api.column( index ).footer() ).html(pageTotal);
+	        });
+
+	        $('input.prixfinal').each(function(){
+ 				sumPrixTotal+=parseFloat($(this).val().replace("",0));
+				$( api.column('#prixfinal').footer() ).html(sumPrixTotal);
+ 			});
+        }
+    } );
+
+});
+
+</script>
+<script>
+function screenshot(caller){
+	console.log("submit ticket event");
+	html2canvas($('#data_commande'), {
+		onrendered: function(canvas) {
+		var myImage = canvas.toDataURL("image/png");
+		var order_id=$("#incrementid-dropdown").val();
+		var supscreenshot=$('#supscreenshot').is(":checked");
+		Pic = myImage.replace(/^data:image\/(png|jpg);base64,/, "");
+		$(caller).find('img.modal').css({'display':'inline'});
+	    // Sending the image data to Server
+	    $.ajax({
+	        url: 'save.php',
+			type: 'post',
+			        data: {
+			        	type:'screenshot',
+			            orderid:order_id,
+			            image: Pic,
+			            supscreenshot:supscreenshot
+			        },
+	        success: function (msg) {
+	            alert(msg);
+	            $(caller).find('img.modal').css({'display':'none'});
+	        },
+	        error: function (msg) {
+	            alert(msg);
+	             $(caller).find('img.modal').css({'display':'none'});
+	        }
+	    });
+		}
+	});
+	//$("#uploaded_images").load("/models/remboursement/images.php");
+	return false;	
+};
+
+//save Comment function
+function submitCommentTicket(caller) {
+	var comment_remboursement=$('#comment_remboursement').val();
+	var comment_commande=$('#comment_commande').val();
+	var comment_ticket=$('#comment_ticket').val();
+	var comment_fraislivraison=$('#comment_fraislivraison').val();
+	var order_id=$("#incrementid-dropdown").val();
+	var supcomments=$('#supcomments').is(":checked");
+	$(caller).find('img.modal').css({'display':'inline'});
+    $.ajax({
+        url: 'save.php',
+		type: 'post',
+		        data: {
+		            type:'comment',
+		            orderid:order_id,
+		            commentremboursement:comment_remboursement,
+		            commentcommande:comment_commande,
+		            commentticket:comment_ticket,
+		            commentfraislivraison:comment_fraislivraison,
+		            supcomments:supcomments
+		        },
+        success: function (msg) {
+            alert(msg);
+            $(caller).find('img.modal').css({'display':'none'});
+        },
+        error: function (msg) {
+            alert(msg);
+             $(caller).find('img.modal').css({'display':'none'});
+        }
+    });
+    return false;
+}
+
+//save Ticket function
+function submitFormTicket(caller) {
+    console.log("submit ticket event");
+    var order_id=$("#incrementid-dropdown").val();
+	var fd = new FormData(document.getElementById("formticket"));
+	fd.append("orderid", order_id);
+	fd.append("type", "ticket");
+	$(caller).find('img.modal').css({'display':'inline'});
+    $.ajax({
+      url: "save.php",
+      type: "POST",
+      data: fd,
+      enctype: 'multipart/form-data',
+      processData: false,  // tell jQuery not to process the data
+      contentType: false,   // tell jQuery not to set contentType
+      success: function (msg) {
+            alert(msg);
+            $(caller).find('img.modal').css({'display':'none'});
+        },
+        error: function (msg) {
+            alert(msg);
+             $(caller).find('img.modal').css({'display':'none'});
+        }
+    });
+    //$("#uploaded_images").load("/models/remboursement/images.php");
+    return false;
+}
+</script>

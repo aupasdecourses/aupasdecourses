@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Aoe_Addressautocomplete>
+            <version>0.1.0</version>
+        </Aoe_Addressautocomplete>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <aoeaddressautocomplete>
+                    <file>aoeaddressautocomplete/aoeaddressautocomplete.xml</file>
+                </aoeaddressautocomplete>
+            </updates>
+        </layout>
+    </frontend>
+</config>
+
+
+
+
+

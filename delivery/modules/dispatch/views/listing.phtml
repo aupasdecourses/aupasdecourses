@@ -1,0 +1,177 @@
+<?php
+	if(!isset($_GET['date'])){
+		$_GET['date']=date("Y-m-d");
+	}
+?> 
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+    <div class="page-header">
+      <h2>Liste des commandes 
+      		<small><?php 
+      			if(isset($_GET['date'])){
+      				echo $_GET['date'];
+      			}?>
+      		</small>
+      </h2>
+    </div>
+    <p id="warning-message" class="bg-warning">Attention: Seules les commandes à l'état "Processing" sont affichées.</p>
+    <?php
+	    $com_id=liste_commercant_id();
+		$orders=array();
+	    foreach($com_id as $id => $name){
+	    	$orders[$id]=orders_fortheday($_GET['date'],$id);
+	    }
+	    $date=datetime_filter('date');
+	?>
+
+		<div class="row button_accueil">
+		<p id="warning-message" class="bg-warning hidden">Attention: Seules les commandes à l'état "Processing" ou "Complete" sont affichées.</p>
+			<div class="col-md-4" style="margin-bottom: 20px;">
+
+			<?php //Dropdown liste date
+			echo '<label class="control-label">Date: </label><select id="date-dropdown" class="form-control">';
+	    		echo '<option>Select date</option>';
+	    		foreach($date as $d){
+	    			echo '<option ';
+	    			if($_GET['date']==$d){echo "selected";}
+	    			echo '>'.$d.'</option>';
+	    		}
+	    	echo '</select>';?>
+
+	    	</div>
+	    </div>
+
+	    <div class="row">
+
+	    	<div class="table-responsive order-table">
+			  <table id="picking-info" class="table table-striped">
+			    <thead>
+			    	<tr>
+			    		<td>Commercant</td>
+			    		<td># Commande</td>
+			    		<td>Montant commande</td>
+			    	</tr>
+			    </thead>
+			    <tbody>
+
+    	<?php //Affichage information des commandes
+
+    	if(isset($_GET['date'])){
+	    	foreach($orders as $id=>$orders_array){
+	    		foreach($orders_array as $order){
+					if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
+
+						$ordered_items = $order->getAllItems();
+					  	$tot_qty=0;
+					   	$sum=0;
+					   	foreach($ordered_items as $item){
+					   		if($item->getCommercant()==$id){
+					   			$tot_qty+=$item->getQtyOrdered();
+								$sum+=$item->getRowTotalInclTax();
+							}
+					   	}
+
+	    ?>
+				    	<tr>
+				    		<td><?php echo $com_id[$id];?></td>
+				    		<td><?php echo $order->getData('increment_id');?></td>
+				    		<td><?php echo $sum;?></td>
+				    	</tr>
+		   <?php
+		 			}
+		 		}?>
+			<?php
+
+	 		}
+	 	}?>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+		      <a href="javascript:generatePDF()" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a>
+		    </div>
+    	</div>
+  </div>
+</body>
+
+<script type="text/javascript">
+
+$(function(){
+  $("#date-dropdown").change(function(){
+    	window.location='index.php?module=dispatch&action=view&option=listing&date=' + this.value;
+    	$("#warning-message").removeClass("hidden");
+  });
+});
+</script>
+<script src="/delivery/libs/js/jspdf.plugin.autotable.js"></script>
+<script src="/delivery/libs/js/html2canvas.js"></script>
+<script type="text/javascript">
+function generatePDF() {
+
+	//Function to generate header and footer
+	function header(date_livraison){
+		doc.setFontSize(8);
+		doc.text(20,20,'Listing pour le picking - '+date_livraison);
+		doc.setLineWidth(0.5);
+		doc.line(20, 25, 822, 25);
+	};
+
+	function footer(dt){
+		doc.setFontSize(8);
+		doc.setLineWidth(0.5);
+		doc.line(20, 560, 822, 560);
+		doc.text(20,570, 'Généré le: ' + dt);
+		doc.text(800,570, 'page ' + doc.page);
+		doc.page ++;
+	};
+
+	//Configuration générale du PDF
+	var doc = new jsPDF('l','pt','a4');
+	doc.page=1;
+	var margin_left = 20;
+	var line_height = 20;
+	var base_font_size = 12;
+	var date_livraison = $('#date-dropdown').find(":selected").text();
+	var dt = new Date();
+	var commercant = $(".page-header").children("h2").text();
+	doc.setProperties({
+		title: 'Listing pour le picking - '+date_livraison,
+		subject: 'Listing picking Au Pas De Courses',
+		author: 'Pierre Mainguet',
+		keywords: 'AU PAS DE COURSES, commandes, generated, javascript, web 2.0, ajax',
+		creator: 'AU PAS DE COURSES'
+	});
+
+	//Création des pages commande (1 par commande)
+
+	var len = $('.order-table').length;
+   $('.order-table').each(function(index){
+   		header(date_livraison);
+   		doc.setFontSize(base_font_size);
+   		doc.setFontType('normal');
+
+		var items = doc.autoTableHtmlToJson(document.getElementById("picking-info"));
+		
+		var options = {
+		    padding: 5, // Horizontal cell padding
+		    fontSize: 11,
+		    lineHeight: line_height+10,
+		    margins: { horizontal: 2*margin_left, top: 40, bottom: 10 },
+		    overflow: 'linebreak',
+		 };
+
+		doc.autoTable(false, items,options);
+
+		footer(dt);
+		if (index < len - 1) {
+           doc.addPage();
+        }
+	});
+
+var filename= 'Listing picking-'+date_livraison+'.pdf';
+filename=filename.split(' ').join('-');
+   doc.save(filename);
+};
+
+</script>

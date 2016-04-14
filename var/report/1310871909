@@ -1,0 +1,41 @@
+a:5:{i:0;s:2673:"SELECT `t_d`.`entity_id`, `t_d`.`attribute_id`, `t_d`.`value` AS `default_value`, `t_s`.`value` AS `store_value`, IF(t_s.value_id IS NULL, t_d.value, t_s.value) AS `value` FROM `catalog_product_entity_text` AS `t_d`
+ LEFT JOIN `catalog_product_entity_text` AS `t_s` ON t_s.attribute_id = t_d.attribute_id AND t_s.entity_id = t_d.entity_id AND t_s.store_id = 1 WHERE (t_d.entity_type_id = 4) AND (t_d.entity_id IN (3882, 4465, 4034)) AND (t_d.attribute_id IN ('73')) AND (t_d.store_id = 0) UNION ALL SELECT `t_d`.`entity_id`, `t_d`.`attribute_id`, `t_d`.`value` AS `default_value`, `t_s`.`value` AS `store_value`, IF(t_s.value_id IS NULL, t_d.value, t_s.value) AS `value` FROM `catalog_product_entity_decimal` AS `t_d`
+ LEFT JOIN `catalog_product_entity_decimal` AS `t_s` ON t_s.attribute_id = t_d.attribute_id AND t_s.entity_id = t_d.entity_id AND t_s.store_id = 1 WHERE (t_d.entity_type_id = 4) AND (t_d.entity_id IN (3882, 4465, 4034)) AND (t_d.attribute_id IN ('75', '76', '120')) AND (t_d.store_id = 0) UNION ALL SELECT `t_d`.`entity_id`, `t_d`.`attribute_id`, `t_d`.`value` AS `default_value`, `t_s`.`value` AS `store_value`, IF(t_s.value_id IS NULL, t_d.value, t_s.value) AS `value` FROM `catalog_product_entity_datetime` AS `t_d`
+ LEFT JOIN `catalog_product_entity_datetime` AS `t_s` ON t_s.attribute_id = t_d.attribute_id AND t_s.entity_id = t_d.entity_id AND t_s.store_id = 1 WHERE (t_d.entity_type_id = 4) AND (t_d.entity_id IN (3882, 4465, 4034)) AND (t_d.attribute_id IN ('77', '78', '93', '94')) AND (t_d.store_id = 0) UNION ALL SELECT `t_d`.`entity_id`, `t_d`.`attribute_id`, `t_d`.`value` AS `default_value`, `t_s`.`value` AS `store_value`, IF(t_s.value_id IS NULL, t_d.value, t_s.value) AS `value` FROM `catalog_product_entity_varchar` AS `t_d`
+ LEFT JOIN `catalog_product_entity_varchar` AS `t_s` ON t_s.attribute_id = t_d.attribute_id AND t_s.entity_id = t_d.entity_id AND t_s.store_id = 1 WHERE (t_d.entity_type_id = 4) AND (t_d.entity_id IN (3882, 4465, 4034)) AND (t_d.attribute_id IN ('86', '87', '97', '112', '113', '114', '118', '119', '134', '152', '169', '178', '180', '181')) AND (t_d.store_id = 0) UNION ALL SELECT `t_d`.`entity_id`, `t_d`.`attribute_id`, `t_d`.`value` AS `default_value`, `t_s`.`value` AS `store_value`, IF(t_s.value_id IS NULL, t_d.value, t_s.value) AS `value` FROM `catalog_product_entity_int` AS `t_d`
+ LEFT JOIN `catalog_product_entity_int` AS `t_s` ON t_s.attribute_id = t_d.attribute_id AND t_s.entity_id = t_d.entity_id AND t_s.store_id = 1 WHERE (t_d.entity_type_id = 4) AND (t_d.entity_id IN (3882, 4465, 4034)) AND (t_d.attribute_id IN ('96', '121', '123', '125', '126', '127', '128', '131')) AND (t_d.store_id = 0)
+
+";i:1;s:4207:"#0 /home/aupasdecln/www/lib/Varien/Db/Statement/Pdo/Mysql.php(110): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/aupasdecln/www/app/code/core/Zend/Db/Statement.php(291): Varien_Db_Statement_Pdo_Mysql->_execute(Array)
+#2 /home/aupasdecln/www/lib/Zend/Db/Adapter/Abstract.php(480): Zend_Db_Statement->execute(Array)
+#3 /home/aupasdecln/www/app/code/local/Zend/Db/Adapter/Pdo/Abstract.php(239): Zend_Db_Adapter_Abstract->query('SELECT `t_d`.`e...', Array)
+#4 /home/aupasdecln/www/lib/Varien/Db/Adapter/Pdo/Mysql.php(504): Zend_Db_Adapter_Pdo_Abstract->query('SELECT `t_d`.`e...', Array)
+#5 /home/aupasdecln/www/lib/Zend/Db/Adapter/Abstract.php(737): Varien_Db_Adapter_Pdo_Mysql->query('SELECT `t_d`.`e...', Array)
+#6 /home/aupasdecln/www/app/code/core/Mage/Eav/Model/Entity/Collection/Abstract.php(1109): Zend_Db_Adapter_Abstract->fetchAll('SELECT `t_d`.`e...')
+#7 /home/aupasdecln/www/app/code/core/Mage/Catalog/Model/Resource/Product/Collection.php(480): Mage_Eav_Model_Entity_Collection_Abstract->_loadAttributes(false, false)
+#8 /home/aupasdecln/www/app/code/core/Mage/Eav/Model/Entity/Collection/Abstract.php(874): Mage_Catalog_Model_Resource_Product_Collection->_loadAttributes(false, false)
+#9 /home/aupasdecln/www/app/code/core/Mage/Review/Model/Observer.php(78): Mage_Eav_Model_Entity_Collection_Abstract->load()
+#10 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(1358): Mage_Review_Model_Observer->catalogBlockProductCollectionBeforeToHtml(Object(Varien_Event_Observer))
+#11 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(1331): Mage_Core_Model_App->_callObserverMethod(Object(Mage_Review_Model_Observer), 'catalogBlockPro...', Object(Varien_Event_Observer))
+#12 /home/aupasdecln/www/app/Mage.php(448): Mage_Core_Model_App->dispatchEvent('catalog_block_p...', Array)
+#13 /home/aupasdecln/www/app/code/core/Mage/Catalog/Block/Product/List.php(164): Mage::dispatchEvent('catalog_block_p...', Array)
+#14 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Abstract.php(918): Mage_Catalog_Block_Product_List->_beforeToHtml()
+#15 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Text/List.php(43): Mage_Core_Block_Abstract->toHtml()
+#16 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Abstract.php(919): Mage_Core_Block_Text_List->_toHtml()
+#17 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Abstract.php(637): Mage_Core_Block_Abstract->toHtml()
+#18 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Abstract.php(581): Mage_Core_Block_Abstract->_getChildHtml('content', true)
+#19 /home/aupasdecln/www/app/design/frontend/rwd/default/template/page/2columns-left.phtml(59): Mage_Core_Block_Abstract->getChildHtml('content')
+#20 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Template.php(241): include('/home/aupasdecl...')
+#21 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Template.php(272): Mage_Core_Block_Template->fetchView('frontend/rwd/de...')
+#22 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Template.php(286): Mage_Core_Block_Template->renderView()
+#23 /home/aupasdecln/www/app/code/core/Mage/Core/Block/Abstract.php(919): Mage_Core_Block_Template->_toHtml()
+#24 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Layout.php(555): Mage_Core_Block_Abstract->toHtml()
+#25 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Action.php(390): Mage_Core_Model_Layout->getOutput()
+#26 /home/aupasdecln/www/app/code/core/Mage/Catalog/controllers/CategoryController.php(161): Mage_Core_Controller_Varien_Action->renderLayout()
+#27 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Action.php(418): Mage_Catalog_CategoryController->viewAction()
+#28 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Router/Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('view')
+#29 /home/aupasdecln/www/app/code/core/Mage/Core/Controller/Varien/Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#30 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#31 /home/aupasdecln/www/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#32 /home/aupasdecln/www/index.php(86): Mage::run('', 'store')
+#33 {main}";s:3:"url";s:120:"/batignolles/pret-a-manger/les-fromages-des-batignolles/epicerie.html?dir=asc&limit=all&order=name&produit_biologique=76";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:11:"batignolles";}

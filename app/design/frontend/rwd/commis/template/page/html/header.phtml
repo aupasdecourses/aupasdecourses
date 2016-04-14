@@ -1,0 +1,143 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div id="logo_smalldisplay">
+    <a class="logo" href="<?php echo $this->getUrl('') ?>">
+        <img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="small" />
+    </a>
+</div>
+<header id="header" class="page-header">
+    <div class="page-header-container">
+            <div class="logo">
+                <a href="<?php echo Mage::getBaseUrl();?>">
+                    <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+                    <div id="storename"><?php echo Mage::app()->getStore()->getName();?></div>
+                </a>
+            </div>
+	         <!-- Skip Links -->
+	         <div class="skip-links">
+	            <a href="#header-nav" class="skip-link skip-nav">
+	                <i class="fa fa-bars"></i>
+	                <span class="label"><?php echo $this->__('Menu'); ?></span>
+	            </a>
+
+	            <a href="#header-search" class="skip-link skip-search">
+	                 <i class="fa fa-search"></i>
+	                <span class="label"><?php echo $this->__('Search'); ?></span>
+	            </a>
+                <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend'));
+                    if($session->isLoggedIn()){?>
+                        <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>aworewards/invitation/';" class="skip-link skip-referral">
+                            <i class="fa fa-bullhorn"></i>
+                            <span class="label">Parrainez</span>
+                        </a>
+                <?php }?>
+                <div class="dropdown skip-help">
+                    <a id="dLabel" data-target="#" href="#header-help" data-toggle="dropdown" class="skip-link skip-help">
+                        <i class="fa fa-question-circle"></i>
+                        <span class="label">Aide</span>
+                    </a>
+                  <ul id="header-help" class="dropdown-menu links" aria-labelledby="dLabel">
+                    <li class="first"><a href="<?php echo Mage::getBaseUrl();?>besoin-d-aide">Besoin d'aide ?</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl();?>zone-et-horaire">Zone & horaires</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl();?>tarifs-livraison">Tarifs</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl();?>commercant-form/">Commerce manquant</a></li>
+                    <li class="last"><a href="<?php echo Mage::getBaseUrl();?>products-form/">Produit manquant</a></li>
+                  </ul>
+                </div>
+                <div class="header-account-container">
+                     <a href="#header-account" class="skip-link skip-account">
+                        <i class="fa fa-heart"></i>
+                        <?php if($this->helper('customer')->isLoggedIn()){
+                            echo '<span class="label">'.$this->__('Account').'</span>';
+                            echo '<i class="fa fa-check account-connected"></i>';
+                        }
+                        else{
+                            echo '<span class="label">'.$this->__('Account').'</span>';
+                        }?>
+                    </a>
+                    <!-- Account Menu-->
+                    <div id="header-account" class="skip-content" id="right-links">
+                        <?php echo $this->getChildHtml('topLinks') ?>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div id="header-search" class="skip-content">
+                    <?php echo $this->getChildHtml('topSearch') ?>
+                </div>
+                
+	            <!-- Cart -->
+	            <div class="header-minicart">
+	                <?php echo $this->getChildHtml('minicart_head'); ?>
+	            </div>
+
+	        </div>
+	    
+    </div>
+    <div id="topmenu">
+            <!-- Navigation -->
+
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div>
+	</div>
+</header>
+
+
+<?php echo $this->getChildHtml('topContainer'); ?>

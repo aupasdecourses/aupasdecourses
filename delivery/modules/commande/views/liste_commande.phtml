@@ -1,0 +1,181 @@
+<?php
+	if(!isset($_GET['date'])){
+		$_GET['date']=date("Y-m-d");
+	}
+?> 
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+    <div class="page-header">
+      <h2>Liste des commandes <small>Tous commerçants</small></h2>
+    </div>
+    <?php
+    	$orders=orders_fortheday($_GET['date']);
+    	$date=datetime_filter('date');
+    	$horaire=datetime_filter('time');
+    	?>
+		<div class="row button_accueil">
+		<p id="warning-message" class="bg-warning hidden">Attention: Seules les commandes à l'état "Processing" ou "Complete" sont affichées.</p>
+			<div class="col-md-4" style="margin-bottom: 20px;">
+
+			<?php //Dropdown liste date
+			echo '<label class="control-label">Date: </label><select id="date-dropdown" class="form-control">';
+	    		echo '<option>Select date</option>';
+	    		foreach($date as $d){
+	    			echo '<option ';
+	    			if($_GET['date']==$d){echo "selected";}
+	    			echo '>'.$d.'</option>';
+	    		}
+	    	echo '</select>';?>
+
+	    	</div>
+	    </div>
+
+    	<?php //Affichage information des commandes
+
+    if(isset($_GET['date'])){
+
+	    if($orders->count()>0){
+		  foreach($horaire as $h){
+		    		if(isset($_GET['date'])){echo '<h3>Créneau de livraison: '.$h.'</h3>';}
+		    	foreach($orders as $order){
+		    			if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
+		    				if($order->getData('dtime')==$h){
+		    					$shipping=$order->getBillingAddress();
+		    					$address=$shipping->getStreet()[0].' '.$shipping->getPostcode().' '.$shipping->getCity()
+		    		?>
+		    <div class="row">
+		      <div class="col-md-12 order-box">
+				<div class="col-md-3">
+					<div class="order-ref"><?php echo 'Commande #'.$order->getData('increment_id');?></div>
+					<dl class="dl-vertical">
+						<dt>Etat commande</dt>
+					  	<dd><?php echo $order->getStatusLabel();?></dd>
+					</dl>
+					<dl class="dl-vertical">
+					  <dt><i class="fa fa-user"></i> Client</dt>
+					  <dd><?php echo $order->getData('customer_firstname').' '.$order->getData('customer_lastname');?></dd>
+					  <dt><i class="fa fa-phone"></i> Téléphone</dt>
+					  <dd><a href="tel:<?php echo $shipping->getTelephone();?>"><?php echo $shipping->getTelephone();?></a></dd>
+					  <dt><i class="fa fa-envelope-o"></i> Mail</dt>
+					  <dd><a href="mailto:<?php echo $order->getData('customer_email');?>"><?php echo $order->getData('customer_email');?></a></dd>
+					</dl>
+					<dl class="dl-vertical">
+					  <dt><i class="fa fa-calendar"></i> Date Livraison</dt>
+					  <?php if($_GET['date']<=AMASTY_MW_DATE):?>
+							  <dd class="delivery_date"><?php echo $order->getData('delivery_date');?></dd>
+							  <dt>Horaire livraison</dt>
+							  <dd class="delivery_time"><?php echo $order->getData('delivery_time');?></dd>
+						  <?php else:?>
+							  <dd class="delivery_date"><?php echo $order->getData('ddate');?></dd>
+							  <dt>Horaire livraison</dt>
+							  <dd class="delivery_time"><?php echo $order->getData('dtime');?></dd>
+						  <?php endif;?>
+					  <dt><i class="fa fa-map-marker"></i> Adresse</dt>
+					  <dd><a href="http://maps.google.com/?q=<?php echo $address;?>"><?php echo $address;?></a></dd>
+					  <dt><i class="fa fa-info"></i> Informations complémentaires</dt>
+					  <dd><?php if($order->getData('delivery_comment')==""){echo "Aucune";}else{echo $order->getData('delivery_comment');}?></dd>
+					  <dt><i class="fa fa-user-plus"></i> Contact voisin</dt>
+					  <dd><?php if($order->getData('contactvoisin')==""){echo "Aucun";}else{echo $order->getData('contactvoisin');}?></dd> -->
+					</dl>
+					<div class="update_status">
+						<a href=""><button type="button" class="btn btn-warning btn-block btn-lg" style="margin-bottom: 20px;">Valider réception commande</button></a>
+					</div>
+				</div>
+				<div class="col-md-9 table-responsive">
+					<table class="table table-striped table-condensed">
+					    <thead>
+					      <tr>
+							<th>Produit</th>
+							<th>SKU</th>
+							<th>Référence</th>
+							<th>Prix Unitaire</th>
+							<th>Quantité facturée</th>
+							<th>Prix total</th>
+							<th>Commentaires</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+						    <?php
+						    	$ordered_items = $order->getAllVisibleItems();
+						    	$tot_qty=0;
+						    	$sum=0;
+						    	$storeid=1;
+						      	foreach($ordered_items as $item){
+							      	$product = Mage::getModel('catalog/product')->setStoreId($storeid)->load($item->getProduct()->getId());
+										echo '<tr>';
+											echo '<td class="col-md-3"><a href="'.$product->getProductUrl().'">'.$item->getName().'</a></td>';
+											echo '<td class="col-md-2">'.$item->getSku().'</td>';
+											echo '<td class="col-md-1">'.$product->getData('reference_interne_magasin').'</td>';
+											echo '<td class="col-md-1">'.round($item->getPriceInclTax(),2).' €</td>';
+											echo '<td class="col-md-1">'.round($item->getQtyOrdered(),0).'</td>';
+											echo '<td class="col-md-1">'.round($item->getRowTotalInclTax(),2).' €</td>';
+											echo '<td class="col-md-3">'.$item->getData('item_comment').'</td>';
+										echo '</tr>';
+									$tot_qty+=$item->getQtyOrdered();
+									$sum+=$item->getRowTotalInclTax();
+						     	 }?>
+						     	 <tr class="info">
+						     	 	<td colspan=4><strong>Total</strong></td>
+						     	 	<td><?php echo round($tot_qty,0)?></td>
+						     	 	<td><?php echo round($sum,2).' €'?></td>
+						     	 	<td></td>
+						     	 </tr>
+					    </tbody>
+					  </table>
+				</div>
+				</div>
+		    </div>
+	   <?php
+	  }}}}}else{?>
+	  	  <div class="row">
+		  	<div class="col-xs-12">
+		  		Aucune commande ce jour
+		  	</div>
+		  </div>
+	  	<?php }} ?>
+
+	<div class="row button_accueil">
+		<div class="col-md-12">
+	      <!-- <a id="printPDF_bottom" href=""><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a> -->
+	       <a id="return_profile_bottom" href="index.php?index.php?module=commande&action=view&id=<?php echo $_GET['id']?>"><button type="button" class="btn btn-default btn-lg ">Retour au profil</button></a>
+	    </div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+
+$(function(){
+  $("#date-dropdown").change(function(){
+    	window.location='index.php?module=commande&action=view&date=' + this.value;
+    	$("#warning-message").removeClass("hidden");
+  });
+});
+
+$(function(){
+  $("#printPDF").on('click',function(e){
+  		e.preventDefault();
+    	 html2canvas($("#canvas"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL(
+                    'image/png');              
+                var doc = new jsPDF('p', 'mm');
+                pdfInternals = doc.internal,
+		        pdfPageSize = pdfInternals.pageSize,
+		        pdfScaleFactor = pdfInternals.scaleFactor,
+		        pdfPageWidth = pdfPageSize.width,
+		        pdfPageHeight = pdfPageSize.height,
+		        totalPdfHeight = 0,
+		        htmlPagewidth = canvas.height,
+		        htmlScaleFactor = canvas.width / canvas.height;
+                doc.addImage(imgData, 'PNG', 10, 10,pdfPageWidth-20,pdfPageHeight/htmlScaleFactor-40);
+                doc.save('delivery.pdf');
+            }
+        });
+    
+  });
+
+});
+
+
+</script>

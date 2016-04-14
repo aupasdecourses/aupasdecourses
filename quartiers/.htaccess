@@ -1,0 +1,10 @@
+Options +FollowSymlinks
+RewriteEngine On
+RewriteBase /quartiers/
+RewriteRule  ^Paris_([0-9A-Za-z]*) index.php?zipcode=Paris\%20$1 [L]
+RewriteRule  ^Boulogne index.php?zipcode=Boulogne [L]
+RewriteRule  ^Levallois-Perret index.php?zipcode=Levallois-Perret [L]
+RewriteRule  ^Issy-Les-Moulineaux index.php?zipcode=Issy\%20Les\%20Moulineaux [L]
+RewriteRule  ^Montrouge index.php?zipcode=Montrouge [L]
+RewriteRule  ^Vincennes index.php?zipcode=Vincennes [L]
+ErrorDocument 404 404.html

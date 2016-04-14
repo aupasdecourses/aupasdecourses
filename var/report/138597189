@@ -1,0 +1,9 @@
+a:5:{i:0;s:198:"Error in file: "/home/aupasdecln/www/app/code/local/Pmainguet/Delivery/sql/pmainguet_delivery_setup/mysql4-upgrade-0.0.1-0.0.2.php" - Column "refund_order_id" does not exist in table "refund_order".";i:1;s:930:"#0 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(644): Mage::exception('Mage_Core', 'Error in file: ...')
+#1 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(437): Mage_Core_Model_Resource_Setup->_modifyResourceDb('upgrade', '0.0.1', '0.0.2')
+#2 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(320): Mage_Core_Model_Resource_Setup->_upgradeResourceDb('0.0.1', '0.0.2')
+#3 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(235): Mage_Core_Model_Resource_Setup->applyUpdates()
+#4 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(428): Mage_Core_Model_Resource_Setup::applyAllUpdates()
+#5 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(354): Mage_Core_Model_App->_initModules()
+#6 /home/aupasdecln/www/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#7 /home/aupasdecln/www/index.php(86): Mage::run('', 'store')
+#8 {main}";s:3:"url";s:40:"/index.php/admin/petitcommisadmin/cache/";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:7:"default";}

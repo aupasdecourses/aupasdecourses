@@ -1,0 +1,92 @@
+/**
+ * @package		AwoDev_AwoRewards
+ * @copyright	Copyright (C) Seyi Awofadeju - All rights reserved.
+ * @website		http://awodev.com
+ * @license		http://awodev.com/content/magento-license
+ **/
+
+ul.promo { list-style:none !important; }
+ul.promo li{ padding: 10px !important; border-bottom:1px solid #dfdfdf !important; list-style: none !important; }
+ul.promo li:hover { background-color: #F2F5A9; cursor:pointer;}
+
+ul.promo li.inactive { 
+	background-color: #cccccc;     
+	opacity: .5;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+}
+ul.promo li.inactive:hover { background-color: #cccccc; cursor:default; }
+
+div.promo {
+	position:relative;	/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+	overflow:hidden;		/* This chops off any overhanging divs */
+}
+div.promo .colright, div.promo .colmid, div.promo .colleft {
+	float:left;
+	width:100%;			/* width of page */
+	position:relative;
+}
+div.promo .col1, div.promo .col2, div.promo .col3 {
+	float:left;
+	position:relative;
+	padding:0 0 1em 0;	/* no left and right padding on columns, we just make them narrower instead 
+					only padding top and bottom is included here, make it whatever value you need */
+	overflow:hidden;
+}
+/* 3 Column settings */
+
+div.promo .colmid {
+	right:15%;			/* width of the right column */
+}
+div.promo .colleft {
+	right:70%;			/* width of the middle column */
+}
+div.promo .col1 {
+	width:11%;			/* Width of left column content (column width minus padding on either side) */
+	left:21%;			/* width of (right column) plus (center column left and right padding) plus (left column left padding) */
+}
+div.promo .col2 {
+	width:66%;			/* width of center column content (column width minus padding on either side) */
+	left:102%;			/* 100% plus left padding of center column */
+}
+div.promo .col3 {
+	width:11%;			/* Width of right column content (column width minus padding on either side) */
+	left:95%;			/* Please make note of the brackets here:
+					(100% - left column width) plus (center column left and right padding) plus (left column left and right padding) plus (right column left padding) */
+}
+div.promo  .col1 img { width:60px; }
+
+div.promo .col2 .h {font-size:1.4em; padding-bottom:5px; color:#06C; }
+div.promo .col2 .desc {}
+
+
+
+div.promo .col3 {text-align:center;}
+div.promo .col3 .h {font-size:2.3em; line-height:30px; }
+div.promo .col3 .desc {font-size:.7em;}
+
+
+
+
+
+
+
+
+div.promoblock {  }
+div.promoblock .c1_1 { float: left; vertical-align:middle; }
+div.promoblock .c1 img { float:left; width:60px; padding: 0 7px 0 0;}
+
+div.promoblock .c1_2 { float: left; padding:0 10px 0 10px; }
+div.promoblock .c1 .h {font-size:1.4em; padding-bottom:5px; color:#06C; }
+
+
+div.promoblock .c2_1 {float:left; padding-top:8px; }
+div.promoblock .c2_1 input {padding: 0 40px; }
+div.promoblock .c2_2 { float: right; vertical-align:top; text-align:center;  }
+div.promoblock .c2_2 .h {font-size:2.3em;}
+div.promoblock .c2_2 .desc {font-size:.7em;}
+
+

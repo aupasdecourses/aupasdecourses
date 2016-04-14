@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Pmainguet_Custommenu>
+            <version>0.0.1</version>
+        </Pmainguet_Custommenu>
+    </modules>
+    <global>
+        <blocks>
+            <custommenu>
+                <rewrite>
+                    <navigation>Pmainguet_Custommenu_Block_Navigation</navigation>
+                </rewrite>
+            </custommenu>
+            <pm_custommenu>
+                <class>Pmainguet_Custommenu_Block</class>
+            </pm_custommenu>
+        </blocks>
+    </global>
+</config>

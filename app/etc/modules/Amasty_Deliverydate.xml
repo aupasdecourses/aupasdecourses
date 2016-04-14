@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+-->
+<config>
+    <modules>
+        <Amasty_Deliverydate>
+            <active>false</active>
+            <codePool>local</codePool>
+            <edition>community</edition>
+        </Amasty_Deliverydate>
+    </modules>
+</config>

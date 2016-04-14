@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <mobassistantconnectorinfo translate="label">
+            <label>eMagicOne</label>
+            <sort_order>100</sort_order>
+        </mobassistantconnectorinfo>
+    </tabs>
+    <sections>
+        <mobassistantconnectorinfosec translate="label">
+            <label>Mobile Assistant Connector</label>
+            <tab>mobassistantconnectorinfo</tab>
+			<frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <emogeneral  translate="label comment">
+                    <label>General Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <status  translate="label comment">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>
+                                adminhtml/system_config_source_enabledisable
+                            </source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </status>
+                    </fields>
+                </emogeneral>
+				<emoaccess translate="label">
+                    <label>Access Settings</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <login translate="label comment">
+                            <label>Login</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>emagiconemobassistantconnector/login</backend_model>							
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Login for accessing Mobile Assistant Connector from Your mobile application.]]></comment>
+                        </login>
+                        <password translate="label comment">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+							<source_model>emagiconemobassistantconnector/defpassword</source_model>
+                            <backend_model>emagiconemobassistantconnector/password</backend_model>							
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Password for accessing Mobile Assistant Connector from Your mobile application. Default password is '1'. Please change it to your own one.]]></comment>
+                        </password>
+                    </fields>
+                </emoaccess>
+				<emoqr  translate="label comment">
+					<expanded>1</expanded>
+                    <label>QR Code</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </emoqr>
+            </groups>
+        </mobassistantconnectorinfosec>
+    </sections>
+</config>

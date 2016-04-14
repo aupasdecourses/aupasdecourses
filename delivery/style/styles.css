@@ -1,0 +1,341 @@
+<style type="text/css">
+
+/*HEADER*/
+
+.page-header {
+    margin: 0px 0px 20px;
+}
+
+/*NAVBAR*/
+
+
+.navbar{
+      position:relative !important;
+    }
+    .navbar-fixed-top, .navbar-fixed-bottom{
+      position:relative !important;
+    }
+
+.navbar-inverse {
+    background-color: none;
+    border: none;
+}
+
+.navbar-fixed-top .navbar-inner{
+    border-radius: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom{
+position:relative !important;
+}
+
+/*Shadow under the navbar*/
+.navbar-fixed-top .navbar-inner {
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+    border-width: 0px 0px 1px;
+}
+
+.navbar>.container>.navbar-header>a.navbar-brand img {
+    height: 45px !important;
+}
+
+.navbar{
+  position:relative !important;
+  margin-bottom: 0px;
+}
+
+.navbar-inner {
+    background-color: #FAFAFA;
+    background-image: linear-gradient(to bottom, #FFF, #F2F2F2);
+    background-repeat: repeat-x;
+    border: 1px solid #D4D4D4;
+}
+
+.navbar-brand{
+    padding: 7px 15px;
+}
+
+.navbar-brand img{
+  margin-top: 3px;
+}
+
+.navbar-brand .fa{
+    display: table-cell;
+    padding-right: 10px;
+}
+
+.navbar-brand span{
+      display: table-cell;
+      vertical-align: middle;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: #348A4A;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+      text-shadow: none;
+  color:#174523;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus{
+  color: #206231;
+  background-color: #F9F9F9;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #FFF;
+    background-color: #206231;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #174523;
+}
+
+
+/*FOOTER*/
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 60px;
+}
+#footer {
+  background-color: #F5F5F5;
+}
+
+.credit {
+    margin: 20px 0px;
+}
+
+.muted{
+  color:#999;
+}
+
+/*ZEBRA FORM*/
+
+.Zebra_Form div.error div.container div.close {
+    background: none repeat scroll 0% 0% transparent;
+}
+
+.error .container{
+  width:100%;
+}
+
+.error{
+  margin-bottom:20px;
+}
+
+.Zebra_Form .button, .Zebra_Form label.button {
+
+}
+
+/*ACCUEIL*/
+
+.text_accueil p{
+  text-align:center;
+}
+
+.button_accueil{
+  margin-bottom: 40px;
+  text-align:center;
+}
+
+.button_accueil button{
+  margin-bottom: 20px;
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.button_profil{
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#liste_commande > button{
+  margin-bottom: 20px;
+}
+
+@media (min-width: 992px) { 
+  #liste_commande{
+    float:left;
+  }
+
+  #retour_liste{
+    float:right;
+  }
+}
+
+/*MODIF Horaires & Dispos*/
+
+.btn_modif_dispo button{
+  float:right;
+  padding: 6px 20px;
+  background: url('button-background.gif') repeat-x scroll center top #EFEFEF;
+  cursor: pointer;
+  overflow: visible;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px #AAA;
+  border: 1px solid #999;
+  font-weight: bold;
+  outline: medium none;
+  color: #222;
+}
+
+.btn_modif_dispo button:hover{
+  background: none repeat scroll 0% 0% #303740;
+  color: #FFF;
+}
+
+.horaires_dispos th.th_small{
+  font-weight:normal;
+  text-align:center;
+  font-size:0.85em;
+}
+
+.horaires_dispos td{
+  text-align:center;
+}
+
+.table th, .table td{
+  text-align:center;
+}
+
+/*LIVREURS - DISPOS*/
+
+.dispo_livreur input{
+  width:14px;
+} 
+
+/*COMMERCANT - MODIF HORAIRES*/
+
+
+.horaires_magasin input{
+  width:50px;
+}
+
+
+/*BODY*/
+
+html, body {
+  height: 100% !important;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+
+/*BODY*/
+
+body{
+  font-family: "Raleway Bold", "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  line-height: 1.46;
+  color: #333;
+} 
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+a{
+    color: #206231;
+}
+
+a:hover, a:focus {
+    color: #174523;
+    text-decoration: none;
+}
+
+dd a{
+  font-weight: bold;
+}
+
+/*Order-box*/
+
+.order-box{
+  padding: 20px;
+  border: 1px solid #BABABA;
+  margin: 15px 0;
+}
+
+.order-ref{
+  font-weight:bold;
+  padding-bottom:10px;
+  font-size: 1.2em;
+}
+
+.order-box ul{
+  margin-bottom:20px;
+}
+
+#date-dropdown{
+  width: 150px;
+  display: inline;
+  text-align: center;
+  margin-left: 10px;
+  height: 44px;
+  font-size: 1.2em;
+}
+
+.table-responsive{
+  padding: 10px 0;
+}
+
+.order-box .dl-horizontal dd {
+    margin-left: 110px;
+}
+
+.order-box .dl-horizontal dt {
+    width: 100px;
+  white-space: normal;
+  line-height: 1em;
+  margin-top: 3px;
+}
+
+
+@media (min-width: 992px) { 
+  #printPDF{
+    float:right;
+    margin-right: 10px;
+  }
+
+  #return_profile{
+    float:right;
+  }
+}
+
+@media (min-width: 992px) { 
+  #printPDF_bottom{
+    float:left;
+  }
+
+  #return_profile_bottom{
+    float:right;
+  }
+}
+
+
+.bg-warning{
+  padding: 10px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+dd{
+  margin-bottom: 5px;
+}
+
+.leaflet-container {
+    overflow: visible;
+}
+
+</style>

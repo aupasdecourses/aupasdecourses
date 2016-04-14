@@ -1,0 +1,69 @@
+<?php $breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
+        
+$breadcrumbs->addCrumb('home', array('label'=>Mage::helper('cms')->__('Home'), 'link'=>Mage::getBaseUrl()));
+ 
+$breadcrumbs->addCrumb('commercant-manquant', array('label'=>'Commercant manquant'));
+ 
+
+echo $this->getLayout()->getBlock('breadcrumbs')->toHtml();?>
+<div class="page-title">
+    <h1>Suggérez un commerce à Au Pas De Courses</h1>
+</div>
+<div class="box simple_contact">
+    <p>Nous ne travaillons pas encore avec votre boucher ou traiteur préféré ? <br/> Prenez quelques instants pour remplir ce formulaire et nous ferons tout pour que ses produits soient rapidement disponible sur la plateforme Au Pas De Courses.</p>
+    <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+    <form id="commercant_form" name="commercant_form" action="<?php echo $this->getUrl('commercant-form/') ?>index/sendemail" method="post">
+        <fieldset class="group-select">
+            <ul>
+                <li>
+                    <div class="input-box">
+                        <label for="name"><?php echo $this->__('Votre nom ') ?><span class="required"></span></label><br />
+                        <input name="name" id="name" title="Name" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="email"><?php echo $this->__('Votre email ') ?><span class="required"></span></label><br />
+                        <input name="email" id="email" title="Email" value="" class="required-entry input-text validate-email" type="text" />
+                    </div>
+                </li>
+                    <div class="clear"></div>
+                <li>
+                    <div class="input-box">
+                        <label for="nom-commercant"><?php echo $this->__('Nom du Commerçant ') ?><span class="required"></span></label><br />
+                        <input name="nom-commercant" id="nom-commercant" title="<?php echo $this->__('Nom du commerçant') ?>" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="adresse-commercant"><?php echo $this->__('Adresse du commerçant ') ?><span class="required"></span></label><br />
+                        <input name="adresse-commercant" id="adresse-commercant" title="<?php echo $this->__('Adresse du commerçant') ?>" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="zipcode-commercant"><?php echo $this->__('Code Postal ') ?><span class="required"></span></label><br />
+                        <input name="zipcode-commercant" id="zipcode-commercant" title="<?php echo $this->__('Code Postal') ?>" value="" class="required-entry input-text" type="text" />
+                    </div>
+                </li>
+                <li>
+                    <div class="input-box">
+                        <label for="comment"><?php echo $this->__('Commentaires ') ?></label><br />
+                        <textarea name="comment" id="comment" title="Comment" class="validate-no-html-tags input-text" style="height:100px;" cols="50" rows="3"></textarea>
+                    </div>
+                </li>
+                <li>
+                    <span class="required">* Champs obligatoires</span>
+                </li>
+            </ul>
+        </fieldset>
+        <div class="button-set" style="margin-top:10px">
+            <button class="button" type="submit"><span><?php echo $this->__('Envoyez')?></span></button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+        var customForm = new VarienForm('commercant_form');
+    //]]>
+</script>

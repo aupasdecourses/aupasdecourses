@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+<!--
+/*
+ * Commis
+ * www.petitcommis.fr
+ *
+ * @description  Layout modifications
+ * @author       Author Name
+ * @package      packagename_default
+ *
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href>
+            </action>
+            <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//fonts.googleapis.com/css?family=Montserrat:400,700</href>
+            </action>
+            <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//fonts.googleapis.com/css?family=Courgette</href>
+            </action>
+            <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css</href>
+                <integrity>sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7</integrity>
+                <crossorigin>anonymous</crossorigin>
+            </action>
+            <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href>
+            </action>
+             <action method="addLinkRel">
+                <rel>alternate</rel>
+                <href>https://www.aupasdecourses.com</href>
+                <hreflang>fr</hreflang>
+            </action>
+            <!-- <action method="addCss">
+                <name>css/bootstrap.css</name>
+            </action> -->
+            <action method="addCss">
+                <name>css/bootstrap-social.css</name>
+            </action>
+            <action method="removeItem"><type>js</type><name>mgt_developertoolbar/jquery-1.7.2.min.js</name></action>
+            <block type="core/text" name="cdn">
+                <action method="setText">
+                    <text><![CDATA[<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>]]>
+                    </text>
+                </action>
+            </block>
+            <action method="addItem"><rel>skin_js</rel><href>js/custom.js</href></action>
+            <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+        </reference>
+        <reference name="right">
+             <!--Remove whishlist -->
+            <remove name="wishlist_sidebar"/>
+            <!-- Remove products viewed -->
+            <remove name="right.reports.product.viewed" />
+            <!-- Remove recently purchased items -->
+            <remove name="sale.reorder.sidebar" />
+        </reference>
+        <reference name="footer">
+            <block type="cms/block" name="footer.links.left">
+                <action method="setBlockId"><block_id>footer_links_left</block_id></action>
+            </block>
+            <block type="cms/block" name="footer.links.middle">
+                <action method="setBlockId"><block_id>footer_links_middle</block_id></action>
+            </block>
+            <block type="cms/block" name="footer.links.middle.2">
+                <action method="setBlockId"><block_id>footer_links_middle_2</block_id></action>
+            </block>
+            <block type="cms/block" name="footer.links.right">
+                <action method="setBlockId"><block_id>footer_links_right</block_id></action>
+            </block>
+            <block type="cms/block" name="footer.social">
+                <action method="setBlockId"><block_id>footer-social</block_id></action>
+            </block>
+            <block type="cms/block" name="footer.cards">
+                <action method="setBlockId"><block_id>footer-cards</block_id></action>
+            </block>
+            <remove name="footer_links"/>
+            <remove name="footer_links2"/>
+        </reference>
+        <reference name="before_body_end">
+            <remove name="global_cookie_notice"/>
+        </reference>
+        <reference name="global_notices">
+            <block type="page/html_cookieNotice" name="global_cookie_notice_head" as ="global_cookie_notice_head" template="page/html/cookienotice.phtml"/>
+        </reference>
+        <reference name="left">
+            <remove name="catalog.leftnav"/>
+        </reference>
+     </default>
+     <!-- Homepage -->
+     <cms_index_index>
+		<reference name="head">
+          <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>
+          <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>
+          <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
+          <action method="addItem"><rel>skin_js</rel><href>countdown/js/jquery.countdown.js</href></action>
+          <action method="addItem"><rel>skin_js</rel><href>countdown/js/script.js</href></action>
+          <action method="addItem"><rel>skin_css</rel><href>countdown/css/jquery.countdown.css</href></action><!--[if lt IE 9]>
+          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+          <block type="core/text" name="hotjar">
+            <action method="setText">
+                <text><![CDATA[<!-- Hotjar Tracking Code for http://www.aupasdecourses.com -->
+                <script>
+                    (function(h,o,t,j,a,r){
+                        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                        h._hjSettings={hjid:168512,hjsv:5};
+                        a=o.getElementsByTagName('head')[0];
+                        r=o.createElement('script');r.async=1;
+                        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                        a.appendChild(r);
+                    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+                </script>]]>
+                </text>
+            </action>
+          </block>
+		</reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/homepage.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <remove name="cms.wrapper"/>
+    	    <!-- Inclusion du Carroussel et des liens droite-->
+            <block type="core/template" name="home-carroussel-links" as="home-carroussel-links" template="customhome/carroussel-and-links.phtml">
+                <block type="cms/block" name="carroussel-home-page" as="carroussel-home-page">
+                    <action method="setBlockId"><block_id>carroussel-home-page</block_id></action>
+                </block>
+                <block type="cms/block" name="cms_livraison" as="cms_livraison">
+                    <action method="setBlockId"><block_id>block_livraison</block_id></action>
+                </block>
+            </block>
+             <!-- Reassurance -->
+            <block type="core/template" name="home-reassurance" as="home-reassurance" template="customhome/reassurance.phtml" after="home-carroussel-links">
+                <block type="core/template" name="deliverytime-home" template="customhome/deliverytime.phtml"/>
+            </block>
+            <!-- Inclusion du block promos & produits favoris-->
+            <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="customhome/promos-and-favoris.phtml">
+                <block type="blockselection/selection" name="home-selection" template="blockselection/selection_all.phtml"></block>
+                <block type="catalog/product_bestseller" name="home-favorite" template="catalog/product/bestseller.phtml"></block>
+            </block>
+            <!-- Inclusion des commerçants du Commis -->
+            <block type="commercants/fiche" template="commercants/fiche.phtml" name="commercants-fiche">
+                <block type="cms/block" name="texte-intro-liste-commercants">
+                    <action method="setBlockId"><block_id>texte_intro_liste_commercants</block_id></action>
+                </block>
+            </block>
+       </reference>
+    </cms_index_index>
+       <catalog_category_view>  
+        <reference name="right">
+            <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
+            </block>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <remove name="product_list"/>
+    </catalog_category_view>
+    <!-- Category (Not Anchor) => 'Mon Primeur' -->
+    <catalog_category_default>
+         <reference name="head">
+             <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css</href>
+            </action>
+            <action method="addLinkRel">
+                <rel>js</rel>
+                <href>//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.js</href>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="commercants/fiche" template="commercants/commercantnavigation.phtml" name="listecommercants"></block>
+        </reference>
+        <remove name="product_list"/>
+        <reference name="left_first">
+            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
+                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
+            </block>
+            <!-- Recently purchased items -->
+            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
+            <!-- Recently viewed items -->
+            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
+        </reference>
+    </catalog_category_default >
+    <!-- Page Commerçant => 'Primeur Clémence' -->
+    <PAGE_COMMERCANT>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+          <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>
+          <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>
+          <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
+        </reference>
+        <reference name="content">
+            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
+                <block type="blockselection/selection" name="blockselection" as="blockselection" after="all" template="blockselection/selection.phtml"/>
+                <!-- <block type="blockselection/selection" name="lastorder" as="lastorder" after="all" template="blockselection/lastorder.phtml"/> -->
+            </block>
+        </reference>
+        <remove name="product_list"/>
+	</PAGE_COMMERCANT>
+    <catalog_product_view>
+        <remove name="product.reviews"/>
+        <reference name="product.info.upsell">
+            <action method="setColumnCount"><columns>5</columns></action>
+            <action method="setItemLimit"><type>upsell</type><limit>4</limit></action>
+        </reference>
+    </catalog_product_view>
+    <PRODUCT_TYPE_bundle>
+        <remove name="bundle.tierprices"/>
+        <remove name="product.info.sharing"/>
+        <remove name="product.info.addtocart.paypaluk.wrapper"/>
+        <reference name="product.info.options.wrapper.bottom">
+            <action method="setTemplate"><template>bundle/catalog/product/view/options/wrapper/bottom.phtml</template></action>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+    <!-- Product listings by commerçants 'Fruits'-->
+    <!-- Remove shipping calculation and discount coupon from cart -->
+    <checkout_cart_index>
+        <remove name="checkout.cart.shipping" />
+        <!-- <remove name="checkout.cart.coupon"/> -->
+        <reference name="head">
+            <action method="addJs"><script>scrolltofixed.min.js</script></action>
+        </reference>
+    </checkout_cart_index>
+    <commercants_index_index>
+        <reference name="liste_commercants">
+            <block type="cms/block" name="texte-intro-liste-commercants">
+                <action method="setBlockId"><block_id>texte_intro_liste_commercants</block_id></action>
+            </block>
+        </reference>
+    </commercants_index_index>
+    <customer_account_login>
+        <reference name="head">
+            <action method="setTitle" translate="title"><title>Espace Personnel sur Au Pas De Courses</title></action>
+        </reference>
+    </customer_account_login>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName">
+                <name>recurring_profiles</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>billing_agreements</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>reviews</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>OAuth Customer Tokens</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>downloadable_products</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>autoresponderlists</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>mailchimp</name> 
+            </action>
+            <action method="removeLinkByName">
+                <name>newsletter</name> 
+            </action>
+            <remove name="sale.reorder.sidebar.left"/>
+            <remove name="reports.product.viewed.left"/>
+            <remove name="codnitive.customer.sidenav.left.links.after"/>
+        </reference>
+    </customer_account> 
+    <cms_index_noroute translate="label">
+        <label>CMS No-Route Page</label>
+        <reference name="content">
+            <block type="core/template" name="contactForm" template="contacts/form.phtml"/>
+        </reference>
+    </cms_index_noroute>
+    <customer_logged_in>
+         <reference name="top.links">
+            <action method="addLink" translate="label title">
+                <label>Parrainez un ami</label>
+                <url>https://www.aupasdecourses.com/batignolles/aworewards/invitation/</url>
+                <title>Parrainez un ami</title>
+                <prepare/>
+                <urlParams/>
+                <position>10</position>
+            </action>
+             <action method="addLink" translate="label title">
+                <label>Mon historique</label>
+                <url>https://www.aupasdecourses.com/batignolles/sales/order/history/</url>
+                <title>Mon historique</title>
+                <prepare/>
+                <urlParams/>
+                <position>25</position>
+            </action>
+        </reference>
+    </customer_logged_in>
+    <customer_account_changeforgotten translate="label">
+        <label>Reset a Password</label>
+        <remove name="right"/>
+        <remove name="left"/>
+ 
+        <reference name="head">
+            <action method="setTitle" translate="title" module="customer">
+                <title>Reset a Password</title>
+            </action>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+            <action method="setHeaderTitle" translate="title" module="customer">
+                <title>Reset a Password</title>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="customer/form/resetforgottenpassword.phtml"/>
+        </reference>
+    </customer_account_changeforgotten>
+</layout>

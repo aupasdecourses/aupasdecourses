@@ -1,0 +1,9 @@
+<Files sitemap.xml>
+Order allow,deny
+Allow from all
+</Files>
+<Files generate_sitemap.php>
+order deny,allow
+deny from all
+allow from 85.69.57.250
+</Files>

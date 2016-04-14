@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Pmainguet_Customhome>
+            <version>0.1.0</version>
+        </Pmainguet_Customhome>
+    </modules>
+     <frontend>
+          <routers>
+                <customhome>
+                    <use>standard</use>
+                    <args>
+                        <module>Pmainguet_Customhome</module>
+                        <frontName>customhome</frontName>
+                    </args>
+                </customhome>
+            </routers>
+        </frontend>
+    <global>
+        <blocks>
+            <customhome>
+              <class>Pmainguet_Customhome_Block</class>
+            </customhome>
+            <landingpage>
+              <class>Pmainguet_Customhome_Block</class>
+            </landingpage>
+        </blocks>
+        <page>
+            <layouts>
+                <homepage translate="label">
+                    <label>Homepage</label>
+                    <template>page/homepage.phtml</template>
+                    <layout_handle>Homepage</layout_handle>
+                </homepage>
+                <landingpage translate="label">
+                    <label>Landing Page</label>
+                    <template>page/landingpage.phtml</template>
+                    <layout_handle>landing_page</layout_handle>
+                </landingpage>
+            </layouts>
+        </page>
+    </global>
+</config>

@@ -1,0 +1,60 @@
+<?php 
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Deliverydate
+ */
+
+$output = '';
+$fields = Mage::helper('amdeliverydate')->whatShow('order_print', $this->_getStoreId(), 'include');
+if (is_array($fields) && !empty($fields)) {
+    $deliveryDate = $this->getDeliveryDate();
+    $colspan = false;
+    foreach ($fields as $field) {
+        $value = $deliveryDate->getData($field);
+        if ('date' == $field) {
+            $label = $this->__('Delivery Date') . ': ';
+            if ($value && ('0000-00-00' != $value)) {
+                $value = date(Mage::helper('amdeliverydate')->getPhpFormat($this->_getStoreId()), strtotime($value));
+                $output .= '<tr><td>' . $label . '</td><td><strong>' . $value . '</strong></td></tr>';
+                $colspan = true;
+            }
+        } elseif ('time' == $field) {
+            $label = $this->__('Delivery Time Interval') . ':';
+            if ($value) {
+                $output .= '<tr><td>' . $label . '</td><td><strong>' . $value . '</strong></td></tr>';
+                $colspan = true;
+            }
+        } elseif ('comment' == $field) {
+            $label = $this->__('Delivery Comments') . ':<br />';
+            if ($value) {
+                $value = nl2br(htmlentities(preg_replace('/\$/','\\\$', $value), ENT_COMPAT, "UTF-8"));
+                if ($colspan) {
+                    $output .= '<tr><td colspan="2">';
+                } else {
+                    $output .= '<tr><td>';
+                }
+                $output .= '<p align="justify">' . $label . '<i>' . $value . '</i></p></td></tr>';
+            }
+        }
+    }
+}
+if ($output) {
+    $output = '
+        <!-- BEGIN Order Print `Amasty: Delivery Date` -->
+            <h2>' . $this->__('Delivery Date') . '</h2>
+            <table border="0" style="margin-bottom: 20px;" width="100%">'
+        . $output
+        . '</table>
+        <!-- END Order Print `Amasty: Delivery Date` -->';
+    if (Mage::helper('core')->isModuleEnabled('Amasty_Orderattr')) {
+        Mage::register('AmastyDeliveryDatePrint', $output);
+    } else { ?>
+        <div class="col2-set">
+            <div class="col-1">
+                <?php echo $output; ?>
+            </div>
+        </div>
+<?php
+    }
+} ?>
