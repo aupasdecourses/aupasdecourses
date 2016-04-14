@@ -1,9 +1,0 @@
-a:5:{i:0;s:188:"Error in file: "/home/aupasdecln/www/app/code/core/Mage/Paypal/sql/paypal_setup/upgrade-1.6.0.3-1.6.0.4.php" - SQLSTATE[42S21]: Column already exists: 1060 Duplicate column name 'store_id'";i:1;s:938:"#0 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(645): Mage::exception('Mage_Core', 'Error in file: ...')
-#1 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(437): Mage_Core_Model_Resource_Setup->_modifyResourceDb('upgrade', '1.6.0.2', '1.6.0.6')
-#2 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(320): Mage_Core_Model_Resource_Setup->_upgradeResourceDb('1.6.0.2', '1.6.0.6')
-#3 /home/aupasdecln/www/app/code/core/Mage/Core/Model/Resource/Setup.php(235): Mage_Core_Model_Resource_Setup->applyUpdates()
-#4 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(417): Mage_Core_Model_Resource_Setup::applyAllUpdates()
-#5 /home/aupasdecln/www/app/code/core/Mage/Core/Model/App.php(343): Mage_Core_Model_App->_initModules()
-#6 /home/aupasdecln/www/app/Mage.php(684): Mage_Core_Model_App->run(Array)
-#7 /home/aupasdecln/www/index.php(87): Mage::run('', 'store')
-#8 {main}";s:3:"url";s:28:"/assets/img/commis2/shop.jpg";s:11:"script_name";s:10:"/index.php";s:4:"skin";s:7:"default";}
