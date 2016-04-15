@@ -54,3 +54,6 @@ magmi
 tmp
 shell
 pkginfo
+sitemap.xml
+#delivery/attachments
+
