@@ -15,6 +15,19 @@ ob_start();
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
 
+// Identifiants pour la base de données. Nécessaires a PDO2.
+//Config OVH
+
+$config  = Mage::getConfig()->getResourceConnectionConfig("default_setup");
+$_host = $config->host;
+$_uname = $config->username;
+$_pass = $config->password;
+$_dbname = $config->dbname;
+
+define('SQL_DSN', 'mysql:dbname='.$_dbname.';host='.$_host);
+define('SQL_USERNAME', $_uname);
+define('SQL_PASSWORD', $_pass);
+
 // Si un module est specifié, on regarde s'il existe
 if (!empty($_GET['module'])) {
 

@@ -12,7 +12,7 @@ function hashage_mdp($nom_utilisateur,$mdp){
 	$pdo = PDO2::getInstance();
 
 	//Création dans la table membres
-	$requete = $pdo->prepare("INSERT INTO membres SET
+	$requete = $pdo->prepare("INSERT INTO delivery_membres SET
 		login=:login,
 		nom_utilisateur = :nom_utilisateur,
 		prenom_utilisateur = :prenom_utilisateur,
@@ -59,7 +59,7 @@ function maj_avatar_membre($id_utilisateur , $avatarURL) {
 
 	$pdo = PDO2::getInstance();
 
-	$requete = $pdo->prepare("UPDATE membres SET
+	$requete = $pdo->prepare("UPDATE delivery_membres SET
 		avatarURL = :avatarURL
 		WHERE
 		id = :id_utilisateur");
@@ -74,7 +74,7 @@ function maj_mot_de_passe_membre($id_utilisateur,$new_mdp){
 	
 	$pdo = PDO2::getInstance();
 
-	$requete = $pdo->prepare("UPDATE membres SET
+	$requete = $pdo->prepare("UPDATE delivery_membres SET
 		mdp = :mdp
 		WHERE
 		id = :id_utilisateur");
@@ -91,7 +91,7 @@ function maj_adresse_email_membre($id_utilisateur , $email) {
 
 	$pdo = PDO2::getInstance();
 
-	$requete = $pdo->prepare("UPDATE membres SET
+	$requete = $pdo->prepare("UPDATE delivery_membres SET
 		email = :email
 		WHERE
 		id = :id_utilisateur");
@@ -106,7 +106,7 @@ function maj_infos_utilisateur($type, $id_utilisateur , $info) {
 
 	$pdo = PDO2::getInstance();
 	
-	$string="UPDATE membres SET ".$type." = :".$type." WHERE id = :id_utilisateur";
+	$string="UPDATE delivery_membres SET ".$type." = :".$type." WHERE id = :id_utilisateur";
 
 	$requete = $pdo->prepare($string);
 
@@ -122,7 +122,7 @@ function combinaison_connexion_valide($login, $mdp) {
 
 	$pdo = PDO2::getInstance();
 
-	$requete = $pdo->prepare("SELECT id FROM membres
+	$requete = $pdo->prepare("SELECT id FROM delivery_membres
 		WHERE
 		login = :login AND 
 		mdp = :mdp AND
@@ -145,7 +145,7 @@ function lire_infos_utilisateur($id_utilisateur) {
 	$pdo = PDO2::getInstance();
 
 	$requete = $pdo->prepare("SELECT login, nom_utilisateur, prenom_utilisateur, mdp, email, telephone, avatarURL, date_inscription, hash_validation, role
-		FROM membres
+		FROM delivery_membres
 		WHERE
 		id = :id_utilisateur");
 
@@ -164,7 +164,7 @@ function valider_compte_avec_hash($hash_validation) {
 
 	$pdo = PDO2::getInstance();
 
-	$requete = $pdo->prepare("UPDATE membres SET
+	$requete = $pdo->prepare("UPDATE delivery_membres SET
 		hash_validation = ''
 		WHERE
 		hash_validation = :hash_validation");

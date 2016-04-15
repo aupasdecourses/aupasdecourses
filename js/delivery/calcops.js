@@ -54,7 +54,7 @@ $(function(){
 		//prixfinal
 		var column = table.column('#prixfinal',{page:'current'});
 		 $('input.prixfinal').each(function(){
-			sumPrixFinal+=parseFloat($(this).val().replace("",0));
+			sumPrixFinal+=parseFloat($(this).val().replace("",0).replace(/\,/g, '.'));
 		});
 		 $( column.footer() ).html(sumPrixFinal.toFixed(2));
 

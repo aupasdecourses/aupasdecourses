@@ -5,16 +5,6 @@ define('HEURE_DEBUT',7);
 define('HEURE_FIN',22);
 $nom_jour=['Lu','Ma','Me','Je','Ve','Sa','Di'];
 
-// Identifiants pour la base de données. Nécessaires a PDO2.
-//Config OVH
-define('SQL_DSN',      'mysql:dbname=aupasdeclndeliv;host=aupasdeclndeliv.mysql.db');
-define('SQL_USERNAME', 'aupasdeclndeliv');
-define('SQL_PASSWORD', 'Apennins38');
-//Config localhost
-// define('SQL_DSN',      'mysql:dbname=apdc_delivery;host=localhost');
-// define('SQL_USERNAME', 'root');
-// define('SQL_PASSWORD', 'password');
-
 // Chemins à utiliser pour accéder aux vues/modeles/librairies
 $module = empty($module) ? !empty($_GET['module']) ? $_GET['module'] : 'global' : $module;
 define('CHEMIN_VUE',    'modules/'.$module.'/views/');

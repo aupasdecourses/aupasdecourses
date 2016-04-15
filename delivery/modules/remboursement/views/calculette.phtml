@@ -87,7 +87,7 @@ img.modal{
 							    	$ordered_items = $order->getAllItems();
 									$sorted_items = array();
 									  foreach ($ordered_items as $item) {
-									      if (!$item->isDeleted()) {
+									      if (!$item->isDeleted() && !$item->getHasChildren()) {
 									          $sorted_items[] =  $item;
 									      }
 									  }
