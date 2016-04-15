@@ -1,12 +1,8 @@
-## STOP REFERRER SPAM
-RewriteCond %{HTTP_REFERER} semalt\.com [NC,OR]
-RewriteCond %{HTTP_REFERER} buttons-for-website\.com [NC]
-RewriteRule .* - [F]
-
-#Redirect non-www to www
-RewriteEngine On
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+##Access limited
+AuthName "Merci de bien vouloir saisir le mot de passe pour accéder au contenu"
+AuthType Basic
+AuthUserFile "/home/aupasdecln/subdomains/staging/.htpasswrd"
+Require valid-user
 
 Options +FollowSymlinks -Indexes
 RewriteEngine On
@@ -15,11 +11,6 @@ RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
-
-#Force redirect to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # PREVENT VIEWING OF .HTACCESS
 <Files .htaccess>

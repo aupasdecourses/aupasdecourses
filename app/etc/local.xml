@@ -40,11 +40,11 @@
             </db>
             <default_setup>
                 <connection>
-                    <host><![CDATA[mp222483-001.privatesql]]></host>
-                    <username><![CDATA[mp222483-ovh]]></username>
+                    <host><![CDATA[aupasdeclndev.mysql.db]]></host>
+                    <username><![CDATA[aupasdeclndev]]></username>
                     <password><![CDATA[Apennins38]]></password>
-                    <dbname><![CDATA[aupasdecln_apdc]]></dbname>
-                    <port><![CDATA[35120]]></port>
+                    <dbname><![CDATA[aupasdeclndev]]></dbname>
+                    <port><![CDATA[3306]]></port>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>
