@@ -23,8 +23,9 @@ $_host = $config->host;
 $_uname = $config->username;
 $_pass = $config->password;
 $_dbname = $config->dbname;
+$_port = $config->port;
 
-define('SQL_DSN', 'mysql:dbname='.$_dbname.';host='.$_host);
+define('SQL_DSN', 'mysql:dbname='.$_dbname.';host='.$_host.';port='.$_port);
 define('SQL_USERNAME', $_uname);
 define('SQL_PASSWORD', $_pass);
 
