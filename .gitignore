@@ -37,6 +37,7 @@ ehthumbs.db
 Thumbs.db
 
 .htaccess
+.htpasswrd
 app/etc/local.xml
 cron.php
 cron.sh
@@ -52,3 +53,4 @@ dev
 magmi
 tmp
 shell
+pkginfo
