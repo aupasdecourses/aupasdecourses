@@ -12,7 +12,7 @@
         <AwoDev_AwoRewards>
 
             <!-- Whether our module is active: true or false -->
-            <active>true</active>
+            <active>false</active>
 
             <!-- Which code pool to use: core, community or local -->
             <codePool>community</codePool>

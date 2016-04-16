@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 	<config>
 		<modules>
-	      <Pmainguet_Weblog>
-			<version>1.0.0</version>
-	      </Pmainguet_Weblog>
+	      <Pmainguet_Commercants>
+			<version>0.0.2</version>
+	      </Pmainguet_Commercants>
 	    </modules>
 	    <frontend>
 	      <routers>
@@ -56,12 +56,35 @@
 			</menu>
 	      </adminhtml> -->
 	    <global>
-	    	<blocks>
+	        <blocks>
 				<commercants>
 				  <class>Pmainguet_Commercants_Block</class>
 				</commercants>
+				<adminhtml>
+		            <rewrite>
+		                <customer_edit_tab_account>Pmainguet_Commercants_Block_Adminhtml_Editcustomer</customer_edit_tab_account>
+		            </rewrite>
+		        </adminhtml> 
 		    </blocks>
-	    	<models>
+	        <resources>
+	            <commercants_write>
+	                <connection>
+	                    <use>core_write</use>
+	                </connection>
+	            </commercants_write>
+	            <commercants_read>
+	                <connection>
+	                    <use>core_read</use>
+	                </connection>
+	            </commercants_read>
+	            <pmainguet_commercants_setup>
+	                <setup>
+	                    <module>Pmainguet_Commercants</module>
+	                    <class>Mage_Catalog_Model_Resource_Setup</class>
+	                </setup>
+	            </pmainguet_commercants_setup>
+	        </resources>
+	        <models>
 	    		<commercants_model>
 		    		<class>Pmainguet_Commercants_Model</class>
 		    		<resourceModel>commercants_resource</resourceModel>
@@ -75,10 +98,10 @@
 		            </entities>
 		        </commercants_resource>
 	    	</models>
-		    <helpers>
-			   <commercants>
-		          <class>Pmainguet_Commercants_Helper</class>
-			    </commercants>
-			</helpers>
-	    </global>
+	        <helpers>
+	            <pmainguet_commercants>
+	                <class>Pmainguet_Commercants_Helper</class>
+	            </pmainguet_commercants>
+	        </helpers>
+		</global>
 	</config>
