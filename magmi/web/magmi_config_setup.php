@@ -46,6 +46,7 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 					include CHEMIN_MAGE.'app/Mage.php';
 					umask(0);
 					Mage::app();
+					//
 					$commercants=Mage::helper('pmainguet_delivery')->liste_commercant_id();
 					?>
 					<?php foreach($commercants as $storename => $data):?>			

@@ -11,13 +11,13 @@
 	Mage::app();
 	$url_base=Mage::getBaseDir("var")."/import/";
 
-	$google_csv=Mage::helper('pmainguet_delivery')->getgooglecsv();
-
 	if (isset($_GET['action'])) {
 	$commercant=explode("|",$_GET['action']);
 		foreach($commercant as $code){
-			$key=$google_csv[$code]['key'];
-			$gid=$google_csv[$code]['gid'];
+			$google_csv=Mage::helper('pmainguet_delivery')->getgooglecsv($code);
+			$name=$google_csv["name"];
+			$key=$google_csv['key'];
+			$gid=$google_csv['gid'];
 		   	try{
 		   		$filepath=$url_base.date('ymd_Hi')."_".$code.".csv";
 		   		$filesize=0;
@@ -25,7 +25,7 @@
 		   			file_put_contents($filepath, file_get_contents("https://docs.google.com/spreadsheets/d/".$key."/export?gid=".$gid."&format=csv&id=".$key));
 		   			$filesize=filesize($filepath);
 		   		//}
-		   		echo "Fichiers ".$code." synchronisés! (taille=".round(floatval($filesize)/1000,0)."Ko)";
+		   		echo "Fichier ".$name." synchronisé! (taille=".round(floatval($filesize)/1000,0)."Ko)";
 		   	}catch(Exception $e){
 		   		echo "Erreur!";
 		   	}
