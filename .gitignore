@@ -39,7 +39,6 @@ Thumbs.db
 .htaccess
 .htpasswrd
 app/etc/local.xml
-app/etc/modules/AwoDev_AwoRewards.xml
 cron.php
 cron.sh
 downloader
@@ -57,4 +56,3 @@ shell
 pkginfo
 sitemap.xml
 #delivery/attachments
-
