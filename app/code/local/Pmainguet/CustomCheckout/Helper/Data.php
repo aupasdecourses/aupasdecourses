@@ -18,17 +18,17 @@ class Pmainguet_CustomCheckout_Helper_Data extends Mage_Core_Helper_Abstract
                );
             $orderCollection->getSelect()->order('custom_attributes.order_id DESC');
             $orderCollection->getSelect()->limit(1);
+
+            $attributeValue="";
             if ($orderCollection->getSize() > 0)
             {
                 foreach ($orderCollection as $lastOrder)
                 {
                     $attributeValue = $lastOrder->getData($attributecode);
                 }
-            }else{
-                $attributeValue='';
             }
+            return $attributeValue;
         }
-        return $attributeValue;
     }
   
    public function getCommercantname($object){

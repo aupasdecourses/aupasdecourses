@@ -13,370 +13,751 @@ plugin;CrossUpsellProducts;pluginhello:Cross/Upsell Importer-1.0.3-Dweeves-http:
 plugin;RelatedProducts;pluginhello:Product relater-1.0.3-Dweeves,jwtechniek-http://wiki.magmi.org/index.php?title=Product_relater 
 plugin;Magmi_DefaultAttributeItemProcessor;pluginhello:Standard Attribute Import-1.1-Dweeves- 
 startup:Performing Datasouce Lookup...
-lookup:359:0.038836002349854
-startup:Found 359 records, took 0.038836002349854 sec
-columns:51
+lookup:456:0.048115015029907
+startup:Found 456 records, took 0.048115015029907 sec
+columns:52
 plugin;Magmi_DefaultAttributeItemProcessor;startup:Standard Attribute Import v1.1 - Newly created items will have default values for columns:type,visibility,page_layout
 startup:Ajusted processed columns:51
-itime:2 - 1.8250150680542 - 1.8250150680542
-dbtime:84 - 1.7769091129303 - 1.7769091129303 - 84
-itime:4 - 2.1829121112823 - 0.35704493522644
-dbtime:210 - 2.0990788936615 - 0.3221697807312 - 126
-itime:6 - 2.8558821678162 - 0.67212700843811
-dbtime:335 - 2.7180666923523 - 0.6189877986908 - 125
-itime:8 - 2.9736230373383 - 0.11651492118835
-dbtime:444 - 2.7784051895142 - 0.060338497161865 - 109
-itime:10 - 3.2578539848328 - 0.28337979316711
-dbtime:568 - 2.9796183109283 - 0.20121312141418 - 124
-itime:12 - 3.471654176712 - 0.21307396888733
-dbtime:690 - 3.1480841636658 - 0.16846585273743 - 122
-itime:14 - 3.6735150814056 - 0.20117902755737
-dbtime:820 - 3.3102626800537 - 0.16217851638794 - 130
-itime:16 - 4.4223470687866 - 0.74799203872681
-dbtime:946 - 3.9689266681671 - 0.6586639881134 - 126
-itime:18 - 4.6192209720612 - 0.19587397575378
-dbtime:1092 - 4.0652930736542 - 0.096366405487061 - 146
-itime:20 - 4.8065361976624 - 0.1865930557251
-dbtime:1219 - 4.2069039344788 - 0.14161086082458 - 127
-itime:22 - 5.2688829898834 - 0.46164488792419
-dbtime:1344 - 4.5835747718811 - 0.37667083740234 - 125
-itime:24 - 6.8239171504974 - 1.5535659790039
-dbtime:1471 - 5.3577468395233 - 0.77417206764221 - 127
-itime:26 - 7.0520391464233 - 0.22727513313293
-dbtime:1596 - 5.5534131526947 - 0.19566631317139 - 125
-itime:28 - 7.1676580905914 - 0.11480498313904
-dbtime:1724 - 5.6390345096588 - 0.085621356964111 - 128
-itime:30 - 7.2578210830688 - 0.089242935180664
-dbtime:1851 - 5.6949517726898 - 0.055917263031006 - 127
-itime:32 - 7.4214780330658 - 0.16289901733398
-dbtime:1973 - 5.8001556396484 - 0.10520386695862 - 122
-itime:34 - 7.5485301017761 - 0.12617111206055
-dbtime:2102 - 5.8697788715363 - 0.069623231887817 - 129
-itime:36 - 7.7194001674652 - 0.1699321269989
-dbtime:2228 - 5.9882669448853 - 0.118488073349 - 126
-itime:38 - 7.969654083252 - 0.24934792518616
-dbtime:2356 - 6.204879283905 - 0.21661233901978 - 128
-itime:40 - 8.0649712085724 - 0.094492197036743
-dbtime:2478 - 6.2652809619904 - 0.060401678085327 - 122
-itime:42 - 8.1855170726776 - 0.11981105804443
-dbtime:2606 - 6.3517475128174 - 0.086466550827026 - 128
-itime:44 - 8.8858721256256 - 0.69963407516479
-dbtime:2730 - 6.7314467430115 - 0.37969923019409 - 124
-itime:46 - 9.9330701828003 - 1.0463500022888
-dbtime:2853 - 7.3107662200928 - 0.5793194770813 - 123
-itime:48 - 10.114928007126 - 0.18073487281799
-dbtime:2973 - 7.3815057277679 - 0.070739507675171 - 120
-itime:50 - 10.466935157776 - 0.3510639667511
-dbtime:3093 - 7.4516794681549 - 0.070173740386963 - 120
-itime:52 - 11.558119058609 - 1.0906300544739
-dbtime:3220 - 7.9102299213409 - 0.45855045318604 - 127
-itime:54 - 11.700431108475 - 0.14160799980164
-dbtime:3342 - 7.9803595542908 - 0.070129632949829 - 122
-itime:56 - 11.820659160614 - 0.11949014663696
-dbtime:3467 - 8.0668110847473 - 0.086451530456543 - 125
-itime:58 - 11.976023197174 - 0.15469002723694
-dbtime:3587 - 8.1298880577087 - 0.063076972961426 - 120
-itime:60 - 12.113409042358 - 0.13652300834656
-dbtime:3705 - 8.1895496845245 - 0.059661626815796 - 118
-itime:62 - 12.21296620369 - 0.097237110137939
-dbtime:3823 - 8.2463665008545 - 0.056816816329956 - 118
-itime:64 - 12.324511051178 - 0.11076998710632
-dbtime:3943 - 8.3218529224396 - 0.075486421585083 - 120
-itime:66 - 13.394196987152 - 1.0689918994904
-dbtime:4078 - 9.3233635425568 - 1.0015106201172 - 135
-itime:68 - 13.561148166656 - 0.16626501083374
-dbtime:4203 - 9.4520831108093 - 0.12871956825256 - 125
-itime:70 - 13.950865983963 - 0.3883318901062
-dbtime:4329 - 9.8039450645447 - 0.35186195373535 - 126
-itime:72 - 14.133326053619 - 0.18185305595398
-dbtime:4453 - 9.9430799484253 - 0.13913488388062 - 124
-itime:74 - 15.693652153015 - 1.5597491264343
-dbtime:4578 - 10.151116132736 - 0.20803618431091 - 125
-itime:76 - 16.328247070312 - 0.63368797302246
-dbtime:4703 - 10.239991426468 - 0.088875293731689 - 125
-itime:78 - 16.450021028519 - 0.12073683738708
-dbtime:4825 - 10.310934305191 - 0.070942878723145 - 122
-itime:80 - 16.573522090912 - 0.12266397476196
-dbtime:4954 - 10.380625963211 - 0.06969165802002 - 129
-itime:82 - 16.747965097427 - 0.17371511459351
-dbtime:5077 - 10.468001127243 - 0.087375164031982 - 123
-itime:84 - 16.898843050003 - 0.15013790130615
-dbtime:5198 - 10.564344644547 - 0.096343517303467 - 121
-itime:86 - 17.374981164932 - 0.47519207000732
-dbtime:5324 - 10.704195737839 - 0.13985109329224 - 126
-itime:88 - 17.664700031281 - 0.28895998001099
-dbtime:5447 - 10.904316425323 - 0.20012068748474 - 123
-itime:90 - 17.856032133102 - 0.19060111045837
-dbtime:5574 - 11.000943899155 - 0.096627473831177 - 127
-itime:92 - 18.396679162979 - 0.53991603851318
-dbtime:5696 - 11.208119153976 - 0.20717525482178 - 122
-itime:94 - 18.602680206299 - 0.20522403717041
-dbtime:5818 - 11.313317775726 - 0.10519862174988 - 122
-itime:96 - 18.758129119873 - 0.15476202964783
-dbtime:5940 - 11.422007799149 - 0.10869002342224 - 122
-itime:98 - 18.95356297493 - 0.1945629119873
-dbtime:6062 - 11.505680561066 - 0.083672761917114 - 122
-itime:100 - 19.122220993042 - 0.16794991493225
-dbtime:6184 - 11.601566076279 - 0.095885515213013 - 122
-itime:102 - 19.279216051102 - 0.15629005432129
-dbtime:6306 - 11.711107969284 - 0.10954189300537 - 122
-itime:104 - 19.432425022125 - 0.15242600440979
-dbtime:6428 - 11.798856258392 - 0.087748289108276 - 122
-itime:106 - 19.587671995163 - 0.15452790260315
-dbtime:6551 - 11.87317442894 - 0.074318170547485 - 123
-itime:108 - 20.048748016357 - 0.46037292480469
-dbtime:6671 - 11.93906545639 - 0.065891027450562 - 120
-itime:110 - 20.446150064468 - 0.39636588096619
-dbtime:6800 - 12.014825820923 - 0.075760364532471 - 129
-itime:112 - 20.81689119339 - 0.36989617347717
-dbtime:6923 - 12.086946964264 - 0.072121143341064 - 123
-itime:114 - 20.97172498703 - 0.1539888381958
-dbtime:7063 - 12.182002782822 - 0.095055818557739 - 140
-itime:116 - 21.937712192535 - 0.96502900123596
-dbtime:7191 - 12.692647695541 - 0.51064491271973 - 128
-itime:118 - 22.198121070862 - 0.25954008102417
-dbtime:7316 - 12.840535879135 - 0.14788818359375 - 125
-itime:120 - 22.786346197128 - 0.5868501663208
-dbtime:7438 - 12.902513504028 - 0.061977624893188 - 122
-itime:122 - 22.922614097595 - 0.1353919506073
-dbtime:7558 - 12.977807998657 - 0.075294494628906 - 120
-itime:124 - 23.115563154221 - 0.19208598136902
-dbtime:7680 - 13.058305025101 - 0.080497026443481 - 122
-itime:126 - 23.228661060333 - 0.11214900016785
-dbtime:7800 - 13.138291358948 - 0.079986333847046 - 120
-itime:128 - 23.373294115067 - 0.14376997947693
-dbtime:7922 - 13.239118814468 - 0.10082745552063 - 122
-itime:130 - 23.667502164841 - 0.29329800605774
-dbtime:8044 - 13.316626787186 - 0.077507972717285 - 122
-itime:132 - 23.788136005402 - 0.11972880363464
-dbtime:8166 - 13.385806322098 - 0.069179534912109 - 122
-itime:134 - 23.895862102509 - 0.10714292526245
-dbtime:8288 - 13.46320772171 - 0.077401399612427 - 122
-itime:136 - 24.02651309967 - 0.13001894950867
-dbtime:8410 - 13.540428161621 - 0.077220439910889 - 122
-itime:138 - 24.249660015106 - 0.22258186340332
-dbtime:8534 - 13.734556913376 - 0.19412875175476 - 124
-itime:140 - 24.384464025497 - 0.13411593437195
-dbtime:8656 - 13.81822514534 - 0.083668231964111 - 122
-itime:142 - 24.599454164505 - 0.21427798271179
-dbtime:8778 - 14.004342794418 - 0.18611764907837 - 122
-itime:144 - 24.712006092072 - 0.11190605163574
-dbtime:8902 - 14.086228847504 - 0.081886053085327 - 124
-itime:146 - 24.884250164032 - 0.17159700393677
-dbtime:9028 - 14.221168279648 - 0.13493943214417 - 126
-itime:148 - 25.034882068634 - 0.15008592605591
-dbtime:9155 - 14.326685667038 - 0.10551738739014 - 127
-itime:150 - 25.142013072968 - 0.10646986961365
-dbtime:9278 - 14.390339374542 - 0.063653707504272 - 123
-itime:152 - 25.246997117996 - 0.10421991348267
-dbtime:9403 - 14.460879802704 - 0.070540428161621 - 125
-itime:154 - 25.508337020874 - 0.26068592071533
-dbtime:9528 - 14.650452136993 - 0.18957233428955 - 125
-itime:156 - 25.823470115662 - 0.31430602073669
-dbtime:9652 - 14.751312732697 - 0.10086059570312 - 124
-itime:158 - 25.940679073334 - 0.11644887924194
-dbtime:9773 - 14.82817864418 - 0.076865911483765 - 121
-itime:160 - 26.509858131409 - 0.56818413734436
-dbtime:9898 - 14.901538848877 - 0.073360204696655 - 125
-itime:162 - 26.640894174576 - 0.11590003967285
-dbtime:10023 - 14.975873470306 - 0.074334621429443 - 125
-itime:164 - 26.966981172562 - 0.32116103172302
-dbtime:10151 - 15.233964920044 - 0.25809144973755 - 128
-itime:166 - 27.091667175293 - 0.12382817268372
-dbtime:10276 - 15.303033828735 - 0.069068908691406 - 125
-itime:168 - 27.43617105484 - 0.34359908103943
-dbtime:10398 - 15.362153053284 - 0.05911922454834 - 122
-itime:170 - 27.563930034637 - 0.12689304351807
-dbtime:10520 - 15.457817316055 - 0.095664262771606 - 122
-itime:172 - 27.667441129684 - 0.10264897346497
-dbtime:10642 - 15.528505325317 - 0.070688009262085 - 122
-itime:174 - 28.201537132263 - 0.53328609466553
-dbtime:10764 - 15.600825309753 - 0.072319984436035 - 122
-itime:176 - 28.519525051117 - 0.31714606285095
-dbtime:10884 - 15.657849788666 - 0.057024478912354 - 120
-itime:178 - 28.84783411026 - 0.32744312286377
-dbtime:11004 - 15.73551940918 - 0.077669620513916 - 120
-itime:180 - 28.982469081879 - 0.13396501541138
-dbtime:11126 - 15.820233345032 - 0.084713935852051 - 122
-itime:182 - 29.219614028931 - 0.23624682426453
-dbtime:11250 - 15.887626886368 - 0.06739354133606 - 124
-itime:184 - 29.376804113388 - 0.1365270614624
-dbtime:11370 - 15.974880933762 - 0.087254047393799 - 120
-itime:186 - 29.49004817009 - 0.11244010925293
-dbtime:11493 - 16.044725656509 - 0.069844722747803 - 123
-itime:188 - 29.583387136459 - 0.092000007629395
-dbtime:11615 - 16.10644364357 - 0.061717987060547 - 122
-itime:190 - 29.727682113647 - 0.14344906806946
-dbtime:11737 - 16.180976629257 - 0.074532985687256 - 122
-itime:192 - 29.846165180206 - 0.1177031993866
-dbtime:11862 - 16.270184516907 - 0.089207887649536 - 125
-itime:194 - 29.944181203842 - 0.09721302986145
-dbtime:11986 - 16.336647987366 - 0.066463470458984 - 124
-itime:196 - 30.105650186539 - 0.16070914268494
-dbtime:12110 - 16.460571289062 - 0.12392330169678 - 124
-itime:198 - 30.199048042297 - 0.092382907867432
-dbtime:12234 - 16.521843910217 - 0.061272621154785 - 124
-itime:200 - 30.657129049301 - 0.45709800720215
-dbtime:12357 - 16.618680953979 - 0.096837043762207 - 123
-itime:202 - 31.277312040329 - 0.39305400848389
-dbtime:12481 - 16.690182209015 - 0.0715012550354 - 124
-itime:204 - 31.459485054016 - 0.18134689331055
-dbtime:12605 - 16.817574977875 - 0.12739276885986 - 124
-itime:206 - 31.822131156921 - 0.36167001724243
-dbtime:12731 - 16.908616304398 - 0.091041326522827 - 126
-itime:208 - 31.94248509407 - 0.11944007873535
-dbtime:12856 - 16.996428728104 - 0.087812423706055 - 125
-itime:210 - 32.152137994766 - 0.2086968421936
-dbtime:12978 - 17.084229469299 - 0.087800741195679 - 122
-itime:212 - 32.250677108765 - 0.097870111465454
-dbtime:13096 - 17.133990287781 - 0.049760818481445 - 118
-itime:214 - 32.722867012024 - 0.47145080566406
-dbtime:13218 - 17.232543945312 - 0.098553657531738 - 122
-itime:216 - 32.846012115479 - 0.1225049495697
-dbtime:13335 - 17.322895765305 - 0.090351819992065 - 117
-itime:218 - 32.95973610878 - 0.11294007301331
-dbtime:13453 - 17.363670110703 - 0.040774345397949 - 118
-itime:220 - 33.056733131409 - 0.096338987350464
-dbtime:13571 - 17.426957845688 - 0.063287734985352 - 118
-itime:222 - 33.141271114349 - 0.083955049514771
-dbtime:13692 - 17.481503486633 - 0.054545640945435 - 121
-itime:224 - 33.277539014816 - 0.13570785522461
-dbtime:13820 - 17.557266950607 - 0.075763463973999 - 128
-itime:226 - 33.38911318779 - 0.11073899269104
-dbtime:13943 - 17.624828338623 - 0.067561388015747 - 123
-itime:228 - 33.501971006393 - 0.11215901374817
-dbtime:14069 - 17.697979450226 - 0.073151111602783 - 126
-itime:230 - 33.613499164581 - 0.11076807975769
-dbtime:14187 - 17.750332355499 - 0.052352905273438 - 118
-itime:232 - 33.791836023331 - 0.17771100997925
-dbtime:14310 - 17.837435245514 - 0.087102890014648 - 123
-itime:234 - 33.962090015411 - 0.16941094398499
-dbtime:14428 - 17.893140554428 - 0.055705308914185 - 118
-itime:236 - 34.108232021332 - 0.14547991752625
-dbtime:14550 - 17.991966962814 - 0.09882640838623 - 122
-itime:238 - 34.301349163055 - 0.19229912757874
-dbtime:14658 - 18.066903352737 - 0.074936389923096 - 108
-itime:240 - 34.430824995041 - 0.12860989570618
-dbtime:14778 - 18.145562171936 - 0.078658819198608 - 120
-itime:242 - 34.531666994095 - 0.10006999969482
-dbtime:14898 - 18.215083599091 - 0.069521427154541 - 120
-itime:244 - 34.628920078278 - 0.094429016113281
-dbtime:15018 - 18.266465902328 - 0.051382303237915 - 120
-itime:246 - 34.728274106979 - 0.098575115203857
-dbtime:15128 - 18.334854841232 - 0.068388938903809 - 110
-itime:248 - 34.829056978226 - 0.10003781318665
-dbtime:15246 - 18.397703886032 - 0.062849044799805 - 118
-itime:250 - 34.912383079529 - 0.082382917404175
-dbtime:15363 - 18.441537380219 - 0.043833494186401 - 117
-itime:252 - 35.210530996323 - 0.2974100112915
-dbtime:15474 - 18.49406337738 - 0.052525997161865 - 111
-itime:254 - 35.28239607811 - 0.071006059646606
-dbtime:15583 - 18.537406921387 - 0.043343544006348 - 109
-itime:256 - 35.367681980133 - 0.08427882194519
-dbtime:15682 - 18.594693899155 - 0.057286977767944 - 99
-itime:258 - 35.46812415123 - 0.099640130996704
-dbtime:15804 - 18.663209438324 - 0.068515539169312 - 122
-itime:260 - 36.555564165115 - 1.086611032486
-dbtime:15924 - 19.719797134399 - 1.0565876960754 - 120
-itime:262 - 36.640515089035 - 0.084127902984619
-dbtime:16044 - 19.773998022079 - 0.054200887680054 - 120
-itime:264 - 37.238546133041 - 0.59718704223633
-dbtime:16164 - 19.838831663132 - 0.064833641052246 - 120
-itime:266 - 37.383097171783 - 0.14364004135132
-dbtime:16282 - 19.906616210938 - 0.067784547805786 - 118
-itime:268 - 37.495422124863 - 0.11145997047424
-dbtime:16405 - 19.985842704773 - 0.079226493835449 - 123
-itime:270 - 37.643129110336 - 0.14681005477905
-dbtime:16534 - 20.107115268707 - 0.12127256393433 - 129
-itime:272 - 37.761671066284 - 0.11759305000305
-dbtime:16659 - 20.188791275024 - 0.081676006317139 - 125
-itime:274 - 37.890765190125 - 0.12832808494568
-dbtime:16779 - 20.251171350479 - 0.062380075454712 - 120
-itime:276 - 38.007163047791 - 0.11544299125671
-dbtime:16899 - 20.33728146553 - 0.08611011505127 - 120
-itime:278 - 38.123183012009 - 0.11535000801086
-dbtime:17020 - 20.423954963684 - 0.086673498153687 - 121
-itime:280 - 38.239573001862 - 0.11524295806885
-dbtime:17138 - 20.467221260071 - 0.043266296386719 - 118
-itime:282 - 38.333652973175 - 0.093269824981689
-dbtime:17261 - 20.529498338699 - 0.06227707862854 - 123
-itime:284 - 38.419949054718 - 0.085465908050537
-dbtime:17382 - 20.584087848663 - 0.054589509963989 - 121
-itime:286 - 38.506852149963 - 0.086235046386719
-dbtime:17502 - 20.635231018066 - 0.051143169403076 - 120
-itime:288 - 38.630500078201 - 0.12277793884277
-dbtime:17627 - 20.706888437271 - 0.071657419204712 - 125
-itime:290 - 38.761747121811 - 0.12925791740417
-dbtime:17748 - 20.758963108063 - 0.052074670791626 - 121
-itime:292 - 39.069243192673 - 0.30685019493103
-dbtime:17858 - 20.918179035187 - 0.15921592712402 - 110
-itime:294 - 39.136079072952 - 0.066173076629639
-dbtime:17958 - 20.962663173676 - 0.04448413848877 - 100
-itime:296 - 39.258152008057 - 0.12144589424133
-dbtime:18080 - 21.052268266678 - 0.089605093002319 - 122
-itime:298 - 39.569482088089 - 0.31078410148621
-dbtime:18198 - 21.101301670074 - 0.049033403396606 - 118
-itime:300 - 39.682829141617 - 0.11134696006775
-dbtime:18320 - 21.166584014893 - 0.065282344818115 - 122
-itime:302 - 39.963680028915 - 0.28015089035034
-dbtime:18442 - 21.229100227356 - 0.062516212463379 - 122
-itime:304 - 40.080370187759 - 0.11608004570007
-dbtime:18563 - 21.305488586426 - 0.076388359069824 - 121
-itime:306 - 40.429398059845 - 0.34831500053406
-dbtime:18681 - 21.346483945847 - 0.040995359420776 - 118
-itime:308 - 40.527033090591 - 0.096682071685791
-dbtime:18799 - 21.38253903389 - 0.036055088043213 - 118
-itime:310 - 41.056179046631 - 0.52843284606934
-dbtime:18923 - 21.842848539352 - 0.46030950546265 - 124
-itime:312 - 41.200652122498 - 0.14382314682007
-dbtime:19049 - 21.939351558685 - 0.096503019332886 - 126
-itime:314 - 41.342660188675 - 0.14110207557678
-dbtime:19171 - 22.020547389984 - 0.081195831298828 - 122
-itime:316 - 41.476617097855 - 0.13326501846313
-dbtime:19289 - 22.087994337082 - 0.067446947097778 - 118
-itime:318 - 41.622080087662 - 0.11102199554443
-dbtime:19398 - 22.152636528015 - 0.064642190933228 - 109
-itime:320 - 41.716935157776 - 0.094145059585571
-dbtime:19509 - 22.220823287964 - 0.06818675994873 - 111
-itime:322 - 41.867526054382 - 0.14911985397339
-dbtime:19629 - 22.307270765305 - 0.086447477340698 - 120
-itime:324 - 41.962781190872 - 0.09448504447937
-dbtime:19738 - 22.370785713196 - 0.063514947891235 - 109
-itime:326 - 42.10164308548 - 0.13704991340637
-dbtime:19860 - 22.475468397141 - 0.1046826839447 - 122
-itime:328 - 42.166541099548 - 0.064162015914917
-dbtime:19969 - 22.51585316658 - 0.040384769439697 - 109
-itime:330 - 42.523312091827 - 0.35600996017456
-dbtime:20089 - 22.781792879105 - 0.26593971252441 - 120
-itime:332 - 42.704097032547 - 0.18003487586975
-dbtime:20215 - 22.928029537201 - 0.14623665809631 - 126
-itime:334 - 42.930541038513 - 0.22561693191528
-dbtime:20339 - 23.09358048439 - 0.16555094718933 - 124
-itime:336 - 43.264968156815 - 0.3336660861969
-dbtime:20459 - 23.178040027618 - 0.084459543228149 - 120
-itime:338 - 43.359042167664 - 0.093253135681152
-dbtime:20570 - 23.243480920792 - 0.065440893173218 - 111
-itime:340 - 43.485737085342 - 0.12579298019409
-dbtime:20692 - 23.309260606766 - 0.065779685974121 - 122
-itime:342 - 43.571349143982 - 0.084766149520874
-dbtime:20810 - 23.364911079407 - 0.055650472640991 - 118
-itime:344 - 43.698091983795 - 0.12573385238647
-dbtime:20932 - 23.452965736389 - 0.088054656982422 - 122
-itime:346 - 43.815080165863 - 0.11612200737
-dbtime:21043 - 23.507813453674 - 0.054847717285156 - 111
-itime:348 - 43.951431035995 - 0.13551187515259
-dbtime:21156 - 23.577847242355 - 0.07003378868103 - 113
-itime:350 - 44.053563117981 - 0.10115098953247
-dbtime:21278 - 23.646885156631 - 0.069037914276123 - 122
-itime:352 - 44.215866088867 - 0.16155600547791
-dbtime:21400 - 23.750538110733 - 0.10365295410156 - 122
-itime:354 - 44.335875988007 - 0.11922383308411
-dbtime:21522 - 23.840198755264 - 0.08966064453125 - 122
-itime:356 - 44.439655065536 - 0.10294604301453
-dbtime:21644 - 23.904217004776 - 0.064018249511719 - 122
-itime:358 - 44.549610137939 - 0.10884499549866
-dbtime:21766 - 23.95947933197 - 0.055262327194214 - 122
-itime:359 - 44.785374164581 - 0.23488116264343
-dbtime:21890 - 24.164609909058 - 0.2051305770874 - 124
-info:Skus imported OK:359/359
+itime:3 - 0.23626017570496 - 0.23626017570496
+dbtime:140 - 0.0340416431427 - 0.0340416431427 - 140
+itime:6 - 0.52042603492737 - 0.28396081924438
+dbtime:318 - 0.074753761291504 - 0.040712118148804 - 178
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1006 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1006 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1006 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1007 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1007 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1007 - Image attributes processor v1.0.25 - CSA10-ailfrais.jpg cannot be found in images path
+itime:9 - 0.83048820495605 - 0.30988216400146
+dbtime:479 - 0.15321660041809 - 0.078462839126587 - 161
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1011 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1011 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1011 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+itime:12 - 1.1315071582794 - 0.30069208145142
+dbtime:640 - 0.23953723907471 - 0.086320638656616 - 161
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1013 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1013 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1013 - Image attributes processor v1.0.25 - CSA10-ananas.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1014 - Image attributes processor v1.0.25 - CSA10-ananascoupmais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1014 - Image attributes processor v1.0.25 - CSA10-ananascoupmais.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1014 - Image attributes processor v1.0.25 - CSA10-ananascoupmais.jpg cannot be found in images path
+itime:15 - 1.4240181446075 - 0.29224014282227
+dbtime:784 - 0.32852983474731 - 0.088992595672607 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1015 - Image attributes processor v1.0.25 - CSA10-ananasvictor.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1015 - Image attributes processor v1.0.25 - CSA10-ananasvictor.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1015 - Image attributes processor v1.0.25 - CSA10-ananasvictor.jpg cannot be found in images path
+itime:18 - 1.7166051864624 - 0.29228806495667
+dbtime:951 - 0.4530553817749 - 0.12452554702759 - 167
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1020 - Image attributes processor v1.0.25 - CSA10-artichautpoivra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1020 - Image attributes processor v1.0.25 - CSA10-artichautpoivra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1020 - Image attributes processor v1.0.25 - CSA10-artichautpoivra.jpg cannot be found in images path
+itime:21 - 1.9504411220551 - 0.23356604576111
+dbtime:1098 - 0.51462388038635 - 0.06156849861145 - 147
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1021 - Image attributes processor v1.0.25 - CSA10-artichauts.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1021 - Image attributes processor v1.0.25 - CSA10-artichauts.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1021 - Image attributes processor v1.0.25 - CSA10-artichauts.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1023 - Image attributes processor v1.0.25 - CSA10-aspergeblanche.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1023 - Image attributes processor v1.0.25 - CSA10-aspergeblanche.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1023 - Image attributes processor v1.0.25 - CSA10-aspergeblanche.jpg cannot be found in images path
+itime:24 - 2.2431440353394 - 0.29240798950195
+dbtime:1249 - 0.57065582275391 - 0.056031942367554 - 151
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1026 - Image attributes processor v1.0.25 - CSA10-aspergeverte.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1026 - Image attributes processor v1.0.25 - CSA10-aspergeverte.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1026 - Image attributes processor v1.0.25 - CSA10-aspergeverte.jpg cannot be found in images path
+itime:27 - 2.5204491615295 - 0.27708506584167
+dbtime:1414 - 0.64517641067505 - 0.074520587921143 - 165
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1028 - Image attributes processor v1.0.25 - CSA10-aspergeviolette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1028 - Image attributes processor v1.0.25 - CSA10-aspergeviolette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1028 - Image attributes processor v1.0.25 - CSA10-aspergeviolette.jpg cannot be found in images path
+itime:30 - 2.7376010417938 - 0.21685886383057
+dbtime:1576 - 0.69101142883301 - 0.045835018157959 - 162
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1031 - Image attributes processor v1.0.25 - CSA10-aubergines.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1031 - Image attributes processor v1.0.25 - CSA10-aubergines.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1031 - Image attributes processor v1.0.25 - CSA10-aubergines.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1032 - Image attributes processor v1.0.25 - CSA10-avocatgros.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1032 - Image attributes processor v1.0.25 - CSA10-avocatgros.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1032 - Image attributes processor v1.0.25 - CSA10-avocatgros.jpg cannot be found in images path
+itime:33 - 2.9889030456543 - 0.25108695030212
+dbtime:1727 - 0.74554538726807 - 0.054533958435059 - 151
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1034 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1034 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1034 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1035 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1035 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1035 - Image attributes processor v1.0.25 - CSA10-banane.jpg cannot be found in images path
+itime:36 - 4.1077330112457 - 1.118665933609
+dbtime:1890 - 1.0328078269958 - 0.28726243972778 - 163
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1037 - Image attributes processor v1.0.25 - CSA10-mangetout.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1037 - Image attributes processor v1.0.25 - CSA10-mangetout.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1037 - Image attributes processor v1.0.25 - CSA10-mangetout.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1038 - Image attributes processor v1.0.25 - CSA10-haricotsvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1038 - Image attributes processor v1.0.25 - CSA10-haricotsvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1038 - Image attributes processor v1.0.25 - CSA10-haricotsvert.jpg cannot be found in images path
+itime:39 - 4.8598260879517 - 0.75188493728638
+dbtime:2049 - 1.2936823368073 - 0.2608745098114 - 159
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1040 - Image attributes processor v1.0.25 - CSA10-basilicpot.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1040 - Image attributes processor v1.0.25 - CSA10-basilicpot.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1040 - Image attributes processor v1.0.25 - CSA10-basilicpot.jpg cannot be found in images path
+itime:42 - 5.0523540973663 - 0.19235897064209
+dbtime:2209 - 1.3322529792786 - 0.038570642471313 - 160
+itime:45 - 5.2630310058594 - 0.2104868888855
+dbtime:2382 - 1.3759517669678 - 0.043698787689209 - 173
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1045 - Image attributes processor v1.0.25 - CSA10-blette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1045 - Image attributes processor v1.0.25 - CSA10-blette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1045 - Image attributes processor v1.0.25 - CSA10-blette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1047 - Image attributes processor v1.0.25 - CSA10-carottesbotte.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1047 - Image attributes processor v1.0.25 - CSA10-carottesbotte.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1047 - Image attributes processor v1.0.25 - CSA10-carottesbotte.jpg cannot be found in images path
+itime:48 - 5.4890379905701 - 0.22581386566162
+dbtime:2536 - 1.4333782196045 - 0.057426452636719 - 154
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1048 - Image attributes processor v1.0.25 - CSA10-navetsbottfran.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1048 - Image attributes processor v1.0.25 - CSA10-navetsbottfran.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1048 - Image attributes processor v1.0.25 - CSA10-navetsbottfran.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1049 - Image attributes processor v1.0.25 - CSA10-radis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1049 - Image attributes processor v1.0.25 - CSA10-radis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1049 - Image attributes processor v1.0.25 - CSA10-radis.jpg cannot be found in images path
+itime:51 - 5.8858962059021 - 0.39658498764038
+dbtime:2692 - 1.4828045368195 - 0.049426317214966 - 156
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1052 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1052 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1052 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1053 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1053 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1053 - Image attributes processor v1.0.25 - CSA10-brocolis.jpg cannot be found in images path
+itime:54 - 6.8371732234955 - 0.94164419174194
+dbtime:2844 - 2.0591728687286 - 0.57636833190918 - 152
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1054 - Image attributes processor v1.0.25 - CSA10-butternut.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1054 - Image attributes processor v1.0.25 - CSA10-butternut.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1054 - Image attributes processor v1.0.25 - CSA10-butternut.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1056 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1056 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1056 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+itime:57 - 7.0610091686249 - 0.22359299659729
+dbtime:2986 - 2.102010011673 - 0.042837142944336 - 142
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1057 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1057 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1057 - Image attributes processor v1.0.25 - CSA10-carottes.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1059 - Image attributes processor v1.0.25 - CSA10-carottesable.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1059 - Image attributes processor v1.0.25 - CSA10-carottesable.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1059 - Image attributes processor v1.0.25 - CSA10-carottesable.jpg cannot be found in images path
+itime:60 - 7.2652151584625 - 0.20403695106506
+dbtime:3127 - 2.143315076828 - 0.041305065155029 - 141
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1061 - Image attributes processor v1.0.25 - CSA10-celeribranch.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1061 - Image attributes processor v1.0.25 - CSA10-celeribranch.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1061 - Image attributes processor v1.0.25 - CSA10-celeribranch.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1062 - Image attributes processor v1.0.25 - CSA10-celeriravefranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1062 - Image attributes processor v1.0.25 - CSA10-celeriravefranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1062 - Image attributes processor v1.0.25 - CSA10-celeriravefranc.jpg cannot be found in images path
+itime:63 - 7.533607006073 - 0.26820492744446
+dbtime:3281 - 2.1820645332336 - 0.03874945640564 - 154
+itime:66 - 7.7763340473175 - 0.24249696731567
+dbtime:3453 - 2.2300181388855 - 0.047953605651855 - 172
+itime:69 - 8.1194660663605 - 0.3429229259491
+dbtime:3619 - 2.3203413486481 - 0.090323209762573 - 166
+itime:72 - 8.3789691925049 - 0.2593150138855
+dbtime:3794 - 2.3830001354218 - 0.062658786773682 - 175
+itime:75 - 8.6212611198425 - 0.24208092689514
+dbtime:3964 - 2.4487118721008 - 0.065711736679077 - 170
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1077 - Image attributes processor v1.0.25 - CSA10-cerneauxdenoix.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1077 - Image attributes processor v1.0.25 - CSA10-cerneauxdenoix.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1077 - Image attributes processor v1.0.25 - CSA10-cerneauxdenoix.jpg cannot be found in images path
+itime:78 - 8.9567940235138 - 0.33531880378723
+dbtime:4109 - 2.5504908561707 - 0.10177898406982 - 145
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1078 - Image attributes processor v1.0.25 - CSA10-champignonblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1078 - Image attributes processor v1.0.25 - CSA10-champignonblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1078 - Image attributes processor v1.0.25 - CSA10-champignonblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1079 - Image attributes processor v1.0.25 - CSA10-champignoncrème.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1079 - Image attributes processor v1.0.25 - CSA10-champignoncrème.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1079 - Image attributes processor v1.0.25 - CSA10-champignoncrème.jpg cannot be found in images path
+itime:81 - 9.1660981178284 - 0.20914602279663
+dbtime:4262 - 2.5852177143097 - 0.034726858139038 - 153
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1081 - Image attributes processor v1.0.25 - CSA10-shitake.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1081 - Image attributes processor v1.0.25 - CSA10-shitake.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1081 - Image attributes processor v1.0.25 - CSA10-shitake.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1083 - Image attributes processor v1.0.25 - CSA10-chouxblancfranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1083 - Image attributes processor v1.0.25 - CSA10-chouxblancfranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1083 - Image attributes processor v1.0.25 - CSA10-chouxblancfranc.jpg cannot be found in images path
+itime:84 - 9.3750941753387 - 0.20852708816528
+dbtime:4406 - 2.6208434104919 - 0.035625696182251 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1085 - Image attributes processor v1.0.25 - CSA10-choufleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1085 - Image attributes processor v1.0.25 - CSA10-choufleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1085 - Image attributes processor v1.0.25 - CSA10-choufleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1086 - Image attributes processor v1.0.25 - CSA10-choufrisekale.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1086 - Image attributes processor v1.0.25 - CSA10-choufrisekale.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1086 - Image attributes processor v1.0.25 - CSA10-choufrisekale.jpg cannot be found in images path
+itime:87 - 9.592511177063 - 0.21722912788391
+dbtime:4546 - 2.6642498970032 - 0.04340648651123 - 140
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1089 - Image attributes processor v1.0.25 - CSA10-chouromanesco.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1089 - Image attributes processor v1.0.25 - CSA10-chouromanesco.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1089 - Image attributes processor v1.0.25 - CSA10-chouromanesco.jpg cannot be found in images path
+itime:90 - 9.8769071102142 - 0.2841260433197
+dbtime:4692 - 2.7347717285156 - 0.070521831512451 - 146
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1090 - Image attributes processor v1.0.25 - CSA10-chouxrougefranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1090 - Image attributes processor v1.0.25 - CSA10-chouxrougefranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1090 - Image attributes processor v1.0.25 - CSA10-chouxrougefranc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1092 - Image attributes processor v1.0.25 - CSA10-chouxbruxell.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1092 - Image attributes processor v1.0.25 - CSA10-chouxbruxell.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1092 - Image attributes processor v1.0.25 - CSA10-chouxbruxell.jpg cannot be found in images path
+itime:93 - 10.202832221985 - 0.32560920715332
+dbtime:4848 - 2.8037033081055 - 0.068931579589844 - 156
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1093 - Image attributes processor v1.0.25 - CSA10-chouxrave.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1093 - Image attributes processor v1.0.25 - CSA10-chouxrave.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1093 - Image attributes processor v1.0.25 - CSA10-chouxrave.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1094 - Image attributes processor v1.0.25 - CSA10-ciboulefrance.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1094 - Image attributes processor v1.0.25 - CSA10-ciboulefrance.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1094 - Image attributes processor v1.0.25 - CSA10-ciboulefrance.jpg cannot be found in images path
+itime:96 - 10.428713083267 - 0.2256920337677
+dbtime:4998 - 2.839855670929 - 0.036152362823486 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1098 - Image attributes processor v1.0.25 - CSA10-citronbio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1098 - Image attributes processor v1.0.25 - CSA10-citronbio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1098 - Image attributes processor v1.0.25 - CSA10-citronbio.jpg cannot be found in images path
+itime:99 - 10.645924091339 - 0.21703600883484
+dbtime:5152 - 2.8938777446747 - 0.054022073745728 - 154
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1100 - Image attributes processor v1.0.25 - CSA10-citroncaviar.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1100 - Image attributes processor v1.0.25 - CSA10-citroncaviar.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1100 - Image attributes processor v1.0.25 - CSA10-citroncaviar.jpg cannot be found in images path
+itime:102 - 10.95009803772 - 0.30393385887146
+dbtime:5307 - 2.9441778659821 - 0.050300121307373 - 155
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1104 - Image attributes processor v1.0.25 - CSA10-citronsverts.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1104 - Image attributes processor v1.0.25 - CSA10-citronsverts.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1104 - Image attributes processor v1.0.25 - CSA10-citronsverts.jpg cannot be found in images path
+itime:105 - 11.217109203339 - 0.26675915718079
+dbtime:5461 - 2.9911658763885 - 0.046988010406494 - 154
+itime:108 - 11.493514060974 - 0.27611303329468
+dbtime:5639 - 3.0774040222168 - 0.086238145828247 - 178
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1109 - Image attributes processor v1.0.25 - CSA10-clementinesocul.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1109 - Image attributes processor v1.0.25 - CSA10-clementinesocul.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1109 - Image attributes processor v1.0.25 - CSA10-clementinesocul.jpg cannot be found in images path
+itime:111 - 11.719024181366 - 0.22523713111877
+dbtime:5802 - 3.1422500610352 - 0.064846038818359 - 163
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1111 - Image attributes processor v1.0.25 - CSA10-clementinejaffa.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1111 - Image attributes processor v1.0.25 - CSA10-clementinejaffa.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1111 - Image attributes processor v1.0.25 - CSA10-clementinejaffa.jpg cannot be found in images path
+itime:114 - 11.970043182373 - 0.25085210800171
+dbtime:5946 - 3.1810340881348 - 0.038784027099609 - 144
+itime:117 - 12.254109144211 - 0.2838671207428
+dbtime:6106 - 3.2679605484009 - 0.086926460266113 - 160
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1118 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1118 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1118 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1119 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1119 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1119 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+itime:120 - 12.47199511528 - 0.21761393547058
+dbtime:6248 - 3.307056427002 - 0.039095878601074 - 142
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1121 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1121 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1121 - Image attributes processor v1.0.25 - CSA10-concombre.jpg cannot be found in images path
+itime:123 - 12.722994089127 - 0.25082993507385
+dbtime:6405 - 3.365492105484 - 0.058435678482056 - 157
+itime:126 - 13.016652107239 - 0.2933828830719
+dbtime:6565 - 3.4317841529846 - 0.06629204750061 - 160
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1126 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1126 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1126 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1127 - Image attributes processor v1.0.25 - CSA10-courgettdeprove.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1127 - Image attributes processor v1.0.25 - CSA10-courgettdeprove.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1127 - Image attributes processor v1.0.25 - CSA10-courgettdeprove.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1128 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1128 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1128 - Image attributes processor v1.0.25 - CSA10-courgetteespagn.jpg cannot be found in images path
+itime:129 - 13.259018182755 - 0.24220108985901
+dbtime:6709 - 3.5204520225525 - 0.088667869567871 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1130 - Image attributes processor v1.0.25 - CSA10-courgetrondedep.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1130 - Image attributes processor v1.0.25 - CSA10-courgetrondedep.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1130 - Image attributes processor v1.0.25 - CSA10-courgetrondedep.jpg cannot be found in images path
+itime:132 - 13.476260185242 - 0.21699619293213
+dbtime:6852 - 3.5724990367889 - 0.05204701423645 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1132 - Image attributes processor v1.0.25 - CSA10-cresson.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1132 - Image attributes processor v1.0.25 - CSA10-cresson.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1132 - Image attributes processor v1.0.25 - CSA10-cresson.jpg cannot be found in images path
+itime:135 - 13.710035085678 - 0.23355293273926
+dbtime:7006 - 3.6339962482452 - 0.061497211456299 - 154
+itime:138 - 13.961118221283 - 0.25088500976562
+dbtime:7160 - 3.665961265564 - 0.031965017318726 - 154
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1140 - Image attributes processor v1.0.25 - CSA10-endiveblanchefr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1140 - Image attributes processor v1.0.25 - CSA10-endiveblanchefr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1140 - Image attributes processor v1.0.25 - CSA10-endiveblanchefr.jpg cannot be found in images path
+itime:141 - 14.153793096542 - 0.19250297546387
+dbtime:7320 - 3.7037830352783 - 0.037821769714355 - 160
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1143 - Image attributes processor v1.0.25 - CSA10-endiverouge.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1143 - Image attributes processor v1.0.25 - CSA10-endiverouge.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1143 - Image attributes processor v1.0.25 - CSA10-endiverouge.jpg cannot be found in images path
+itime:144 - 14.371604204178 - 0.21764898300171
+dbtime:7474 - 3.7410373687744 - 0.037254333496094 - 154
+itime:147 - 14.614580154419 - 0.24273800849915
+dbtime:7640 - 3.7875554561615 - 0.046518087387085 - 166
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1147 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1147 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1147 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1148 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1148 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1148 - Image attributes processor v1.0.25 - CSA10-fenouil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1149 - Image attributes processor v1.0.25 - CSA10-feves.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1149 - Image attributes processor v1.0.25 - CSA10-feves.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1149 - Image attributes processor v1.0.25 - CSA10-feves.jpg cannot be found in images path
+itime:150 - 14.915268182755 - 0.30047607421875
+dbtime:7787 - 3.8694767951965 - 0.081921339035034 - 147
+itime:153 - 15.952872037888 - 1.0374119281769
+dbtime:7942 - 4.1542837619781 - 0.28480696678162 - 155
+itime:156 - 16.329349040985 - 0.37631392478943
+dbtime:8102 - 4.2370262145996 - 0.08274245262146 - 160
+itime:159 - 16.588057994843 - 0.25840497016907
+dbtime:8252 - 4.3062365055084 - 0.069210290908813 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1159 - Image attributes processor v1.0.25 - CSA10-fraisebarquette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1159 - Image attributes processor v1.0.25 - CSA10-fraisebarquette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1159 - Image attributes processor v1.0.25 - CSA10-fraisebarquette.jpg cannot be found in images path
+itime:162 - 17.123114109039 - 0.53488612174988
+dbtime:8409 - 4.3721647262573 - 0.065928220748901 - 157
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1164 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1164 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1164 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+itime:165 - 17.423874139786 - 0.30049204826355
+dbtime:8568 - 4.453818321228 - 0.081653594970703 - 159
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1165 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1165 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1165 - Image attributes processor v1.0.25 - CSA10-fraisesguarigue.jpg cannot be found in images path
+itime:168 - 17.649640083313 - 0.22551107406616
+dbtime:8721 - 4.5126087665558 - 0.058790445327759 - 153
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1169 - Image attributes processor v1.0.25 - CSA10-framboises.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1169 - Image attributes processor v1.0.25 - CSA10-framboises.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1169 - Image attributes processor v1.0.25 - CSA10-framboises.jpg cannot be found in images path
+itime:171 - 17.950670003891 - 0.30078101158142
+dbtime:8869 - 4.5764563083649 - 0.063847541809082 - 148
+itime:174 - 18.244511127472 - 0.29354310035706
+dbtime:9035 - 4.6391494274139 - 0.062693119049072 - 166
+itime:177 - 18.57039809227 - 0.32556009292603
+dbtime:9201 - 4.7182352542877 - 0.079085826873779 - 166
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1177 - Image attributes processor v1.0.25 - CSA10-grenadepérou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1177 - Image attributes processor v1.0.25 - CSA10-grenadepérou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1177 - Image attributes processor v1.0.25 - CSA10-grenadepérou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1179 - Image attributes processor v1.0.25 - CSA10-groseille.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1179 - Image attributes processor v1.0.25 - CSA10-groseille.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1179 - Image attributes processor v1.0.25 - CSA10-groseille.jpg cannot be found in images path
+itime:180 - 18.7706990242 - 0.20000290870667
+dbtime:9343 - 4.7704553604126 - 0.052220106124878 - 142
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1182 - Image attributes processor v1.0.25 - CSA10-haricotcocoplat.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1182 - Image attributes processor v1.0.25 - CSA10-haricotcocoplat.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1182 - Image attributes processor v1.0.25 - CSA10-haricotcocoplat.jpg cannot be found in images path
+itime:183 - 19.021764039993 - 0.25088882446289
+dbtime:9501 - 4.8546516895294 - 0.084196329116821 - 158
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1184 - Image attributes processor v1.0.25 - CSA10-haricotvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1184 - Image attributes processor v1.0.25 - CSA10-haricotvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1184 - Image attributes processor v1.0.25 - CSA10-haricotvert.jpg cannot be found in images path
+itime:186 - 19.36389708519 - 0.34185409545898
+dbtime:9652 - 4.9296882152557 - 0.075036525726318 - 151
+itime:189 - 19.581183195114 - 0.21710610389709
+dbtime:9811 - 5.0046818256378 - 0.07499361038208 - 159
+itime:192 - 19.835913181305 - 0.25442910194397
+dbtime:9958 - 5.0634486675262 - 0.058766841888428 - 147
+itime:195 - 20.065906047821 - 0.22971987724304
+dbtime:10103 - 5.1161353588104 - 0.05268669128418 - 145
+itime:198 - 20.341675043106 - 0.27550792694092
+dbtime:10249 - 5.1733078956604 - 0.057172536849976 - 146
+itime:201 - 20.608931064606 - 0.26699090003967
+dbtime:10399 - 5.2706110477448 - 0.097303152084351 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1202 - Image attributes processor v1.0.25 - CSA10-kiwibio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1202 - Image attributes processor v1.0.25 - CSA10-kiwibio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1202 - Image attributes processor v1.0.25 - CSA10-kiwibio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1203 - Image attributes processor v1.0.25 - CSA10-kiwigoldnzelai.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1203 - Image attributes processor v1.0.25 - CSA10-kiwigoldnzelai.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1203 - Image attributes processor v1.0.25 - CSA10-kiwigoldnzelai.jpg cannot be found in images path
+itime:204 - 21.036330223083 - 0.42712211608887
+dbtime:10553 - 5.356189250946 - 0.085578203201294 - 154
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1205 - Image attributes processor v1.0.25 - CSA10-kiwis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1205 - Image attributes processor v1.0.25 - CSA10-kiwis.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1205 - Image attributes processor v1.0.25 - CSA10-kiwis.jpg cannot be found in images path
+itime:207 - 21.303586006165 - 0.26696991920471
+dbtime:10699 - 5.4210531711578 - 0.064863920211792 - 146
+itime:210 - 21.604926109314 - 0.30113911628723
+dbtime:10869 - 5.5183534622192 - 0.097300291061401 - 170
+itime:213 - 21.855667114258 - 0.25048303604126
+dbtime:11024 - 5.5808899402618 - 0.062536478042603 - 155
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1213 - Image attributes processor v1.0.25 - CSA10-machefrance.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1213 - Image attributes processor v1.0.25 - CSA10-machefrance.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1213 - Image attributes processor v1.0.25 - CSA10-machefrance.jpg cannot be found in images path
+itime:216 - 22.115134000778 - 0.25930094718933
+dbtime:11198 - 5.6464478969574 - 0.065557956695557 - 174
+itime:219 - 22.382654190063 - 0.26725101470947
+dbtime:11364 - 5.7266452312469 - 0.080197334289551 - 166
+itime:222 - 22.616869211197 - 0.23395204544067
+dbtime:11533 - 5.8052220344543 - 0.078576803207397 - 169
+itime:225 - 22.867541074753 - 0.25038599967957
+dbtime:11678 - 5.8547809123993 - 0.049558877944946 - 145
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-APE-1226 - Image attributes processor v1.0.25 - CSA10-melangetropical.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-APE-1226 - Image attributes processor v1.0.25 - CSA10-melangetropical.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-APE-1226 - Image attributes processor v1.0.25 - CSA10-melangetropical.jpg cannot be found in images path
+itime:228 - 23.093424081802 - 0.22556304931641
+dbtime:11831 - 5.9095678329468 - 0.054786920547485 - 153
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1228 - Image attributes processor v1.0.25 - CSA10-melons.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1228 - Image attributes processor v1.0.25 - CSA10-melons.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUF-1228 - Image attributes processor v1.0.25 - CSA10-melons.jpg cannot be found in images path
+itime:231 - 23.377642154694 - 0.28400707244873
+dbtime:11974 - 5.9616532325745 - 0.052085399627686 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1233 - Image attributes processor v1.0.25 - CSA10-mesclun.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1233 - Image attributes processor v1.0.25 - CSA10-mesclun.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1233 - Image attributes processor v1.0.25 - CSA10-mesclun.jpg cannot be found in images path
+itime:234 - 23.6378262043 - 0.2598991394043
+dbtime:12130 - 6.0308620929718 - 0.069208860397339 - 156
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1234 - Image attributes processor v1.0.25 - CSA10-fressinette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1234 - Image attributes processor v1.0.25 - CSA10-fressinette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1234 - Image attributes processor v1.0.25 - CSA10-fressinette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1235 - Image attributes processor v1.0.25 - CSA10-minichouxfleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1235 - Image attributes processor v1.0.25 - CSA10-minichouxfleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-CHO-1235 - Image attributes processor v1.0.25 - CSA10-minichouxfleur.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1236 - Image attributes processor v1.0.25 - CSA10-miniconcombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1236 - Image attributes processor v1.0.25 - CSA10-miniconcombre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1236 - Image attributes processor v1.0.25 - CSA10-miniconcombre.jpg cannot be found in images path
+itime:237 - 23.888934135437 - 0.25095295906067
+dbtime:12271 - 6.0790793895721 - 0.048217296600342 - 141
+itime:240 - 24.106300115585 - 0.21709108352661
+dbtime:12428 - 6.1336250305176 - 0.054545640945435 - 157
+itime:243 - 24.465605020523 - 0.3591148853302
+dbtime:12592 - 6.2396104335785 - 0.10598540306091 - 164
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1243 - Image attributes processor v1.0.25 - CSA10-myrtillesmures.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1243 - Image attributes processor v1.0.25 - CSA10-myrtillesmures.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FRO-1243 - Image attributes processor v1.0.25 - CSA10-myrtillesmures.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1245 - Image attributes processor v1.0.25 - CSA10-navets.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1245 - Image attributes processor v1.0.25 - CSA10-navets.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1245 - Image attributes processor v1.0.25 - CSA10-navets.jpg cannot be found in images path
+itime:246 - 24.68283700943 - 0.21699500083923
+dbtime:12736 - 6.290557384491 - 0.050946950912476 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1246 - Image attributes processor v1.0.25 - CSA10-navetbouled'or.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1246 - Image attributes processor v1.0.25 - CSA10-navetbouled'or.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-LER-1246 - Image attributes processor v1.0.25 - CSA10-navetbouled'or.jpg cannot be found in images path
+itime:249 - 24.942234992981 - 0.25913286209106
+dbtime:12887 - 6.3408584594727 - 0.050301074981689 - 151
+itime:252 - 25.468394041061 - 0.52590990066528
+dbtime:13037 - 6.401656627655 - 0.060798168182373 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1254 - Image attributes processor v1.0.25 - CSA10-noisettesblanch.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1254 - Image attributes processor v1.0.25 - CSA10-noisettesblanch.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1254 - Image attributes processor v1.0.25 - CSA10-noisettesblanch.jpg cannot be found in images path
+itime:255 - 25.727241039276 - 0.25856995582581
+dbtime:13183 - 6.4908907413483 - 0.089234113693237 - 146
+itime:258 - 26.222132205963 - 0.49460101127625
+dbtime:13333 - 6.5712821483612 - 0.080391407012939 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1258 - Image attributes processor v1.0.25 - CSA10-noixdecajou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1258 - Image attributes processor v1.0.25 - CSA10-noixdecajou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1258 - Image attributes processor v1.0.25 - CSA10-noixdecajou.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1259 - Image attributes processor v1.0.25 - CSA10-noixdecajoucara.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1259 - Image attributes processor v1.0.25 - CSA10-noixdecajoucara.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1259 - Image attributes processor v1.0.25 - CSA10-noixdecajoucara.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1260 - Image attributes processor v1.0.25 - CSA10-noixdecoco.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1260 - Image attributes processor v1.0.25 - CSA10-noixdecoco.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FEX-1260 - Image attributes processor v1.0.25 - CSA10-noixdecoco.jpg cannot be found in images path
+itime:261 - 26.840364217758 - 0.61801314353943
+dbtime:13474 - 6.7289574146271 - 0.15767526626587 - 141
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1261 - Image attributes processor v1.0.25 - CSA10-noixdepecan.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1261 - Image attributes processor v1.0.25 - CSA10-noixdepecan.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1261 - Image attributes processor v1.0.25 - CSA10-noixdepecan.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1263 - Image attributes processor v1.0.25 - CSA10-noixseches.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1263 - Image attributes processor v1.0.25 - CSA10-noixseches.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1263 - Image attributes processor v1.0.25 - CSA10-noixseches.jpg cannot be found in images path
+itime:264 - 27.560050010681 - 0.71938896179199
+dbtime:13615 - 6.9167788028717 - 0.18782138824463 - 141
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1264 - Image attributes processor v1.0.25 - CSA10-oignonrosederos.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1264 - Image attributes processor v1.0.25 - CSA10-oignonrosederos.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1264 - Image attributes processor v1.0.25 - CSA10-oignonrosederos.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1265 - Image attributes processor v1.0.25 - CSA10-oignongrelot.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1265 - Image attributes processor v1.0.25 - CSA10-oignongrelot.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1265 - Image attributes processor v1.0.25 - CSA10-oignongrelot.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1266 - Image attributes processor v1.0.25 - CSA10-oignons.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1266 - Image attributes processor v1.0.25 - CSA10-oignons.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1266 - Image attributes processor v1.0.25 - CSA10-oignons.jpg cannot be found in images path
+itime:267 - 27.802567005157 - 0.24216890335083
+dbtime:13756 - 6.9581348896027 - 0.041356086730957 - 141
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1267 - Image attributes processor v1.0.25 - CSA10-oignonsblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1267 - Image attributes processor v1.0.25 - CSA10-oignonsblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1267 - Image attributes processor v1.0.25 - CSA10-oignonsblanc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1268 - Image attributes processor v1.0.25 - CSA10-oignonsdoux.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1268 - Image attributes processor v1.0.25 - CSA10-oignonsdoux.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-OAE-1268 - Image attributes processor v1.0.25 - CSA10-oignonsdoux.jpg cannot be found in images path
+itime:270 - 28.019909143448 - 0.21710705757141
+dbtime:13903 - 7.0291686058044 - 0.071033716201782 - 147
+itime:273 - 28.228985071182 - 0.20888590812683
+dbtime:14053 - 7.0825986862183 - 0.053430080413818 - 150
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1273 - Image attributes processor v1.0.25 - CSA10-orangeajus.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1273 - Image attributes processor v1.0.25 - CSA10-orangeajus.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1273 - Image attributes processor v1.0.25 - CSA10-orangeajus.jpg cannot be found in images path
+itime:276 - 28.454444169998 - 0.22529697418213
+dbtime:14199 - 7.1399421691895 - 0.057343482971191 - 146
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1277 - Image attributes processor v1.0.25 - CSA10-orangesanguine.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1277 - Image attributes processor v1.0.25 - CSA10-orangesanguine.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1277 - Image attributes processor v1.0.25 - CSA10-orangesanguine.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1278 - Image attributes processor v1.0.25 - CSA10-orangesoculente.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1278 - Image attributes processor v1.0.25 - CSA10-orangesoculente.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1278 - Image attributes processor v1.0.25 - CSA10-orangesoculente.jpg cannot be found in images path
+itime:279 - 28.748215198517 - 0.29355311393738
+dbtime:14343 - 7.1967039108276 - 0.056761741638184 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1281 - Image attributes processor v1.0.25 - CSA10-orangesmaltaise.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1281 - Image attributes processor v1.0.25 - CSA10-orangesmaltaise.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1281 - Image attributes processor v1.0.25 - CSA10-orangesmaltaise.jpg cannot be found in images path
+itime:282 - 29.242384195328 - 0.49394011497498
+dbtime:14486 - 7.354115486145 - 0.15741157531738 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1282 - Image attributes processor v1.0.25 - CSA10-orangesnavelbio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1282 - Image attributes processor v1.0.25 - CSA10-orangesnavelbio.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1282 - Image attributes processor v1.0.25 - CSA10-orangesnavelbio.jpg cannot be found in images path
+itime:285 - 29.485110998154 - 0.24254584312439
+dbtime:14655 - 7.4148955345154 - 0.060780048370361 - 169
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1286 - Image attributes processor v1.0.25 - CSA10-patatedouce.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1286 - Image attributes processor v1.0.25 - CSA10-patatedouce.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1286 - Image attributes processor v1.0.25 - CSA10-patatedouce.jpg cannot be found in images path
+itime:288 - 29.836566209793 - 0.35127115249634
+dbtime:14821 - 7.5093502998352 - 0.094454765319824 - 166
+itime:291 - 30.071063995361 - 0.23429393768311
+dbtime:14993 - 7.5703163146973 - 0.060966014862061 - 172
+itime:294 - 30.331824064255 - 0.26056003570557
+dbtime:15161 - 7.6159658432007 - 0.045649528503418 - 168
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1294 - Image attributes processor v1.0.25 - CSA10-petitspoisesp.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1294 - Image attributes processor v1.0.25 - CSA10-petitspoisesp.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1294 - Image attributes processor v1.0.25 - CSA10-petitspoisesp.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1295 - Image attributes processor v1.0.25 - CSA10-pignodepin65g.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1295 - Image attributes processor v1.0.25 - CSA10-pignodepin65g.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1295 - Image attributes processor v1.0.25 - CSA10-pignodepin65g.jpg cannot be found in images path
+itime:297 - 30.548934221268 - 0.21684122085571
+dbtime:15302 - 7.6609787940979 - 0.045012950897217 - 141
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1299 - Image attributes processor v1.0.25 - CSA10-pistache.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1299 - Image attributes processor v1.0.25 - CSA10-pistache.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-FSE-1299 - Image attributes processor v1.0.25 - CSA10-pistache.jpg cannot be found in images path
+itime:300 - 31.075241088867 - 0.52614903450012
+dbtime:15445 - 7.6973803043365 - 0.036401510238647 - 143
+itime:303 - 31.425729990005 - 0.35031199455261
+dbtime:15593 - 7.7462446689606 - 0.048864364624023 - 148
+itime:306 - 31.851556062698 - 0.42555499076843
+dbtime:15741 - 7.7858183383942 - 0.039573669433594 - 148
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1306 - Image attributes processor v1.0.25 - CSA10-poirecomiceextr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1306 - Image attributes processor v1.0.25 - CSA10-poirecomiceextr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1306 - Image attributes processor v1.0.25 - CSA10-poirecomiceextr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1307 - Image attributes processor v1.0.25 - CSA10-poireconferenc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1307 - Image attributes processor v1.0.25 - CSA10-poireconferenc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1307 - Image attributes processor v1.0.25 - CSA10-poireconferenc.jpg cannot be found in images path
+itime:309 - 32.270009040833 - 0.41817092895508
+dbtime:15894 - 7.8199782371521 - 0.034159898757935 - 153
+itime:312 - 32.645879030228 - 0.37556886672974
+dbtime:16063 - 7.8702027797699 - 0.050224542617798 - 169
+itime:315 - 33.272404193878 - 0.6263701915741
+dbtime:16232 - 7.9306721687317 - 0.060469388961792 - 169
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1315 - Image attributes processor v1.0.25 - CSA10-poireaux.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1315 - Image attributes processor v1.0.25 - CSA10-poireaux.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1315 - Image attributes processor v1.0.25 - CSA10-poireaux.jpg cannot be found in images path
+itime:318 - 33.597814083099 - 0.32514190673828
+dbtime:16377 - 7.990953207016 - 0.060281038284302 - 145
+itime:321 - 34.345816135406 - 0.74781394004822
+dbtime:16521 - 8.1363272666931 - 0.14537405967712 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1321 - Image attributes processor v1.0.25 - CSA10-poivronjaune.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1321 - Image attributes processor v1.0.25 - CSA10-poivronjaune.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1321 - Image attributes processor v1.0.25 - CSA10-poivronjaune.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1322 - Image attributes processor v1.0.25 - CSA10-poivronrouge.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1322 - Image attributes processor v1.0.25 - CSA10-poivronrouge.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1322 - Image attributes processor v1.0.25 - CSA10-poivronrouge.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1323 - Image attributes processor v1.0.25 - CSA10-poivronvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1323 - Image attributes processor v1.0.25 - CSA10-poivronvert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1323 - Image attributes processor v1.0.25 - CSA10-poivronvert.jpg cannot be found in images path
+itime:324 - 34.943992137909 - 0.59793710708618
+dbtime:16664 - 8.2722535133362 - 0.13592624664307 - 143
+itime:327 - 35.394637107849 - 0.45039296150208
+dbtime:16809 - 8.3133864402771 - 0.041132926940918 - 145
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1329 - Image attributes processor v1.0.25 - CSA10-pomeloroseflor.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1329 - Image attributes processor v1.0.25 - CSA10-pomeloroseflor.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AGR-1329 - Image attributes processor v1.0.25 - CSA10-pomeloroseflor.jpg cannot be found in images path
+itime:330 - 35.65361905098 - 0.2588038444519
+dbtime:16955 - 8.3630232810974 - 0.049636840820312 - 146
+itime:333 - 36.698374032974 - 1.0445609092712
+dbtime:17126 - 8.5450410842896 - 0.18201780319214 - 171
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1334 - Image attributes processor v1.0.25 - CSA10-pommecanadaroug.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1334 - Image attributes processor v1.0.25 - CSA10-pommecanadaroug.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1334 - Image attributes processor v1.0.25 - CSA10-pommecanadaroug.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1335 - Image attributes processor v1.0.25 - CSA10-pommecanadavert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1335 - Image attributes processor v1.0.25 - CSA10-pommecanadavert.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1335 - Image attributes processor v1.0.25 - CSA10-pommecanadavert.jpg cannot be found in images path
+itime:336 - 36.94190120697 - 0.24331212043762
+dbtime:17269 - 8.6063108444214 - 0.061269760131836 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1337 - Image attributes processor v1.0.25 - CSA10-pommechantecler.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1337 - Image attributes processor v1.0.25 - CSA10-pommechantecler.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1337 - Image attributes processor v1.0.25 - CSA10-pommechantecler.jpg cannot be found in images path
+itime:339 - 37.226467132568 - 0.28438997268677
+dbtime:17412 - 8.6461937427521 - 0.039882898330688 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1339 - Image attributes processor v1.0.25 - CSA10-pommedeterreaga.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1339 - Image attributes processor v1.0.25 - CSA10-pommedeterreaga.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1339 - Image attributes processor v1.0.25 - CSA10-pommedeterreaga.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1341 - Image attributes processor v1.0.25 - CSA10-pommedeterreama.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1341 - Image attributes processor v1.0.25 - CSA10-pommedeterreama.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1341 - Image attributes processor v1.0.25 - CSA10-pommedeterreama.jpg cannot be found in images path
+itime:342 - 37.435492038727 - 0.20883989334106
+dbtime:17552 - 8.689448595047 - 0.043254852294922 - 140
+itime:345 - 37.778928995132 - 0.34322094917297
+dbtime:17721 - 8.7792501449585 - 0.089801549911499 - 169
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1345 - Image attributes processor v1.0.25 - CSA10-pommedeterregre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1345 - Image attributes processor v1.0.25 - CSA10-pommedeterregre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1345 - Image attributes processor v1.0.25 - CSA10-pommedeterregre.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1347 - Image attributes processor v1.0.25 - CSA10-pommedeterremon.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1347 - Image attributes processor v1.0.25 - CSA10-pommedeterremon.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1347 - Image attributes processor v1.0.25 - CSA10-pommedeterremon.jpg cannot be found in images path
+itime:348 - 38.864077091217 - 1.0847489833832
+dbtime:17866 - 9.0922110080719 - 0.3129608631134 - 145
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1349 - Image attributes processor v1.0.25 - CSA10-pommedeterrepom.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1349 - Image attributes processor v1.0.25 - CSA10-pommedeterrepom.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1349 - Image attributes processor v1.0.25 - CSA10-pommedeterrepom.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1350 - Image attributes processor v1.0.25 - CSA10-pommedeterrerat.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1350 - Image attributes processor v1.0.25 - CSA10-pommedeterrerat.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1350 - Image attributes processor v1.0.25 - CSA10-pommedeterrerat.jpg cannot be found in images path
+itime:351 - 39.173119068146 - 0.30883288383484
+dbtime:18015 - 9.1769745349884 - 0.084763526916504 - 149
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1351 - Image attributes processor v1.0.25 - CSA10-pommedeterreros.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1351 - Image attributes processor v1.0.25 - CSA10-pommedeterreros.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PDT-1351 - Image attributes processor v1.0.25 - CSA10-pommedeterreros.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1353 - Image attributes processor v1.0.25 - CSA10-pommefuji.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1353 - Image attributes processor v1.0.25 - CSA10-pommefuji.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1353 - Image attributes processor v1.0.25 - CSA10-pommefuji.jpg cannot be found in images path
+itime:354 - 39.39907002449 - 0.22570085525513
+dbtime:18166 - 9.2227003574371 - 0.04572582244873 - 151
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1354 - Image attributes processor v1.0.25 - CSA10-pommegoldenrose.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1354 - Image attributes processor v1.0.25 - CSA10-pommegoldenrose.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1354 - Image attributes processor v1.0.25 - CSA10-pommegoldenrose.jpg cannot be found in images path
+itime:357 - 39.582840204239 - 0.18344616889954
+dbtime:18309 - 9.2651488780975 - 0.0424485206604 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1358 - Image attributes processor v1.0.25 - CSA10-pommegrannysmit.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1358 - Image attributes processor v1.0.25 - CSA10-pommegrannysmit.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1358 - Image attributes processor v1.0.25 - CSA10-pommegrannysmit.jpg cannot be found in images path
+itime:360 - 39.826467037201 - 0.24342393875122
+dbtime:18465 - 9.3315861225128 - 0.066437244415283 - 156
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1360 - Image attributes processor v1.0.25 - CSA10-pommejazz.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1360 - Image attributes processor v1.0.25 - CSA10-pommejazz.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1360 - Image attributes processor v1.0.25 - CSA10-pommejazz.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1362 - Image attributes processor v1.0.25 - CSA10-pommepinkladyfr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1362 - Image attributes processor v1.0.25 - CSA10-pommepinkladyfr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1362 - Image attributes processor v1.0.25 - CSA10-pommepinkladyfr.jpg cannot be found in images path
+itime:363 - 40.102812051773 - 0.27615785598755
+dbtime:18617 - 9.3751165866852 - 0.043530464172363 - 152
+itime:366 - 40.387052059174 - 0.28403687477112
+dbtime:18789 - 9.4323410987854 - 0.05722451210022 - 172
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1368 - Image attributes processor v1.0.25 - CSA10-pommeroyalgalaf.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1368 - Image attributes processor v1.0.25 - CSA10-pommeroyalgalaf.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1368 - Image attributes processor v1.0.25 - CSA10-pommeroyalgalaf.jpg cannot be found in images path
+itime:369 - 40.604771137238 - 0.21754002571106
+dbtime:18931 - 9.4762139320374 - 0.043872833251953 - 142
+itime:372 - 41.622453212738 - 1.0173511505127
+dbtime:19088 - 9.5493595600128 - 0.073145627975464 - 157
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1372 - Image attributes processor v1.0.25 - CSA10-pommeselstar.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1372 - Image attributes processor v1.0.25 - CSA10-pommeselstar.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-PEP-1372 - Image attributes processor v1.0.25 - CSA10-pommeselstar.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1374 - Image attributes processor v1.0.25 - CSA10-potdepersil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1374 - Image attributes processor v1.0.25 - CSA10-potdepersil.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1374 - Image attributes processor v1.0.25 - CSA10-potdepersil.jpg cannot be found in images path
+itime:375 - 41.948546171188 - 0.32567405700684
+dbtime:19231 - 9.6566953659058 - 0.10733580589294 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1375 - Image attributes processor v1.0.25 - CSA10-potdethym.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1375 - Image attributes processor v1.0.25 - CSA10-potdethym.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1375 - Image attributes processor v1.0.25 - CSA10-potdethym.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1376 - Image attributes processor v1.0.25 - CSA10-potmenthe.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1376 - Image attributes processor v1.0.25 - CSA10-potmenthe.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-ARO-1376 - Image attributes processor v1.0.25 - CSA10-potmenthe.jpg cannot be found in images path
+itime:378 - 42.349518060684 - 0.40034699440002
+dbtime:19380 - 9.7328531742096 - 0.076157808303833 - 149
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1380 - Image attributes processor v1.0.25 - CSA10-poussed'epinard.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1380 - Image attributes processor v1.0.25 - CSA10-poussed'epinard.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1380 - Image attributes processor v1.0.25 - CSA10-poussed'epinard.jpg cannot be found in images path
+itime:381 - 42.694811105728 - 0.3450870513916
+dbtime:19536 - 9.8284320831299 - 0.095578908920288 - 156
+itime:384 - 42.970387220383 - 0.27529907226562
+dbtime:19700 - 9.8986537456512 - 0.070221662521362 - 164
+itime:387 - 43.329944133759 - 0.35930800437927
+dbtime:19884 - 9.9855966567993 - 0.086942911148071 - 184
+itime:390 - 43.605919122696 - 0.27570104598999
+dbtime:20058 - 10.04482626915 - 0.059229612350464 - 174
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1391 - Image attributes processor v1.0.25 - CSA10-raisinmoscatelc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1391 - Image attributes processor v1.0.25 - CSA10-raisinmoscatelc.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1391 - Image attributes processor v1.0.25 - CSA10-raisinmoscatelc.jpg cannot be found in images path
+itime:393 - 43.882171154022 - 0.2760009765625
+dbtime:20223 - 10.093458414078 - 0.048632144927979 - 165
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1395 - Image attributes processor v1.0.25 - CSA10-raisinsanspepin.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1395 - Image attributes processor v1.0.25 - CSA10-raisinsanspepin.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-RAI-1395 - Image attributes processor v1.0.25 - CSA10-raisinsanspepin.jpg cannot be found in images path
+itime:396 - 44.191632986069 - 0.30913996696472
+dbtime:20381 - 10.1564245224 - 0.062966108322144 - 158
+itime:399 - 44.492973089218 - 0.30108690261841
+dbtime:20552 - 10.22623872757 - 0.069814205169678 - 171
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1401 - Image attributes processor v1.0.25 - CSA10-roquette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1401 - Image attributes processor v1.0.25 - CSA10-roquette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1401 - Image attributes processor v1.0.25 - CSA10-roquette.jpg cannot be found in images path
+itime:402 - 44.785447120667 - 0.29215312004089
+dbtime:20722 - 10.300508022308 - 0.07426929473877 - 170
+itime:405 - 45.135088205338 - 0.34936499595642
+dbtime:20879 - 10.350068807602 - 0.049560785293579 - 157
+itime:408 - 45.522356987 - 0.38709592819214
+dbtime:21055 - 10.444854974747 - 0.094786167144775 - 176
+itime:411 - 45.851610183716 - 0.32898306846619
+dbtime:21228 - 10.536348342896 - 0.091493368148804 - 173
+itime:414 - 46.23330616951 - 0.38147497177124
+dbtime:21394 - 10.579547405243 - 0.043199062347412 - 166
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1416 - Image attributes processor v1.0.25 - CSA10-sucrine.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1416 - Image attributes processor v1.0.25 - CSA10-sucrine.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1416 - Image attributes processor v1.0.25 - CSA10-sucrine.jpg cannot be found in images path
+itime:417 - 46.567584037781 - 0.33405995368958
+dbtime:21563 - 10.6806640625 - 0.10111665725708 - 169
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1417 - Image attributes processor v1.0.25 - CSA10-trevise.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1417 - Image attributes processor v1.0.25 - CSA10-trevise.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-SAL-1417 - Image attributes processor v1.0.25 - CSA10-trevise.jpg cannot be found in images path
+itime:420 - 46.818744182587 - 0.2509241104126
+dbtime:21729 - 10.735525369644 - 0.054861307144165 - 166
+itime:423 - 47.119526147842 - 0.30054402351379
+dbtime:21877 - 10.797120571136 - 0.06159520149231 - 148
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1424 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1424 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1424 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1425 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1425 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1425 - Image attributes processor v1.0.25 - CSA10-tomatebelgique.jpg cannot be found in images path
+itime:426 - 47.346332073212 - 0.22649693489075
+dbtime:22020 - 10.850476503372 - 0.053355932235718 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1427 - Image attributes processor v1.0.25 - CSA10-tomatecerisegra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1427 - Image attributes processor v1.0.25 - CSA10-tomatecerisegra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1427 - Image attributes processor v1.0.25 - CSA10-tomatecerisegra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1428 - Image attributes processor v1.0.25 - CSA10-tomatecerisevra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1428 - Image attributes processor v1.0.25 - CSA10-tomatecerisevra.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1428 - Image attributes processor v1.0.25 - CSA10-tomatecerisevra.jpg cannot be found in images path
+itime:429 - 47.563660144806 - 0.21707606315613
+dbtime:22164 - 10.916003465652 - 0.065526962280273 - 144
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1431 - Image attributes processor v1.0.25 - CSA10-tomatecoeurdebo.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1431 - Image attributes processor v1.0.25 - CSA10-tomatecoeurdebo.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1431 - Image attributes processor v1.0.25 - CSA10-tomatecoeurdebo.jpg cannot be found in images path
+itime:432 - 47.797826051712 - 0.23392295837402
+dbtime:22318 - 10.962019681931 - 0.046016216278076 - 154
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1433 - Image attributes processor v1.0.25 - CSA10-tomategrappepro.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1433 - Image attributes processor v1.0.25 - CSA10-tomategrappepro.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1433 - Image attributes processor v1.0.25 - CSA10-tomategrappepro.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1434 - Image attributes processor v1.0.25 - CSA10-tomategrapperab.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1434 - Image attributes processor v1.0.25 - CSA10-tomategrapperab.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1434 - Image attributes processor v1.0.25 - CSA10-tomategrapperab.jpg cannot be found in images path
+itime:435 - 48.190658092499 - 0.3926260471344
+dbtime:22479 - 11.062343358994 - 0.10032367706299 - 161
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1437 - Image attributes processor v1.0.25 - CSA10-tomatenoiredecr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1437 - Image attributes processor v1.0.25 - CSA10-tomatenoiredecr.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1437 - Image attributes processor v1.0.25 - CSA10-tomatenoiredecr.jpg cannot be found in images path
+itime:438 - 48.424647092819 - 0.23383808135986
+dbtime:22622 - 11.113352298737 - 0.051008939743042 - 143
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1438 - Image attributes processor v1.0.25 - CSA10-tomateolivette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1438 - Image attributes processor v1.0.25 - CSA10-tomateolivette.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1438 - Image attributes processor v1.0.25 - CSA10-tomateolivette.jpg cannot be found in images path
+itime:441 - 48.717292070389 - 0.2923948764801
+dbtime:22788 - 11.186859607697 - 0.073507308959961 - 166
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1441 - Image attributes processor v1.0.25 - CSA10-tomates.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1441 - Image attributes processor v1.0.25 - CSA10-tomates.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-TOM-1441 - Image attributes processor v1.0.25 - CSA10-tomates.jpg cannot be found in images path
+itime:444 - 48.976384162903 - 0.2588210105896
+dbtime:22943 - 11.240345478058 - 0.053485870361328 - 155
+itime:447 - 49.928227186203 - 0.95164513587952
+dbtime:23100 - 11.52338385582 - 0.28303837776184 - 157
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1447 - Image attributes processor v1.0.25 - CSA10-topinambour.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1447 - Image attributes processor v1.0.25 - CSA10-topinambour.jpg cannot be found in images path
+plugin;ImageAttributeItemProcessor;warning:SKU CSA10-AUL-1447 - Image attributes processor v1.0.25 - CSA10-topinambour.jpg cannot be found in images path
+itime:450 - 50.330556154251 - 0.4020471572876
+dbtime:23254 - 11.605911493301 - 0.082527637481689 - 154
+itime:453 - 50.564367055893 - 0.23353505134583
+dbtime:23400 - 11.668186664581 - 0.062275171279907 - 146
+itime:456 - 50.748346090317 - 0.18379187583923
+dbtime:23544 - 11.705991268158 - 0.03780460357666 - 144
+itime:456 - 50.825489044189 - 0.076900959014893
+dbtime:23594 - 11.731467247009 - 0.025475978851318 - 50
+info:Skus imported OK:456/456
 end:Import Ended
