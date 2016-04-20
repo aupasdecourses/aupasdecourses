@@ -11,11 +11,17 @@ class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 	    return $fiche;
   	}
 
+  	//Return list of all Commercant categories, filtered by store
   	public function getListCommercant(){
+
+  		$storeid=Mage::app()->getStore()->getId();
+  		$rootId=Mage::app()->getStore($storeid)->getRootCategoryId();
+
 	    $categories = Mage::getModel('catalog/category')
                          ->getCollection()
                          ->addAttributeToSelect('*')
                          ->addIsActiveFilter()
+                         ->addFieldToFilter('path', array('like'=> "1/$rootId/%"))
                          ->addAttributeToFilter('level', array('eq'=>3))
                          //70 est la value_id de l'option du select, correspondant à 'Oui'                        
                          ->addAttributeToFilter('estcom_commercant',70)
