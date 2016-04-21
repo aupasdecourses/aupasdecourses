@@ -54,4 +54,5 @@ tmp
 shell
 pkginfo
 sitemap.xml
-#delivery/attachments
+delivery/attachments
+magmi/conf/magmi.ini
