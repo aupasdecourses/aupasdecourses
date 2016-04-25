@@ -53,5 +53,7 @@ dev
 tmp
 shell
 pkginfo
+sitemap/sitemap.xml
 sitemap.xml
-#delivery/attachments
+sitemap_accueil/sitemap.xml
+delivery/attachments
