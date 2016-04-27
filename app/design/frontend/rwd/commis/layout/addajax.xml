@@ -189,6 +189,10 @@
             </block>
         </reference>
     </addajax_index_options>
+    <addajax_index_update>
+        <remove name="roots"/>
+        <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+    </addajax_index_update>
     <catalogsearch_result_index >
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>

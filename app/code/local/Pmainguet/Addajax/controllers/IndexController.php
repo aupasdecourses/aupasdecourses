@@ -107,4 +107,54 @@ class Pmainguet_Addajax_IndexController extends Mage_Checkout_CartController{
         }
     }
 
+    //Adapted from app/code/local/Mage/Checkout/Model/Cart.php
+    public function updateAction(){
+        $cartData = $this->getRequest()->getParams();
+            try {
+                $filter = new Zend_Filter_LocalizedToNormalized(array('locale' => Mage::app()->getLocale()->getLocaleCode()));
+                //Normalize and sanitize cartData to fit Magento format for updateItems function
+                $data=array();
+                $data[$cartData['id']]['qty'] = $filter->filter(trim($cartData['qty']));
+                $data[$cartData['id']]['item_comment'] = $filter->filter(trim($cartData['comments']));
+                $cart = $this->_getCart();
+                if (! $cart->getCustomerSession()->getCustomer()->getId() && $cart->getQuote()->getCustomerId()) {
+                    $cart->getQuote()->setCustomerId(null);
+                }
+                $data = $cart->suggestItemsQty($data);
+                //function in Pmainguet/QuoteItemComment/Model/Cart.php
+                $cart->updateItems($data)->save();
+                $this->_getSession()->setCartWasUpdated(true);
+                if (!$cart->getQuote()->getHasError()){
+                    $message = $this->__('%s a été mis à jour.', Mage::helper('core')->escapeHtml('Le produit'));
+                    $response['status'] = 'SUCCESS';
+                    $response['message'] = $message;
+                    //Update minicart and totals
+                    $this->loadLayout();
+                    $minicart_head = $this->getLayout()->getBlock('minicart_head')->toHtml();
+                    $totals = $this->getLayout()->getBlock('checkout.cart.totals')->toHtml();
+                    Mage::register('referrer_url', $this->_getRefererUrl());
+                    $response['minicarthead'] = $minicart_head;
+                    $response['totals'] = $totals;
+                }
+            } catch (Mage_Core_Exception $e) {
+                $msg = "";
+                if ($this->_getSession()->getUseNotice(true)) {
+                    $msg = $e->getMessage();
+                } else {
+                    $messages = array_unique(explode("\n", $e->getMessage()));
+                    foreach ($messages as $message) {
+                        $msg .= $message.'<br/>';
+                    }
+                }
+                $response['status'] = 'ERROR';
+                $response['message'] = $msg;
+            } catch (Exception $e) {
+                $response['status'] = 'ERROR';
+                $response['message'] = $this->__('Cannot update shopping cart.');
+                Mage::logException($e);
+            }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            return;
+    }
+
 }
