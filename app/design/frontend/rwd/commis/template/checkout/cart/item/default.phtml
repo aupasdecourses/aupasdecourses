@@ -29,7 +29,7 @@ $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 $_product = Mage::getModel('catalog/product')->load($_item->getProductId());
-$helper = Mage::helper('commercants');
+$helper = Mage::helper('pmainguet_commercants');
 
 ?>
 <tr>

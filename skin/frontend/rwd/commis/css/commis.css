@@ -1167,6 +1167,21 @@ div.parentMenu.menu0{
   line-height:22px;
 }
 
+.thumb-menu{
+  width:20%;
+  display: inline-block;
+  vertical-align: middle;
+  /*add round shape*/
+}
+
+.thumb-text-menu{
+  width:80%;
+  display: inline-block;
+  padding-left: 10px;
+  vertical-align: middle;
+  /*add round shape*/
+}
+
 @media screen and (min-width: 771px){
   a.level3:link, a.level3:visited {
       padding-left:20px;
