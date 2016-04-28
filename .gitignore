@@ -57,3 +57,4 @@ sitemap.xml
 delivery/attachments
 magmi/conf/magmi.ini
 magmi/state
+maintenance.flag
