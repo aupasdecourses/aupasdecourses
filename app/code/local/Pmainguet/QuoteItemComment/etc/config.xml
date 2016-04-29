@@ -29,16 +29,16 @@
             </sales_convert_order_item>
         </fieldsets>
         <models>
-                <!-- Pas obligé de le mettre si seulement rewrite -->
-                 <pmainguet_quoteitemcomment>
-                    <class>Pmainguet_QuoteItemComment_Model</class>
-                </pmainguet_quoteitemcomment> 
-                <!--- Attention à la syntaxe <nom_core_dossier><rewrite><nom_class_php> -->
-                <checkout>
-                    <rewrite>
-                        <cart>Pmainguet_QuoteItemComment_Model_Cart</cart>
-                    </rewrite>
-                </checkout>
+            <!-- Pas obligé de le mettre si seulement rewrite -->
+             <pmainguet_quoteitemcomment>
+                <class>Pmainguet_QuoteItemComment_Model</class>
+            </pmainguet_quoteitemcomment> 
+            <!--- Attention à la syntaxe <nom_core_dossier><rewrite><nom_class_php> -->
+            <checkout>
+                <rewrite>
+                    <cart>Pmainguet_QuoteItemComment_Model_Cart</cart>
+                </rewrite>
+            </checkout>
         </models>
         <!-- <events>
             <sales_quote_item_set_product>

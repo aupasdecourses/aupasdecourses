@@ -42,27 +42,27 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 		<h3>Sélectionner les fichiers à synchroniser</h3>
 			<div id="sync_div">
 				<?php
-					$commercants=[
-					"FRB17"=>"Fromagerie des Batignolles",
-					"RGA17"=>"Regal Art",
-					"CDV17"=>"Comptoir des Vignes",
-					"FIB17"=>"La Fille du Boulanger",
-					"PBP17"=>"Pascal Bassard Primeur",
-					"MAR17"=>"Marée 17",
-					"BDM17"=>"Boucherie des Moines",
-					"DAN17"=>"Boucherie Dandelion",
-					"TDC17"=>"Terres de Café",
-					"LRE17"=>"La Récolte",
-					];?>
-
-					<table>
-						<!-- <input id="selectous" type="checkbox" name="selectous" value="tous" /><label>Sélectionner tous</label> -->
-					<?php foreach($commercants as $code => $name){?>
-						<tr><td>
-							<input type="checkbox" name="com" value="<?php echo $code;?>" /><label><?php echo $name;?></label>
-						</td></tr>
-				<?php }?>
-					</table>
+					define('CHEMIN_MAGE','../../');
+					include CHEMIN_MAGE.'app/Mage.php';
+					umask(0);
+					Mage::app();
+					//
+					$commercants=Mage::helper('pmainguet_delivery')->liste_commercant_id();
+					?>
+					<?php foreach($commercants as $storename => $data):?>			
+						<table width="49%;" style="display:inline;">
+							<!-- <input id="selectous" type="checkbox" name="selectous" value="tous" /><label>Sélectionner tous</label> -->
+							<thead>
+								<th><?php echo "Quartier ".$storename;?></th>
+							</thead>
+							<tbody>
+							<?php foreach($data as $id => $name):?>
+								<tr><td>
+									<input type="checkbox" name="com" value="<?php echo $id;?>" /><label><?php echo $name;?></label>
+								</td></tr>
+							<?php endforeach;?>
+						</table>
+					<?php endforeach;?>
 				<input type="submit" id="button_sync" name="Sync!" value="Sync!" />
 			</div>
 			<script>

@@ -64,7 +64,7 @@
 						Mage::app()->getResponse()->setRedirect($url);
 						break;
 					case 'Paris 10e':
-						$storeId='../quartiers/Paris_10e';
+						$storeId='../saintmartin';
 						$url=$coreUrl.$storeId;
 						Mage::app()->getResponse()->setRedirect($url);
 						break;

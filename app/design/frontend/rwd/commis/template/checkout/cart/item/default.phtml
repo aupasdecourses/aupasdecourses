@@ -29,7 +29,7 @@ $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 $_product = Mage::getModel('catalog/product')->load($_item->getProductId());
-$helper = Mage::helper('commercants');
+$helper = Mage::helper('pmainguet_commercants');
 
 ?>
 <tr>
@@ -207,49 +207,20 @@ $helper = Mage::helper('commercants');
         </td>
         <?php endif; ?>
     <?php endif; ?>
-    <td class="product-cart-actions" data-rwd-label="<?php echo $this->__('Qty'); ?>">
-        <input type="text" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty validate-digits" maxlength="12" />
-        <!-- <select
-            pattern="\d*"
-            name="cart[<?php echo $_item->getId() ?>][qty]"
-            value="<?php echo $this->getQty() ?>"
-            title="<?php echo $this->__('Qty') ?>"
-            class="input-text qty">
-              <?php for($i=1;$i<=10;$i++){
-                if($i==$this->getQty()){
-                    echo "<option selected value=".$i.">";
-                }else{
-                    echo "<option value=".$i.">";
-                }
-                    echo $i."</option>";
-                }?>
-        </select>  -->
-
-        <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update'); ?>" class="button btn-update-custom"><span><span><?php echo $this->__('Update'); ?></span></span>
-        </button>
-
-        <!-- <ul class="cart-links">
-            <?php if ($isVisibleProduct): ?>
-                <li>
-                    <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo $this->__('Edit item parameters') ?>"><?php echo $this->__('Edit') ?></a>
-                </li>
-            <?php endif ?>
-
-            <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
-            <li>
-                <?php if ($isVisibleProduct): ?>
-                    <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move to wishlist'); ?></a>
-                <?php endif ?>
-            </li>
-            <?php endif ?>
-        </ul> -->
+    <td class="product-cart-actions" id="product-cart-actions_<?php echo $_item->getId()?>" data-rwd-label="<?php echo $this->__('Qt& & Commentaires'); ?>">
+        <!--Qty input -->
+        <label><?php echo $this->__('Quantité: '); ?></label><input type="text" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty validate-digits" maxlength="12" />
+        <!--Comment input -->
+        <textarea class="comment-cart" placeholder="Votre commentaire" name="cart[<?php echo $_item->getId() ?>][item_comment]"><?php echo $_item->getItemComment() ?></textarea>
+        <!--Button input -->
+        <div class="button-box">
+            <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update'); ?>" class="button btn-update-custom" onclick="event.preventDefault();setLocationAjax('<?php echo $this->getUrl('checkout/cart/updatePost') ?>','<?php echo $_item->getId()?>')"><span><span><?php echo $this->__('Update'); ?></span></span>
+            </button>
+            <!--Ajax loaders -->
+            <span id='ajax_loader_<?php echo $_item->getId()?>'style="display:none"><div class="loader"></div></span>
+            <span id="ajax_loader_success_<?php echo $_item->getId()?>" class="ajax_loader_success" style="display:none"><i class="fa fa-check account-connected"></i></span>
+        </div>
     </td>
-    <!-- Comment section starts here -->
-    <td class="a-center">
-        <textarea id="comment-cart" name="cart[<?php echo $_item->getId() ?>][item_comment]" rows="3" cols="20"><?php echo $_item->getItemComment() ?></textarea>
-    </td>
-
-
     <!--Sub total starts here -->
     <?php if (($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
     <td class="product-cart-total" data-rwd-label="<?php echo $this->__('Subtotal'); ?>">

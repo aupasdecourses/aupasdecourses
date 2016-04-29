@@ -9,19 +9,14 @@
 						
 						//Limite le nombre de vignette visible et les affiche dans un ordre aléatoire
 						$fiches=$this->getListCommercant();
-							// ->setCurPage(1)
-							// ->setPageSize(19);
 						$fiches->getSelect()->orderRand();
-
 						foreach ($fiches as $fiche){
-
 							$_NameStripped = $this->stripTags($fiche->getName(), null, true);
 							$_thumbnail=$fiche->getThumbnail();
 							$src = Mage::getBaseUrl('media').'catalog/category/'.$_thumbnail;
 							$_name=$fiche->getName();
 							$_adresse=$fiche->getData('adresse_commercant');
 							$url=$fiche->getUrl();
-
 							?>
 							<div class="commercant-item">
 					            <a class="product-image" href="<?php echo $url;?>" title="<?php echo $_NameStripped;?>">

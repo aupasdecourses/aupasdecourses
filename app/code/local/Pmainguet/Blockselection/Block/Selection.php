@@ -3,21 +3,24 @@
 class Pmainguet_Blockselection_Block_Selection extends Mage_Catalog_Block_Product{
 
 	function getAllSelections(){
-		$collection = Mage::getModel('catalog/product')->getCollection()
+		//filter by store
+		$storeid=Mage::app()->getStore()->getId();
+		$collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeid)
 					->addAttributeToSelect(array('name','price','small_image','short_description','produit_biologique','origine'))
-					->addFieldToFilter('status',1)
-					->addFieldToFilter('on_selection',True);
+					->addFieldToFilter('status',1);
+					//->addFieldToFilter('on_selection',True);
 		$collection->getSelect()->orderRand();
 		return $collection;
 	}
 
 	function getSelectionbyById($category_id){
-		$collection = Mage::getModel('catalog/product')->getCollection()
+		$storeid=Mage::app()->getStore()->getId();
+		$collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeid)
 				->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
 				->addAttributeToSelect('*')
 				->addAttributeToFilter('category_id', $category_id)
-				->addFieldToFilter('status',1)
-				->addFieldToFilter('on_selection',True);
+				->addFieldToFilter('status',1);
+				//->addFieldToFilter('on_selection',True);
 		$collection->getSelect()->orderRand();
 		return $collection;
 	}
