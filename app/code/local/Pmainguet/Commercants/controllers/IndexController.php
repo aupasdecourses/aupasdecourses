@@ -81,27 +81,21 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         $modelid = intval(Mage::getConfig()->getNode('stores')->{$this->_codemodel}->{'system'}->{'store'}->{'id'});
         $newstoreid = intval(Mage::getConfig()->getNode('stores')->{$this->_codeboutique}->{'system'}->{'store'}->{'id'});
 
-        // //DUPLICATE HOMEPAGE
-
-        // //Get home page of Model
-        //$page= Mage::getModel('cms/page')->setStoreId($modelid)->load('home');
-
-        // // $arraystore=$page->getStoreId();
-        // // if(!in_array($newstoreid,$arraystore){
-        // //     array_push($newstoreid,$arraystore);
-        // // }
-        // $cmsPageData=[
-        //     'title'=>'Au Pas De Courses - Livraison de courses Saint Martin Paris 10e et 3e',
-        //     'root_template'=>$page->getRootTemplate(),
-        //     'meta_description'=>'Les livraisons de courses dans le 10e et 3e arrondissements avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!',
-        //     'identifier'=>$page->getIdentifier(),
-        //     'content_heading'=>$page->getContentHeading(),
-        //     //'content'=>$page->getContent(),
-        //     'custom_root_template'=>$page->getCustomRootTemplate(),
-        //     'store_id'=>[$newstoreid],
-        // ];
-        // Mage::getModel('cms/page')->setData($cmsPageData)->save();
-        // echo 'Homepage for '.$this->_storecode.' created!';
+        //DUPLICATE HOMEPAGE
+        //Get home page of Model
+        $page= Mage::getModel('cms/page')->setStoreId($modelid)->load('home');
+        $cmsPageData=[
+            'title'=>'Au Pas De Courses - Livraison de courses Saint Martin Paris 10e et 3e',
+            'root_template'=>$page->getRootTemplate(),
+            'meta_description'=>'Les livraisons de courses dans le 10e et 3e arrondissements avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!',
+            'identifier'=>$page->getIdentifier(),
+            'content_heading'=>$page->getContentHeading(),
+            //'content'=>$page->getContent(),
+            'custom_root_template'=>$page->getCustomRootTemplate(),
+            'store_id'=>[$newstoreid],
+        ];
+        Mage::getModel('cms/page')->setData($cmsPageData)->save();
+        echo 'Homepage for '.$this->_storecode.' created!';
 
         //UPDATE CAROUSSEL & FOOTER BLOCKS
         $blocks = [
