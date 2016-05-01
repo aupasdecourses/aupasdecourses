@@ -55,7 +55,7 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         ];
 
     private $_titlehomepage = 'Au Pas De Courses - Livraison de courses Saint Martin Paris 10e et 3e';
-    private $_metadescription ='Les livraisons de courses dans le 10e et 3e arrondissements avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!';
+    private $_metadescription = 'Les livraisons de courses dans le 10e et 3e arrondissements avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!';
     private $_content_heading = 'Au Pas De Courses Saint Martin, votre livraison de produits frais dans le 10e et 3e';
 
     private $_shippingruletoduplicate = 'Restriction 17e';
@@ -74,15 +74,24 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         $storeId = 0;
         $category = Mage::getModel('catalog/category');
         $category->setStoreId($storeId);
-        $category->setName($this->_rootcategory);
-        $category->setUrlKey($this->_rootcaturlkey);
-        $category->setIsActive(1);
-        $category->setDisplayMode('PRODUCTS');
-        $parentId = Mage_Catalog_Model_Category::TREE_ROOT_ID;
-        $parentCategory = Mage::getModel('catalog/category')->load($parentId);
-        $category->setPath($parentCategory->getPath());
-        $category->save();
-        echo $this->_rootcategory.' created!';
+
+        $check = $category->getCollection()->addAttributeToFilter('is_active', true)
+            ->addAttributeToFilter('name', $this->_rootcategory)
+            ->getFirstItem()->getId();
+
+        if ($check == null) {
+            $category->setName($this->_rootcategory);
+            $category->setUrlKey($this->_rootcaturlkey);
+            $category->setIsActive(1);
+            $category->setDisplayMode('PRODUCTS');
+            $parentId = Mage_Catalog_Model_Category::TREE_ROOT_ID;
+            $parentCategory = Mage::getModel('catalog/category')->load($parentId);
+            $category->setPath($parentCategory->getPath());
+            $category->save();
+            echo 'Category '.$this->_rootcategory.' created!';
+        } else {
+            echo 'Category '.$this->_rootcategory.' already exist. Next!';
+        }
     }
 
     //Creation de la Boutique, du Group Store et du Store
@@ -436,8 +445,8 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         $rootCategoryId = Mage::app()->getStore($storeid)->getRootCategoryId();
         $categories->addAttributeToFilter('path', array('like' => '1/'.$rootCategoryId.'/%'));
         foreach ($categories as $cat) {
-            if(in_array($cat->getName(),array_keys($this->_commercant))){
-                $cat->setIsClickable("Non");
+            if (in_array($cat->getName(), array_keys($this->_commercant))) {
+                $cat->setIsClickable('Non');
                 echo 'Catégorie '.$cat->getName().' non cliquable.</br>';
             } else {
                 $cat->setIsClickable(true);
