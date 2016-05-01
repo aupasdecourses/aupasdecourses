@@ -182,10 +182,10 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
 
         //DUPLICATE CAROUSSEL
         echo '//DUPLICATE CARROUSSEL//</br>';
-        $b = Mage::getModel('cms/block')->load('carroussel-home-page');
-        $check = sizeof($b->setStoreId($newstoreid)->getData());
-        if ($check == 0) {
-            $data = $b->setStoreId($modelid)->getData();
+        $b = Mage::getModel('cms/block');
+        $check=$b->getCollection()->addStoreFilter($newstoreid)->addFieldToFilter('identifier','carroussel-home-page');
+        if (sizeof($check->getData())==0) {
+            $data = $b->load('carroussel-home-page')->setStoreId($modelid)->getData();
             unset($data['block_id']);
             unset($data['creation_time']);
             $data['title'] = 'Caroussel Home Page '.$this->_nameboutique;
