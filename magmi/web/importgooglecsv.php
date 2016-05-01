@@ -18,17 +18,21 @@
 			$name=$google_csv["name"];
 			$key=$google_csv['key'];
 			$gid=$google_csv['gid'];
-		   	try{
-		   		$filepath=$url_base.date('ymd_Hi')."_".$code.".csv";
-		   		$filesize=0;
-		   		//while($filesize<$size_file_limit){
-		   			file_put_contents($filepath, file_get_contents("https://docs.google.com/spreadsheets/d/".$key."/export?gid=".$gid."&format=csv&id=".$key));
-		   			$filesize=filesize($filepath);
-		   		//}
-		   		echo "Fichier ".$name." synchronisé! (taille=".round(floatval($filesize)/1000,0)."Ko)";
-		   	}catch(Exception $e){
-		   		echo "Erreur!";
-		   	}
+			if(!is_null($key) && !is_null($gid)){
+			   	try{
+			   		$filepath=$url_base.date('ymd_Hi')."_".$code.".csv";
+			   		$filesize=0;
+			   		//while($filesize<$size_file_limit){
+			   			file_put_contents($filepath, file_get_contents("https://docs.google.com/spreadsheets/d/".$key."/export?gid=".$gid."&format=csv&id=".$key));
+			   			$filesize=filesize($filepath);
+			   		//}
+			   		echo "Fichier ".$name." synchronisé! (taille=".round(floatval($filesize)/1000,0)."Ko)";
+			   	}catch(Exception $e){
+			   		echo "Erreur!";
+			   	}
+			} else {
+				echo "Key & gid vides! Vérifier les informations Google Sheets dans la catégorie correspondante.";
+			}
 	   }
 	}
 ?>
