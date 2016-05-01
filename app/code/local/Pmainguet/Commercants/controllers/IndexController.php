@@ -183,7 +183,7 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         //DUPLICATE CAROUSSEL
         echo '//DUPLICATE CARROUSSEL//</br>';
         $b = Mage::getModel('cms/block')->load('carroussel-home-page');
-        $check = sizeof($b->setStoreId($modelid)->getData());
+        $check = sizeof($b->setStoreId($newstoreid)->getData());
         if ($check == 0) {
             $data = $b->setStoreId($modelid)->getData();
             unset($data['block_id']);
