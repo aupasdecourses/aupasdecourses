@@ -115,7 +115,7 @@ class Pmainguet_Addajax_IndexController extends Mage_Checkout_CartController{
                 //Normalize and sanitize cartData to fit Magento format for updateItems function
                 $data=array();
                 $data[$cartData['id']]['qty'] = $filter->filter(trim($cartData['qty']));
-                $data[$cartData['id']]['item_comment'] = $filter->filter(trim($cartData['comments']));
+                $data[$cartData['id']]['item_comment'] = filter_var($cartData['comments'], FILTER_SANITIZE_SPECIAL_CHARS);
                 $cart = $this->_getCart();
                 if (! $cart->getCustomerSession()->getCustomer()->getId() && $cart->getQuote()->getCustomerId()) {
                     $cart->getQuote()->setCustomerId(null);
