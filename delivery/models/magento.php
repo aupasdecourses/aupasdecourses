@@ -45,7 +45,7 @@ function liste_commercant_id()
     // }
 
     //with active categories
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter();
+    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
     foreach ($categories as $cat) {
         if ($cat->getData('estcom_commercant') == true) {
             $return[$cat->getData('att_com_id')] = $cat->getName();
@@ -393,7 +393,7 @@ function data_facturation_products($debut, $fin)
         // if ($parentid!=NULL) {
         //     $ordered_items=Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
         // }else{
-            $ordered_items = $order->getAllVisibleItems();
+        $ordered_items = $order->getAllItems();
         $credit_comments = getRefundorderdata($order, 'comment');
         // }
 
