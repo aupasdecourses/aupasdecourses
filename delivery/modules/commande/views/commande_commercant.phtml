@@ -152,9 +152,11 @@
 									}
 						     	 }?>
 						     	 <tr class="info">
-									<td colspan="2"><strong>Total</strong></td>
+									<td/><strong>Total</strong></td>
+									<td></td>
 						     	 	<td><?php echo round($tot_qty,0)?></td>
-						     	 	<td colspan="2"></td>
+						     	 	<td></td>
+						     	 	<td></td>
 						     	 	<td><?php echo round($sum,2).' €'?></td>
 						     	 	<td></td>
 						     	 </tr>
@@ -178,23 +180,6 @@
 <script src="/delivery/libs/js/html2canvas.js"></script>
 <script>
 function generatePDF() {  
-
-	//Function to generate header and footer
-	function header(date_livraison, commercant){
-		doc.setFontSize(8);
-		doc.text(20,20,'Commande Au Pas De Courses - '+commercant+' pour le '+date_livraison);
-		doc.setLineWidth(0.5);
-		doc.line(20, 25, 822, 25);
-	};
-
-	function footer(dt){
-		doc.setFontSize(8);
-		doc.setLineWidth(0.5);
-		doc.line(20, 560, 822, 560);
-		doc.text(20,570, 'Généré le: ' + dt);
-		doc.text(800,570, 'page ' + doc.page);
-		doc.page ++;
-	};
 
 	function reminder(){
 		// doc.setFontSize(16);
@@ -233,9 +218,24 @@ function generatePDF() {
 		creator: 'AU PAS DE COURSES'
 	});
 
-	//Page de Garde - Nombre de commande du jour et liste des orders increment_id du jour
+	//Function to generate header and footer
+	var header = function (){
+		doc.setFontSize(8);
+		doc.text('Commande Au Pas De Courses - '+commercant+' pour le '+date_livraison,20,20);
+		doc.setLineWidth(0.5);
+		doc.line(20, 25, 822, 25);
+	};
 
-	header(date_livraison, commercant);
+	var footer = function (){
+		doc.setFontSize(8);
+		doc.setLineWidth(0.5);
+		doc.line(20, 560, 822, 560);
+		doc.text('Généré le: ' + dt,20,570);
+		doc.text('page ' + doc.page,800,570);
+		doc.page ++;
+	};
+
+	//Page de Garde - Nombre de commande du jour et liste des orders increment_id du jour
 
 	var nb_orders = 0, orders_incrementid=[];
 	$('.order-box').each(function(index){
@@ -245,25 +245,22 @@ function generatePDF() {
 
 	var position_title = 150;
 	doc.setFontSize(base_font_size/(.75)^2);
-	doc.text(margin_left*2,position_title,'Commandes AU PAS DE COURSES');
+	doc.text('Commandes AU PAS DE COURSES',margin_left*2,position_title);
 	doc.setFontSize(base_font_size/(.75)^2-2);
-	doc.text(margin_left*2,position_title+line_height,'A '+commercant+' pour le '+date_livraison);
+	doc.text('A '+commercant+' pour le '+date_livraison,margin_left*2,position_title+line_height);
 	if(nb_orders>0){
 		doc.setFontSize(base_font_size/.75);
-		doc.text(margin_left*2,position_title+2*line_height+20,'Nombre de commandes: '+nb_orders);
+		doc.text('Nombre de commandes: '+nb_orders,margin_left*2,position_title+2*line_height+20);
 		doc.setFontSize(base_font_size);
 		$.each(orders_incrementid,function(index){
-			doc.text(margin_left*2,position_title+(3+index)*line_height+20,'Commande n°'+(index+1)+': '+this);
+			doc.text('Commande n°'+(index+1)+': '+this,margin_left*2,position_title+(3+index)*line_height+20);
 		});
 	}else{
 		doc.setFontSize(base_font_size/.75^2);
 		doc.setTextColor(255,0,0);
-		doc.text(margin_left*2,position_title+2*line_height+20,'Vous n\'avez pas de commande pour cette date');
+		doc.text('Vous n\'avez pas de commande pour cette date',margin_left*2,position_title+2*line_height+20);
 		doc.setTextColor(0,0,0);
 	}
-	reminder();
-
-	footer(dt);
 
 	if(nb_orders>0){
 		doc.addPage();
@@ -273,79 +270,91 @@ function generatePDF() {
 
 	var len = $('.order-box').length;
    $('.order-box').each(function(index){
-   		header(date_livraison, commercant);
    		doc.setFontSize(base_font_size);
    		
    		//Numéro de commande
    		doc.setFontType("bold");
    		doc.setFontSize(base_font_size/(.75)^2);
    		var text ='Commande n° ';
-   		doc.text(margin_left, 40+line_height,text);
+   		doc.text(text,margin_left, 40+line_height);
    		var w = 150;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+line_height,$(this).children('.infos_client').children('.order-ref').children('span').text());
+		doc.text($(this).children('.infos_client').children('.order-ref').children('span').text(),margin_left+w,40+line_height);
 		doc.setFontSize(base_font_size);
 
 		//Nom du client
 		doc.setFontType("bold");
    		text ='Nom du client: ';
-   		doc.text(margin_left, 40+2*line_height,text);
+   		doc.text(text,margin_left, 40+2*line_height);
    		w = doc.getStringUnitWidth(text) * base_font_size;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+2*line_height,$(this).children('.infos_client').children('dl').children('dd.name').text());  
+		doc.text($(this).children('.infos_client').children('dl').children('dd.name').text(),margin_left+w,40+2*line_height);  
 
 		//Date de commande
 		doc.setFontType("bold");
    		text ='Date Prise de Commande: ';
-   		doc.text(margin_left, 40+3*line_height,text);
+   		doc.text(text,margin_left, 40+3*line_height);
    		w = doc.getStringUnitWidth(text) * base_font_size;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+3*line_height,$(this).children('.infos_client').children('dl').children('dd.order_date').text());
+		doc.text($(this).children('.infos_client').children('dl').children('dd.order_date').text(),margin_left+w,40+3*line_height);
 
 		//Date de livraison
 		doc.setFontType("bold");
    		text ='Date Livraison: ';
-   		doc.text(margin_left, 40+4*line_height,text);
+   		doc.text(text,margin_left, 40+4*line_height);
    		w = doc.getStringUnitWidth(text) * base_font_size;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+4*line_height,$(this).children('.infos_client').children('dl').children('dd.delivery_date').text());
+		doc.text($(this).children('.infos_client').children('dl').children('dd.delivery_date').text(),margin_left+w,40+4*line_height);
 
 		//Créneau de livraison
 		doc.setFontType("bold");
    		text ='Créneau Livraison: ';
-   		doc.text(margin_left, 40+5*line_height,text);
+   		doc.text(text,margin_left, 40+5*line_height);
    		w = doc.getStringUnitWidth(text) * base_font_size;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+5*line_height,$(this).children('.infos_client').children('dl').children('dd.delivery_time').text());
+		doc.text($(this).children('.infos_client').children('dl').children('dd.delivery_time').text(),margin_left+w,40+5*line_height);
 
 		//Produit équivalent
 		doc.setFontType("bold");
    		text ='Remplacement pour produit équivalent possible: ';
-   		doc.text(margin_left, 40+6*line_height,text);
+   		doc.text(text,margin_left, 40+6*line_height);
    		w = doc.getStringUnitWidth(text) * base_font_size;
    		doc.setFontType('normal');
-		doc.text(margin_left+w,40+6*line_height,$(this).children('.infos_client').children('dl').children('dd.remplacement').text());
+		doc.text($(this).children('.infos_client').children('dl').children('dd.remplacement').text(),margin_left+w,40+6*line_height);
 
 		//Liste des produits commandés
 		doc.setFontType("bold");
    		text ='Liste des produits commandés:';
-   		doc.text(margin_left, 40+7*line_height,text);
+   		doc.text(text,margin_left, 40+7*line_height);
    		doc.setFontType('normal');
 
 		var items = doc.autoTableHtmlToJson(document.getElementById("infocommande_"+index));
 		
 		var options = {
-		    padding: 5, // Horizontal cell padding
-		    fontSize: 11,
-		    lineHeight: line_height+10,
-		    margins: { horizontal: 2*margin_left, top: 40+8*line_height, bottom: 10 },
-		    overflow: 'linebreak',
-		    overflowColumns: ['Nom du Produit', 'Description Unitaire', 'Commentaires']
+			theme: 'striped',
+			styles:{
+				cellPadding: 5, // Horizontal cell padding
+			    fontSize: 11,
+			    rowHeight: line_height+10,
+			    halign: 'left',
+    			valign: 'middle',
+			    overflow: 'linebreak',
+			    columnWidth:'auto'
+			},
+			margin: { horizontal: 2*margin_left, top: 40, bottom: 10 },
+			startY:40+8*line_height,
+			pageBreak: 'auto',
+			tableWidth: 'auto',
+			beforePageContent: header,
+			afterPageContent: footer,
+			columnStyles: {
+	            2: {fontStyle: 'bold',fontSize:14,halign:'center'},
+	            3: {fontStyle: 'bold',fontSize:12},
+	        }
 		 };
 
-		doc.autoTable(false, items,options);
+		doc.autoTable(items.columns, items.data,options);
 
-		footer(dt);
 		if (index < len - 1) {
            doc.addPage();
         }

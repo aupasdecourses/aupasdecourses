@@ -14,25 +14,51 @@ function connect_magento()
 
 /////Création des tables commercants, produits, statuts pour limiter les call à MAGENTO
 
-function list_stores()
+function list_stores($displayby = 'code')
 {
+    //Get all store except "accueil"
+
     $stores = [];
     $allStores = Mage::app()->getStores();
     foreach ($allStores as $_eachStoreId => $val) {
-        $_storeCode = Mage::app()->getStore($_eachStoreId)->getCode();
-        //$_storeName = Mage::app()->getStore($_eachStoreId)->getName();
         $_storeId = Mage::app()->getStore($_eachStoreId)->getId();
-        $stores[$_storeId] = $_storeCode;
+        if ($displayby == 'code') {
+            $_storeCode = Mage::app()->getStore($_eachStoreId)->getCode();
+            $stores[$_storeId] = $_storeCode;
+        } elseif ($displayby == 'name') {
+            $_storeName = Mage::app()->getStore($_eachStoreId)->getName();
+            $stores[$_storeId] = $_storeName;
+        }
+    }
+    if (($key = array_search('Au Pas De Courses Accueil', $stores)) !== false || ($key = array_search('accueil', $stores)) !== false) {
+        unset($stores[$key]);
     }
 
     return $stores;
+}
+
+function list_rootcatid($displayby = 'name')
+{
+    $stores = list_stores('name');
+    $rootcatid = [];
+    foreach ($stores as $id => $name) {
+        $current = Mage::app()->setCurrentStore($id);
+        $rootCategoryId = Mage::app()->getStore()->getRootCategoryId();
+        if ($displayby == 'name') {
+            $rootcatid[$rootCategoryId] = $name;
+        } elseif ($displayby == 'id') {
+            $rootcatid[$rootCategoryId] = $id;
+        }
+    }
+
+    return $rootcatid;
 }
 
 //* --- Récupération des informations commerçants avec numéro ID --*//
 
 //LISTE COMMERCANT, VIA COMMERCANT_ID
 
-function liste_commercant_id()
+function liste_commercant_id($filter = 'none')
 {
     $return = [];
 
@@ -45,13 +71,22 @@ function liste_commercant_id()
     // }
 
     //with active categories
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
+    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter();
     foreach ($categories as $cat) {
         if ($cat->getData('estcom_commercant') == true) {
-            $return[$cat->getData('att_com_id')] = $cat->getName();
+            if ($filter == 'none') {
+                $return[$cat->getData('att_com_id')] = $cat->getName();
+            } elseif ($filter == 'store') {
+                $storeid = explode('/', $cat->getPath())[1];
+                $return[$storeid][$cat->getData('att_com_id')] = array(
+                    'name' => $cat->getName(),
+                    'adresse' => $cat->getAdresseCommercant(),
+                    'telephone' => $cat->getTelephone()." / ".$cat->getPortable(),
+                );
+            }
         }
     }
-    asort($return);
+    arsort($return);
 
     return $return;
 }

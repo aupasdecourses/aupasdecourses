@@ -16,12 +16,15 @@
     </div>
     <p id="warning-message" class="bg-warning">Attention: Seules les commandes à l'état "Processing" sont affichées.</p>
     <?php
-	    $com_id=liste_commercant_id();
+	    $com_id=liste_commercant_id("store");
 		$orders=array();
-	    foreach($com_id as $id => $name){
-	    	$orders[$id]=orders_fortheday($_GET['date'],$id);
+	    foreach($com_id as $store => $com_array){
+			foreach($com_array as $id => $array) {
+				$orders[$store][$id]=orders_fortheday($_GET['date'],$id);
+			}
 	    }
 	    $date=datetime_filter('date');
+	   	$stores=list_rootcatid("name");
 	?>
 
 		<div class="row button_accueil">
@@ -37,61 +40,71 @@
 	    			echo '>'.$d.'</option>';
 	    		}
 	    	echo '</select>';?>
-
 	    	</div>
 	    </div>
+	    <?php if(isset($_GET['date'])):?>
+		    <?php foreach ($orders as $store => $orders_day) :
+		    ?>
+			    <div class="row" id="info-<?php echo $store;?>">
+			    <h3><?php echo "Boutique ".$stores[$store];?></h3>
+			    	<div id="order-table-<?php echo $store;?>" class="table-responsive order-table">
+					  <table id="picking-info-<?php echo $store?>" class="table table-striped">
+					    <thead>
+					    	<tr>
+					    		<td>Commercant</td>
+					    		<td>Adresse</td>
+					    		<td>Téléphone</td>
+					    		<td># Commande</td>
+					    		<td>Montant commande</td>
+					    	</tr>
+					    </thead>
+					    <tbody>
 
-	    <div class="row">
+		    	<?php //Affichage information des commandes
+			    	foreach($orders_day as $id=>$orders_array){
+			    		foreach($orders_array as $order){
+							if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
+								$ordered_items = $order->getAllItems();
+							  	$tot_qty=0;
+							   	$sum=0;
+							   	foreach($ordered_items as $item){
+							   		if($item->getCommercant()==$id){
+							   			$tot_qty+=$item->getQtyOrdered();
+										$sum+=$item->getRowTotalInclTax();
+									}
+							   	}
 
-	    	<div class="table-responsive order-table">
-			  <table id="picking-info" class="table table-striped">
-			    <thead>
-			    	<tr>
-			    		<td>Commercant</td>
-			    		<td># Commande</td>
-			    		<td>Montant commande</td>
-			    	</tr>
-			    </thead>
-			    <tbody>
+			    ?>
+						    	<tr>
+						    		<?php if ($nom_commercant<>$com_id[$store][$id]["name"]):?>
+						    			<td><b><?php echo $nom_commercant=$com_id[$store][$id]["name"];?></b></td>
+						    			<td><i><?php echo $com_id[$store][$id]["adresse"];?></i></td>
+						    			<td><?php echo $com_id[$store][$id]["telephone"];?></td>
+						    		<?php else: ?>
+							    		<td></td>
+							    		<td></td>
+							    		<td></td>
+						    		<?php endif;?>
+						    		<td><?php echo $order->getData('increment_id');?></td>
+						    		<td><?php echo $sum." €";?></td>
+						    	</tr>
+				   <?php
+				 			}
+				 		}?>
+					<?php
 
-    	<?php //Affichage information des commandes
-
-    	if(isset($_GET['date'])){
-	    	foreach($orders as $id=>$orders_array){
-	    		foreach($orders_array as $order){
-					if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
-
-						$ordered_items = $order->getAllItems();
-					  	$tot_qty=0;
-					   	$sum=0;
-					   	foreach($ordered_items as $item){
-					   		if($item->getCommercant()==$id){
-					   			$tot_qty+=$item->getQtyOrdered();
-								$sum+=$item->getRowTotalInclTax();
-							}
-					   	}
-
-	    ?>
-				    	<tr>
-				    		<td><?php echo $com_id[$id];?></td>
-				    		<td><?php echo $order->getData('increment_id');?></td>
-				    		<td><?php echo $sum;?></td>
-				    	</tr>
-		   <?php
-		 			}
-		 		}?>
-			<?php
-
-	 		}
-	 	}?>
-				</tbody>
-			</table>
+			 		}?>
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+				      <a href="javascript:generatePDF(<?php echo $store; ?>)" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a>
+				    </div>
+		    	</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-		      <a href="javascript:generatePDF()" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a>
-		    </div>
-    	</div>
+			<?php endforeach;?>
+		<?php endif;?>
   </div>
 </body>
 
@@ -107,17 +120,34 @@ $(function(){
 <script src="/delivery/libs/js/jspdf.plugin.autotable.js"></script>
 <script src="/delivery/libs/js/html2canvas.js"></script>
 <script type="text/javascript">
-function generatePDF() {
+function generatePDF(store) {
+
+	//Configuration générale du PDF
+	var doc = new jsPDF('l','pt','a4');
+	doc.page=1;
+	var margin_left = 20;
+	var line_height = 20;
+	var base_font_size = 12;
+	var boutique = $("#info-"+store).find("h3").text();
+	var date_livraison = $('#date-dropdown').find(":selected").text();
+	var dt = new Date();
+	doc.setProperties({
+		title: boutique+ ' - Listing pour le picking - '+date_livraison,
+		subject: 'Listing picking Au Pas De Courses - '+boutique,
+		author: 'Pierre Mainguet',
+		keywords: 'AU PAS DE COURSES, commandes, generated, javascript, web 2.0, ajax',
+		creator: 'AU PAS DE COURSES'
+	});
 
 	//Function to generate header and footer
-	function header(date_livraison){
+	var  header = function(){
 		doc.setFontSize(8);
-		doc.text(20,20,'Listing pour le picking - '+date_livraison);
+		doc.text(boutique+' - Listing picking Au Pas De Courses - '+date_livraison,20,20);
 		doc.setLineWidth(0.5);
 		doc.line(20, 25, 822, 25);
 	};
 
-	function footer(dt){
+	var footer = function(){
 		doc.setFontSize(8);
 		doc.setLineWidth(0.5);
 		doc.line(20, 560, 822, 560);
@@ -126,50 +156,46 @@ function generatePDF() {
 		doc.page ++;
 	};
 
-	//Configuration générale du PDF
-	var doc = new jsPDF('l','pt','a4');
-	doc.page=1;
-	var margin_left = 20;
-	var line_height = 20;
-	var base_font_size = 12;
-	var date_livraison = $('#date-dropdown').find(":selected").text();
-	var dt = new Date();
-	var commercant = $(".page-header").children("h2").text();
-	doc.setProperties({
-		title: 'Listing pour le picking - '+date_livraison,
-		subject: 'Listing picking Au Pas De Courses',
-		author: 'Pierre Mainguet',
-		keywords: 'AU PAS DE COURSES, commandes, generated, javascript, web 2.0, ajax',
-		creator: 'AU PAS DE COURSES'
-	});
-
 	//Création des pages commande (1 par commande)
 
-	var len = $('.order-table').length;
-   $('.order-table').each(function(index){
-   		header(date_livraison);
+	var len = $('#order-table-'+store).length;
+   $('#order-table-'+store).each(function(index){
    		doc.setFontSize(base_font_size);
    		doc.setFontType('normal');
 
-		var items = doc.autoTableHtmlToJson(document.getElementById("picking-info"));
+		var items = doc.autoTableHtmlToJson(document.getElementById("picking-info-"+store));
 		
 		var options = {
-		    padding: 5, // Horizontal cell padding
-		    fontSize: 11,
-		    lineHeight: line_height+10,
-		    margins: { horizontal: 2*margin_left, top: 40, bottom: 10 },
-		    overflow: 'linebreak',
+			theme: 'striped',
+			styles:{
+				cellPadding: 5, // Horizontal cell padding
+			    fontSize: 11,
+			    rowHeight: line_height+10,
+			    halign: 'left',
+    			valign: 'middle',
+			    overflow: 'linebreak',
+			    columnWidth:'auto'
+			},
+			margin: { horizontal: 2*margin_left, top: 40, bottom: 10 },
+			pageBreak: 'auto',
+			tableWidth: 'auto',
+			beforePageContent: header,
+			afterPageContent: footer,
+			columnStyles: {
+	            0: {fontStyle: 'bold'},
+	            1: {fontStyle: 'italic'},
+	            4: {halign: 'center'},
+	        }
 		 };
 
-		doc.autoTable(false, items,options);
+		doc.autoTable(items.columns, items.data,options);
 
-		footer(dt);
 		if (index < len - 1) {
            doc.addPage();
         }
 	});
 
-var filename= 'Listing picking-'+date_livraison+'.pdf';
+var filename= boutique+' - Listing-picking-'+date_livraison+'.pdf';
 filename=filename.split(' ').join('-');
    doc.save(filename);
 };

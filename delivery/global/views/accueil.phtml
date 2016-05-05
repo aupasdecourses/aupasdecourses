@@ -6,36 +6,36 @@
       <p>Bienvenue sur la plateforme de livraison de APDC<br />
     (réservé aux administrateurs et livreurs)</p>
     </div>
-    <h3>Process</h3>
+    <h3>1 - Envoi Commandes</h3>
     <div class="button_accueil">
-      <a href="index.php?module=prepacommande&action=view"><button type="button" class="btn btn-primary btn-lg btn-block">Process commandes</button></a>
-    </div>
-    <h3>Commerçants</h3>
-    <div class="button_accueil">
-      <a href="index.php?module=commercant&action=view&option=profile"><button type="button" class="btn btn-default btn-lg btn-block">Profils commerçant</button></a>
-    </div>
-    <h3>Commandes</h3>
-    <div class="button_accueil">
+      <a href="index.php?module=commercant&action=view&option=order"><button type="button" class="btn btn-primary btn-lg btn-block">Liste par commerçant</button></a>
       <a href="index.php?module=commande&action=view"><button type="button" class="btn btn-default btn-lg btn-block">Liste complète (avec détails)</button></a>
-      <a href="index.php?module=commande&action=view&option=client"><button type="button" class="btn btn-default btn-lg btn-block">Liste complète (infos clients)</button></a>
-       <a href="index.php?module=commercant&action=view&option=order"><button type="button" class="btn btn-default btn-lg btn-block">Liste par commerçant</button></a>
     </div>
-    <h3>Livraisons</h3>
+    <h3>2 - Picking & Livraisons</h3>
     <div class="button_accueil">
-       <a href="index.php?module=dispatch&action=view&option=listing"><button type="button" class="btn btn-default btn-lg btn-block">Listing livraison</button></a>
+       <a href="index.php?module=dispatch&action=view&option=listing"><button type="button" class="btn btn-primary  btn-lg btn-block">Listing picking</button></a>
+       <a href="index.php?module=commande&action=view&option=client"><button type="button" class="btn btn-primary  btn-lg btn-block">Listing livraison</button></a>
        <a href="index.php?module=dispatch&action=view&option=route"><button type="button" class="btn btn-default btn-lg btn-block">Création tournées</button></a>
        <a href="index.php?module=dispatch&action=view&option=carte"><button type="button" class="btn btn-default btn-lg btn-block">Cartes</button></a>
     </div>
-    <h3>Règlements</h3>
+    <h3>3 - Remboursement & Facturation</h3>
     <div class="button_accueil">
-       <a href="index.php?module=remboursement&action=view"><button type="button" class="btn btn-default btn-lg btn-block">Remboursement client</button></a>
-       <a href="index.php?module=facturation&action=view"><button type="button" class="btn btn-default btn-lg btn-block">Calcul versements</button></a>
+       <a href="index.php?module=remboursement&action=view"><button type="button" class="btn btn-primary btn-lg btn-block">Remboursement client</button></a>
+       <a href="index.php?module=facturation&action=view"><button type="button" class="btn btn-primary btn-lg btn-block">Facturation commerçants</button></a>
     </div>
-    <h3>Clients</h3>
+    <h3>4 - Infos Commerçants</h3>
+    <div class="button_accueil">
+      <a href="index.php?module=commercant&action=view&option=profile"><button type="button" class="btn btn-default btn-lg btn-block">Profils commerçant</button></a>
+    </div>
+    <h3>5 - Infos Clients</h3>
     <div class="button_accueil">
        <a href="index.php?module=clients&action=view&option=stat"><button type="button" class="btn btn-default btn-lg btn-block">Stats Clients</button></a>
        <a href="index.php?module=clients&action=view&option=fidelity"><button type="button" class="btn btn-default btn-lg btn-block">Fidelité Clients</button></a>
        <a href="index.php?module=clients&action=view&option=notation"><button type="button" class="btn btn-default btn-lg btn-block">Notes commande</button>
+    </div>
+    <h3>6 - Process</h3>
+    <div class="button_accueil">
+      <a href="index.php?module=prepacommande&action=view"><button type="button" class="btn btn-default btn-lg btn-block">Process commandes</button></a>
     </div>
     <div class="button_accueil">
         <a href="index.php?module=profil&amp;action=deconnexion"><button type="button" class="btn btn-danger btn-lg btn-block">Déconnexion</button></a>

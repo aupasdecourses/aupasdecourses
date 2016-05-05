@@ -16,7 +16,11 @@
     </div>
     <p id="warning-message" class="bg-warning">Attention: Seules les commandes à l'état "Processing" sont affichées.</p>
     <?php
-    	$orders=orders_fortheday($_GET['date']);
+    	$orders=array();
+        $stores=list_stores("name");
+        foreach($stores as $id=>$name){
+            $orders[$id]=orders_fortheday($_GET['date'])->addAttributetoFilter('store_id',array("eq"=>$id));
+        }
 	    $date=datetime_filter('date');
 	    $horaire=datetime_filter('time');
     	?>
@@ -37,61 +41,64 @@
 
 	    	</div>
 	    </div>
+        <?php foreach ($stores as $id => $name) :?>
 
-	    <div class="row">
+    	    <div class="row" id="info-<?php echo $id;?>">
+            <h3><?php echo "Boutique ".$name;?></h3>
+    	    	<div id="order-table-<?php echo $id;?>" class="table-responsive order-table">
+    			  <table id="clients-info-<?php echo $id;?>" class="table table-striped">
+    			    <thead>
+    			    	<tr>
+    			    		<td>Créneau Livraison</td>
+    			    		<td># Commande</td>
+    			    		<td>Montant total</td>
+    			    		<td>Nom client</td>
+    						<td>Adresse</td>
+    			    		<td>Téléphone</td>
+    <!-- 			    		<td>Email</td> -->
+    			    		<td>Infos</td>
+    			    		<td>Contact Voisin</td>
+    			    		<td>Tel Voisin</td>
+    			    	</tr>
+    			    </thead>
+    			    <tbody>
 
-	    	<div class="table-responsive order-table">
-			  <table id="clients-info" class="table table-striped">
-			    <thead>
-			    	<tr>
-			    		<td>Créneau Livraison</td>
-			    		<td># Commande</td>
-			    		<td>Montant total</td>
-			    		<td>Nom client</td>
-						<td>Adresse</td>
-			    		<td>Téléphone</td>
-<!-- 			    		<td>Email</td> -->
-			    		<td>Infos</td>
-			    		<td>Contact Voisin</td>
-			    		<td>Tel Voisin</td>
-			    	</tr>
-			    </thead>
-			    <tbody>
+        	<?php //Affichage information des commandes
 
-    	<?php //Affichage information des commandes
+        	if(isset($_GET['date'])){
+      		foreach($horaire as $h){
+    	    	foreach($orders[$id] as $order){
+    	    			if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
+    	    				if($order->getData('dtime')==$h){
+    	    					$shipping=$order->getShippingAddress();
+    	    					$address=$shipping->getStreet()[0].' '.$shipping->getPostcode().' '.$shipping->getCity()
+    	    		?>
+    			    	<tr>
+    			    		<td><?php echo $order->getData('dtime');?></td>
+    			    		<td><?php echo $order->getData('increment_id');?></td>
+    			    		<td><?php echo $order->getGrandTotal() - $order->getShippingAmount() - $order->getShippingTaxAmount();?></td>
+    			    		<td><?php echo $order->getData('customer_firstname').' '.$order->getData('customer_lastname');?></td>
+    			    		<td><a href="http://maps.google.com/?q=<?php echo $address;?>"><?php echo $address;?></a></td>
+    			    		<td><a href="tel:<?php echo $shipping->getTelephone();?>"><?php echo $shipping->getTelephone();?></a></td>
+    			    		<td><?php echo "Porte 1: ".$order->getData('codeporte1').", Porte 2: ".$order->getData('codeporte2').", Batiment: ".$order->getData('batiment').", Etage: ".$order->getData('etage').", Infos: ".$order->getData('infocomplementaires');?>
+    			    		</td>
+    			    		<td><?php echo $order->getData('contactvoisin');?></td>
+    			    		<td><?php echo $order->getData('telcontact');?></td>
+    			    	</tr>
+    	   <?php
+    	 		}}}
+    	 	}}?>
 
-    	if(isset($_GET['date'])){
-  		foreach($horaire as $h){
-	    	foreach($orders as $order){
-	    			if(isset($_GET['date']) && $order->getData('ddate')==$_GET['date']){
-	    				if($order->getData('dtime')==$h){
-	    					$shipping=$order->getShippingAddress();
-	    					$address=$shipping->getStreet()[0].' '.$shipping->getPostcode().' '.$shipping->getCity()
-	    		?>
-			    	<tr>
-			    		<td><?php echo $order->getData('dtime');?></td>
-			    		<td><?php echo $order->getData('increment_id');?></td>
-			    		<td><?php echo $order->getGrandTotal() - $order->getShippingAmount() - $order->getShippingTaxAmount();?></td>
-			    		<td><?php echo $order->getData('customer_firstname').' '.$order->getData('customer_lastname');?></td>
-			    		<td><a href="http://maps.google.com/?q=<?php echo $address;?>"><?php echo $address;?></a></td>
-			    		<td><a href="tel:<?php echo $shipping->getTelephone();?>"><?php echo $shipping->getTelephone();?></a></td>
-			    		<td><?php echo "Porte 1: ".$order->getData('codeporte1').", Porte 2: ".$order->getData('codeporte2').", Batiment: ".$order->getData('batiment').", Etage: ".$order->getData('etage').", Infos: ".$order->getData('infocomplementaires');?>
-			    		</td>
-			    		<td><?php echo $order->getData('contactvoisin');?></td>
-			    		<td><?php echo $order->getData('telcontact');?></td>
-			    	</tr>
-	   <?php
-	 		}}}
-	 	}}?>
-
-				</tbody>
-			</table>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-		      <a href="javascript:generatePDF()" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a>
-		    </div>
-    	</div>
+    				</tbody>
+    			</table>
+    		</div>
+    		<div class="row">
+    			<div class="col-md-12">
+    		      <a href="javascript:generatePDF(<?php echo $id; ?>)" style="float:left;"><button type="button" class="btn btn-primary btn-lg ">Imprimer PDF</button></a>
+    		    </div>
+        	</div>
+            </div>
+        <?php endforeach;?>
   </div>
 </body>
 
@@ -107,24 +114,7 @@ $(function(){
 <script src="/delivery/libs/js/jspdf.plugin.autotable.js"></script>
 <script src="/delivery/libs/js/html2canvas.js"></script>
 <script type="text/javascript">
-function generatePDF() {
-
-	//Function to generate header and footer
-	function header(date_livraison){
-		doc.setFontSize(8);
-		doc.text(20,20,'Commande Au Pas De Courses (infos clients) - pour le '+date_livraison);
-		doc.setLineWidth(0.5);
-		doc.line(20, 25, 822, 25);
-	};
-
-	function footer(dt){
-		doc.setFontSize(8);
-		doc.setLineWidth(0.5);
-		doc.line(20, 560, 822, 560);
-		doc.text(20,570, 'Généré le: ' + dt);
-		doc.text(800,570, 'page ' + doc.page);
-		doc.page ++;
-	};
+function generatePDF(store) {
 
 	//Configuration générale du PDF
 	var doc = new jsPDF('l','pt','a4');
@@ -132,45 +122,74 @@ function generatePDF() {
 	var margin_left = 20;
 	var line_height = 20;
 	var base_font_size = 12;
+    var boutique = $("#info-"+store).find("h3").text();
 	var date_livraison = $('#date-dropdown').find(":selected").text();
 	var dt = new Date();
-	var commercant = $(".page-header").children("h2").text();
 	doc.setProperties({
-		title: 'Commande Au Pas De Courses (infos clients) - pour le '+date_livraison,
-		subject: 'Commande du jour Au Pas De Courses',
+		title: boutique+ ' - Listing livraison Au Pas De Courses - '+date_livraison,
+		subject: 'Listing livraison Au Pas De Courses '+boutique,
 		author: 'Pierre Mainguet',
 		keywords: 'AU PAS DE COURSES, commandes, generated, javascript, web 2.0, ajax',
 		creator: 'AU PAS DE COURSES'
 	});
 
+        //Function to generate header and footer
+    var header = function(){
+        doc.setFontSize(8);
+        doc.text(boutique+' - Listing livraison Au Pas De Courses - '+date_livraison,20,20);
+        doc.setLineWidth(0.5);
+        doc.line(20, 25, 822, 25);
+    };
+
+    var footer =function(){
+        doc.setFontSize(8);
+        doc.setLineWidth(0.5);
+        doc.line(20, 560, 822, 560);
+        doc.text(20,570, 'Généré le: ' + dt);
+        doc.text(800,570, 'page ' + doc.page);
+        doc.page ++;
+    };
+
 	//Création des pages commande (1 par commande)
 
-	var len = $('.order-table').length;
-   $('.order-table').each(function(index){
-   		header(date_livraison);
+	var len = $('#order-table-'+store).length;
+   $('#order-table-'+store).each(function(index){
    		doc.setFontSize(base_font_size);
    		doc.setFontType('normal');
 
-		var items = doc.autoTableHtmlToJson(document.getElementById("clients-info"));
+		var items = doc.autoTableHtmlToJson(document.getElementById("clients-info-"+store));
 		
-		var options = {
-		    padding: 5, // Horizontal cell padding
-		    fontSize: 11,
-		    lineHeight: line_height+10,
-		    margins: { horizontal: 2*margin_left, top: 40, bottom: 10 },
-		    overflow: 'linebreak',
-		    overflowColumns: ['Nom client', 'Adresse','Infos','Contact Voisin']
-		 };
+         var options = {
+            theme: 'striped',
+            styles:{
+                cellPadding: 5, // Horizontal cell padding
+                fontSize: 11,
+                rowHeight: line_height+10,
+                halign: 'left',
+                valign: 'middle',
+                overflow: 'linebreak',
+                columnWidth:'auto'
+            },
+            margin: { horizontal: 2*margin_left, top: 40, bottom: 10 },
+            pageBreak: 'auto',
+            tableWidth: 'auto',
+            beforePageContent: header,
+            afterPageContent: footer,
+            columnStyles: {
+                0: {fontStyle: 'bold'},
+                1: {fontStyle: 'italic'},
+                4: {halign: 'center'},
+            }
+         };
 
-		doc.autoTable(false, items,options);
+		doc.autoTable(items.columns, items.data,options);
 
-		footer(dt);
 		if (index < len - 1) {
            doc.addPage();
         }
 	});
 
-var filename= 'APDC-clients-'+date_livraison+'.pdf';
+var filename= boutique+' - Listing-livraison-'+date_livraison+'.pdf';
 filename=filename.split(' ').join('-');
    doc.save(filename);
 };
