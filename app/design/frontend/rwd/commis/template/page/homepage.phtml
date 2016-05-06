@@ -39,6 +39,8 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
 
 <head>
+<title><?php echo Mage::getSingleton("cms/page")->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars(Mage::getSingleton("cms/page")->getMetaDescription()) ?>" />
 <?php echo $this->getChildHtml('head') ?>
 </head>
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>

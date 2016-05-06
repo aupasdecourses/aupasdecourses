@@ -171,14 +171,16 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
                  'identifier' => $page->getIdentifier(),
                  'content_heading' => $this->_content_heading,
                  //'content'=>$page->getContent(),
-                 'custom_root_template' => $page->getCustomRootTemplate(),
                  'store_id' => [$newstoreid],
             ];
             Mage::getModel('cms/page')->setData($cmsPageData)->save();
+
             echo 'Homepage for '.$this->_nameboutique.' created!</br>';
         } else {
             echo 'Homepage for '.$this->_nameboutique.' already exists. Next!</br>';
         }
+
+        Mage::getConfig()->saveConfig('design/head/default_description', $this->_metadescription, 'stores', $newstoreid);
 
         //DUPLICATE CAROUSSEL
         echo '//DUPLICATE CARROUSSEL//</br>';
