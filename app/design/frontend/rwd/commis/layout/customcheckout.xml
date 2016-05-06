@@ -46,6 +46,8 @@
     <pmainguet_customcheckout_ajaxcoupon_index_customcouponpost translate="label">
         <remove name="roots"/>
         <block type="core/template" name="ajaxcoupon" template="customcheckout/ajaxcoupon/ajaxcoupon.phtml"/>
+        <block type="checkout/cart_totals" after="deliverycheck_review" name="totals" template="customcheckout/checkout/onepage/review/totals.phtml"/>
+        <block type="checkout/onepage_progress" name="progress" template="ddate/checkout/onepage/progress/shipping_method.phtml"></block>
     </pmainguet_customcheckout_ajaxcoupon_index_customcouponpost>
     <hipay_mapi_payment>
         <reference name="hipaypayment.redirect">

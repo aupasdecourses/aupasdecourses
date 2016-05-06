@@ -67,9 +67,9 @@
     <div class="col-sm-6">
     <fieldset>
         <ul class="form-list">
+            <label for="billing-address-select"><?php echo $this->__('Adresse de facturation') ?></label>
         <?php if ($this->customerHasAddresses()): ?>
             <li class="wide">
-                <label for="billing-address-select"><?php echo $this->__('Adresse de facturation') ?></label>
                 <div class="input-box">
                     <?php echo $this->getAddressesHtmlSelect('billing') ?>
                 </div>
@@ -229,9 +229,9 @@
     <div class="col-sm-6">
     <fieldset>
         <ul class="form-list">
+            <label for="shipping-address-select"><?php echo $this->__('Adresse de livraison') ?></label>
         <?php if ($this->customerHasAddresses()): ?>
            <li class="wide">
-               <label for="shipping-address-select"><?php echo $this->__('Adresse de livraison') ?></label>
                <div class="input-box">
                    <?php echo $this->getAddressesHtmlSelect('shipping') ?>
                </div>

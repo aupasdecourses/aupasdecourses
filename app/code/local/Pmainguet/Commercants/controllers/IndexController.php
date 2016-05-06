@@ -59,6 +59,8 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
     private $_content_heading = 'Au Pas De Courses Saint Martin, votre livraison de produits frais dans le 10e et 3e';
 
     private $_shippingruletoduplicate = 'Restriction 17e';
+    private $_shippinglivraisonpro = 'Livraison pour pro';
+    private $_couponname = 'Première livraison gratuite';
 
     public function indexAction()
     {
@@ -256,6 +258,27 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
             }
         }
 
+        //Livraison pro update
+        echo '//LIVRAISON PRO SHIPPING RESTRICTION//</br>';
+        $livpro = $this->_shippinglivraisonpro;
+
+        $check = Mage::getModel('amshiprestriction/rule')->getCollection()
+           ->addFieldToFilter('is_active', true)
+           ->addFieldToFilter('name', $livpro)->getFirstItem();
+
+        if (!is_null($check->getRuleId())) {
+            $rules=Mage::getModel('amshiprestriction/rule')->getCollection()
+               ->addFieldToFilter('is_active', true)
+               ->addFieldToFilter('name', $livpro);
+            foreach($rules as $rule) {
+                $rule->setStores($rule->getStores().','.$newstoreid);;
+                $rule->save();
+            }
+            echo 'Shipping restriction '.$livpro.' updated!</br>';
+        } else {
+            echo 'Shipping restriction '.$livpro.' does not exist.Pass!</br>';
+        }
+
         //Duplicate Shipping restriction
         echo '//DUPLICATE SHIPPING RESTRICTION//</br>';
         $namerule = $this->_shippingruletoduplicate;
@@ -320,6 +343,24 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
             //}
         }
         echo 'Shipping rates duplicated!';*/
+
+        //Update BIENVENUE Coupon
+        echo "//EXTEND BIENVENUE COUPON TO NEW BOUTIQUE//</br>";
+        $salesRule = Mage::getModel('salesrule/rule')->getCollection()->addFieldToFilter("name",$this->_couponname)->getFirstItem();
+        try {
+            $data=$salesRule->getData();
+            $websiteids=$salesRule->getWebsiteIds();
+            array_push($websiteids,$newstoreid);
+            $salesRule->setData($data);
+            $salesRule->setWebsiteIds($websiteids);
+            $salesRule->setCouponCode('BIENVENUE');
+            $salesRule->save();
+            echo "Livraison gratuite extended to new boutique!</br>";
+        } catch (Exception $e) {
+            // display error message
+            echo $e->getMessage()."</br>";
+        }
+
     }
 
     //Création des catégories générales Commerçants

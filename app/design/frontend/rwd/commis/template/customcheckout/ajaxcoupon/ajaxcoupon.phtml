@@ -66,8 +66,9 @@
                     if(data.status == 'SUCCESS'){
                         
                         if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                             jQuery('#discount-coupon-form').replaceWith(data.review);
-                           
                         }
                         if(data.msg){
                             jQuery('#msg').html(data.msg);
@@ -75,8 +76,9 @@
                           }
                     }else{
                         if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                             jQuery('#discount-coupon-form').replaceWith(data.review);
-                            
                         }
                         if(data.msg){
                             jQuery('#msg').html(data.msg);
@@ -88,7 +90,6 @@
         });
 
         jQuery('.cancelcoupon').on('click',function(){
-                            console.log('hello');
             var data1 = new Object();
             data1.remove = 1;
             jQuery('#msg').hide();
@@ -104,8 +105,9 @@
                     if(data.status == 'SUCCESS'){
                         
                         if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                             jQuery('#discount-coupon-form').replaceWith(data.review);
-                            
                         }
                         if(data.msg){
                             jQuery('#msg').html(data.msg);
@@ -113,8 +115,9 @@
                           }
                     }else{
                         if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                             jQuery('#discount-coupon-form').replaceWith(data.review);
-                            
                         }
                         if(data.msg){
                             jQuery('#msg').html(data.msg);
