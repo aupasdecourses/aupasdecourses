@@ -466,7 +466,7 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         // init model and set data
         $model = Mage::getModel('sitemap/sitemap');
 
-        $sitemap_filename="sitemap_".$this->_codeboutique.".xml";
+        $sitemap_filename="sitemap.xml";
         $sitemap_path="/sitemap/sitemap_".$this->_codeboutique."/";
         $server_path=glob($_SERVER["DOCUMENT_ROOT"]);
 
