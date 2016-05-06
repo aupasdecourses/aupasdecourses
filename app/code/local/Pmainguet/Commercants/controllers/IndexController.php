@@ -458,4 +458,67 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
         }
         echo 'Catégories de '.$this->_codeboutique.' activées!</br>';
     }
+
+    public function createsitemapAction(){
+
+        $newstoreid = intval(Mage::getConfig()->getNode('stores')->{$this->_codeboutique}->{'system'}->{'store'}->{'id'});
+
+        // init model and set data
+        $model = Mage::getModel('sitemap/sitemap');
+
+        $sitemap_filename="sitemap_".$this->_codeboutique.".xml";
+        $sitemap_path="/sitemap/sitemap_".$this->_codeboutique."/";
+        $server_path=glob($_SERVER["DOCUMENT_ROOT"]);
+
+        if (!file_exists($server_path[0].$sitemap_path)) {
+            mkdir($server_path[0].$sitemap_path,0777,true);
+            echo $server_path[0].$sitemap_path." folder has been created!</br>";
+        } else {
+            echo $server_path[0].$sitemap_path." folder already exists. Next!</br>";
+        }
+
+        $path = $sitemap_path.$sitemap_filename;
+
+        if(is_null(Mage::getSingleton("sitemap/sitemap")->getCollection()->addFieldToFilter("sitemap_filename",$sitemap_filename."fdf")->getFirstItem()->getId())) {
+            $data=array(
+                "sitemap_filename" => $sitemap_filename ,
+                "sitemap_path" => $sitemap_path,
+                "store_id" => $newstoreid
+                );
+
+            $model->setData($data);
+
+            // try to save it
+            try {
+                // save the data
+                $model->save();
+                // display success message
+                echo 'The sitemap has been saved.</br>';
+
+            } catch (Exception $e) {
+                // display error message
+                echo $e->getMessage()."</br>";
+            }
+
+            // if sitemap record exists
+            if ($model->getId()) {
+                try {
+                    $model->generateXml();
+                    echo 'The sitemap has been generated.</br>';
+                }
+                catch (Mage_Core_Exception $e) {
+                    echo $e->getMessage()."</br>";
+                }
+                catch (Exception $e) {
+                    echo 'Unable to generate the sitemap.</br>';
+                }
+            } else {
+                echo 'Unable to find a sitemap to generate.</br>';
+            }
+        } else {
+            echo "Sitemap seems to already exists. Check Magento for additionnal info. We stop here!</br>";
+        }
+
+    }
+
 }
