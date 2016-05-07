@@ -12,8 +12,8 @@
 						$fiches->getSelect()->orderRand();
 						foreach ($fiches as $fiche){
 							$_NameStripped = $this->stripTags($fiche->getName(), null, true);
-							$_thumbnail=$fiche->getThumbnail();
-							$src = Mage::getBaseUrl('media').'catalog/category/'.$_thumbnail;
+							$_image=$fiche->getImage();
+							$src = Mage::getBaseUrl('media').'catalog/category/'.$_image;
 							$_name=$fiche->getName();
 							$_adresse=$fiche->getData('adresse_commercant');
 							$url=$fiche->getUrl();
