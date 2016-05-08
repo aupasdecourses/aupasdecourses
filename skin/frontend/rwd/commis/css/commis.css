@@ -994,7 +994,6 @@ label {
   #header-search #search{
     margin-top: 15px;
     margin-bottom: -10px;
-    display: none;
   }
 
   #header-search button{
@@ -1310,7 +1309,7 @@ display: block;
 
 @media only screen and (min-width: 771px){
   #header-search{
-    display: none;
+    display: block;
     position: absolute;
     top: 18px;
     left: 250px;
