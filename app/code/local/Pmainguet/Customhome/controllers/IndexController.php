@@ -30,21 +30,31 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
                         $url = $coreUrl.$storeId;
                         Mage::app()->getResponse()->setRedirect($url);
                         break;
-                    case 'Paris 1er':
-                        $storeId = '../quartiers/Paris_1er';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
                     case 'Paris 2e':
-                        $storeId = '../quartiers/Paris_2e';
+                        $storeId = '../saintmartin';
                         $url = $coreUrl.$storeId;
                         Mage::app()->getResponse()->setRedirect($url);
                         break;
                     case 'Paris 3e':
-                        $storeId = '../quartiers/Paris_3e';
+                        $storeId = '../saintmartin';
                         $url = $coreUrl.$storeId;
                         Mage::app()->getResponse()->setRedirect($url);
                         break;
+                    case 'Paris 10e':
+                        $storeId = '../saintmartin';
+                        $url = $coreUrl.$storeId;
+                        Mage::app()->getResponse()->setRedirect($url);
+                        break;
+                    case 'Paris 11e':
+                        $storeId = '../saintmartin';
+                        $url = $coreUrl.$storeId;
+                        Mage::app()->getResponse()->setRedirect($url);
+                        break;
+                    case 'Paris 1er':
+                        $storeId = '../quartiers/Paris_1er';
+                        $url = $coreUrl.$storeId;
+                        Mage::app()->getResponse()->setRedirect($url);
+                        break; 
                     case 'Paris 4e':
                         $storeId = '../quartiers/Paris_4e';
                         $url = $coreUrl.$storeId;
@@ -62,16 +72,6 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
                         break;
                     case 'Paris 7e':
                         $storeId = '../quartiers/Paris_7e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 10e':
-                        $storeId = '../quartiers/Paris_10e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 11e':
-                        $storeId = '../quartiers/Paris_11e';
                         $url = $coreUrl.$storeId;
                         Mage::app()->getResponse()->setRedirect($url);
                         break;

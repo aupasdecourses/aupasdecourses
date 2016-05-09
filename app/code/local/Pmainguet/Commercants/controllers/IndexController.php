@@ -40,7 +40,7 @@ class Pmainguet_Commercants_IndexController extends Mage_Core_Controller_Front_A
             'mentions-legales-cgv',
             'nos-engagements',
             'politique-confidentialite-restriction-cookie',
-            'tarifs-livraison',
+            // 'tarifs-livraison',
             'zone-et-horaire',
         ];
 
