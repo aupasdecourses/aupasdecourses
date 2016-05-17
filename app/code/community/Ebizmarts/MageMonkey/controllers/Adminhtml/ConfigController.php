@@ -37,7 +37,7 @@ class Ebizmarts_MageMonkey_Adminhtml_ConfigController extends Mage_Adminhtml_Con
                 }
             }
         }
-        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setHeader('Content-type', 'application/json',true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($rc));
     }
 
