@@ -51,7 +51,7 @@ robots.txt
 var
 dev
 tmp
-shell
+#shell
 pkginfo
 sitemap/sitemap.xml
 sitemap.xml
