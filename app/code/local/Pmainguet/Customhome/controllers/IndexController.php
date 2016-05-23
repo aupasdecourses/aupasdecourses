@@ -4,6 +4,8 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
 {
     public function redirectAction()
     {
+        $baseurl=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+
         if ($data = $this->getRequest()->getPost()) {
             $zipcode = $data['zipcode'];
             $refererUrl = Mage::helper('core/http')->getHttpReferer(true);
@@ -54,7 +56,7 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
                         $storeId = '../quartiers/Paris_1er';
                         $url = $coreUrl.$storeId;
                         Mage::app()->getResponse()->setRedirect($url);
-                        break; 
+                        break;
                     case 'Paris 4e':
                         $storeId = '../quartiers/Paris_4e';
                         $url = $coreUrl.$storeId;
@@ -136,12 +138,14 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
                         Mage::app()->getResponse()->setRedirect($url);
                         break;
                     default:
-                        Mage::app()->getResponse()->setRedirect($refererUrl.'#download');
+                        Mage::app()->getResponse()->setRedirect($baseurl);
                         break;
                 }
             } else {
                 Mage::app()->getResponse()->setRedirect($refererUrl);
             }
+        } else {
+            Mage::app()->getResponse()->setRedirect($baseurl);
         }
     }
 }
