@@ -3798,7 +3798,10 @@ label{
 }
 
 .page-title h1 {
-    font-size: 36px;
+    font-size: 28px;
+    font-family: Montserrat, Raleway, sans-serif;
+    font-weight: normal;
+    color: rgb(67, 41, 24);
 }
 
 .sp-methods dt {
