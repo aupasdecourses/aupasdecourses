@@ -3802,6 +3802,8 @@ label{
     font-family: Montserrat, Raleway, sans-serif;
     font-weight: normal;
     color: rgb(67, 41, 24);
+    text-transform: none;
+    text-align: center;
 }
 
 .sp-methods dt {
