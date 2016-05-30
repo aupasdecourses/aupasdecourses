@@ -2,7 +2,7 @@
     <config>
         <modules>
             <Emagicone_Mobassistantconnector>
-                <active>true</active>
+                <active>false</active>
                 <codePool>community</codePool>
             </Emagicone_Mobassistantconnector>
         </modules>
