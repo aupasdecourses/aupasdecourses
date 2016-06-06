@@ -112,42 +112,40 @@ header{
 		<h2 class="dark-text">Comment cela fonctionne ?</h2>
 		<div class="colored-line"></div>
 		<div class="section-description" style="margin-bottom:50px;">
-			 Ue plateforme qui vous propose de commander des produits frais et artisanaux de commerces de bouche locaux, et de les livrer chez vous.
+			 Une plateforme pour commander et se faire livrer des produits frais et artisanaux de commerces de bouche locaux.
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
     <div class="row">
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">
-				<img src="<?php echo $this->getSkinUrl('images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
-				<ul class="package-feature">
-					<li>1 - Commandez en ligne chez les commerçants de votre quartier.</li>
-				</ul>
-			</div>
+	    <div class="col-md-3 col-sm-12"></div>
+		<div id="carousel-how" class="owl-carousel col-sm-12 col-md-4">
+			<div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
+					<ul class="package-feature">
+						<li>1 - Commandez en ligne chez les commerçants de votre quartier.</li>
+					</ul>
+				</div>
+		    </div>
+	        <div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/shops.png')?>" alt="Les commerçants préparent votre commande">
+					<ul class="package-feature">
+						<li>2 - Les commerçants préparent votre commande</li>
+					</ul>
+					
+				</div>
+		    </div>
+		    <div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
+					<ul class="package-feature">
+						<li>3 - On vous livre le tout chez vous, en une fois</li>
+					</ul>
+				</div>
+		    </div>
 		</div>
-		<!-- /END SINGLE PACKACGE -->
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">
-				<img src="<?php echo $this->getSkinUrl('images/shops.png')?>" alt="Les commerçants préparent votre commande">
-				<ul class="package-feature">
-					<li>2 - Les commerçants préparent votre commande</li>
-				</ul>
-				
-			</div>
-		</div>
-		<!-- /END SINGLE PACKACGE -->
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">
-				<img src="<?php echo $this->getSkinUrl('images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
-				<ul class="package-feature">
-					<li>3 - On vous livre le tout chez vous, en une fois</li>
-				</ul>
-			</div>
-		</div>
-		<!-- /END SINGLE PACKACGE -->
+		<div class="col-md-4 col-sm-12"></div>
 	</div>
 	<!-- /END ROW -->
 </div>
@@ -173,9 +171,10 @@ header{
 	</div>
 	<!-- /END SECTION HEADER -->
     <div class="row">
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-6 col-sm-6 single-service">
-			<?php $url_cover=$this->getSkinUrl('images/monceau_batignolles.jpg');?>
+    	<div class="col-md-3 col-sm-12"></div>
+		<div id="carousel-quartier" class="owl-carousel col-sm-12 col-md-4">
+			<div class="item">
+				<?php $url_cover=$this->getSkinUrl('images/monceau_batignolles.jpg');?>
 				<div class="single-package" style="background-image: url('<?php echo $url_cover;?>')">
 					<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
 						<div class="color-overlay">
@@ -184,11 +183,9 @@ header{
 						</div>
 					</a>
 				</div>
-		</div>
-		<!-- /END SINGLE PACKACGE -->
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-6 col-sm-6 single-service">
-			<?php $url_cover=$this->getSkinUrl('images/saintmartin_marais.jpg');?>
+		    </div>
+	        <div class="item">
+				<?php $url_cover=$this->getSkinUrl('images/saintmartin_marais.jpg');?>
 				<div class="single-package" style="background-image: url('<?php echo $url_cover;?>')">
 					<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
 						<div class="color-overlay">
@@ -197,7 +194,16 @@ header{
 						</div>
 					</a>
 				</div>
-			</a>
+		    </div>
+		    <div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
+					<ul class="package-feature">
+						<li>Au-dessus de 90€ d'achat</li>
+						<li class="price">3€ la livraison</li>
+					</ul>
+				</div>
+		    </div>
 		</div>
 		<!-- /END SINGLE PACKACGE -->
 	</div>
@@ -252,32 +258,37 @@ header{
 	<!-- /END SECTION HEADER -->
 	
     <div class="row">
-		<div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">	
-				<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="En dessous de 45€ d'achat">
-				<ul class="package-feature">
-					<li>En dessous de 45€ d'achat</li>
-					<li class="price">9€ la livraison</li>
-				</ul>
-			</div>
+    	<div class="col-md-3 col-sm-12"></div>
+		<div id="carousel-price" class="owl-carousel col-sm-12 col-md-4">
+			<div class="item">
+				<div class="single-package">	
+					<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="En dessous de 45€ d'achat">
+					<ul class="package-feature">
+						<li>En dessous de 45€ d'achat</li>
+						<li class="price">9€ la livraison</li>
+					</ul>
+				</div>
+		    </div>
+	        <div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Entre 45 et 90€ d'achat">	
+					<ul class="package-feature">
+						<li>Entre 45 et 90€ d'achat</li>
+						<li class="price">6€ la livraison</li>
+					</ul>
+				</div>
+		    </div>
+		    <div class="item">
+				<div class="single-package">
+					<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
+					<ul class="package-feature">
+						<li>Au-dessus de 90€ d'achat</li>
+						<li class="price">3€ la livraison</li>
+					</ul>
+				</div>
+		    </div>
 		</div>
-		<div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">
-				<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Entre 45 et 90€ d'achat">	
-				<ul class="package-feature">
-					<li>Entre 45 et 90€ d'achat</li>
-					<li class="price">6€ la livraison</li>
-				</ul>
-			</div>
-		</div><div class="col-md-4 col-sm-4 single-service">
-			<div class="single-package">
-				<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
-				<ul class="package-feature">
-					<li>Au-dessus de 90€ d'achat</li>
-					<li class="price">3€ la livraison</li>
-				</ul>
-			</div>
-		</div>
+		<div class="col-md-4 col-sm-12"></div>
 	</div>
 	<!-- /END ROW -->
 </div>
