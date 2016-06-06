@@ -1,61 +1,20 @@
 <?php
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magento.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magento.com for more information.
- *
- * @category    design
- * @package     default_default
- * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
+  $i = rand(1, 17); // generate random number size of the array
+  $url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+  $angledown= $this->getSkinUrl("images/angle-down.png");
 ?>
-<?php /*{
-    "label":"Root page layout",
-    "type":"core/template",
-    "children":{
-        "header":{ "label":"Header", "type":"adminhtml/page_header" },
-        "menu":{ "label":"Top navigation", "type":"adminhtml/page_menu" },
-        "breadcrumbs":{ "label":"Breadcrumbs", "type":"adminhtml/widget_breadcrumbs" },
-        "content":{ "label":"Content block", "type":"core/template" },
-        "left":{ "label":"Left navigation", "type":"core/template" },
-        "footer":{ "label":"Footer", "type":"adminhtml/page_footer" }
-    },
-    "vars":{}
-}*/ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
 <head>
     <?php echo $this->getChildHtml('head') ?>
 </head>
+<style>
+header{
+	background: transparent url("<?php echo $this->getSkinUrl($url);?>") no-repeat center top / cover;
+}
+</style>
 
 <body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
-
-<!-- =========================
-     PRE LOADER       
-============================== -->
-<div class="preloader">
-  <div class="container">
-	  
-	  <img id="logo-loader" src="<?php echo $this->getSkinUrl('images/logo@2x.png')?>" alt="Un instant, Au Pas De Courses se charge :-)">
-	  <div class="status"></div>
-   </div>
-</div>
-
 <!-- =========================
      HEADER   
 ============================== -->
@@ -63,38 +22,8 @@
 
 <!-- COLOR OVER IMAGE -->
 <div class="color-overlay"> <!-- To make header full screen. Use .full-screen class with color overlay. Example: <div class="color-overlay full-screen">  -->
-
-	<!-- STICKY NAVIGATION -->
-	<!-- <div class="navbar navbar-inverse bs-docs-nav navbar-fixed-top sticky-navigation">
-		<div class="container">
-			<div class="navbar-header">
-				
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#kane-navigation">
-				<span class="sr-only">Menu</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				</button>
-
-				<a class="navbar-brand" href="#"><img src="<?php echo $this->getSkinUrl('images/logo.png')?>" alt="Logo Au Pas De Courses"></a>
-				
-			</div>
-			
-			<div class="navbar-collapse collapse" id="kane-navigation">
-				<ul class="nav navbar-nav navbar-right main-navigation">
-					<li><a href="#faites-vos-courses">Faites vos courses</a></li>
-					<li><a href="#video-presentation">Plus d'infos</a></li>
-					<li><a href="#nos-tarifs">Tarifs</a></li>
-					<li><a href="#inscription">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</div> --> <!-- /END STICKY NAVIGATION -->
-	
-	
 	<!-- CONTAINER -->
 	<div class="container">
-		
 		<!-- ONLY LOGO ON HEADER -->
 		<div class="only-logo">
 			<div class="navbar">
@@ -103,30 +32,24 @@
 				</div>
 			</div>
 		</div> <!-- /END ONLY LOGO ON HEADER -->
-		
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				
 				<!-- HEADING AND BUTTONS -->
 				<div class="intro-section">
-					
 					<!-- WELCOM MESSAGE -->
-					<!--<h1 class="intro">Le plaisir de bien manger grâce aux commerçants de votre quartier.</h1>-->
-					<h1 class="intro">Faites vous livrer les meilleurs produits de votre quartier</h1>
-<!-- 					<h2 style="color: #3FA342;font-weight: 600;">Nous faisons vos courses dès maintenant</h2>
- -->			        <div class="col-md-12">
+					<h1 class="intro">Les meilleurs produits de votre quartier, sans vous déplacer</h1>
+				        <div class="col-md-12">
 				        <form role="form" class="contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
-						    <div class="input-groupe-center">
-							    <h3>Sélectionnez votre quartier pour commencer vos courses</h3>
-							    <div class="input-group" style="margin: auto;">
-							      <select class="form-control select-quartier" placeholder="Code postal" name="zipcode">
-						    		<option disabled>Quartier Batignolles</option>
+						    <div id="input-group-intro">
+							 	  <p class="label_input">Mon quartier: </p>
+							      <select class="form-control select-quartier" placeholder="Code postal" name="zipcode" style="background: url('<?php echo $angledown;?>') 96% / 15% no-repeat #fff;float:none;">
+						    		<option disabled>Monceau-Batignolles</option>
 						    		<option selected>Paris 17e</option>
 						      		<option>Paris 18e</option>
 						      		<option>Paris 9e</option>
 						      		<option>Paris 8e</option>
 						      		<option disabled>──────────</option>
-						      		<option disabled>Quartier Saint Martin</option>
+						      		<option disabled>Saint Martin-Marais</option>
 					      			<option>Paris 10e</option>
 					      			<option>Paris 3e</option>
 					      			<option>Paris 11e</option>
@@ -155,20 +78,19 @@
 						    </div>
 					    </form>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-5"></div>
+					<div class="col-md-2">
 						<div id="scroll-button" >
-							<h3 class="small-header">Plus d'infos</h3>
+							<p id="small-header">Plus d'infos</p>
 							<div class="arrow bounce"></div>
 						</div>
 					</div>
-					
+					<div class="col-md-5"></div>
 				</div>
 				<!-- /END HEADNING AND BUTTONS -->
-				
 			</div>
 		</div>
 		<!-- /END ROW -->
-		
 	</div>
 	<!-- /END CONTAINER -->
 </div>
@@ -177,477 +99,191 @@
 <!-- /END HEADER -->
 
 <!-- =========================
-     VIDEO 
+     CONCEPT | Added on version 1.7   
 ============================== -->
-<section class="video-youtube grey-bg" id="video-presentation">
+<section class="packages grey-bg" id="concept">
 
 <div class="container">
 	
 	<!-- SECTION HEADER -->
-	<div class="section-header wow fadeIn animated" data-wow-offset="120" data-wow-duration="1.5s">
+	<div class="section-header">
+		
 		<!-- SECTION TITLE -->
-		<h2 class="dark-text">Se faire livrer le meilleur des artisans locaux ?</h2>
+		<h2 class="dark-text">Comment cela fonctionne ?</h2>
 		<div class="colored-line"></div>
-		<div class="section-description">
-			C'est facile avec Au Pas De Courses!
+		<div class="section-description" style="margin-bottom:50px;">
+			 Ue plateforme qui vous propose de commander des produits frais et artisanaux de commerces de bouche locaux, et de les livrer chez vous.
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
-	
-	
-	<div class="row">
-		
-		<div class="col-sm-12">
-			<div class="embed-responsive embed-responsive-16by9">
-				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gb75gUhl5bM" allowfullscreen></iframe>
-				
-			</div>
-		</div>
-	</div>
-
-</div>
-
-</section>
-
-<!-- =========================
-     FEATURES 
-============================== -->
-<section class="features" id="nos-commercants">
-
-<div class="container">
-	
-	<!-- SECTION HEADER -->
-	<div class="section-header wow fadeIn animated" data-wow-offset="120" data-wow-duration="1.5s">
-		
-		<!-- SECTION TITLE -->
-		<h2 class="dark-text">Le goût des bons produits en toutes occasions</h2>
-		<div class="colored-line"></div>
-		<div class="section-description">
-			Des courses de produits frais, pour bien manger toute la semaine
-		</div>
-	</div>
-	<!-- /END SECTION HEADER -->
-
-	<div class="row">
-
-		<!-- FEATURES LEFT -->
-		<div class="col-md-4 col-sm-4 features-left wow fadeInLeft animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						 <div class="viande-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">De la bonne viande</h4>
-					<p class="feature-description">
-						 En direct de nos campagnes, le meilleur de la viande et de la charcuterie.
-					</p>
-				</div>
-				
-			</div>
-			<!-- /END SINGLE FEATURE -->
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						<div class="primeur-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">De bons fruits et légumes</h4>
-					<p class="feature-description">
-						 Des primeurs de saison, pour des fruits charnus et des légumes croquants.
-					</p>
-				</div>
-				
-			</div>
-			<!-- /END SINGLE FEATURE -->
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						<div class="fromage-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">Des fromages fermiers</h4>
-					<p class="feature-description">
-						 Brebis, vache ou chèvre, le fromager saura vous surprendre.
-					</p>
-				</div>
-				
-			</div>
-			<!-- /END SINGLE FEATURE -->
-			
-		</div>
-		<!-- /END FEATURES LEFT -->
-		
-		<!-- PHONE IMAGE -->
-		<div class="col-md-4 col-sm-4">
-			<div class="phone-image wow bounceIn animated" data-wow-offset="120" data-wow-duration="1.5s">
-				<img src="<?php echo $this->getSkinUrl('images/food-bag.jpg')?>" alt="Le panier de la semaine avec Au Pas De Courses">
-			</div>
-		</div>
-		
-		<!-- FEATURES RIGHT -->
-		<div class="col-md-4 col-sm-4 features-right wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						<div class="poisson-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">Du poisson frais</h4>
-					<p class="feature-description">
-						 En direct de l'océan, la pêche de votre poissonnier vous fera voyager.
-					</p>
-				</div>
-				
-			</div>
-			<!-- /END SINGLE FEATURE -->
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						<div class="pain-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">Du pain croquant</h4>
-					<p class="feature-description">
-						 Tout chaud, sorti du fournil du boulanger.
-					</p>
-				</div>
-				
-			</div>
-			
-			<!-- /END SINGLE FEATURE -->
-			
-			<!-- FEATURE -->
-			<div class="feature">
-				
-				<!-- ICON -->
-				<div class="icon-container">
-					<div class="icon">
-						<div class="autres-ico"></div>
-					</div>
-				</div>
-				
-				<!-- FEATURE HEADING AND DESCRIPTION -->
-				<div class="fetaure-details">
-					<h4 class="main-color">Et bien plus encore!</h4>
-					<p class="feature-description">
-						 Vins, coulis de fruits, pâtes ... vous trouverez tout ce dont vous avez besoin.
-					</p>
-				</div>
-				
-			</div>
-			<!-- /END SINGLE FEATURE -->
-			
-		</div>
-		<!-- /END FEATURES RIGHT -->
-		
-	</div>
-	<!-- /END ROW -->
-	
-</div>
-<!-- /END CONTAINER -->
-
-</section>
-<!-- /END FEATURES SECTION -->
-
-<!-- =========================
-     TESTIMONIALS 
-============================== -->
-<section class="testimonials" id="le-service">
-
-<div class="color-overlay">
-	
-	<div class="container">
-
-	<div class="row">
-		<div class="col-md-6 left-align" style="color:#333;">
-			
-			<!-- SECTION TITLE -->
-			<h2 class="dark-text">Nous avons sélectionné la qualité au plus près de chez vous</h2>
-			<div class="colored-line"></div>
-			<div class="left-align">
-				<p>
-					Ils sont l'âme de votre quartier et détiennent des secrets d'artisans pour sélectionner les produits qui ont du goût et du caractère.
-				</p>
-				<!-- FEATURE LIST -->
-				<ul class="feature-list">
-					<li><i class="icon_lock_alt"></i> Ils choisissent des produits français en priorité,</li>
-					<li><i class="icon_check_alt2"></i> Ils sont à l'écoute de vos envies,</li>
-					<li><i class="icon_adjust-vert"></i> Ils préparent vos commandes avec soin,</li>
-					<li><i class="icon_lock_alt"></i> Vous pouvez les retrouver en magasin quand vous le souhaitez.</li>
+    <div class="row">
+		<!-- SINGLE PACKACGE -->
+		<div class="col-md-4 col-sm-4 single-service">
+			<div class="single-package">
+				<img src="<?php echo $this->getSkinUrl('images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
+				<ul class="package-feature">
+					<li>1 - Commandez en ligne chez les commerçants de votre quartier.</li>
 				</ul>
 			</div>
 		</div>
+		<!-- /END SINGLE PACKACGE -->
+		<!-- SINGLE PACKACGE -->
+		<div class="col-md-4 col-sm-4 single-service">
+			<div class="single-package">
+				<img src="<?php echo $this->getSkinUrl('images/shops.png')?>" alt="Les commerçants préparent votre commande">
+				<ul class="package-feature">
+					<li>2 - Les commerçants préparent votre commande</li>
+				</ul>
+				
+			</div>
+		</div>
+		<!-- /END SINGLE PACKACGE -->
+		<!-- SINGLE PACKACGE -->
+		<div class="col-md-4 col-sm-4 single-service">
+			<div class="single-package">
+				<img src="<?php echo $this->getSkinUrl('images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
+				<ul class="package-feature">
+					<li>3 - On vous livre le tout chez vous, en une fois</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /END SINGLE PACKACGE -->
 	</div>
-
-		
-	</div>
-	<!-- /END CONTAINER -->
-	
+	<!-- /END ROW -->
 </div>
-<!-- /END COLOR OVERLAY -->
-
+<!-- /END CONTAINER -->
 </section>
-<!-- /END TESTIMONIALS SECTION -->
+<!-- /END CONCEPT SECTION -->
+<!-- =========================
+     CONCEPT | Added on version 1.7   
+============================== -->
+<section class="packages" id="concept">
 
-
+<div class="container">
+	
+	<!-- SECTION HEADER -->
+	<div class="section-header">
+		
+		<!-- SECTION TITLE -->
+		<h2 class="dark-text">Faites vous livrer</h2>
+		<div class="colored-line"></div>
+		<div class="section-description" style="margin-bottom:50px;">
+			 Au Pas De Courses est aujourd'hui actif dans les arrondissements suivants à Paris.
+		</div>
+	</div>
+	<!-- /END SECTION HEADER -->
+    <div class="row">
+		<!-- SINGLE PACKACGE -->
+		<div class="col-md-6 col-sm-6 single-service">
+			<?php $url_cover=$this->getSkinUrl('images/monceau_batignolles.jpg');?>
+				<div class="single-package" style="background-image: url('<?php echo $url_cover;?>')">
+					<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
+						<div class="color-overlay">
+							<h3 class="package-heading main-color">Monceau - Batignolles</h3>
+							<p>17e-18e-9e-8e</p>
+						</div>
+					</a>
+				</div>
+		</div>
+		<!-- /END SINGLE PACKACGE -->
+		<!-- SINGLE PACKACGE -->
+		<div class="col-md-6 col-sm-6 single-service">
+			<?php $url_cover=$this->getSkinUrl('images/saintmartin_marais.jpg');?>
+				<div class="single-package" style="background-image: url('<?php echo $url_cover;?>')">
+					<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
+						<div class="color-overlay">
+							<h3 class="package-heading main-color">Saint Martin - Marais</h3>
+							<p>10e-3e-11e</p>
+						</div>
+					</a>
+				</div>
+			</a>
+		</div>
+		<!-- /END SINGLE PACKACGE -->
+	</div>
+	<!-- /END ROW -->
+</div>
+<!-- /END CONTAINER -->
+</section>
+<!-- /END CONCEPT SECTION -->
 <!-- =========================
      BRIEF LEFT SECTION 
 ============================== -->
 <section class="app-brief grey-bg" id="brief1">
-
 <div class="container">
-	
 	<div class="row">
-		
-		<!-- PHONES IMAGE -->
-		<div class="col-md-6 wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-			<div class="phone-image">
-				<img src="<?php echo $this->getSkinUrl('images/screens.png')?>" alt="Au Pas De Courses sur ordinateur, tablette et smartphone.">
-
+		<div class="col-md-6">
+			<div class="embed-responsive embed-responsive-16by9">
+				<iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/gb75gUhl5bM" allowfullscreen></iframe>	
 			</div>
 		</div>
-		
-		<!-- RIGHT SIDE WITH BRIEF -->
-		<div class="col-md-6 left-align wow fadeInLeft animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<!-- SECTION TITLE -->
-			<h2 class="dark-text">Un service simple</h2>
-			
+		<div class="col-md-6 left-align">
+			<h2 class="dark-text">Simple, pratique et local</h2>
 			<div class="colored-line-left">
 			</div>
-			
-			<p>Commandez en quelques clics seulement.</p>
-			
-			<!-- FEATURE LIST -->
 			<ul class="feature-list">
-				<li><i class="icon_lock_alt"></i> Les mêmes produits qu'en magasin</li>
-				<li><i class="icon_check_alt2"></i> Commandez sur votre ordinateur, votre tablette ou votre mobile</li>
-				<li><i class="icon_adjust-vert"></i> Des créneaux de livraison de moins d'une heure, de 18h00 à 21h00</li>
-				<li><i class="icon_lock_alt"></i> Un paiement en une seule fois, en toute sécurité</li>
+				<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des commerçants locaux sélectionnés,</li>
+				<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Les mêmes prix qu'en magasin,</li>
+				<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des créneaux de livraison de 45 minutes,</li>
+				<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Une livraison douce en triporteur électrique.</li>
 			</ul>
-			
 		</div>
-		<!-- /END RIGHT BRIEF -->
-		
 	</div>
-	<!-- /END ROW -->
-	
 </div>
-<!-- /END CONTAINER -->
-
 </section>
 <!-- /END SECTION -->
-
-
-<!-- =========================
-     BRIEF RIGHT SECTION 
-============================== -->
-<section class="app-brief" id="brief2">
-
-<div class="container">
-	
-	<div class="row">
-		
-		<!-- BRIEF -->
-		<div class="col-md-6 left-align wow fadeInLeft animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<!-- SECTION TITLE -->
-			<h2 class="dark-text">Une livraison en douceur</h2>
-			
-			<div class="colored-line-left">
-			</div>
-			<p>
-				La qualité de notre service est primordiale.
-			</p>
-			<!-- FEATURE LIST -->
-			<ul class="feature-list">
-				<li><i class="icon_lock_alt"></i> Nous utilisons des vélos triporteurs: pas de pollution, pas de bruit, pas de camions en double file.</li>
-				<li><i class="icon_check_alt2"></i> Nos livreurs sont souriants et vous aideront à ranger vos courses si vous leur demandez.</li>
-				<li><i class="icon_adjust-vert"></i>  Vous pourriez bien être livré par l'un des fondateurs, l'occasion de lui faire part de vos remarques et suggestions.</li>
-			</ul>			
-		</div>
-		<!-- /ENDBRIEF -->
-		
-		<!-- PHONES IMAGE -->
-		<div class="col-md-6 wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-			<div class="phone-image">
-				<img src="<?php echo $this->getSkinUrl('images/livraison.jpg')?>" alt="La livraison douce en vélo électrique avec Au Pas De Courses">
-			</div>
-		</div>
-		<!-- /END PHONES IMAGE -->
-		
-	</div>
-	<!-- /END ROW -->
-	
-</div>
-<!-- /END CONTAINER -->
-
-</section>
-<!-- /END SECTION -->
-
 <!-- =========================
      PRICING TABLE | Added on version 1.7   
 ============================== -->
-<section class="packages grey-bg" id="nos-tarifs">
+<section class="packages" id="nos-tarifs">
 
 <div class="container">
 	
 	<!-- SECTION HEADER -->
-	<div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+	<div class="section-header">
 		
 		<!-- SECTION TITLE -->
 		<h2 class="dark-text">Combien cela coûte ?</h2>
 		<div class="colored-line"></div>
 		<div class="section-description" style="margin-bottom:50px;">
-			 Nous sommes là dans toutes les situations!
-			 <!--Soyez fidèle aux commerçants de votre quartier, et ils vous le rendront bien!-->
+			 Pas de minimum de commande. Première livraison gratuite avec le code "BIENVENUE"
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
 	
     <div class="row">
-		
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-3 col-sm-3 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<div class="single-package">
-				
-				<h3 class="package-heading main-color">Express</h3>
-				
-				<div class="price">
-					<h2><span class="sign"></span>9€<span class="month">/commande</span></h2>
-				</div>
-
-				<span class="package-subheading">Disponible à tout moment.</span>
-				
+		<div class="col-md-4 col-sm-4 single-service">
+			<div class="single-package">	
+				<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="En dessous de 45€ d'achat">
 				<ul class="package-feature">
-					<li><span class="main-color icon_check_alt2"></span>Moins de 45€ d'achat</li>
-				</ul>
-				
-			</div>
-		</div>
-		<!-- /END SINGLE PACKACGE -->
-		
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-3 col-sm-3 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<div class="single-package">
-				
-				<h3 class="package-heading main-color">Gourmand</h3>
-				
-				<div class="price">
-					<h2><span class="sign"></span>6€<span class="month">/commande</span></h2>
-				</div>
-
-				<span class="package-subheading">Pour se faire plaisir en semaine.</span>
-				
-				<ul class="package-feature">
-					<li><span class="main-color icon_check_alt2"></span>De 45 à 90€ d'achat</li>
+					<li>En dessous de 45€ d'achat</li>
+					<li class="price">9€ la livraison</li>
 				</ul>
 			</div>
 		</div>
-		<!-- /END SINGLE PACKACGE -->
-		
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-3 col-sm-3 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
+		<div class="col-md-4 col-sm-4 single-service">
 			<div class="single-package">
-				
-				<h3 class="package-heading main-color">Familial</h3>
-				
-				<div class="price">
-					<h2><span class="sign"></span>3€<span class="month">/commande</span></h2>
-				</div>
-
-				<span class="package-subheading">Pour les familles et ceux qui sont à plusieurs.</span>
-				
+				<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Entre 45 et 90€ d'achat">	
 				<ul class="package-feature">
-					<li><span class="main-color icon_check_alt2"></span>Plus de 90€ d'achat</li>
+					<li>Entre 45 et 90€ d'achat</li>
+					<li class="price">6€ la livraison</li>
+				</ul>
+			</div>
+		</div><div class="col-md-4 col-sm-4 single-service">
+			<div class="single-package">
+				<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
+				<ul class="package-feature">
+					<li>Au-dessus de 90€ d'achat</li>
+					<li class="price">3€ la livraison</li>
 				</ul>
 			</div>
 		</div>
-		<!-- /END SINGLE PACKACGE -->
-
-		<!-- SINGLE PACKACGE -->
-		<div class="col-md-3 col-sm-3 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<div class="single-package">
-				
-				<h3 class="package-heading main-color">Et pour tous</h3>
-				
-				<ul class="package-feature">
-					<li style="font-weight:700;font-size:20px;">1<sup>ère</sup> commande gratuite, sans engagement, </br>avec le code </br>"BIENVENUE"</li>
-					<li>Les même prix qu'en magasin</li>
-					<li>Livraison le soir même, si commande avant 15h</li>
-				</ul>
-			</div>
-		</div>
-		<!-- <div class="col-md-3 col-sm-3 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-			
-			<div class="single-package">
-				
-				<h3 class="package-heading main-color">Fidelité</h3>
-				
-				<div class="price">
-					<div class="color-bg">
-						<h2><span class="sign"></span>0€<span class="month">/commande*</span></h2>
-					</div>
-				</div>
-				
-				<ul class="package-feature">
-					<li><span class="main-color icon_check_alt2"></span>Minimum de 4 commandes dans le mois</li>
-					<li><span class="main-color icon_check_alt2"></span>Minimum de 35€ pour chaque commande</li>
-				</ul>
-				<p style="font-size:13px;line-height: 16px;font-style: italic;">
-					*Remboursement des frais de livraison en fin de mois
-				</p>
-			</div>
-		 --></div>
-		<!-- /END SINGLE PACKAGE -->
 	</div>
 	<!-- /END ROW -->
-	
 </div>
 <!-- /END CONTAINER -->
 </section>
 <!-- /END PRICING TABLE SECTION -->
-
 <!-- =========================
      ILS PARLENT DE NOUS SECTION 
 ============================== -->
@@ -656,18 +292,42 @@
 <div class="container">
 		
 	<!-- SECTION HEADER -->
-	<div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+	<div class="section-header">
 		<!-- SECTION TITLE -->
-		<h2>Ils parlent de nous</h2>
+		<h2>Lauréat de la <a href="http://www.cci-paris-idf.fr/presse/communiques/7eme-edition-des-palmes-du-e-commerce-2015-neuf-laureats-recompenses-pour-des-projets-de-commerce-innovants-presse" target="_blank" >Palme du eCommerce 2015</a>!</h2>
 		<div class="colored-line"></div>
 		<div class="section-description" style="margin-bottom:50px;">
-			 Medias, clients, commerçants ...
+			 Une belle récompense pour notre équipe, nos clients et nos partenaires.
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
 
-	<div class="col-md-4 col-sm-12"></div>
+	<div class="col-md-3 col-sm-12"></div>
 	<div id="carousel-comments" class="owl-carousel col-sm-12 col-md-4">
+		<div class="item">
+			<div class="one-avis single-service">
+	            <div class="avis-main">
+	              <span class="vc-outer">
+	                <span class="vc-inner">	Très belle initiative. Merci Au Pas de Courses et aux commerçants partenaires :-)</span>
+	              </span>
+	            </div>
+	            <div class="avis-author">
+	              Nadine G., Cliente fidèle.
+	            </div>
+	        </div>
+	    </div>
+		<div class="item">
+			<div class="one-avis single-service">
+	            <div class="avis-main">
+	              <span class="vc-outer">
+	                <span class="vc-inner">C'est extraordinaire d'avoir des produits faits par des artisans et livrés par Au Pas De Courses. On ne peut pas faire plus court que ce circuit là.</span>
+	              </span>
+	            </div>
+	            <div class="avis-author">
+	              Francis Ramon, La Fille du Boulanger.
+	            </div>
+	        </div>
+	    </div>
 		<div class="item">
 			<div class="one-avis single-service" style="width:100%;display: block;height: auto;">
 	            <div class="avis-main">
@@ -692,28 +352,15 @@
 	            </div>
 	        </div>
 	    </div>
-		<div class="item">
+	    <div class="item">
 			<div class="one-avis single-service">
 	            <div class="avis-main">
 	              <span class="vc-outer">
-	                <span class="vc-inner">"Une nouvelle initiative originale et maline voit le jour aux Batignolles. Testez vite et partagez."</span>
+	                <span class="vc-inner">Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses!</span>
 	              </span>
 	            </div>
 	            <div class="avis-author">
-	              <a href="https://www.facebook.com/LivinBatignolles?fref=ts" target="_blank"><img src="<?php echo $this->getSkinUrl('images/livin.jpg');?>" alt="Cliquez pour voir l'article de Livin'Batignolles"/>
-	              <span style="color:white;">Livin'Batignolles</span></a>
-	            </div>
-	        </div>
-	    </div>
-		<div class="item">
-			<div class="one-avis single-service">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">"En voilà un service pratique, conçu pour faciliter la vie des consommateurs comme celle des artisans!"</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              <a href="http://www.hello-paris17.fr/medias/vivre-a-paris-17/09-06-2015-simplifiez-vous-la-vie-avec-le-service-au-pas-de-courses" target="_blank"><img src="<?php echo $this->getSkinUrl('images/hello-paris17.png');?>" alt="Cliquez pour voir l'article de Hello Paris 17"/></a>
+	              Michel Vaidie, Boucherie des Moines.
 	            </div>
 	        </div>
 	    </div>
@@ -722,179 +369,53 @@
 
 </div>
 <!-- /END CONTAINER -->
-
 </section>
 <!-- /END SECTION -->
-
 <!-- =========================
-     DOWNLOAD NOW 
+     EVENEMENTS SECTION
 ============================== -->
-<section class="download" id="inscription">
+<section class="packages grey-bg" id="evenements">
+<div class="container">
+	
 
-<div class="color-overlay">
-
-	<div class="container">
+<div class="container">
+	<!-- SECTION HEADER -->
+		<div class="section-header">
+			<!-- SECTION TITLE -->
+			<h2 class="dark-text">Un évènement à organiser ?</h2>
+			<div class="colored-line"></div>
+			<div class="section-description" style="margin-bottom:50px;">
+				 Au Pas De Courses et vos commerçants de quartier vous proposent des plateaux pour vos évènements en famille ou au travail.
+			</div>
+		</div>
+		<!-- /END SECTION HEADER -->
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				
-				<!-- DOWNLOAD BUTTONS AREA -->
-				<div class="download-container">
-					<h2 class=" wow fadeInLeft animated" data-wow-offset="10" data-wow-duration="1.5s">La diversité de votre quartier, la simplicité d’Internet, la confiance et le sourire en plus</h2>
-					
-					<!-- BUTTONS -->
-					<div class="buttons wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-						
-						<!--A modifier lorsque plusieurs boutiques -->
-						<a class="btn btn-default btn-lg standard-button" href="https://www.aupasdecourses.com/batignolles/customer/account/create/">Vous inscrire</a>
-						
-					</div>
-					<!-- /END BUTTONS -->
-					
-				</div>
-				<!-- END OF DOWNLOAD BUTTONS AREA -->
-				
-				
-				<!-- SUBSCRIPTION FORM WITH TITLE -->
-				<div class="subscription-form-container">
-					
-					<h2 class="wow fadeInLeft animated" data-wow-offset="10" data-wow-duration="1.5s">Recevez notre newsletter</h2>
-					
-					<!-- =====================
-					     MAILCHIMP FORM STARTS 
-					     ===================== -->
-					
-					<form id="sub-form-mailchimp" class="subscription-form mailchimp form-inline wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s" role="form">
-						
-						<!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
-						<h4 class="subscription-success"></h4>
-						<h4 class="subscription-error"></h4>
-						
-						<!-- EMAIL INPUT BOX -->
-						<input type="email" name="email" id="subscriber-email" placeholder="Votre email" class="form-control input-box">
-						
-						<!-- SUBSCRIBE BUTTON -->
-						<button type="submit" id="subscribe-button" class="btn btn-default standard-button">S'enregistrer</button>
-						
-					</form>
-					<!-- /END MAILCHIMP FORM STARTS -->
-					
-					<!-- =====================
-					     LOCAL TXT FORM STARTS 
-					     ===================== -->
-					     
-					<!-- THIS FORM IS COMMENTED TO HIDE 
-					
-					<form class="subscription-form form-inline wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s" id="subscribe" role="form">
-						
-						<h4 class="subscription-success"><i class="icon_check"></i> Thank you! We will notify you soon.</h4>
-						<h4 class="subscription-error">Something Wrong!</h4>
-						
-						<input type="email" name="email" id="subscriber-email" placeholder="Your Email" class="form-control input-box">
-						
-						<button type="submit" id="subscribe-button" class="btn btn-default standard-button">Subscribe</button>
-						
-					</form>
-					
-					-->
-					
-					<!-- / LOCAL TXT SAVING FORM END -->
-
-				</div>
-                <!-- END OF SUBSCRIPTION FORM WITH TITLE -->
-				
+				<a class="btn btn-default standard-button" href="javascript:void(Tawk_API.toggle())">Nous contacter</a>
 			</div> 
-			<!-- END COLUMN -->
-			
 		</div> 
-		<!-- END ROW -->
-		
 	</div>
-	<!-- /END CONTAINER -->
-</div>
-<!-- /END COLOR OVERLAY -->
-
+<!-- /END CONTAINER -->
 </section>
-<!-- /END DOWNLOAD SECTION -->
-
-
+<!-- /END PRICING TABLE SECTION -->
 <!-- =========================
      FOOTER 
 ============================== -->
 <footer id="contact-section">
 
 <div class="container">
-	
-	<div class="contact-box">
-		
-		<!-- CONTACT BUTTON TO EXPAND OR COLLAPSE FORM -->
-		
-		<a class="btn contact-button expand-form expanded"><i class="icon_mail_alt"></i></a>
-		<div class="section-description" style="margin-bottom:50px;margin-top:50px;">
-			 Un remerciement, une demande, une remarque ? </br>
-			 Vous êtes commerçants et souhaitez faire partie de notre sélection ?</br>
-			 Du temps libre pour livrer à vélo ?</br>
-			 Envie de nous rejoindre dans l'aventure?</br>
-			 Envoyez nous un petit message!
-		</div>
-		
-		<!-- EXPANDED CONTACT FORM -->
-		<div class="row expanded-contact-form">
-			
-			<div class="col-md-8 col-md-offset-2">
-				
-				<!-- FORM -->
-				<form class="contact-form" id="contact-form-1" role="form">
-					
-					<!-- IF MAIL SENT SUCCESSFULLY -->
-					<h4 class="success">
-						<i class="icon_check"></i> Votre message a bien été envoyé.
-					</h4>
-					
-					<!-- IF MAIL SENDING UNSUCCESSFULL -->
-					<h4 class="error">
-						<i class="icon_error-circle_alt"></i> Vous devez renseigner un e-mail valide et votre message doit faire plus de 1 caractère.
-					</h4>
-					
-					<div class="col-md-6">
-						<input class="form-control input-box" id="name" type="text" name="name" placeholder="Votre nom">
-					</div>
-					
-					<div class="col-md-6">
-						<input class="form-control input-box" id="email" type="email" name="email" placeholder="Votre email">
-					</div>
-					
-					<div class="col-md-12">
-						<input class="form-control input-box" id="subject" type="text" name="subject" placeholder="Sujet">
-						<textarea class="form-control textarea-box" id="message" rows="8" placeholder="Message"></textarea>
-					</div>
-					
-					<button class="btn btn-primary standard-button2 ladda-button" type="submit" id="submit" name="submit" data-style="expand-left">Envoyer</button>
-					
-				</form>
-				<!-- /END FORM -->
-				
-			</div>
-			
-		</div>
-		<!-- /END EXPANDED CONTACT FORM -->
-		
-	</div>
-	<!-- /END CONTACT BOX -->
-	
-	<!-- LOGO -->
-	<img src="<?php echo $this->getSkinUrl('images/logo.png')?>" alt="LOGO" class="responsive-img">
-	
 	<!-- SOCIAL ICONS -->
 	<ul class="social-icons">
-		<li><a href="https://www.facebook.com/aupasdecourses"><i class="social_facebook_square"></i></a></li>
-		<li><a href="https://twitter.com/aupasdecourses"><i class="social_twitter_square"></i></a></li>
-		<li><a href="https://plus.google.com/114890137995721785465/about"><i class="social_googleplus_square"></i></a></li>
-		<li><a href="https://instagram.com/aupasdecourses/"><i class="social_instagram_square"></i></a></li>
+		<p>Suivez nous sur</p>
+		<li><a href="https://www.facebook.com/aupasdecourses"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+		<li><a href="https://twitter.com/aupasdecourses"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+		<li><a href="https://plus.google.com/114890137995721785465/about"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a></li>
+		<li><a href="https://instagram.com/aupasdecourses/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 	</ul>
 	
 	<!-- COPYRIGHT TEXT -->
 	<p class="copyright">
-		©2015 Au Pas De Courses, tous droits réservés.
+		©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés. Crédit Photos: Pierre Mainguet, <a href="https://flic.kr/p/mJNxaB">David Fleg</a> et <a href="https://commons.wikimedia.org/wiki/File%3ARue_de_Bretagne%2C_75003_Paris%2C_2015.jpg">besopha</a>
 	</p>
 
 </div>
@@ -904,39 +425,6 @@
  
 </footer>
 <!-- /END FOOTER -->
-
+    <?php echo $this->getChildHtml('footer') ?>
 </body>
 </html>
-
-<!-- =========================
-     SCRIPTS 
-============================== -->
-
-<script src="<?php echo $this->getSkinUrl('js/custom.js');?>"></script>
-
-<script>
-var amountScrolled = 300;
-
-
-$j(window).scroll(function() {
-	if ( $j(window).scrollTop() > amountScrolled ) {
-		$j('a.back-to-top').fadeIn('slow');
-	} else {
-		$j('a.back-to-top').fadeOut('slow');
-	}
-});
-
-$j('a.back-to-top').click(function() {
-	$j('body, html').animate({
-		scrollTop: 0
-	}, 700);
-	return false;
-});
-
-$j("#scroll-button").click(function() {
-    $j('html,body').animate({
-        scrollTop: $j("#video-presentation").offset().top},
-        'slow');
-});
-
-</script>
