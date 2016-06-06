@@ -521,7 +521,7 @@ padding: 40px;
 }
 
 .owl-theme .owl-controls .owl-page span {
-    background: #fff none repeat scroll 0% 0% !important;
+    background: #3fa342 none repeat scroll 0% 0% !important;
 }
 
 /*price*/
@@ -542,6 +542,7 @@ h3.package-heading{
 .single-package{
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   background: #Fff none repeat scroll 0% 0%;
+  margin-bottom:20px;
 }
 
  @media screen and (min-width: 768px){
