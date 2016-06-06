@@ -11,8 +11,8 @@ h1,h2{
 }
 
 h1 {
-    font-size: 2.5rem;
-    line-height: 2.8rem;
+    font-size: 38px;
+    line-height: 38px;
 }
 
 h2 {
@@ -64,16 +64,13 @@ h4 {
 /*style select menu*/
 
 header {
-    background: transparent url("../images/landing_splash.jpg") no-repeat center top / cover;
+    /*background: transparent url("../images/landing_splash.jpg") no-repeat center top / cover;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-position: center center !important;
-
-    /*@media (max-width: @iphone-screen) {
-        background-attachment: scroll;
-    }*/
+    height: 510px;
 }
 
 header .only-logo .navbar {
@@ -81,7 +78,7 @@ header .only-logo .navbar {
 }
 
 .color-overlay {
-    background: rgba(255,255,255, 0.4) none repeat scroll 0% 0%;
+    background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
 }
 
 /*Navbar*/
@@ -109,30 +106,29 @@ header .intro-section .intro {
     color:#164D26;
 }
 
-.intro-section h3{
+.intro-section p.label_input{
   color: rgb(67, 41, 24);
-	font-weight: 500;
-	margin-top: 0;
-	margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 22px;
+  margin-right: 10px;
+  vertical-align: -webkit-baseline-middle;
+  display:inline-block;
 }
 
-@media screen and (max-width:767px){
-  .intro-section h3{
-     line-height: 26px;
-  }
-
-}
-
-.intro-section h3.small-header{
+#small-header{
   font-size: 18px;
   margin: 35px 0px 0px;
   line-height: 16px;
   color:#333;
 }
 
+#input-group-intro{
+  margin:auto; 
+  min-width:400px;
+}
+
 .intro-section select{
   clear:both;
-  background: url("https://aupasdecourses.com/skin/frontend/rwd/landing-page/images/angle-down.png") 96% / 15% no-repeat #eee;
   border-image-outset: 0 0 0 0;
   border-image-repeat: stretch stretch;
   border-image-slice: 100% 100% 100% 100%;
@@ -157,6 +153,8 @@ header .intro-section .intro {
   -moz-appearance: none;
   -webkit-appearance: none;
   -moz-border-colors: none;
+  vertical-align:middle;
+  float:none;
 }
 
 .intro-section select.select-quartier{
@@ -174,12 +172,12 @@ header .intro-section .buttons {
 
 .intro-section button.select-quartier{
   display:inline-block;
-  margin:0 10px;
   background-color: #E94E19;
   min-width: 0;
   border-radius: 0px !important;
   padding: 12px;
   font-family: Montserrat;
+  vertical-align:middle;
 }
 
 .intro-section button.select-quartier:hover,.intro-section button.select-quartier:focus,.intro-section button.select-quartier:active{
@@ -226,6 +224,69 @@ header .intro-section .buttons {
   -moz-animation: bounce 2s infinite;
   -webkit-animation: bounce 2s infinite;
   animation: bounce 2s infinite;
+}
+
+@media screen and (max-width:767px){
+  .intro-section h3{
+     line-height: 26px;
+  }
+
+  .intro-section p.label_input{
+    display:none;
+  }
+
+  #input-group-intro{
+    min-width:100%;
+  }
+
+}
+
+/* Concept */
+
+.single-package img{
+  width:280px;
+}
+
+.single-package .package-feature > li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+li.price{
+    margin-top: 0;
+    font-size: 24px;
+}
+
+#concept .single-package:hover .color-overlay{
+  background:rgba(255, 255, 255, 0.8);
+}
+
+#concept .single-package .color-overlay {
+    background:rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    height: 100%;
+    z-index: 2;
+    min-height: 343px;
+}
+
+#concept h3.package-heading{
+  margin-top: 130px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-weight: 900;
+  color:#164D26;
+}
+
+#concept .single-package a, #concept .single-package a:hover{
+  text-decoration: none;
+}
+
+#concept .single-package p{
+  margin: 0px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #333;
 }
 
 /*Video*/
@@ -493,7 +554,8 @@ padding: 40px;
   margin-bottom:30px;
   box-shadow:0px 1px 3px rgba(0,0,0,0.1);
   color:#6b7781;
-  background:#FFF
+  background:#FFF;
+  min-height: 180px;
 }
 
 .one-avis .avis-main strong{
@@ -525,12 +587,27 @@ padding: 40px;
   color:white;
 }
 
+#avis  a{
+  color:#FFF;
+  font-weight: bold;
+}
+
+#avis  a:hover{
+  text-decoration: underline;
+}
+
+
 .one-avis .avis-author a{
   color:#FFF
 }
 
+.one-avis .vc-outer{
+  display: inline-block;
+}
+
 .one-avis .vc-inner{
   font-style: italic;
+  display: inline;
 }
 
 .owl-theme .owl-controls .owl-page span {
@@ -574,51 +651,15 @@ h3.package-heading{
 
 /*newsletter*/
 
-#inscription button.standard-button, #inscription .standard-button, .contact-box .standard-button2 {
+#evenements .standard-button {
     display: inline-block;
     margin: 0px 10px;
     background-color: #3FA342;
     min-width: 0px;
     border-radius: 0px !important;
     padding: 16px;
-}
-
-.download {
-    background: url('../images/bg-3.jpg') no-repeat center;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    color: #ffffff;
-    background-attachment: scroll;
-}
-
-.download .subscription-form .input-box {
-    height: 57px;
-    border:none;
-    border-radius: 0px !important;
-    font-size: 18px;
-}
-
-.download h2 {
-    font-weight: 500;
-    color: #222;
-    font-size: 33px;
-    line-height: 38px;
-}
-
-h4.subscription-error, h4.subscription-success{
-  color:#164D26;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-h4.subscription-success{
-  color:#164D26;
-}
-
-h4.subscription-error, h4.subscription-error a{
-  color:#C20404;
+    font-size: 22px;
+    font-weight: 500!important;
 }
 
 /*footer*/

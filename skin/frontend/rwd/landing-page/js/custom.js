@@ -7,7 +7,7 @@ $j(document).ready(function() {
         autoPlay: 6000,
         itemsCustom : [
         [0, 1],
-        [768, 2]
+        [768, 3]
         ],
         stopOnHover:true
   });
@@ -91,6 +91,6 @@ $j('a.back-to-top').click(function() {
 
 $j("#scroll-button").click(function() {
     $j('html,body').animate({
-        scrollTop: $j("#video-presentation").offset().top},
+        scrollTop: $j("#concept").offset().top},
         'slow');
 });

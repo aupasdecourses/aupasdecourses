@@ -27,8 +27,10 @@
                 <!-- BOOTSTRAP -->
                 <action method="addItem"><rel>skin_css</rel><href>bootstrap/bootstrap.min.css</href></action>
                 <!-- FONT ICONS -->
-                <action method="addItem"><rel>skin_css</rel><href>assets/elegant-icons/style.css</href></action>
-                <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css</href></action>
+                <action method="addLinkRel">
+                <rel>stylesheet</rel>
+                <href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href>
+                </action>
                 <!-- WEB FONTS -->
                 <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
                 <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Montserrat:400,700</href><type>text/css</type></action>
