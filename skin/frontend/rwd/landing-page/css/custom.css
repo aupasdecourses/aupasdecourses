@@ -38,28 +38,6 @@ h4 {
     color: #3FA342;
 }
 
-/*loader*/
-
-.status {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background-image: url("../images/loading.gif");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    margin: -20px 0px 0px -20px;
-}
-
-#logo-loader{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin: -120px 0px 0px -110px;
-    width:221px;
-}
 
 /*style select menu*/
 
@@ -75,6 +53,11 @@ header {
 
 header .only-logo .navbar {
     padding: 40px;
+    padding-bottom: 20px;
+}
+
+header .only-logo img {
+    width:221px;
 }
 
 .color-overlay {
