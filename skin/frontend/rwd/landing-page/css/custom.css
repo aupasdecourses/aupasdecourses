@@ -48,7 +48,7 @@ header {
     -o-background-size: cover;
     background-size: cover;
     background-position: center center !important;
-    height: 510px;
+    height: 570px;
 }
 
 header .only-logo .navbar {
@@ -64,20 +64,6 @@ header .only-logo img {
     background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
 }
 
-/*Navbar*/
-
-.navbar {
-    margin-bottom: 0px;
-}
-
-.navbar > .container .navbar-brand{
-  padding-top: 5px;
-}
-
-.sticky-navigation .navbar-header img {
-    max-height: 50px;
-}
-
 /*Intro section*/
 
 header .intro-section{
@@ -87,6 +73,8 @@ header .intro-section{
 header .intro-section .intro {
     margin-bottom: 20px;
     color:#164D26;
+    text-transform: uppercase;
+    line-height: 1.15;
 }
 
 .intro-section p.label_input{
@@ -210,9 +198,10 @@ header .intro-section .buttons {
 }
 
 @media screen and (max-width:767px){
-  .intro-section h3{
-     line-height: 26px;
-  }
+
+  .intro-section h1{
+     font-size: 32px;
+  } 
 
   .intro-section p.label_input{
     display:none;
@@ -222,6 +211,17 @@ header .intro-section .buttons {
     min-width:100%;
   }
 
+  header .color-overlay {
+      min-height: 580px;
+  }
+
+}
+
+/*Packages*/
+
+.packages {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 /* Concept */
@@ -232,7 +232,7 @@ header .intro-section .buttons {
 }
 
 .single-package img{
-  width:280px;
+  width:260px;
 }
 
 .single-package .package-feature > li {
