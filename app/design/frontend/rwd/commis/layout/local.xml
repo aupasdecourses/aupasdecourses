@@ -342,7 +342,7 @@
             <block type="core/template" name="contactForm" template="contacts/form.phtml"/>
         </reference>
     </cms_index_noroute>
-    <customer_logged_in>
+    <!-- <customer_logged_in>
          <reference name="top.links">
             <action method="addLink" translate="label title">
                 <label>Parrainez un ami</label>
@@ -361,7 +361,7 @@
                 <position>25</position>
             </action>
         </reference>
-    </customer_logged_in>
+    </customer_logged_in> -->
     <customer_account_changeforgotten translate="label">
         <label>Reset a Password</label>
         <remove name="right"/>
