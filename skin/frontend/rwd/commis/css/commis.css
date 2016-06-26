@@ -1106,7 +1106,7 @@ div.menu a:link, div.menu a span {
       color:rgb(67, 41, 24);
 }
 
-div.menu a:hover span, div.menu.act a span, div.menu.active a span {
+div.menu a:hover span, div.menu.act a span, div.menu.active a span, div.menu a:hover, div.menu.act a, div.menu.active a {
     color: #FFF;
     background-color:rgb(67, 41, 24);
 }
