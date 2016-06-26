@@ -1102,7 +1102,7 @@ div.menu:hover, div.menu:active, div.menu:focus{
   background-color: rgb(67, 41, 24);
 }
 
-div.menu a:link {
+div.menu a:link, div.menu a span {
       color:rgb(67, 41, 24);
 }
 
@@ -1373,7 +1373,7 @@ display: block;
   display: block;
   padding: 0px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
   color: inherit;
   text-align: center;
   white-space: inherit;
@@ -1382,6 +1382,7 @@ display: block;
   line-height: 42px;
   font-family: Raleway;
   line-height: 20px;
+  text-transform: capitalize;
 }
 
 /* ============================================ *
@@ -3804,6 +3805,18 @@ label{
     color: rgb(67, 41, 24);
     text-transform: none;
     text-align: center;
+}
+
+.cms-index-index .page-title h1{
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    background-color: #f2efe3;
+    margin-left: -30px;
+    margin-top: -10px;
+    margin-right: -30px;
+    color: rgb(99,99,99);
 }
 
 .sp-methods dt {

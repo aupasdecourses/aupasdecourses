@@ -72,9 +72,10 @@ header .intro-section{
 
 header .intro-section .intro {
     margin-bottom: 20px;
-    color:#164D26;
-    text-transform: uppercase;
+    color: #164D26;
+    /* text-transform: uppercase; */
     line-height: 1.15;
+    font-family: Raleway;
 }
 
 .intro-section p.label_input{
