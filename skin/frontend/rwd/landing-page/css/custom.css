@@ -49,6 +49,9 @@ header {
     background-size: cover;
     background-position: center center !important;
     height: 570px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgb(212, 212, 212);
+    position:relative;
 }
 
 header .only-logo .navbar {
@@ -60,7 +63,9 @@ header .only-logo img {
     width:221px;
 }
 
-.color-overlay {
+header .color-overlay {
+    height: 100%;
+    min-height: auto;
     background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
 }
 
@@ -210,10 +215,6 @@ header .intro-section .buttons {
 
   #input-group-intro{
     min-width:100%;
-  }
-
-  header .color-overlay {
-      min-height: 580px;
   }
 
 }
@@ -639,10 +640,6 @@ a.back-to-top:focus,a.back-to-top:active{
     
     html {
         font-size: 90%;
-    }
-
-    header .color-overlay {
-        min-height: 780px;
     }
 
     .sticky-navigation .navbar-header {
