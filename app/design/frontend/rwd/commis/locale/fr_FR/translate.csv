@@ -370,7 +370,8 @@ Mage_Sales::Shipping Method,Votre livraison,,
 Amasty_Orderattr::Additional Info,Informations complémentaires,,
 Amasty_Orderattach::Order Attachments,Tickets commerçants:,,
 Mage_Customer::If you are a registered VAT customer," please click <a href=""%s"">here</a> to enter you billing address for proper VAT calculation",Si vous êtes un client Entreprise," merci de compléter votre adresse d'envoi en cliquant <a href=""%s"">ici</a>"
-Mage_Customer::If there is an account associated with %s you will receive an email with a link to reset your password.,Si l'adresse %s existe dans notre base de données, vous recevrez un lien sur celle-ci pour réinitialiser votre mot de passe.,
+Mage_Customer::If there is an account associated with %s you will receive an email with a link to reset your password.,"Si l'adresse %s existe dans notre base de données, vous recevrez un lien sur celle-ci pour réinitialiser votre mot de passe.",
+Mage_Customer::"Your password has been updated.","Votre mot de passe a été mis à jour."
 Mage_Checkout::Select a shipping address from your address book or enter a new address.,Choisissez une adresse de livraison depuis votre carnet d'adresses ou entrer une nouvelle adresse.,,
 Mage_Checkout::Select a billing address from your address book or enter a new address.,Choisissez une adresse de facturation depuis votre carnet d'adresses ou entrer une nouvelle adresse.,,
 MW_Ddate::Your Checkout Progress,Rappel de votre commande,,
