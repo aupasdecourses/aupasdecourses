@@ -325,6 +325,7 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
 
         $notifyCustomer = true;
         $visibleOnFront=true;
+        $includeComment=true;
         $comment = $data['comment'];
         // $includeComment = true;
         // $creditmemo->setEmailSent(false);
@@ -353,6 +354,9 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
         } catch (Mage_Core_Exception $e) {
             $this->_fault('data_invalid', $e->getMessage());
         }
+
+        // send email notification
+        $creditmemo->sendEmail($notifyCustomer, ($includeComment ? $comment : ''));
 
         return $creditmemo;
 
