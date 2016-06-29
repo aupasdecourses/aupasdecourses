@@ -323,14 +323,15 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
         //$saveTransaction = Mage::getModel('core/resource_transaction')->addObject ($creditmemo )->addObject ( $order )->save ();
         // $order->addStatusToHistory ( $orderCreditMemoStatusCode, $orderCreditMemoStatusComment, true );
 
-        $notifyCustomer = false;
+        $notifyCustomer = true;
+        $visibleOnFront=true;
         $comment = $data['comment'];
         // $includeComment = true;
         // $creditmemo->setEmailSent(false);
 
         // add comment to creditmemo
         if (!empty($comment)) {
-            $creditmemo->addComment($comment, $notifyCustomer);
+            $creditmemo->addComment($comment, $notifyCustomer,$visibleOnFront);
         }
 
         try {
