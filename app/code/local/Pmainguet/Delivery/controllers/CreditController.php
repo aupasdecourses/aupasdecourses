@@ -324,11 +324,9 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
         // $order->addStatusToHistory ( $orderCreditMemoStatusCode, $orderCreditMemoStatusComment, true );
 
         $notifyCustomer = true;
-        $visibleOnFront=true;
+        $visibleOnFront=false;
         $includeComment=true;
         $comment = $data['comment'];
-        // $includeComment = true;
-        // $creditmemo->setEmailSent(false);
 
         // add comment to creditmemo
         if (!empty($comment)) {
@@ -336,7 +334,6 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
         }
 
         try {
-            
             //  
             $creditmemo->setRefundRequested(true)->setOfflineRequested(true)->register();
             
@@ -350,13 +347,12 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
             }
             
             $transactionSave->save();
+            // send email notification
+            $creditmemo->sendEmail($notifyCustomer, ($includeComment ? $comment : ''));
 
         } catch (Mage_Core_Exception $e) {
             $this->_fault('data_invalid', $e->getMessage());
         }
-
-        // send email notification
-        $creditmemo->sendEmail($notifyCustomer, ($includeComment ? $comment : ''));
 
         return $creditmemo;
 
