@@ -348,6 +348,7 @@ class Pmainguet_Delivery_CreditController extends Mage_Core_Controller_Front_Act
             
             $transactionSave->save();
             // send email notification
+            Mage::log('Email sent: '.$comment, null, 'email.log');
             $creditmemo->sendEmail($notifyCustomer, ($includeComment ? $comment : ''));
 
         } catch (Mage_Core_Exception $e) {
