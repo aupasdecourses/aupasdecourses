@@ -19,14 +19,23 @@
 
 	//Version for Mage World Delivery Module
 	if(Mage::helper('core')->isModuleEnabled('MW_Ddate')){
+		$count=1;
+		$intervalTab = [];
+
 		$hlp = Mage::helper('ddate');
 		$storeId = $this->getCurrentStore();
 		$options = $hlp->getDtime($storeId);
-		$count=1;
+
 		foreach($options as $timeint){
-			if($timeint<>''){
-					echo '<span style="display:block;float:left;width:50%;padding-top:5px;padding-bottom:0px;">'.$timeint->getInterval().'</span>';
-			}
+				$dTstr = $timeint->getInterval();
+				$tmpSplit = preg_split("/[-:]/", $dTstr);
+				$intervalTab[] = $tmpSplit;
+		}
+		asort($intervalTab);
+
+		foreach($intervalTab as $intSplit){
+			$intStr = "$intSplit[0]:$intSplit[1]-$intSplit[2]:$intSplit[3]";
+			echo '<span style="display:block;float:left;width:50%;padding-top:5px;padding-bottom:0px;">'.$intStr.'</span>';
 			$count+=1;
 		}
 	}

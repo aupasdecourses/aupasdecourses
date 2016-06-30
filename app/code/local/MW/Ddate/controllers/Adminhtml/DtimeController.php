@@ -7,7 +7,6 @@ class MW_Ddate_Adminhtml_DtimeController extends Mage_Adminhtml_Controller_Actio
         $this->loadLayout()
             ->_setActiveMenu('dtime/items')
             ->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-
         return $this;
     }
 
