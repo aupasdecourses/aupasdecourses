@@ -39,10 +39,10 @@ header{
 					<!-- WELCOM MESSAGE -->
 					<h1 class="intro">Les meilleurs produits de votre quartier, sans vous déplacer</h1>
 				        <div class="col-md-12">
-				        <form role="form" class="contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
+				        <form role="form" class="form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
 						    <div id="input-group-intro">
 								<p class="label_input">Ma rue :</p>
-								<input id='GoogleAutoComplete' type='text' name='addr' onFocus='GoogleGeolocate()' />
+								<input id='GoogleAutoComplete' class='form-control' type='text' name='addr' onFocus='GoogleGeolocate()' />
 								<input id='GoogleAutoCompleteZipcode' type='hidden' name="zipcode" />
 								<button class="btn btn-default standard-button select-quartier" type="submit">OK</button>
 							    </div><!-- /input-group -->
