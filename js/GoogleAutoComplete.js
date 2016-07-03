@@ -1,29 +1,38 @@
-// This example displays an address form, using the autocomplete feature
-// // of the Google Places API to help users fill in the information.
+// globals declaration
+var placeSearch;
+var	autocomplete;
 
-var placeSearch, autocomplete;
-
+// Google handle, triger, hook
 function initGoogleAutocomplete() {
-	// Create the autocomplete object, restricting the search to geographical
-	// location types.
 	autocomplete = new google.maps.places.Autocomplete(
 			/** @type {!HTMLInputElement} */(document.getElementById('GoogleAutoComplete')),
 			{types: ['geocode']});
 
-	// When the user selects an address from the dropdown, populate the address
-	// fields in the form.
 	autocomplete.addListener('place_changed', fillInAddress);
 }
 
-function fillInAddress() {
-	// Get the place details from the autocomplete object.
-	var place = autocomplete.getPlace();
-
-	document.getElementById('GoogleAutoCompleteZipcode').value = place.address_components[4].short_name;
+function getPlaceKey(place, key) {
+	for (var obj in place.address_components) {
+		for (var t in place.address_components[obj].types) {
+			if (place.address_components[obj].types[t] == key) {
+				return place.address_components[obj].short_name;
+			}
+		}
+	}
+	return 'not found';
 }
 
-// Bias the autocomplete object to the user's geographical location,
-// as supplied by the browser's 'navigator.geolocation' object.
+function fillInAddress() {
+	var	place = autocomplete.getPlace();
+	var	zipcode = getPlaceKey(place, 'postal_code');
+
+	console.debug(place);
+	if (zipcode != 'not found') {
+		document.getElementById('GoogleAutoCompleteZipcode').value = zipcode;
+	}
+}
+
+// input onFocus
 function GoogleGeolocate() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {

@@ -1,12 +1,12 @@
 <?php
-  $i = rand(1, 17); // generate random number size of the array
-  $url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
-  $angledown= $this->getSkinUrl("images/angle-down.png");
+$i = rand(1, 17); // generate random number size of the array
+$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+$angledown= $this->getSkinUrl("images/angle-down.png");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
 <head>
-    <?php echo $this->getChildHtml('head') ?>
+	<?php echo $this->getChildHtml('head') ?>
 </head>
 <style>
 header{
@@ -16,7 +16,7 @@ header{
 
 <body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
 <!-- =========================
-     HEADER   
+	 HEADER   
 ============================== -->
 <header class="header" data-stellar-background-ratio="0.5" id="faites-vos-courses">
 
@@ -38,19 +38,19 @@ header{
 				<div class="intro-section">
 					<!-- WELCOM MESSAGE -->
 					<h1 class="intro">Les meilleurs produits de votre quartier, sans vous déplacer</h1>
-				        <div class="col-md-12">
-				        <form role="form" class="form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
-						    <div id="input-group-intro">
-								<p class="label_input">Ma rue :</p>
+<!--					<div class="col-md-4"> -->
+						<form role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
+							<div id="input-group-intro">
+								<label for='addr' class="label_input">Mon adresse :</label>
 								<input id='GoogleAutoComplete' class='form-control' type='text' name='addr' onFocus='GoogleGeolocate()' />
 								<input id='GoogleAutoCompleteZipcode' type='hidden' name="zipcode" />
 								<button class="btn btn-default standard-button select-quartier" type="submit">OK</button>
-							    </div><!-- /input-group -->
-						    </div>
-					    </form>
-					</div>
-					<div class="col-md-5"></div>
-					<div class="col-md-2">
+								</div><!-- /input-group -->
+							</div>
+						</form>
+<!--					</div> -->
+					<div class="col-xs-12 col-md-12"></div>
+					<div class="col-xs-12 col-md-12">
 						<div id="scroll-button" >
 							<p id="small-header">Plus d'infos</p>
 							<div class="arrow bounce"></div>
@@ -70,15 +70,15 @@ header{
 <!-- /END HEADER -->
 
 <!-- =========================
-     CONCEPT | Added on version 1.7   
+	 CONCEPT | Added on version 1.7   
 ============================== -->
 <section class="packages grey-bg" id="concept">
 
 <div class="container">
-	
+
 	<!-- SECTION HEADER -->
 	<div class="section-header">
-		
+
 		<!-- SECTION TITLE -->
 		<h2 class="dark-text">Comment cela fonctionne ?</h2>
 		<div class="colored-line"></div>
@@ -87,8 +87,8 @@ header{
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
-    <div class="row">
-	    <div class="col-md-3 col-sm-12"></div>
+	<div class="row">
+		<div class="col-md-3 col-sm-12"></div>
 		<div id="carousel-how" class="owl-carousel col-sm-12 col-md-4">
 			<div class="item">
 				<div class="single-package">
@@ -97,24 +97,24 @@ header{
 						<li>1 - Commandez en ligne chez les commerçants de votre quartier.</li>
 					</ul>
 				</div>
-		    </div>
-	        <div class="item">
+			</div>
+			<div class="item">
 				<div class="single-package">
 					<img src="<?php echo $this->getSkinUrl('images/shops.png')?>" alt="Les commerçants préparent votre commande">
 					<ul class="package-feature">
 						<li>2 - Les commerçants préparent votre commande</li>
 					</ul>
-					
+
 				</div>
-		    </div>
-		    <div class="item">
+			</div>
+			<div class="item">
 				<div class="single-package">
 					<img src="<?php echo $this->getSkinUrl('images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
 					<ul class="package-feature">
 						<li>3 - On vous livre le tout chez vous, en une fois</li>
 					</ul>
 				</div>
-		    </div>
+			</div>
 		</div>
 		<div class="col-md-4 col-sm-12"></div>
 	</div>
@@ -124,15 +124,15 @@ header{
 </section>
 <!-- /END CONCEPT SECTION -->
 <!-- =========================
-     CONCEPT | Added on version 1.7   
+	 CONCEPT | Added on version 1.7   
 ============================== -->
 <section class="packages" id="concept">
 
 <div class="container">
-	
+
 	<!-- SECTION HEADER -->
 	<div class="section-header">
-		
+
 		<!-- SECTION TITLE -->
 		<h2 class="dark-text">Vous faire livrer</h2>
 		<div class="colored-line"></div>
@@ -141,8 +141,8 @@ header{
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
-    <div class="row">
-    	<div class="col-md-3 col-sm-12"></div>
+	<div class="row">
+		<div class="col-md-3 col-sm-12"></div>
 		<div id="carousel-quartier" class="owl-carousel col-sm-12 col-md-4">
 			<div class="item">
 				<?php $url_cover=$this->getSkinUrl('images/monceau_batignolles.jpg');?>
@@ -154,8 +154,8 @@ header{
 						</div>
 					</a>
 				</div>
-		    </div>
-	        <div class="item">
+			</div>
+			<div class="item">
 				<?php $url_cover=$this->getSkinUrl('images/saintmartin_marais.jpg');?>
 				<div class="single-package" style="background-image: url('<?php echo $url_cover;?>')">
 					<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
@@ -165,7 +165,7 @@ header{
 						</div>
 					</a>
 				</div>
-		    </div>
+			</div>
 		</div>
 		<!-- /END SINGLE PACKACGE -->
 	</div>
@@ -175,7 +175,7 @@ header{
 </section>
 <!-- /END CONCEPT SECTION -->
 <!-- =========================
-     BRIEF LEFT SECTION 
+	 BRIEF LEFT SECTION 
 ============================== -->
 <section class="app-brief grey-bg" id="brief1">
 <div class="container">
@@ -200,15 +200,15 @@ header{
 </section>
 <!-- /END SECTION -->
 <!-- =========================
-     PRICING TABLE | Added on version 1.7   
+	 PRICING TABLE | Added on version 1.7   
 ============================== -->
 <section class="packages" id="nos-tarifs">
 
 <div class="container">
-	
+
 	<!-- SECTION HEADER -->
 	<div class="section-header">
-		
+
 		<!-- SECTION TITLE -->
 		<h2 class="dark-text">Combien cela coûte ?</h2>
 		<div class="colored-line"></div>
@@ -217,9 +217,9 @@ header{
 		</div>
 	</div>
 	<!-- /END SECTION HEADER -->
-	
-    <div class="row">
-    	<div class="col-md-3 col-sm-12"></div>
+
+	<div class="row">
+		<div class="col-md-3 col-sm-12"></div>
 		<div id="carousel-price" class="owl-carousel col-sm-12 col-md-4">
 			<div class="item">
 				<div class="single-package">	
@@ -229,8 +229,8 @@ header{
 						<li class="price">9€ la livraison</li>
 					</ul>
 				</div>
-		    </div>
-	        <div class="item">
+			</div>
+			<div class="item">
 				<div class="single-package">
 					<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Entre 45 et 90€ d'achat">	
 					<ul class="package-feature">
@@ -238,8 +238,8 @@ header{
 						<li class="price">6€ la livraison</li>
 					</ul>
 				</div>
-		    </div>
-		    <div class="item">
+			</div>
+			<div class="item">
 				<div class="single-package">
 					<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
 					<ul class="package-feature">
@@ -247,7 +247,7 @@ header{
 						<li class="price">3€ la livraison</li>
 					</ul>
 				</div>
-		    </div>
+			</div>
 		</div>
 		<div class="col-md-4 col-sm-12"></div>
 	</div>
@@ -257,12 +257,12 @@ header{
 </section>
 <!-- /END PRICING TABLE SECTION -->
 <!-- =========================
-     ILS PARLENT DE NOUS SECTION 
+	 ILS PARLENT DE NOUS SECTION 
 ============================== -->
 <section class="avis" id="avis">
 
 <div class="container">
-		
+
 	<!-- SECTION HEADER -->
 	<div class="section-header">
 		<!-- SECTION TITLE -->
@@ -278,64 +278,64 @@ header{
 	<div id="carousel-comments" class="owl-carousel col-sm-12 col-md-4">
 		<div class="item">
 			<div class="one-avis single-service">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">	Très belle initiative. Merci Au Pas de Courses et aux commerçants partenaires :-)</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              Nadine G., Cliente fidèle.
-	            </div>
-	        </div>
-	    </div>
+				<div class="avis-main">
+				  <span class="vc-outer">
+					<span class="vc-inner">	Très belle initiative. Merci Au Pas de Courses et aux commerçants partenaires :-)</span>
+				  </span>
+				</div>
+				<div class="avis-author">
+				  Nadine G., Cliente fidèle.
+				</div>
+			</div>
+		</div>
 		<div class="item">
 			<div class="one-avis single-service">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">C'est extraordinaire d'avoir des produits faits par des artisans et livrés par Au Pas De Courses. On ne peut pas faire plus court que ce circuit là.</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              Francis Ramon, La Fille du Boulanger.
-	            </div>
-	        </div>
-	    </div>
+				<div class="avis-main">
+				  <span class="vc-outer">
+					<span class="vc-inner">C'est extraordinaire d'avoir des produits faits par des artisans et livrés par Au Pas De Courses. On ne peut pas faire plus court que ce circuit là.</span>
+				  </span>
+				</div>
+				<div class="avis-author">
+				  Francis Ramon, La Fille du Boulanger.
+				</div>
+			</div>
+		</div>
 		<div class="item">
 			<div class="one-avis single-service" style="width:100%;display: block;height: auto;">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">"C'est désormais toute la semaine que vous aurez les meilleurs produits dans votre assiette"</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              <a href="http://issuu.com/le-bonbon/docs/ouest_9dd7a5e8a951a4/26" target="_blank"><img src="<?php echo $this->getSkinUrl('images/lebonbon.png');?>" alt="Cliquez pour voir l'article du Bonbon"/></a>
-	            </div>
-	        </div>
-        </div>
-        <div class="item">
+				<div class="avis-main">
+				  <span class="vc-outer">
+					<span class="vc-inner">"C'est désormais toute la semaine que vous aurez les meilleurs produits dans votre assiette"</span>
+				  </span>
+				</div>
+				<div class="avis-author">
+				  <a href="http://issuu.com/le-bonbon/docs/ouest_9dd7a5e8a951a4/26" target="_blank"><img src="<?php echo $this->getSkinUrl('images/lebonbon.png');?>" alt="Cliquez pour voir l'article du Bonbon"/></a>
+				</div>
+			</div>
+		</div>
+		<div class="item">
 			<div class="one-avis single-service">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">"Excellents produits, service ponctuel.</br>Je recommande !"</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              Margot P., cliente de la première heure
-	            </div>
-	        </div>
-	    </div>
-	    <div class="item">
+				<div class="avis-main">
+				  <span class="vc-outer">
+					<span class="vc-inner">"Excellents produits, service ponctuel.</br>Je recommande !"</span>
+				  </span>
+				</div>
+				<div class="avis-author">
+				  Margot P., cliente de la première heure
+				</div>
+			</div>
+		</div>
+		<div class="item">
 			<div class="one-avis single-service">
-	            <div class="avis-main">
-	              <span class="vc-outer">
-	                <span class="vc-inner">Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses!</span>
-	              </span>
-	            </div>
-	            <div class="avis-author">
-	              Michel Vaidie, Boucherie des Moines.
-	            </div>
-	        </div>
-	    </div>
+				<div class="avis-main">
+				  <span class="vc-outer">
+					<span class="vc-inner">Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses!</span>
+				  </span>
+				</div>
+				<div class="avis-author">
+				  Michel Vaidie, Boucherie des Moines.
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-4 col-sm-12"></div>
 
@@ -344,11 +344,11 @@ header{
 </section>
 <!-- /END SECTION -->
 <!-- =========================
-     EVENEMENTS SECTION
+	 EVENEMENTS SECTION
 ============================== -->
 <section class="packages grey-bg" id="evenements">
 <div class="container">
-	
+
 
 <div class="container">
 	<!-- SECTION HEADER -->
@@ -371,7 +371,7 @@ header{
 </section>
 <!-- /END PRICING TABLE SECTION -->
 <!-- =========================
-     FOOTER 
+	 FOOTER 
 ============================== -->
 <footer id="contact-section">
 
@@ -384,7 +384,7 @@ header{
 		<li><a href="https://plus.google.com/114890137995721785465/about"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a></li>
 		<li><a href="https://instagram.com/aupasdecourses/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 	</ul>
-	
+
 	<!-- COPYRIGHT TEXT -->
 	<p class="copyright">
 		©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés. Crédit Photos: Pierre Mainguet, <a href="https://flic.kr/p/mJNxaB">David Fleg</a> et <a href="https://commons.wikimedia.org/wiki/File%3ARue_de_Bretagne%2C_75003_Paris%2C_2015.jpg">besopha</a>
@@ -394,9 +394,9 @@ header{
 <!-- /END CONTAINER -->
 
 <a href="#" class="back-to-top">Haut de page</a>
- 
+
 </footer>
 <!-- /END FOOTER -->
-    <?php echo $this->getChildHtml('footer') ?>
+	<?php echo $this->getChildHtml('footer') ?>
 </body>
 </html>

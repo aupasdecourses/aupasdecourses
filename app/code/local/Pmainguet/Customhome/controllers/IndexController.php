@@ -61,8 +61,8 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
     public function redirectAction()
     {
         $baseurl=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-
 		$data = $this->getRequest()->getPost();
+
 		if (isset($data['zipcode'])) {
 			$zipcode = $data['zipcode'];
 			$refererUrl = Mage::helper('core/http')->getHttpReferer(true);

@@ -40,7 +40,7 @@ Whoops, it looks like you have an invalid PHP version.</h3></div><p>Magento supp
 define('MAGENTO_ROOT', getcwd());
 
 $ip = $_SERVER['REMOTE_ADDR'];
-$allowed = array('127.0.0.1','85.69.57.250'); // these are the IP's that are allowed to view the site.
+$allowed = array('127.0.0.1'); // these are the IP's that are allowed to view the site.
 
 $compilerConfig = MAGENTO_ROOT . '/includes/config.php';
 if (file_exists($compilerConfig)) {
