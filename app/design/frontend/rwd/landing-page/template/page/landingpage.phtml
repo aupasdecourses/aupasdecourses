@@ -42,7 +42,7 @@ header{
 						<form role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
 							<div id="input-group-intro">
 								<label for='addr' class="label_input">Mon adresse :</label>
-								<input class='form-control input-quartier' id='GoogleAutoComplete' type='text' name='addr' onFocus='GoogleGeolocate()' />
+								<input class='form-control input-quartier'placeholder='Entrer mon adresse' id='GoogleAutoComplete' type='text' name='addr' onFocus='GoogleGeolocate()' />
 								<input id='GoogleAutoCompleteZipcode' type='hidden' name="zipcode" />
 								<button class="btn btn-default standard-button input-quartier" type="submit">OK</button>
 								</div><!-- /input-group -->
