@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+*.sw*
 
 # Packages #
 ############
@@ -60,3 +61,4 @@ delivery/attachments
 magmi/conf/magmi.ini
 magmi/state
 maintenance.flag
+mage-dbdump.sh
