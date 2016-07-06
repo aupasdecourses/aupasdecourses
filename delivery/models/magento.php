@@ -305,28 +305,12 @@ function startsWith($haystack, $needle)
 function getOrderAttachments($order)
 {
     $attachments = Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
-    $remboursement_client = $attachments->getData('remboursements');
-    $commentaires_ticket = $attachments->getData('commentaires_ticket');
-    $commentaires_interne = $attachments->getData('commentaires_commande');
-    $commentaires_fraislivraison = $attachments->getData('commentaires_fraislivraison');
+    $remboursement_client = "|*REMBOURSEMENTS*|</br>".$attachments->getData('remboursements')."</br>";
+    $commentaires_ticket = "|*COM. TICKET*|</br>".$attachments->getData('commentaires_ticket')."</br>";
+    $commentaires_interne = "|*COM. INTERNE*|</br>".$attachments->getData('commentaires_commande')."</br>";
+    $commentaires_fraislivraison = "|*COM. FRAISLIV*|</br>".$attachments->getData('commentaires_fraislivraison');
 
-    if ($remboursement_client != '') {
-        $remboursement_client .= ' - ';
-    }
-
-    if ($commentaires_ticket != '') {
-        $commentaires_ticket .= ' - ';
-    }
-
-    if ($commentaires_interne != '') {
-        $commentaires_interne .= ' - ';
-    }
-
-    if ($commentaires_fraislivraison != '') {
-        $commentaires_fraislivraison .= ' - ';
-    }
-
-    $comments = $remboursement_client.' / '.$commentaires_ticket.' / '.$commentaires_interne.' / '.$commentaires_fraislivraison;
+    $comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
 
     return $comments;
 }
@@ -340,11 +324,11 @@ function getOrderComments($order)
         $comment_status = $status->getData('status');
         $comment = $status->getData('comment');
         if ($comment_status == 'processing' && $comment != null && $comment != '' && !startsWith($comment, 'Notification paiement Hipay') && !startsWith($comment, 'Le client a payé par Hipay avec succès')) {
-            $order_comments .= $comment.'<br/><br/>';
+            $order_comments .= "=> ".$comment.'<br/>';
         }
     }
 
-    return $order_comments;
+    return "|*ORDER HISTORY*|</br>".$order_comments;
 }
 
 function getRefundorderdata($order, $output)

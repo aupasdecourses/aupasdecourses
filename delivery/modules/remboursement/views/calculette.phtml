@@ -76,9 +76,10 @@ img.modal{
 							<th class="float">Quantité</th>
 							<th class="float">Total com.</th>
 							<th class="float" id="prixfinal">Total ticket</th>
-							<th class="float" id="diffprixfinal">A rembourser</th>
+							<th class="float" id="diffprixfinal">Rembt</th>
+							<th>Note client</th>
 							<th>Sur ticket</th>
-							<th>Commentaires</th>
+							<th>Note APDC</th>
 					      </tr>
 					    </thead>
 					    <tbody>
@@ -126,6 +127,7 @@ img.modal{
 												echo '<td class="col-sm-1 prixfinal" style="text-align:center;"><input type="text" name="'.$itemid.'-prixfinal" class="prixfinal" style="width:60px" value="'.$prixfinal.'"></td>';
 												$diff=$prixinitial-$prixfinal;
 												echo '<td class="diffprixfinal" style="text-align:center;">'.$diff.'</td>';
+												echo '<td class="comment_customer"><input type="text" name="'.$itemid.'-comment-customer" class="comment" value="'.$item->getData('item_comment').'" disabled></td>';
 												if ($refund_item->getOrderItemId()-$item->getId()==0 && $refund_item->getInTicket()){
 													echo '<td class="col-sm-1 in-ticket" style="text-align:center;"><input type="checkbox" style="width: 30px;height: 30px" checked></td>';
 												}else{
@@ -152,6 +154,7 @@ img.modal{
 						     	 	<th id="total_commande"></th>
 						     	 	<th id="total_ticket"></th>
 						     	 	<th id="total_remboursement"></th>
+						     	 	<th></th>
 						     	 	<th></th>
 						     	 	<th></th>
 						    </tr>
