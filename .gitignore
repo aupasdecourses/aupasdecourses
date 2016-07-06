@@ -36,12 +36,12 @@
 ehthumbs.db
 Thumbs.db
 
-.htaccess
+/.htaccess
 .htpasswrd
-app/etc/local.xml
-cron.php
-cron.sh
-downloader
+/app/etc/local.xml
+/cron.php
+/cron.sh
+/downloader
 /includes
 #index.php
 /install.php
