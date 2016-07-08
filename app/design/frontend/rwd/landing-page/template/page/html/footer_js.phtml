@@ -61,3 +61,21 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
+<!-- MAIN POPUP -->
+<script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
+<?php
+$popup_block = $this->getLayout()->createBlock('cms/block')->setBlockId('main_popup')->toHtml();
+$popup_block = preg_replace("#[\n\r]#", "", $popup_block);
+if ($popup_block != '') : ?>
+	<script>
+	jQuery(function($) {
+		$.magnificPopup.open({
+			items: {
+				src: '<?= "$popup_block" ?>',
+				type: 'inline'
+			}
+		});
+	});
+	</script>
+<?php endif ?>
+<!-- END MAIN POPUP -->
