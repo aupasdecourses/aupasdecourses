@@ -74,8 +74,6 @@
         </reference>
         <reference name="footer">
             <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
-			<block type="cms/block" name="main_popup">
-			</block>
         </reference>
     </default>
 </layout>
