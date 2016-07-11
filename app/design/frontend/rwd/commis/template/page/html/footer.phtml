@@ -55,12 +55,33 @@
     </div>
 </div>
 <div class="copyright-cards-container">
-	        <div class="row">
-	        	<div class="col-md-6">
-	        		<p class="copyright"><?php echo $this->getCopyright() ?></p>
-	        	</div>
-	        	<div class="col-md-6">
-	        			<?php echo $this->getChildHtml('footer.cards') ?>
-	        	</div>
-	        </div>
+	<div class="row">
+		<div class="col-md-6">
+			<p class="copyright"><?php echo $this->getCopyright() ?></p>
 	    </div>
+		<div class="col-md-6">
+			<?php echo $this->getChildHtml('footer.cards') ?>
+		</div>
+	</div>
+</div>
+
+<!-- MAIN POPUP -->
+<script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
+<?php
+$popup_show = Mage::getSingleton('core/session')->getData('main_popup');
+$popup_block = $this->getLayout()->createBlock('cms/block')->setBlockId('main_popup')->toHtml();
+$popup_block = preg_replace("#[\n\r]#", "", $popup_block);
+if ($popup_block != '' && $popup_show != 'true') : ?>
+	<?php Mage::getSingleton('core/session')->setData('main_popup','true'); ?>
+	<script>
+	jQuery(function($) {
+		$.magnificPopup.open({
+			items: {
+				src: '<?= "$popup_block" ?>',
+				type: 'inline'
+			}
+		});
+	});
+	</script>
+<?php endif ?>
+<!-- END MAIN POPUP -->
