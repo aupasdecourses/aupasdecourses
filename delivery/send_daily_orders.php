@@ -34,7 +34,6 @@ function getCommercant() {
 }
 
 function getOrders($id, $date = TODAY_DATE) {
-	//$orderObjs = orders_fortheday(TODAY_DATE);
 	$orderObjs = orders_fortheday($date, $id);
 	$orders = [];
 	foreach ($orderObjs as $orderObj) {
@@ -77,10 +76,10 @@ function getOrders($id, $date = TODAY_DATE) {
 	return ($orders);
 }
 
-$commercant = getCommercant();
+$commercants = getCommercant();
 
-print_r($commercant);
+foreach ($commercants as $commercant_id => $commercant_info) {
+	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, date('Y-m-d', strtotime('2016-06-17')));
+} 
 
-$orders = getOrders(7, date('Y-m-d', strtotime('2016-06-17')));
-
-print_r($orders);
+print_r($commercants);
