@@ -56,6 +56,7 @@
                 <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
                 <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+				<action method="addJs"><script>GoogleAutoComplete.js</script></action>
                 <!-- OTHERS -->
                 <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
                 
