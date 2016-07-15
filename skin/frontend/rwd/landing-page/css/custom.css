@@ -104,7 +104,7 @@ header .intro-section .intro {
   min-width:400px;
 }
 
-.intro-section select{
+.intro-section input {
   clear:both;
   border-image-outset: 0 0 0 0;
   border-image-repeat: stretch stretch;
@@ -134,30 +134,36 @@ header .intro-section .intro {
   float:none;
 }
 
-.intro-section select.select-quartier{
+.intro-section input.input-quartier{
   display:inline-block;
   margin:0 auto;
-  float:left;
-  width: 160px;
+  height: 50px;
+  width: 80%;
+  min-width: 250px;
+  max-width: 700px;
+  margin-right: -2px;
   background-color: white;
   color: #333;
+/*  border:	1px solid #333;*/
 }
 
 header .intro-section .buttons {
     margin-top: 0px;
 }
 
-.intro-section button.select-quartier{
+.intro-section button.input-quartier{
   display:inline-block;
   background-color: #E94E19;
+  height: 50px;
   min-width: 0;
   border-radius: 0px !important;
   padding: 12px;
+  margin-left: -6px;
   font-family: Montserrat;
   vertical-align:middle;
 }
 
-.intro-section button.select-quartier:hover,.intro-section button.select-quartier:focus,.intro-section button.select-quartier:active{
+.intro-section button.input-quartier:hover,.intro-section button.input-quartier:focus,.intro-section button.input-quartier:active{
   background-color: #C03100;
   color: white;
 }
