@@ -116,19 +116,32 @@ function generate_Pdf($commercant, $orders_date) {
 	foreach ($commercant['orders'] as $order) {
 		$orders_summary->drawText('Commande n°' . ++$order_count . ': ' . $order['Commande n°'], 50, $height - ($lineHeight * $lineOffset_summary++));
 	//	Order	==>>
-		$order = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-		$pdf->pages[] = $order;
+		$orders_page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+		$pdf->pages[] = $orders_page;
+
+		$lineHeight = 15;
+		$lineOffset_order = 5;
 		
-		$order->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
-		$order->drawText('Commande Au Pas De Courses - ' . $c . ' pour le ' . $d, 50, $height - 45);
-		$order->setLineWidth(0.5);
-		$order->drawLine(50, 50, $width - 50, 50);
+		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
+		$orders_page->drawText('Commande Au Pas De Courses - ' . $commercant['name'] . ' pour le ' . $orders_date, 50, $height - 45);
+		$orders_page->setLineWidth(0.5);
+		$orders_page->drawLine(50, 50, $width - 50, 50);
+
+		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
+		$orders_page->drawText('Commande n°  ' . $order['Commande n°'], 50, $height - ($lineHeight * $lineOffset_order++));
+		$lineOffset_order++;
+		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
+		$orders_page->drawText('Nom du client: ' . $order['Prenom'] . ' ' . $order['Nom'], 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Date de Prise de Commande: ' . $order['Date prise de commande'], 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Date de Livraison: ' . $order['Date de livraison'], 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Creneau de Livraison: ' . $order['Heure de livraison'], 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Remplacement equivalent: ' . ($order['Remplacement pour produit équivalent possible']) ? 'oui' : 'non', 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Liste des produits commandes: ', 50, $height - ($lineHeight * $lineOffset_order++));
 
 
-
-		$order->drawLine(50, $height - 50, $width - 50, $height - 50);
-		$order->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
-		$order->drawText('Genere le: ' . date('r'), 50, 40);
+		$orders_page->drawLine(50, $height - 50, $width - 50, $height - 50);
+		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
+		$orders_page->drawText('Genere le: ' . date('r'), 50, 40);
 	//	<<==	Order
 	}
 
