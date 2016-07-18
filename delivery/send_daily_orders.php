@@ -135,7 +135,7 @@ function generate_Pdf($commercant, $orders_date) {
 		$orders_page->drawText('Date de Prise de Commande: ' . $order['Date prise de commande'], 50, $height - ($lineHeight * $lineOffset_order++));
 		$orders_page->drawText('Date de Livraison: ' . $order['Date de livraison'], 50, $height - ($lineHeight * $lineOffset_order++));
 		$orders_page->drawText('Creneau de Livraison: ' . $order['Heure de livraison'], 50, $height - ($lineHeight * $lineOffset_order++));
-		$orders_page->drawText('Remplacement equivalent: ' . ($order['Remplacement pour produit équivalent possible']) ? 'oui' : 'non', 50, $height - ($lineHeight * $lineOffset_order++));
+		$orders_page->drawText('Remplacement equivalent: ' . (($order['Remplacement pour produit équivalent possible']) ? 'oui' : 'non'), 50, $height - ($lineHeight * $lineOffset_order++));
 		$orders_page->drawText('Liste des produits commandes: ', 50, $height - ($lineHeight * $lineOffset_order++));
 
 
