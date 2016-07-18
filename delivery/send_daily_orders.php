@@ -15,6 +15,14 @@ $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']=2016000249;
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
 
+$lib_path = realpath(dirname(__FILE__) . '../lib');
+set_include_path("$libpath:".get_include_path());
+
+require_once 'Zend/Loader.php';
+require_once 'Zend/Loader/Autoloader.php';
+
+Zend_Loader_Autoloader::getInstance();
+
 function getCommercant() {
 	$commercants = [];
 
@@ -77,9 +85,55 @@ function getOrders($id, $date = TODAY_DATE) {
 }
 
 $commercants = getCommercant();
+$orders_date = date('Y-m-d', strtotime('2016-06-21'));
 
 foreach ($commercants as $commercant_id => $commercant_info) {
-	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, date('Y-m-d', strtotime('2016-06-17')));
+	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, $orders_date);
 } 
 
-print_r($commercants);
+function generate_Pdf($commercant, $orders_date) {
+	print_r($commercant);
+	$lineHeight = 20;
+	$lineOffset_summary = 5;
+	$pdf = new Zend_Pdf();
+
+	//	Orders_Summary	==>>
+	$orders_summary = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+	$pdf->pages[] = $orders_summary;
+	$width = $orders_summary->getWidth();
+	$height = $orders_summary->getHeight();
+
+	$orders_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
+	$orders_summary->drawText('Commandes AU PAS DE COURSES', 50, $height - ($lineHeight * $lineOffset_summary++));
+	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
+	$orders_summary->drawText('A ' . $commercant['name'] . ' pour le ' . $orders_date, 50, $height - ($lineHeight * $lineOffset_summary++));
+	$lineOffset_summary++;
+	$orders_summary->drawText('Nombre de commandes: ' . count($commercant['orders']), 50, $height - ($lineHeight * $lineOffset_summary++));
+	//	<<==	Orders_Summary
+
+	$order_count = 0;
+	foreach ($commercant['orders'] as $order) {
+		$orders_summary->drawText('Commande n°' . ++$order_count . ': ' . $order['Commande n°'], 50, $height - ($lineHeight * $lineOffset_summary++));
+	//	Order	==>>
+		$order = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+		$pdf->pages[] = $order;
+		
+		$order->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
+		$order->drawText('Commande Au Pas De Courses - ' . $c . ' pour le ' . $d, 50, $height - 45);
+		$order->setLineWidth(0.5);
+		$order->drawLine(50, 50, $width - 50, 50);
+
+
+
+		$order->drawLine(50, $height - 50, $width - 50, $height - 50);
+		$order->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
+		$order->drawText('Genere le: ' . date('r'), 50, 40);
+	//	<<==	Order
+	}
+
+	return ($pdf);
+}
+
+generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
+
