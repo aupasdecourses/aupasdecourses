@@ -4,10 +4,19 @@ body{
     background: none;
     font-family: 'Raleway', sans-serif;
     font-size: 18px;
-    font-weight: 400;
-    color: white;
-    line-height: 1.6em;
+	font-weight: 400;
+	color: white;
+	line-height: 1.6em;
 }
+
+body.coming-soon {
+	background: url(../img/eifel_tower.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
 .full {
   -webkit-background-size: cover;
   -moz-background-size: cover;
