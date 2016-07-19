@@ -135,6 +135,8 @@
         <reference name="content">
             <remove name="cms.wrapper"/>
     	    <!-- Inclusion du Carroussel et des liens droite-->
+
+			<block type="core/template" name="headband" template="page/html/headband.phtml"/>
             <block type="core/template" name="home-carroussel-links" as="home-carroussel-links" template="customhome/carroussel-and-links.phtml">
                 <block type="cms/block" name="carroussel-home-page" as="carroussel-home-page">
                     <action method="setBlockId"><block_id>carroussel-home-page</block_id></action>

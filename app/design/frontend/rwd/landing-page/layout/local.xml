@@ -44,6 +44,8 @@
                 <!-- OWL CARROUSEL -->
                 <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>
                 <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>
+                <!-- MAGNIFIC POPUP -->
+				<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
                 <!-- =========================
                       FAV AND TOUCH ICONS  
                 ============================== -->
@@ -56,6 +58,13 @@
                 <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
                 <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+				<!--				<block type='core/text' name='google query'>
+					<action method='setText'>
+						<text>
+							<![CDATA[<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>]]>
+						</text>
+					</action>
+				</block> -->
                 <!-- OTHERS -->
                 <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
                 
