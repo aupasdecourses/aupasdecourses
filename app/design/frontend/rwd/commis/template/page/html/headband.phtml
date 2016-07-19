@@ -1,0 +1,9 @@
+<?php
+
+$headband = $this->getLayout()->createBlock('cms/block')->setBlockId('headband')->toHtml();
+if ($headband != '') {
+	$html = "<div class='page-title'>";
+	$html .= $headband;
+	$html .= "</div>";
+	echo $html;
+}

@@ -777,6 +777,47 @@ function data_clients($debut, $fin)
     return $data;
 }
 
+//Refactoring surement possible avec data_facturation
+function data_coupon($debut, $fin)
+{
+    $data = [];
+
+  /* Format dates */
+  $debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+    $fin = date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+
+    $orders = Mage::getModel('sales/order')->getCollection()
+    ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+    ->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
+    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))
+    ->addAttributeToSort('increment_id', 'DESC');
+
+  //Get info on delivery date
+  // $orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
+  //   $orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+
+    foreach ($orders as $order) {
+        $incrementid = $order->getIncrementId();
+        $coupon = $order->getCouponCode();
+        array_push($data, [
+            'increment_id' => $incrementid,
+            'Coupon Code' => $coupon,
+        ]);
+
+        arsort($data);
+
+    }
+
+    $data_conso=[];
+    foreach($data as $row){
+        if($row['Coupon Code']){
+            $data_conso[$row['Coupon Code']][]=$row['increment_id'];
+        }
+    }
+        
+    return $data_conso;
+}
+
 function array_columns($array, $column_name)
 {
     return array_map(

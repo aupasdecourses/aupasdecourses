@@ -62,8 +62,29 @@ src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
 
+<!-- Google Auto Complete -->
 <?php
 	$key = Mage::getModel('core/variable')->loadByCode('GoogleApiKey')->getValue('plain');
 ?>
 <script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage' async defer></script>
+<!-- End Google Auto Complete -->
+<!-- MAIN POPUP -->
+<script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
+<?php
+$popup_block = $this->getLayout()->createBlock('cms/block')->setBlockId('main_popup')->toHtml();
+$popup_block = preg_replace("#[\n\r]#", "", $popup_block);
+if ($popup_block != '') : ?>
+	<?php Mage::getSingleton('core/session')->setData('main_popup','true'); ?>
+	<script>
+	jQuery(function($) {
+		$.magnificPopup.open({
+			items: {
+				src: '<?= "$popup_block" ?>',
+				type: 'inline'
+			}
+		});
+	});
+	</script>
+<?php endif ?>
+<!-- END MAIN POPUP -->

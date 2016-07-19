@@ -82,6 +82,8 @@
                 <block type="core/text" name="head.viewport">
                     <action method="setText"><text><![CDATA[<meta name="viewport" content="initial-scale=1.0, width=device-width" />]]>&#10;</text></action>
                 </block>
+                <!-- MAGNIFIC POPUP -->
+				<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
             </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">
