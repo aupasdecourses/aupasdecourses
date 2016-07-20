@@ -26,23 +26,26 @@ Zend_Loader_Autoloader::getInstance();
 function getCommercant() {
 	$commercants = [];
 
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter();
+    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter()->addFieldToFilter('estcom_commercant', ['neq' => NULL]);
 	foreach ($categories as $category) {
-		if ($category->getData('estcom_commercant')) {
-			$commercant[$category->getData('att_com_id')] = [
-				'name'		=>	$category->getName(),
+		$commercants[$category->getData('att_com_id')] = [
+			'name'		=>	$category->getName(),
 				'addr'		=>	$category->getAdresseCommercant(),
 				'phone'		=>	$category->getTelephone(),
 				'mobile'	=>	$category->getPortable(),
 				'mail'		=>	$category->getMailContact()
 				];
-		}
 	}
-	return ($commercant);
+	return ($commercants);
 }
 
-function getOrders($id, $date = TODAY_DATE) {
-	$orderObjs = orders_fortheday($date, $id);
+//foreach ($commercants as $commercant_id => $commercant_info) {
+//	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, $orders_date);
+//} 
+
+function getOrders($commercants, $date = TODAY_DATE) {
+	$orderObjs = orders_fortheday($date);
+	print_r($orderObjs);
 	$orders = [];
 	foreach ($orderObjs as $orderObj) {
 		$data['id'] = $orderObj->getData('increment_id');
@@ -85,11 +88,10 @@ function getOrders($id, $date = TODAY_DATE) {
 }
 
 $commercants = getCommercant();
+
 $orders_date = date('Y-m-d', strtotime('2016-06-21'));
 
-foreach ($commercants as $commercant_id => $commercant_info) {
-	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, $orders_date);
-} 
+getOrders($commercants, $orders_date);
 
 function generate_Pdf($commercant, $orders_date) {
 	$lineHeight_summary = 20;
@@ -146,9 +148,8 @@ function generate_Pdf($commercant, $orders_date) {
 		$orders_page->drawText("Genere le: " . date('r'), $alignLeft, 40);
 	//	<<==	Order
 	}
-
 	return ($pdf);
 }
 
-generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
+//generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
 
