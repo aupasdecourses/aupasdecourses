@@ -69,7 +69,7 @@ function getOrders(&$commercants, $date = TODAY_DATE) {
 				$prod_data['comment'] .= $opt['label'] . ' ' . $opt['value'] . PHP_EOL;
 			}
 			$prod_data['comment']	.= $oprod->getData('item_comment') . PHP_EOL;
-			if (!isset($commercants[$oprod->getCommercant()][$order['id']])) {
+			if (!isset($commercants[$oprod->getCommercant()]['orders'][$order['id']])) {
 				$commercants[$oprod->getCommercant()]['orders'][$order['id']] = $order;
 			}
 			$commercants[$oprod->getCommercant()]['orders'][$order['id']]['products'][] = $prod_data;
