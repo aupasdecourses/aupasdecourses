@@ -25,23 +25,39 @@ Zend_Loader_Autoloader::getInstance();
 
 function getCommercant() {
 	$commercants = [];
-
     $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter()->addFieldToFilter('estcom_commercant', ['neq' => NULL]);
 	foreach ($categories as $category) {
 		$commercants[$category->getData('att_com_id')] = [
 			'name'		=>	$category->getName(),
-				'addr'		=>	$category->getAdresseCommercant(),
-				'phone'		=>	$category->getTelephone(),
-				'mobile'	=>	$category->getPortable(),
-				'mail'		=>	$category->getMailContact()
-				];
+			'addr'		=>	$category->getAdresseCommercant(),
+			'phone'		=>	$category->getTelephone(),
+			'mobile'	=>	$category->getPortable(),
+			'mail'		=>	$category->getMailContact()
+		];
 	}
 	return ($commercants);
 }
 
+function getOrders($date = TODAY_DATE) {
+//	$orders = Mage::getModel('mwddate_store')->getCollection();
+//	$orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', ['ddate' => 'mwddate.ddate', 'dtime' => 'mwddate.dtime']);
+//	$orders->addFilterToMap('ddate', 'mwddate.ddate');
+//	$orders->addFilterToMap('dtime', 'mwddate.dtimetext');
+//	$order->addFieldToFilter('order_status', ['nin' => ['pending_payment','payment_review','holded','closed','canceled']]);
+//	$order->addFieldToFilter('ddate', ['eq' => $date]);
+//	$item = Mage::getModel('sales/order_item')->getCollection();
+	$item = Mage::getModel('sales/order_item')->getCollection();
+	
+	print_r($item);
+}
+
+getOrders();
+
 //foreach ($commercants as $commercant_id => $commercant_info) {
 //	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, $orders_date);
 //} 
+
+/*
 
 function getOrders($commercants, $date = TODAY_DATE) {
 	$orderObjs = orders_fortheday($date);
@@ -150,6 +166,8 @@ function generate_Pdf($commercant, $orders_date) {
 	}
 	return ($pdf);
 }
+
+*/
 
 //generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
 
