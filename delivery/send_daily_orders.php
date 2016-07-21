@@ -38,69 +38,45 @@ function getCommercant() {
 	return ($commercants);
 }
 
-function getOrders($date = TODAY_DATE) {
-//	$orders = Mage::getModel('mwddate_store')->getCollection();
-//	$orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', ['ddate' => 'mwddate.ddate', 'dtime' => 'mwddate.dtime']);
-//	$orders->addFilterToMap('ddate', 'mwddate.ddate');
-//	$orders->addFilterToMap('dtime', 'mwddate.dtimetext');
-//	$order->addFieldToFilter('order_status', ['nin' => ['pending_payment','payment_review','holded','closed','canceled']]);
-//	$order->addFieldToFilter('ddate', ['eq' => $date]);
-//	$item = Mage::getModel('sales/order_item')->getCollection();
-	$item = Mage::getModel('sales/order_item')->getCollection();
-	
-	print_r($item);
-}
-
-getOrders();
-
-//foreach ($commercants as $commercant_id => $commercant_info) {
-//	$commercants[$commercant_id]['orders'] = getOrders($commercant_id, $orders_date);
-//} 
-
-/*
-
-function getOrders($commercants, $date = TODAY_DATE) {
+function getOrders(&$commercants, $date = TODAY_DATE) {
 	$orderObjs = orders_fortheday($date);
-	print_r($orderObjs);
-	$orders = [];
 	foreach ($orderObjs as $orderObj) {
-		$data['id'] = $orderObj->getData('increment_id');
-		$data['first_name'] = $orderObj->getShippingAddress()->getData('firstname');
-		$data['last_name'] = $orderObj->getShippingAddress()->getData('lastname');
-		$data['order_date'] = $orderObj->getData('created_at');
-		$data['delivery_date'] = (TODAY_DATE <= AMASTY_MW_DATE) ? $orderObj->getData('delivery_date') : $orderObj->getData('ddate');
-		$data['delivery_time'] = (TODAY_DATE <= AMASTY_MW_DATE) ? $orderObj->getData('delivery_time') : $orderObj->getData('dtime');
-		$data['equivalent_replacement'] = $orderObj->getData('produit_equivalent');
-		$data['Total quantité'] = 0;
-		$data['Total prix'] = 0.0;
-		$data['Order products'] = [];
+		$order['id'] = $orderObj->getData('increment_id');
+		$order['first_name'] = $orderObj->getShippingAddress()->getData('firstname');
+		$order['last_name'] = $orderObj->getShippingAddress()->getData('lastname');
+		$order['order_date'] = $orderObj->getData('created_at');
+		$order['delivery_date'] = $orderObj->getData('ddate');
+		$order['delivery_time'] = $orderObj->getData('dtime');
+		$order['equivalent_replacement'] = $orderObj->getData('produit_equivalent');
+		$order['Total quantité'] = 0;
+		$order['Total prix'] = 0.0;
+		$order['products'] = [];
 
 		$oproducts = $orderObj->getAllItems();
 		foreach ($oproducts as $oprod) {
-			if ($oprod->getCommercant() == $id) {
-				$sprod = Mage::getModel('catalog/product')->load($oprod->getProduct()->getId());
-				$prod_data = [
-					'title'			=>	$oprod->getName(),
-					'prix_kilo'		=>	($oprod->getPrixKiloSite() <> "") ? $oprod->getPrixKiloSite() : $sprod->getPrixKiloSite(),
-					'quantite'		=>	round($oprod->getQtyOrdered(), 0),
-					'description'	=>	($oprod->getShortDescription() <> "") ? $oprod->getShortDescription() : $sprod->getShortDescription(),
-					'prix_unitaire'	=>	round($oprod->getPriceInclTax(),2),
-					'prix_total'	=>	round($oprod->getRowTotalInclTax(),2)
-					];
-				$prod_data['comment'] = '';
-				$opts = $oprod->getProductOptions()['options'];
-				foreach ($opts as $opt) {
-					$prod_data['comment'] .= $opt['label'] . ' ' . $opt['value'] . PHP_EOL;
-				}
-				$prod_data['comment']		.= $oprod->getData('item_comment') . PHP_EOL;
-				$data['Total quantité']		+= $prod_data['quantite'];
-				$data['Total prix']			+= $prod_data['prix_total'];
-				$data['Order products'][]	= $prod_data;
+			$sprod = Mage::getModel('catalog/product')->load($oprod->getProduct()->getId());
+			$prod_data = [
+				'title'			=>	$oprod->getName(),
+				'prix_kilo'		=>	($oprod->getPrixKiloSite() <> "") ? $oprod->getPrixKiloSite() : $sprod->getPrixKiloSite(),
+				'quantite'		=>	round($oprod->getQtyOrdered(), 0),
+				'description'	=>	($oprod->getShortDescription() <> "") ? $oprod->getShortDescription() : $sprod->getShortDescription(),
+				'prix_unitaire'	=>	round($oprod->getPriceInclTax(),2),
+				'prix_total'	=>	round($oprod->getRowTotalInclTax(),2)
+				];
+			$prod_data['comment'] = '';
+			$opts = $oprod->getProductOptions()['options'];
+			foreach ($opts as $opt) {
+				$prod_data['comment'] .= $opt['label'] . ' ' . $opt['value'] . PHP_EOL;
 			}
+			$prod_data['comment']	.= $oprod->getData('item_comment') . PHP_EOL;
+			if (!isset($commercants[$oprod->getCommercant()][$order['id']])) {
+				$commercants[$oprod->getCommercant()]['orders'][$order['id']] = $order;
+			}
+			$commercants[$oprod->getCommercant()]['orders'][$order['id']]['products'][] = $prod_data;
+			$commercants[$oprod->getCommercant()]['orders'][$order['id']]['Total quantité'] += $prod_data['quantite'];
+			$commercants[$oprod->getCommercant()]['orders'][$order['id']]['Total prix'] += $prod_data['prix_total'];
 		}
-		$orders[] = $data;
 	}
-	return ($orders);
 }
 
 $commercants = getCommercant();
@@ -108,6 +84,8 @@ $commercants = getCommercant();
 $orders_date = date('Y-m-d', strtotime('2016-06-21'));
 
 getOrders($commercants, $orders_date);
+
+print_r($commercants);
 
 function generate_Pdf($commercant, $orders_date) {
 	$lineHeight_summary = 20;
@@ -166,8 +144,6 @@ function generate_Pdf($commercant, $orders_date) {
 	}
 	return ($pdf);
 }
-
-*/
 
 //generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
 
