@@ -52,12 +52,9 @@
 			<div class="container container-footer-info"">
 
 				<div class="footer-copyright">
-					<?php printf(
-						__( "Avec Ceci? - Le blog d'%1$s", 'zillah' ),
-						sprintf( '<a href="https://aupasdecourses.com/">%s</a>', esc_html__( 'Au Pas De Courses', 'zillah' ) )
-					); ?>
+					Avec Ceci? - Le blog d'<a href="https://aupasdecourses.com/">Au Pas De Courses</a>
 					<span class="sep"> | </span>
-					Tout droits réservés Au Pas De Courses <?= getdate()[year]?> 
+					Tous droits réservés Au Pas De Courses <?= getdate()[year]?> 
 				</div>
 				<div class="footer-back-top"">
 					<a href="#" id="to-top" class="to-top"><?php _e( 'Retour en haut de page','zillah' ); ?> <i class="fa fa-angle-double-up" aria-hidden="true"></i></a>
