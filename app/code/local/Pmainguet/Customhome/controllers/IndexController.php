@@ -45,7 +45,7 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
 			if (array_key_exists($zipcode, $this->_urlTab))
 				Mage::app()->getResponse()->setRedirect($coreUrl . $this->_urlTab[$zipcode]);
 			else
-				Mage::app()->getResponse()->setRedirect($baseurl);
+				Mage::app()->getResponse()->setRedirect($baseurl . "../quartiers/coming-soon.php");
 		} else {
 			Mage::app()->getResponse()->setRedirect($refererUrl);
 		}
