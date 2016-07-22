@@ -108,8 +108,6 @@
             </block>
             <remove name="footer_links"/>
             <remove name="footer_links2"/>
-
-            <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
         </reference>
         <reference name="before_body_end">
             <remove name="global_cookie_notice"/>

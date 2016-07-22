@@ -30,8 +30,8 @@ require_once 'MW/Ddate/controllers/Checkout/OnepageController.php';
 class Pmainguet_CustomCheckout_Checkout_OnepageController extends MW_Ddate_Checkout_OnepageController
 {
 	public function indexAction() {
-		$payment_activated = Mage::getModel('core/variable')->loadByCode('payment_activated')->getValue('plain');
-		if ($payment_activated == 'false') {
+		$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
+		if (!$payment_activated) {
 			Mage::getSingleton('core/session')->setData('main_popup','false');
 			$refererUrl = Mage::helper('core/http')->getHttpReferer(true);
 			Mage::app()->getResponse()->setRedirect($refererUrl);
@@ -63,8 +63,6 @@ class Pmainguet_CustomCheckout_Checkout_OnepageController extends MW_Ddate_Check
 			$this->getLayout()->getBlock('head')->setTitle($this->__('Checkout'));
 			$this->renderLayout();
 		}
-
-
 	}
 
     /**
