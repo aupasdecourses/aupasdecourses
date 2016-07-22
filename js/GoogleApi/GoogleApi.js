@@ -47,6 +47,8 @@ function GoogleApiCustomcheck() {
     });
 }
 
+var googleRsl = false;
+
 function GoogleApiLandingpage() {
     autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoComplete')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_landingpage.addListener('place_changed', function() {
@@ -55,6 +57,11 @@ function GoogleApiLandingpage() {
 
 		if (zipcode != 'not found') {
 			document.getElementById('GoogleAutoCompleteZipcode').value = zipcode;
+			googleRsl = true;
+		} else {
+			googleRsl = false;
+			$j('#form-quartier').addClass('has-error');
+			alert('veuillez entree une adresse complete');
 		}
     });
 }
