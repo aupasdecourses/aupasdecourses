@@ -1,3 +1,4 @@
+var autocomplete_addr_edit;
 var autocomplete_billing;
 var autocomplete_shipping;
 var autocomplete_landingpage;
@@ -13,8 +14,18 @@ function getPlaceKey(place, key) {
 	return 'not found';
 }
 
-function GoogleApiCustomcheck() {
+function GoogleApiCustomerEdit() {
+    autocomplete_addr_edit = new google.maps.places.Autocomplete((document.getElementById('street_1')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
+    autocomplete_addr_edit.addListener('place_changed', function() {
+        var place_shipping = autocomplete_addr_edit.getPlace();
+        jQuery('#street_1').val(place_shipping.address_components[0]['long_name'] + ' ' + place_shipping.address_components[1]['long_name']);
+        jQuery('#city').val(place_shipping.address_components[2]['long_name']);
+        jQuery('#zip').val(place_shipping.address_components[6]['long_name']);
+        jQuery('#country').val(place_shipping.address_components[5]['short_name']);
+    });
+}
 
+function GoogleApiCustomcheck() {
     autocomplete_billing = new google.maps.places.Autocomplete((document.getElementById('billing:street1')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_billing.addListener('place_changed', function() {
         var place_billing = autocomplete_billing.getPlace();
@@ -37,7 +48,6 @@ function GoogleApiCustomcheck() {
 }
 
 function GoogleApiLandingpage() {
-
     autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoComplete')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_landingpage.addListener('place_changed', function() {
         var place = autocomplete_landingpage.getPlace();

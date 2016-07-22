@@ -78,6 +78,16 @@
 <?php
 	$key = Mage::getStoreConfig('api_key/google/google_nav');
 ?>
+<script type="text/javascript">
+	$j('#billing:street1').keypress(function(event){
+		if (event.which == 13)
+			event.preventDefault();
+	})
+	$j('#shipping:street1').keypress(function(event){
+		if (event.which == 13)
+			event.preventDefault();
+	})
+</script>
 <script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiCustomcheck' async defer></script>
 <!-- End Google Auto Complete -->
