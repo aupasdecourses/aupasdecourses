@@ -6,7 +6,8 @@
  *
  * @package zillah
  */
-
+global $wp_customize;
+$zillah_sidebar_show = get_theme_mod( 'zillah_sidebar_show', false );
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'entry-content-wrap' ); ?>>

@@ -23,13 +23,13 @@
 define('DB_NAME', 'aupasdecln_blog');
 
 /** MySQL database username */
-define('DB_USER', '000nimda0814');
+define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'VAIdieOops3');
+define('DB_PASSWORD', 'password');
 
 /** MySQL hostname */
-define('DB_HOST', 'mp222483-001.privatesql:35120');
+define('DB_HOST', '127.0.0.1');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');

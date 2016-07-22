@@ -969,6 +969,7 @@ a:active {
 }
 
 .author-details-wrap {
+	display:	none;
 	margin-top: -59px;
 	background: #FFF;
 	padding: 80px 0;
