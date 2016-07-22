@@ -64,7 +64,7 @@ src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 
 <!-- Google Auto Complete -->
 <?php
-	$key = Mage::getModel('core/variable')->loadByCode('GoogleApiKey')->getValue('plain');
+	$key = Mage::getStoreConfig('api_key/google/google_nav');
 ?>
 <script type="text/javascript">
 	$j('#GoogleAutoComplete').keypress(function(event){
