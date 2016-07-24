@@ -81,11 +81,28 @@ function getOrders(&$commercants, $date = TODAY_DATE) {
 
 $commercants = getCommercant();
 
-$orders_date = date('Y-m-d', strtotime('2016-06-21'));
+$orders_date = date('Y-m-d', strtotime('2016-06-24'));
 
 getOrders($commercants, $orders_date);
 
 print_r($commercants);
+
+class generatePdf {
+	private		$_pdf; 
+	private		$_summary;
+
+	function __construct() {
+		$this->_pdf = new Zend_Pdf();
+
+		$this->_summary = $this->_pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+		$this->_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		$this->_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
+
+	}
+
+	function addOrder($order) {
+	}
+}
 
 function generate_Pdf($commercant, $orders_date) {
 	$lineHeight_summary = 20;
@@ -94,18 +111,16 @@ function generate_Pdf($commercant, $orders_date) {
 	$lineOffset_order = 5;
 	$alignLeft = 50;
 	
-	print_r($commercant);	// Debug
-
-	$pdf = new Zend_Pdf();
+//	$pdf = new Zend_Pdf();
 
 	//	Orders_Summary	==>>
-	$orders_summary = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+//	$orders_summary = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
 	$pdf->pages[] = $orders_summary;
 	$width = $orders_summary->getWidth();
 	$height = $orders_summary->getHeight();
 
-	$orders_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
-	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
+//	$orders_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+//	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
 	$orders_summary->drawText('Commandes AU PAS DE COURSES', $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
 	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
 	$orders_summary->drawText("A {$commercant['name']} pour le {$orders_date}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
@@ -144,6 +159,3 @@ function generate_Pdf($commercant, $orders_date) {
 	}
 	return ($pdf);
 }
-
-//generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
-
