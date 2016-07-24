@@ -47,21 +47,18 @@ function GoogleApiCustomcheck() {
     });
 }
 
-var googleRsl = false;
-
 function GoogleApiLandingpage() {
     autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoComplete')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
-    autocomplete_landingpage.addListener('place_changed', function() {
-        var place = autocomplete_landingpage.getPlace();
+    autocomplete_landingpage.addListener('place_changed', function(){
+		var place = autocomplete_landingpage.getPlace();
 		var	zipcode = getPlaceKey(place, 'postal_code');
 
 		if (zipcode != 'not found') {
-			document.getElementById('GoogleAutoCompleteZipcode').value = zipcode;
-			googleRsl = true;
+			$j('#GoogleAutoCompleteZipcode').val(zipcode);
+			$j('#form-quartier').removeClass('has-error');
+			$j('#form-quartier').submit();
 		} else {
-			googleRsl = false;
-			$j('#form-quartier').addClass('has-error');
-			alert('veuillez entree une adresse complete');
+			$j('#GoogleAutoCompleteZipcode').val('');
 		}
-    });
+	})
 }

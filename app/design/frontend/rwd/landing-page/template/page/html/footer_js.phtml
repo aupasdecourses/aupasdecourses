@@ -69,17 +69,21 @@ src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 <script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage' async defer></script>
 <script type="text/javascript">
-$j('#GoogleAutoComplete').keydown(function(event) {
-	if (event.which == 13 && googleRsl == false)
+$j('#GoogleAutoComplete').keypress(function(event) {
+	if (event.which == 13) {
 		event.preventDefault();
-	else if (event.which != 13) { 
-		$j('#form-quartier').removeClass('has-error');
-		$j('#GoogleAutoCompleteZipcode').val('');
-		googleRsl = false;
+		window.setTimeout(function(){
+			$j('#form-quartier').submit();
+		}, 100)
 	}
-	if (event.which == 13 && googleRsl == true)
-		$j('#form-quartier').submit();
-})
+});
+$j('#form-quartier').submit(function(event){
+	if ($j('#GoogleAutoCompleteZipcode').val() == '') {
+		event.preventDefault();
+		$j('#form-quartier').addClass('has-error');
+		alert('veuillez entree une adresse complete');
+	}
+});
 </script>
 <!-- End Google Auto Complete -->
 
