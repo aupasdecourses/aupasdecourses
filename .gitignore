@@ -50,7 +50,6 @@ Thumbs.db
 #index.php
 /install.php
 LICENSE*
-/blog
 /media
 /robots.txt
 /var
@@ -66,3 +65,4 @@ LICENSE*
 /magmi/state
 /maintenance.flag
 /mage-dbdump.sh
+/blog/wp-config.php
