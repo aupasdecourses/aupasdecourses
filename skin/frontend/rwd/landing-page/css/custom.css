@@ -135,16 +135,14 @@ header .intro-section .intro {
 }
 
 .intro-section input.input-quartier{
-  display:inline-block;
+  display:block;
   margin:0 auto;
   height: 50px;
   width: 80%;
   min-width: 250px;
   max-width: 700px;
-  margin-right: -2px;
   background-color: white;
   color: #333;
-/*  border:	1px solid #333;*/
 }
 
 header .intro-section .buttons {
@@ -152,13 +150,15 @@ header .intro-section .buttons {
 }
 
 .intro-section button.input-quartier{
-  display:inline-block;
+  display:block;
+  margin: auto;
+  margin-top: 12px;
   background-color: #E94E19;
   height: 50px;
   min-width: 0;
+  max-width: 700px;
   border-radius: 0px !important;
   padding: 12px;
-  margin-left: -6px;
   font-family: Montserrat;
   vertical-align:middle;
 }
