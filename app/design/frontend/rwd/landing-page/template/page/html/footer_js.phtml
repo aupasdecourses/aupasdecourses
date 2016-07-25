@@ -82,8 +82,13 @@ $j('#form-quartier').submit(function(event){
 	if ($j('#GoogleAutoCompleteZipcode').val() == '') {
 		event.preventDefault();
 		$j('#form-quartier').addClass('has-error');
-		alert('veuillez entree une adresse complete');
+		if (throughGoogle == true) {
+			alert('Veuillez entrer une adresse complete.');
+		} else {
+			alert('Veuillez selcetioner une addresse dans la liste proposee par google.');
+		}
 	}
+	throughGoogle = false;
 });
 </script>
 <!-- End Google Auto Complete -->
