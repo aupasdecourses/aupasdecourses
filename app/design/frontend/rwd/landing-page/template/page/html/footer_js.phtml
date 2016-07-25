@@ -69,7 +69,7 @@ src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 <script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage' async defer></script>
 <script type="text/javascript">
-//$j('#GoogleAutoComplete').attr('autocomplete', 'off');
+$j('#GoogleAutoComplete').attr('autocomplete', 'off');
 $j('#GoogleAutoComplete').keypress(function(event) {
 	if (event.which == 13) {
 		event.preventDefault();
