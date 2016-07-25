@@ -98,6 +98,7 @@ $zipcode_popup = "<div class=\'autocomp_popup\'>
 			margin:         20px auto;
 			background:     rgba(255,255,255,1);
 			padding:		20px;
+			text-align:		center;
 		}
 		.autocomp_popup_content {
 		    width:         100%;
@@ -110,9 +111,9 @@ $zipcode_popup = "<div class=\'autocomp_popup\'>
 	</style>
 	<div class=\'.autocomp_popup_content\'>
 		<div class=\'intro-section\'>
-			<p>Veuillez précisser votre code postale.</p>
+			<p>Veuillez préciser votre code postal.</p>
 			<form method=\'post\' action=\'$url\'>
-				<input type=\'text\' class=\'form-control input-quartier\' name=\'zipcode\' />
+				<input type=\'text\' class=\'form-control input-quartier\' name=\'zipcode\' placeholder=\'\'/>
 				<button type=\'submit\' class=\'btn btn-default standard-button input-quartier\'>Voir mes commerçants</button>
 			</form>
 		</div>
@@ -121,6 +122,7 @@ $zipcode_popup = "<div class=\'autocomp_popup\'>
 $zipcode_popup = preg_replace("#[\n\r]#", "", $zipcode_popup);
 ?>
 <script type="text/javascript">
+$j('#GoogleAutoCompleteZipcode').val('');
 $j('#GoogleAutoCompleteInput').keypress(function(event) {
 	if (event.which == 13) {
 		event.preventDefault();
@@ -132,7 +134,6 @@ $j('#GoogleAutoCompleteInput').keypress(function(event) {
 $j('#form-quartier').submit(function(event){
 	if ($j('#GoogleAutoCompleteZipcode').val() == '') {
 		event.preventDefault();
-		$j('#form-quartier').addClass('has-error');
 		$j.magnificPopup.open({
 			items: {
 				src: '<?= $zipcode_popup ?>',
