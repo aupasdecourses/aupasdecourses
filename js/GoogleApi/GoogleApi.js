@@ -50,7 +50,7 @@ function GoogleApiCustomcheck() {
 var throughGoogle = false;
 
 function GoogleApiLandingpage() {
-    autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoComplete')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
+    autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoComplete')),{ types: ['address'], componentRestrictions: {country: "fr"}});
     autocomplete_landingpage.addListener('place_changed', function(){
 		var place = autocomplete_landingpage.getPlace();
 		var	zipcode = getPlaceKey(place, 'postal_code');
