@@ -40,6 +40,7 @@
         <ul class="dropdown-menu" role="menu">
           <li> <a href="index.php?module=clients&action=view&option=stat">Stats Clients</a></li>
           <li><a href="index.php?module=clients&action=view&option=fidelity">Fidelité Clients</a></li>
+          <li><a href="index.php?module=clients&action=view&option=coupon">Stats Coupon</a></li>
           <li><a href="index.php?module=clients&action=view&option=notation">Notes commande</a></li>
         </ul>
     </li>

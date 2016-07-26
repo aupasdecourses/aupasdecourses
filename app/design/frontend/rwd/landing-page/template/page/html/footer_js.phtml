@@ -61,3 +61,86 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
+
+<!-- MAIN POPUP -->
+<script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
+<?php
+$popup_block = $this->getLayout()->createBlock('cms/block')->setBlockId('main_popup')->toHtml();
+$popup_block = preg_replace("#[\n\r]#", "", $popup_block);
+if ($popup_block != '') : ?>
+	<?php Mage::getSingleton('core/session')->setData('main_popup','true'); ?>
+	<script>
+	jQuery(function($) {
+		$.magnificPopup.open({
+			items: {
+				src: '<?= "$popup_block" ?>',
+				type: 'inline'
+			}
+		});
+	});
+	</script>
+<?php endif ?>
+<!-- END MAIN POPUP -->
+
+<!-- Google Auto Complete -->
+<?php
+	$key = Mage::getStoreConfig('api_key/google/google_nav');
+?>
+<script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage' async defer></script>
+<?php
+$url = $this->getUrl('customhome/index/redirect');
+$zipcode_popup = "<div class=\'autocomp_popup\'>
+	<style>
+		.autocomp_popup {
+			position:       relative;
+			max-width:      800px;
+			margin:         20px auto;
+			background:     rgba(255,255,255,1);
+			padding:		20px;
+			text-align:		center;
+		}
+		.autocomp_popup_content {
+		    width:         100%;
+		    margin:        20px;
+		}
+		.autocomp_popup_content p {
+			width:         100%;
+			padding:	   20px;
+		}
+	</style>
+	<div class=\'.autocomp_popup_content\'>
+		<div class=\'intro-section\'>
+			<p>Veuillez préciser votre code postal.</p>
+			<form method=\'post\' action=\'$url\'>
+				<input type=\'text\' class=\'form-control input-quartier\' name=\'zipcode\' placeholder=\'\'/>
+				<button type=\'submit\' class=\'btn btn-default standard-button input-quartier\'>Voir mes commerçants</button>
+			</form>
+		</div>
+	</div>
+</div>";
+$zipcode_popup = preg_replace("#[\n\r]#", "", $zipcode_popup);
+?>
+<script type="text/javascript">
+$j('#GoogleAutoCompleteZipcode').val('');
+$j('#GoogleAutoCompleteInput').keypress(function(event) {
+	if (event.which == 13) {
+		event.preventDefault();
+		window.setTimeout(function(){
+			$j('#form-quartier').submit();
+		}, 500)
+	}
+});
+$j('#form-quartier').submit(function(event){
+	if ($j('#GoogleAutoCompleteZipcode').val() == '') {
+		event.preventDefault();
+		$j.magnificPopup.open({
+			items: {
+				src: '<?= $zipcode_popup ?>',
+				type: 'inline'
+			}
+		});
+	}
+});
+</script>
+<!-- End Google Auto Complete -->

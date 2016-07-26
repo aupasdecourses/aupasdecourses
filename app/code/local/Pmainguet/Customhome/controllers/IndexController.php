@@ -2,150 +2,52 @@
 
 class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Action
 {
+	private $_urlTab = [
+		75001	=>	'../quartiers/Paris_1er',
+		75002	=>	'../saintmartin',
+		75003	=>	'../saintmartin',
+		75004	=>	'../quartiers/Paris_4e',
+		75005	=>	'../quartiers/Paris_5e',
+		75006	=>	'../quartiers/Paris_6e',
+		75007	=>	'../quartiers/Paris_7e',
+		75008	=>	'../batignolles',
+		75009	=>	'../batignolles',
+		75010	=>	'../saintmartin',
+		75011	=>	'../saintmartin',
+		75012	=>	'../quartiers/Paris_12e',
+		75013	=>	'../quartiers/Paris_13e',
+		75014	=>	'../quartiers/Paris_14e',
+		75015	=>	'../quartiers/Paris_15e',
+		75016	=>	'../quartiers/Paris_16e',
+		75116	=>	'../quartiers/Paris_16e',
+		75017	=>	'../batignolles',
+		75018	=>	'../batignolles',
+		75019	=>	'../quartiers/Paris_19e',
+		75020	=>	'../quartiers/Paris_20e',
+
+		92110	=>	'../quartiers/Boulogne',
+		92130	=>	'../quartiers/Issy-Les-Moulineaux',
+		92300	=>	'../quartiers/Levallois-Perret',
+		92120	=>	'../quartiers/Montrouge',
+		94300	=>	'../quartiers/Vincennes'
+	];
+
     public function redirectAction()
     {
         $baseurl=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+		$data = $this->getRequest()->getPost();
 
-        if ($data = $this->getRequest()->getPost()) {
-            $zipcode = $data['zipcode'];
-            $refererUrl = Mage::helper('core/http')->getHttpReferer(true);
-            $coreUrl = Mage::getBaseUrl();
-            if (isset($zipcode)) {
-                switch ($zipcode) {
-                    case 'Paris 17e':
-                        $storeId = '../batignolles';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 18e':
-                        $storeId = '../batignolles';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 9e':
-                        $storeId = '../batignolles';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 8e':
-                        $storeId = '../batignolles';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 2e':
-                        $storeId = '../saintmartin';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 3e':
-                        $storeId = '../saintmartin';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 10e':
-                        $storeId = '../saintmartin';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 11e':
-                        $storeId = '../saintmartin';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 1er':
-                        $storeId = '../quartiers/Paris_1er';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 4e':
-                        $storeId = '../quartiers/Paris_4e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 5e':
-                        $storeId = '../quartiers/Paris_5e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 6e':
-                        $storeId = '../quartiers/Paris_6e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 7e':
-                        $storeId = '../quartiers/Paris_7e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 12e':
-                        $storeId = '../quartiers/Paris_12e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 13e':
-                        $storeId = '../quartiers/Paris_13e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 14e':
-                        $storeId = '../quartiers/Paris_14e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 15e':
-                        $storeId = '../quartiers/Paris_15e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 16e':
-                        $storeId = '../quartiers/Paris_16e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 19e':
-                        $storeId = '../quartiers/Paris_19e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Paris 20e':
-                        $storeId = '../quartiers/Paris_20e';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Boulogne':
-                        $storeId = '../quartiers/Boulogne';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Issy Les Moulineaux':
-                        $storeId = '../quartiers/Issy-Les-Moulineaux';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Levallois Perret':
-                        $storeId = '../quartiers/Levallois-Perret';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Montrouge':
-                        $storeId = '../quartiers/Montrouge';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    case 'Vincennes':
-                        $storeId = '../quartiers/Vincennes';
-                        $url = $coreUrl.$storeId;
-                        Mage::app()->getResponse()->setRedirect($url);
-                        break;
-                    default:
-                        Mage::app()->getResponse()->setRedirect($baseurl);
-                        break;
-                }
-            } else {
-                Mage::app()->getResponse()->setRedirect($refererUrl);
-            }
-        } else {
-            Mage::app()->getResponse()->setRedirect($baseurl);
-        }
-    }
+		if (isset($data['zipcode'])) {
+			$zipcode = $data['zipcode'];
+			$refererUrl = Mage::helper('core/http')->getHttpReferer(true);
+			$coreUrl = Mage::getBaseUrl();
+
+			if (array_key_exists($zipcode, $this->_urlTab))
+				Mage::app()->getResponse()->setRedirect($coreUrl . $this->_urlTab[$zipcode]);
+			else
+				Mage::app()->getResponse()->setRedirect($baseurl . "../quartiers/coming-soon.php");
+		} else {
+			Mage::app()->getResponse()->setRedirect($refererUrl);
+		}
+	}
 }

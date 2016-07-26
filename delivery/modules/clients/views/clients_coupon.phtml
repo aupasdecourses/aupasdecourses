@@ -1,0 +1,149 @@
+<!-- DataPicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<!-- DataTables -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+<style>
+ input#datepicker,input#datepicker_fin{
+    width:100px;
+    display: inline;
+    vertical-align:top;
+}
+</style>
+<?php
+            //Génération de la liste des increment_id des commmandes et récupération d'un tableau des données
+            if(isset($_GET['date_debut']) && isset($_GET['date_fin'])){
+                $orderid_array=get_list_orderid();
+                $date_debut=$_GET['date_debut'];
+                $date_fin=$_GET['date_fin'];
+                $data=data_coupon($date_debut,$date_fin);
+            }   
+?>
+
+<body>
+  <div id="canvas" class="container theme-showcase" role="main">
+    <div class="page-header">
+      <h2>Liste des commandes (filtrable par clients) du <input type="text" class="form-control" id="datepicker" placeholder="Cliquez pour sélectionner la date" value="<?php echo $date_debut?>"> au <input type="text" class="form-control" id="datepicker_fin" placeholder="Cliquez pour sélectionner la date" value="<?php echo $date_fin?>"></h2>
+    </div>
+    <div class="row">
+        <div id="data" class="col-sm-12">
+            <table class="display dt-responsive no-wrap" id="data_facturation">
+                <thead>
+                    <tr>
+                        <th>Coupon</th>
+                        <th class="float">Nombre</th>
+                        <th># Commande</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($data as $coupon => $ids){?>
+                    <tr>
+                        <td><?= $coupon?></td>
+                        <td><?= count($ids)?></td>
+                        <td><?php foreach($ids as $id) :
+                            echo $id."</br>".PHP_EOL;
+                        endforeach;?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+  </div>
+</body>
+<script>
+
+$(function() {
+  $( "#datepicker" ).datepicker({
+    altField: "#datepicker",
+    closeText: 'Fermer',
+    prevText: 'Précédent',
+    nextText: 'Suivant',
+    currentText: 'Aujourd\'hui',
+    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    weekHeader: 'Sem.',
+    dateFormat: 'dd/mm/yy',
+  });
+
+  $( "#datepicker_fin" ).datepicker({
+    altField: "#datepicker_fin",
+    closeText: 'Fermer',
+    prevText: 'Précédent',
+    nextText: 'Suivant',
+    currentText: 'Aujourd\'hui',
+    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    weekHeader: 'Sem.',
+    dateFormat: 'dd/mm/yy',
+  });
+});
+
+$(function(){
+  $("#datepicker_fin").change(function(){
+        window.location='index.php?module=clients&action=view&option=coupon&date_debut='+$("#datepicker").val()+'&date_fin='+this.value;
+  });
+});
+
+$(document).ready(function() {
+    var table=$('#data_facturation').DataTable({
+        "lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+        "pageLength": -1,
+        "order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+        initComplete: function () {
+        },
+
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            this.api().columns(['.float']).every(function (){
+                var index = this.index();
+                // Total over all pages
+                // total = api
+                //     .column( index )
+                //     .data()
+                //     .reduce( function (a, b) {
+                //         return intVal(a) + intVal(b);
+                //     } );
+                // total=total.toFixed(2);
+     
+                // Total over this page
+                pageTotal = api
+                    .column( index, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                pageTotal=pageTotal.toFixed(2);
+
+                // Update footer
+                $( api.column( index ).footer() ).html(pageTotal);
+            });
+        }
+    } );
+
+});
+</script>
