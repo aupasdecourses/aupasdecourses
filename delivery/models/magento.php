@@ -122,7 +122,8 @@ function all_orders($var = 'mwddate', $commercantId = 'all')
 {
     try {
         $orders = Mage::getModel('sales/order')->getCollection();
-        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m') - 1, date('d'), date('Y')));
+        //N'affiche que les commandes de moins de 3 mois
+        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m')-3, date('d'), date('Y')));
 
         //Ajout de MWDDate (pour les commandes après le 12 janvier environ)
         if ($var == 'mwddate') {
@@ -136,6 +137,7 @@ function all_orders($var = 'mwddate', $commercantId = 'all')
             $orders->addAttributeToFilter('main_table.created_at', array(
                             'from' => $from_date,
                     ));
+
         //Amasty Delivery Date
         } elseif ($var = '') {
             $orders->getSelect()->join(array('delivery_date' => 'amasty_amdeliverydate_deliverydate'), 'delivery_date.order_id = main_table.entity_id', array('*', 'delivery_date' => 'delivery_date.date', 'delivery_time' => 'delivery_date.time'))->order('delivery_date', 'ASC');
