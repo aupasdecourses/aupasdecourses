@@ -15,14 +15,6 @@ $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']=2016000249;
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
 
-$lib_path = realpath(dirname(__FILE__) . '../lib');
-set_include_path("$libpath:".get_include_path());
-
-require_once 'Zend/Loader.php';
-require_once 'Zend/Loader/Autoloader.php';
-
-Zend_Loader_Autoloader::getInstance();
-
 function getCommercant() {
 	$commercants = [];
     $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter()->addFieldToFilter('estcom_commercant', ['neq' => NULL]);
