@@ -80,19 +80,56 @@ getOrders($commercants, $orders_date);
 print_r($commercants);
 
 class generatePdf {
-	private		$_pdf; 
-	private		$_summary;
+	private			$_commercant;
 
-	function __construct() {
+	private			$_pdf; 
+
+	private			$_font;
+	private			$_font_bold;
+	private			$_font_italic;
+
+	private static	$_width = 842;
+	private	static	$_height = 595;
+
+	private			$_summary = [];
+	private			$_summary_lineHeight = 20;
+	private			$_summary_lineOffset = 5;
+
+	private			$_margin_horizontal = 50;
+	private			$_margin_vertical = 50;
+
+	public function __construct($commercant, $orders_date) {
+		$this->_commercant = $commercant;
+
 		$this->_pdf = new Zend_Pdf();
 
-		$this->_summary = $this->_pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-		$this->_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
-		$this->_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
+		$this->_font = Zend_Pdf_Font::fontWisthName(Zend_Pdf_Font::FONT_HELVETICA);
+		$this->_font_bold = Zend_Pdf_Font::fontWisthName(Zend_Pdf_Font::FONT_HELVETICA_BOLD);
+		$this->_font_italic = Zend_Pdf_Font::fontWisthName(Zend_Pdf_Font::FONT_HELVETICA_ITALIC);
 
+		$this->_summary = $this->_pdf->newPage(static::$_width . ':' . static::$_height . ':');
+
+		$this->_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		$this->_summary->setFont($this->_font, 16);
+		$this->_summary->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
+		$this->_summary->setFont($this->_font, 12);
+		$this->_summary->drawText("A {$this->_commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
+		$this->_summary_lineOffset++;
+		$this->_summary_lineOffset++;
 	}
 
-	function addOrder($order) {
+	private function _finalizePdf() {
+		$this->_summary->drawText('Nombre de commandes: ' . $this->_orders_count, $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 8));
+	}
+
+	public function addOrder($order) {
+		$this->_summary->drawText("Commande n°" . ++$this->orders_count . ": {$order['id']}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++)); // <<== make a function if page is full create new;
+	}
+
+	public function save($filename) {
+	}
+
+	public function send($from, $to) {
 	}
 }
 
@@ -108,21 +145,21 @@ function generate_Pdf($commercant, $orders_date) {
 	//	Orders_Summary	==>>
 //	$orders_summary = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
 	$pdf->pages[] = $orders_summary;
-	$width = $orders_summary->getWidth();
-	$height = $orders_summary->getHeight();
+//	$width = $orders_summary->getWidth();
+//	$height = $orders_summary->getHeight();
 
 //	$orders_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 //	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
-	$orders_summary->drawText('Commandes AU PAS DE COURSES', $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
-	$orders_summary->drawText("A {$commercant['name']} pour le {$orders_date}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	$lineOffset_summary++;
-	$orders_summary->drawText('Nombre de commandes: ' . count($commercant['orders']), $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
+//	$orders_summary->drawText('Commandes AU PAS DE COURSES', $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
+//	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
+//	$orders_summary->drawText("A {$commercant['name']} pour le {$orders_date}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
+//	$lineOffset_summary++;
+//	$orders_summary->drawText('Nombre de commandes: ' . count($commercant['orders']), $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
 	//	<<==	Orders_Summary
 
 	$order_count = 0;
 	foreach ($commercant['orders'] as $order) {
-		$orders_summary->drawText("Commande n°" . ++$order_count . ": {$order['id']}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
+//		$orders_summary->drawText("Commande n°" . ++$order_count . ": {$order['id']}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
 	//	Order	==>>
 		$orders_page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
 		$pdf->pages[] = $orders_page;
