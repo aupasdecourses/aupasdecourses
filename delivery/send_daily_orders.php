@@ -87,6 +87,11 @@ getOrders($commercants, $orders_date);
 
 print_r($commercants);
 
+$i = 1;
+while (++$i < 401) {
+	$commercants['7']['orders'][$i]['id'] = $i;
+}
+
 class generatePdf {
 	private			$_commercant;
 
@@ -106,7 +111,7 @@ class generatePdf {
 	private			$_summary_columnWidth;
 	private			$_summary_columnOffset;
 	private			$_summary_startColumnOffset = 0;
-	private			$_summary_maxColumnOffset = 3;
+	private			$_summary_maxColumnOffset = 2;
 
 	private			$_summary_lineHeight = 20;
 	private			$_summary_startLineOffset = 9;
@@ -130,10 +135,10 @@ class generatePdf {
 		$this->_font_bold = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD);
 		$this->_font_italic = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_ITALIC);
 
-		$this->_summary_columnWidth = (static::$_width - ($this->_margin_horizontal * 2)) / number_format($this->_summary_maxColumnOffset, 2);
+		$this->_summary_columnWidth = (static::$_width - ($this->_margin_horizontal * 2)) / number_format($this->_summary_maxColumnOffset + 1, 2);
 		$this->_summary_columnOffset = $this->_summary_startColumnOffset;
 		$this->_summary_lineOffset = $this->_summary_startLineOffset;
-		$this->_summary_maxLineOffset = (static::$_height / $this->_summary_lineHeight) - 10;
+		$this->_summary_maxLineOffset = (static::$_height / $this->_summary_lineHeight) - ($this->_margin_vertical / $this->_summary_lineHeight);
 
 		$this->_format = static::$_width . ':' . static::$_height . ':';
 		// <<==
@@ -160,16 +165,17 @@ class generatePdf {
 			if ($this->_summary_columnOffset < $this->_summary_maxColumnOffset) {
 				$this->_summary_columnOffset++;
 			} else { // add page to summary
-				$this->_summary_startOffset = 5;
+				$this->_summary_startLineOffset = 5;
 				$this->_summary_columnOffset = $this->_summary_startColumnOffset;
-				$this->summary_id++;
+				$this->_summary_id++;
 				$this->_summary[$this->_summary_id] = $this->_pdf->newPage($this->_format);
+				$this->_summary[$this->_summary_id]->setFont($this->_font, 12);
 			}
 			// reinitialyse line offset to start position
 			$this->_summary_lineOffset = $this->_summary_startLineOffset;
 		}
 		// add current order to summary
-		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
+		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
 	public function addOrder($order) {
