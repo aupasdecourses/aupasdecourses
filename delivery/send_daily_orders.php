@@ -87,11 +87,6 @@ getOrders($commercants, $orders_date);
 
 print_r($commercants);
 
-$i = 1;
-while (++$i < 401) {
-	$commercants['7']['orders'][$i]['id'] = $i;
-}
-
 class generatePdf {
 	private			$_commercant;
 
@@ -117,6 +112,9 @@ class generatePdf {
 	private			$_summary_startLineOffset = 9;
 	private			$_summary_maxLineOffset;
 	private			$_summary_lineOffset;
+
+	private			$_order_template;
+	private			$_orders;
 
 	private			$_orders_count = 0;
 
@@ -150,6 +148,10 @@ class generatePdf {
 		$this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
 		$this->_summary[0]->setFont($this->_font, 12);
 		$this->_summary[0]->drawText("A {$this->_commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
+		// <<==
+
+		// create order template page ==>>
+		
 		// <<==
 	}
 
