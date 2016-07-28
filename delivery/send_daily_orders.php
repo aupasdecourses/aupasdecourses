@@ -141,7 +141,6 @@ class generatePdf {
 		$this->_summary_lineOffset = $this->_summary_startLineOffset;
 		$this->_summary_maxLineOffset = (static::$_height / $this->_summary_lineHeight) - ($this->_margin_vertical / $this->_summary_lineHeight);
 
-		$this->_orders_lineOffset = $this->_orders_startLineOffset_first;
 		$this->_orders_maxLineOffset = (static::$_height / $this->_orders_lineHeight) - ($this->_margin_vertical / $this->_orders_lineHeight);
 
 		$this->_format = static::$_width . ':' . static::$_height . ':';
@@ -227,6 +226,8 @@ class generatePdf {
 		$this->_orders[$this->_orders_id]->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));
 		$this->_orders[$this->_orders_id]->drawText("Liste des produits commandes: ", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 11));
 
+		$this->_orders_lineOffset = $this->_orders_startLineOffset_first;
+		$this->_orders[$this->_orders_id]->drawText("==================", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset++));
 		// create table
 	}
 
