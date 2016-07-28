@@ -88,8 +88,6 @@ getOrders($commercants, $orders_date);
 print_r($commercants);
 
 class generatePdf {
-	private			$_commercant;
-
 	private			$_pdf; 
 
 	private			$_font;
@@ -113,8 +111,15 @@ class generatePdf {
 	private			$_summary_maxLineOffset;
 	private			$_summary_lineOffset;
 
-	private			$_order_template;
-	private			$_orders;
+	private			$_order_template_first;
+	private			$_order_template_second;
+	private			$_orders = [];
+	private			$_orders_id = -1;
+	private			$_orders_lineHeight = 15;
+	private			$_orders_startLineOffset_first = 13;
+	private			$_orders_startLineOffset_second = 6;
+	private			$_orders_maxLineOffset;
+	private			$_orders_lineOffset;
 
 	private			$_orders_count = 0;
 
@@ -124,8 +129,6 @@ class generatePdf {
 	private			$_finalized = false;
 
 	public function __construct($commercant, $orders_date) {
-		$this->_commercant = $commercant;
-
 		$this->_pdf = new Zend_Pdf();
 
 		// Algorithm constants set ==>>
@@ -138,6 +141,9 @@ class generatePdf {
 		$this->_summary_lineOffset = $this->_summary_startLineOffset;
 		$this->_summary_maxLineOffset = (static::$_height / $this->_summary_lineHeight) - ($this->_margin_vertical / $this->_summary_lineHeight);
 
+		$this->_orders_lineOffset = $this->_orders_startLineOffset_first;
+		$this->_orders_maxLineOffset = (static::$_height / $this->_orders_lineHeight) - ($this->_margin_vertical / $this->_orders_lineHeight);
+
 		$this->_format = static::$_width . ':' . static::$_height . ':';
 		// <<==
 
@@ -147,23 +153,46 @@ class generatePdf {
 		$this->_summary[0]->setFont($this->_font, 16);
 		$this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
 		$this->_summary[0]->setFont($this->_font, 12);
-		$this->_summary[0]->drawText("A {$this->_commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
+		$this->_summary[0]->drawText("A {$commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
 		// <<==
 
-		// create order template page ==>>
-		
+		// create orders template page ==>>
+		$this->_orders_template_first = $this->_pdf->newPage($this->_format);	
+
+		$this->_orders_template_first->setFont($this->_font, 8);
+		$this->_orders_template_first->drawText("Commande Au Pas De Courses - {$commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - $this->_margin_vertical + 10);
+		$this->_orders_template_first->setLineWidth(0.5);
+		$this->_orders_template_first->drawLine($this->_margin_horizontal, static::$_height - $this->_margin_vertical, static::$_width - $this->_margin_horizontal, static::$_height - $this->_margin_vertical);
+
+		$this->_orders_template_first->drawLine($this->_margin_horizontal, $this->_margin_vertical, static::$_width - $this->_margin_horizontal, $this->_margin_vertical);
+		$this->_orders_template_first->setFont($this->_font, 8);
+		$this->_orders_template_first->drawText("Genere le: " . date('r'), $this->_margin_horizontal, $this->_margin_vertical - 10);
+
+		$this->_orders_template_second = clone $this->_orders_template_first;
+
 		// <<==
 	}
 
 	private function _finalizePdf() {
+		$page_id = 1;
+		$page_count = count($this->_summary) + count($this->_orders);
 		$this->_summary[0]->drawText('Nombre de commandes: ' . $this->_orders_count, $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 8));
 		foreach ($this->_summary as $page) {
+			$page->setFont($this->_font, 8);
+			$page->drawText("page {$page_id}/{$page_count}", static::$_width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
+			$page_id++;
+			$this->_pdf->pages[] = $page;
+		}
+		foreach ($this->_orders as $page) {
+			$page->setFont($this->_font, 8);
+			$page->drawText("page {$page_id}/{$page_count}", static::$_width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
+			$page_id++;
 			$this->_pdf->pages[] = $page;
 		}
 	}
 
 	private function addOrderToSummary($order) {
-		if (!($this->_summary_lineOffset < $this->_summary_maxLineOffset)) { // add column to currenti summary
+		if (!($this->_summary_lineOffset < $this->_summary_maxLineOffset)) { // add column to current summary
 			if ($this->_summary_columnOffset < $this->_summary_maxColumnOffset) {
 				$this->_summary_columnOffset++;
 			} else { // add page to summary
@@ -180,8 +209,25 @@ class generatePdf {
 		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
+	private static function _orders_table_header($page) {
+	}
+
 	public function addOrder($order) {
 		$this->addOrderToSummary($order);
+		$this->_orders_id++;
+		$this->_orders[$this->_orders_id] = clone $this->_orders_template_first;
+
+		$this->_orders[$this->_orders_id]->setFont($this->_font, 16);
+		$this->_orders[$this->_orders_id]->drawText("Commande n°  {$order['id']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 5));
+		$this->_orders[$this->_orders_id]->setFont($this->_font, 12);
+		$this->_orders[$this->_orders_id]->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
+		$this->_orders[$this->_orders_id]->drawText("Date de Prise de Commande: {$order['order_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 7));
+		$this->_orders[$this->_orders_id]->drawText("Date de Livraison: {$order['delivery_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 8));
+		$this->_orders[$this->_orders_id]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
+		$this->_orders[$this->_orders_id]->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));
+		$this->_orders[$this->_orders_id]->drawText("Liste des produits commandes: ", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 11));
+
+		// create table
 	}
 
 	public function save($filename) {
@@ -202,63 +248,3 @@ foreach ($commercants['7']['orders'] as $order) {
 	$test->addOrder($order);
 }
 $test->save('test.pdf');
-
-/*
-function generate_Pdf($commercant, $orders_date) {
-	$lineHeight_summary = 20;
-	$lineOffset_summary = 5;
-	$lineHeight_order = 15;
-	$lineOffset_order = 5;
-	$alignLeft = 50;
-	
-	$pdf = new Zend_Pdf();
-
-	//	Orders_Summary	==>>
-	$orders_summary = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-	$pdf->pages[] = $orders_summary;
-	$width = $orders_summary->getWidth();
-	$height = $orders_summary->getHeight();
-
-	$orders_summary->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
-	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
-	$orders_summary->drawText('Commandes AU PAS DE COURSES', $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	$orders_summary->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
-	$orders_summary->drawText("A {$commercant['name']} pour le {$orders_date}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	$lineOffset_summary++;
-	$orders_summary->drawText('Nombre de commandes: ' . count($commercant['orders']), $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	//	<<==	Orders_Summary
-
-	$order_count = 0;
-	foreach ($commercant['orders'] as $order) {
-		$orders_summary->drawText("Commande n°" . ++$order_count . ": {$order['id']}", $alignLeft, $height - ($lineHeight_summary * $lineOffset_summary++));
-	//	Order	==>>
-		$orders_page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
-		$pdf->pages[] = $orders_page;
-
-		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
-		$orders_page->drawText("Commande Au Pas De Courses - {$commercant['name']} pour le {$orders_date}", $alignLeft, $height - 45);
-		$orders_page->setLineWidth(0.5);
-		$orders_page->drawLine($alignLeft, $height - 50, $width - $alignLeft, $height - 50);
-
-		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 16);
-		$orders_page->drawText("Commande n°  {$order['id']}", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
-		$orders_page->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->drawText("Date de Prise de Commande: {$order['order_date']}", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->drawText("Date de Livraison: {$order['delivery_date']}", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->drawText("Creneau de Livraison: {$order['delivery_time']}", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-		$orders_page->drawText("Liste des produits commandes: ", $alignLeft, $height - ($lineHeight_order * $lineOffset_order++));
-
-		//	<<===
-
-		$orders_page->drawLine($alignLeft, 50, $width - $alignLeft, 50);
-		$orders_page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 8);
-		$orders_page->drawText("Genere le: " . date('r'), $alignLeft, 40);
-	//	<<==	Order
-	}
-	return ($pdf);
-}
-
-generate_Pdf($commercants['7'], $orders_date)->save('test.pdf');
-*/
