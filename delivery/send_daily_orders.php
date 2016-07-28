@@ -208,7 +208,7 @@ class generatePdf {
 		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
-	private static function _orders_table_header($page) {
+	private function _orders_table_draw($page) {
 	}
 
 	public function addOrder($order) {
