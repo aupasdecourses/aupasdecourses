@@ -97,7 +97,13 @@ li {
 	    margin-top: 50px;
 	}
 }
-
+#footer .return {
+	text-align:	center;
+}
+#footer .return a {
+	text-align:	center;
+	font-weight:600;
+}
 #footer .social-icons {
     margin-bottom: 0px;
     padding-bottom: 0px;
