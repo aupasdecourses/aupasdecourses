@@ -14,7 +14,6 @@
       		</small>
       </h2>
     </div>
-    <p id="warning-message" class="bg-warning">Attention: Seules les commandes à l'état "Processing" sont affichées.</p>
     <?php
 	    $com_id=liste_commercant_id("store");
 		$orders=array();
@@ -28,7 +27,7 @@
 	?>
 
 		<div class="row button_accueil">
-		<p id="warning-message" class="bg-warning hidden">Attention: Seules les commandes à l'état "Processing" ou "Complete" sont affichées.</p>
+		<p id="warning-message" class="bg-warning">Attention: Seules les commandes à l'état "Processing" et "Complete" - de moins de 3 mois - sont affichées.</p>
 			<div class="col-md-4" style="margin-bottom: 20px;">
 
 			<?php //Dropdown liste date
