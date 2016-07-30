@@ -218,6 +218,7 @@ class generatePdf {
 		$page->drawText("Description Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
 		$page->drawText("Prix Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
 		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 	}
 
 	private function _orders_table_draw($oder, &$pages) {
