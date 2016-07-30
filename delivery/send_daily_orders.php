@@ -205,19 +205,26 @@ class generatePdf {
 		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
+	private static	$_orders_table_column_set = [ 10, 110, 190, 250, 370, 450 ];
+
 	private function _orders_header_draw(&$page) {
-		$this->_orders_lineOffset = $this->_orders_startLineOffset_first;
 		$page->setFillColor(new Zend_Pdf_Color_Html('#188071'));
 		$page->setLineColor(new Zend_Pdf_Color_Html('#188071'));
 		$page->drawRectangle($this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 2)));
-		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 1));
+		$page->drawText("Nom du produit", $this->_margin_horizontal + static::$_orders_table_column_set[0], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Prix a l'unite", $this->_margin_horizontal + static::$_orders_table_column_set[1], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Quantite", $this->_margin_horizontal + static::$_orders_table_column_set[2], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Description Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Prix Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
 	}
 
 	private function _orders_table_draw($oder, &$pages) {
 		$page_id = 0;
 
 		foreach ($order['products'] as $product) {
-			if (!$this->_order_lineOffset < $this->_order_maxLineOffset) { // add new page to order
+			if (!$this->_orders_lineOffset < $this->_orders_maxLineOffset) { // add new page to order
 				$page_id++;
 				$page[$page_id] = clone $this->_orders_template;
 				$this->_orders_lineOffset = $this->_orders_startLineOffset_second;
