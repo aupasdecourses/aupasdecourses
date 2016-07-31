@@ -205,7 +205,7 @@ class generatePdf {
 		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
-	private static	$_orders_table_column_set = [ 10, 110, 190, 250, 370, 450 ];
+	private static	$_orders_table_column_set = [ 10, 110, 190, 250, 370, 450, 510 ];
 
 	private function _orders_header_draw(&$page) {
 		$page->setFillColor(new Zend_Pdf_Color_Html('#188071'));
@@ -217,48 +217,60 @@ class generatePdf {
 		$page->drawText("Quantite", $this->_margin_horizontal + static::$_orders_table_column_set[2], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
 		$page->drawText("Description Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
 		$page->drawText("Prix Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
-		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Prix Total", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[6], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
 		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 	}
 
-	static private function _wordwrap($str, $width, &$nline, $break = '\n') {
-		$rsl = '';
+	private static function _getLineHeight($str) {
 		$i = -1;
+		$rsl = 1;
 
 		while ($str[++$i]) {
-			if (!($i % $width))
-				$rsl .= $break;
-			$rsl .= $str[$i];
+			if ($str[$i] == '\n')
+				$rsl++;
 		}
-		return $rsl;
+		return ($rsl);
 	}
 
-	private function _orders_row_draw(&$page, $id) {
-		if (!$id % 2)
-			$color = new Zend_Pdf_Color_Rgb(0, 0, 0);
+	private function _orders_row_draw($product, &$page, $id) {
+		if ($id % 2)
+			$color = new Zend_Pdf_Color_Rgb(1, 1, 1);
 		else
-			$color = new Zend_Pdf_Color_Hmtl('#F0F0F0');
-		
-		$prod_data['title'];
-		$prod_data['prix_kilo'];
-		$prod_data['quantite'];
-		$prod_data['description'];
-		$prod_data['prix_unitaire'];
-		$prod_data['prix_total'];
-		$prod_data['comment'];
+			$color = new Zend_Pdf_Color_Html('#F0F0F0');
+		$title = wordwrap($product['title'], 20, PHP_EOL, true); 
+		$description = wordwrap($product['description'], 20, PHP_EOL, true); 
+		$comment = wordwrap($product['comment'], 30, PHP_EOL, true); 
+		$max_height = max([1, static::_getLineHeight($title), static::_getLineHeight($quantite), static::_getLineHeight($comment)]);
+		$page->setFillColor($color);
+		$page->setLineColor($color);
+		$page->drawRectangle($this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		$page->drawText($title, $this->_margin_horizontal + static::$_orders_table_column_set[0], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($product['prix_unitaire'], $this->_margin_horizontal + static::$_orders_table_column_set[1], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($product['quantite'], $this->_margin_horizontal + static::$_orders_table_column_set[2], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($description, $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($product['prix_unitaire'], $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($product['prix_total'], $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$page->drawText($comment, $this->_margin_horizontal + static::$_orders_table_column_set[6], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
+		$this->_orders_lineOffset += $max_height;
 	}
 
-	private function _orders_table_draw($oder, &$pages) {
+	private function _orders_table_draw($order, &$pages) {
 		$page_id = 0;
-
+		$id = 0;
+		
 		foreach ($order['products'] as $product) {
 			if (!$this->_orders_lineOffset < $this->_orders_maxLineOffset) { // add new page to order
+				$id = 0;
 				$page_id++;
-				$page[$page_id] = clone $this->_orders_template;
+				$pages[$page_id] = clone $this->_orders_template;
+				$pages[$page_id]->setFont($this->_font, 12);
 				$this->_orders_lineOffset = $this->_orders_startLineOffset_second;
-				$this->_orders_header_draw($page[$page_id]);
+				$this->_orders_header_draw($pages[$page_id]);
 			}
-			// insert row	
+			$this->_orders_row_draw($product, $pages[$page_id], $id);
+			$id++;
 		}
 	}
 
