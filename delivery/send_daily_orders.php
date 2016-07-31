@@ -212,13 +212,40 @@ class generatePdf {
 		$page->setLineColor(new Zend_Pdf_Color_Html('#188071'));
 		$page->drawRectangle($this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 2)));
 		$page->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 1));
-		$page->drawText("Nom du produit", $this->_margin_horizontal + static::$_orders_table_column_set[0], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
-		$page->drawText("Prix a l'unite", $this->_margin_horizontal + static::$_orders_table_column_set[1], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
-		$page->drawText("Quantite", $this->_margin_horizontal + static::$_orders_table_column_set[2], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
-		$page->drawText("Description Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
-		$page->drawText("Prix Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
-		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.5)));
+		$page->drawText("Nom du produit", $this->_margin_horizontal + static::$_orders_table_column_set[0], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Prix a l'unite", $this->_margin_horizontal + static::$_orders_table_column_set[1], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Quantite", $this->_margin_horizontal + static::$_orders_table_column_set[2], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Description Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Prix Unitaire", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
+		$page->drawText("Commentaires", $this->_margin_horizontal + static::$_orders_table_column_set[5], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset - 0.75)));
 		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+	}
+
+	static private function _wordwrap($str, $width, &$nline, $break = '\n') {
+		$rsl = '';
+		$i = -1;
+
+		while ($str[++$i]) {
+			if (!($i % $width))
+				$rsl .= $break;
+			$rsl .= $str[$i];
+		}
+		return $rsl;
+	}
+
+	private function _orders_row_draw(&$page, $id) {
+		if (!$id % 2)
+			$color = new Zend_Pdf_Color_Rgb(0, 0, 0);
+		else
+			$color = new Zend_Pdf_Color_Hmtl('#F0F0F0');
+		
+		$prod_data['title'];
+		$prod_data['prix_kilo'];
+		$prod_data['quantite'];
+		$prod_data['description'];
+		$prod_data['prix_unitaire'];
+		$prod_data['prix_total'];
+		$prod_data['comment'];
 	}
 
 	private function _orders_table_draw($oder, &$pages) {
