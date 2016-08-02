@@ -116,7 +116,7 @@ class generatePdf {
 	private			$_orders_id = -1;
 	private			$_orders_lineHeight = 15;
 	private			$_orders_startLineOffset_first = 14;
-	private			$_orders_startLineOffset_second = 6;
+	private			$_orders_startLineOffset_second = 8;
 	private			$_orders_maxLineOffset;
 	private			$_orders_lineOffset;
 
@@ -141,7 +141,7 @@ class generatePdf {
 		$this->_summary_lineOffset = $this->_summary_startLineOffset;
 		$this->_summary_maxLineOffset = (static::$_height / $this->_summary_lineHeight) - ($this->_margin_vertical / $this->_summary_lineHeight);
 
-		$this->_orders_maxLineOffset = (static::$_height / $this->_orders_lineHeight) - ($this->_margin_vertical / $this->_orders_lineHeight);
+		$this->_orders_maxLineOffset = (static::$_height / $this->_orders_lineHeight) - ($this->_margin_vertical / $this->_orders_lineHeight) - 3;
 
 		$this->_format = static::$_width . ':' . static::$_height . ':';
 		// <<==
@@ -153,6 +153,8 @@ class generatePdf {
 		$this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
 		$this->_summary[0]->setFont($this->_font, 12);
 		$this->_summary[0]->drawText("A {$commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
+		$image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . "/logo.png");
+		$this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
 		// <<==
 
 		// create orders template page ==>>
@@ -205,7 +207,7 @@ class generatePdf {
 		$this->_summary[$this->_summary_id]->drawText("Commande n°" . ++$this->_orders_count . ": {$order['id']}", $this->_margin_horizontal + ($this->_summary_columnWidth * $this->_summary_columnOffset), static::$_height - ($this->_summary_lineHeight * $this->_summary_lineOffset++));
 	}
 
-	private static	$_orders_table_column_set = [ 5, 120, 185, 300, 415, 465 ];
+	private static	$_orders_table_column_set = [ 5, 120, 185, 300, 415, 475 ];
 
 	private function _orders_header_draw(&$page) {
 		$page->setFont($this->_font, 12);
@@ -251,6 +253,7 @@ class generatePdf {
 			$color = new Zend_Pdf_Color_Rgb(1, 1, 1);
 		else
 			$color = new Zend_Pdf_Color_Html('#F0F0F0');
+		$column_line_color = new Zend_Pdf_Color_Html('#D3D3D3');
 
 		$title = static::_lineSplit($product['title'], 21); 
 		$description = static::_lineSplit($product['description'], 20); 
@@ -261,16 +264,29 @@ class generatePdf {
 		$page->setLineColor($color);
 		$page->drawRectangle($this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		$page->setLineColor($column_line_color);
+
 		$this->_textPrint($title, $page, static::$_orders_table_column_set[0]);
+
+		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[1] - 2, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[1] - 2, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->setFont($this->_font_bold, 10);
 		$page->drawText("{$product['quantite']} x", $this->_margin_horizontal + static::$_orders_table_column_set[1] + 15, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
 		$page->setFont($this->_font, 10);
+
+		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[2] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[2] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$this->_textPrint($description, $page, static::$_orders_table_column_set[2]);
+
+		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[3] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[3] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->drawText($product['prix_unitaire'] . "€ ({$product['prix_kilo']})", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+
+		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[4] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[4] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->drawText("{$product['prix_total']}€", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+
+		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[5] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[5] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->setFont($this->_font_bold, 10);
 		$this->_textPrint($comment, $page, static::$_orders_table_column_set[5]);
 		$page->setFont($this->_font, 10);
+
 		$this->_orders_lineOffset += $max_height;
 	}
 
@@ -285,11 +301,24 @@ class generatePdf {
 				$pages[$page_id] = clone $this->_orders_template;
 				$this->_orders_lineOffset = $this->_orders_startLineOffset_second;
 				$this->_orders_header_draw($pages[$page_id]);
+				$pages[$page_id]->setFont($this->_font, 16);
+				$pages[$page_id]->drawText("Commande n°  {$order['id']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 5));
 				$pages[$page_id]->setFont($this->_font, 10);
 			}
 			$this->_orders_row_draw($product, $pages[$page_id], $id);
 			$id++;
 		}
+	}
+
+	private function _orders_total_draw($order, &$page) {
+		$page->setFont($this->_font_bold, 10);
+		$page->setFillColor(new Zend_Pdf_Color_Html('#188071'));
+		$page->setLineColor(new Zend_Pdf_Color_Html('#188071'));
+		$page->drawRectangle($this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 2)));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 1));
+		$page->drawText("TOTAL", $this->_margin_horizontal + static::$_orders_table_column_set[0] + 150, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 1.25)));
+		$page->drawText("{$order['Total prix']}€", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 1.25)));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 	}
 
 	public function addOrder($order) {
@@ -314,18 +343,21 @@ class generatePdf {
 		$this->_orders_header_draw($pages[0]);
 		$pages[0]->setFont($this->_font, 10);
 		$this->_orders_table_draw($order, $pages);
+		$this->_orders_total_draw($order, $pages[count($pages) - 1]);
 
 		$page_count = count($pages);
+		$page_id = 1;
 		foreach($pages as $page) { // finalyse order
+			$page->setFont($this->_font, 16);
+			$page->drawText("{$page_id}/{$page_count}", static::$_width - $this->_margin_horizontal - 50, static::$_height - ($this->_orders_lineHeight * 5));
 			$this->_orders[] = $page;
-			// add order page index
+			$page_id++;
 		}
 	}
 
 	public function save($filename) {
-		if (!$this->finalized) {
+		if (!$this->finalized)
 			$this->_finalizePdf();
-		}
 		$this->_pdf->save($filename);
 	}
 
@@ -336,6 +368,18 @@ class generatePdf {
 }
 
 $test = new generatePdf($commercants['7'], $orders_date);
+$i = 0;
+while ($i < 57) {
+	$commercants['7']['orders']['2016000430']['products'][] = [
+		'title'			=>	'yolo',
+		'prix_kilo'		=>	3.4,
+		'quantite'		=>	72,
+		'description'	=>	'yolo swag',
+		'prix_unitaire'	=>	45,
+		'prix_total'	=>	908.44
+	];
+	$i++;
+}
 foreach ($commercants['7']['orders'] as $order) {
 	$test->addOrder($order);
 }
