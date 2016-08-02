@@ -79,6 +79,10 @@ select{
   background-color:white;
 }
 
+.messages {
+    margin-bottom: 20px;
+}
+
 /* ============================================ *
  * Typography
  * ============================================ */
@@ -1494,15 +1498,17 @@ display: block;
     background: rgb(255, 255, 255) none repeat scroll 0% 0%;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
     text-transform: none;
+    width:320px;
+    border: 1px solid #CCC;
   }
 
   #header-account.skip-active {
     top: 60px;
-    right: 100px;
+    right: 30px;
   }
 
   #header-help{
-    right: 0px;
+    right: -150px;
     top: 48px;
     left: auto;
     border-radius: 0px;

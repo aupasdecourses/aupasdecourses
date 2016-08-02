@@ -344,6 +344,11 @@
             <block type="core/template" name="contactForm" template="contacts/form.phtml"/>
         </reference>
     </cms_index_noroute>
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="removeLinkByUrl"><url helper="customer/getAccountUrl"/></action>
+        </reference>
+    </customer_logged_out>
     <!-- <customer_logged_in>
          <reference name="top.links">
             <action method="addLink" translate="label title">
