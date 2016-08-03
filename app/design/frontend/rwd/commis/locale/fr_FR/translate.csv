@@ -384,3 +384,4 @@ Mage_Checkout::Submitting order information...,"Un instant, vous allez être red
 Mage_Bundle::Price as configured,Prix total,,
 "Mage_Customer::Log In","Connexion/S'enregistrer",,
 "Mage_Customer::My Account","Mon Compte",,
+"Mage_Customer::Prefix","Préfixe",,

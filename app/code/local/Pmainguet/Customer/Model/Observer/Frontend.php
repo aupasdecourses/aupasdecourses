@@ -41,7 +41,7 @@ class Pmainguet_Customer_Model_Observer_Frontend
 
             $url = Mage::getBaseUrl();
             $controller = $observer->getData('controller_action');
-            Mage::getSingleton('core/session')->addSuccess('Bienvenue! Votre compte a bien été créé sur Au Pas De Courses. Bonnes courses !');
+            Mage::getSingleton('core/session')->addSuccess('Votre compte a bien été créé. Bienvenue chez Au Pas De Courses !');
             $controller->getResponse()->setRedirect($url);
         }
     }
