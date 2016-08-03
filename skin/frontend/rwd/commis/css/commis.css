@@ -1535,7 +1535,13 @@ display: block;
       line-height: 35px;
   }
 
-  .#header-help > li > a:focus{
+  #header-help li{
+      font-size: inherit;
+      background: none;
+      width: 100%;
+  }
+
+  #header-help > li > a:focus{
       background: none;
   }
 
