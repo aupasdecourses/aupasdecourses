@@ -21,13 +21,24 @@
 	if(Mage::helper('core')->isModuleEnabled('MW_Ddate')){
 		$hlp = Mage::helper('ddate');
 		$storeId = $this->getCurrentStore();
-		$options = $hlp->getDtime($storeId);
-		$count=1;
-		foreach($options as $timeint){
-			if($timeint<>''){
-					echo '<span style="display:block;float:left;width:50%;padding-top:5px;padding-bottom:0px;">'.$timeint->getInterval().'</span>';
-			}
-			$count+=1;
+		$timeObjs = $hlp->getDtime($storeId);
+		$dTstr_tab = [];
+		$html = '';
+
+		foreach($timeObjs as $tObj){
+			$dTstr = $tObj->getInterval();
+			if ($dTstr <> '')
+				$dTstr_tab[] = $dTstr;
 		}
+		uasort($dTstr_tab, function ($dTlhs, $dTrhs) {
+			return strcmp($dTlhs, $dTrhs);
+		});
+
+		foreach($dTstr_tab as $dTstr){
+			$html .= <<<END
+<span style="display:block;float:left;width:50%;padding-top:5px;padding-bottom:0px;">$dTstr</span>
+END;
+		}
+		echo $html;
 	}
 ?>
