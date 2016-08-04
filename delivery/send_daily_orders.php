@@ -238,9 +238,9 @@ class generatePdf {
 			$color = new Zend_Pdf_Color_Rgb(1, 1, 1);
 		else
 			$color = new Zend_Pdf_Color_Html('#F0F0F0');
-		$title = wordwrap($product['title'], 20, PHP_EOL, true); 
-		$description = wordwrap($product['description'], 20, PHP_EOL, true); 
-		$comment = wordwrap($product['comment'], 30, PHP_EOL, true); 
+		$title = wordwrap($product['title'], 20, "\n", true); 
+		$description = wordwrap($product['description'], 20, "\n", true); 
+		$comment = wordwrap($product['comment'], 30, "\n", true); 
 		$max_height = max([1, static::_getLineHeight($title), static::_getLineHeight($quantite), static::_getLineHeight($comment)]);
 		$page->setFillColor($color);
 		$page->setLineColor($color);

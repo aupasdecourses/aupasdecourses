@@ -40,7 +40,12 @@
 			</div>
 		</div>
 	</div>
+<?php $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment'); ?>
+<?php if ($payment_activated == true) : ?>
+	<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
+    <script type='text/javascript 'src='/js/countdown/js/script.js'></script>
 	<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
 		<div id="countdown"></div>
 	</div>
+<?php endif ?>
 </div>
