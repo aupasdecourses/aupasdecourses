@@ -125,8 +125,8 @@
           <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>
           <action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>
           <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
-          <action method="addItem"><rel>skin_js</rel><href>countdown/js/jquery.countdown.js</href></action>
-          <action method="addItem"><rel>skin_js</rel><href>countdown/js/script.js</href></action>
+<!--      <action method="addItem"><rel>skin_js</rel><href>countdown/js/jquery.countdown.js</href></action>
+		  <action method="addItem"><rel>skin_js</rel><href>countdown/js/script.js</href></action> -->
           <action method="addItem"><rel>skin_css</rel><href>countdown/css/jquery.countdown.css</href></action>
 		</reference>
         <reference name="root">
