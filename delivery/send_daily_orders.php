@@ -367,19 +367,13 @@ class generatePdf {
 	}
 }
 
-$test = new generatePdf($commercants['7'], $orders_date);
-$i = 0;
-while ($i < 57) {
-	$commercants['7']['orders']['2016000430']['products'][] = [
-		'title'			=>	'yolo',
-		'prix_kilo'		=>	3.4,
-		'quantite'		=>	72,
-		'description'	=>	'yolo swag',
-		'prix_unitaire'	=>	45,
-		'prix_total'	=>	908.44
-	];
-	$i++;
+foreach ($commercants as $commercant) {
+	$commercant_pdf = new generatePdf($commercant, $orders_date);
+	foreach ($commercant['orders'] as $order) {
+		$commercant_pdf->addOrder($order);
+	}
 }
+//$test = new generatePdf($commercants['7'], $orders_date);
 foreach ($commercants['7']['orders'] as $order) {
 	$test->addOrder($order);
 }
