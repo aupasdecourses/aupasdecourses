@@ -200,7 +200,7 @@
             <!-- Recently viewed items -->
             <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
         </reference>
-    </catalog_category_default >
+    </catalog_category_default>
     <!-- Page Commerçant => 'Primeur Clémence' -->
     <PAGE_COMMERCANT>
         <reference name="root">
