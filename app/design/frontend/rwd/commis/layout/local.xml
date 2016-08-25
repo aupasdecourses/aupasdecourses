@@ -118,6 +118,25 @@
         <reference name="left">
             <remove name="catalog.leftnav"/>
         </reference>
+        <!--remove unneeded blocks-->
+        <!-- <remove name="optional_zip_countries"/>
+        <remove name="store_language"/>
+        <remove name="top.container"/>
+        <remove name="welcome"/>
+        <remove name="currency"/>
+        <remove name="wishlist_link"/>
+        <remove name="cart_sidebar.cart_promotion"/>
+        <remove name="cart_sidebar.extra_actions"/>
+        <remove name="left_first"/>
+        <remove name="left"/>
+        <remove name="emailcatcher"/>
+        <remove name="headband"/>
+        <remove name="right"/>
+        <remove name="bottom.container"/>
+        <remove name="store_switcher"/>
+        <remove name="cms_footer_links"/>
+        <remove name="cms_footer_links_sm"/>
+        <remove name="custommenu-content"/> -->
      </default>
      <!-- Homepage -->
      <cms_index_index>
