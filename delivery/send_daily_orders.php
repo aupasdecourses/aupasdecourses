@@ -371,8 +371,7 @@ class generatePdf {
 		$pdf = $this->_pdf->render();
 		$tr = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		$mail = new Zend_Mail('utf-8');
-//		$mail->addTo($this->_mails);
-		$mail->addTo(['admin@aupasdecourses.com']);
+		$mail->addTo($this->_mails);
 		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
 		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
