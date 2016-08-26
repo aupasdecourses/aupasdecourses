@@ -121,10 +121,12 @@ class generatePdf {
 	private			$_finalized = false;
 
 	private			$_date;
+	private			$_name;
 	private			$_mails = [];
 
 	public function __construct($commercant, $orders_date) {
 		$this->_date = $orders_date;
+		$this->_name = $commercant['name'];
 		$this->_mails = [
 			$commercant['mail3'],
 			$commercant['mailc'],
@@ -372,11 +374,22 @@ class generatePdf {
 		$mail->addTo($this->_mails);
 		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
-		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}"); //<===
+		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
 		$mail->setBodyHtml(
 			Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
 			->getProcessedTemplate(['commercant' => $_POST['commercant'], 'nbecommande' => $this->_orders_count])
 		);
+		$attach = new Zend_Mime_Part($pdf);
+		$attach->type = 'application/pdf';
+		$attach->disposition = Zend_Mime::DISPOSITION_ATTACHMENT;
+		$attach->encoding = Zend_Mime::ENCODING_BASE64;
+		$attach->filename = $this->_date;
+		$mail->addAttachment($attach);
+		try {
+			$mail->send($tr);
+		} catch (Exception $e) {
+			Mage::log($e,null,'email.log');
+		}
 	}
 }
 
