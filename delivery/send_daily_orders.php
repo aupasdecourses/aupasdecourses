@@ -369,7 +369,7 @@ class generatePdf {
 		if (!$this->finalized)
 			$this->_finalizePdf();
 		$pdf = $this->_pdf->render();
-		$tr = new Zend_Mail_Transport_Smtp($smpt_host, $smtp_config);
+		$tr = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		$mail = new Zend_Mail('utf-8');
 		$mail->addTo($this->_mails);
 		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
@@ -377,7 +377,7 @@ class generatePdf {
 		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
 		$mail->setBodyHtml(
 			Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
-			->getProcessedTemplate(['commercant' => $_POST['commercant'], 'nbecommande' => $this->_orders_count])
+			->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])
 		);
 		$attach = new Zend_Mime_Part($pdf);
 		$attach->type = 'application/pdf';
