@@ -112,5 +112,9 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Apdcadmin>
+    <Pmainguet_Customer>
+        <codePool>local</codePool>
+        <active>true</active>
+    </Pmainguet_Customer>
   </modules>
 </config>

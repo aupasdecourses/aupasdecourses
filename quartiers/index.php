@@ -129,8 +129,8 @@
     <!-- /.container -->
     <div id="footer" class="container">
         <div class="row">
-            <div class="col-md-4 credits">
-                <a href="https://flic.kr/p/5v7rs8" class="credit_link" target="_blank">Crédit photo: <?php echo $data[$zipcode]['credits'];?></a>
+            <div class="col-md-4 return">
+				<a href="https://www.aupasdecourses.com"><?= "<-- changer d'addresse" ?></a>
             </div>
             <div class="col-md-4 col-sm-12">
                 <ul class="social-icons">
@@ -139,6 +139,9 @@
                     <li><a href="https://plus.google.com/114890137995721785465/about"><i class="social_googleplus_square"></i></a></li>
                     <li><a href="https://instagram.com/aupasdecourses/"><i class="social_instagram_square"></i></a></li>
                 </ul>
+            </div>
+            <div class="col-md-4 credits">
+                <a href="https://flic.kr/p/5v7rs8" class="credit_link" target="_blank">Crédit photo: <?php echo $data[$zipcode]['credits'];?></a>
             </div>
         </div>
     </div>

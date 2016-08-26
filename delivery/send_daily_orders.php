@@ -32,7 +32,9 @@ function getCommercant() {
 			'addr'		=>	$category->getAdresseCommercant(),
 			'phone'		=>	$category->getTelephone(),
 			'mobile'	=>	$category->getPortable(),
-			'mail'		=>	$category->getMailContact()
+			'mail3'		=>	$category->getMail3(),
+			'mailc'		=>	$category->getMailContact(),
+			'mailp'		=>	$category->getMailPro()
 		];
 	}
 	return ($commercants);
@@ -79,14 +81,6 @@ function getOrders(&$commercants, $date = TODAY_DATE) {
 	}
 }
 
-$commercants = getCommercant();
-
-$orders_date = date('Y-m-d', strtotime('2016-06-21'));
-
-getOrders($commercants, $orders_date);
-
-//print_r($commercants);
-
 class generatePdf {
 	private			$_pdf; 
 
@@ -113,7 +107,6 @@ class generatePdf {
 
 	private			$_orders_template;
 	private			$_orders = [];
-	private			$_orders_id = -1;
 	private			$_orders_lineHeight = 15;
 	private			$_orders_startLineOffset_first = 14;
 	private			$_orders_startLineOffset_second = 8;
@@ -127,7 +120,17 @@ class generatePdf {
 
 	private			$_finalized = false;
 
+	private			$_date;
+	private			$_mails = [];
+
 	public function __construct($commercant, $orders_date) {
+		$this->_date = $orders_date;
+		$this->_mails = [
+			$commercant['mail3'],
+			$commercant['mailc'],
+			$commercant['mailp']
+		];
+
 		$this->_pdf = new Zend_Pdf();
 
 		// Algorithm constants set ==>>
@@ -325,7 +328,6 @@ class generatePdf {
 		$pages = [];
 
 		$this->addOrderToSummary($order);
-//		$this->_orders_id++;
 		$pages[0] = clone $this->_orders_template;
 
 		$pages[0]->setFont($this->_font, 16);
@@ -361,20 +363,33 @@ class generatePdf {
 		$this->_pdf->save($filename);
 	}
 
-	public function send($from, $to) {
+	public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com']) {
 		if (!$this->finalized)
 			$this->_finalizePdf();
+		$pdf = $this->_pdf->render();
+		$tr = new Zend_Mail_Transport_Smtp($smpt_host, $smtp_config);
+		$mail = new Zend_Mail('utf-8');
+		$mail->addTo($this->_mails);
+		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
+        $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
+		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}"); //<===
+		$mail->setBodyHtml(
+			Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
+			->getProcessedTemplate(['commercant' => $_POST['commercant'], 'nbecommande' => $this->_orders_count])
+		);
 	}
 }
+
+$commercants = getCommercant();
+
+$orders_date = date('Y-m-d', strtotime('2016-06-21'));
+
+getOrders($commercants, $orders_date);
 
 foreach ($commercants as $commercant) {
 	$commercant_pdf = new generatePdf($commercant, $orders_date);
 	foreach ($commercant['orders'] as $order) {
 		$commercant_pdf->addOrder($order);
 	}
+	$commercant_pdf->send();
 }
-//$test = new generatePdf($commercants['7'], $orders_date);
-foreach ($commercants['7']['orders'] as $order) {
-	$test->addOrder($order);
-}
-$test->save('test.pdf');
