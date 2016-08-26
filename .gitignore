@@ -77,3 +77,6 @@ LICENSE*
 /blog/*.log
 /blog/wp-content/cache/
 /blog/wp-content/backups/
+/magmi/.htaccess
+
+

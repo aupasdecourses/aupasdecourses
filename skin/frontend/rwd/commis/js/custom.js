@@ -25,3 +25,22 @@
         }
     });
 })();
+
+//Color for custom top menu
+
+var color_menu={
+    "Primeur":"#3ab64b",
+    "Boucher":"#f14556",
+    "Fromager":"#f8a564",
+    "Poissonnier":"#5496d7",
+    "Caviste":"#e83632",
+    "Boulanger":"#f3a71c",
+    "Epicier":"#2f4da8",
+    "Café & Thé":"#f36520"
+};
+
+$j(document).ready(function() {
+    for (var k in color_menu){
+        $j("#custommenu .parentMenu span:contains('"+k+"')").parent().css("background",color_menu[k]);
+    }
+});

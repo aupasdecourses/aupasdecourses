@@ -58,26 +58,7 @@
             </block>
             <action method="addItem"><rel>skin_js</rel><href>js/custom.js</href></action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
-            <block type="core/text" name="fbpixel">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Facebook Pixel Code -->
-                        <script>
-                        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                        document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
-                        fbq('init', '1709948302620869');
-                        fbq('track', "PageView");</script>
-                        <noscript><img height="1" width="1" style="display:none"
-                        src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
-                        /></noscript>
-                        <!-- End Facebook Pixel Code -->]]>
-                    </text>
-                </action>
-              </block>
+            
         </reference>
         <reference name="right">
              <!--Remove whishlist -->
@@ -412,26 +393,6 @@
     </customer_account_changeforgotten>
     <hipay_mapi_payment ifhandle="STORE_batignolles">
         <reference name="content">
-                <block type="core/text" name="fbpixel">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Facebook Pixel Code -->
-                        <script>
-                        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                        document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
-                        fbq('init', '1709948302620869');
-                        fbq('track', "PageView");</script>
-                        <noscript><img height="1" width="1" style="display:none"
-                        src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
-                        /></noscript>
-                        <!-- End Facebook Pixel Code -->]]>
-                    </text>
-                </action>
-              </block>
                 <block type="core/text" name="googleconversion">
                     <action method="setText">
                         <text>
@@ -460,26 +421,6 @@
     </hipay_mapi_payment>
     <hipay_mapi_payment ifhandle="STORE_saintmartin">
         <reference name="content">
-                <block type="core/text" name="fbpixel">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Facebook Pixel Code -->
-                        <script>
-                        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                        document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
-                        fbq('init', '1709948302620869');
-                        fbq('track', "PageView");</script>
-                        <noscript><img height="1" width="1" style="display:none"
-                        src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
-                        /></noscript>
-                        <!-- End Facebook Pixel Code -->]]>
-                    </text>
-                </action>
-              </block>
                 <block type="core/text" name="googleconversion">
                     <action method="setText">
                         <text>
