@@ -19,7 +19,7 @@ if(!empty($_POST['pdf'])){
                 'username' => 'pierre@aupasdecourses.com',
                 'password' => 'suQMuVOzZHE5kc-wmH3oUA',
                 'port' => 2525,
-                'return-path', 'contact@aupasdecourses.com'
+				'return-path' => 'contact@aupasdecourses.com'
                 );
     $transport = new Zend_Mail_Transport_Smtp('smtp.mandrillapp.com', $config);
     
