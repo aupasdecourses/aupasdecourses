@@ -345,11 +345,11 @@ class generatePdf {
 		$pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
 		$pages[0]->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));	// <===
 		if ($order['equivalent_replacement'] == "oui") {
-			$pages[0]->drawText("oui", $this->_margin_horizontal + 50, static::$_height - ($this->_orders_lineHeight * 10));
+			$pages[0]->drawText("oui", $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
 		} else {
 			$pages[0]->setFont($this->_font_bold, 12);
 			$pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-			$pages[0]->drawText("non", $this->_margin_horizontal + 50, static::$_height - ($this->_orders_lineHeight * 10));
+			$pages[0]->drawText("non", $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
 			$pages[0]->setFont($this->_font, 12);
 			$pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 		}
@@ -409,7 +409,7 @@ class generatePdf {
 
 $commercants = getCommercant();
 
-$orders_date = date('Y-m-d', strtotime('2016-06-21'));
+$orders_date = date('Y-m-d', strtotime('2016-07-01'));
 
 getOrders($commercants, $orders_date);
 
