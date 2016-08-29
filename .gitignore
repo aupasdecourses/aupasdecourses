@@ -57,9 +57,8 @@ LICENSE*
 /tmp
 #shell
 /pkginfo
-/sitemap/sitemap.xml
-/sitemap.xml
-/sitemap_accueil/sitemap.xml
+/sitemap
+/sitemap_accueil
 /delivery/attachments
 /magmi/conf/magmi.ini
 /magmi/state
