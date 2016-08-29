@@ -275,7 +275,11 @@ class generatePdf {
 
 		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[1] - 2, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[1] - 2, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
 		$page->setFont($this->_font_bold, 10);
+		if ($product['quantite'] > 1) {
+			$page->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
+		}
 		$page->drawText("{$product['quantite']} x", $this->_margin_horizontal + static::$_orders_table_column_set[1] + 15, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+		$page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 		$page->setFont($this->_font, 10);
 
 		$page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[2] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[2] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
@@ -339,7 +343,16 @@ class generatePdf {
 		$pages[0]->drawText("Date de Prise de Commande: {$order['order_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 7));
 		$pages[0]->drawText("Date de Livraison: {$order['delivery_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 8));
 		$pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
-		$pages[0]->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));
+		$pages[0]->drawText("Remplacement equivalent: " . (($order['equivalent_replacement']) ? "oui" : "non"), $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));	// <===
+		if ($order['equivalent_replacement'] == "oui") {
+			$pages[0]->drawText("oui", $this->_margin_horizontal + 50, static::$_height - ($this->_orders_lineHeight * 10));
+		} else {
+			$pages[0]->setFont($this->_font_bold, 12);
+			$pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
+			$pages[0]->drawText("non", $this->_margin_horizontal + 50, static::$_height - ($this->_orders_lineHeight * 10));
+			$pages[0]->setFont($this->_font, 12);
+			$pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
+		}
 		$pages[0]->drawText("Liste des produits commandes: ", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 11));
 
 		$this->_orders_lineOffset = $this->_orders_startLineOffset_first;
@@ -371,7 +384,8 @@ class generatePdf {
 		$pdf = $this->_pdf->render();
 		$tr = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		$mail = new Zend_Mail('utf-8');
-		$mail->addTo($this->_mails);
+//		$mail->addTo($this->_mails);
+		$mail->addTo(['admin@aupasdecourses.com']);
 		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
 		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
@@ -387,10 +401,8 @@ class generatePdf {
 		$mail->addAttachment($attach);
 		try {
 			$mail->send($tr);
-			echo "OK";
 		} catch (Exception $e) {
 			Mage::log($e,null,'email.log');
-			echo "KO";
 		}
 	}
 }
