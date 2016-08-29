@@ -326,6 +326,21 @@
             </action>
         </reference>
     </checkout_cart_index>
+    <checkout_onepage_index>
+        <reference name="head">
+            <block type="core/text" name="suivi_hipay" before="-">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                            try{
+                               window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                            } catch(e){
+                        }};</script>]]>
+                    </text>
+                </action>
+            </block>
+        </reference>
+    </checkout_onepage_index>
     <commercants_index_index>
         <reference name="liste_commercants">
             <block type="cms/block" name="texte-intro-liste-commercants">
