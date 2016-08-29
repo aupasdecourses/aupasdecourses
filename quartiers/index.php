@@ -70,7 +70,16 @@
 	<meta property="og:url" content="https://www.aupasdecourses.com" />
 	<meta property="og:type" content="website" />
 	<meta property="og:description" content="Commandez facilement et faites vous livrer le soir-même les produits frais et artisanaux des commerçants de votre quartier!" />
-
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:275054,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
 </head>
 <style>
 .full {
