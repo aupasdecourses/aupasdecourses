@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Pmainguet_CommercantForm>
+        <Apdc_Forms>
             <version>0.1.0</version>
-        </Pmainguet_CommercantForm>
+        </Apdc_Forms>
     </modules>
     <frontend>
         <routers>
-            <commercantform>
+            <form>
                 <use>standard</use>
                 <args>
-                    <module>Pmainguet_CommercantForm</module>
-                    <frontName>commercant-form</frontName>
+                    <module>Apdc_Forms</module>
+                    <frontName>formulaire</frontName>
                 </args>
-            </commercantform>
+            </form>
         </routers>
         <layout>
             <updates>
                 <carttotal>
-                    <file>commercantform.xml</file>
+                    <file>formulaire.xml</file>
                 </carttotal>
             </updates>
         </layout>
