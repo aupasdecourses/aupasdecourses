@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+  <config>
+    <modules>
+    <Apdc_Forms>
+        <codePool>local</codePool>
+        <active>true</active>
+    </Apdc_Forms>
+  </modules>
+</config>

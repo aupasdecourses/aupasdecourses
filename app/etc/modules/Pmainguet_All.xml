@@ -48,14 +48,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_QuoteItemComment>
-    <Pmainguet_CommercantForm>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_CommercantForm>
-    <Pmainguet_ProductsForm>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_ProductsForm>
     <Pmainguet_Invoice>
         <active>true</active>
         <codePool>local</codePool>
