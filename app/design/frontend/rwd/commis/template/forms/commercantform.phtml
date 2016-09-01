@@ -12,7 +12,7 @@ echo $this->getLayout()->getBlock('breadcrumbs')->toHtml();?>
 <div class="box simple_contact">
     <p>Nous ne travaillons pas encore avec votre boucher ou traiteur préféré ? <br/> Prenez quelques instants pour remplir ce formulaire et nous ferons tout pour que ses produits soient rapidement disponible sur la plateforme Au Pas De Courses.</p>
     <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
-    <form id="commercant_form" name="commercant_form" action="<?php echo $this->getUrl('commercant-form/') ?>index/sendemailcommercant" method="post">
+    <form id="commercant_form" name="commercant_form" action="<?php echo $this->getUrl('formulaire/') ?>index/sendemailcommercant" method="post">
         <fieldset class="group-select">
             <ul>
                 <li>

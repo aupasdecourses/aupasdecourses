@@ -11,7 +11,7 @@ echo $this->getLayout()->getBlock('breadcrumbs')->toHtml();?>
 <div class="box simple_contact">
     <p>Vous avez besoin d'un produit et vous ne le trouvez pas sur le site ?<br/> Nous vous remercions de prendre quelques instants pour remplir ce formulaire, et nous ferons tout pour les rendre rapidement disponible sur la plateforme Au Pas De Courses.</p>
     <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
-    <form id="products_form" name="products_form" action="<?php echo $this->getUrl('products-form/') ?>index/sendemailproduits" method="post">
+    <form id="products_form" name="products_form" action="<?php echo $this->getUrl('formulaire/') ?>index/sendemailproduits" method="post">
         <fieldset class="group-select">
             <ul>
                 <li>

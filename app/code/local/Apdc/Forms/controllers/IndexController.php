@@ -1,20 +1,22 @@
 <?php
- 
+
+/** Need to be recoded http://astrio.net/blog/magento-admin-form/ **/
+
 class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function commercantsmanquantsAction()
     {
         //Get current layout state
-        $this->loadLayout();   
- 
+        $this->loadLayout();
+
         $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
             'pmainguet.commercant_form',
             array(
-                'template' => 'forms/commercantform.phtml'
+                'template' => 'forms/commercantform.phtml',
             )
         );
- 
+
         $this->getLayout()->getBlock('content')->append($block);
         $this->getLayout()->getBlock('head')->setTitle($this->__('Suggérez un commerce à Au Pas De Courses'));
         $this->_initLayoutMessages('core/session');
@@ -26,16 +28,16 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
     public function produitsmanquantsAction()
     {
         //Get current layout state
-        $this->loadLayout();   
- 
+        $this->loadLayout();
+
         $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
             'pmainguet.products_form',
             array(
-                'template' => 'forms/productform.phtml'
+                'template' => 'forms/productform.phtml',
             )
         );
- 
+
         $this->getLayout()->getBlock('content')->append($block);
         $this->getLayout()->getBlock('head')->setTitle($this->__('Vous ne trouvez pas ce que vous cherchez ?'));
         $this->_initLayoutMessages('core/session');
@@ -43,15 +45,15 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
         $this->_initLayoutMessages('catalog/session');
         $this->renderLayout();
     }
- 
+
     public function sendemailcommercantAction()
     {
         //Fetch submited params
         $params = $this->getRequest()->getParams();
 
-        $text='Commentaire: '.$params['comment'].'&#10;Nom du commerçant: '.$params['nom-commercant'].'&#10;Adresse du commerçant: '.$params['adresse-commercant'].'&#10;Code Postal: '.$params['zipcode-commercant'];
-        $html='<p>Commentaire: '.$params['comment'].'</p><p>Nom du commerçant: '.$params['nom-commercant'].'</p><p>Adresse du commerçant: '.$params['adresse-commercant'].'</p><p>Code postal: '.$params['zipcode-commercant'].'</p>';
- 
+        $text = 'Commentaire: '.$params['comment'].'&#10;Nom du commerçant: '.$params['nom-commercant'].'&#10;Adresse du commerçant: '.$params['adresse-commercant'].'&#10;Code Postal: '.$params['zipcode-commercant'];
+        $html = '<p>Commentaire: '.$params['comment'].'</p><p>Nom du commerçant: '.$params['nom-commercant'].'</p><p>Adresse du commerçant: '.$params['adresse-commercant'].'</p><p>Code postal: '.$params['zipcode-commercant'].'</p>';
+
         $mail = new Zend_Mail('UTF-8');
         $mail->setBodyText($text);
         $mail->setBodyHtml($html);
@@ -61,23 +63,21 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
         try {
             $mail->send();
             Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
-        }        
-        catch(Exception $ex) {
+        } catch (Exception $ex) {
             Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
- 
         }
- 
+
         //Redirect back to index action this controller via frontname
-        $this->_redirect('commercant-form/');
+        $this->_redirect('formulaire/index/commercantsmanquants');
     }
- 
+
     public function sendemailproduitsAction()
     {
         //Fetch submited params
         $params = $this->getRequest()->getParams();
- 
-        $text='Commentaire: '.$params['comment'].'&#10;Nom du ou des produits: '.$params['nom-produits'];
-        $html='<p>Commentaire: '.$params['comment'].'</p><p>Nom du ou des produits: '.$params['nom-produits'].'</p>';
+
+        $text = 'Commentaire: '.$params['comment'].'&#10;Nom du ou des produits: '.$params['nom-produits'];
+        $html = '<p>Commentaire: '.$params['comment'].'</p><p>Nom du ou des produits: '.$params['nom-produits'].'</p>';
 
         $mail = new Zend_Mail();
         $mail->setBodyText($text);
@@ -88,15 +88,11 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
         try {
             $mail->send();
             Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
-        }        
-        catch(Exception $ex) {
+        } catch (Exception $ex) {
             Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
- 
         }
- 
+
         //Redirect back to index action this controller via frontname
-        $this->_redirect('products-form/');
+        $this->_redirect('formulaire/index/produitsmanquants');
     }
 }
- 
-?>
