@@ -170,17 +170,14 @@ function orders_fortheday($date, $commercantId = 'all', $var = 'mwddate')
     $orders = all_orders($var, $commercantId);
     $d = explode('-', $date);
     $date = date('Y-m-d H:i:s', mktime(0, 0, 0, intval($d[1]), intval($d[2]), intval($d[0])));
-    $date1 = date('Y-m-d H:i:s', mktime(0, 0, 0, intval($d[1]), intval($d[2]) + 1, intval($d[0])));
     if ($var == 'mwddate') {
-		$orders->addAttributeToFilter('ddate', array(
-			'from' => $date,
-			'to' => $date1,
-		));
+        $orders->addAttributeToFilter('ddate', array(
+            'in' => $date
+        ));
     } else {
-		$orders->addAttributeToFilter('delivery_date', array(
-			'from' => $date,
-			'to' => $date1,
-		));
+        $orders->addAttributeToFilter('delivery_date', array(
+            'in' => $date,
+        ));
     }
     return $orders;
 }
