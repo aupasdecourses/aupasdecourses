@@ -10,6 +10,8 @@ define('CHEMIN_MAGE', dirname(__FILE__).'/../');
 define('AMASTY_MW_DATE',date("Y-m-d", mktime(0, 0, 0, 1, 20, 2016)));
 define('TODAY_DATE', date("Y-m-d"));
 
+$GLOBALS['ORDER_STATUS_NODISPLAY']=array('pending_payment','payment_review','holded','closed','canceled');
+
 $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']=2016000249;
 
 include CHEMIN_MODELE.'magento.php';
@@ -384,7 +386,13 @@ class generatePdf {
 		$pdf = $this->_pdf->render();
 		$tr = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
 		$mail = new Zend_Mail('utf-8');
-		$mail->addTo($this->_mails);
+		$this->_mails = ['admin@aupasdecourses.com'];
+		$tmp = [];
+		foreach ($this->_mails as $m) {
+			if ($m <> '' && $m <> '')
+				$tmp[] = $m;
+		}
+		$mail->addTo($tmp);
 		$mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
 		$mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
