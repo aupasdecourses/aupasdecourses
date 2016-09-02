@@ -35,7 +35,7 @@ function getCommercant()
             'addr' => $category->getAdresseCommercant(),
             'phone' => $category->getTelephone(),
             'mobile' => $category->getPortable(),
-            'mail3' => $category->getMail3(),
+            'mail3' => $category->getData('mail_3'),
             'mailc' => $category->getMailContact(),
             'mailp' => $category->getMailPro(),
         ];
