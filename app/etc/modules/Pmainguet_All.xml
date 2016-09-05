@@ -32,10 +32,6 @@
       <active>true</active>
       <codePool>local</codePool>
     </Pmainguet_Blockselection>
-    <Pmainguet_Customhandles>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Customhandles>
     <Pmainguet_CartTotal>
         <active>true</active>
         <codePool>local</codePool>
@@ -60,10 +56,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Pdfcustomer>
-    <Pmainguet_Customvar>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Customvar>
     <Pmainguet_Validateaddress>
         <active>true</active>
         <codePool>local</codePool>

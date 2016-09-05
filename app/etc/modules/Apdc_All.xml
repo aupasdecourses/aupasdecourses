@@ -1,9 +1,27 @@
 <?xml version="1.0"?>
-  <config>
+<config>
     <modules>
-	    <Apdc_Forms>
-	        <codePool>local</codePool>
-	        <active>true</active>
-	    </Apdc_Forms>
-  </modules>
+        <Apdc_Forms>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Forms>
+        <Apdc_DisableCompare>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+            </depends>
+        </Apdc_DisableCompare>
+        <Apdc_Config>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+            </depends>
+        </Apdc_Config>
+        <Apdc_Google>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Google>
+    </modules>
 </config>

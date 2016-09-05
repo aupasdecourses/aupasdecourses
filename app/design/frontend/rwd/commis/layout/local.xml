@@ -51,10 +51,6 @@
             <action method="addCss">
                 <name>css/bootstrap-social.css</name>
             </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>mgt_developertoolbar/jquery-1.7.2.min.js</name>
-            </action>
             <block type="core/text" name="cdn">
                 <action method="setText">
                     <text>
@@ -385,61 +381,8 @@
             </action> -->
             <remove name="sale.reorder.sidebar.left" />
             <remove name="reports.product.viewed.left" />
-            <remove name="codnitive.customer.sidenav.left.links.after" />
         </reference>
     </customer_account>
-    <customer_account_index ifhandle="STORE_batignolles">
-        <reference name="head">
-            <block type="core/text" name="googleconversion">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Google Code for INSCRIPTION BATIGNOLLES Conversion Page -->
-                            <script type="text/javascript">
-                            var google_conversion_id = 952464504;
-                            var google_conversion_language = "en";
-                            var google_conversion_format = "3";
-                            var google_conversion_color = "ffffff";
-                            var google_conversion_label = "ipymCPDYxmYQ-OiVxgM";
-                            var google_remarketing_only = false;
-                            </script>
-                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-                            </script>
-                            <noscript>
-                            <div style="display:inline;">
-                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?label=ipymCPDYxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
-                            </div>
-                            </noscript>]]>
-                    </text>
-                </action>
-            </block>
-        </reference>
-    </customer_account_index>
-    <customer_account_index ifhandle="STORE_saintmartin">
-        <reference name="head">
-            <block type="core/text" name="googleconversion">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Google Code for INSCRIPTION SAINT-MARTIN Conversion Page -->
-                            <script type="text/javascript">
-                            var google_conversion_id = 952464504;
-                            var google_conversion_language = "en";
-                            var google_conversion_format = "3";
-                            var google_conversion_color = "ffffff";
-                            var google_conversion_label = "R3hVCJnbxmYQ-OiVxgM";
-                            var google_remarketing_only = false;
-                            </script>
-                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-                            </script>
-                            <noscript>
-                            <div style="display:inline;">
-                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?label=R3hVCJnbxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
-                            </div>
-                            </noscript>]]>
-                    </text>
-                </action>
-            </block>
-        </reference>
-    </customer_account_index>
     <cms_index_noroute translate="label">
         <label>CMS No-Route Page</label>
         <reference name="content">
