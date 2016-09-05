@@ -23,5 +23,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Google>
+        <Apdc_Adminhtml>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Adminhtml>
     </modules>
 </config>
