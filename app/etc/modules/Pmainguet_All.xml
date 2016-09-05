@@ -28,18 +28,10 @@
       <active>false</active>
       <codePool>local</codePool>
     </Pmainguet_Customfield> 
-    <Pmainguet_Blockselection>
-      <active>true</active>
-      <codePool>local</codePool>
-    </Pmainguet_Blockselection>
     <Pmainguet_CartTotal>
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_CartTotal>
-    <Pmainguet_Blockrelated>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Blockrelated>
     <Pmainguet_QuoteItemComment>
         <active>true</active>
         <codePool>local</codePool>

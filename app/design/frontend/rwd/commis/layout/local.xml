@@ -202,7 +202,7 @@
             </block>
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="customhome/promos-and-favoris.phtml">
-                <block type="blockselection/selection" name="home-selection" template="blockselection/selection_all.phtml"></block>
+                <block type="apdc_catalog/selection" name="home-selection" template="blockselection/selection_all.phtml"></block>
                 <block type="catalog/product_bestseller" name="home-favorite" template="catalog/product/bestseller.phtml"></block>
             </block>
             <!-- Inclusion des commerçants du Commis -->

@@ -27,5 +27,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Adminxyz>
+        <Apdc_Catalog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Catalog>
     </modules>
 </config>

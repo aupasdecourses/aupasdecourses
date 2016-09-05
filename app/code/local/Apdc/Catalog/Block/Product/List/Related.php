@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-class Pmainguet_Blockrelated_Block_Product_List_Related extends Mage_Catalog_Block_Product_List_Related
+
+class Apdc_Catalog_Block_Product_List_Related extends Mage_Catalog_Block_Product_List_Related
 {
-   protected function _prepareData()
+    protected function _prepareData()
     {
         $product = Mage::registry('product');
         /* @var $product Mage_Catalog_Model_Product */
@@ -32,5 +33,3 @@ class Pmainguet_Blockrelated_Block_Product_List_Related extends Mage_Catalog_Blo
         return $this;
     }
 }
-
-?>
