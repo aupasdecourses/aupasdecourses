@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<apdc_general>
+										<title>General</title>
+									</apdc_general>
+									<api_key>
+										<title>API Keys</title>
+									</api_key>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

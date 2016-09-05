@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Apdc Modules
+ * @package    Apdc_DisableCompare
+ * @copyright  Pierre Mainguet
+ */
+-->
+<config>
+    <modules>
+        <Apdc_DisableCompare>
+            <version>0.0.1</version>
+        </Apdc_DisableCompare>
+    </modules>
+    <global>
+        <models>
+            <apdc_disablecompare>
+                <class>Apdc_DisableCompare_Model</class>
+            </apdc_disablecompare>
+        </models>
+        <helpers>
+            <apdc_disablecompare>
+                <class>Apdc_DisableCompare_Helper</class>
+            </apdc_disablecompare>
+            <catalog>
+                <rewrite>
+                    <product_compare>Apdc_DisableCompare_Helper_Compare</product_compare>
+                </rewrite>
+            </catalog>
+        </helpers>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <apdc_disablecompare>
+                    <file>apdc/disablecompare.xml</file>
+                </apdc_disablecompare>
+            </updates>
+        </layout>
+    </frontend>
+</config>

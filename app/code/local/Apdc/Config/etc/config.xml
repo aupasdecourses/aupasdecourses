@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Pierre Mainguet
+ * @package Apdc_Config
+ * All custom config
+ * Customhandles: observer that add custom handles to specific page
+ */
+-->
+<config>
+    <modules>
+        <Apdc_Config>
+            <version>0.1.0</version>
+        </Apdc_Config>
+    </modules>
+    <global>
+        <models>
+            <apdcconfig>
+                    <class>Apdc_Config_Model</class>
+            </apdcconfig>
+        </models>
+        <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <apdc_admin_customhandles>
+                        <class>apdcconfig/observer</class>
+                        <method>addCustomhandle</method>
+                    </apdc_admin_customhandles>
+                </observers>
+            </controller_action_layout_load_before>
+        </events>
+    </global>
+</config>
