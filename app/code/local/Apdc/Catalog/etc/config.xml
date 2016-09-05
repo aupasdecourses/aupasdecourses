@@ -7,10 +7,10 @@
     </modules>
     <global>
         <blocks>
+            <apdc_catalog>
+                <class>Apdc_Catalog_Block</class>
+            </apdc_catalog>
             <catalog>
-                <apdc_catalog>
-                    <class>Apdc_Catalog_Block</class>
-                </apdc_catalog>
                 <rewrite>
                     <product_list_related>Apdc_Catalog_Block_Product_List_Related</product_list_related>
                 </rewrite>

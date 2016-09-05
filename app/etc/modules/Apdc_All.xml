@@ -31,5 +31,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Catalog>
+        <Apdc_Csart>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Csart>
     </modules>
 </config>
