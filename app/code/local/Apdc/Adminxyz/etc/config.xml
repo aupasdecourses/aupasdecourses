@@ -7,22 +7,14 @@
     </modules>
     <global>
         <blocks>
+            <adpcadmin>
+                <class>Apdc_Adminxyz_Block</class>
+            </adpcadmin>
         	<adminhtml>
 	            <rewrite>
-                    <sales_order>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order>
+                    <sales_order_grid>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
 	            </rewrite>
 	        </adminhtml>
         </blocks>
     </global>
-    <frontend>
-        <routers>
-            <trucmuche>
-                <use>standard</use>
-                <args>
-                    <module>Apdc_Adminxyz</module>
-                    <frontName>trucmuche</frontName>
-                </args>
-            </trucmuche>
-        </routers>
-    </frontend>
 </config>

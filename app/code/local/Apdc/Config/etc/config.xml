@@ -14,15 +14,22 @@
         </Apdc_Config>
     </modules>
     <global>
+        <blocks>
+            <page>
+                <rewrite>
+                      <html_footer>Apdc_Config_Block_Html_Footer</html_footer>
+                </rewrite>
+            </page>
+        </blocks>
         <models>
             <apdcconfig>
                     <class>Apdc_Config_Model</class>
             </apdcconfig>
-            <apdc_sitemap>  
+            <sitemap>  
                 <rewrite>  
                     <sitemap>Apdc_Config_Model_Sitemap</sitemap> 
                 </rewrite>
-            </apdc_sitemap>  
+            </sitemap>  
         </models>
         <events>
             <controller_action_layout_load_before>

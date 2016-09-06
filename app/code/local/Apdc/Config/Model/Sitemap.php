@@ -1,6 +1,7 @@
 <?php
 /**
  * @author  Pierre Mainguet
+ * Add homepage to sitemap.xml (https://www.aupasdecourses.com/index.html)
  */
 class Apdc_Config_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
 {

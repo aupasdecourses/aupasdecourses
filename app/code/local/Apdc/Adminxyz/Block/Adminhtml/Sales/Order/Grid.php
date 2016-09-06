@@ -5,9 +5,8 @@
 
 //In this case you have to override Block_Sales_Order_Grid and not Block_Widget_Grid however calling to return the grandparent Block_Widget_Grid prepareCollection in the current prepareCollection ...
 
-class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Sales_Order_Grid
+class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
-
     //Amasty Order Attributes
     protected function _getAttributes()
     {
@@ -31,6 +30,26 @@ class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Bloc
         }
 
         return $this->_attachments;
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setId('sales_order_grid');
+        $this->setUseAjax(true);
+        $this->setDefaultSort('created_at');
+        $this->setDefaultDir('DESC');
+        $this->setSaveParametersInSession(true);
+    }
+
+    /**
+     * Retrieve collection class.
+     *
+     * @return string
+     */
+    protected function _getCollectionClass()
+    {
+        return 'sales/order_grid_collection';
     }
 
     protected function _prepareCollection()
@@ -64,7 +83,7 @@ class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Bloc
         $this->setCollection($collection);
 
         //Important to not use parent::_prepareCollection() but Mage_Adminhtml_Block_Widget_Grid (grandparent function)
-        return Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
+        return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
@@ -172,7 +191,6 @@ class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Bloc
         $this->addExportType('*/*/exportExcel', Mage::helper('sales')->__('Excel'));
 
         //return parent::_prepareColumns();
-
     }
 
     protected function _myDdateFilter($collection, $column)
@@ -185,5 +203,74 @@ class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Bloc
         $this->getCollection()->getSelect()->where("mwddate.ddate >= '".$from."' AND ddate <= '".$to."'");
 
         return $this;
+    }
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('entity_id');
+        $this->getMassactionBlock()->setFormFieldName('order_ids');
+        $this->getMassactionBlock()->setUseSelectAll(false);
+
+        if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/cancel')) {
+            $this->getMassactionBlock()->addItem('cancel_order', array(
+                 'label' => Mage::helper('sales')->__('Cancel'),
+                 'url' => $this->getUrl('*/sales_order/massCancel'),
+            ));
+        }
+
+        if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/hold')) {
+            $this->getMassactionBlock()->addItem('hold_order', array(
+                 'label' => Mage::helper('sales')->__('Hold'),
+                 'url' => $this->getUrl('*/sales_order/massHold'),
+            ));
+        }
+
+        if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/unhold')) {
+            $this->getMassactionBlock()->addItem('unhold_order', array(
+                 'label' => Mage::helper('sales')->__('Unhold'),
+                 'url' => $this->getUrl('*/sales_order/massUnhold'),
+            ));
+        }
+
+        $this->getMassactionBlock()->addItem('pdfinvoices_order', array(
+             'label' => Mage::helper('sales')->__('Print Invoices'),
+             'url' => $this->getUrl('*/sales_order/pdfinvoices'),
+        ));
+
+        $this->getMassactionBlock()->addItem('pdfshipments_order', array(
+             'label' => Mage::helper('sales')->__('Print Packingslips'),
+             'url' => $this->getUrl('*/sales_order/pdfshipments'),
+        ));
+
+        $this->getMassactionBlock()->addItem('pdfcreditmemos_order', array(
+             'label' => Mage::helper('sales')->__('Print Credit Memos'),
+             'url' => $this->getUrl('*/sales_order/pdfcreditmemos'),
+        ));
+
+        $this->getMassactionBlock()->addItem('pdfdocs_order', array(
+             'label' => Mage::helper('sales')->__('Print All'),
+             'url' => $this->getUrl('*/sales_order/pdfdocs'),
+        ));
+
+        $this->getMassactionBlock()->addItem('print_shipping_label', array(
+             'label' => Mage::helper('sales')->__('Print Shipping Labels'),
+             'url' => $this->getUrl('*/sales_order_shipment/massPrintShippingLabel'),
+        ));
+
+        return $this;
+    }
+
+    public function getRowUrl($row)
+    {
+        if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
+            return $this->getUrl('*/sales_order/view', array('order_id' => $row->getId()));
+        }
+
+        return false;
+    }
+
+    public function getGridUrl()
+    {
+        return $this->getUrl('*/*/grid', array('_current' => true));
     }
 }
