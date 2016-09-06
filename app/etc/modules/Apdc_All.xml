@@ -31,9 +31,13 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Catalog>
-        <Apdc_Csart>
+        <Apdc_Cart>
             <active>true</active>
             <codePool>local</codePool>
-        </Apdc_Csart>
+        </Apdc_Cart>
+        <Apdc_Customer>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Customer>
     </modules>
 </config>

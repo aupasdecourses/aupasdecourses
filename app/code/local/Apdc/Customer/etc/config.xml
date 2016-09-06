@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- /* @author Pierre Mainguet */-->
+<config>
+    <modules>
+        <Apdc_Customer>
+            <version>0.0.1</version>
+        </Apdc_Customer>
+    </modules>
+    <global>
+        <blocks>
+            <customer>
+                <rewrite>
+                    <account_navigation>Apdc_Customer_Block_Account_Navigation</account_navigation>
+                </rewrite>
+            </customer>
+        </blocks>
+        <models>
+            <apdccustomer>
+                <class>Apdc_Customer_Model</class>
+            </apdccustomer>
+        </models>
+    </global>
+    <frontend>
+        <events>
+            <controller_action_postdispatch_customer_account_createPost>
+                <observers>
+                    <apdc_customer>
+                        <type>singleton</type>
+                        <class>apdccustomer/observer_frontend</class>
+                        <method>controllerActionPostdispatchCreatePostAction</method>
+                    </apdc_customer>
+                </observers>
+            </controller_action_postdispatch_customer_account_createPost>
+            <customer_register_success>
+                <observers>
+                    <apdc_customer>
+                        <type>singleton</type>
+                        <class>apdccustomer/observer_frontend</class>
+                        <method>customerRegisterSuccess</method>
+                    </apdc_customer>
+                </observers>
+            </customer_register_success>
+        </events>
+    </frontend>
+</config>

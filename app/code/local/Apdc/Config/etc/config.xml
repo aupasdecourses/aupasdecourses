@@ -18,6 +18,11 @@
             <apdcconfig>
                     <class>Apdc_Config_Model</class>
             </apdcconfig>
+            <apdc_sitemap>  
+                <rewrite>  
+                    <sitemap>Apdc_Config_Model_Sitemap</sitemap> 
+                </rewrite>
+            </apdc_sitemap>  
         </models>
         <events>
             <controller_action_layout_load_before>

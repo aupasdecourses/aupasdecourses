@@ -281,8 +281,8 @@
         </reference>
         <reference name="content">
             <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="blockselection/selection" name="blockselection" as="blockselection" after="all" template="blockselection/selection.phtml" />
-                <!-- <block type="blockselection/selection" name="lastorder" as="lastorder" after="all" template="blockselection/lastorder.phtml"/> -->
+                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
+                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
             </block>
         </reference>
         <remove name="product_list" />
@@ -373,12 +373,6 @@
             <action method="removeLinkByName">
                 <name>autoresponderlists</name>
             </action>
-            <!--             <action method="removeLinkByName">
-                <name>mailchimp</name> 
-            </action>
-            <action method="removeLinkByName">
-                <name>newsletter</name> 
-            </action> -->
             <remove name="sale.reorder.sidebar.left" />
             <remove name="reports.product.viewed.left" />
         </reference>

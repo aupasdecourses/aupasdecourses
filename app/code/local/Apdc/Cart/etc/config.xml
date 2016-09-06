@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- /* @author Pierre Mainguet*/ -->
+<config>
+    <modules>
+        <Apdc_Cart>
+            <version>0.1.0</version>
+        </Apdc_Cart>
+    </modules>
+    <global>
+        <blocks>
+            <apdccart>
+                <class>Apdc_Cart_Block</class>
+            </apdccart>
+        </blocks>
+        <models>
+            <apdccart>
+                <class>Apdc_Cart_Model</class>
+            </apdccart>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <apdccart>
+                    <file>apdccart.xml</file>
+                </apdccart>
+            </updates>
+        </layout>
+        <routers>
+          <checkout>
+            <args>
+              <modules>
+                <Apdc_Cart before="Mage_Checkout">Apdc_Cart</Apdc_Cart>
+              </modules>
+            </args>
+          </checkout>
+        </routers>
+    </frontend>
+</config>

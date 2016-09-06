@@ -6,15 +6,6 @@
         </Pmainguet_Validateaddress>
     </modules>
     <frontend>
-        <routers>
-            <checkout> <!-- must match the router config you are trying to override -->
-               <args>
-                    <modules>
-                        <Pmainguet_Validateaddress_Checkout before="Mage_Checkout">Pmainguet_Validateaddress_Checkout</Pmainguet_Validateaddress_Checkout>
-                    </modules>
-               </args>
-            </checkout>
-        </routers>
     	<events>
 		    <shipping_validation_checkout>
 		      <observers>

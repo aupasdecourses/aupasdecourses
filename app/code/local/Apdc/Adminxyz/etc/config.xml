@@ -9,9 +9,20 @@
         <blocks>
         	<adminhtml>
 	            <rewrite>
-	                <sales_order_grid>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order>
 	            </rewrite>
 	        </adminhtml>
         </blocks>
     </global>
+    <frontend>
+        <routers>
+            <trucmuche>
+                <use>standard</use>
+                <args>
+                    <module>Apdc_Adminxyz</module>
+                    <frontName>trucmuche</frontName>
+                </args>
+            </trucmuche>
+        </routers>
+    </frontend>
 </config>
