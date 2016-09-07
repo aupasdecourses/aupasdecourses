@@ -5,7 +5,7 @@
 
 //In this case you have to override Block_Sales_Order_Grid and not Block_Widget_Grid however calling to return the grandparent Block_Widget_Grid prepareCollection in the current prepareCollection ...
 
-class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Sales_Order_Grid
 {
     //Amasty Order Attributes
     protected function _getAttributes()
@@ -83,7 +83,7 @@ class Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Bloc
         $this->setCollection($collection);
 
         //Important to not use parent::_prepareCollection() but Mage_Adminhtml_Block_Widget_Grid (grandparent function)
-        return parent::_prepareCollection();
+        return Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
     }
 
     protected function _prepareColumns()

@@ -12,7 +12,7 @@
             </adpcadmin>
         	<adminhtml>
 	            <rewrite>
-                    <sales_order_grid>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order>
 	            </rewrite>
 	        </adminhtml>
         </blocks>
