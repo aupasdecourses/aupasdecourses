@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MW_Mcore>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </MW_Mcore>
     </modules>

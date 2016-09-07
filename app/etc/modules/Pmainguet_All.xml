@@ -65,7 +65,7 @@
         <codePool>local</codePool>
     </Pmainguet_Customvar>
     <Pmainguet_Validateaddress>
-        <active>true</active>
+        <active>false</active>
         <codePool>local</codePool>
     </Pmainguet_Validateaddress>
     <Pmainguet_Avoircustom>
@@ -85,7 +85,7 @@
         <codePool>local</codePool>
     </Pmainguet_Ajaxlp>
     <Pmainguet_CustomCheckout>
-        <active>true</active>
+        <active>false</active>
         <codePool>local</codePool>
     </Pmainguet_CustomCheckout>
     <Pmainguet_Custommenu>
