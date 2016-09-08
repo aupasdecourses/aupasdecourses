@@ -108,5 +108,9 @@
         <codePool>local</codePool>
         <active>true</active>
     </Pmainguet_Customer>
+    <Alanstormdotcom_Layoutviewer>
+        <codePool>local</codePool>
+        <active>true</active>
+    </Alanstormdotcom_Layoutviewer>
   </modules>
 </config>

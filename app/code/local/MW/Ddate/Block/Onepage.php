@@ -40,8 +40,7 @@ class MW_Ddate_Block_Onepage extends Mage_Checkout_Block_Onepage
             $steps['login'] = $this->getCheckout()->getStepData('login');
         }
 
-        //Change steps order and remove "shipping"
-        $stepCodes = array('billing', 'shipping_method','ddate', 'payment', 'review');
+        $stepCodes = array('billing', 'shipping', 'shipping_method', 'payment', 'ddate', 'review');
         foreach ($stepCodes as $step) {
             $steps[$step] = $this->getCheckout()->getStepData($step);
         }

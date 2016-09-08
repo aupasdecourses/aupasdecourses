@@ -76,8 +76,8 @@
         singleClick : true
     });
 
-	deliveryurls = '<?php echo Mage::getUrl('ddate_admin/adminhtml_ddate/update_delivery') ?>';
-	enableurls = '<?php echo Mage::getUrl('ddate_admin/adminhtml_ddate/isenabledday') ?>';
+	deliveryurls = '<?php echo Mage::getUrl('adminhtml/ddate_ddate/update_delivery') ?>';
+	enableurls = '<?php echo Mage::getUrl('adminhtml/ddate_ddate/isenabledday') ?>';
 
 	function check_enable_day() {
 		var date_post ="orderid="+mwdeliveryorderid+"&mwdate="+$('onestepcheckout_date').getValue();

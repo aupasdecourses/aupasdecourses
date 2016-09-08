@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MW_Ddate>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
 			<depends>
 				<MW_Mcore/>

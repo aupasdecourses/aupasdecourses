@@ -14,9 +14,8 @@ class MW_Ddate_Model_Ddate extends Mage_Core_Model_Abstract
     {
         if(is_null($this->inexedDdates)) {
             $timeFilter = strtotime('- 1 day');
-            $collection = $this->getCollection()
-                ->addExpressionFieldToSelect('timestamp','UNIX_TIMESTAMP({{ddate}})', array('ddate'=>'ddate'));
-                $collection->getSelect()->having('timestamp >= '.$timeFilter);
+            $collection = $this->getCollection();
+            $collection->getSelect()->where('UNIX_TIMESTAMP(ddate) >= ' . $timeFilter);
             $ddateArray = array();
             foreach ($collection as $ddate) {
                 $ddateArray[$ddate->getDtime()][$ddate->getDdate()] = $ddate;

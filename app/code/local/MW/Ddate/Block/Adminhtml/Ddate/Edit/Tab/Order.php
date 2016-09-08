@@ -137,6 +137,6 @@ class MW_Ddate_Block_Adminhtml_Ddate_Edit_Tab_Order extends Mage_Adminhtml_Block
 
     public function getGridUrl()
     {
-        return $this->getUrl('ddate_admin/adminhtml_ddate/grid', array('ddate_id'=>$this->getRequest()->getParam('ddate_id')));
+        return $this->getUrl('adminhtml/ddate_ddate/grid', array('ddate_id'=>$this->getRequest()->getParam('ddate_id')));
     }
 }

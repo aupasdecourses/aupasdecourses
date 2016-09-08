@@ -26,21 +26,6 @@ class MW_Ddate_Helper_Data extends Mage_Core_Helper_Abstract
         return $dtimes;
     }
 
-    public function getFrdaytext($daytext)
-    {
-        $array=[
-        "Mon"=>"Lun",
-        "Tue"=>"Mar",
-        "Wed"=>"Mer",
-        "Thu"=>"Jeu",
-        "Fri"=>"Ven",
-        "Sat"=>"Sam",
-        "Sun"=>"Dim",
-        ];
-
-        return $array[$daytext];
-    }
-
     public function getSpecialDay()
     {
 		$regis=Mage::registry('mw_ddate_specialday');//fix error:Mage registry key "mw_ddate_specialday" already exists

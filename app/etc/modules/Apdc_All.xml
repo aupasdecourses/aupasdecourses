@@ -5,5 +5,10 @@
 	        <codePool>local</codePool>
 	        <active>true</active>
 	    </Apdc_Forms>
+	    <Apdc_Checkout>
+	        <codePool>local</codePool>
+	        <active>true</active>
+	        <depends><MW_Ddate /></depends>
+	    </Apdc_Checkout>
   </modules>
 </config>
