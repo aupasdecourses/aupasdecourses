@@ -12,7 +12,7 @@ class Apdc_Checkout_Block_Onepage extends MW_Ddate_Block_Onepage
         }
 
         //Change steps order and remove "shipping" and "payment"
-        $stepCodes = array('billing', 'shipping_method','ddate', 'payment');
+        $stepCodes = array('billing', 'shipping_method', 'payment');
         foreach ($stepCodes as $step) {
             $steps[$step] = $this->getCheckout()->getStepData($step);
         }
