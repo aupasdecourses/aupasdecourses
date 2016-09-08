@@ -1,0 +1,113 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+    var quoteBaseGrandTotal = <?php echo (float)$this->getQuoteBaseGrandTotal(); ?>;
+    var checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+    var payment = new Payment('co-payment-form', '<?php echo $this->getUrl('checkout/onepage/savePayment') ?>');
+    var lastPrice;
+//]]>
+</script>
+<div class="row">
+    <form action="" id="co-payment-form">
+        <div class="sp-methods" id="checkout-payment-method-load">
+           <!-- Content dynamically loaded. Content from the methods.phtml is loaded during the ajax call -->
+        </div>
+        <div class="tool-tip" id="payment-tool-tip" style="display:none;">
+            <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>"><?php echo $this->__('Close') ?></a></div>
+            <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" /></div>
+        </div>
+        <?php echo $this->getChildChildHtml('additional') ?>
+
+            <div class="col-sm-6">
+                <h3><?php echo $this->__('En cas de non disponibilité') ?></h3>
+                <div id="amorderattr" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="produit_equivalent" class="col-sm-6 label-checkout">Remplacer par un produit équivalent</label>
+                        <div class="col-sm-3">
+                            <select id="produit_equivalent" name="amorderattr[produit_equivalent]" class="required-entry required-entry select" style="height:33px;text-align:center;">
+                                <option value="1" selected="selected">Oui</option>
+                                <option value="0">Non</option>
+                            </select>
+                        </div>
+                        <div type="anchor" id="anchor_produit_equivalent"></div><div style="padding: 4px;"></div>
+                    </div>
+                </div>
+            </div>
+    </form>
+    <div class="col-sm-6">
+        <?php echo $this->getChildHtml('ajaxcoupon'); ?>
+    </div>
+</div>
+<div class="row">
+    <ul class="form-list" style="margin-top:20px;">
+        <div class="hipay_infobox_headline">
+            <a style="color:#333" href="https://www.hipaywallet.com/" target="_blank"><?php echo Mage::helper('hipaymod')->__('Paiement 100% sécurisé en ligne via') ?><img style="display:inline;margin-left:5px;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>frontend/base/default/images/himediapayments/hipay/hipay_logo.png"/></a>
+        </div>
+    </ul>
+</div>
+<div class="row">
+    <div class="buttons-set" id="payment-buttons-container">
+        <p class="f-left"><?php echo $this->__('Forgot an Item?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('Edit Your Cart') ?></a></p>
+        <button type="button" class="button btn-checkout" onclick="button_onclick()"><span><?php echo Mage::helper('core')->quoteEscape($this->__('Place Order')) ?></span></button>
+        <span class="please-wait" id="payment-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+        </span>
+    </div>
+</div>
+ <script type="text/javascript">
+    //<![CDATA[
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+    //]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    function toggleToolTip(event){
+        if($('payment-tool-tip')){
+            $('payment-tool-tip').setStyle({
+                top: (Event.pointerY(event)-560)+'px'//,
+                //left: (Event.pointerX(event)+100)+'px'
+            })
+            $('payment-tool-tip').toggle();
+        }
+        Event.stop(event);
+    }
+    if($('payment-tool-tip-close')){
+        Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+    }
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    function button_onclick(){
+        tagmanager_event('validationPaiement',{});
+        payment.save();
+    }
+
+    payment.currentMethod = "<?php echo $this->getChild('methods')->getSelectedMethodCode() ?>";
+//]]>
+</script>

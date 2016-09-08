@@ -1,0 +1,86 @@
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <!-- Remove unnecessary JS from MW_Ddate -->
+        <reference name="head">
+            <action method="removeItem">
+                <type>js</type>
+                <file>mw_ddate/jquery-1.7.2.min.js</file>
+            </action>
+            <action method="removeItem">
+                <type>js</type>
+                <file>mw_ddate/jquery-noconflict.js</file>
+            </action>
+        </reference>
+        <!-- Merge Billing & Shipping -->
+        <reference name="checkout.onepage.billing"> Change the template of billing block
+          <action method="setTemplate"><template>apdc_checkout/persistent/checkout/onepage/billing.phtml</template></action>
+        </reference>
+        <!-- Merge Shipping Method & Ddate -->
+        <reference name="checkout.onepage.shipping_method"> <!-- Change the template of billing block  -->
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method.phtml</template></action>
+            <!-- Add delivery check -->
+            <block type="apdc_checkout/deliverycheck_check" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
+            <!-- Add ddate -->
+            <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
+        </reference>
+        <!-- Merge Payment & Review -->
+        <remove name="checkout.onepage.review"/>
+        <reference name="checkout.onepage.payment">
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
+            <block type="core/template" name="ajaxcoupon" after="root1" template="ajaxcoupon/ajaxcoupon.phtml"/>
+        </reference>
+        <!--update shipping totals template-->
+        <reference name="shipping_total_renderer">
+            <action method="setTemplate"><template>apdc_checkout/tax/checkout/shipping.phtml</template></action>
+        </reference>
+        <!-- Affichage spécial pour la livraison en triporteur -->
+        <reference name="checkout.onepage.shipping_method.available">
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method/available.phtml</template></action>
+        </reference>
+    </checkout_onepage_index>
+    <!-- Affichage spécial pour la livraison en triporteur (AJAX) -->
+    <checkout_onepage_shippingmethod>
+        <remove name="root"/>
+         <block type="checkout/onepage_shipping_method_available" name="root1" output="toHtml" template="apdc_checkout/checkout/onepage/shipping_method/available.phtml"/>
+    </checkout_onepage_shippingmethod>
+    <!-- Ajax URL Payment & Review & Coupon -->
+    <checkout_onepage_paymentmethod>
+        <remove name="root"/>
+        <block type="checkout/onepage_payment_methods" name="root_init" output="toHtml" template="apdc_checkout/checkout/onepage/payment/methods.phtml">
+            <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+            <block type="core/template" name="checkout.onepage.payment.methods.scripts" as="scripts" />
+            <block type="core/template" name="checkout.onepage.payment.methods.additional" as="additional" />
+            <block type="checkout/onepage_review_info" name="root1" template="apdc_checkout/checkout/onepage/review/info.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+                <block type="apdc_checkout/deliverycheck_check" name="deliverycheck_review"/>
+                <block type="checkout/cart_totals" after="deliverycheck_review" name="checkout.onepage.review.info.totals" as="totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
+            </block>
+        </block>
+    </checkout_onepage_paymentmethod>
+    <!--For Delivery Check / Custom Checkout modules-->
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="setTemplate"><template>email/order/items.phtml</template></action>
+            <action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>apdc_checkout/email/order/items/order/default.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>apdc_checkout/email/order/items/order/default.phtml</template></action>
+            <action method="addItemRender"><type>bundle</type><block>bundle/sales_order_items_renderer</block><template>apdc_checkout/bundle/email/order/items/order/default.phtml</template></action>
+            <block type="apdc_checkout/deliverycheck_check" name="deliverycheck_review"/>
+        </reference>
+        <reference name="order_totals">
+            <action method="setTemplate"><template>apdc_checkout/email/order/totals.phtml</template></action>
+                <action method="setLabelProperties"><value>colspan="2" align="left" style="width:80%;"</value></action>
+                <action method="setValueProperties"><value>align="left" style="width:20%;"</value></action>
+                <block type="tax/sales_order_tax" name="tax" template="apdc_checkout/email/order/tax.phtml">
+                    <action method="setIsPlaneMode"><value>1</value></action>
+                </block>
+        </reference>
+    </sales_email_order_items>
+    <!-- A supprimer une fois que HiPay est désactivé -->
+    <hipay_mapi_payment>
+        <reference name="hipaypayment.redirect">
+            <action method="setTemplate"><template>apdc_checkout/hipay/payment.phtml</template></action>
+        </reference>
+    </hipay_mapi_payment>
+</layout>

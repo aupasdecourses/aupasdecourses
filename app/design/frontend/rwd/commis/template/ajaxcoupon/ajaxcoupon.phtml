@@ -1,0 +1,132 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?> 
+    <form id="discount-coupon-form" action="" method="post">
+        <div class="discount-form row">
+            <h3><?php echo $this->__('Votre code de réduction') ?></h3>
+            <div class="field-wrapper" style="width:100%">
+                <input style="height:33px;margin-top:0px" class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />
+                <div class="button-wrapper col-sm-6">
+                    <div style="width:100%;">
+                        <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())==0): ?>
+                        <button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button addcoupon col-xs-7" value="<?php echo $this->__('Apply Coupon') ?>"><span><span><?php echo $this->__('Utiliser') ?></span></span></button>
+                        <?php endif;?>
+                        <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())): ?>
+                            <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button cancelcoupon col-xs-7" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Annuler') ?></span></span></button>
+                        <?php endif;?>
+                        <span class="coupon-please-wait loader col-xs-2" id="coupon-please-wait" style="display:none; line-height:19px; margin-left:5px;"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;height:21px">
+                <span id="msg" style="display:block;font-family:Raleway;display:none;color:red;width:100%"></span>
+            </div>
+        </div>
+    </form>
+<script>
+    jQuery.noConflict();
+    //jQuery(document).ready(function(){
+        jQuery('.addcoupon').on('click',function(){
+            jQuery('#msg').hide();
+            jQuery('#coupon_code').removeClass('validation-failed');
+            if(jQuery('#coupon_code').val() == ''){
+                jQuery('#coupon_code').addClass('validation-failed');
+                return false;}
+            jQuery('#coupon-please-wait').show();
+            jQuery.ajax({
+                url: '<?php echo $this->getUrl('customcheckout/ajaxcoupon_index/customcouponPost') ?>',
+                dataType: 'json',
+                data: jQuery("form#discount-coupon-form").serializeArray(), 
+                type:'POST',
+                success: function(data) {
+                    jQuery('#coupon-please-wait').hide();
+                    if(data.status == 'SUCCESS'){
+                        
+                        if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
+                            jQuery('#discount-coupon-form').replaceWith(data.review);
+                        }
+                        if(data.msg){
+                            jQuery('#msg').html(data.msg);
+                            jQuery('#msg').show();
+                          }
+                    }else{
+                        if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
+                            jQuery('#discount-coupon-form').replaceWith(data.review);
+                        }
+                        if(data.msg){
+                            jQuery('#msg').html(data.msg);
+                            jQuery('#msg').show();
+                          }
+                    }
+                }
+            });
+        });
+
+        jQuery('.cancelcoupon').on('click',function(){
+            var data1 = new Object();
+            data1.remove = 1;
+            jQuery('#msg').hide();
+            if(jQuery('#coupon_code').val() == ''){return false;}
+            jQuery('#coupon-please-wait').show();
+            jQuery.ajax({
+                url: '<?php echo $this->getUrl('customcheckout/ajaxcoupon_index/customcouponPost') ?>',
+                dataType: 'json',
+                data: data1, 
+                type:'POST',
+                success: function(data) {
+                    jQuery('#coupon-please-wait').hide();
+                    if(data.status == 'SUCCESS'){
+                        
+                        if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
+                            jQuery('#discount-coupon-form').replaceWith(data.review);
+                        }
+                        if(data.msg){
+                            jQuery('#msg').html(data.msg);
+                            jQuery('#msg').show();
+                          }
+                    }else{
+                        if(jQuery('#discount-coupon-form')){
+                            jQuery('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                            jQuery('#shipping_method-progress-opcheckout').replaceWith(data.progress);
+                            jQuery('#discount-coupon-form').replaceWith(data.review);
+                        }
+                        if(data.msg){
+                            jQuery('#msg').html(data.msg);
+                            jQuery('#msg').show();
+                          }
+                    
+                        }
+                }
+            });
+        });
+    //});
+</script>
