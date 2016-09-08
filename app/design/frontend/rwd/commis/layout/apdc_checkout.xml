@@ -37,6 +37,10 @@
         <reference name="checkout.onepage.shipping_method.available">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method/available.phtml</template></action>
         </reference>
+        <!--Réecriture du Progress sur le côté -->
+        <reference name="checkout.progress">
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/progress.phtml</template></action>
+        </reference>
     </checkout_onepage_index>
     <!-- Affichage spécial pour la livraison en triporteur (AJAX) -->
     <checkout_onepage_shippingmethod>
