@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_cart_index>
+        <block type="apdccart/cart_total_shipping" name="shipping_total_renderer" />
+        <block type="apdccart/cart_total_subtotal" name="subtotal_total_renderer" />
+        <block type="apdccart/cart_total_grand" name="grand_total_total_renderer" />
+    </checkout_cart_index>
+</layout>

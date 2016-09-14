@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Adminxyz>
+            <version>0.0.1</version>
+        </Apdc_Adminxyz>
+    </modules>
+    <global>
+        <blocks>
+            <adpcadmin>
+                <class>Apdc_Adminxyz_Block</class>
+            </adpcadmin>
+        	<adminhtml>
+	            <rewrite>
+                    <sales_order>Apdc_Adminxyz_Block_Adminhtml_Sales_Order_Grid</sales_order>
+	            </rewrite>
+	        </adminhtml>
+        </blocks>
+    </global>
+</config>

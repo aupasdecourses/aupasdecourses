@@ -1,14 +1,48 @@
 <?xml version="1.0"?>
   <config>
     <modules>
-	    <Apdc_Forms>
-	        <codePool>local</codePool>
-	        <active>true</active>
-	    </Apdc_Forms>
-	    <Apdc_Checkout>
-	        <codePool>local</codePool>
-	        <active>true</active>
-	        <depends><MW_Ddate /></depends>
-	    </Apdc_Checkout>
-  </modules>
+        <Apdc_Forms>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Forms>
+        <Apdc_DisableCompare>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+            </depends>
+        </Apdc_DisableCompare>
+        <Apdc_Config>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog/>
+            </depends>
+        </Apdc_Config>
+        <Apdc_Google>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Google>
+        <Apdc_Adminxyz>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Adminxyz>
+        <Apdc_Catalog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Catalog>
+        <Apdc_Cart>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Cart>
+        <Apdc_Customer>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Customer>
+	<Apdc_Checkout>
+	    <codePool>local</codePool>
+	    <active>true</active>
+	    <depends><MW_Ddate /></depends>
+	</Apdc_Checkout>
+    </modules>
 </config>

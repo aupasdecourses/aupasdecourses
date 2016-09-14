@@ -56,10 +56,6 @@
             <action method="addCss">
                 <name>css/bootstrap-social.css</name>
             </action>
-            <action method="removeItem">
-                <type>js</type>
-                <name>mgt_developertoolbar/jquery-1.7.2.min.js</name>
-            </action>
             <block type="core/text" name="cdn">
                 <action method="setText">
                     <text>
@@ -211,7 +207,7 @@
             </block>
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="customhome/promos-and-favoris.phtml">
-                <block type="blockselection/selection" name="home-selection" template="blockselection/selection_all.phtml"></block>
+                <block type="apdc_catalog/selection" name="home-selection" template="catalog/blockselection/selection_all.phtml"></block>
                 <block type="catalog/product_bestseller" name="home-favorite" template="catalog/product/bestseller.phtml"></block>
             </block>
             <!-- Inclusion des commerçants du Commis -->
@@ -290,8 +286,8 @@
         </reference>
         <reference name="content">
             <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="blockselection/selection" name="blockselection" as="blockselection" after="all" template="blockselection/selection.phtml" />
-                <!-- <block type="blockselection/selection" name="lastorder" as="lastorder" after="all" template="blockselection/lastorder.phtml"/> -->
+                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
+                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
             </block>
         </reference>
         <remove name="product_list" />
@@ -382,69 +378,10 @@
             <action method="removeLinkByName">
                 <name>autoresponderlists</name>
             </action>
-            <!--             <action method="removeLinkByName">
-                <name>mailchimp</name> 
-            </action>
-            <action method="removeLinkByName">
-                <name>newsletter</name> 
-            </action> -->
             <remove name="sale.reorder.sidebar.left" />
             <remove name="reports.product.viewed.left" />
-            <remove name="codnitive.customer.sidenav.left.links.after" />
         </reference>
     </customer_account>
-    <customer_account_index ifhandle="STORE_batignolles">
-        <reference name="head">
-            <block type="core/text" name="googleconversion">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Google Code for INSCRIPTION BATIGNOLLES Conversion Page -->
-                            <script type="text/javascript">
-                            var google_conversion_id = 952464504;
-                            var google_conversion_language = "en";
-                            var google_conversion_format = "3";
-                            var google_conversion_color = "ffffff";
-                            var google_conversion_label = "ipymCPDYxmYQ-OiVxgM";
-                            var google_remarketing_only = false;
-                            </script>
-                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-                            </script>
-                            <noscript>
-                            <div style="display:inline;">
-                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?label=ipymCPDYxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
-                            </div>
-                            </noscript>]]>
-                    </text>
-                </action>
-            </block>
-        </reference>
-    </customer_account_index>
-    <customer_account_index ifhandle="STORE_saintmartin">
-        <reference name="head">
-            <block type="core/text" name="googleconversion">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<!-- Google Code for INSCRIPTION SAINT-MARTIN Conversion Page -->
-                            <script type="text/javascript">
-                            var google_conversion_id = 952464504;
-                            var google_conversion_language = "en";
-                            var google_conversion_format = "3";
-                            var google_conversion_color = "ffffff";
-                            var google_conversion_label = "R3hVCJnbxmYQ-OiVxgM";
-                            var google_remarketing_only = false;
-                            </script>
-                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-                            </script>
-                            <noscript>
-                            <div style="display:inline;">
-                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?label=R3hVCJnbxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
-                            </div>
-                            </noscript>]]>
-                    </text>
-                </action>
-            </block>
-        </reference>
-    </customer_account_index>
     <cms_index_noroute translate="label">
         <label>CMS No-Route Page</label>
         <reference name="content">

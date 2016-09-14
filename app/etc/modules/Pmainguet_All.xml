@@ -65,7 +65,7 @@
         <codePool>local</codePool>
     </Pmainguet_Customvar>
     <Pmainguet_Validateaddress>
-        <active>false</active>
+        <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Validateaddress>
     <Pmainguet_Avoircustom>
@@ -84,10 +84,7 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Ajaxlp>
-    <Pmainguet_CustomCheckout>
-        <active>false</active>
-        <codePool>local</codePool>
-    </Pmainguet_CustomCheckout>
+
     <Pmainguet_Custommenu>
         <active>true</active>
         <codePool>local</codePool>
@@ -100,15 +97,7 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Delivery>
-    <Pmainguet_Apdcadmin>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Apdcadmin>
-    <Pmainguet_Customer>
-        <codePool>local</codePool>
-        <active>true</active>
-    </Pmainguet_Customer>
-    <Alanstormdotcom_Layoutviewer>
+        <Alanstormdotcom_Layoutviewer>
         <codePool>local</codePool>
         <active>true</active>
     </Alanstormdotcom_Layoutviewer>

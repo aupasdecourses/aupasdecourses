@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Google>
+            <version>0.2.0</version>
+        </Apdc_Google>
+    </modules>
+</config>
