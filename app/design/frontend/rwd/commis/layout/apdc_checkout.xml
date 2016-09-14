@@ -29,6 +29,9 @@
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
             <block type="core/template" name="ajaxcoupon" after="root1" template="ajaxcoupon/ajaxcoupon.phtml"/>
         </reference>
+        <reference name="checkout.payment.methods.child0">
+            <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
+        </reference>
         <!--update shipping totals template-->
         <reference name="shipping_total_renderer">
             <action method="setTemplate"><template>apdc_checkout/tax/checkout/shipping.phtml</template></action>
@@ -101,13 +104,6 @@
                 </block>
         </reference>
     </sales_email_order_items>
-    <!-- A supprimer une fois que HiPay est désactivé -->
-    <hipay_mapi_payment>
-        <reference name="hipaypayment.redirect">
-            <action method="setTemplate"><template>apdc_checkout/hipay/payment.phtml</template></action>
-        </reference>
-    </hipay_mapi_payment>
-    <!-- Rewrite Progress -->
     <checkout_onepage_progress_billing> 
         <!-- Mage_Checkout -->
         <remove name="right"/>
