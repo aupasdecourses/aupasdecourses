@@ -57,7 +57,7 @@
                 return false;}
             jQuery('#coupon-please-wait').show();
             jQuery.ajax({
-                url: '<?php echo $this->getUrl('customcheckout/ajaxcoupon_index/customcouponPost') ?>',
+                url: '<?php echo $this->getUrl('ajaxcoupon/index/customcouponPost') ?>',
                 dataType: 'json',
                 data: jQuery("form#discount-coupon-form").serializeArray(), 
                 type:'POST',

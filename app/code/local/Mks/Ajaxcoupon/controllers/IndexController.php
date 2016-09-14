@@ -2,7 +2,7 @@
 require_once 'Mage/Checkout/controllers/CartController.php';
 class Mks_Ajaxcoupon_IndexController extends Mage_Checkout_CartController
 {
-	
+
 	public function customcouponPostAction()
     {
     	/**
