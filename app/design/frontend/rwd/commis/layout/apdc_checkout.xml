@@ -145,5 +145,10 @@
         <action method="setInfoTemplate"><method></method><template></template></action>
     </block>
     </checkout_onepage_progress_payment>
+    <checkout_onepage_success translate="label">
+        <reference name="checkout.success">
+            <action method="setTemplate"><template>apdc_checkout/checkout/success.phtml</template></action>
+        </reference>
+    </checkout_onepage_success>
 
 </layout>

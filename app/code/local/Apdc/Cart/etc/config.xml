@@ -17,16 +17,29 @@
                 <class>Apdc_Cart_Model</class>
             </apdccart>
         </models>
+        <rewrite>
+            <ajax_cart> <!--This can be any unique id -->
+                <from><![CDATA[#^/checkout/cart/#]]></from>  <!-- the URL which u want to override-->
+                <to>/addajax/index/</to>  <!-- destination url -->
+            </ajax_cart>
+        </rewrite>
     </global>
     <frontend>
         <layout>
             <updates>
                 <apdccart>
-                    <file>apdccart.xml</file>
+                    <file>apdc_cart.xml</file>
                 </apdccart>
             </updates>
         </layout>
         <routers>
+            <addajax>
+                <use>standard</use>
+                <args>
+                    <module>Apdc_Cart</module>
+                    <frontName>addajax</frontName>
+                </args>
+            </addajax>
           <checkout>
             <args>
               <modules>

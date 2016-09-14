@@ -315,18 +315,6 @@
         </reference>
     </PRODUCT_TYPE_bundle>
     <!-- Product listings by commerçants 'Fruits'-->
-    <!-- Remove shipping calculation and discount coupon from cart -->
-    <checkout_cart_index>
-        <remove name="checkout.cart.shipping" />
-        <!-- <remove name="checkout.cart.coupon"/> -->
-        <reference name="head">
-            <action method="addJs">
-                <script>
-                scrolltofixed.min.js
-                </script>
-            </action>
-        </reference>
-    </checkout_cart_index>
     <checkout_onepage_index>
         <reference name="head">
             <block type="core/text" name="suivi_hipay" before="-">
@@ -492,4 +480,51 @@
             </block>
         </reference>
     </hipay_mapi_payment>
+    <catalog_category_layered_nochildren>
+        <reference name="head">
+             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
+             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
+        </reference>
+        <remove name="headercommercant"/>
+        <reference name="left_first">
+            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
+                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
+            </block>
+            <!-- Recently purchased items -->
+            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
+            <!-- Recently viewed items -->
+            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
+        </reference> 
+        <reference name="catalog.leftnav">  
+            <action method="unsetChild"><alias>category_filter</alias></action>
+        </reference>
+    </catalog_category_layered_nochildren>
+    <GROUP_CATEGORY>
+        <reference name="head">
+             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
+             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
+        </reference>
+        <remove name="headercommercant"/>
+        <reference name="left_first">
+            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
+                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
+            </block>
+            <!-- Recently purchased items -->
+            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
+            <!-- Recently viewed items -->
+            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
+        </reference> 
+        <reference name="catalog.leftnav">  
+            <action method="unsetChild"><alias>category_filter</alias></action>
+        </reference>
+    </GROUP_CATEGORY>
+    <catalogsearch_result_index >
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+         <reference name="head">
+             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
+             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
+        </reference>
+    </catalogsearch_result_index>
 </layout>

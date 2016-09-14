@@ -65,7 +65,7 @@
         <codePool>local</codePool>
     </Pmainguet_Customvar>
     <Pmainguet_Validateaddress>
-        <active>true</active>
+        <active>false</active>
         <codePool>local</codePool>
     </Pmainguet_Validateaddress>
     <Pmainguet_Avoircustom>
