@@ -35,7 +35,7 @@ function getCommercant()
             'addr' => $category->getAdresseCommercant(),
             'phone' => $category->getTelephone(),
             'mobile' => $category->getPortable(),
-            'mail3' => $category->getMail3(),
+            'mail3' => $category->getData('mail_3'),
             'mailc' => $category->getMailContact(),
             'mailp' => $category->getMailPro(),
         ];
@@ -73,7 +73,7 @@ function getOrders(&$commercants, $date = TODAY_DATE)
             $prod_data['comment'] = '';
             $opts = $oprod->getProductOptions()['options'];
             foreach ($opts as $opt) {
-                $prod_data['comment'] .= $opt['label'].' '.$opt['value'].PHP_EOL;
+                $prod_data['comment'] .= $opt['label'].': '.$opt['value'].' | ';
             }
             $prod_data['comment']    .= $oprod->getData('item_comment').PHP_EOL;
             if (!isset($commercants[$oprod->getCommercant()]['orders'][$order['id']])) {
