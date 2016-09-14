@@ -27,7 +27,6 @@
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
-            <block type="core/template" name="ajaxcoupon" after="root1" template="ajaxcoupon/ajaxcoupon.phtml"/>
         </reference>
         <reference name="checkout.payment.methods.child0">
             <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
