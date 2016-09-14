@@ -24,10 +24,6 @@
       <active>true</active>
       <codePool>local</codePool>
     </Pmainguet_Custcatatt>
-    <Pmainguet_Customfield>
-      <active>false</active>
-      <codePool>local</codePool>
-    </Pmainguet_Customfield> 
     <Pmainguet_Blockselection>
       <active>true</active>
       <codePool>local</codePool>
@@ -44,10 +40,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Blockrelated>
-    <Pmainguet_QuoteItemComment>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_QuoteItemComment>
     <Pmainguet_Invoice>
         <active>true</active>
         <codePool>local</codePool>

@@ -11,11 +11,21 @@
             <apdccart>
                 <class>Apdc_Cart_Block</class>
             </apdccart>
+            <adminhtml>
+                <rewrite>
+                    <sales_items_abstract>Apdc_Cart_Block_Adminhtml_Sales_Items_Abstract</sales_items_abstract>
+                </rewrite>
+            </adminhtml>
         </blocks>
         <models>
             <apdccart>
                 <class>Apdc_Cart_Model</class>
             </apdccart>
+            <checkout>
+                <rewrite>
+                    <cart>Apdc_Cart_Model_Cart</cart>
+                </rewrite>
+            </checkout>
         </models>
         <rewrite>
             <ajax_cart> <!--This can be any unique id -->
@@ -23,6 +33,18 @@
                 <to>/addajax/index/</to>  <!-- destination url -->
             </ajax_cart>
         </rewrite>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <item_comment>
+                    <to_order_item>*</to_order_item>
+                </item_comment>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <item_comment>
+                    <to_quote_item>*</to_quote_item>
+                </item_comment>
+            </sales_convert_order_item>
+        </fieldsets>
     </global>
     <frontend>
         <layout>
@@ -49,4 +71,13 @@
           </checkout>
         </routers>
     </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <item_comment>
+                    <file>apdc_cart.xml</file>
+                </item_comment>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>
