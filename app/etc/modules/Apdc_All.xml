@@ -39,10 +39,14 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Customer>
-	<Apdc_Checkout>
-	    <codePool>local</codePool>
-	    <active>true</active>
-	    <depends><MW_Ddate /></depends>
-	</Apdc_Checkout>
+    	<Apdc_Checkout>
+    	    <codePool>local</codePool>
+    	    <active>true</active>
+    	    <depends><MW_Ddate /></depends>
+    	</Apdc_Checkout>
+        <Apdc_Coupon>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Coupon>
     </modules>
 </config>
