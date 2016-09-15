@@ -51,10 +51,6 @@
                 <!-- MAGNIFIC POPUP -->
                 <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
                 <!-- =========================
-                      FAV AND TOUCH ICONS  
-                ============================== -->
-                <action method="addItem"><rel>skin_icon</rel><href>images/favicon.ico'</href></action>
-                <!-- =========================
                      SCRIPTS   
                 ============================== -->
                 <!-- JQUERY -->
