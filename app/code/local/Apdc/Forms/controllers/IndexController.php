@@ -13,7 +13,7 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
             'Mage_Core_Block_Template',
             'pmainguet.commercant_form',
             array(
-                'template' => 'forms/commercantform.phtml',
+                'template' => 'apdc_forms/commercantform.phtml',
             )
         );
 
@@ -34,7 +34,7 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
             'Mage_Core_Block_Template',
             'pmainguet.products_form',
             array(
-                'template' => 'forms/productform.phtml',
+                'template' => 'apdc_forms/productform.phtml',
             )
         );
 

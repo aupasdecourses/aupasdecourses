@@ -48,5 +48,14 @@
             <codePool>local</codePool>
             <active>true</active>
         </Apdc_Coupon>
+        <Apdc_Home>
+            <codePool>local</codePool>
+            <active>true</active>
+            <depends><Mage_Page /></depends>
+        </Apdc_Home>
+        <Apdc_Bundle>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Bundle>
     </modules>
 </config>
