@@ -14,21 +14,21 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
 {
     private $_codemodel = 'batignolles';
 
-    private $_rootcategory = 'Commercants Saint Martin';
-    private $_rootcaturlkey = 'commercants-saint-martin';
-    private $_codewebsite = 'apdc_saintmartin';
-    private $_namewebsite = 'Au Pas De Courses Saint Martin';
-    private $_namestoregroup = 'apdc_saintmartin';
-    private $_codeboutique = 'saintmartin';
-    private $_nameboutique = 'Saint Martin';
+    private $_rootcategory = 'Commercants Commerce';
+    private $_rootcaturlkey = 'commercants-commerce';
+    private $_codewebsite = 'apdc_commerce';
+    private $_namewebsite = 'Au Pas De Courses Commerce';
+    private $_namestoregroup = 'apdc_commerce';
+    private $_codeboutique = 'commerce';
+    private $_nameboutique = 'Commerce';
 
     private $_commercant = [
-            'Boucher' => 'Boucherie Lévêque',
-            'Primeur' => 'Verger Saint-Martin',
-            'Fromager' => 'Fromagerie Bouvet',
-            'Poissonnier' => 'Les Viviers de Noirmoutier',
-            'Caviste' => 'La cave du marché Saint-Martin',
-            'Boulanger' => 'La Miche Qui Fume',
+            'Boucher' => 'Boucherie Franck Lebrec',
+            'Primeur' => 'Les Halles Felix Faure',
+            'Fromager' => 'Thomas Artisan Fromager',
+            'Poissonnier' => 'Poissonnier Vent d\'Ouest',
+            'Caviste' => 'Le goût des vignes',
+            'Boulanger' => 'Boulangerie Moisan Fondary',
             ];
 
     private $_amasty = [
@@ -43,15 +43,15 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
          ];
 
     private $_pagetoupdate = [
-            'annonce-livreurs',
-            'autoriser-cookies',
-            'besoin-d-aide',
-            'no-route',
-            'mentions-legales-cgv',
-            'nos-engagements',
-            'politique-confidentialite-restriction-cookie',
+            // 'annonce-livreurs',
+            // 'autoriser-cookies',
+            // 'besoin-d-aide',
+            // 'no-route',
+            // 'mentions-legales-cgv',
+            // 'nos-engagements',
+            // 'politique-confidentialite-restriction-cookie',
             // 'tarifs-livraison',
-            'zone-et-horaire',
+            //'zone-et-horaire',
         ];
 
     private $_blocktoupdate = [
@@ -64,11 +64,11 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             'footer-cards',
         ];
 
-    private $_titlehomepage = 'Au Pas De Courses - Livraison de courses Saint Martin Paris 10e et 3e';
-    private $_metadescription = 'Les livraisons de courses dans le 10e et 3e arrondissements avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!';
-    private $_content_heading = 'Au Pas De Courses Saint Martin, votre livraison de produits frais dans le 10e et 3e';
+    private $_titlehomepage = 'Au Pas De Courses - Livraison de courses Commerce Paris 15e';
+    private $_metadescription = 'Les livraisons de courses dans le 15e arrondissement avec Au Pas De Courses, pour bien manger avec les meilleurs commerçants de Paris. Essayez ce soir, c\'est facile!';
+    private $_content_heading = 'Au Pas De Courses Commerce, votre livraison de produits frais dans le 15e';
 
-    private $_shippingruletoduplicate = 'Restriction 17e';
+    private $_shippingruletoduplicate = 'Restriction 15e';
     private $_shippinglivraisonpro = 'Livraison pour pro';
     private $_couponname = 'Première livraison gratuite';
 
@@ -168,7 +168,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
         //DUPLICATE HOMEPAGE
         echo "//DUPLICATE HOMEPAGE//\n";
         $page = Mage::getModel('cms/page')->setStoreId($modelid)->load('home');
-        $check = sizeof(Mage::getModel('cms/page')->setStoreId($newstoreid)->load('home')->getData());
+        $check = sizeof(Mage::getModel('cms/page')->setStoreId($newstoreid)->load('home')->getPageId());
         if ($check == 0) {
             $cmsPageData = [
                  'title' => $this->_titlehomepage,
