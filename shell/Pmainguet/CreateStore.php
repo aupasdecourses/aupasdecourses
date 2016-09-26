@@ -51,7 +51,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             'nos-engagements',
             'politique-confidentialite-restriction-cookie',
             'tarifs-livraison',
-            'zone-et-horaire',
+            //'zone-et-horaire',
         ];
 
     private $_blocktoupdate = [
