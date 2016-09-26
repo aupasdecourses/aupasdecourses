@@ -43,14 +43,14 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
          ];
 
     private $_pagetoupdate = [
-            'annonce-livreurs',
-            'autoriser-cookies',
-            'besoin-d-aide',
-            'no-route',
-            'mentions-legales-cgv',
-            'nos-engagements',
-            'politique-confidentialite-restriction-cookie',
-            'tarifs-livraison',
+            // 'annonce-livreurs',
+             'autoriser-cookies',
+             'besoin-d-aide',
+             'no-route',
+             'mentions-legales-cgv',
+             'nos-engagements',
+             'politique-confidentialite-restriction-cookie',
+             'tarifs-livraison',
             //'zone-et-horaire',
         ];
 
