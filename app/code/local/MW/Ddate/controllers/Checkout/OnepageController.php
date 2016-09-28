@@ -57,39 +57,31 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
                 */
                 try {
                     $result = $this->getOnepage()->savePayment($data);
-                    Mage::log("etape 1");
                 } catch (Mage_Payment_Exception $e) {
-                    Mage::log("erreur 1");
                     if ($e->getFields()) {
                         $result['fields'] = $e->getFields();
                     }
                     $result['error'] = $e->getMessage();
                 } catch (Exception $e) {
-                    Mage::log("erreur 2");
                     $result['error'] = $e->getMessage();
                 }
 
                 $redirectUrl = $this->getOnePage()->getQuote()->getPayment()->getCheckoutRedirectUrl();
-                                    Mage::log("etape 2");
                 if (empty($result['error']) && !$redirectUrl) {
                     $result['goto_section'] = 'ddate';
-                                        Mage::log("etape 3");
                 }
 
                 if ($redirectUrl) {
-                                        Mage::log("etape 4");
                     $result['redirect'] = $redirectUrl;
                 }
 
                 $this->getResponse()->setBody(Zend_Json::encode($result));
-                                    Mage::log("etape 5");
             }
         } else {
             if ($this->_expireAjax()) {
                 return;
             }
             try {
-                                    Mage::log("etape 6");
                 if (!$this->getRequest()->isPost()) {
                     $this->_ajaxRedirectResponse();
                     return;

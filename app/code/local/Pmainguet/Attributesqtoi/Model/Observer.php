@@ -24,7 +24,7 @@ class Pmainguet_Attributesqtoi_Model_Observer extends Varien_Object
             if(isset($ddate)){
                 $timestamp = strtotime($ddate);
                 $day = date('w', $timestamp);
-                $helper=Mage::helper('customcheckout');
+                $helper=Mage::helper('apdc_checkout');
                 $name=$helper->getCommercantname($quoteItem);
                 $delivery_days=$helper->getCommercantcat($name);
                 $delivery_days = str_replace(' ', '', $delivery_days);
