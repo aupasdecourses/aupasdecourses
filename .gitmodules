@@ -1,0 +1,3 @@
+[submodule "faq"]
+	path = faq
+	url = https://github.com/aupasdecourses/faq.git
