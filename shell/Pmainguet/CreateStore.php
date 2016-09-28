@@ -26,7 +26,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             'Boucher' => 'Boucherie Franck Lebrec',
             'Primeur' => 'Les Halles Felix Faure',
             'Fromager' => 'Thomas Artisan Fromager',
-            'Poissonnier' => 'Poissonnier Vent d\'Ouest',
+            'Poissonnier' => 'Vent d\'Ouest Marée',
             'Caviste' => 'Le goût des vignes',
             'Boulanger' => 'Boulangerie Moisan Fondary',
             ];
