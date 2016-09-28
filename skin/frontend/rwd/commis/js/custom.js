@@ -35,7 +35,7 @@ var color_menu={
     "Poissonnier":"#5496d7",
     "Caviste":"#e83632",
     "Boulanger":"#f3a71c",
-    "Epicier":"#2f4da8",
+    "Epicierie Fine":"#2f4da8",
     "Café & Thé":"#f36520"
 };
 
