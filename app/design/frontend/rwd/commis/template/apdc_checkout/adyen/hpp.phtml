@@ -1,0 +1,14 @@
+<?php
+/**
+* @author Pierre Mainguet
+ */
+?>
+<?php $_code = $this->getMethodCode() ?>
+<?php $disabled = $this->getHppOptionsDisabled();?>
+<?php if ($disabled): ?>
+    <fieldset class="form-list">
+        <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+            <li></li>
+        </ul>
+    </fieldset>
+<?php endif; ?>

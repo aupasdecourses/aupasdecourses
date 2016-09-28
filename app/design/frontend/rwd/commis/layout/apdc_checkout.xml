@@ -85,6 +85,12 @@
             </block>
         </block>
     </checkout_onepage_paymentmethod>
+    <!-- HiPay Redirect -->
+    <hipay_mapi_payment>
+        <reference name="hipaypayment.redirect">
+            <action method="setTemplate"><template>hipay/payment.phtml</template></action>
+        </reference>
+    </hipay_mapi_payment>
     <!--For Delivery Check / Custom Checkout modules-->
     <sales_email_order_items>
         <reference name="items">
