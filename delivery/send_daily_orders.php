@@ -38,6 +38,7 @@ function getCommercant()
             'mail3' => $category->getData('mail_3'),
             'mailc' => $category->getMailContact(),
             'mailp' => $category->getMailPro(),
+			'orders' => []
         ];
     }
 
@@ -392,7 +393,7 @@ class generatePdf
 
     public function save($filename)
     {
-        if (!$this->finalized) {
+        if (!$this->_finalized) {
             $this->_finalizePdf();
         }
         $this->_pdf->save($filename);
@@ -400,7 +401,7 @@ class generatePdf
 
     public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com'])
     {
-        if (!$this->finalized) {
+        if (!$this->_finalized) {
             $this->_finalizePdf();
         }
         $pdf = $this->_pdf->render();
