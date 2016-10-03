@@ -10,7 +10,7 @@ echo $this->getLayout()->getBlock('breadcrumbs')->toHtml();?>
     <h1>Suggérez un commerce à Au Pas De Courses</h1>
 </div>
 <div class="box simple_contact">
-    <p>Nous ne travaillons pas encore avec votre boucher ou traiteur préféré ? <br/> Prenez quelques instants pour remplir ce formulaire et nous ferons tout pour que ses produits soient rapidement disponible sur la plateforme Au Pas De Courses.</p>
+    <p>Nous ne travaillons pas encore avec votre boucher ou traiteur préféré ? <br/> Prenez quelques instants pour remplir ce formulaire et nous ferons tout pour que ses produits soient rapidement disponibles sur la plateforme Au Pas De Courses.</p>
     <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
     <form id="commercant_form" name="commercant_form" action="<?php echo $this->getUrl('formulaire/') ?>index/sendemailcommercant" method="post">
         <fieldset class="group-select">
