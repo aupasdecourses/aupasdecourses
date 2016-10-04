@@ -16,15 +16,7 @@ $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
-/*
-$lib_path = realpath(dirname(__FILE__) . '../lib');
-set_include_path("$libpath:".get_include_path());
 
-require_once 'Zend/Loader.php';
-require_once 'Zend/Loader/Autoloader.php';
-
-Zend_Loader_Autoloader::getInstance();
- */
 function getCommercant()
 {
     $commercants = [];
@@ -416,7 +408,7 @@ class generatePdf
         $mail->addTo($tmp);
         $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
-        $mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
+        $mail->setSubject("Au Pas De Courses {$this->_orders_count} commandes le {$this->_date}");
         $mail->setBodyHtml(
             Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
             ->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])
