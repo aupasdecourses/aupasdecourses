@@ -17,7 +17,7 @@ class Pmainguet_Customhome_IndexController extends Mage_Core_Controller_Front_Ac
 		75012	=>	'../quartiers/Paris_12e',
 		75013	=>	'../quartiers/Paris_13e',
 		75014	=>	'../quartiers/Paris_14e',
-		75015	=>	'../quartiers/Paris_15e',
+		75015	=>	'../commerce',
 		75016	=>	'../quartiers/Paris_16e',
 		75116	=>	'../quartiers/Paris_16e',
 		75017	=>	'../batignolles',
