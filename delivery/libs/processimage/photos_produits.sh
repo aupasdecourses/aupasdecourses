@@ -3,12 +3,7 @@ URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
 cd ../../uploads/files
 dir="temp"
-dirsite="site"
 mkdir "$dir"
-
-if [ ! -d "$dirsite" ]; then
-  mkdir "$dirsite"
-fi
 
 #convert png if exist
 echo "Convert png if exist ..."
@@ -52,3 +47,6 @@ for f in "$dir"/*.jpg; do
 mv "$f" ../../../media/import
 done
 echo "Done!"
+
+#remove temp files
+rm -R * temp/
