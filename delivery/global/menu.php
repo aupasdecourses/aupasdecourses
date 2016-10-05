@@ -44,6 +44,12 @@
           <li><a href="index.php?module=clients&action=view&option=notation">Notes commande</a></li>
         </ul>
     </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Outils<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="index.php?module=processimage&action=view&option=processimage"><b>Upload images</b></a></li>
+        </ul>
+    </li>
     <li><a href="index.php?module=prepacommande&action=view">Process</a></li>
     <li><a href="index.php?module=profil&amp;action=deconnexion">Déconnexion</a></li>
   </ul>
