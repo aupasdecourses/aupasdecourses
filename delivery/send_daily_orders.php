@@ -16,15 +16,7 @@ $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
-/*
-$lib_path = realpath(dirname(__FILE__) . '../lib');
-set_include_path("$libpath:".get_include_path());
 
-require_once 'Zend/Loader.php';
-require_once 'Zend/Loader/Autoloader.php';
-
-Zend_Loader_Autoloader::getInstance();
- */
 function getCommercant()
 {
     $commercants = [];
@@ -38,6 +30,7 @@ function getCommercant()
             'mail3' => $category->getData('mail_3'),
             'mailc' => $category->getMailContact(),
             'mailp' => $category->getMailPro(),
+			'orders' => []
         ];
     }
 
@@ -392,7 +385,7 @@ class generatePdf
 
     public function save($filename)
     {
-        if (!$this->finalized) {
+        if (!$this->_finalized) {
             $this->_finalizePdf();
         }
         $this->_pdf->save($filename);
@@ -400,7 +393,7 @@ class generatePdf
 
     public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com'])
     {
-        if (!$this->finalized) {
+        if (!$this->_finalized) {
             $this->_finalizePdf();
         }
         $pdf = $this->_pdf->render();
@@ -415,7 +408,7 @@ class generatePdf
         $mail->addTo($tmp);
         $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
-        $mail->setSubject("Au Pas De Courses - Commande du {$this->_date}");
+        $mail->setSubject("Au Pas De Courses {$this->_orders_count} commandes le {$this->_date}");
         $mail->setBodyHtml(
             Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
             ->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])

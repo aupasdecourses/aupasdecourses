@@ -4,6 +4,16 @@
 
 class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
 {
+
+    public function getTransport(){
+        return new Zend_Mail_Transport_Smtp('smtp.mandrillapp.com', array(
+        'auth'     => 'login',
+        'username' => 'pierre@aupasdecourses.com',
+        'password' => 'suQMuVOzZHE5kc-wmH3oUA',
+        'port'     => 587,
+        ));
+    }
+
     public function commercantsmanquantsAction()
     {
         //Get current layout state
@@ -48,26 +58,29 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
 
     public function sendemailcommercantAction()
     {
+
         //Fetch submited params
         $params = $this->getRequest()->getParams();
+        if ($params!=array()){
+            $text = 'Expéditeur'.$params['name'].' - '.$params['email'].'&#10;Commentaire: '.$params['comment'].'&#10;Nom du commerçant: '.$params['nom-commercant'].'&#10;Adresse du commerçant: '.$params['adresse-commercant'].'&#10;Code Postal: '.$params['zipcode-commercant'];
+            $html = '<p>Expéditeur'.$params['name'].' - '.$params['email'].'</p><p>Commentaire: '.$params['comment'].'</p><p>Nom du commerçant: '.$params['nom-commercant'].'</p><p>Adresse du commerçant: '.$params['adresse-commercant'].'</p><p>Code postal: '.$params['zipcode-commercant'].'</p>';
 
-        $text = 'Commentaire: '.$params['comment'].'&#10;Nom du commerçant: '.$params['nom-commercant'].'&#10;Adresse du commerçant: '.$params['adresse-commercant'].'&#10;Code Postal: '.$params['zipcode-commercant'];
-        $html = '<p>Commentaire: '.$params['comment'].'</p><p>Nom du commerçant: '.$params['nom-commercant'].'</p><p>Adresse du commerçant: '.$params['adresse-commercant'].'</p><p>Code postal: '.$params['zipcode-commercant'].'</p>';
-
-        $mail = new Zend_Mail('UTF-8');
-        $mail->setBodyText($text);
-        $mail->setBodyHtml($html);
-        $mail->setFrom($params['email'], $params['name']);
-        $mail->addTo('contact@aupasdecourses.com', 'Au Pas De Courses');
-        $mail->setSubject('Suggestion d\'un commerce pour Au Pas De Courses');
-        try {
-            $mail->send();
-            Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
-        } catch (Exception $ex) {
-            Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
+            $mail = new Zend_Mail('UTF-8');
+            $mail->setBodyText($text);
+            $mail->setBodyHtml($html);
+            $mail->setFrom('contact@aupasdecourses.com', 'Formulaire commerçants');
+            $mail->addTo('contact@aupasdecourses.com', 'Au Pas De Courses');
+            $mail->setSubject('Suggestion d\'un commerce pour Au Pas De Courses');
+            try {
+                $mail->send($this->getTransport());
+                Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
+            } catch (Exception $ex) {
+                Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
+            }
+        } else {
+            Mage::getSingleton('core/session')->addError('Merci de renseigner l\'ensemble des champs du formulaire!');
         }
 
-        //Redirect back to index action this controller via frontname
         $this->_redirect('formulaire/index/commercantsmanquants');
     }
 
@@ -76,20 +89,24 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
         //Fetch submited params
         $params = $this->getRequest()->getParams();
 
-        $text = 'Commentaire: '.$params['comment'].'&#10;Nom du ou des produits: '.$params['nom-produits'];
-        $html = '<p>Commentaire: '.$params['comment'].'</p><p>Nom du ou des produits: '.$params['nom-produits'].'</p>';
+        if ($params!=array()){
+            $text = 'Expéditeur'.$params['name'].' - '.$params['email'].'&#10;Commentaire: '.$params['comment'].'&#10;Nom du ou des produits: '.$params['nom-produits'];
+            $html = '<p>Expéditeur'.$params['name'].' - '.$params['email'].'</p><p>Commentaire: '.$params['comment'].'</p><p>Nom du ou des produits: '.$params['nom-produits'].'</p>';
 
-        $mail = new Zend_Mail();
-        $mail->setBodyText($text);
-        $mail->setBodyHtml($html);
-        $mail->setFrom($params['email'], $params['name']);
-        $mail->addTo('contact@aupasdecourses.com', 'Au Pas De Courses');
-        $mail->setSubject('Produit(s) manquant(s) sur Au Pas De Courses');
-        try {
-            $mail->send();
-            Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
-        } catch (Exception $ex) {
-            Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
+            $mail = new Zend_Mail();
+            $mail->setBodyText($text);
+            $mail->setBodyHtml($html);
+            $mail->setFrom('contact@aupasdecourses.com', 'Formulaire Produits');
+            $mail->addTo('contact@aupasdecourses.com', 'Au Pas De Courses');
+            $mail->setSubject('Produit(s) manquant(s) sur Au Pas De Courses');
+            try {
+                $mail->send($this->getTransport());
+                Mage::getSingleton('customer/session')->addSuccess('Votre message a bien été envoyé!');
+            } catch (Exception $ex) {
+                Mage::getSingleton('core/session')->addError('Impossible d\'envoyer la notification à Au Pas De Courses, merci de bien vouloir contacter l\'administrateur système.');
+            }
+        } else {
+            Mage::getSingleton('core/session')->addError('Merci de renseigner l\'ensemble des champs du formulaire!');
         }
 
         //Redirect back to index action this controller via frontname

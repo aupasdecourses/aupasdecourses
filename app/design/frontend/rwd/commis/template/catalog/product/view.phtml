@@ -55,7 +55,7 @@
 
 
             <?php $attributes = $_product->getAttributes();
-                $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','saisonnalite'=>'saison','labels_produits'=>'labels'];
+                $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
             ?>
 
              <table class="tags-product">
@@ -74,36 +74,27 @@
                                 foreach ($tags as $tag=>$label) {    
                                     $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
                                     if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
+                                        <td class='tags-wrapper'>
                                         <?php if($tag=='producteur'){?>
-                                            <td class='tags-wrapper'>
-                                                <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag-<?php echo $label?>"><span><?php echo $attributeValue?></span></div></a>
-                                            </td>
+                                                <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
+                                            
                                             <?php }elseif($tag=='origine'){?>
-                                            <td class='tags-wrapper'>
                                                 <?php if (substr($attributeValue, 0, 6) == "France"){?>
-                                                    <div class="value-tag tag-<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
+                                                    <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
                                                 <?php }else{?>
-                                                    <div class="value-tag tag-<?php echo $label;?>"><span><?php echo $attributeValue;?></span></div> 
+                                                    <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
                                                 <?php } ?>
-                                            </td>
                                         <?php }elseif($tag=='produit_biologique'){?>
-                                            <td class='tags-wrapper'>
                                                 <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
-                                            </td>
                                         <?php } else{?>
-                                            <td class='tags-wrapper'>
-                                                <div class="value-tag tag-<?php echo $label;?>"><span><?php echo $attributeValue;?></span></div> 
-                                            </td>
+                                                <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
                                         <?php } ?>
+                                        </td>
                                 <?php }} 
                         ?>
                     </tr>
                 </tbody>
             </table>
-
-    <!--         <input type="text" title="Commentaires" value="Commentaires" id="item_comment" name="item_comment">
-     -->
-
     </div>
             </div>
 

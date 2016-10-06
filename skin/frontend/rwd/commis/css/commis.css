@@ -3586,7 +3586,7 @@ a.btn:hover {
     font-weight: bold;
 }
 
-.tag-saison {
+.tag_produit_de_saison {
     background-color: #1C7E1C;
     padding-left: 5px;
     padding-right: 5px;
@@ -3594,28 +3594,28 @@ a.btn:hover {
     -moz-transform: rotate(-15deg);*/
 }
 
-.tag-origine {
+.tag_origine {
     font-size: 0.8em;
     padding: 10px;
     background-color: #ECECEC;
     color: #333;
 }
 
-.tag-origine img.origine_flag {
+.tag_origine img.origine_flag {
     margin: auto;
 }
 
-.tag-bio {
+.tag_produit_biologique {
     background-color: #3CA53C;
     font-size: 0.8em;
 }
 
-.tag-producteur {
+.tag_producteur {
     background-color: #C3401D;
     padding: 5px;
 }
 
-.tag-labels {
+.tag_labels_produits {
     background-color: #DA3131;
     padding: 5px;
 }

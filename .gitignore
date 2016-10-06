@@ -79,3 +79,4 @@ LICENSE*
 /magmi/.htaccess
 *.default
 /delivery/attachments
+/delivery/uploads/files/
