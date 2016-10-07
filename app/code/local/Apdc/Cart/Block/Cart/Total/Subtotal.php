@@ -3,6 +3,6 @@
 class Apdc_Cart_Block_Cart_Total_Subtotal extends Mage_Checkout_Block_Total_Default
 {
 
-    protected $_template = 'apdccart/cart/total/subtotal.phtml';
+    protected $_template = 'apdc_cart/cart/total/subtotal.phtml';
 
 }

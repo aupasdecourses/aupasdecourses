@@ -32,8 +32,8 @@
  * @package     Mage_Bundle
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Pmainguet_Bundle_Block_Catalog_Product_View_Type_Bundle_Option_Checkbox
-    extends Pmainguet_Bundle_Block_Catalog_Product_View_Type_Bundle_Option
+class Apdc_Bundle_Block_Catalog_Product_View_Type_Bundle_Option_Checkbox
+    extends Apdc_Bundle_Block_Catalog_Product_View_Type_Bundle_Option
 {
     /**
      * Set template

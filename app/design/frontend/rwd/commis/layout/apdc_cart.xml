@@ -12,6 +12,7 @@
         </reference>
     </default>
     <checkout_cart_index>
+        <remove name="checkout.cart.shipping"/>
     	<reference name="head">
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
         </reference>
@@ -28,9 +29,9 @@
     	<reference name="checkout.cart.totals">
     		<action method="setTemplate"><template>apdc_cart/cart/totals.phtml</template></action>
     	</reference>
-        <block type="apdc_cart/cart_total_shipping" name="shipping_total_renderer" />
-        <block type="apdc_cart/cart_total_subtotal" name="subtotal_total_renderer" />
-        <block type="apdc_cart/cart_total_grand" name="grand_total_total_renderer" />
+        <block type="apdccart/cart_total_shipping" name="shipping_total_renderer" />
+        <block type="apdccart/cart_total_subtotal" name="subtotal_total_renderer" />
+        <block type="apdccart/cart_total_grand" name="grand_total_total_renderer" />
     </checkout_cart_index>
     <catalog_category_layered_nochildren>
         <reference name="content">

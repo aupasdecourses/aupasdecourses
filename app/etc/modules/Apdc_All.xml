@@ -23,10 +23,10 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Google>
-        <Apdc_Adminxyz>
+        <Apdc_Admin>
             <active>true</active>
             <codePool>local</codePool>
-        </Apdc_Adminxyz>
+        </Apdc_Admin>
         <Apdc_Catalog>
             <active>true</active>
             <codePool>local</codePool>
@@ -57,5 +57,9 @@
             <codePool>local</codePool>
             <active>true</active>
         </Apdc_Bundle>
+        <Apdc_Front>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Front>
     </modules>
 </config>

@@ -21,7 +21,7 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
 
         $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
-            'pmainguet.commercant_form',
+            'apdc.commercant_form',
             array(
                 'template' => 'apdc_forms/commercantform.phtml',
             )
@@ -42,7 +42,7 @@ class Apdc_Forms_IndexController extends Mage_Core_Controller_Front_Action
 
         $block = $this->getLayout()->createBlock(
             'Mage_Core_Block_Template',
-            'pmainguet.products_form',
+            'apdc.products_form',
             array(
                 'template' => 'apdc_forms/productform.phtml',
             )

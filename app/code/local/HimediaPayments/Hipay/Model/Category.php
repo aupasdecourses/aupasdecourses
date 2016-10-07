@@ -90,7 +90,9 @@ class HimediaPayments_Hipay_Model_Category
 			}
 			else 
 			{
-				Mage::log("Hipay: Error while resolving category list by this URL '".$categoryUrl."': " .$response);
+				if(isset($response)){
+					Mage::log("Hipay: Error while resolving category list by this URL '".$categoryUrl."': " .$response);
+				}
 				return array(
 	            	array('value'=>'', 'label'=>Mage::helper('hipaymod')->__('Error! Check your logs, please!'))
 	        	);

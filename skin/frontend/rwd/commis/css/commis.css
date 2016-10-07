@@ -897,7 +897,6 @@ form .legend {
 
 label {
     display: inline-block;
-    font-size: 13px;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-weight: 600;
     -moz-user-select: none;
@@ -905,6 +904,19 @@ label {
     -webkit-user-select: none;
     -o-user-select: none;
     user-select: none;
+    text-align: left;
+    font-size: 14px;
+}
+
+.product-options ul.options-list label {
+    white-space:normal;
+    line-height: 1.25;
+    padding: 0;
+}
+
+.product-options ul.options-list input.checkbox{
+    margin-left: 30px;
+    margin-top: 6px;
 }
 
 
@@ -4017,10 +4029,6 @@ input[type=text] {
 
 #amorderattr label {
     text-align: right;
-}
-
-label {
-    font-size: 14px;
 }
 
 

@@ -2,7 +2,7 @@
 /* @author Pierre Mainguet*/
 class Apdc_Cart_Block_Cart_Total_Shipping extends Mage_Checkout_Block_Total_Default
 {
-    protected $_template = 'apdccart/cart/total/shipping.phtml';
+    protected $_template = 'apdc_cart/cart/total/shipping.phtml';
 
     /**
      * Check if shipping is free.

@@ -249,8 +249,25 @@
         <remove name="product.info.addtocart.paypaluk.wrapper" />
         <reference name="product.info.options.wrapper.bottom">
             <action method="setTemplate">
-                <template>bundle/catalog/product/view/options/wrapper/bottom.phtml</template>
+                <template>apdc_bundle/catalog/product/view/options/wrapper/bottom.phtml</template>
             </action>
+        </reference>
+        <reference name="product.info">
+            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>apdc_bundle/catalog/product/price.phtml</template></action>
+        </reference>
+        <reference name="bundle.prices">
+            <action method="setTemplate">
+                <template>apdc_bundle/catalog/product/view/prices.phtml</template>
+            </action>
+        </reference>
+        <reference name="product.info.bundle.options">
+            <action method="setTemplate">
+                <template>apdc_bundle/catalog/product/view/type/bundle/options.phtml</template>
+            </action>
+            <action method="addRenderer"><type>select</type><block>bundle/catalog_product_view_type_bundle_option_select</block><template>apdc_bundle/catalog/product/view/type/bundle/option/select.phtml</template></action>
+            <action method="addRenderer"><type>multi</type><block>bundle/catalog_product_view_type_bundle_option_multi</block><template>apdc_bundle/catalog/product/view/type/bundle/option/multi.phtml</template></action>
+            <action method="addRenderer"><type>radio</type><block>bundle/catalog_product_view_type_bundle_option_radio</block><template>apdc_bundle/catalog/product/view/type/bundle/option/radio.phtml</template></action>
+            <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block><template>apdc_bundle/catalog/product/view/type/bundle/option/checkbox.phtml</template></action>
         </reference>
     </PRODUCT_TYPE_bundle>
     <!-- Product listings by commerçants 'Fruits'-->
