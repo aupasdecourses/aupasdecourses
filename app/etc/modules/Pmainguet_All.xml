@@ -80,10 +80,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Bundle>
-    <Pmainguet_Delivery>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Delivery>
         <Alanstormdotcom_Layoutviewer>
         <codePool>local</codePool>
         <active>true</active>
