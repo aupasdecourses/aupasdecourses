@@ -61,5 +61,9 @@
             <codePool>local</codePool>
             <active>true</active>
         </Apdc_Front>
+        <Apdc_Sales>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Sales>
     </modules>
 </config>
