@@ -56,7 +56,6 @@
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
                 <block type="apdc_catalog/selection" name="home-selection" template="catalog/blockselection/selection_all.phtml"></block>
-                <block type="catalog/product_bestseller" name="home-favorite" template="catalog/product/bestseller.phtml"></block>
             </block>
             <!-- Inclusion des commerçants du Commis -->
             <block type="commercants/fiche" template="commercants/fiche.phtml" name="commercants-fiche">

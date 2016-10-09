@@ -76,11 +76,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Ajaxlp>
-
-    <Pmainguet_Custommenu>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Custommenu>
     <Pmainguet_Bundle>
         <active>true</active>
         <codePool>local</codePool>
