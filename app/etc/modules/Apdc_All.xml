@@ -60,9 +60,6 @@
         <Apdc_Front>
             <codePool>local</codePool>
             <active>true</active>
-            <depends>
-                <WP_CustomMenu/>
-            </depends>
         </Apdc_Front>
         <Apdc_Sales>
             <codePool>local</codePool>
