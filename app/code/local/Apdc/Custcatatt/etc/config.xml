@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Apdc_Custcatatt>
+      <version>0.0.8</version>
+    </Apdc_Custcatatt>
+  </modules>
+    <global>
+      <helpers>
+        <custcatatt>
+          <class>Apdc_Custcatatt_Helper</class>
+        </custcatatt>
+      </helpers>
+      <models>
+        <custcatatt>
+          <class>Apdc_Custcatatt_Model</class>
+        </custcatatt>
+      </models>
+      <resources>
+          <Custcatatt_setup>
+            <setup>
+              <module>Apdc_Custcatatt</module>
+              <class>Mage_Eav_Model_Entity_Setup</class>
+            </setup>
+            <connection>
+              <use>default_setup</use>
+            </connection>
+          </Custcatatt_setup>
+      </resources>
+    </global>
+</config>
