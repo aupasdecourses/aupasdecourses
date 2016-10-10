@@ -108,7 +108,7 @@
         <remove name="global_cookie_notice"/>
         <remove name="custommenu-content"/>
         <remove name="balloz.toolbar"/>
-        <reference name="head">
+        <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">
                     <text>
@@ -125,6 +125,6 @@
                     </text>
                 </action>
             </block>
-        </reference>
+        </reference> -->
     </default>
 </layout>

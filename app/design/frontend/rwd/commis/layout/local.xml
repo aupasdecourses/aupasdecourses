@@ -138,7 +138,7 @@
         <remove name="cms_footer_links"/>
         <remove name="cms_footer_links_sm"/>
         <remove name="custommenu-content"/> -->
-        <reference name="head">
+        <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">
                     <text>
@@ -155,7 +155,7 @@
                     </text>
                 </action>
             </block>
-        </reference>
+        </reference> -->
     </default>
     <!-- Homepage -->
     <cms_index_index>
