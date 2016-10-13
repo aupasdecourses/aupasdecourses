@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <adminhtml_gmsponsorship_sponsor_index>
+    <reference name="content">
+      <block type="gm_sponsorship/adminhtml_sponsor" name="sponsor" />
+    </reference>
+  </adminhtml_gmsponsorship_sponsor_index>
+
+  <adminhtml_gmsponsorship_godchild_index>
+    <reference name="content">
+      <block type="gm_sponsorship/adminhtml_godchild" name="godchild" />
+    </reference>
+  </adminhtml_gmsponsorship_godchild_index>
+</layout>
