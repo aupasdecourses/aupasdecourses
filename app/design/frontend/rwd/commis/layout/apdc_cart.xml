@@ -17,11 +17,11 @@
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
         </reference>
         <reference name="checkout.cart">
-        	<action method="setTemplate"><template>apdc_cart/carts.phtml</template></action>
-        	<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
-            <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
-            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
-            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
+        	<action method="setTemplate"><template>apdc_cart/cart.phtml</template></action>
+        	<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/defaults.phtml</template></action>
+            <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/defaults.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/defaults.phtml</template></action>
+            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/defaults.phtml</template></action>
         </reference>
         <reference name="checkout.cart.coupon">
         	<action method="setTemplate"><template>apdc_cart/cart/coupon.phtml</template></action>
