@@ -9,10 +9,6 @@ require_once 'Mage/Checkout/controllers/CartController.php';
 class Apdc_Cart_CartController extends Mage_Checkout_CartController
 {
 
-    public function updatePostAction(){
-        return "hello";
-    }
-
     /**
      * Minicart delete action.
      */
