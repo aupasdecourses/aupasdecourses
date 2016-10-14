@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MW_Ddate>
-            <version>1.7.3</version>
+            <version>1.7.4</version>
         </MW_Ddate>
     </modules>
     <frontend>
@@ -34,17 +34,10 @@
     </frontend>
     <admin>
         <routers>
-            <ddate_admin>
-                <use>admin</use>
-                <args>
-                    <module>MW_Ddate</module>
-                    <frontName>ddate_admin</frontName>
-                </args>
-            </ddate_admin>
             <adminhtml>
                 <args>
                     <modules>
-                        <MW_Ddate before="Mage_Adminhtml">MW_Ddate_Adminhtml</MW_Ddate>
+                        <ddate before="Mage_Adminhtml">MW_Ddate_Adminhtml</ddate>
                     </modules>
                 </args>
             </adminhtml>
@@ -68,12 +61,12 @@
                     <items module="ddate">
                         <title>Manage Delivery Schedule</title>
                         <sort_order>0</sort_order>
-                        <action>ddate_admin/adminhtml_ddate</action>
+                        <action>adminhtml/ddate_ddate</action>
                     </items>
                     <dtime>
                         <title>Manage Delivery Times</title>
                         <sort_order>10</sort_order>
-                        <action>ddate_admin/adminhtml_dtime</action>
+                        <action>adminhtml/ddate_dtime</action>
                     </dtime>
                     <ddate_config>
                         <title>Configuration</title>
@@ -90,10 +83,20 @@
                 </all>
                 <admin>
                     <children>
-                        <MW_Ddate>
-                            <title>Delivery date Module</title>
+                        <ddate>
+                            <title>Delivery Schedule</title>
                             <sort_order>10</sort_order>
-                        </MW_Ddate>
+                            <children>
+                                <ddate module="ddate">
+                                    <title>Manage Delivery Schedule</title>
+                                    <sort_order>10</sort_order>
+                                </ddate>
+                                <dtime module="ddate">
+                                    <title>Manage Delivery Times</title>
+                                    <sort_order>20</sort_order>
+                                </dtime>
+                            </children>
+                        </ddate>
                         <system>
                             <children>
                                 <config>
@@ -124,15 +127,15 @@
                     <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>ddate/sender::prepareMail</model>
+                    <model>reminder/sender::prepareMail</model>
                 </run>
             </sendreminders>
         </jobs>
     </crontab>
     <global>
-        <events>
-            <sales_order_item_cancel>
-                <observers>
+		<events>
+			<sales_order_item_cancel>
+            	<observers>
                     <affiliate_cancel>
                         <type>singleton</type>
                         <class>MW_Ddate_Model_Observer</class>
@@ -140,15 +143,15 @@
                     </affiliate_cancel>
                 </observers>
             </sales_order_item_cancel> 
-            <controller_front_init_before>
-                <observers>
+			<controller_front_init_before>
+            	<observers>
                     <tenmodule>
                         <type>singleton</type>
                         <class>MW_Ddate_Model_Observer</class>
                         <method>checkLicense</method>
                     </tenmodule>
                 </observers>
-            </controller_front_init_before>
+			</controller_front_init_before>
             <controller_action_layout_generate_blocks_before>
                 <observers>
                     <ddate_controller_action_layout_generate_blocks_before>
@@ -158,7 +161,7 @@
                     </ddate_controller_action_layout_generate_blocks_before>
                 </observers>
             </controller_action_layout_generate_blocks_before>
-        </events>
+		</events>
         <resources>
             <ddate_setup>
                 <setup>
@@ -185,13 +188,13 @@
                 </from>
                 <to>/ddate/checkout_onepage/</to>
             </mw_ddate_checkout_onepage>
-            <mw_ddate_checkout_multishipping>
+			<mw_ddate_checkout_multishipping>
                 <from><![CDATA[#^/checkout/multishipping/#]]>
                 </from>
                 <to>/ddate/checkout_multishipping/</to>
-            </mw_ddate_checkout_multishipping>  
+            </mw_ddate_checkout_multishipping>	
         </rewrite>
-        <blocks>            
+        <blocks>			
             <ddate>
                 <class>MW_Ddate_Block</class>
             </ddate>
@@ -209,18 +212,13 @@
                     <order_print>MW_Ddate_Block_Sales_Order_Print</order_print>
                 </rewrite>
             </sales>
-            <adminhtml>
-                <rewrite>
-                    <sales_order_grid>MW_Ddate_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
-                </rewrite>
-            </adminhtml>
         </blocks>
         <helpers>
             <ddate>
                 <class>MW_Ddate_Helper</class>
             </ddate>
         </helpers>
-        <models>            
+        <models>			
             <ddate>
                 <class>MW_Ddate_Model</class>
                 <resourceModel>ddate_mysql4</resourceModel>
@@ -249,7 +247,7 @@
                 <rewrite>
                     <type_onepage>MW_Ddate_Model_Type_Onepage</type_onepage>
                 </rewrite>
-                <rewrite>
+				<rewrite>
                     <type_multishipping>MW_Ddate_Model_Type_Multishipping</type_multishipping>
                 </rewrite>
             </checkout>

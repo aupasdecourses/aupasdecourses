@@ -54,7 +54,6 @@
                      SCRIPTS   
                 ============================== -->
                 <!-- JQUERY -->
-                <action method="removeItem"><type>js</type><name>mgt_developertoolbar/jquery-1.7.2.min.js</name></action>
                 <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
                 <action method="addJs"><script>lib/jquery/noconflict.js</script></action>

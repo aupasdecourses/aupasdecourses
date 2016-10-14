@@ -61,19 +61,6 @@ class MW_Ddate_Block_Onepage_Ddate extends Mage_Checkout_Block_Onepage_Abstract
         return Mage::getResourceModel('ddate/ddate')->getDtime();
     }
     
-    public function getRemainingnumberofOrders($slotId,$date)        
-    {
-       $slots = $this->getSlots();
-       $ddates=Mage::getSingleton('ddate/ddate')->getNumberOrderFromNow();
-       $remaining=intval($slots[$slotId]->getMaximumBooking());
-       if(isset($ddates[$slotId][$date]))
-       {
-         $remaining=intval($slots[$slotId]->getMaximumBooking())-intval($ddates[$slotId][$date]->getOrdered());
-        }
-        return $remaining;
-    }
-
-
     /**
      * check available date
      * @param int $slotId: dtime's id
@@ -99,10 +86,10 @@ class MW_Ddate_Block_Onepage_Ddate extends Mage_Checkout_Block_Onepage_Abstract
         if(Mage::getStoreConfig('ddate/info/disable_base_firststlot')){
             if(!isset($this->enableDate[$date])){
                 $startTime = Mage::getSingleton('ddate/dtime')->getStartTimeOfFirstSlot();
-                Mage::log(get_class($this), Zend_Log::DEBUG, 'debug.log');
-                Mage::log(date('Y-m-d H:i:s', $delayTime), Zend_Log::DEBUG, 'debug.log');
-                Mage::log(date('Y-m-d H:i:s', $ddateTime), Zend_Log::DEBUG, 'debug.log');
-                Mage::log(date('Y-m-d H:i:s', $this->getCurrentTime()), Zend_Log::DEBUG, 'debug.log');
+                // Mage::log(get_class($this), Zend_Log::DEBUG, 'debug.log');
+                // Mage::log(date('Y-m-d H:i:s', $delayTime), Zend_Log::DEBUG, 'debug.log');
+                // Mage::log(date('Y-m-d H:i:s', $ddateTime), Zend_Log::DEBUG, 'debug.log');
+                // Mage::log(date('Y-m-d H:i:s', $this->getCurrentTime()), Zend_Log::DEBUG, 'debug.log');
 
                 if ($delayTime > strtotime('+'.$startTime.' hours', $ddateTime)) {
                     $this->enableDate[$date] = false;

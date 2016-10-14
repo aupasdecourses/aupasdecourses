@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Pierre Mainguet
+ */
+
+?>
+
+<?php
+    $_cartQty = $this->getSummaryCount();
+    if(empty($_cartQty)) {
+        $_cartQty = 0;
+    }
+?>
+
+<a href="#header-cart" class="skip-link skip-cart <?php if($_cartQty <= 0): ?> no-count<?php endif; ?>">
+    <i class="fa fa-shopping-cart" style="font-size: 17px;"></i>
+    <span class="label"><?php echo $this->__('Cart'); ?></span>
+    <span class="count"><?php echo $_cartQty; ?></span>
+</a>
+
+<div id="header-cart" class="block block-cart skip-content">
+    <?php echo $this->getChildHtml('minicart_content');?>
+</div>

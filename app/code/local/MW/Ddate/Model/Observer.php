@@ -8,7 +8,7 @@ class MW_Ddate_Model_Observer extends Mage_Core_Model_Abstract
         $order = $cancel ->getOrder();
         $order_id=$order->getIncrementId();
         $resource = Mage::getSingleton('core/resource');
-        $selection = "SELECT * FROM `{$resource->getTableName('ddate/ddate_store')}` WHERE increment_id='{$order_id}'";
+        $selection = "SELECT * FROM {$resource->getTableName('ddate/ddate_store')} WHERE increment_id='{$order_id}'";
         $con = Mage::getModel('core/resource')->getConnection('core_read');
         $result = $con->query($selection);
         $results = $result->fetchAll();

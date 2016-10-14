@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Sales>
+            <version>0.0.1</version>
+        </Apdc_Sales>
+    </modules>
+    <global>
+        <models>
+            <apdc_sales>
+              <class>Apdc_Sales_Model</class>
+            </apdc_sales>
+            <sales>
+              <rewrite>
+                <order_pdf_abstract>Apdc_Sales_Model_Order_Pdf_Abstract</order_pdf_abstract>
+                <order_pdf_invoice>Apdc_Sales_Model_Order_Pdf_Invoice</order_pdf_invoice>
+                <order_pdf_shipment>Apdc_Sales_Model_Order_Pdf_Shipment</order_pdf_shipment>
+                <order_pdf_items_invoice_default>Apdc_Sales_Model_Order_Pdf_Items_Invoice_Default</order_pdf_items_invoice_default>
+              </rewrite>
+            </sales>
+        </models>
+        <helpers>
+            <invoice>
+                <class>Apdc_Sales_Helper</class>
+            </invoice>
+            <amorderattr>
+                <rewrite>
+                    <pdf>Apdc_Sales_Helper_Orderattr_Pdf</pdf>
+                </rewrite>
+            </amorderattr>
+        </helpers>
+    </global>
+</config>

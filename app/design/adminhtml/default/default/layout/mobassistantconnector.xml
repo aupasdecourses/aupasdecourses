@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<layout>
-    <adminhtml_system_config_edit>
-        <reference name="content">
-            <block type="core/template" name="mobassistantconnector"  template="mobassistantconnector/jsinit.phtml"></block>
-        </reference>
-    </adminhtml_system_config_edit>
-</layout>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Front>
+            <version>0.2.0</version>
+        </Apdc_Front>
+    </modules>
+    <global>
+        <blocks>
+            <apdc_front>
+                <class>Apdc_Front_Block</class>
+            </apdc_front>
+            <page>
+                <rewrite>
+                    <html_footer>Apdc_Front_Block_Page_Html_Footer</html_footer>
+                </rewrite>
+            </page>
+            <custommenu>
+                <rewrite>
+                    <navigation>Apdc_Front_Block_Navigation</navigation>
+                </rewrite>
+            </custommenu>
+        </blocks>
+    </global>
+</config>

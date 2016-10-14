@@ -24,10 +24,6 @@
       <active>true</active>
       <codePool>local</codePool>
     </Pmainguet_Custcatatt>
-    <Pmainguet_Customfield>
-      <active>false</active>
-      <codePool>local</codePool>
-    </Pmainguet_Customfield> 
     <Pmainguet_Blockselection>
       <active>true</active>
       <codePool>local</codePool>
@@ -44,10 +40,6 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Blockrelated>
-    <Pmainguet_QuoteItemComment>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_QuoteItemComment>
     <Pmainguet_Invoice>
         <active>true</active>
         <codePool>local</codePool>
@@ -65,7 +57,7 @@
         <codePool>local</codePool>
     </Pmainguet_Customvar>
     <Pmainguet_Validateaddress>
-        <active>true</active>
+        <active>false</active>
         <codePool>local</codePool>
     </Pmainguet_Validateaddress>
     <Pmainguet_Avoircustom>
@@ -84,29 +76,13 @@
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Ajaxlp>
-    <Pmainguet_CustomCheckout>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_CustomCheckout>
-    <Pmainguet_Custommenu>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Custommenu>
     <Pmainguet_Bundle>
         <active>true</active>
         <codePool>local</codePool>
     </Pmainguet_Bundle>
-    <Pmainguet_Delivery>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Delivery>
-    <Pmainguet_Apdcadmin>
-        <active>true</active>
-        <codePool>local</codePool>
-    </Pmainguet_Apdcadmin>
-    <Pmainguet_Customer>
+        <Alanstormdotcom_Layoutviewer>
         <codePool>local</codePool>
         <active>true</active>
-    </Pmainguet_Customer>
+    </Alanstormdotcom_Layoutviewer>
   </modules>
 </config>

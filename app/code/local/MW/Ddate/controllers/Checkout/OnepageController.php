@@ -36,7 +36,7 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
         'ddate'           => '_getDdateHtml',
     );
 
-    public function ddateAction()
+	public function ddateAction()
     {
         if(!Mage::helper('ddate')->isOSCRunning()){
             $this->loadLayout(false);
@@ -44,7 +44,7 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
         }
     }
 
-    public function savePaymentAction()
+	public function savePaymentAction()
     {
         if(Mage::getModel('ddate/dtime')->getCollection()->count() > 0 && Mage::helper('ddate')->haveAnySlotAvailable()) {
 
@@ -118,14 +118,14 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
         }
     }
 
-    protected function _getReviewHtml()
+	protected function _getReviewHtml()
     {
         return $this->getLayout()->getBlock('root')->toHtml();
     }
 
     protected function _getDdateHtml()
     {
-        $layout = $this->getLayout();
+    	$layout = $this->getLayout();
         $update = $layout->getUpdate();
         $update->load('checkout_onepage_ddate');
         $layout->generateXml();
@@ -139,33 +139,33 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
     {
         $this->_expireAjax();
         if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost('ddate', '');
-            $result = $this->getOnepage()->saveDdate($data);
+        	$data = $this->getRequest()->getPost('ddate', '');
+			$result = $this->getOnepage()->saveDdate($data);
             if (!$result) {
-                $this->loadLayout('checkout_onepage_review');
+				$this->loadLayout('checkout_onepage_review');
                 $result['goto_section'] = 'review';
                 $result['update_section'] = array(
                     'name' => 'review',
                     'html' => $this->_getReviewHtml()
                 );
-            }
+			}
             $this->getResponse()->setBody(Zend_Json::encode($result));
         }
     }
 
-    public function findDtimeAction()
+	public function findDtimeAction()
     {
         if ($this->getRequest()->isPost()) {
             $delay = Mage::getStoreConfig('ddate/info/delay');
 
-            $post = $this->getRequest()->getPost('deliverydate','');
-            $day = explode('>', $post);
-            $temp1 = array("sun", "mon", "tue", "wed", "thu", "fri", "sat");
-            $slot = Mage::getModel('ddate/dtime')
+			$post = $this->getRequest()->getPost('deliverydate','');
+			$day = explode('>', $post);
+			$temp1 = array("sun", "mon", "tue", "wed", "thu", "fri", "sat");
+			$slot = Mage::getModel('ddate/dtime')
                     ->getCollection()
                     ->addFieldToFilter($temp1[$day[1]], array('eq' => 1))
-                    ->addFieldToFilter('status', array('eq' => 1));
-                    
+					->addFieldToFilter('status', array('eq' => 1));
+					
             $slot = $slot->getItems();
             if (count($slot)) {
                 foreach($slot as $key => $sl) {
@@ -176,18 +176,18 @@ class MW_Ddate_Checkout_OnepageController extends Mage_Checkout_OnepageControlle
                 };
             }
 
-            if (count($slot)) {
-                $html  = "";
-                $html .= '<select id="ddate:dtime" size="1" name="ddate[dtime]">';
+			if (count($slot)) {
+				$html  = "";
+				$html .= '<select id="ddate:dtime" size="1" name="ddate[dtime]">';
                 $html .= '<option value="">' . Mage::helper('ddate')->__('Select Time') . '</option>';
-                foreach($slot as $sl){
-                    $html .= '<option value="'.$sl->getDtimeId().'">'.$sl->getDtime().'</option>';
-                };
-                $html .= '</select>';
+				foreach($slot as $sl){
+					$html .= '<option value="'.$sl->getDtimeId().'">'.$sl->getDtime().'</option>';
+				};
+				$html .= '</select>';
 
-                echo $html;
+				echo $html;
                 return;
-            } else {
+			} else {
                 echo Mage::helper('ddate')->__('There is no delivery time slot available for choosed day');
             }
         }
