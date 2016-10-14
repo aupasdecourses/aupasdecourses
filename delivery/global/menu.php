@@ -28,7 +28,7 @@
         </ul>
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Remb./Facturaton<span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Remb./Facturation<span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
           <li><a href="index.php?module=remboursement&action=view">Remboursements</a></li>
           <li><a href="index.php?module=facturation&action=view">Facturation</a></li>
