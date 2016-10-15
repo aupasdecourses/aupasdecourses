@@ -8,6 +8,49 @@
 <head>
 	<?php echo $this->getChildHtml('head') ?>
 </head>
+<style>
+/**
+ * Simple fade transition,
+ */
+.mfp-fade.mfp-bg {
+	opacity: 0;
+	-webkit-transition: all 0.15s ease-out; 
+	-moz-transition: all 0.15s ease-out; 
+	transition: all 0.15s ease-out;
+}
+.mfp-fade.mfp-bg.mfp-ready {
+	opacity: 0.8;
+}
+.mfp-fade.mfp-bg.mfp-removing {
+	opacity: 0;
+}
+
+.mfp-fade.mfp-wrap .mfp-content {
+	opacity: 0;
+	-webkit-transition: all 0.15s ease-out; 
+	-moz-transition: all 0.15s ease-out; 
+	transition: all 0.15s ease-out;
+}
+.mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+	opacity: 1;
+}
+.mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+	opacity: 0;
+}
+</style>
+<script>
+$j(document).ready(function() {
+	$j('.popup-gmaps').magnificPopup({
+		disableOn: 700,
+		type: 'iframe',
+		mainClass: 'mfp-fade',
+		removalDelay: 160,
+		preloader: false,
+
+		fixedContentPos: false
+	});
+});
+</script>
 <body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
 	<?php echo $this->getChildHtml('after_body_start') ?>
 	<header class="header" id="faites-vos-courses">
@@ -49,25 +92,32 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12 col-md-4">
+			<div class="col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Monceau - Batignolles</h3>
 					<p>17e-18e-9e-8e</p>
 				</a>
 			</div>
-			<div class="col-sm-12 col-md-4">
+			<div class="col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Commerce</h3>
 					<p>15e</p>
 				</a>
 			</div>
-			<div class="col-sm-12 col-md-4">
+			<div class="col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Saint Martin - Marais</h3>
 					<p>10e-3e-11e</p>
+				</a>
+			</div>
+			<div class="col-sm-12 col-md-3">
+				<a class="popup-gmaps" href="http://u.osmfr.org/m/86851/" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/paris.jpg');?>" alt="Autres quartiers" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">Pas sûr ?</h3>
+					<p>Cliquez pour savoir si nous pouvons vous livrer</p>
 				</a>
 			</div>
 		</div>
