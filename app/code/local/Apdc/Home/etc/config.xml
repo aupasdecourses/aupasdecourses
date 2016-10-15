@@ -41,7 +41,7 @@
                 </homepage>
                 <landingpage translate="label">
                     <label>Landing Page</label>
-                    <template>page/landingpage2.phtml</template>
+                    <template>page/landingpage3.phtml</template>
                     <layout_handle>landing_page</layout_handle>
                 </landingpage>
             </layouts>
