@@ -48,7 +48,6 @@ header {
     -o-background-size: cover;
     background-size: cover;
     background-position: center center !important;
-    height: 570px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgb(212, 212, 212);
     position:relative;
@@ -64,7 +63,7 @@ header .only-logo img {
 }
 
 .color-overlay {
-      background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
+      background: rgba(0, 0, 0, 0.28) none repeat scroll 0% 0%
 }
 
 header .color-overlay {
@@ -228,6 +227,22 @@ header .intro-section .buttons {
     min-width:100%;
   }
 
+}
+
+#background_video_container {
+  position: relative;
+  overflow: hidden;
+  width:auto;
+}
+
+#background_video_video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -10;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
 }
 
 /*Packages*/
