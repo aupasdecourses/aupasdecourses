@@ -63,10 +63,13 @@ header .only-logo img {
     width:221px;
 }
 
+.color-overlay {
+      background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
+}
+
 header .color-overlay {
     height: 100%;
     min-height: auto;
-    background: rgba(255,255,255, 0.6) none repeat scroll 0% 0%;
 }
 
 /*Intro section*/
@@ -174,7 +177,8 @@ header .intro-section .buttons {
     color:#333;
     font-size: 38px;
     line-height: 42px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 .section-header {
@@ -233,55 +237,25 @@ header .intro-section .buttons {
     padding-bottom: 40px;
 }
 
-/* Concept */
-
-.single-package{
-  margin-left:15px;
-  margin-right: 15px;
-}
-
-.single-package img{
-  width:260px;
-}
-
-.single-package .package-feature > li {
-    margin-bottom: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-}
+/* Quartiers */
 
 li.price{
     margin-top: 0;
     font-size: 24px;
 }
 
-#concept .single-package:hover .color-overlay{
-  background:rgba(255, 255, 255, 0.8);
-}
-
-#concept .single-package .color-overlay {
-    background:rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    height: 100%;
-    z-index: 2;
-    min-height: 343px;
-}
-
-#concept h3.package-heading{
-  margin-top: 130px;
+#quartiers h3.package-heading{
   text-transform: uppercase;
   margin-bottom: 0;
-  font-weight: 900;
   color:#164D26;
 }
 
-#concept .single-package a, #concept .single-package a:hover{
+#quartiers a, #quartiers a:hover{
   text-decoration: none;
 }
 
-#concept .single-package p{
+#quartiers p{
   margin: 0px;
-  font-weight: 600;
   font-size: 20px;
   color: #333;
 }
@@ -535,6 +509,10 @@ h3.package-heading{
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   background: #Fff none repeat scroll 0% 0%;
   margin-bottom:20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
  @media screen and (min-width: 768px){

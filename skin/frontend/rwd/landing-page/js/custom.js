@@ -3,7 +3,7 @@
 =================================== */
 
 $j(document).ready(function() {$j("#carousel-how").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 3]],stopOnHover:true});});
-$j(document).ready(function() {$j("#carousel-quartier").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 2]],stopOnHover:true});});
+//$j(document).ready(function() {$j("#carousel-quartier").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 2]],stopOnHover:true});});
 $j(document).ready(function() {$j("#carousel-price").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 3]],stopOnHover:true});});
 $j(document).ready(function() {$j("#carousel-comments").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 3]],stopOnHover:true});});
 
