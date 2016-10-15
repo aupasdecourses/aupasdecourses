@@ -53,15 +53,6 @@ header {
     position:relative;
 }
 
-header .only-logo .navbar {
-    padding: 40px;
-    padding-bottom: 20px;
-}
-
-header .only-logo img {
-    width:221px;
-}
-
 .color-overlay {
       background: rgba(0, 0, 0, 0.28) none repeat scroll 0% 0%
 }
@@ -75,15 +66,20 @@ header .color-overlay {
 
 header .intro-section{
   padding-top: 0;
+      height: 500px;
 }
 
 header .intro-section .intro {
     margin-bottom: 20px;
-    margin-top: 0;
-    color: #164D26;
+        margin-top: 20px;
+    color: white;
     /* text-transform: uppercase; */
     line-height: 1.15;
     font-family: Raleway;
+}
+
+#logo{
+  margin-top:50px;
 }
 
 .intro-section p.label_input{
