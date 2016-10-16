@@ -57,13 +57,14 @@ $j(document).ready(function() {
 	<div class="color-overlay">
 		<div id="background_video_container" class="container">
 			<video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">		
-				<source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
+				<!-- <source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
 				<source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
-				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" />
+				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
 			</video>
 			<div class="intro-section">
 				<img id="logo" src="<?php echo $this->getSkinUrl('images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
 				<h1 class="intro">Les meilleurs produits de votre quartier,</br>sans vous déplacer</h1>
+				<p class="intro-subtitle">Première livraison gratuite avec le code PANIER</p>
 					<!-- <form id='form-quartier' role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
 						<div id="input-group-intro">
 							<input id='GoogleAutoCompleteInput' class='form-control input-quartier' placeholder='Entrez votre adresse' type='text' name='input_addr' />

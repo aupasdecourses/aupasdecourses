@@ -39,7 +39,7 @@ h4 {
 }
 
 
-/*style select menu*/
+/*Header and intro section*/
 
 header {
     /*background: transparent url("../images/landing_splash.jpg") no-repeat center top / cover;*/
@@ -54,7 +54,7 @@ header {
 }
 
 .color-overlay {
-      background: rgba(0, 0, 0, 0.28) none repeat scroll 0% 0%
+      background: rgba(0, 0, 0, 0.42) none repeat scroll 0% 0%
 }
 
 header .color-overlay {
@@ -62,7 +62,9 @@ header .color-overlay {
     min-height: auto;
 }
 
-/*Intro section*/
+#logo{
+  margin-top:50px;
+}
 
 header .intro-section{
   padding-top: 0;
@@ -78,9 +80,33 @@ header .intro-section .intro {
     font-family: Raleway;
 }
 
-#logo{
-  margin-top:50px;
+p.intro-subtitle{
+  color: white;
+  font-size: 20px;
 }
+
+@media screen and (max-width:767px){
+
+  #logo{
+    margin-top:20px;
+    width:300px;
+  }
+
+  .intro-section h1{
+     font-size: 32px;
+  } 
+
+  .intro-section p.label_input{
+    display:none;
+  }
+
+  #input-group-intro{
+    min-width:100%;
+  }
+
+}
+
+
 
 .intro-section p.label_input{
   color: rgb(67, 41, 24);
@@ -209,21 +235,7 @@ header .intro-section .buttons {
   animation: bounce 2s infinite;
 }
 
-@media screen and (max-width:767px){
 
-  .intro-section h1{
-     font-size: 32px;
-  } 
-
-  .intro-section p.label_input{
-    display:none;
-  }
-
-  #input-group-intro{
-    min-width:100%;
-  }
-
-}
 
 #background_video_container {
   position: relative;
