@@ -44,7 +44,7 @@
             <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
                 <block type="core/text_list" name="product_list.name.after" as="name.after"/>
                 <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="apdc_cart/catalog/product/addajax/list/toolbar.phtml">
+                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
                     <block type="page/html_pager" name="product_list_toolbar_pager"/>
                     </block>
                     <action method="addColumnCountLayoutDepend">

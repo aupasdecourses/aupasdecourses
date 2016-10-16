@@ -21,5 +21,10 @@
                 </rewrite>
             </custommenu>
         </blocks>
+        <helpers>
+            <apdc_front>
+                <class>Apdc_Front_Helper</class>
+            </apdc_front>
+        </helpers>
     </global>
 </config>

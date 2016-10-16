@@ -11,21 +11,6 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
     public $_topMenu = array();
     public $_popupMenu = array();
 
-    /**
-     * Retrieve Thumbnail image URL.
-     *
-     * @return string
-     */
-    public function getThumbnailImageUrl($category)
-    {
-        $url = false;
-        if ($image = $category->getThumbnail()) {
-            $url = Mage::getBaseUrl('media').'catalog/category/'.$image;
-        }
-
-        return $url;
-    }
-
     public function drawCustomMenuMobileItem($category, $level = 0, $last = false)
     {
         if (!$category->getIsActive()) {
@@ -201,6 +186,7 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
 
     public function drawMenuItem($children, $level = 1)
     {
+        $helper=Mage::helper('apdc_front');
         $html = '<div class="itemMenu level'.$level.'">';
         $keyCurrent = $this->getCurrentCategory()->getId();
         foreach ($children as $child) {
@@ -228,7 +214,7 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
                     $html .= '<a class="itemMenuName level'.$level.$active.'" href="'.$this->getCategoryUrl($child).'">';
                     //add thumbnail
                     if ($level == 1) {
-                        $html .= '<img class="thumb-menu" src="'.$this->getThumbnailImageUrl($cat).'"/>';
+                        $html .= '<img class="thumb-menu" src="'.$helper->getThumbnailImageUrl($cat).'"/>';
                     }
                     $html .= '<span class="thumb-text-menu">'.$name.'</span></a>';
                 }
