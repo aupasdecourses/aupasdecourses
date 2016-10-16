@@ -93,28 +93,28 @@ $j(document).ready(function() {
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12 col-md-3">
+			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Batignolles</h3>
 					<p>17e-18e-9e-8e</p>
 				</a>
 			</div>
-			<div class="col-sm-12 col-md-3">
+			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Commerce</h3>
 					<p>15e</p>
 				</a>
 			</div>
-			<div class="col-sm-12 col-md-3">
+			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Saint Martin</h3>
 					<p>10e-3e-11e</p>
 				</a>
 			</div>
-			<div class="col-sm-12 col-md-3">
+			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a class="popup-gmaps" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/paris.jpg');?>" alt="Autres quartiers" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">Pas sûr ?</h3>
@@ -171,7 +171,9 @@ $j(document).ready(function() {
 			<h2 class="dark-text">Combien cela coûte ?</h2>
 			<div class="colored-line"></div>
 			<div class="section-description" >
-				Les mêmes prix qu'en magasin, première livraison gratuite avec le code "PANIER"
+				Vous commandez au même prix qu'en magasin,</br>
+				Nous vous remboursons les écarts de poids, </br>
+				Vous payez une seule livraison quelque soit le nombre de commerçants
 			</div>
 		</div>
 		<div class="row">
@@ -179,27 +181,27 @@ $j(document).ready(function() {
 			<div id="carousel-price" class="owl-carousel col-sm-12 col-md-4">
 				<div class="item">
 					<div class="single-package">	
-						<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="En dessous de 45€ d'achat">
+						<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="Montant des produits commandés inférieur à 45€">
 						<ul class="package-feature">
-							<li>En dessous de 45€ d'achat</li>
+							<li>Montant des produits commandés</br> inférieur à 45€</li>
 							<li class="price">9€ la livraison</li>
 						</ul>
 					</div>
 				</div>
 				<div class="item">
 					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Entre 45 et 90€ d'achat">	
+						<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Montant des produits commandés entre 45 et 90€">	
 						<ul class="package-feature">
-							<li>Entre 45 et 90€ d'achat</li>
+							<li>Montant des produits commandés</br> entre 45 et 90€</li>
 							<li class="price">6€ la livraison</li>
 						</ul>
 					</div>
 				</div>
 				<div class="item">
 					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Au-dessus de 90€ d'achat">	
+						<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Montant des produits commandés au-dessus de 90€">	
 						<ul class="package-feature">
-							<li>Au-dessus de 90€ d'achat</li>
+							<li>Montant des produits commandés</br> au-dessus de 90€</li>
 							<li class="price">3€ la livraison</li>
 						</ul>
 					</div>
@@ -222,8 +224,9 @@ $j(document).ready(function() {
 				<div class="colored-line-left">
 				</div>
 				<ul class="feature-list">
-					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des commerçants locaux sélectionnés,</li>
+					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des commerçants locaux sélectionnés pour qualité de leur produit et leur savoir faire,</li>
 					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des créneaux de livraison de 45 minutes,</li>
+					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Une livraison possible le soir même ou durant les 5 prochains jours,</li>
 					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Une livraison douce en triporteur électrique.</li>
 				</ul>
 			</div>
