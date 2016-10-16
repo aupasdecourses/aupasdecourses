@@ -80,3 +80,4 @@ LICENSE*
 *.default
 /delivery/attachments
 /delivery/uploads/files/
+/app/code/local/Alanstormdotcom
