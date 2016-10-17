@@ -255,6 +255,7 @@ header .intro-section .buttons {
     font-size: 26px;
     margin-top: 10px;
     line-height: 1.4em;
+    text-align: center;
 }
 
 .packages {
