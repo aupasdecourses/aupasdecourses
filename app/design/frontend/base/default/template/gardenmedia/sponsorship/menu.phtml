@@ -1,0 +1,47 @@
+<?php $action = Mage::app()->getRequest()->getActionName(); ?>
+<ul class="links" id="sponsorship-menu">
+    <?php if ($action == 'index') : ?>
+        <li class="first">
+            <b><?php echo $this->__('Invitations'); ?></b>
+        </li>
+        <li>
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/godchilds'); ?>" title="<?php echo $this->__('My godchilds'); ?>">
+                <?php echo $this->__('My godchilds'); ?>
+            </a>
+        </li>
+        <li class="last">
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/rewards'); ?>" title="<?php echo $this->__('My rewards'); ?>">
+                <?php echo $this->__('My rewards'); ?>
+            </a>
+        </li>
+    <?php elseif ($action == 'godchilds') : ?>
+        <li class="first">
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/index'); ?>" title="<?php echo $this->__('Invitations'); ?>">
+                <?php echo $this->__('Invitations'); ?>
+            </a>
+        </li>
+        <li>
+            <b><?php echo $this->__('My godchilds'); ?></b>
+        </li>
+        <li class="last">
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/rewards'); ?>" title="<?php echo $this->__('My rewards'); ?>">
+                <?php echo $this->__('My rewards'); ?>
+            </a>
+        </li>
+    <?php elseif ($action == 'rewards') : ?>
+        <li class="first">
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/index'); ?>" title="<?php echo $this->__('Invitations'); ?>">
+                <?php echo $this->__('Invitations'); ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo $this->getUrl('gm_sponsorship/index/godchilds'); ?>" title="<?php echo $this->__('My godchilds'); ?>">
+                <?php echo $this->__('My godchilds'); ?>
+            </a>
+        </li>
+        <li class="last">
+            <b><?php echo $this->__('My rewards'); ?></b>
+        </li>
+    <?php endif; ?>
+</ul>
+<div class="clear"></div>

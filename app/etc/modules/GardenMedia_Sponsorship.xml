@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Garden Media Studio VN
+ * @copyright Copyright (c) 2016 Garden Media Studio VN
+ * @package GardenMedia_Sponsorship
+ */
+-->
+<config>
+    <modules>
+        <GardenMedia_Sponsorship>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_Rule />
+              <Mage_SalesRule />
+              <Mage_Customer />
+            </depends>
+        </GardenMedia_Sponsorship>
+    </modules>
+</config>

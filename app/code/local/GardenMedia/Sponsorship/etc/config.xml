@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<config>
+
+	<modules>
+		<GardenMedia_Sponsorship>
+			<version>0.1.2</version>
+		</GardenMedia_Sponsorship>
+	</modules>
+
+	<global>
+		<blocks>
+			<gm_sponsorship>
+				<class>GardenMedia_Sponsorship_Block</class>
+			</gm_sponsorship>
+		</blocks>
+		<helpers>
+			<gm_sponsorship>
+				<class>GardenMedia_Sponsorship_Helper</class>
+			</gm_sponsorship>
+		</helpers>
+		<models>
+			<gm_sponsorship>
+				<class>GardenMedia_Sponsorship_Model</class>
+        <resourceModel>gm_sponsorship_resource</resourceModel>
+			</gm_sponsorship>
+      <gm_sponsorship_resource>
+          <class>GardenMedia_Sponsorship_Model_Resource</class>
+          <entities>
+              <salesrule_coupon_customer>
+                  <table>gardenmedia_sponsorship_salesrule_coupon_customer</table>
+              </salesrule_coupon_customer>
+              <sponsor>
+                  <table>gardenmedia_sponsorship_sponsor</table>
+              </sponsor>
+              <godchild>
+                  <table>gardenmedia_sponsorship_godchild</table>
+              </godchild>
+          </entities>
+      </gm_sponsorship_resource>
+      <customer>
+        <rewrite>
+          <form>GardenMedia_Sponsorship_Model_Customer_Form</form>
+        </rewrite>
+      </customer>
+      <customer_resource>
+        <rewrite>
+          <customer_collection>GardenMedia_Sponsorship_Model_Resource_Customer_Collection</customer_collection>
+        </rewrite>
+      </customer_resource>
+		</models>
+    <resources>
+        <gm_sponsorship_setup>
+            <setup>
+                <module>GardenMedia_Sponsorship</module>
+                <class>Mage_Eav_Model_Entity_Setup</class>
+            </setup>
+            <connection>
+                <use>core_setup</use>
+            </connection>
+        </gm_sponsorship_setup>
+    </resources>
+    <template>
+        <email>
+            <gm_sponsorship_email_template translate="label" module="gm_sponsorship">
+                <label>Sponsorship - Share By Email</label>
+                <file>gardenmedia/sponsorship/share_by_email.html</file>
+                <type>html</type>
+            </gm_sponsorship_email_template>
+            <gm_sponsorship_rewards_template_sponsor translate="label" module="gm_sponsorship">
+                <label>Sponsorship - Rewards sent to Sponsor</label>
+                <file>gardenmedia/sponsorship/rewards_sponsor.html</file>
+                <type>html</type>
+            </gm_sponsorship_rewards_template_sponsor>
+            <gm_sponsorship_rewards_template_godchild translate="label" module="gm_sponsorship">
+                <label>Sponsorship - Rewards sent to Godchild</label>
+                <file>gardenmedia/sponsorship/rewards_godchild.html</file>
+                <type>html</type>
+            </gm_sponsorship_rewards_template_godchild>
+            <gm_sponsorship_sponsor_template_new_godchild translate="label" module="gm_sponsorship">
+                <label>Sponsorship - New Godchild</label>
+                <file>gardenmedia/sponsorship/new_godchild.html</file>
+                <type>html</type>
+            </gm_sponsorship_sponsor_template_new_godchild>
+        </email>
+    </template>
+	</global>
+	
+	<frontend>
+	   <routers>
+	       <gm_sponsorship>
+	           <use>standard</use>
+	           <args>
+	               <module>GardenMedia_Sponsorship</module>
+	               <frontName>sponsorship</frontName>
+	           </args>
+	       </gm_sponsorship>
+	   </routers>
+	   <layout>
+	       <updates>
+	           <gm_sponsorship>
+                <file>gardenmedia/sponsorship.xml</file>
+	           </gm_sponsorship>
+	       </updates>
+	   </layout>
+	   <translate>
+	       <modules>
+	           <GardenMedia_Sponsorship>
+	               <files>
+	                   <default>GardenMedia_Sponsorship.csv</default>
+	               </files>
+	           </GardenMedia_Sponsorship>
+	       </modules>
+	   </translate>
+		<events>
+      <sales_order_invoice_save_after>
+        <observers>
+          <gm_sponsorship_check_rewards>
+            <type>singleton</type>
+            <class>gm_sponsorship/observer</class>
+            <method>checkAfterInvoice</method>
+          </gm_sponsorship_check_rewards>
+        </observers>
+      </sales_order_invoice_save_after>
+      <controller_action_predispatch>
+        <observers>
+          <gm_sponsorship_predispatch_invite>
+            <type>singleton</type>
+            <class>gm_sponsorship/observer</class>
+            <method>preDispatchInvitation</method>
+          </gm_sponsorship_predispatch_invite>
+        </observers>
+      </controller_action_predispatch>
+      <customer_register_success>
+        <observers>
+          <gm_sponsorship_register_success_create_godchild>
+            <type>singleton</type>
+            <class>gm_sponsorship/observer</class>
+            <method>associateSponsorAndGodchild</method>
+          </gm_sponsorship_register_success_create_godchild>
+        </observers>
+      </customer_register_success>
+		</events>
+	</frontend>
+
+
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+              <gm_sponsorship after="Mage_Adminhtml">GardenMedia_Sponsorship_Adminhtml</gm_sponsorship>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+	
+	<adminhtml>
+	  <layout>
+	    <updates>
+	      <gm_sponsorship>
+          <file>gardenmedia/sponsorship.xml</file>
+	      </gm_sponsorship>
+	    </updates>
+	  </layout>
+
+		<events>
+      <sales_order_invoice_save_after>
+        <observers>
+          <gm_sponsorship_check_rewards>
+            <type>singleton</type>
+          <class>gm_sponsorship/observer</class>
+            <method>checkAfterInvoice</method>
+          </gm_sponsorship_check_rewards>
+        </observers>
+      </sales_order_invoice_save_after>
+    </events>
+
+	  <translate>
+      <modules>
+        <GardenMedia_Sponsorship>
+          <files>
+            <default>GardenMedia_Sponsorship.csv</default>
+          </files>
+        </GardenMedia_Sponsorship>
+      </modules>
+    </translate>
+
+    <menu>
+      <customer translate="title">
+        <children>
+          <gm_sponsorship translate="title" module="gm_sponsorship">
+            <title>Manage Sponsorship</title>
+            <sort_order>100</sort_order>
+            <children>
+              <sponsor translate="title" module="gm_sponsorship">
+                <title>View sponsors</title>
+                <sort_order>10</sort_order>
+                <action>adminhtml/gmSponsorship_sponsor</action>
+              </sponsor>
+
+              <godchild translate="title" module="gm_sponsorship">
+                <title>View godchilds</title>
+                <sort_order>20</sort_order>
+                <action>adminhtml/gmSponsorship_godchild</action>
+              </godchild>
+            </children>
+          </gm_sponsorship>
+        </children>
+      </customer>
+    </menu>
+
+    <acl>
+      <resources>
+        <admin>
+          <children>
+            <customer>
+              <children>
+                <gm_sponsorship translate="title" module="gm_sponsorship">
+                  <title>Sponsorship</title>
+                  <children>
+                      <sponsor translate="title" module="gm_sponsorship">
+                          <title>View Sponsors</title>
+                          <sort_order>100</sort_order>
+                      </sponsor>
+                      <godchild translate="title" module="gm_sponsorship">
+                          <title>View Godchilds</title>
+                          <sort_order>110</sort_order>
+                      </godchild>
+                  </children>
+                </gm_sponsorship>
+              </children>
+            </customer>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <gm_sponsorship translate="title" module="gm_sponsorship">
+                      <title>Sponsorship Configuration</title>
+                    </gm_sponsorship>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+	</adminhtml>
+
+  <default>
+    <gm_sponsorship>
+      <general>
+        <active>0</active>
+        <register_sponsor_message><![CDATA[Plus qu'un pas pour valider le parrainage de <strong>%s</strong> et bénéficier d'un coupon de réduction.]]></register_sponsor_message>
+        <register_success_message><![CDATA[Bravo ! Vous avez été parrainé par <strong>%s</strong>. Dès 50€ d'achat sur AuPasDeCourses.fr vous bénéficirez d'un coupon de réduction de 10€]]></register_success_message>
+        <register_instruction>Entrez ici le code de votre parrain et bénéficiez d'un coupon de réduction de 10€ dès 50€ d'achat.</register_instruction>
+      </general>
+      <twitter>
+        <text>Parrainage sur aupasdecourses.fr, bénéficiez de 10€ de réduction !</text>
+        <hashtags>aupasdecourses,parrainage</hashtags>
+      </twitter>
+      <facebook>
+        <title>Parrainage sur Au Pas de courses !</title>
+        <description>%s souhaite vous parrainer sur Au Pas de Courses. Ainsi vous pourrez tous les 2 bénéficier de 10€ de réduction sur votre prochain achat sur www.aupasdecourses.fr.</description>
+        <caption>Au pas de courses !</caption>
+        <image>default/logo-green.png</image>
+      </facebook>
+      <sponsor>
+        <code_format>alphanum</code_format>
+        <code_length>12</code_length>
+        <code_prefix>PARRAIN-</code_prefix>
+        <code_dash>4</code_dash>
+      </sponsor>
+      <rewards>
+        <minimum_ordered_amount>50</minimum_ordered_amount>
+        <code_format>alphanum</code_format>
+        <code_length>12</code_length>
+        <code_prefix>REWARDS-</code_prefix>
+        <code_dash>4</code_dash>
+      </rewards>
+    </gm_sponsorship>
+  </default>
+
+
+</config>
