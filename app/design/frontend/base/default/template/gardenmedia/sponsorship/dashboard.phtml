@@ -68,8 +68,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
-
 <script>
     var dataForm = new VarienForm('form-validate', true);
     jQuery('#sponsorship-share-email button').on('click', function() {
@@ -78,35 +76,4 @@
     jQuery('#send-email-cancel').on('click', function() {
         jQuery('#send-email').fadeOut(200);
     });
-/*
-	window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '642182809283298',
-            xfbml      : true,
-            version    : 'v2.8'
-        });
-		jQuery(document).trigger('fbload');  //  <---- THIS RIGHT HERE TRIGGERS A CUSTOM EVENT CALLED 'fbload'
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-	jQuery(document).on('fbload', function() {
-		document.querySelector('#sponsorship-share-facebook button').onclick = function() {
-		  FB.ui({
-			method: 'share',
-			display: 'popup',
-            href: 'http://aupasdecourses.dev/saintmartin/sponsorship/',
-            hashtag:'#aupasdecourses',
-            quote: 'Venez faire un tour sur Au Pas de courses !'
-		  }, function(response){});
-		}
-	});
-*/
 </script>

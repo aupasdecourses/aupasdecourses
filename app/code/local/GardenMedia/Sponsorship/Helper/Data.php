@@ -77,7 +77,11 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
     public function getUniqueLink($customer)
     {
         $url = Mage::getUrl('gm_sponsorship/index/invite', array('sponsor_id' => $customer->getId(), 'sponsor_code' => $this->getSponsorCode($customer)));
-        return Mage::helper('gm_sponsorship/shortUrl')->shorten($url);
+        $shortUrl = Mage::helper('gm_sponsorship/shortUrl')->shorten($url);
+        if ($shortUrl) {
+            return $shortUrl;
+        }
+        return $url;
     }
 
     /**

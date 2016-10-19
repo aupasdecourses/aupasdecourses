@@ -27,15 +27,6 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </active>
-                        <urlshortener_api_key translate="label comment" module="gm_sponsorship">
-                            <label>Url Shortener Api Key</label>
-                            <frontend_type>text</frontend_type>
-                            <comment><![CDATA[Get your Api key from <a href='https://console.developers.google.com' target='_blank'>google urlshortener</a>. More infos <a href='https://developers.google.com/url-shortener/v1/getting_started?hl=fr#APIKey' target='_blank'>about urlshortener</a>]]></comment>
-                            <sort_order>20</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </urlshortener_api_key>
                         <block_dashboard translate="label comment" module="gm_sponsorship">
                             <label>Block displayed on dashboard</label>
                             <comment><![CDATA[This block is displayed on the Sponsorship customer dashboard]]></comment>

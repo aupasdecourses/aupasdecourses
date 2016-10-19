@@ -7,7 +7,7 @@ class GardenMedia_Sponsorship_Helper_ShortUrl extends Mage_Core_Helper_Abstract
     // Constructor
     public function __construct()
     {
-        $key = Mage::getStoreConfig('gm_sponsorship/general/urlshortener_api_key');
+        $key = Mage::getStoreConfig('api_key/google/google_nav');
         $apiURL = 'https://www.googleapis.com/urlshortener/v1/url';
         // Keep the API Url
         $this->apiURL = $apiURL.'?key='.$key;
