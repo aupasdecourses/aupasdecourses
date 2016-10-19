@@ -144,33 +144,37 @@ class GardenMedia_Sponsorship_Model_Observer
     public function associateSponsorAndGodchild(Varien_Event_Observer $observer)
     {
         $session = Mage::getSingleton('core/session');
+        $accountController = $observer->getEvent()->getAccountController();
         $customer = $observer->getEvent()->getCustomer();
-        $sponsorData = $session->getSponsorData();
-        if ($sponsorData && !empty($sponsorData)) {
-            $godchild = Mage::getModel('gm_sponsorship/godchild')
-                ->setGodchildId($customer->getId())
-                ->setSponsorId($sponsorData->getSponsor()->getId());
-                $godchild->save();
+        $postData = $accountController->getRequest()->getPost();
+        if (isset($postData['sponsor_code']) && !empty($postData['sponsor_code'])) {
+            $sponsor = Mage::getModel('gm_sponsorship/sponsor')->load($postData['sponsor_code'], 'sponsor_code');
+            if ($sponsor->getId() != $customer->getId()) {
+                $sponsorCustomer = Mage::getModel('customer/customer')->load($sponsor->getId());
+                $godchild = Mage::getModel('gm_sponsorship/godchild')
+                    ->setGodchildId($customer->getId())
+                    ->setSponsorId($sponsor->getId());
+                    $godchild->save();
 
-            $sponsor = $session->getSponsorData()->getSponsor();
-            $message = sprintf(Mage::getStoreConfig('gm_sponsorship/general/register_success_message'), $sponsor->getName());
-            Mage::getSingleton('core/session')->addSuccess($message);
+                $message = sprintf(Mage::getStoreConfig('gm_sponsorship/general/register_success_message'), $sponsorCustomer->getName());
+                Mage::getSingleton('core/session')->addSuccess($message);
 
-            // Send new godchild email to sponsor
-		    $emailTemplate = Mage::getModel('core/email_template');
-            $templateId = Mage::getStoreConfig('gm_sponsorship/sponsor/template_new_godchild');
-            if (!$templateId) {
-                $templateId = 'gm_sponsorship_sponsor_template_new_godchild';
+                // Send new godchild email to sponsor
+                $emailTemplate = Mage::getModel('core/email_template');
+                $templateId = Mage::getStoreConfig('gm_sponsorship/sponsor/template_new_godchild');
+                if (!$templateId) {
+                    $templateId = 'gm_sponsorship_sponsor_template_new_godchild';
+                }
+                $vars = array(
+                    'sponsor' => $sponsorCustomer,
+                    'godchild' => $customer
+                );
+                $sender = array(
+                    'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
+                    'email' => Mage::getStoreConfig('trans_email/ident_general/email')
+                );
+                $emailTemplate->sendTransactional($templateId, $sender, $sponsorCustomer->getEmail(), $sponsorCustomer->getName(), $vars);
             }
-            $vars = array(
-                'sponsor' => $sponsor,
-                'godchild' => $customer
-            );
-            $sender = array(
-                'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
-                'email' => Mage::getStoreConfig('trans_email/ident_general/email')
-            );
-            $emailTemplate->sendTransactional($templateId, $sender, $sponsor->getEmail(), $sponsor->getName(), $vars);
         }
 
         // clean session
