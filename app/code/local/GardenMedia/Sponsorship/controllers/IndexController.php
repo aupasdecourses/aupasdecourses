@@ -129,11 +129,13 @@ class GardenMedia_Sponsorship_IndexController extends Mage_Core_Controller_Front
             $templateId = 'gm_sponsorship_email_template';
         }
         $sender = array(
-            'name' => $customer->getName(),
-            'email' => $customer->getEmail()
+            'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
+            'email' => Mage::getStoreConfig('trans_email/ident_general/email')
         );
 
+
 		try{
+            //$emailTemplate->addBcc($customer->getEmail());
             $emailTemplate->sendTransactional($templateId, $sender, $postData['sendTo'], $postData['friendName'], $vars);
             if ($emailTemplate->getSentSuccess()) {
                 Mage::getSingleton('core/session')->addSuccess($this->__('Invitation has been sent successfully'));
