@@ -1,0 +1,17 @@
+<?php
+$this->headLink()
+	->prependStylesheet('//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css');
+$this->headScript()
+	->prependFile('//code.jquery.com/ui/1.12.1/jquery-ui.js');
+
+$this->inlineScript()
+	->prependFile($this->basePath('public/js/datepicker.js'));
+?>
+
+<div id='form_fromto'>
+	<?= $this->form()->openTag($formto).PHP_EOL ?>
+	<?= "<div class='form-group'>".PHP_EOL ?>
+		<?= $this->formCollection($formto).PHP_EOL ?>
+	<?= "</div>".PHP_EOL ?>
+	<?= $this->form()->closeTag().PHP_EOL ?>
+</div>

@@ -1,0 +1,84 @@
+<?= $this->menu ?>
+<div class="container">
+	<?= $this->formto ?>
+	<?= $this->formid ?>
+	<hr>
+<?php foreach($this->orders as $order_id => $order) : ?>
+	<div class="order">
+		<div>
+			<table class="table">
+				<tr>
+					<td style="width: 50%">
+						<table class="table">
+							<tr>
+								<td><b>Commande n°</b></td>
+								<td><?= $order_id ?></td>
+							</tr>
+							<tr>
+								<td><b>Client</b></td>
+								<td><?= "{$order['first_name']} {$order['last_name']}" ?></td>
+							</tr>
+							<tr>
+								<td><b>Prise de commande</b></td>
+								<td><?= $order['order_date'] ?></td>
+							</tr>
+							<tr>
+								<td><b>Date de Livraison</b></td>
+								<td><?= $order['delivery_date'] ?></td>
+							</tr>
+							<tr>
+								<td><b>Creneau de Livraison</b></td>
+								<td><?= $order['delivery_time'] ?></td>
+							</tr>
+							<tr>
+								<td><b>Remplacement equivalent</b></td>
+								<td><?= ($order['equivalent_replacement']) ? "oui" : "non" ?></td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table class="table">
+							<tr>
+								<td><b>Addresse de Livraison</b></td>
+								<td><a href="https://www.google.com/maps?q=<?= "{$order['address']}" ?>" target="_blanc"><?= "{$order['address']}" ?></a></td>
+							</tr>
+							<tr>
+								<td><b>Telephone</b></td>
+								<td><?= $order['phone'] ?></td>
+							</tr>
+							<tr>
+								<td><b>Info Complementaire</b></td>
+								<td><?= $order['info'] ?></td>
+							</tr>
+						</table>
+					<td>
+				</tr>
+			</table>
+		</div>
+		<table class="table table-striped">
+			<tr>
+				<th>Produit</th>
+				<th>Quantite</th>
+				<th>Description</th>
+				<th>Prix</th>
+				<th>Total</th>
+				<th>Commentaire</th>
+			</tr>
+<?php foreach($order['products'] as $product) : ?>
+			<tr>
+				<td><?= $product['nom'] ?></td>
+				<td><?= $product['quantite'] ?></td>
+				<td><?= $product['description'] ?></td>
+				<td><?= "{$product['prix_kilo']}€ ({$product['prix_kilo']})" ?></td>
+				<td><?= "{$product['prix_total']}€" ?></td>
+				<td><?= $product['comment'] ?></td>
+			</tr>
+<?php endforeach ?>
+			<tr>
+				<td colspan="4"><b>TOTAL</b></td>
+				<td colspan="2"><b><?= "{$order['Total prix']}€" ?></b></td>
+			</tr>
+		</table>
+	</div>
+<?php endforeach ?>
+</div>

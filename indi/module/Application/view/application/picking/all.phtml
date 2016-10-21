@@ -1,0 +1,47 @@
+<?= $this->menu ?>
+<div class="container">
+	<?= $this->from ?>
+	<hr>
+	<?php foreach($this->orders as $store => $commercants) : ?>
+		<?php $id = str_replace(' ', '_', $store)?>
+		<table style="width: 100%">
+			<tr>
+				<th>
+					<a href="#<?= $id ?>" data-toggle="collapse"><?= $store ?></a>
+				</th>
+			</td>
+			<tr>
+				<td>
+					<div id="<?= $id ?>" class="store collapse">
+						<table class="table">
+							<tr>
+								<th>Commercant</th>
+								<th>Adresse</th>
+								<th>Telephone</th>
+								<th>N° Commande</th>
+								<th>Montant Commande</th>
+							</tr>
+							<?php foreach($commercants as $com_id => $commercant) : ?>
+								<tr>
+									<td><?= $commercant['name'] ?></td>
+									<td><?= $commercant['addr'] ?></td>
+									<td><?= "{$commercant['phone']} / {$commercant['mobile']}" ?></td>
+									<td>
+										<?php foreach($commercant['orders'] as $order_id => $order) : ?>
+											<a href="/indi/orders/<?= $order_id ?>" target="_blanc"><?= $order_id ?></a><br />
+										<?php endforeach ?>
+									</td>
+									<td>
+										<?php foreach($commercant['orders'] as $order_id => $order) : ?>
+											<?= "{$order['Total prix']}€" ?><br />
+										<?php endforeach ?>
+									</td>
+								</tr>
+							<?php endforeach ?>
+						</table>
+					</div>
+				</td>
+			</tr>
+		<table>
+	<?php endforeach ?>
+</div>
