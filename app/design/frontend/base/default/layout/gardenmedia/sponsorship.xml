@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package		GardenMedia_Sponsorship
+ * @copyright	Copyright (C) Garden Media Studio VN - All rights reserved.
+ **/
+-->
+<layout version="0.1.0">
+	<customer_account>
+		<reference name="customer_account_navigation">
+      <action method="addLink" translate="label" module="gm_sponsorship" ifconfig="gm_sponsorship/general/active">
+				<name>gm_sponsorship_link</name>
+        <path>sponsorship/</path>
+				<label>My sponsorship</label>
+			</action>
+    </reference>
+  </customer_account>
+  
+  <gm_sponsorship_index_index>
+    <update handle="customer_account" />
+
+    <reference name="head">
+      <action method="addItem"><type>skin_css</type><name>css/gardenmedia/sponsorship/style.css</name></action>
+    </reference>
+    <reference name="my.account.wrapper">
+      <block type="core/template" name="gm_sponsorship_menu" template="gardenmedia/sponsorship/menu.phtml" />
+      <block type="gm_sponsorship/dashboard" name="gm_sponsorship_dashboard" template="gardenmedia/sponsorship/dashboard.phtml" />
+    </reference>
+  </gm_sponsorship_index_index>
+
+  <gm_sponsorship_index_godchilds>
+    <update handle="customer_account" />
+
+    <reference name="head">
+      <action method="addItem"><type>skin_css</type><name>css/gardenmedia/sponsorship/style.css</name></action>
+    </reference>
+    <reference name="my.account.wrapper">
+      <block type="core/template" name="gm_sponsorship_menu" template="gardenmedia/sponsorship/menu.phtml" />
+      <block type="gm_sponsorship/godchilds" name="gm_sponsorship_godchilds" template="gardenmedia/sponsorship/godchilds.phtml" />
+    </reference>
+  </gm_sponsorship_index_godchilds>
+
+  <gm_sponsorship_index_rewards>
+    <update handle="customer_account" />
+
+    <reference name="head">
+      <action method="addItem"><type>skin_css</type><name>css/gardenmedia/sponsorship/style.css</name></action>
+    </reference>
+    <reference name="my.account.wrapper">
+      <block type="core/template" name="gm_sponsorship_menu" template="gardenmedia/sponsorship/menu.phtml" />
+      <block type="gm_sponsorship/rewards" name="gm_sponsorship_rewards" template="gardenmedia/sponsorship/rewards.phtml" />
+    </reference>
+  </gm_sponsorship_index_rewards>
+
+  <customer_account_create>
+    <reference name="customer_form_register">
+      <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+    </reference>
+  </customer_account_create>
+</layout>

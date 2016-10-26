@@ -343,7 +343,7 @@
          <reference name="top.links">
             <action method="addLink" translate="label title">
                 <label>Parrainez un ami</label>
-                <url>aworewards/invitation/</url>
+                <url>sponsorship/</url>
                 <title>Parrainez un ami</title>
                 <prepare/>
                 <urlParams/>

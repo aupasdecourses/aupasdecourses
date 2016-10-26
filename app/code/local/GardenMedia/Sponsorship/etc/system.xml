@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+
+<config>
+    <sections>
+       <gm_sponsorship translate="label" module="gm_sponsorship">
+            <label>Sponsorship</label>
+            <tab>customer</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>345</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="gm_sponsorship">
+                    <label>General Extension Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <block_dashboard translate="label comment" module="gm_sponsorship">
+                            <label>Block displayed on dashboard</label>
+                            <comment><![CDATA[This block is displayed on the Sponsorship customer dashboard]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_staticBlocks</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </block_dashboard>
+                        <register_sponsor_message translate="label comment" module="gm_sponsorship">
+                            <label>Register Personalized Message</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Displayed on the register form if the customer comes from the sponsorship invitation url. We can display a personalized message. Use %s to insert the name of the sponsor]]></comment>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </register_sponsor_message>
+                        <register_instruction translate="label comment" module="gm_sponsorship">
+                            <label>Register Instructions</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[This text will be displayed near the text field for the sponsor code. Used to give instructions to the customer]]></comment>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </register_instruction>
+                        <register_success_message translate="label comment" module="gm_sponsorship">
+                            <label>Register Success Message</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[This message is displayed whenever the customer successfully registerd and linked to his sponsor.]]></comment>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </register_success_message>
+                    </fields>
+                </general>            
+                <twitter translate="label" module="gm_sponsorship">
+                    <label>Share on Twitter Settings</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <text translate="label" module="gm_sponsorship">
+                            <label>Text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </text>
+                        <hashtags translate="label comment" module="gm_sponsorship">
+                            <label>Hashtags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <comment><![CDATA[Hastags comma separated (eg: aupasdecourses,sponsor,discount)]]></comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </hashtags>
+                    </fields>
+                </twitter>
+                <facebook translate="label" module="gm_sponsorship">
+                    <label>Share on Facebook Settings</label>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <app_id translate="label comment" module="gm_sponsorship">
+                            <label>App Id</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[Please visit <a href='https://developers.facebook.com' target='_blank'>Facebook Developpers website</a> to configure your application and get your app id. You can referer to the <a href='https://developers.facebook.com/docs/sharing/reference/feed-dialog' target='_blank'>complete documentation</a> of the feed dialog plugin]]></comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_id>
+                        <title translate="label" module="gm_sponsorship">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <description translate="label comment" module="gm_sponsorship">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <comment><![CDATA[You can use %s to insert the sponsor name.]]></comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </description>
+                        <caption translate="label comment" module="gm_sponsorship">
+                            <label>Caption</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[This text is displayed under the description.]]></comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </caption>
+                        <image translate="label comment" module="gm_sponsorship">
+                            <label>Image</label>
+                            <comment><![CDATA[Allowed file types: jpeg, gif, png.]]></comment>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">gm_sponsorship</upload_dir>
+                            <base_url type="media" scope_info="1">gm_sponsorship</base_url>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image>
+                    </fields>
+                </facebook>
+
+                <email translate="label" module="gm_sponsorship">
+                    <label>Share by Email Settings</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <template translate="label" module="gm_sponsorship">
+                            <label>Template Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                    </fields>
+                </email>
+
+                <sponsor translate="label" module="gm_sponsorship">
+                    <label>Sponsorship Settings</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <template_new_godchild translate="label" module="gm_sponsorship">
+                            <label>Notification for new godchild</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template_new_godchild>
+                        <code_length>
+                            <label>Code Length</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_length>
+                        <code_format>
+                            <label>Code Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_couponFormat</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_format>
+                        <code_prefix>
+                            <label>Code Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_prefix>
+                        <code_suffix>
+                            <label>Code Suffix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_suffix>
+                        <code_dash translate="comment" module="salesrule">
+                            <label>Dash Every X Characters</label>
+                            <comment>If empty no separation.</comment>
+                            <validate>validate-not-negative-number</validate>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_dash>
+                    </fields>
+                </sponsor>
+                <rewards translate="label" module="gm_sponsorship">
+                    <label>Rewards Settings</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <salesrule translate="label comment" module="gm_sponsorship">
+                            <label>Sales rule to create discount coupon</label>
+                            <frontend_type>select</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_salesRule</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will use this rule to create discount coupon. (eg: 10€ discount when total ordered has reached the minimum ordered amount)]]></comment>
+                        </salesrule>
+                        <template_sponsor translate="label" module="gm_sponsorship">
+                            <label>Email sent to Sponsor</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template_sponsor>
+                        <template_godchild translate="label" module="gm_sponsorship">
+                            <label>Email sent to Godchild</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template_godchild>
+                        <minimum_ordered_amount translate="label comment" module="gm_sponsorship">
+                            <label>Minimum Ordered Amount</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Minimum amount of purchased items before receiving discount]]></comment>
+                        </minimum_ordered_amount>
+                        <code_length>
+                            <label>Code Length</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_length>
+                        <code_format>
+                            <label>Code Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_couponFormat</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_format>
+                        <code_prefix>
+                            <label>Code Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_prefix>
+                        <code_suffix>
+                            <label>Code Suffix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_suffix>
+                        <code_dash translate="comment" module="salesrule">
+                            <label>Dash Every X Characters</label>
+                            <comment>If empty no separation.</comment>
+                            <validate>validate-not-negative-number</validate>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </code_dash>
+                    </fields>
+                </rewards>
+            </groups>
+        </gm_sponsorship>
+    </sections>
+</config>
