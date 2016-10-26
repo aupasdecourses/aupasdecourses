@@ -80,17 +80,17 @@
 	                 <i class="fa fa-search"></i>
 	                <span class="label"><?php echo $this->__('Search'); ?></span>
 	            </a>
-                <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend'));
+                <!-- <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend'));
                     if($session->isLoggedIn()){?>
                         <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
                             <i class="fa fa-bullhorn"></i>
                             <span class="label">Parrainez</span>
                         </a>
-                <?php }?>
+                <?php }?> -->
                 <div class="dropdown skip-help">
                     <a id="dLabel" data-target="#" href="#header-help" data-toggle="dropdown" class="skip-link skip-help">
                         <i class="fa fa-question-circle"></i>
-                        <span class="label">Aide</span>
+                        <span class="label">FAQ</span>
                     </a>
                   <ul id="header-help" class="dropdown-menu links" aria-labelledby="dLabel">
                     <li class="first"><a href="<?php echo Mage::getBaseUrl();?>besoin-d-aide">Besoin d'aide ?</a></li>
