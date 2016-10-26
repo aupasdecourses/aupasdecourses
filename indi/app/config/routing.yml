@@ -1,3 +1,48 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+user:
+    pattern:    /user/{value1}/{value2}
+    defaults:   { _controller: AppBundle:User:index}
+
+orders_one:
+    pattern:    /orders_one/{value}
+    defaults:   { _controller: AppBundle:Orders:ordersOne}
+
+orders_all:
+    pattern:    /orders_all/{value1}/{value2}
+    defaults:   { _controller: AppBundle:Orders:ordersAll}
+
+orders_index:
+   pattern:    /orders_index/
+   defaults:   { _controller: AppBundle:Orders:index}
+
+merchants_one:
+   pattern:    /merchants_one/{value1}/{value2}/{value3}
+   defaults:   { _controller: AppBundle:Controller:merchantsOne}
+
+merchants_all:
+   pattern:    /merchants_all/{value1}/{value2}/
+   defaults:   { _controller: AppBundle:Controller:merchantsAll}
+
+merchants_index:
+   pattern:    /merchants_index/
+   defaults:   { _controller: AppBundle:Controller:index}
+
+picking_all:
+   pattern:    /picking_all/{value1}
+   defaults:   { _controller: AppBundle:Controller:pickingAll}
+
+picking_index:
+   pattern:    /picking_index/
+   defaults:   { _controller: AppBundle:Controller:index}
+
+shipping_all:
+   pattern:    /shipping_all/{value1}
+   defaults:   { _controller: AppBundle:Controller:shippingAll}
+
+shipping_index:
+   pattern:    /shipping_index/
+   defaults:   { _controller: AppBundle:Controller:index}
+
