@@ -10,35 +10,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrdersController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function ordersOne(Request $request)
-    {
-        return new Response('DEFAULT CONTROLER');
-//        return $this->render('default/index.html.twig', [
-//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//              ]);
-    }
-
-
-   public function ordersAll(Request $request)
-    {
-        return new Response('DEFAULT CONTROLER');
-//        return $this->render('default/index.html.twig', [
-//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//              ]);
-    }
-
   public function indexAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
+        return new Response('ORDER INDEX');
 //        return $this->render('default/index.html.twig', [
 //              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
 //              ]);
     }
 
+    public function ordersOneAction(Request $request)
+    {
+        return new Response('ORDER ONE');
+//        return $this->render('default/index.html.twig', [
+//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+//              ]);
+    }
 
-
+   public function ordersAllAction(Request $request)
+    {
+        return new Response('ORDER ALL');
+//        return $this->render('default/index.html.twig', [
+//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+//              ]);
+    }
 }
-
