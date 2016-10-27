@@ -2,7 +2,7 @@ app:
   resource: "@AppBundle/Controller/"
   type:     annotation
 
-route:
+root:
   path: '/'
   defaults: { _controller:AppBundle:Default:index}
 
@@ -15,55 +15,48 @@ ordersIndex:
   defaults:   { _controller: AppBundle:Orders:index}
 
 
-#ordersOne:
-#  path:    /ordersOne/{id}
-#  defaults:   { _controller: AppBundle:Orders:ordersOne}
-#  requirements:
-#      id:"[0-9]+"
-#
-#ordersAll:
-#  path:    /ordersAll/{from}/{to}
-#  defaults:  { _controller: AppBundle:Orders:ordersAll, to: null}
-#  requirements:
-#    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" 
-#    to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"
-#
-#merchantsOne:
-#  path:    /merchantsOne/{id}/{from}/{to}
-#  defaults:   { _controller: AppBundle:Merchants:merchantsOne, to: null, from: null}
-#  requirements:
-#    id: "[0-9]+"
-#    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"
-#    to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"
-#
-#merchantsAll:
-#  path:    /merchantsAll/{from}/{to}/
-#  defaults:   { _controller: AppBundle:Merchants:merchantsAll, to: null}
-#  requirements:
-#    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
-#    to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"
-#
+ordersOne:
+  path:    /ordersOne/{id}
+  defaults:   { _controller: AppBundle:Orders:ordersOne}
+  requirements:
+      {id:"[0-9]+"}
+
+ordersAll:
+  path:    /ordersAll/{from}/{to}
+  defaults:  { _controller: AppBundle:Orders:ordersAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+merchantsOne:
+  path:    /merchantsOne/{id}/{from}/{to}
+  defaults:   { _controller: AppBundle:Merchants:merchantsOne, to: null, from: null}
+  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+merchantsAll:
+  path:    /merchantsAll/{from}/{to}/
+  defaults:   { _controller: AppBundle:Merchants:merchantsAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
 merchantsIndex:
   path:    /merchantsIndex
   defaults:   { _controller: AppBundle:Merchants:index}
 
-#pickingAll:
-#  pattern:    /pickingAll/{from}
-#  defaults:   { _controller: AppBundle:Picking:pickingAll}
-#  requirements:
-#    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
-#
-#
+pickingAll:
+  path:    /pickingAll/{from}
+  defaults:   { _controller: AppBundle:Picking:pickingAll}
+  requirements:
+    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+
 pickingIndex:
   path:    /pickingIndex
   defaults:   { _controller: AppBundle:Picking:index}
 
-#shippingAll:
-#  pattern:    /shippingAll/{from}
-#  defaults:   { _controller: AppBundle:Shipping:shippingAll}
-#  requirements:
-#    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
-#
+shippingAll:
+  path:    /shippingAll/{from}
+  defaults:   { _controller: AppBundle:Shipping:shippingAll}
+  requirements:
+    from: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
 shippingIndex:
   path:    /shippingIndex/
   defaults:   { _controller: AppBundle:Shipping:index}
