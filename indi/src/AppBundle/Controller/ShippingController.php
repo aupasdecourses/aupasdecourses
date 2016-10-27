@@ -8,25 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class ShippingController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
-//        return $this->render('default/index.html.twig', [
-//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//              ]);
+        return new Response('Shipping CONTROLER');
     }
 
     public function shippingAll(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
-//        return $this->render('default/index.html.twig', [
-//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//              ]);
+        return new Response('shipping all CONTROLER');
     }
 
 }

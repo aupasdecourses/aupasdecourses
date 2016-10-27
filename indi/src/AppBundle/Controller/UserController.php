@@ -10,15 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
     public function indexAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
-//        return $this->render('default/index.html.twig', [
-//              'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//              ]);
+        return new Response('User controller');
     }
 }
 
