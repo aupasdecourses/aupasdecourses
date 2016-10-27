@@ -1,48 +1,58 @@
 app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+  resource: "@AppBundle/Controller/"
+  type:     annotation
+
+root:
+  path: '/'
+  defaults: { _controller:AppBundle:Default:index}
 
 user:
-    pattern:    /user/{value1}/{value2}
-    defaults:   { _controller: AppBundle:User:index}
+  path:    /user/{value1}/{value2}
+  defaults:   { _controller: AppBundle:User:index}
 
-orders_one:
-    pattern:    /orders_one/{value}
-    defaults:   { _controller: AppBundle:Orders:ordersOne}
+ordersIndex:
+  path:    /orders
+  defaults:   { _controller: AppBundle:Orders:index}
 
-orders_all:
-    pattern:    /orders_all/{value1}/{value2}
-    defaults:   { _controller: AppBundle:Orders:ordersAll}
+ordersOne:
+  path:    /orders/{id}
+  defaults:   { _controller: AppBundle:Orders:ordersOne}
+  requirements:
+      {id:"[0-9]+"}
 
-orders_index:
-   pattern:    /orders_index/
-   defaults:   { _controller: AppBundle:Orders:index}
+ordersAll:
+  path:    /orders/{from}/{to}
+  defaults:  { _controller: AppBundle:Orders:ordersAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
-merchants_one:
-   pattern:    /merchants_one/{value1}/{value2}/{value3}
-   defaults:   { _controller: AppBundle:Controller:merchantsOne}
+merchantsIndex:
+  path:    /merchants
+  defaults:   { _controller: AppBundle:Merchants:index}
 
-merchants_all:
-   pattern:    /merchants_all/{value1}/{value2}/
-   defaults:   { _controller: AppBundle:Controller:merchantsAll}
+merchantsOne:
+  path:    /merchants/{id}/{from}/{to}
+  defaults:   { _controller: AppBundle:Merchants:merchantsOne, to: null, from: null}
+  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
-merchants_index:
-   pattern:    /merchants_index/
-   defaults:   { _controller: AppBundle:Controller:index}
+merchantsAll:
+  path:    /merchants/{from}/{to}/
+  defaults:   { _controller: AppBundle:Merchants:merchantsAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
-picking_all:
-   pattern:    /picking_all/{value1}
-   defaults:   { _controller: AppBundle:Controller:pickingAll}
+pickingIndex:
+  path:    /picking
+  defaults:   { _controller: AppBundle:Picking:index}
 
-picking_index:
-   pattern:    /picking_index/
-   defaults:   { _controller: AppBundle:Controller:index}
+pickingAll:
+  path:    /picking/{from}
+  defaults:   { _controller: AppBundle:Picking:pickingAll}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
 
-shipping_all:
-   pattern:    /shipping_all/{value1}
-   defaults:   { _controller: AppBundle:Controller:shippingAll}
+shippingIndex:
+  path:    /shipping/
+  defaults:   { _controller: AppBundle:Shipping:index}
 
-shipping_index:
-   pattern:    /shipping_index/
-   defaults:   { _controller: AppBundle:Controller:index}
-
+shippingAll:
+  path:    /shipping/{from}
+  defaults:   { _controller: AppBundle:Shipping:shippingAll}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
