@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% use '/menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<hr>
+	<h1> Shipping </h1>
+	{% for store, order in orders %}
+		<table style="width: 100%">
+			<tr>
+				<th>
+					<h4><a href="#<?= $id ?>" data-toggle="collapse"><?= $store ?></a></h4>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<div id="<?= $id ?>" class="store collapse">
+						<table class="table" style="width: 100%">
+							<tr>
+								<th>Creneaux</th>
+								<th>N° Commande</th>
+								<th>Montant</th>
+								<th>Nom Clients</th>
+								<th>Adresse</th>
+								<th>Tel</th>
+								<th>Autre Contact</th>
+								<th>Infos</th>
+							</tr>
+						{% for order_id, order in orders %}
+							<tr>
+								<td> {{ order.delivery_time }}</td>
+								<td><a href="indi/orders/order_id" target="_blanc"></a></td>
+								<td> {{ order.totalPrix }}</td>
+								<td> {{ order.first_name ~ order.last_name }}</td>
+
+								<td><a href="https://www.google.com/maps?q={{ order.adress }}" target="_blanc"></a></td>
+								<td><a href="tel: {{ order.phone }} "></a></td>
+								<td> {{ order.contact }} <a href="tel: {{ order.contact_phone }}"></a></td>
+								<td> {{ order.info }}</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+{% endfor %}
+</div>
+
+{% endblock %}

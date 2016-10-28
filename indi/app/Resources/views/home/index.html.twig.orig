@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
+<<<<<<< HEAD
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+<br><br>
 <div class="container">
 	<h1> HOME INDEX </h1>
 	<hr>
@@ -19,4 +21,11 @@
 </div>
 
 
+=======
+{% use 'menu/default.html.twig' %}
+
+{% block body %}
+	{% include 'forms/default.html.twig' %}
+	Hello World !
+>>>>>>> a460bab692cbf351524ebef420917cfb935b91d0
 {% endblock %}
