@@ -2,14 +2,15 @@
 
 namespace AppBundle\Entity;
 
-class OrderId {
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+
+class OrderId extends \AppBundle\Entity\Model {
 	protected $_id;
 
-	public function getId() {
-		return $this->_id;
-	}
-
-	public function setId($id) {
-		$this->_id = $id;
+	public static function loadValidatorMetadata(ClassMetadata $metadata) {
+		$metadata->addPropertyConstraint('_id', new Assert\Regex(array(
+			'pattern' => '/\d+/',
+		)));
 	}
 }
