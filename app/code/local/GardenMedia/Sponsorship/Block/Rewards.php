@@ -45,6 +45,18 @@ class GardenMedia_Sponsorship_Block_Rewards extends Mage_Core_Block_Template
             'coupon.coupon_id = rewards.coupon_id',
             array('coupon_code' => 'code')
         );
+        $rewards->getSelect()->joinLeft(
+            array('salesrule_default_label' => $rewards->getTable('salesrule/label')),
+            'coupon.rule_id = salesrule_default_label.rule_id AND salesrule_default_label.store_id = 0',
+            array()
+        );
+        $rewards->getSelect()->joinLeft(
+            array('salesrule_label' => $rewards->getTable('salesrule/label')),
+            'coupon.rule_id = salesrule_label.rule_id AND salesrule_label.store_id = ' . (int) Mage::app()->getStore()->getId(),
+            array()
+        );
+        $rewards->getSelect()->columns('IF(salesrule_label.label IS NOT NULL, salesrule_label.label, salesrule_default_label.label) AS rule_label');
+
 
         return $rewards;
     }

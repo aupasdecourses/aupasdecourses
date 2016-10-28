@@ -11,12 +11,14 @@
                 <col width="1">
                 <col width="1">
                 <col width="1">
+                <col width="1">
             </colgroup>
             <thead>
                 <tr class="first last">
                     
                     <th class="owner_type"><?php echo $this->__('As'); ?></th>
                     <th class="name"><?php echo $this->__('Name'); ?></th>
+                    <th class="coupon_name"><?php echo $this->__('Label'); ?></th>
                     <th class="reward"><?php echo $this->__('Coupon Code'); ?></th>
                     <th class="used"><?php echo $this->__('Coupon Used'); ?></th>
                 </tr>
@@ -37,6 +39,8 @@
                         <?php else : ?>
                             <?php echo $this->__('Sponsor:'). ' ' . $reward->getName(); ?>
                         <?php endif; ?>
+                    </td>
+                    <td class="coupon_name"><?php echo $reward->getRuleLabel(); ?></td>
                     <td class="reward"><span class="nobr"><?php echo $reward->getCouponCode(); ?></span></td>
                     <td class="used">
                         <?php if ($reward->getIsUsed()) : ?>
