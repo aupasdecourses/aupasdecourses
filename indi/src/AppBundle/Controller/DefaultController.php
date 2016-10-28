@@ -11,7 +11,7 @@ class DefaultController extends Controller
 	public function indexAction(Request $request)
 	{
 		$id = new \AppBundle\Entity\FromToMerchant();
-		$form = $this->createForm(\AppBundle\Form\FromToMerchantType::class, $id);
+		$form = $this->createForm(\AppBundle\Form\FromToMerchantType::class, $id, ['yolo' => 'swag']);
 
 		$form->handleRequest($request);
 

@@ -13,6 +13,7 @@ class FromToMerchantType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		print_r($options);
 		$builder->add('from', TextType::class);
 		$builder->add('to', TextType::class);
 		$builder->add('merchant', TextType::class);
