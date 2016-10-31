@@ -2,43 +2,46 @@
 <!--
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 -->
 <config>
     <modules>
         <Amasty_Oaction>
-            <version>2.0.3</version>
+            <version>2.1.2</version>
         </Amasty_Oaction>
     </modules>
+
     <admin>
         <routers>
-            <amoaction>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Amasty_Oaction</module>
-                    <frontName>amoaction</frontName>
+                    <modules>
+                        <Amasty_Oaction after="Mage_Adminhtml">Amasty_Oaction_Adminhtml</Amasty_Oaction>
+                    </modules>
                 </args>
-            </amoaction>
+            </adminhtml>
         </routers>
     </admin>
+
     <adminhtml>
         <menu>
             <system>
                 <children>
                     <convert>
                         <children>
-                            <amoaction translate="title" module="amoaction">
+                            <amoaction_import translate="title" module="amoaction">
                                 <title>Import Tracking Numbers</title>
-                                <action>amoaction/adminhtml_index</action>
+                                <action>adminhtml/amoactionimport</action>
                                 <sort_order>41</sort_order>
-                            </amoaction>
+                            </amoaction_import>
                         </children>
                     </convert>
                 </children>
             </system>
         </menu>
+
         <events>
             <am_grid_massaction_actions>
                 <observers>
@@ -58,7 +61,7 @@
                     </amoaction>
                 </observers>
             </am_grid_massaction_js>            
-        <core_block_abstract_prepare_layout_after>
+            <core_block_abstract_prepare_layout_after>
                 <observers>
                     <amogrid>
                         <type>singleton</type>
@@ -67,7 +70,8 @@
                     </amogrid>
                 </observers>
             </core_block_abstract_prepare_layout_after>       
-        </events> 
+        </events>
+
         <translate>
             <modules>
                 <Amasty_Oaction>
@@ -77,6 +81,7 @@
                 </Amasty_Oaction>
             </modules>
         </translate>
+
         <acl>
             <resources>
                 <all>
@@ -84,13 +89,53 @@
                 </all>
                 <admin>
                     <children>
+                        <sales>
+                            <children>
+                                <order>
+                                    <children>
+                                        <mass_order_actions translate="title">
+                                            <title>Mass Order Actions</title>
+                                            <children>
+                                                <invoice translate="title">
+                                                    <title>Invoice</title>
+                                                </invoice>
+                                                <invoicecapture translate="title">
+                                                    <title>Invoice > Capture</title>
+                                                </invoicecapture>
+                                                <invoiceship translate="title">
+                                                    <title>Invoice > Ship</title>
+                                                </invoiceship>
+                                                <invoicecaptureship translate="title">
+                                                    <title>Invoice > Capture > Ship</title>
+                                                </invoicecaptureship>
+                                                <captureship translate="title">
+                                                    <title>Capture > Ship</title>
+                                                </captureship>
+                                                <capture translate="title">
+                                                    <title>Capture</title>
+                                                </capture>
+                                                <ship translate="title">
+                                                    <title>Ship</title>
+                                                </ship>
+                                                <status translate="title">
+                                                    <title>Change Status</title>
+                                                </status>
+                                                <comment translate="title">
+                                                    <title>Add Comment</title>
+                                                </comment>
+                                            </children>
+                                        </mass_order_actions>
+                                    </children>
+                                </order>
+                            </children>
+                        </sales>
                         <system>
                             <children>
                                 <convert>
                                     <children>
-                                        <amoaction translate="title" module="amoaction">
+                                        <amoaction_import translate="title" module="amoaction">
                                             <title>Import Tracking Numbers</title>
-                                        </amoaction>
+                                        </amoaction_import>
                                     </children>
                                 </convert>
                                 <config>
@@ -106,14 +151,16 @@
                 </admin> 
             </resources>
         </acl>
+
         <layout>
             <updates>
                 <amoaction module="Amasty_Oaction">
-                    <file>amoaction.xml</file>
+                    <file>amasty/amoaction/amoaction.xml</file>
                 </amoaction>
             </updates>
         </layout>        
     </adminhtml>
+
     <global>
         <models>
             <amoaction>
@@ -124,6 +171,7 @@
                 <class>Amasty_Oaction_Model_Mysql4</class>
             </amoaction_mysql4>
         </models>
+
 		<resources>
              <amoaction_setup>
                 <setup>
@@ -140,6 +188,7 @@
 		        <connection><use>core_read</use></connection>
 		    </amoaction_read>
 		</resources>
+
         <blocks>
             <amoaction>
                 <class>Amasty_Oaction_Block</class>
@@ -155,27 +204,29 @@
         	    </rewrite>
             </enterprise_salesarchive> 
         </blocks>
+
         <helpers>
             <amoaction>
                 <class>Amasty_Oaction_Helper</class>
             </amoaction>
         </helpers>
     </global>
+
     <default>
         <amoaction>
-           <general>
-                <commands>invoice,invoicecapture,invoiceship,invoicecaptureship,captureship,capture,ship,status</commands>
-           </general>
-           <invoice>
+            <general>
+            <commands>invoice,invoicecapture,invoiceship,invoicecaptureship,captureship,capture,ship,status,comment</commands>
+        </general>
+            <invoice>
                 <notify>0</notify>
                 <status>0</status>
                 <print>0</print>
-           </invoice>                     
-           <capture>
+            </invoice>
+            <capture>
                 <notify>0</notify>
                 <status>0</status>
-           </capture>                     
-           <ship>
+            </capture>
+            <ship>
                 <addcolumn>1</addcolumn>
                 <notify>0</notify>
                 <status>0</status>
@@ -183,7 +234,14 @@
                 <title></title>
                 <comment>0</comment>
                 <force_title>0</force_title>
-           </ship> 
+            </ship>
+            <status>
+                <check_state>0</check_state>
+                <notify>0</notify>
+            </status>
+            <comment>
+                <notify>0</notify>
+            </comment>
         </amoaction>
     </default>
 </config>

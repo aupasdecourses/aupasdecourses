@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Invoicecapture extends Amasty_Oaction_Model_Command_Invoice
@@ -28,5 +28,11 @@ class Amasty_Oaction_Model_Command_Invoicecapture extends Amasty_Oaction_Model_C
         }
         
         return $success; 
+    }
+
+    protected function _getDefault()
+    {
+        return (int)Mage::getStoreConfig('amoaction/invoice/notify')
+            && (int)Mage::getStoreConfig('amoaction/capture/notify');
     }
 }

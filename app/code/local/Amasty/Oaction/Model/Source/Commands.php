@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */ 
 class Amasty_Oaction_Model_Source_Commands
@@ -16,7 +16,7 @@ class Amasty_Oaction_Model_Source_Commands
             'label' => '',
             
         ); 
-        $types = array('invoice', 'invoicecapture', 'invoiceship', 'invoicecaptureship', 'captureship', 'capture', 'ship', 'status');        
+        $types = array('invoice', 'invoicecapture', 'invoiceship', 'invoicecaptureship', 'captureship', 'capture', 'ship', 'status', 'comment');
         foreach ($types as $type){
             $command = Amasty_Oaction_Model_Command_Abstract::factory($type);  
             $options[] = array(
