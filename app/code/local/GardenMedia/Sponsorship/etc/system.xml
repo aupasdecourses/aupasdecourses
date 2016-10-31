@@ -37,6 +37,26 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </block_dashboard>
+                        <become_sponsor_is_active translate="label comment" module="gm_sponsorship">
+                            <label>Customer must order once</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment><![CDATA[If enabled, customer must at least order once before becoming a sponsor and get their sponsor code and their share link.]]></comment>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </become_sponsor_is_active>
+                        <block_become_sponsor_dashboard translate="label comment" module="gm_sponsorship">
+                            <label>Block displayed on dashboard if customer is not a sponsor yet</label>
+                            <comment><![CDATA[This block is displayed on the Sponsorship customer dashboard when this customer is not a sponsor yet. He must ordered once before becoming a sponsor (if enabled)]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_staticBlocks</source_model>
+                            <sort_order>34</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </block_become_sponsor_dashboard>
                         <register_sponsor_message translate="label comment" module="gm_sponsorship">
                             <label>Register Personalized Message</label>
                             <frontend_type>text</frontend_type>
@@ -248,6 +268,17 @@
                             <show_in_store>1</show_in_store>
                             <comment><![CDATA[Will use this rule to create discount coupon. (eg: 10€ discount when total ordered has reached the minimum ordered amount)]]></comment>
                         </salesrule>
+                        <salesrule_register translate="label comment" module="gm_sponsorship">
+                            <label>Sales rule to create discount coupon after successfull godchild registration</label>
+                            <frontend_type>select</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <source_model>gm_sponsorship/adminhtml_system_config_source_salesRule</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will use this rule to create discount coupon when a new customer is successfully registered as a godchild.]]></comment>
+                        </salesrule_register>
                         <template_sponsor translate="label" module="gm_sponsorship">
                             <label>Email sent to Sponsor</label>
                             <frontend_type>select</frontend_type>
@@ -266,6 +297,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </template_godchild>
+                        <template_godchild_register translate="label" module="gm_sponsorship">
+                            <label>Email sent to Godchild when successfully registered</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template_godchild_register>
                         <minimum_ordered_amount translate="label comment" module="gm_sponsorship">
                             <label>Minimum Ordered Amount</label>
                             <frontend_type>text</frontend_type>
@@ -274,7 +314,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment><![CDATA[Minimum amount of purchased items before receiving discount]]></comment>
+                            <comment><![CDATA[Minimum amount of purchased items before receiving discount. To disable this feature, please unset this field or set it to 0.]]></comment>
                         </minimum_ordered_amount>
                         <code_length>
                             <label>Code Length</label>

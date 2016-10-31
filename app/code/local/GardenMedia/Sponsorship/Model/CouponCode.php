@@ -56,12 +56,12 @@ class GardenMedia_Sponsorship_Model_CouponCode extends Mage_Core_Model_Abstract
      * @param int    $customerId        : customerId 
      * @param int    $sponsorCustomerId : sponsorCustomerId 
      * @param string $ownerType         : ownerType 
+     * @param int    $ruleId            : salesrule Id
      * 
      * @return string
      */
-    public function generateRewardCode($customerId, $sponsorCustomerId, $ownerType)
+    public function generateRewardCode($customerId, $sponsorCustomerId, $ownerType, $ruleId)
     {
-        $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule');
         $length = (Mage::getStoreConfig('gm_sponsorship/rewards/code_length') > 0 ? Mage::getStoreConfig('gm_sponsorship/rewards/code_length') : 12);
         $data = array(
             'qty' => 1,

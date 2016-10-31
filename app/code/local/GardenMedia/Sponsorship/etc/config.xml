@@ -3,7 +3,7 @@
 
 	<modules>
 		<GardenMedia_Sponsorship>
-			<version>0.1.2</version>
+			<version>0.1.3</version>
 		</GardenMedia_Sponsorship>
 	</modules>
 
@@ -76,6 +76,11 @@
                 <file>gardenmedia/sponsorship/rewards_godchild.html</file>
                 <type>html</type>
             </gm_sponsorship_rewards_template_godchild>
+            <gm_sponsorship_rewards_template_godchild_register translate="label" module="gm_sponsorship">
+                <label>Sponsorship - Rewards sent to Godchild after successfull registration</label>
+                <file>gardenmedia/sponsorship/rewards_godchild.html</file>
+                <type>html</type>
+            </gm_sponsorship_rewards_template_godchild_register>
             <gm_sponsorship_sponsor_template_new_godchild translate="label" module="gm_sponsorship">
                 <label>Sponsorship - New Godchild</label>
                 <file>gardenmedia/sponsorship/new_godchild.html</file>

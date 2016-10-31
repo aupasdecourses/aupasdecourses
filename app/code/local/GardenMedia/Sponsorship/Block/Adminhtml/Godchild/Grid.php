@@ -43,6 +43,7 @@ class GardenMedia_Sponsorship_Block_Adminhtml_Godchild_Grid extends Mage_Adminht
      */
     protected function _prepareCollection()
     {
+        $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule_register');
         $collection = Mage::getModel('customer/customer')->getCollection()
             ->addNameToSelect()
             ->addAttributeToSelect('email');
@@ -62,6 +63,12 @@ class GardenMedia_Sponsorship_Block_Adminhtml_Godchild_Grid extends Mage_Adminht
             array(
                 'has_rewards' => 'IF(rewards.coupon_id IS NULL, 0, 1)'
             )
+        );
+
+        $collection->getSelect()->join(
+            array('coupon' => $collection->getTable('salesrule/coupon')),
+            'coupon.coupon_id = rewards.coupon_id AND coupon.rule_id = ' . (int) $ruleId,
+            array()
         );
 
         // If godchild's coupon is used
@@ -120,6 +127,7 @@ class GardenMedia_Sponsorship_Block_Adminhtml_Godchild_Grid extends Mage_Adminht
             'orders.customer_id = e.entity_id',
             array('total_amount')
         );
+        $collection->getSelect()->group('godchild.godchild_id');
 
         $this->setCollection($collection);
         return parent::_prepareCollection();

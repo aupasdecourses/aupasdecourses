@@ -40,6 +40,7 @@ class GardenMedia_Sponsorship_Block_Godchilds extends Mage_Core_Block_Template
      */
     public function getGodchilds()
     {
+        $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule_register');
         $customer = Mage::getSingleton('customer/session')->getCustomer();
         $godchilds = Mage::getModel('customer/customer')->getCollection()
             ->addNameToSelect();
@@ -53,12 +54,18 @@ class GardenMedia_Sponsorship_Block_Godchilds extends Mage_Core_Block_Template
             'rewards.customer_owner_id = godchilds.godchild_id AND rewards.owner_type = "godchild"',
             array('has_rewards' => 'coupon_id')
         );
+        $godchilds->getSelect()->join(
+            array('coupon' => $godchilds->getTable('salesrule/coupon')),
+            'coupon.coupon_id = rewards.coupon_id AND coupon.rule_id = ' . (int) $ruleId,
+            array()
+        );
 
         $godchilds->getSelect()->joinLeft(
             array('coupon_used' => $godchilds->getTable('salesrule/coupon_usage')),
             'coupon_used.customer_id = godchilds.godchild_id AND coupon_used.coupon_id = rewards.coupon_id AND coupon_used.times_used >= 1',
             array('is_used' => 'coupon_id')
         );
+
 
         return $godchilds;
     }
