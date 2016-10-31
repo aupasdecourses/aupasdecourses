@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 include_once 'Magento.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 class OrdersController extends Controller
 {
 	public function indexAction(Request $request)
@@ -27,24 +31,14 @@ class OrdersController extends Controller
 		$form_id->handleRequest($request);
 
 		if ($form_id->isValid()) {
-			$y = $form_id->getData();
-			echo 'yolo';
-			print_r($entity_id->getid());
-			echo 'swag';
-			//$url = $this->generateUrl('ordersOne', ['id' => $entity_id->getid()]);
-			//echo "id: ===>|$url|<===";
-			die('=== ID ===');
-			//$this->redirect($url);
+			return $this->redirectToRoute('ordersOne', [
+				'id' => $entity_id->id
+			]);
 		} else if ($form_fromto->isValid()) {
-			$url = $this->generateUrl('ordersAll',
-				['from' => $entity_fromto->getfrom()],
-			UrlGeneratorInterface::ABSOLUTE_URL);
-			echo "from: ===>|$url|<===";
-			die('=== FROM ===');
-			//$this->redirect($url);
+			return $this->redirectToRoute('ordersAll', [
+				'from' => $entity_fromto->from
+			]);
 		}
-//		$url = $this->generateUrl('ordersAll', ['from' => '0000-00-00'/*$entity_fromto->getfrom()*/]);
-//			echo "===>|$url|<===".PHP_EOL;
 
 		return $this->render('orders/index.html.twig', [
 			'forms' => [
