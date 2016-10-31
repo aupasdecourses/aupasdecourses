@@ -12,17 +12,17 @@ class MerchantsController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
+        return new Response('MERCHANT INDEX CONTROLER');
     }
 
     public function merchantsOneAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
+        return new Response('MERCHANT ONE CONTROLER');
     }
     
     public function merchantsAllAction(Request $request)
     {
-        return new Response('DEFAULT CONTROLER');
+        return new Response('MERCHANT ALL CONTROLER');
     }
 }
 

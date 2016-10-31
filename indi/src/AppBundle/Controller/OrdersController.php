@@ -12,16 +12,16 @@ class OrdersController extends Controller
 {
   public function indexAction(Request $request)
     {
-        return new Response('ORDER INDEX');
+        return new Response('ORDER INDEX CONTROLLER');
     }
 
     public function ordersOneAction(Request $request)
     {
-        return new Response('ORDER ONE');
+        return new Response('ORDER ONE CONTROLLER');
     }
 
    public function ordersAllAction(Request $request)
     {
-        return new Response('ORDER ALL');
+        return new Response('ORDER ALL CONTROLLER');
     }
 }

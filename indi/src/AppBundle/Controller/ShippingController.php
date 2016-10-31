@@ -12,12 +12,12 @@ class ShippingController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return new Response('Shipping CONTROLER');
+        return new Response('SHIPPING INDEX CONTROLER');
     }
 
     public function shippingAllAction(Request $request)
     {
-        return new Response('shipping all CONTROLER');
+        return new Response('SHIPPING ALL CONTROLER');
     }
 }
 

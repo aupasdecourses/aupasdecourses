@@ -12,12 +12,12 @@ class PickingController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return new Response('Inedx Action');
+        return new Response('PICKING INDEX CONTROLLER');
     }
 
     public function pickingAllAction(Request $request)
     {
-        return new Response('Picking controller');
+        return new Response('PICKING ALL CONTROLLER');
     }
 }
 

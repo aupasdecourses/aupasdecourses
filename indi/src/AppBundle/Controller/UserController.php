@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return new Response('User controller');
+        return new Response('USER INDEX CONTROLLER');
     }
 }
 

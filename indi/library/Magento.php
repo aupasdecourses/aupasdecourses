@@ -1,10 +1,24 @@
 <?php
 
+include '../../app/Mage.php';
+
 class Magento
 {
 	const AUTHORIZED_GROUP = ['Administrators'];
 
-	public function isLoggedAction() {
+	static $_this;
+
+	static function getInstance() {
+		if (!isset(static::$_this))
+			static::$_this = new Magento();
+		return (static::$_this);
+	}
+
+	public function __construct() {
+		\Mage::app();
+	}
+
+	public function isLogged() {
 		\Mage::getSingleton('core/session',['name' => 'adminhtml']);
 		if (isset($_SESSION['delivery'])) {
 			return (true);
@@ -24,16 +38,12 @@ class Magento
 		return (false);
 	}
 
-	public function loginAction($username = null, $password = null) {
-		if (!isset($username) || !isset($password)) {
-			$username = $this->params('username');
-			$password = $this->params('password');
-		}
+	public function login($username = null, $password = null) {
 		\Mage::getModel('admin/session')->login($username, $password);
 		return $this->isLoggedAction();
 	}
 
-	public function logoutAction() {
+	public function logout() {
 		\Mage::getSingleton('core/session',['name' => 'adminhtml']);
 		$adminSession = \Mage::getSingleton('admin/session');
 		$adminSession->unsetAll();
@@ -41,7 +51,7 @@ class Magento
 		unset($_SESSION['delivery']);
 	}
 
-	public function getMerchantsAction($commercantId = -1) {
+	public function getMerchants($commercantId = -1) {
 		$commercants = [];
 
 		$categories = \Mage::getModel('catalog/category')->getCollection()
