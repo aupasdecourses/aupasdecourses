@@ -23,6 +23,7 @@
 # Vim swap files #
 ##################
 *.sw*
+tags
 
 # Logs and databases #
 ######################
