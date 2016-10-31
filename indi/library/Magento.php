@@ -14,7 +14,7 @@ class Magento
 		return (static::$_this);
 	}
 
-	public function __construct() {
+	protected function __construct() {
 		\Mage::app();
 	}
 
