@@ -13,9 +13,26 @@ class FromToMerchantType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('from', TextType::class);
-		$builder->add('to', TextType::class);
-		$builder->add('merchant', TextType::class);
+		$builder->add('from', TextType::class, [
+			'required' => true,
+			'label' => 'From:',
+			'attr' => [
+				'class' => 'form-control datepicker'
+			]
+		]);
+		$builder->add('to', TextType::class,
+			'required' => false,
+			'label' => 'To:',
+			'attr' => [
+				'class' => 'form-control datepicker'
+			]
+		]);
+		$builder->add('merchant', TextType::class,
+			'label' => 'Merchants:',
+			'attr' => [
+				'class' => 'form-control'
+			]
+		]);
 		$builder->add('Search', SubmitType::class);
 	}
 

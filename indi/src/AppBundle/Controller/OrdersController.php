@@ -36,7 +36,8 @@ class OrdersController extends Controller
 			]);
 		} else if ($form_fromto->isValid()) {
 			return $this->redirectToRoute('ordersAll', [
-				'from' => $entity_fromto->from
+				'from' => $entity_fromto->from,
+				'to' => $entity_fromto->to
 			]);
 		}
 

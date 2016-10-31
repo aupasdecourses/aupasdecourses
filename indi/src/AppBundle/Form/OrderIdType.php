@@ -14,7 +14,11 @@ class OrderIdType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$builder->add('id', TextType::class, [
-			'required' => true
+			'required' => true,
+			'label' => 'Id:',
+			'attr' => [
+				'class'	=>	'form-control datepicker'
+			]
 		]);
         $builder->add('Search', SubmitType::class);
 	}

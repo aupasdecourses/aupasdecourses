@@ -14,10 +14,18 @@ class FromToType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('from', TextType::class, [
-			'required' => true
+			'required' => true,
+			'label' => 'From:',
+			'attr' => [
+				'class' => 'form-control datepicker'
+			]
 		]);
 		$builder->add('to', TextType::class, [
-			'required' => false
+			'required' => false,
+			'label' => 'To:',
+			'attr' => [
+				'class' => 'form-control datepicker'
+			]
 		]);
 		$builder->add('Search', SubmitType::class);
 	}
