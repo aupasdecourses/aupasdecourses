@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% use 'menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<hr>
+	<h1> Merchant One </h1>
+	{% for commercant_id, commercant in orders %}
+		<div class="merchant">
+			<label> {{ commercant.name }}</label><br/>
+			{% for order_id, order in orders %}
+			{{ order.first_name ~ order.last_name }}
+			<table style="width:100%">
+				<tr>
+					<td style="width:40%">
+						<a href="{{ order_id}}" data-toggle="collapse">
+							<label>{{ order_id ~ order.first_name ~ order.last_name }}</label>
+						</a>
+					</td>
+					<td style="width:30%">
+						<label>{{"Nombre d'articles:" ~ order.totalQuantite }}</label>
+					</td>
+					<td style="width:30%">
+						<label>{{"Total:" ~ order.totalPrix }}</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<div id=" {{ order_id }}" class=" order collpase">
+							<table class="table" style="width:50%">
+								<tr>
+									<td><b>Commande N°</b></td>
+									<td><a href="/indi/orders/order_id" target="_blanc"></a></td>
+								</tr>
+								<tr>
+									<td><b>Client</b></td>
+									<td>{{ order.first_name ~ order.last_name }}</td>
+								</tr>
+								<tr>
+									<td><b>Prise de Commande</b></td>
+									<td>{{ order.order_date }}</td>
+								</tr>
+								<tr>
+									<td><b>Date de Livraison</b></td>
+									<td>{{ order.delivery_date }}</td>
+								</tr>
+								<tr>
+									<td><b>Creneau de Livraison</b></td>
+									<td>{{ order.delivery_time }}</td>
+								</tr>
+								<tr>
+									<td><b>Remplacement équivalent</b></td>
+									<td>{{ order.equivalent_replacement ~ "oui : non" }}</td>
+								</tr>
+							</table>
+							<table class="table table-striped">
+								<tr>
+									<th>Produit</th>
+									<th>Quantite</th>
+									<th>Description</th>
+									<th>Prix</th>
+									<th>Total</th>
+									<th>Commentaire</th>
+								</tr>
+								{% for product in order.products %}
+									<tr>
+										<td>{{ product.nom }}</td>
+										<td>{{ product.quantite }}</td>
+										<td>{{ product.description }}</td>
+										<td>{{ product.prix_kilo ~ "€" ~ product.prix_kilo }}</td>
+										<td>{{ product.prix_total }}</td>
+										<td>{{ product.comment }}</td>
+									</tr>
+								{% endfor %}
+								<tr>
+									<td><b>TOTAL</b></td>
+									<td colspan="3"><b>{{ order.totalQuantite }}</b></td>
+									<td colspan="2"><b>{{ order.totalPrix }}</b></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		{% endfor %}
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
