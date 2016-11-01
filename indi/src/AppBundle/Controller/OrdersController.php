@@ -10,10 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 include_once 'Magento.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('error_reporting', E_ALL);
-
 class OrdersController extends Controller
 {
 	public function indexAction(Request $request)
@@ -23,9 +19,9 @@ class OrdersController extends Controller
 		//			// redirect to user login
 
 		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromToType::class, $entity_fromto);
+		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto);
 		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderIdType::class, $entity_id);
+		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id);
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);

@@ -40,7 +40,7 @@ class Magento
 
 	public function login($username = null, $password = null) {
 		\Mage::getModel('admin/session')->login($username, $password);
-		return $this->isLoggedAction();
+		return $this->isLogged();
 	}
 
 	public function logout() {
