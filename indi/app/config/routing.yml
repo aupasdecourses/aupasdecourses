@@ -7,8 +7,16 @@ root:
   defaults: { _controller:AppBundle:Default:index}
 
 user:
-  path:    /user/{value1}/{value2}
+  path:    /user/
   defaults:   { _controller: AppBundle:User:index}
+
+userLogin:
+  path:    /user/login
+  defaults:   { _controller: AppBundle:User:login}
+
+userLogout:
+  path:    /user/logout
+  defaults:   { _controller: AppBundle:User:logout}
 
 ordersIndex:
   path:    /orders

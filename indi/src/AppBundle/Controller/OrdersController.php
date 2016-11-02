@@ -19,32 +19,23 @@ class OrdersController extends Controller
 		//			// redirect to user login
 
 		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromToType::class, $entity_fromto);
+		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto);
 		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderIdType::class, $entity_id);
+		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id);
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
 
 		if ($form_id->isValid()) {
-			$y = $form_id->getData();
-			echo 'yolo';
-			print_r($entity_id->getid());
-			echo 'swag';
-			//$url = $this->generateUrl('ordersOne', ['id' => $entity_id->getid()]);
-			//echo "id: ===>|$url|<===";
-			die('=== ID ===');
-			//$this->redirect($url);
+			return $this->redirectToRoute('ordersOne', [
+				'id' => $entity_id->id
+			]);
 		} else if ($form_fromto->isValid()) {
-			$url = $this->generateUrl('ordersAll',
-				['from' => $entity_fromto->getfrom()],
-			UrlGeneratorInterface::ABSOLUTE_URL);
-			echo "from: ===>|$url|<===";
-			die('=== FROM ===');
-			//$this->redirect($url);
+			return $this->redirectToRoute('ordersAll', [
+				'from' => $entity_fromto->from,
+				'to' => $entity_fromto->to
+			]);
 		}
-//		$url = $this->generateUrl('ordersAll', ['from' => '0000-00-00'/*$entity_fromto->getfrom()*/]);
-//			echo "===>|$url|<===".PHP_EOL;
 
 		return $this->render('orders/index.html.twig', [
 			'forms' => [

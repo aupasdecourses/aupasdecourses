@@ -9,20 +9,24 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FromToMerchantType extends AbstractType
+class OrderId extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('from', TextType::class);
-		$builder->add('to', TextType::class);
-		$builder->add('merchant', TextType::class);
-		$builder->add('Search', SubmitType::class);
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+		$builder->add('id', TextType::class, [
+			'required' => true,
+			'label' => 'Id:',
+			'attr' => [
+				'class'	=>	'form-control datepicker'
+			]
+		]);
+        $builder->add('Search', SubmitType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'AppBundle\Entity\FromToMerchant'
+			'data_class' => 'AppBundle\Entity\OrderId'
 		));
 	}
 }
