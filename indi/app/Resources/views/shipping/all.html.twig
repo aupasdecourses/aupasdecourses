@@ -10,12 +10,12 @@
 		<table style="width: 100%">
 			<tr>
 				<th>
-					<h4><a href="#<?= $id ?>" data-toggle="collapse"><?= $store ?></a></h4>
+					<h4><a href="{{ id }}" data-toggle="collapse">{{ store }}</a></h4>
 				</th>
 			</tr>
 			<tr>
 				<td>
-					<div id="<?= $id ?>" class="store collapse">
+					<div id="{{ id }}" class="store collapse">
 						<table class="table" style="width: 100%">
 							<tr>
 								<th>Creneaux</th>
@@ -30,13 +30,13 @@
 						{% for order_id, order in orders %}
 							<tr>
 								<td> {{ order.delivery_time }}</td>
-								<td><a href="indi/orders/order_id" target="_blanc"></a></td>
+								<td><a href="indi/orders/order_id" target="_blanc">{{ order_id }}</a></td>
 								<td> {{ order.totalPrix }}</td>
 								<td> {{ order.first_name ~ order.last_name }}</td>
 
-								<td><a href="https://www.google.com/maps?q={{ order.adress }}" target="_blanc"></a></td>
-								<td><a href="tel: {{ order.phone }} "></a></td>
-								<td> {{ order.contact }} <a href="tel: {{ order.contact_phone }}"></a></td>
+								<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
+								<td><a href="tel: ~ {{ order.phone }} ">{{ order.phone }}</a></td>
+								<td> {{ order.contact }} <a href="tel: ~ {{ order.contact_phone }}">{{ order.contact_phone }}</a></td>
 								<td> {{ order.info }}</td>
 							</tr>
 						{% endfor %}

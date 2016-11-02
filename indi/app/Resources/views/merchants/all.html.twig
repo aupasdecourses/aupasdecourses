@@ -9,17 +9,17 @@
 		<table style="width: 100%">
 			<tr>
 				<th>
-					<a href="#<?= $id ?>" data-toggle="collapse"><?= $store ?></a>
+					<a href="{{ id }}" data-toggle="collapse">{{ store }}</a>
 				</th>
 			</tr>
 			<tr>
 				<td>
-					<div id="<?= $id?>" class="store collapse">
+					<div id="{{ id }}" class="store collapse">
 						{% set i = -1 %}
 						{% for com_id, commercant in commercants %}
 							<div class="merchant">
 								<label> {{ commercant.name }} </label><br>
-							{% for order_id, order in orders %}
+							{% for order_id, order in commercant.orders %}
 								{{ order.first_name ~ order.last_name }}
 								<table style="width: 100%">
 									<tr>
@@ -29,10 +29,10 @@
 											</a>
 										</td>
 										<td style="width:30%">
-											<label>{{"Nombre d'articles:" ~ order.totalQuantite }}</label>
+											<label>{{"Nombre d'articles:" ~ order.total_quantite }}</label>
 										</td>
 										<td style="width:30%">
-											<label>{{"Total :" ~ order.totalPrix }}</label>
+											<label>{{"Total :" ~ order.total_prix }}</label>
 										</td>
 									</tr>
 									<tr>
@@ -41,7 +41,7 @@
 												<table class="table" style="width:50%">
 													<tr>
 														<td><b>Commande N°</b></td>
-														<td><a href="/indi/orders/order_id" target="_blanc"></a></td>
+														<td><a href="/indi/orders/order_id" target="_blanc">{{ order_id }}</a></td>
 													</tr>
 													<tr>
 														<td><b>Client</b></td>
@@ -85,8 +85,8 @@
 													{% endfor %}
 													<tr>
 														<td><b>TOTAL</td></b>
-														<td colspan="3"><b>{{ order.totalQuantite }}</b></td>
-														<td colspan="2"><b>{{ order.totalPrix }}</b></td>
+														<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+														<td colspan="2"><b>{{ order.total_prix }}</b></td>
 													</tr>
 												</table>
 											</td>

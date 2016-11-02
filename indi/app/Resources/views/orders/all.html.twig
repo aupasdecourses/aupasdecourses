@@ -2,6 +2,7 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+
 <div class="container">
 	<hr>
 	<h1> Orders All </h1>
@@ -14,10 +15,10 @@
 					</a>
 				</td>
 				<td style="width:30%">
-					<label>{{ "Nombre d'articles :" ~ order.totalQuantite }}</label>
+					<label>{{ "Nombre d'articles :" ~ order.total_quantite }}</label>
 				</td>
 				<td style="width:30%">
-					<label>{{ "Total :" ~ order.totalPrix }}</label>
+					<label>{{ "Total :" ~ order.total_prix }}</label>
 				</td>
 			</tr>
 			<tr>
@@ -92,8 +93,8 @@
 						{% endfor %}
 							<tr>
 								<td><b>TOTAL</b></td>
-								<td colspan="3"><b>{{ order.totalQuantite }}</b></td>
-								<td colspan="2"><b>{{ order.totalPrix }}</b></td>
+								<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+								<td colspan="2"><b>{{ order.total_prix }}</b></td>
 							</tr>
 						</table>
 					</div>
