@@ -12,10 +12,11 @@ class DefaultController extends Controller
 {
 	public function indexAction(Request $request)
 	{
+
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
-
+	 
 		return $this->render('home/index.html.twig');
 	}
 }

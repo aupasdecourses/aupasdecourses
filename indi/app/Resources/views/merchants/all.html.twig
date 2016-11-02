@@ -9,30 +9,30 @@
 		<table style="width: 100%">
 			<tr>
 				<th>
-					<a href="#<?= $id ?>" data-toggle="collapse"><?= $store ?></a>
+					<a href="{{ id }}" data-toggle="collapse">{{ store }}</a>
 				</th>
 			</tr>
 			<tr>
 				<td>
-					<div id="<?= $id?>" class="store collapse">
+					<div id="{{ id }}" class="store collapse">
 						{% set i = -1 %}
 						{% for com_id, commercant in commercants %}
 							<div class="merchant">
 								<label> {{ commercant.name }} </label><br>
-							{% for order_id, order in orders %}
-								{{ order.first_name ~ order.last_name }}
+							{% for order_id, order in commercant.orders %}
+								{{ order.first_name ~" "~ order.last_name }}
 								<table style="width: 100%">
 									<tr>
 										<td style="width:40%">
-											<a href="{{ order_id ~ "-" }}" data-toggle="collapse">
-												<label>{{ order_id ~ order.first_name ~ order.last_name }}</label>
+											<a href="{{ order_id ~ "-" ~ {%set i = i+1 %} }}}" data-toggle="collapse">
+												<label>{{ order_id ~ order.first_name ~" "~ order.last_name }}</label>
 											</a>
 										</td>
 										<td style="width:30%">
-											<label>{{"Nombre d'articles:" ~ order.totalQuantite }}</label>
+											<label>{{"Nombre d'articles:" ~ order.total_quantite }}</label>
 										</td>
 										<td style="width:30%">
-											<label>{{"Total :" ~ order.totalPrix }}</label>
+											<label>{{"Total :" ~ order.total_prix }}</label>
 										</td>
 									</tr>
 									<tr>
@@ -41,11 +41,11 @@
 												<table class="table" style="width:50%">
 													<tr>
 														<td><b>Commande N°</b></td>
-														<td><a href="/indi/orders/order_id" target="_blanc"></a></td>
+														<td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td>
 													</tr>
 													<tr>
 														<td><b>Client</b></td>
-														<td>{{ order.first_name ~ order.last_name }}</td>
+														<td>{{ order.first_name ~" "~ order.last_name }}</td>
 													</tr>
 													<tr>
 														<td><b>Prise de Commande</b></td>
@@ -53,11 +53,15 @@
 													</tr>
 													<tr>
 														<td><b>Date de livraison</b></td>
+														<td>{{ order.delivery_date }}</td>
+													</tr>
+													<tr>
+														<td><b>Creneau de livraison</b></td>
 														<td>{{ order.delivery_time }}</td>
 													</tr>
 													<tr>
 														<td><b>Remplacement équivalent</b></td>
-														<td>{{ order.equivalent_remplacement ~ "oui : non" }}</td>
+														<td>{{ (order.equivalent_remplacement == 1) ? "oui" : "non" }}</td>
 													</tr>
 												</table>
 												<table class="table table-striped">
@@ -74,15 +78,15 @@
 															<td>{{ product.nom }}</td>
 															<td>{{ product.quantite }}</td>
 															<td>{{ product.description }}</td>
-															<td>{{ product.prix_kilo ~"€" ~ product.prix_kilo }}</td>
+															<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo~")" }}</td>
 															<td>{{ product.prix_total ~"€" }}</td>
 															<td>{{ product.comment }}</td>
 														</tr>
 													{% endfor %}
 													<tr>
 														<td><b>TOTAL</td></b>
-														<td colspan="3"><b>{{ order.totalQuantite }}</b></td>
-														<td colspan="2"><b>{{ order.totalPrix }}</b></td>
+														<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+														<td colspan="2"><b>{{ order.total_prix }}</b></td>
 													</tr>
 												</table>
 											</td>
