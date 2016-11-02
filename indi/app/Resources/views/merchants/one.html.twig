@@ -3,8 +3,8 @@
 {% use 'menu/default.html.twig' %}
 
 {% block body %}
+	{% include 'forms/default.html.twig' %}
 <div class="container">
-	<hr>
 	<h1> Merchant One </h1>
 	{% for commercant_id, commercant in orders %}
 		<div class="merchant">
@@ -15,7 +15,7 @@
 				<tr>
 					<td style="width:40%">
 						<a href="{{ order_id}}" data-toggle="collapse">
-							<label>{{ order_id ~ order.first_name ~ order.last_name }}</label>
+							<label>{{ order_id ~" "~ order.first_name ~" "~ order.last_name }}</label>
 						</a>
 					</td>
 					<td style="width:30%">
@@ -31,11 +31,11 @@
 							<table class="table" style="width:50%">
 								<tr>
 									<td><b>Commande N°</b></td>
-									<td><a href="/indi/orders/order_id" target="_blanc">{{ order_id }}</a></td>
+									<td>{{ order_id }}</td>
 								</tr>
 								<tr>
 									<td><b>Client</b></td>
-									<td>{{ order.first_name ~ order.last_name }}</td>
+									<td>{{ order.first_name ~" "~ order.last_name }}</td>
 								</tr>
 								<tr>
 									<td><b>Prise de Commande</b></td>
@@ -51,7 +51,7 @@
 								</tr>
 								<tr>
 									<td><b>Remplacement équivalent</b></td>
-									<td>{{ order.equivalent_replacement ~ "oui : non" }}</td>
+									<td>{{ (order.equivalent_replacement ==1) ? "oui" : "non" }}</td>
 								</tr>
 							</table>
 							<table class="table table-striped">
@@ -68,15 +68,15 @@
 										<td>{{ product.nom }}</td>
 										<td>{{ product.quantite }}</td>
 										<td>{{ product.description }}</td>
-										<td>{{ product.prix_kilo ~ "€" ~ product.prix_kilo }}</td>
+										<td>{{ product.prix_unitaire ~ "€ (" ~ product.prix_kilo~")" }}</td>
 										<td>{{ product.prix_total }}</td>
 										<td>{{ product.comment }}</td>
 									</tr>
 								{% endfor %}
 								<tr>
 									<td><b>TOTAL</b></td>
-									<td colspan="3"><b>{{ order.totalQuantite }}</b></td>
-									<td colspan="2"><b>{{ order.totalPrix }}</b></td>
+									<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+									<td colspan="2"><b>{{ order.total_prix }}</b></td>
 								</tr>
 							</table>
 						</div>

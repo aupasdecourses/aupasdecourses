@@ -30,9 +30,9 @@
 						{% for order_id, order in orders %}
 							<tr>
 								<td> {{ order.delivery_time }}</td>
-								<td><a href="indi/orders/order_id" target="_blanc">{{ order_id }}</a></td>
+								<td><a href="{{ order_id }}" target="_blanc">{{ order_id }}</a></td>
 								<td> {{ order.totalPrix }}</td>
-								<td> {{ order.first_name ~ order.last_name }}</td>
+								<td> {{ order.first_name ~" "~ order.last_name }}</td>
 
 								<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
 								<td><a href="tel: ~ {{ order.phone }} ">{{ order.phone }}</a></td>

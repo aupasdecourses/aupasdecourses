@@ -27,10 +27,10 @@
 						{% for com_id, commercant in commercants %}
 							<tr>
 								<td> {{ commercant.name }} </td>
-								<td> {{ commercant.phone ~"/"~ commercant.mobile }} </td>
+								<td> {{ commercant.phone ~" / "~ commercant.mobile }} </td>
 								<td>
 									{% for order_id, order in commercant.orders %}
-									<a href="/indi/orders/order_id" target="_blanc">{{ order_id }}</a><br>
+									<a href="{{ order_id}}" target="_blanc">{{ order_id }}</a><br>
 									{% endfor %}
 								</td>
 								<td>

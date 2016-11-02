@@ -2,6 +2,7 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+	{% include 'forms/default.html.twig' %}
 
 <div class="container">
 	<hr>
@@ -10,8 +11,8 @@
 		<table style="width:100%">
 			<tr>
 				<td style="width: 40%">
-					<a href="{{ order_id }}" data-toggle="collapse">
-						<label>{{ order_id ~ order.first_name ~ order.last_name }}</label>
+					<a href="#{{ order_id }}" data-toggle="collapse">
+						<label>{{ order_id ~" "~ order.first_name ~" "~ order.last_name }}</label>
 					</a>
 				</td>
 				<td style="width:30%">
@@ -30,11 +31,11 @@
 									<table class="table">
 										<tr>
 											<td><b>Commande N°</b></td>
-											<td><a href="/indi/orders/order_id" target="_blanc">{{ order_id }}</a></td>
+											<td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td>
 										</tr>
 										<tr>
 											<td><b>Client</b></td>
-											<td>{{ order.first_name ~ order.last_name }}</td>
+											<td>{{ order.first_name ~" "~ order.last_name }}</td>
 										</tr>
 										<tr>
 											<td><b>Prise de Commande</b></td>
@@ -50,7 +51,7 @@
 										</tr>
 										<tr>
 											<td><b>Remplacement équivalent</b></td>
-											<td>{{ order.equivalent_replacement ~ "oui : non" }}</td>
+											<td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td>
 										</tr>
 									</table>
 								</td>
@@ -86,7 +87,7 @@
 								<td>{{ product.nom }}</td>
 								<td>{{ product.quantite }}</td>
 								<td>{{ product.description }}</td>
-								<td>{{ product.prix_kilo ~ "€" ~ product.prix_kilo }}</td>
+								<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
 								<td>{{ product.prix_total }}</td>
 								<td>{{ product.comment }}</td>
 							</tr>

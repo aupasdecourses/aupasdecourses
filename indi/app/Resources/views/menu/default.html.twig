@@ -16,14 +16,14 @@
 			<li class='divider-vertical'>
 			</li>
 			<li class="dropdown">
-				<a href="/indi/orders">Commandes</a>
+				<a href="{{ path ('ordersIndex')}}">Commandes</a>
 			</li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="">Dispatch<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/indi/merchants">Commercants</a></li>
-					<li><a href="/indi/picking">Enlevement</a></li>
-					<li><a href="/indi/shipping">Livraisons</a></li>
+					<li><a href="{{ path ('merchantsIndex')}}">Commercants</a></li>
+					<li><a href="{{ path ('pickingIndex')}}">Enlevement</a></li>
+					<li><a href="{{ path ('shippingIndex')}}">Livraisons</a></li>
 				</ul>
 			</li>
 			<li>
