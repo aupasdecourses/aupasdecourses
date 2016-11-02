@@ -8,21 +8,86 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
+include_once 'Magento.php';
+
 class MerchantsController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return new Response('MERCHANT INDEX CONTROLER');
+		$mage = \Magento::getInstance();
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+
+		$form_fromtoMerchant->handleRequest($request);
+
+		if ($form_fromtoMerchant->isValid()) {
+			if ($entity_fromtoMerchant->merchant <> -1) {
+				return $this->redirectToRoute('merchantsOne', [
+					'id' => $entity_fromtoMerchant->merchant,
+					'from' => $entity_fromtoMerchant->from,
+					'to' => $entity_fromtoMerchant->to
+				]);
+			} else {
+				return $this->redirectToRoute('merchantsAll', [
+					'from' => $entity_fromtoMerchant->from,
+					'to' => $entity_fromtoMerchant->to
+				]);
+			}
+		}
+
+		return $this->render('merchants/index.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			]
+		]);
     }
 
-    public function merchantsOneAction(Request $request)
+    public function merchantsOneAction(Request $request, $id, $from, $to)
     {
-        return new Response('MERCHANT ONE CONTROLER');
+		$mage = \Magento::getInstance();
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+			'action' => $this->generateUrl('merchantsIndex')
+		]);
+
+		$form_fromtoMerchant->get('from')->setData($from);
+		$form_fromtoMerchant->get('to')->setData($to);
+		$form_fromtoMerchant->get('merchant')->setData($id);
+
+		return $this->render('merchants/one.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			],
+			'orders' => $mage->getMerchantsOrders($id, $from, $to)
+		]);
     }
     
-    public function merchantsAllAction(Request $request)
+    public function merchantsAllAction(Request $request, $from, $to)
     {
-        return new Response('MERCHANT ALL CONTROLER');
+		$mage = \Magento::getInstance();
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+			'action' => $this->generateUrl('merchantsIndex')
+		]);
+
+		$form_fromtoMerchant->get('from')->setData($from);
+		$form_fromtoMerchant->get('to')->setData($to);
+
+		return $this->render('merchants/all.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			],
+			'orders' => $mage->getMerchantsOrdersByStore(-1, $from, $to)
+		]);
     }
 }
 

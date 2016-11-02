@@ -231,7 +231,7 @@ class Magento
 			$dto = $dfrom;
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
-		$commercants = $this->getMerchantsAction($commercantId);
+		$commercants = $this->getMerchants($commercantId);
 		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId);
 		foreach ($orders as $order) {
 			$orderHeader = $this->OrderHeaderParsing($order);
@@ -258,7 +258,7 @@ class Magento
 			$dto = $dfrom;
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
-		$commercants = $this->getMerchantsAction($commercantId);
+		$commercants = $this->getMerchants($commercantId);
 		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId);
 		foreach ($orders as $order) {
 			$orderHeader = $this->OrderHeaderParsing($order);
