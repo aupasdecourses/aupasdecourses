@@ -5,26 +5,27 @@
 <div class="container">
 	<hr>
 	<h1> Merchants All </h1>
-	{% for store, commercants in orders %}
+	{% for store, merchants in stores %}
 		<table style="width: 100%">
 			<tr>
 				<th>
-					<a href="{{ id }}" data-toggle="collapse">{{ store }}</a>
+					<a href="{{ store }}" data-toggle="collapse">{{ store }}</a>
 				</th>
 			</tr>
 			<tr>
 				<td>
-					<div id="{{ id }}" class="store collapse">
-						{% set i = -1 %}
-						{% for com_id, commercant in commercants %}
+					<div id="{{ store }}" class="store collapse">
+						{#% set i = -1 %#}
+						{% for com_id, merchant in merchants %}
 							<div class="merchant">
-								<label> {{ commercant.name }} </label><br>
-							{% for order_id, order in commercant.orders %}
+								<label> {{ merchant.name }} </label><br/>
+							{% for order_id, order in merchant.orders %}
 								{{ order.first_name ~" "~ order.last_name }}
 								<table style="width: 100%">
 									<tr>
 										<td style="width:40%">
-											<a href="{{ order_id ~ "-" ~ {%set i = i+1 %} }}}" data-toggle="collapse">
+											{% set i = i + 1 %}
+											<a href="{{ order_id ~ "-" ~ i }}" data-toggle="collapse">
 												<label>{{ order_id ~ order.first_name ~" "~ order.last_name }}</label>
 											</a>
 										</td>
@@ -61,7 +62,7 @@
 													</tr>
 													<tr>
 														<td><b>Remplacement équivalent</b></td>
-														<td>{{ (order.equivalent_remplacement == 1) ? "oui" : "non" }}</td>
+														<td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td>
 													</tr>
 												</table>
 												<table class="table table-striped">

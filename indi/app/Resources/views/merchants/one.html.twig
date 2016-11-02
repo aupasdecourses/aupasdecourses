@@ -6,11 +6,10 @@
 	{% include 'forms/default.html.twig' %}
 <div class="container">
 	<h1> Merchant One </h1>
-	{% for commercant_id, commercant in orders %}
+	{% for merchant_id, merchant in merchants %}
 		<div class="merchant">
-			<label> {{ commercant.name }}</label><br/>
-			{% for order_id, order in orders %}
-			{{ order.first_name ~ order.last_name }}
+			<label> {{ merchant.name }}</label><br/>
+			{% for order_id, order in merchant.orders %}
 			<table style="width:100%">
 				<tr>
 					<td style="width:40%">

@@ -78,6 +78,7 @@ class Magento
 					'mail3'		=> $category->getData('mail_3'),
 					'mailc'		=> $category->getMailContact(),
 					'mailp'		=> $category->getMailPro(),
+					'orders'	=> []
 				];
 		}
 		return $commercants;

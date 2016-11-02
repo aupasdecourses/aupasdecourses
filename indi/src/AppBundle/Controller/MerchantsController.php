@@ -64,7 +64,7 @@ class MerchantsController extends Controller
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
-			'orders' => $mage->getMerchantsOrders($id, $from, $to)
+			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
 		]);
     }
     
@@ -86,7 +86,7 @@ class MerchantsController extends Controller
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
-			'orders' => $mage->getMerchantsOrdersByStore(-1, $from, $to)
+			'stores' => $mage->getMerchantsOrdersByStore(-1, $from, $to)
 		]);
     }
 }
