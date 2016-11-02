@@ -20,14 +20,15 @@ class FromToMerchant extends AbstractType
 				'class' => 'form-control datepicker'
 			]
 		]);
-		$builder->add('to', TextType::class,
+		$builder->add('to', TextType::class, [
 			'required' => false,
 			'label' => 'To:',
 			'attr' => [
 				'class' => 'form-control datepicker'
 			]
 		]);
-		$builder->add('merchant', TextType::class,
+		$builder->add('merchant', TextType::class, [
+			'required' => false,
 			'label' => 'Merchants:',
 			'attr' => [
 				'class' => 'form-control'

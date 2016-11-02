@@ -7,19 +7,19 @@ root:
   defaults: { _controller:AppBundle:Default:index}
 
 user:
-  path:    /user/
+  path:    /users
   defaults:   { _controller: AppBundle:User:index}
 
 userLogin:
-  path:    /user/login
+  path:    /users/login
   defaults:   { _controller: AppBundle:User:login}
 
 userLogout:
-  path:    /user/logout
+  path:    /users/logout
   defaults:   { _controller: AppBundle:User:logout}
 
 ordersIndex:
-  path:    /orders
+  path:    /orders/
   defaults:   { _controller: AppBundle:Orders:index}
 
 ordersOne:
@@ -34,7 +34,7 @@ ordersAll:
   requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 merchantsIndex:
-  path:    /merchants
+  path:    /merchants/
   defaults:   { _controller: AppBundle:Merchants:index}
 
 merchantsOne:
@@ -43,12 +43,12 @@ merchantsOne:
   requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 merchantsAll:
-  path:    /merchants/{from}/{to}/
+  path:    /merchants/{from}/{to}
   defaults:   { _controller: AppBundle:Merchants:merchantsAll, to: null}
   requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 pickingIndex:
-  path:    /picking
+  path:    /picking/
   defaults:   { _controller: AppBundle:Picking:index}
 
 pickingAll:
