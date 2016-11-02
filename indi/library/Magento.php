@@ -152,8 +152,8 @@ class Magento
 		$orderHeader['delivery_date']	=	$order->getData('ddate');
 		$orderHeader['delivery_time']	=	$order->getData('dtime');
 		$orderHeader['equivalent_replacement']	=	$order->getData('produit_equivalent');
-		$orderHeader['Total quantite']	=	0;
-		$orderHeader['Total prix']		=	0.0;
+		$orderHeader['total_quantite']	=	0;
+		$orderHeader['total_prix']		=	0.0;
 		$orderHeader['products']		=	[];
 
 		return $orderHeader;
@@ -183,8 +183,6 @@ class Magento
 			$dfrom = date('Y-m-d');
 		if (!isset($dto))
 			$dto = $dfrom;
-		if ($orderId == -1 && $this->params('id') <> '')
-			$orderId = $this->params('id');
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
 		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $orderId);
@@ -195,8 +193,8 @@ class Magento
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product);
 				$orderHeader['products'][] = $prod_data;
-				$orderHeader['Total quantite'] += $prod_data['quantite'];
-				$orderHeader['Total prix'] += $prod_data['prix_total'];
+				$orderHeader['total_quantite'] += $prod_data['quantite'];
+				$orderHeader['total_prix'] += $prod_data['prix_total'];
 			}
 			$rsl[$orderHeader['id']] = $orderHeader;
 		}
@@ -208,8 +206,6 @@ class Magento
 			$dfrom = date('Y-m-d');
 		if (!isset($dto))
 			$dto = $dfrom;
-		if ($orderId == -1 && $this->params('id') <> '')
-			$orderId = $this->params('id');
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
 		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $orderId);
@@ -220,8 +216,8 @@ class Magento
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product);
 				$orderHeader['products'][] = $prod_data;
-				$orderHeader['Total quantite'] += $prod_data['quantite'];
-				$orderHeader['Total prix'] += $prod_data['prix_total'];
+				$orderHeader['total_quantite'] += $prod_data['quantite'];
+				$orderHeader['total_prix'] += $prod_data['prix_total'];
 			}
 			$rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
 		}
@@ -248,8 +244,8 @@ class Magento
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
-				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['Total quantite'] += $prod_data['quantite'];
-				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['Total prix'] += $prod_data['prix_total'];
+				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
 			}
 		}
 		return ($commercants);
@@ -275,8 +271,8 @@ class Magento
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
-				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['Total quantite'] += $prod_data['quantite'];
-				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['Total prix'] += $prod_data['prix_total'];
+				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
 			}
 		}
 		$rsl = [];

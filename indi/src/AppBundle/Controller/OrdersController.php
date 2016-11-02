@@ -15,8 +15,8 @@ class OrdersController extends Controller
 	public function indexAction(Request $request)
 	{
 		$mage = \Magento::getInstance();
-		//		if (!$mage->isLogged())
-		//			// redirect to user login
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
 
 		$entity_fromto = new \AppBundle\Entity\FromTo();
 		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto);
@@ -45,13 +45,56 @@ class OrdersController extends Controller
 		]);
 	}
 
-	public function ordersOneAction(Request $request)
+	public function ordersOneAction(Request $request, $id)
 	{
-		return new Response('ORDER ONE CONTROLLER');
+		$mage = \Magento::getInstance();
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		$entity_fromto = new \AppBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+			'action' => $this->generateUrl('ordersIndex'),
+		]);
+		$entity_id = new \AppBundle\Entity\OrderId();
+		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+			'action' => $this->generateUrl('ordersIndex'),
+		]);
+
+		$form_id->get('id')->setData($id);
+
+		return $this->render('orders/one.html.twig', [
+			'forms' => [
+				$form_fromto->createView(),
+				$form_id->createView()
+			],
+			'orders' => $mage->getOrders(NULL, NULL, -1, $id)
+		]);
 	}
 
-	public function ordersAllAction(Request $request)
+	public function ordersAllAction(Request $request, $from, $to)
 	{
-		return new Response('ORDER ALL CONTROLLER');
+		$mage = \Magento::getInstance();
+		if (!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		$entity_fromto = new \AppBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+			'action' => $this->generateUrl('ordersIndex'),
+		]);
+		$entity_id = new \AppBundle\Entity\OrderId();
+		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+			'action' => $this->generateUrl('ordersIndex'),
+		]);
+
+		$form_fromto->get('from')->setData($from);
+		$form_fromto->get('to')->setData($to);
+
+		return $this->render('orders/all.html.twig', [
+			'forms' => [
+				$form_fromto->createView(),
+				$form_id->createView()
+			],
+			'orders' => $mage->getOrders($from, $to)
+		]);
 	}
 }
