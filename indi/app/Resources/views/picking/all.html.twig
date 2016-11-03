@@ -6,46 +6,7 @@
 <div class="container">
 	<hr>
 	<h1> PICKING </h1>
-	{% for store, commercants in orders %}
-		<table style="width: 100%">
-			<tr>
-				<th>
-					<a href="{{ id }}" data-toggle="collapse">{{ store }}</a>
-				</th>
-			</tr>
-			<tr>
-				<td>
-					<div id="{{ id }}" class="store collapse">
-						<table class="table">
-							<tr>
-								<th>Commercant</th>
-								<th>Adresse</th>
-								<th>Telephone</th>
-								<th>N° Commande</th>
-								<th>Montant Commande</th>
-							</tr>
-						{% for com_id, commercant in commercants %}
-							<tr>
-								<td> {{ commercant.name }} </td>
-								<td> {{ commercant.phone ~" / "~ commercant.mobile }} </td>
-								<td>
-									{% for order_id, order in commercant.orders %}
-									<a href="{{ order_id}}" target="_blanc">{{ order_id }}</a><br>
-									{% endfor %}
-								</td>
-								<td>
-									{% for order_id, order in commercant.orders %}
-										{{ order.totalPrix ~ "€" }}
-										<br>
-									{% endfor %}
-								</td>
-							</tr>
-						{% endfor %}
-					</table>
-				</div>
-			</td>
-		</tr>
-	</table>	
-{% endfor %}
+
+	{{ dump(stores) }}
 </div>
 {% endblock %}
