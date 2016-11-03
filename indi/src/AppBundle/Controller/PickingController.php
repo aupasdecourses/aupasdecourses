@@ -34,7 +34,7 @@ class PickingController extends Controller
 		]);
 	}
 
-    public function pickingAllAction(Request $request, $from)
+    public function pickingAllAction(Request $request)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -45,11 +45,13 @@ class PickingController extends Controller
 				'action' => $this->generateUrl('pickingIndex'),
 			]);
 
+		$from = $request->attributes->get('from');
+
 		$form_from->get('from')->setData($from);
 
 		return $this->render('picking/all.html.twig', [
 				'forms' => [ $form_from->createView() ],
-				'stores' => $mage->getMerchantsOrdersbyStore(-1, $from)
+				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
 			]);
     }
 }

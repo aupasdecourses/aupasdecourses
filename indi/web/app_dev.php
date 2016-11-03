@@ -21,7 +21,6 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';
 ini_set('include_path', ini_get('include_path').":../library");
-//$loader->add(NULL, '../library');
 Debug::enable();
 
 $kernel = new AppKernel('dev', true);

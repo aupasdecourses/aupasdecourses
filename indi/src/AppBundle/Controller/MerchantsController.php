@@ -45,7 +45,7 @@ class MerchantsController extends Controller
 		]);
     }
 
-    public function merchantsOneAction(Request $request, $id, $from, $to)
+    public function merchantsOneAction(Request $request)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -56,9 +56,13 @@ class MerchantsController extends Controller
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
+		$from = $request->attributes->get('from');
+		$to = $request->attributes->get('to');
+		$merchant = $request->attributes->get('id');
+
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
-		$form_fromtoMerchant->get('merchant')->setData($id);
+		$form_fromtoMerchant->get('merchant')->setData($merchant);
 
 		return $this->render('merchants/one.html.twig', [
 			'forms' => [
@@ -68,7 +72,7 @@ class MerchantsController extends Controller
 		]);
     }
     
-    public function merchantsAllAction(Request $request, $from, $to)
+    public function merchantsAllAction(Request $request)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -78,6 +82,9 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
+
+		$from = $request->attributes->get('from');
+		$to = $request->attributes->get('to');
 
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);

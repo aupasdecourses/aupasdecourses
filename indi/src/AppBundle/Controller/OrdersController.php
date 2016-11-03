@@ -45,7 +45,7 @@ class OrdersController extends Controller
 		]);
 	}
 
-	public function ordersOneAction(Request $request, $id)
+	public function ordersOneAction(Request $request)
 	{
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -60,6 +60,7 @@ class OrdersController extends Controller
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 
+		$id = $request->attributes->get('id');
 		$form_id->get('id')->setData($id);
 
 		return $this->render('orders/one.html.twig', [
@@ -71,7 +72,7 @@ class OrdersController extends Controller
 		]);
 	}
 
-	public function ordersAllAction(Request $request, $from, $to)
+	public function ordersAllAction(Request $request)
 	{
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -85,6 +86,9 @@ class OrdersController extends Controller
 		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
+
+		$from = $request->attributes->get('from');
+		$to = $request->attributes->get('to');
 
 		$form_fromto->get('from')->setData($from);
 		$form_fromto->get('to')->setData($to);
