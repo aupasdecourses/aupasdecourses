@@ -40,14 +40,15 @@ class ShippingController extends Controller
 
 		$entity_from = new \AppBundle\Entity\From();
 		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from, [
-				'action' => $this->generateUrl('pickingIndex'),
+				'action' => $this->generateUrl('shippingIndex'),
 			]);
 
+		$from = $request->attributes->get('from');
 		$form_from->get('from')->setData($from);
 
 		return $this->render('shipping/all.html.twig', [
 				'forms' => [ $form_from->createView() ],
-				'stores' => $mage->getMerchantsOrdersbyStore(-1, $from)
+				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
 			]);
     }
 }

@@ -23,7 +23,6 @@ class UserController extends Controller
 		$form_login->handleRequest($request);
 
 		$mage = \Magento::getInstance();
-		$mage->isLogged();
 		if ($mage->isLogged())
 			return $this->redirectToRoute('root');
 		else {
@@ -33,10 +32,8 @@ class UserController extends Controller
 			}
 
 			return $this->render('login/index.html.twig', [
-				'forms' => [
-					$form_login->createView(),
-					]
-				]);
+				'forms' => [$form_login->createView()]
+			]);
 		}
 	}
 
