@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
+include_once "Magento.php";
+
 class ShippingController extends Controller
 {
     public function indexAction(Request $request)
@@ -32,7 +34,7 @@ class ShippingController extends Controller
 		]);
 	}
 
-    public function shippingAllAction(Request $request)
+    public function shippingAllAction(Request $request, $from)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -48,7 +50,7 @@ class ShippingController extends Controller
 
 		return $this->render('shipping/all.html.twig', [
 				'forms' => [ $form_from->createView() ],
-				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
+				'stores' => $mage->getOrdersByStore($from)
 			]);
     }
 }

@@ -56,8 +56,8 @@ class Magento
 
 		$categories = \Mage::getModel('catalog/category')->getCollection()
 			->addAttributeToSelect('*')
-			->addFieldToFilter('estcom_commercant', [ 'neq' => false ])
-			->addIsActiveFilter();
+			->addFieldToFilter('estcom_commercant', [ 'neq' => false ]);
+			//->addIsActiveFilter();
 		if ($commercantId <> -1)
 			$categories->addFieldToFilter("att_com_id", [ 'eq' => $commercantId ]);
 		$S = [];
