@@ -30,11 +30,12 @@ class PickingController extends Controller
 		}
 
 		return $this->render('picking/index.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
 	}
 
-    public function pickingAllAction(Request $request)
+    public function pickingAllAction(Request $request, $from)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -45,11 +46,10 @@ class PickingController extends Controller
 				'action' => $this->generateUrl('pickingIndex'),
 			]);
 
-		$from = $request->attributes->get('from');
-
 		$form_from->get('from')->setData($from);
 
 		return $this->render('picking/all.html.twig', [
+				'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
 			]);

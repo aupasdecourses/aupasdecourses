@@ -28,11 +28,12 @@ class ShippingController extends Controller
 		}
 
 		return $this->render('shipping/index.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
 	}
 
-    public function shippingAllAction(Request $request)
+    public function shippingAllAction(Request $request, $id)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -43,10 +44,10 @@ class ShippingController extends Controller
 				'action' => $this->generateUrl('shippingIndex'),
 			]);
 
-		$from = $request->attributes->get('from');
 		$form_from->get('from')->setData($from);
 
 		return $this->render('shipping/all.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
 			]);
