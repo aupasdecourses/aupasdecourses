@@ -14,10 +14,10 @@ form {
 	display:			inline-block;
 }
 
-.error {
-	background-color:	red;
-}
-
 span#logo {
 	margin-top: -7px;
+}
+
+.error {
+	background-color:	red;
 }

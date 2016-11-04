@@ -3,29 +3,56 @@
 {% use 'menu/default.html.twig' %}
 
 {% block body %}
-<div class="container">
-	<table class="table">
-		<tr>
-			<td>
-				{% include 'forms/default.html.twig' with {'forms': 'orders'} %}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{% include 'forms/default.html.twig' with {'forms': 'merchants'} %}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{% include 'forms/default.html.twig' with {'forms': 'picking'} %}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{% include 'forms/default.html.twig' with {'forms': 'shipping'} %}
-			</td>
-		</tr>
-	</table>
-</div>
-
+	<div class="container">
+		<table class="table" style="border: 0px">
+			<tr>
+				<td>
+					<label>Orders</label>
+				</td>
+				<td>
+					{% for form in orders %}
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						{{ form_end(form) }}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Merchants<label>
+				</td>
+				<td>
+					{% for form in merchants %}
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						{{ form_end(form) }}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Picking</label>
+				</td>
+				<td>
+					{% for form in picking %}
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						{{ form_end(form) }}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Shipping</label>
+				</td>
+				<td>
+					{% for form in shipping %}
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						{{ form_end(form) }}
+					{% endfor %}
+				</td>
+			</tr>
+		</table>
+	</div>
 {% endblock %}

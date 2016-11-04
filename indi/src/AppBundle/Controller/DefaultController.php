@@ -23,53 +23,35 @@ class DefaultController extends Controller
 			return $this->redirectToRoute('userLogin');
 	 
 		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto);
+		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+			'action' => $this->generateUrl('ordersIndex')
+		]);
+
 		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id);
+		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+			'action' => $this->generateUrl('merchantsIndex')
+		]);
+
 		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+			'action' => $this->generateUrl('merchantsIndex')
+		]);
+
 		$entity_from_picking = new\AppBundle\Entity\From();
-		$form_from_picking = $this->createForm(\AppBundle\Form\From::class, $entity_from_picking);
+		$form_from_picking = $this->createForm(\AppBundle\Form\From::class, $entity_from_picking, [
+			'action' => $this->generateUrl('pickingIndex')
+		]);
+
 		$entity_from_shipping = new\AppBundle\Entity\From();
-		$form_from_shipping = $this->createForm(\AppBundle\Form\From::class, $entity_from_shipping);
+		$form_from_shipping = $this->createForm(\AppBundle\Form\From::class, $entity_from_shipping, [
+			'action' => $this->generateUrl('shippingIndex')
+		]);
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
 		$form_fromtoMerchant->handleRequest($request);
 		$form_from_picking->handleRequest($request);
 		$form_from_shipping->handleRequest($request);
-
-		if ($form_id->isValid()) {
-			return $this->redirectToRoute('ordersOne', [
-				'id' => $entity_id->id
-			]);
-		} else if ($form_fromto->isValid()) {
-			return $this->redirectToRoute('ordersAll', [
-				'from' => $entity_fromto->from,
-				'to' => $entity_fromto->to
-			]);
-		} else if ($form_fromtoMerchant->isValid()) {
-			if ($entity_fromtoMerchant->merchant <> -1) {
-				return $this->redirectToRoute('merchantsOne', [
-					'id' => $entity_fromtoMerchant->merchant,
-					'from' => $entity_fromtoMerchant->from,
-					'to' => $entity_fromtoMerchant->to
-				]);
-			} else {
-				return $this->redirectToRoute('merchantsAll', [
-					'from' => $entity_fromtoMerchant->from,
-					'to' => $entity_fromtoMerchant->to
-				]);
-			}
-		} else if ($form_from_picking->isValid()) {
-			return $this->redirectToRoute('pickingAll', [
-				'from' => $entity_from_picking->from
-				]);
-		} else if ($form_from_shipping->isValid()) {
-			return $this->redirectToRoute('shippingAll', [
-				'from' => $entity_from_shipping->from
-				]);
-		}
 
 		return $this->render('home/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
