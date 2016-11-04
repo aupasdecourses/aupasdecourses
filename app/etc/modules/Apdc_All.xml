@@ -78,5 +78,9 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_Commercant>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Commercant>
     </modules>
 </config>
