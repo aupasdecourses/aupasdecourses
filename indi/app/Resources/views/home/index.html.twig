@@ -1,19 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% use '/menu/default.html.twig' %}
+{% use 'menu/default.html.twig' %}
 
 {% block body %}
 <div class="container">
-	<h1> HOME INDEX </h1>
-	<hr>
-	<table>
+	<table class="table">
 		<tr>
-			<td>0</td>
-			<td>1</td>
+			<td>
+				{% include 'forms/default.html.twig' with {'forms': 'orders'} %}
+			</td>
 		</tr>
 		<tr>
-			<td>3</td>
-			<td>4</td>
+			<td>
+				{% include 'forms/default.html.twig' with {'forms': 'merchants'} %}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{% include 'forms/default.html.twig' with {'forms': 'picking'} %}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{% include 'forms/default.html.twig' with {'forms': 'shipping'} %}
+			</td>
 		</tr>
 	</table>
 </div>
