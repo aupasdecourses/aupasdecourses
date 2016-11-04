@@ -2,42 +2,42 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-	{% include 'forms/default.html.twig' %}
+{% include 'forms/default.html.twig' %}
 <div class="container">
 	<hr>
 	{% for store, orders in stores %}
-		<table style="width: 100%">
-			<tr>
-				<th>
-					<h4><a href="#{{ store|replace({' ': "_"}) }}" data-toggle="collapse">{{ store }}</a></h4>
-				</th>
-			</tr>
-			<tr>
-				<td>
-					<div id="{{ store|replace({' ': "_"}) }}" class="store collapse">
-						<table class="table" style="width:100%">
-							<tr>
-								<th>Creneaux</th>
-								<th>Numero Commande</th>
-								<th>Montant</th>
-								<th>Nom Clients</th>
-								<th>Adresse</th>
-								<th>Tel</th>
-								<th>Autre Contact</th>
-								<th>Infos</th>
-							</tr>
+	<table style="width: 100%">
+		<tr>
+			<th>
+				<h4><a href="#{{ store|replace({' ': "_"}) }}" data-toggle="collapse">{{ store }}</a></h4>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<div id="{{ store|replace({' ': "_"}) }}" class="store collapse">
+					<table class="table" style="width:100%">
+						<tr>
+							<th>Creneaux</th>
+							<th>Numero Commande</th>
+							<th>Montant</th>
+							<th>Nom Clients</th>
+							<th>Adresse</th>
+							<th>Tel</th>
+							<th>Autre Contact</th>
+							<th>Infos</th>
+						</tr>
 						{% for order_id, order in orders %}
-							<tr>
-								<td>{{ order.delivery_time}}</td>
-								<td>{{ order_id }}</td>
-								<td>{{ order.total_prix }}</td>
-								<td>{{ order.first_name ~" "~ order.last_name }}</td>
-								
-								<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
-								<td>{{ order.phone }}</td>
-								<td>{{ order.contact ~" / "~ order.contact_phone}}</td>
-								<td>{{ order.info }}</td>
-							</tr>
+						<tr>
+							<td>{{ order.delivery_time}}</td>
+							<td>{{ order_id }}</td>
+							<td>{{ order.total_prix }}</td>
+							<td>{{ order.first_name ~" "~ order.last_name }}</td>
+
+							<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
+							<td>{{ order.phone }}</td>
+							<td>{{ order.contact ~" / "~ order.contact_phone}}</td>
+							<td>{{ order.info }}</td>
+						</tr>
 						{% endfor %}
 					</table>
 				</div>

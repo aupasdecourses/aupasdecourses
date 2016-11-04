@@ -18,3 +18,7 @@ form {
 	display:inline-block;
 }
 
+span#logo {
+
+	margin-top: -7px;
+}
