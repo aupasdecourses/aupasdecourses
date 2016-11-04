@@ -17,7 +17,7 @@ class OrderId extends AbstractType
 			'required' => true,
 			'label' => 'Id:',
 			'attr' => [
-				'class'	=>	'form-control datepicker'
+				'class'	=>	'form-control'
 			]
 		]);
         $builder->add('Search', SubmitType::class);

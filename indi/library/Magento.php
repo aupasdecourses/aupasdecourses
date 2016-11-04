@@ -6,7 +6,7 @@ class Magento
 {
 	const AUTHORIZED_GROUP = ['Administrators'];
 
-	static $_this;
+	static private $_this;
 
 	static function getInstance() {
 		if (!isset(static::$_this))

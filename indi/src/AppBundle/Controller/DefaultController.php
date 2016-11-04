@@ -17,6 +17,8 @@ class DefaultController extends Controller
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 	 
-		return $this->render('home/index.html.twig');
+		return $this->render('home/index.html.twig', [
+			'user'	=> $_SESSION['delivery']['username']
+		]);
 	}
 }

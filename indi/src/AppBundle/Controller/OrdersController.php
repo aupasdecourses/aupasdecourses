@@ -38,6 +38,7 @@ class OrdersController extends Controller
 		}
 
 		return $this->render('orders/index.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()
@@ -45,7 +46,7 @@ class OrdersController extends Controller
 		]);
 	}
 
-	public function ordersOneAction(Request $request)
+	public function ordersOneAction(Request $request, $id)
 	{
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -59,11 +60,10 @@ class OrdersController extends Controller
 		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
-
-		$id = $request->attributes->get('id');
 		$form_id->get('id')->setData($id);
 
 		return $this->render('orders/one.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()
@@ -72,7 +72,7 @@ class OrdersController extends Controller
 		]);
 	}
 
-	public function ordersAllAction(Request $request)
+	public function ordersAllAction(Request $request, $from, $to)
 	{
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -87,13 +87,11 @@ class OrdersController extends Controller
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 
-		$from = $request->attributes->get('from');
-		$to = $request->attributes->get('to');
-
 		$form_fromto->get('from')->setData($from);
 		$form_fromto->get('to')->setData($to);
 
 		return $this->render('orders/all.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()

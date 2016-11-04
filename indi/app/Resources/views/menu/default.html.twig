@@ -43,14 +43,12 @@
 		</ul>
 		
 		<ul class="nav navbar-nav navbar-right">
-			<?php if (isset($_SESSION['delivery'])) : ?>
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href=""><?= $_SESSION['delivery']['username'] ?><span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href=""><{{ user }}><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="{{ path('userLogout') }}">Logout</a></li>
 				</ul>
 			</li>
-			<?php endif ?>
 		</ul>
 	</div>
 	</div>

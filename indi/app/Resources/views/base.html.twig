@@ -7,8 +7,10 @@
 		</title>
 
 		{% block stylesheets %}
-		<link href="{{ path ('root')}}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<link href="{{ path ('root')}}/css/style.css" rel="stylesheet" />	
+			<link href="{{ path ('root')}}css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+			<link href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+			<link href="{{ path ('root')}}css/style.css" rel="stylesheet" />
+			<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 		{% endblock %}
 
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -18,8 +20,10 @@
 		{% block body %}{% endblock %}
 
 		{% block javascripts %}
-		<script type="text/javascript" src="{{ path('root') }}/js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="{{ path('root') }}/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/jquery-3.1.1.min.js"></script>
+			<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/datepicker.js"></script>
 		{% endblock %}
 	</body>
 </html>

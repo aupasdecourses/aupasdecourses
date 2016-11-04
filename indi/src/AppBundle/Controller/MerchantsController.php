@@ -39,13 +39,14 @@ class MerchantsController extends Controller
 		}
 
 		return $this->render('merchants/index.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			]
 		]);
     }
 
-    public function merchantsOneAction(Request $request)
+    public function merchantsOneAction(Request $request, $id, $from, $to)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -56,15 +57,12 @@ class MerchantsController extends Controller
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
-		$from = $request->attributes->get('from');
-		$to = $request->attributes->get('to');
-		$merchant = $request->attributes->get('id');
-
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
-		$form_fromtoMerchant->get('merchant')->setData($merchant);
+		$form_fromtoMerchant->get('merchant')->setData($id);
 
 		return $this->render('merchants/one.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
@@ -72,7 +70,7 @@ class MerchantsController extends Controller
 		]);
     }
     
-    public function merchantsAllAction(Request $request)
+    public function merchantsAllAction(Request $request, $from, $to)
     {
 		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
@@ -83,13 +81,11 @@ class MerchantsController extends Controller
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
-		$from = $request->attributes->get('from');
-		$to = $request->attributes->get('to');
-
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
 
 		return $this->render('merchants/all.html.twig', [
+			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
