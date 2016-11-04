@@ -142,6 +142,19 @@
                 </routes>
                 <versions>1</versions>
             </shop>
+            <product>
+                <model>apdc_commercant/api2_product</model>
+                <routes>
+                    <route_collection_with_commercant>
+                        <route>/products/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_commercant>
+                    <route_collection_with_store_and_commercant>
+                        <route>/products/store/:store/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store_and_commercant>
+                </routes>
+            </product>
         </resources>
     </api2>
 </config>
