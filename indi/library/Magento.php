@@ -69,6 +69,7 @@ class Magento
 		}
 		foreach ($categories as $category) {
 			$commercants[$category->getData('att_com_id')] = [
+					'active'	=> $category->getData('is_active'),
 					'id'		=> $category->getData('att_com_id'),
 					'store'		=> $S[explode('/', $category->getPath())[1]]['name'],
 					'name'		=> $category->getName(),
@@ -81,6 +82,11 @@ class Magento
 					'orders'	=> []
 				];
 		}
+		uasort($commercants, function ($lhs, $rhs) {
+			if ($lhs['active'] < $rhs['active'])
+				return true;
+			return false;
+		});
 		return $commercants;
 	}
 

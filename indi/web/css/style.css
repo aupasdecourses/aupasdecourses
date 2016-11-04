@@ -1,24 +1,22 @@
 body {
-	padding-top: 75px;
+	padding-top:		75px;
 }
 
 form div div {
-
-	display:inline-block;
-	
+	display:			inline-block;
 }
 
 form div {
-
-	display:inline-block;
-	
+	display:			inline-block;
 }
 
 form {
-	display:inline-block;
+	display:			inline-block;
 }
 
 span#logo {
-
 	margin-top: -7px;
+}
+	.error {
+	background-color:	red;
 }
