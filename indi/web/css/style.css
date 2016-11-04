@@ -17,3 +17,7 @@ form {
 .error {
 	background-color:	red;
 }
+
+span#logo {
+	margin-top: -7px;
+}

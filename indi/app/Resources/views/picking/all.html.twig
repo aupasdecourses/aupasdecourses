@@ -1,22 +1,19 @@
 {% extends 'base.html.twig' %}
 {% use '/menu/default.html.twig' %}
-
 {% block body %}
 	{% include 'forms/default.html.twig' %}
 	<div class="container">
 		<hr>
-		<h1> PICKING </h1>
-
-		{% for store, commercants in orders %}
+		{% for store, commercants in stores %}
 			<table style="width: 100%">
 				<tr>
 					<th>
-						<a href="{{ id }}" data-toggle="collapse">{{ store }}</a>
+						<a href="#{{ store|replace({' ': "_"}) }}" data-toggle="collapse">{{ store }}</a>
 					</th>
 				</tr>
 				<tr>
 					<td>
-						<div id="{{ id }}" class="store collapse">
+						<div id="{{ store|replace({' ': "_"}) }}" class="store collapse">
 							<table class="table">
 								<tr>
 									<th>Commercant</th>
@@ -25,19 +22,21 @@
 									<th>N° Commande</th>
 									<th>Montant Commande</th>
 								</tr>
+
 								{% for com_id, commercant in commercants %}
 									<tr>
 										<td> {{ commercant.name }} </td>
+										<td> {{ commercant.addr }} </td>
 										<td> {{ commercant.phone ~" / "~ commercant.mobile }} </td>
 										<td>
+
 											{% for order_id, order in commercant.orders %}
-												<a href="{{ order_id}}" target="_blanc">{{ order_id }}</a><br>
+												<a href="/indi/orders/{{ order_id}}" target="_blanc">{{ order_id }}</a><br>
 											{% endfor %}
 										</td>
 										<td>
 											{% for order_id, order in commercant.orders %}
-												{{ order.totalPrix ~ "€" }}
-												<br>
+												{{ order.total_prix ~ "€" }}<br/>
 											{% endfor %}
 										</td>
 									</tr>
