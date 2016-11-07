@@ -155,6 +155,15 @@
                     </route_collection_with_store_and_commercant>
                 </routes>
             </product>
+            <order_item>
+                <model>apdc_commercant/api2_order_item</model>
+                <routes>
+                    <route_collection_with_commercant>
+                        <route>/orders/:id/items/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_commercant>
+                </routes>
+            </order_item>
         </resources>
     </api2>
 </config>
