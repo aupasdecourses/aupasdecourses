@@ -5,12 +5,11 @@
 	{% include 'forms/default.html.twig' %}
 	<div class="container">
 		<hr>
-		<h1> Merchants All </h1>
 		{% for store, merchants in stores %}
 			<table style="width: 100%">
 				<tr>
 					<th>
-						<a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse">{{ store }}</a>
+						<a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse"><h2>{{ store }}</h2></a>
 					</th>
 				</tr>
 				<tr>
@@ -18,7 +17,7 @@
 						<div id="{{ store|replace({' ': '_'}) }}" class="store collapse">
 							{% for com_id, merchant in merchants %}
 								<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
-									<label> {{ merchant.name }} </label><br/>
+									<label><h3> {{ merchant.name }} </h3></label><br/>
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>
@@ -28,10 +27,10 @@
 													</a>
 												</td>
 												<td style="width:30%">
-													<label>{{"Nombre d'articles:" ~ order.total_quantite }}</label>
+													<label>{{"Nombre d'articles : " ~ order.total_quantite }}</label>
 												</td>
 												<td style="width:30%">
-													<label>{{"Total :" ~ order.total_prix }}</label>
+													<label>{{"Total : " ~ order.total_prix ~ "€"}}</label>
 												</td>
 											</tr>
 											<tr>

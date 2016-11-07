@@ -6,7 +6,7 @@
 
 <div class="container">
 	<hr>
-	<h1> Orders All </h1>
+	<h1> Commandes : </h1><br/>
 	{% for order_id, order in orders %}
 	<table style="width:100%">
 		<tr>
@@ -16,10 +16,10 @@
 				</a>
 			</td>
 			<td style="width:30%">
-				<label>{{ "Nombre d'articles :" ~ order.total_quantite }}</label>
+				<label>{{ "Nombre d'articles : " ~ order.total_quantite }}</label>
 			</td>
 			<td style="width:30%">
-				<label>{{ "Total :" ~ order.total_prix }}</label>
+				<label>{{ "Total : " ~ order.total_prix ~ "€" }}</label>
 			</td>
 		</tr>
 		<tr>

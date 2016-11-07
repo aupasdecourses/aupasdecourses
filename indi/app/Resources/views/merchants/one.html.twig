@@ -5,10 +5,9 @@
 {% block body %}
 	{% include 'forms/default.html.twig' %}
 	<div class="container">
-		<h1> Merchant One </h1>
 		{% for merchant_id, merchant in merchants %}
 			<div class="merchant">
-				<label> {{ merchant.name }}</label><br/>
+				<label><h3> {{ merchant.name }}</h3></label><br/>
 				{% for order_id, order in merchant.orders %}
 					<table style="width:100%">
 						<tr>
