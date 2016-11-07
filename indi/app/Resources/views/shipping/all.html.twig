@@ -29,7 +29,7 @@
 								{% for order_id, order in orders %}
 									<tr>
 										<td>{{ order.delivery_time}}</td>
-										<td>{{ order_id }}</td>
+										<td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td>
 										<td>{{ order.total_prix }}</td>
 										<td>{{ order.first_name ~" "~ order.last_name }}</td>
 										<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
