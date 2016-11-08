@@ -59,9 +59,9 @@ function zillah_child_custom_header_setup() {
     add_theme_support( 'custom-header', apply_filters( 'zillah_custom_header_args', array(
         'default-image'          => '',
         'default-text-color'     => '7fcaad',
-        'width'                  => 1600,
-        'height'                 => 360,
+        'width'                  => 1700,
+        'height'                 => 400,
         'flex-height'            => true,
     ) ) );
 }
-add_action( 'after_setup_theme', 'zillah_child_custom_header_setup' );
+add_action( 'after_setup_theme', 'zillah_child_custom_header_setup',20 );
