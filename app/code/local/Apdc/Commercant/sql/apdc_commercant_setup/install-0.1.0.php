@@ -23,7 +23,7 @@ $table
 $installer->getConnection()->createTable($table);
 
 /* Bank information table */
-$tableName = $installer->getTable('apdc_commercant/bank_information');
+$tableName = $installer->getTable('apdc_commercant/bankInfo');
 
 if ($installer->tableExists($tableName)) {
     $installer->getConnection()->dropTable($tableName);
@@ -78,8 +78,8 @@ $table
         'id_contact_billing', $installer->getTable('apdc_commercant/contact'), 'id_contact'
     )
     ->addForeignKey(
-        $installer->getFkName('apdc_commercant/commercant', 'id_bank_information', 'apdc_commercant/bank_information', 'id_bank_information'),
-        'id_bank_information', $installer->getTable('apdc_commercant/bank_information'), 'id_bank_information'
+        $installer->getFkName('apdc_commercant/commercant', 'id_bank_information', 'apdc_commercant/bankInfo', 'id_bank_information'),
+        'id_bank_information', $installer->getTable('apdc_commercant/bankInfo'), 'id_bank_information'
     )
 ;
 $installer->getConnection()->createTable($table);
