@@ -70,6 +70,7 @@ class Apdc_Commercant_Adminhtml_Commercant_ContactController extends Mage_Adminh
             return $this->_redirect('*/*/');
         }
 
+        $data = $this->_filterDates($data, ['dob']);
         $model->setData($data);
         $model->save();
         Mage::getSingleton('adminhtml/session')->addSuccess($this->__('The entity has been saved.'));

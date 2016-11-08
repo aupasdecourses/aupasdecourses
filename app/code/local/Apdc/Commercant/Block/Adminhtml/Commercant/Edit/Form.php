@@ -54,7 +54,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $availableCeos = Mage::getModel('apdc_commercant/contact')
             ->getCollection()
-            ->addFieldToFilter('type', Apdc_Commercant_Model_Source_Contact_Type::TYPE_CEO)
+            ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_CEO)
             ->toOptionArray();
         $fieldset->addField('id_contact_ceo', 'select', [
             'name' => 'id_contact_ceo',
@@ -63,17 +63,9 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
             'values' => $availableCeos,
         ]);
 
-        $fieldset->addField('ceo_dob', 'date', [
-            'name' => 'ceo_dob',
-            'image'     => $this->getSkinUrl('images/grid-cal.gif'),
-            'label' => $this->__('CEO Date of birth'),
-            'required' => true,
-            'format' => Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT) //Varien_Date::DATE_INTERNAL_FORMAT,
-        ]);
-
         $availableBillingContacts = Mage::getModel('apdc_commercant/contact')
             ->getCollection()
-            ->addFieldToFilter('type', Apdc_Commercant_Model_Source_Contact_Type::TYPE_BILLING)
+            ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_BILLING)
             ->toOptionArray();
         $fieldset->addField('id_contact_billing', 'select', [
             'name' => 'id_contact_billing',

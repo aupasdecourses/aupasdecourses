@@ -38,6 +38,14 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Edit_Form extends Mage_Adminhtml_B
             'required' => true,
         ]);
 
+        $fieldset->addField('dob', 'date', [
+            'name' => 'dob',
+            'image'     => $this->getSkinUrl('images/grid-cal.gif'),
+            'label' => $this->__('Date of birth'),
+            'required' => false,
+            'format' => Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT)
+        ]);
+
         $fieldset->addField('email', 'text', [
             'name' => 'email',
             'label' => $this->__('Email'),
@@ -50,9 +58,9 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Edit_Form extends Mage_Adminhtml_B
             'required' => false,
         ]);
 
-        $fieldset->addField('type', 'select', [
-            'name' => 'type',
-            'label' => $this->__('Contact type'),
+        $fieldset->addField('role_id', 'multiselect', [
+            'name' => 'role_id',
+            'label' => $this->__('Contact roles'),
             'required' => true,
             'values' => Mage::getModel('apdc_commercant/source_contact_type')->toOptionArray(),
         ]);

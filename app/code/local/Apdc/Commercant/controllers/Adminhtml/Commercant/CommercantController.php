@@ -70,7 +70,6 @@ class Apdc_Commercant_Adminhtml_Commercant_CommercantController extends Mage_Adm
             return $this->_redirect('*/*/');
         }
 
-        $data = $this->_filterDates($data, ['ceo_dob']);
         $model->setData($data);
         $model->save();
         Mage::getSingleton('adminhtml/session')->addSuccess($this->__('The entity has been saved.'));

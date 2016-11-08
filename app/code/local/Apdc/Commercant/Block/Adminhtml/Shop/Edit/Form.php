@@ -153,7 +153,11 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
         ]);
 
         $data = $model->getData();
-        if (isset($data['timetable'])) {
+        if (empty($data['timetable'])) {
+            foreach (Mage::helper('apdc_commercant')->getDays() as $index => $day) {
+                $data['timetable_'.$index] = '9:00-20:00';
+            }
+        } else {
             foreach ($data['timetable'] as $index => $dayData) {
                 $data['timetable_'.$index] = $dayData;
             }

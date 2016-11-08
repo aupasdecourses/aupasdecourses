@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.1.0</version>
+            <version>0.3.0</version>
         </Apdc_Commercant>
     </modules>
     <global>
@@ -33,6 +33,12 @@
                     <contact>
                         <table>apdc_commercant_contact</table>
                     </contact>
+                    <contact_role>
+                        <table>apdc_commercant_contact_role</table>
+                    </contact_role>
+                    <contact_role_assigned>
+                        <table>apdc_commercant_contact_role_assigned</table>
+                    </contact_role_assigned>
                     <bankInfo>
                         <table>apdc_bank_information</table>
                     </bankInfo>
