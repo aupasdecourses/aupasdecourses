@@ -19,18 +19,22 @@ class RefundController extends Controller
 
 		$entity_from = new\AppBundle\Entity\From();
 		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from);
+		
 
 		$form_from->handleRequest($request);
-
+		
 		if ($form_from->isValid()) {
 			return $this->redirectToRoute('refundAll', [
 				'from' => $entity_from->from
 			]);
-		}	
+		}
+			
 
 		return $this->render('refund/index.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'forms' => [ $form_from->createView() ]
+			'forms' => [ 
+				$form_from->createView(),
+			]
 		]);
 
 	}
@@ -52,5 +56,39 @@ class RefundController extends Controller
 				'user' => $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ]
 			]);
+	}
+
+	public function refundOneAction(Request $request, $id)
+	{
+		$mage = \Magento::getInstance();
+		if(!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+		
+	return $this->render('refund/one.html.twig', [
+		'user' => $_SESSION['delivery']['username']		
+	]);		
+
+	}
+
+	public function refundInputAction(Request $request)
+	{
+		$mage = \Magento::getInstance();
+		if(!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		return $this->render('refund/input.html.twig', [
+			'user' => $_SESSION['delivery']['username']
+		]);
+	}
+
+	public function refundSummaryAction(Request $request)
+	{
+		$mage = \Magento::getInstance();
+		if(!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+			
+		return $this->render('refund/summary.html.twig', [
+			'user' => $_SESSION['delivery']['username']
+		]);
 	}
 }

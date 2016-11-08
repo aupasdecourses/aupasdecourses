@@ -72,3 +72,16 @@ refundAll:
   path: /refund/{from}
   defaults: { _controller: AppBundle:Refund:refundAll}
   requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+
+refundOne:
+  path: /refund/{id}
+  defaults: { _controller: AppBundle:Refund:refundOne}
+  requirements: { id:"[0-9]+" }
+
+refundInput:
+  path: /refund/{id}/input
+  defaults: { _controller: AppBundle:Refund:refundInput}
+
+refundSummary:
+  path: /refund/{id}/summary
+  defaults: { _controller: AppBundle:Refund:refundSummary}
