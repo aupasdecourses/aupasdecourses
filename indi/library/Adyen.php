@@ -23,7 +23,7 @@ class Adyen {
 		curl_close($this->_ch);
 	}
 
-	public function refundCurlAction($merchantAccount, $value, $originalReference, $reference)
+	public function refund($merchantAccount, $value, $originalReference, $reference)
 	{
 		$refundTable = array(
 			"merchantAccount" => $merchantAccount,
@@ -42,13 +42,16 @@ class Adyen {
 		$refundResult = curl_exec($this->_ch);
 
 		if(curl_errno($this->_ch)){
-			print "Error: ". curl_error($this->_ch);
-		} else {
-			var_dump($refundResult);
+			throw new Exception('Refund Curl Error'.curl_error($this->_ch)); 
 		}
+		$refundDecoded = json_decode($refundResult, true);
+		if (!in_array("[refund-received]", $refundDecoded))
+			throw new Exception('Adyen Error, Remboursement non valide');
+
+		return($refundDecoded["pspReference"]); 
 	}
 
-	public function payoutCurlStoreAndConfirmAction($value, $iban, $ownerName, $merchantAccount, $reference, $shopperEmail, $shopperReference)  
+	public function payout($value, $iban, $ownerName, $merchantAccount, $reference, $shopperEmail, $shopperReference)  
 	{
 		$storeTable = array(
 			"amount" => array(
@@ -74,12 +77,11 @@ class Adyen {
 		curl_setopt($this->_ch, CURLOPT_USERPWD, "storePayout_104791@Company.AuPasDeCourses:9GsnR!sm3]*w7>rh%^bHSd!@2");
 		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $jsonStoreTable);
 		$storeResult = curl_exec($this->_ch);
+		$storeDecoded = json_decode($storeResult, true);
+		if (!in_array("[payout-submit-received]", $storeDecoded))
+			throw new Exception('Adyen Error, Payout Store and Submit non valide');
 
-		if(curl_errno($this->_ch)) {
-			print "Error: ". curl_error($this->_ch);
-		} else {
-			var_dump($storeResult);
-		}
+
 
 		/* CONFIRMATION DU PAYOUT */
 		$jsonDecoded = json_decode($storeResult, true);
@@ -96,11 +98,11 @@ class Adyen {
 		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $jsonEncoded);
 
 		$result = curl_exec($this->_ch);
+		$storeDecoded = json_decode($result, true);
+		if (!in_array("[payout-confirm-received]", $storeDecoded))
+			throw new Exception('Adyen Error, Confirm non valide');
 
-		if(curl_errno($this->_ch)) {
-			print "Error: ". curl_error($this->_ch);
-		} else {
-			var_dump($result);
-		}
+		return($storeDecoded["pspReference"]); 
+
 	}
 }
