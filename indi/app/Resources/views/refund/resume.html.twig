@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
+
 {% use '/menu/default.html.twig' %}
+
 {% block body %}
-
-REFUND SUMMARY VIEW<br/>
-
-Step three </br>
-This is a recap :
-
+	<pre>
+		{{ dump(order) }}
+	</pre>
 {% endblock %}

@@ -3,7 +3,8 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-REFUND INDEX<br>
-Liste des commandes pour ojd </br>
 	{% include 'forms/default.html.twig' %}
+	<pre>
+		{{ dump(orders) }}
+	</pre>
 {% endblock %}

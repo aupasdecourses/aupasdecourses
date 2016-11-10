@@ -81,5 +81,5 @@ refundAttachment:
 
 refundResume:
   path: /refund/{id}/resume
-  defaults: { _controller: AppBundle:Refund:refundSummary}
+  defaults: { _controller: AppBundle:Refund:refundResume}
   requirements: { id:"[0-9]+" }

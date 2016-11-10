@@ -208,6 +208,31 @@ class Magento
 		return ($rsl);
 	}
 
+	public function getOrderByMerchants($orderId) {
+		$merchants = $this->getMerchants();
+		$orders = $this->OrdersQuery(null, null, -1, $orderId);
+
+		$rsl = [
+			-1 => 0.0
+
+		];
+		foreach ($orders as $order) {
+			$orderHeader = $this->OrderHeaderParsing($order);
+			$products = $order->getAllItems();
+			foreach ($products as $product) {
+				$prod_data = $this->ProductParsing($product);
+				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
+					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
+					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
+				}
+				$rsl[$prod_data['commercant_id']]['products'][] = $prod_data;
+				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[-1] += $prod_data['prix_total'];
+			}
+		}
+		return ($rsl);
+	}
+
 	public function getOrdersByStore($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1) {
 		if (!isset($dfrom))
 			$dfrom = date('Y-m-d');
@@ -231,14 +256,14 @@ class Magento
 		return ($rsl);
 	}
 
-	public function getMerchantsOrders($commercantId = -1, $dfrom = null, $dto = null) {
+	public function getMerchantsOrders($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1) {
 		if (!isset($dfrom))
 			$dfrom = date('Y-m-d');
 		if (!isset($dto))
 			$dto = $dfrom;
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
-		$commercants = $this->getMerchants($commercantId);
+		$commercants = $this->getMerchants($commercantId, $order_id);
 		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId);
 		foreach ($orders as $order) {
 			$orderHeader = $this->OrderHeaderParsing($order);
@@ -258,7 +283,7 @@ class Magento
 		return ($commercants);
 	}
 
-	public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null) {
+	public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1) {
 		if (!isset($dfrom))
 			$dfrom = date('Y-m-d');
 		if (!isset($dto))
@@ -266,7 +291,7 @@ class Magento
 		$dfrom .=  " 00:00:00";
 		$dto .=  " 00:00:00";
 		$commercants = $this->getMerchants($commercantId);
-		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId);
+		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
 		foreach ($orders as $order) {
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = \Mage::getModel('sales/order_item')->getCollection();
