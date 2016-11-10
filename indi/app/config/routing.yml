@@ -65,23 +65,21 @@ shippingAll:
   requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
 
 refundIndex:
-  path:   /refund/
-  defaults:   { _controller: AppBundle:Refund:index}
+  path:   /refund/{from}
+  defaults:   { _controller: AppBundle:Refund:index, from: null}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
 
-refundAll:
-  path: /refund/{from}
-  defaults: { _controller: AppBundle:Refund:refundAll}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
-
-refundOne:
-  path: /refund/{id}
-  defaults: { _controller: AppBundle:Refund:refundOne}
+refundUpload:
+  path: /refund/{id}/upload
+  defaults: { _controller: AppBundle:Refund:refundUpload}
   requirements: { id:"[0-9]+" }
 
-refundInput:
-  path: /refund/{id}/input
+refundAttachment:
+  path: /refund/{id}/attachment
   defaults: { _controller: AppBundle:Refund:refundInput}
+  requirements: { id:"[0-9]+" }
 
-refundSummary:
-  path: /refund/{id}/summary
+refundResume:
+  path: /refund/{id}/resume
   defaults: { _controller: AppBundle:Refund:refundSummary}
+  requirements: { id:"[0-9]+" }
