@@ -76,7 +76,7 @@ refundUpload:
 
 refundAttachment:
   path: /refund/{id}/attachment
-  defaults: { _controller: AppBundle:Refund:refundInput}
+  defaults: { _controller: AppBundle:Refund:refundAttachment}
   requirements: { id:"[0-9]+" }
 
 refundResume:
