@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
+
 {% use '/menu/default.html.twig' %}
+
 {% block body %}
-
-REFUND ONE : </br>
-
-Step one : Uploadez votre ticket
-
+	<pre>
+		{{ dump(order) }}
+	</pre>
 {% endblock %}

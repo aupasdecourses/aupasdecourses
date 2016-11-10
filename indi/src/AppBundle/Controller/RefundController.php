@@ -21,18 +21,18 @@ class RefundController extends Controller
 		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from);
 		
 		$form_from->handleRequest($request);
-		
-		if ($form_from->isValid()) {
-			return $this->redirectToRoute('refundAll', [
-				'from' => $entity_from->from
-			]);
-		}
 
+		if ($form_from->isValid())
+			return $this->redirectToRoute('refundIndex', [ 'from' => $entity_from->from ]);
+		if (isset($from))
+			$orders = $mage->getOrders($from);
+		else
+			$orders = $mage->getOrders();
+		 
 		return $this->render('refund/index.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'forms' => [ 
-				$form_from->createView(),
-			]
+			'forms' => [ $form_from->createView() ],
+			'orders' => $orders
 		]);
 
 	}
@@ -43,8 +43,11 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
+		$order = $mage->getOrderByMerchants($id);
+
 		return $this->render('refund/upload.html.twig', [
-			'user' => $_SESSION['delivery']['username']		
+			'user' => $_SESSION['delivery']['username'],
+			'order' => $order
 		]);		
 
 	}
@@ -55,8 +58,11 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
+		$order = $mage->getOrderByMerchants($id);
+
 		return $this->render('refund/attachment.html.twig', [
-			'user' => $_SESSION['delivery']['username']
+			'user' => $_SESSION['delivery']['username'],
+			'order' => $order
 		]);
 	}
 
@@ -66,8 +72,11 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
+		$order = $mage->getOrderByMerchants($id);
+
 		return $this->render('refund/resume.html.twig', [
-			'user' => $_SESSION['delivery']['username']
+			'user' => $_SESSION['delivery']['username'],
+			'order' => $order
 		]);
 	}
 }

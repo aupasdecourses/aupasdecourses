@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
+
 {% use '/menu/default.html.twig' %}
+
 {% block body %}
-
-REFUND INPUT VIEW </br>
-Step two <br>
-Saisissez les champs :
-
+	<pre>
+		{{ dump(order) }}
+	</pre>
 {% endblock %}
