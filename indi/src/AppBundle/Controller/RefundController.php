@@ -43,7 +43,7 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('refund/one.html.twig', [
+		return $this->render('refund/upload.html.twig', [
 			'user' => $_SESSION['delivery']['username']		
 		]);		
 
@@ -55,7 +55,7 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('refund/input.html.twig', [
+		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username']
 		]);
 	}
@@ -66,7 +66,7 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('refund/summary.html.twig', [
+		return $this->render('refund/resume.html.twig', [
 			'user' => $_SESSION['delivery']['username']
 		]);
 	}
