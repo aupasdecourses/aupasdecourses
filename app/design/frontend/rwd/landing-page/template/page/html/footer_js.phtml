@@ -1,41 +1,79 @@
+<!-- Google Auto Complete -->
+<?php
+	$key = Mage::getStoreConfig('api_key/google/google_nav');
+	$url = $this->getUrl('customhome/index/redirect');
+	$zipcode_popup = "<div class=\'autocomp_popup\'>
+		<style>
+			.autocomp_popup {
+				position:       relative;
+				max-width:      800px;
+				margin:         20px auto;
+				background:     rgba(255,255,255,1);
+				padding:		20px;
+				text-align:		center;
+			}
+			.autocomp_popup_content {
+			    width:         100%;
+			    margin:        20px;
+			}
+			.autocomp_popup_content p {
+				width:         100%;
+				padding:	   20px;
+			}
+		</style>
+		<div class=\'.autocomp_popup_content\'>
+			<div class=\'intro-section\'>
+				<p>Veuillez préciser votre code postal.</p>
+				<form method=\'post\' action=\'$url\'>
+					<input type=\'text\' class=\'form-control input-quartier\' name=\'zipcode\' placeholder=\'\'/>
+					<button type=\'submit\' class=\'btn btn-default standard-button input-quartier\'>Voir mes commerçants</button>
+				</form>
+			</div>
+		</div>
+	</div>";
+	$zipcode_popup = preg_replace("#[\n\r]#", "", $zipcode_popup);
+?>
+
 <script>
-function init() {
-    var imgDefer = document.getElementsByTagName('img');
-    for (var i=0; i<imgDefer.length; i++) {
-        if(imgDefer[i].getAttribute('data-src')) {
-            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-        }
-    }
-    var vidDefer = document.getElementsByTagName('iframe');
-    for (var i=0; i<vidDefer.length; i++) {
-        if(vidDefer[i].getAttribute('data-src')) {
-            vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
-        }
-    }
-}
-window.onload = init;
+	function init() {
+	    var imgDefer = document.getElementsByTagName('img');
+	    for (var i=0; i<imgDefer.length; i++) {
+	        if(imgDefer[i].getAttribute('data-src')) {
+	            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+	        }
+	    }
+	    var vidDefer = document.getElementsByTagName('iframe');
+	    for (var i=0; i<vidDefer.length; i++) {
+	        if(vidDefer[i].getAttribute('data-src')) {
+	            vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
+	        }
+	    }
+	}
+	window.onload = init;
 </script>
 <script type="text/javascript">
-function downloadJSAtOnload() {
-    var jsArray = [
-        "<?php echo $this->getSkinUrl('owl-carrousel/owl.carousel.min.js')?>",
-        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'googleanalytics/ga.js'?>",
-        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'tawkto/tawkto.js'?>"
-        ];
-    var arrayLength = jsArray.length;
-    for (var i = 0; i < arrayLength; i++) {
-        var element = document.createElement("script");
-        element.src = jsArray[i];
-        document.body.appendChild(element);
-    }
-}
-if (window.addEventListener)
-window.addEventListener("load", downloadJSAtOnload, false);
-else if (window.attachEvent)
-window.attachEvent("onload", downloadJSAtOnload);
-else window.onload = downloadJSAtOnload;
+	function downloadJSAtOnload() {
+	    var jsArray = [
+	       	"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'jquery.magnific-popup.min.js'?>",
+	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'googleanalytics/ga.js'?>",
+	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'tawkto/tawkto.js'?>",
+	        //"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'GoogleApi/GoogleApi.js'?>",
+	        //"https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage",
+	       	"<?php echo $this->getSkinUrl('js/custom.js');?>"
+	        ];
+	    var arrayLength = jsArray.length;
+	    for (var i = 0; i < arrayLength; i++) {
+	        var element = document.createElement("script");
+	        element.src = jsArray[i];
+	        document.body.appendChild(element);
+	    }
+	}
+	if (window.addEventListener)
+		window.addEventListener("load", downloadJSAtOnload, false);
+	else if (window.attachEvent)
+		window.attachEvent("onload", downloadJSAtOnload);
+	else window.onload = downloadJSAtOnload;
 </script>
-<script src="<?php echo $this->getSkinUrl('js/custom.js');?>"></script>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -52,7 +90,6 @@ src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"
 <!-- End Facebook Pixel Code -->
 
 <!-- MAIN POPUP -->
-<script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
 <?php
 $popup_block = $this->getLayout()->createBlock('cms/block')->setBlockId('main_popup')->toHtml();
 $popup_block = preg_replace("#[\n\r]#", "", $popup_block);
@@ -70,66 +107,3 @@ if ($popup_block != '') : ?>
 	</script>
 <?php endif ?>
 <!-- END MAIN POPUP -->
-
-<!-- Google Auto Complete -->
-<?php
-	$key = Mage::getStoreConfig('api_key/google/google_nav');
-?>
-<script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
-<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&signed_in=true&libraries=places&callback=GoogleApiLandingpage' async defer></script>
-<?php
-$url = $this->getUrl('customhome/index/redirect');
-$zipcode_popup = "<div class=\'autocomp_popup\'>
-	<style>
-		.autocomp_popup {
-			position:       relative;
-			max-width:      800px;
-			margin:         20px auto;
-			background:     rgba(255,255,255,1);
-			padding:		20px;
-			text-align:		center;
-		}
-		.autocomp_popup_content {
-		    width:         100%;
-		    margin:        20px;
-		}
-		.autocomp_popup_content p {
-			width:         100%;
-			padding:	   20px;
-		}
-	</style>
-	<div class=\'.autocomp_popup_content\'>
-		<div class=\'intro-section\'>
-			<p>Veuillez préciser votre code postal.</p>
-			<form method=\'post\' action=\'$url\'>
-				<input type=\'text\' class=\'form-control input-quartier\' name=\'zipcode\' placeholder=\'\'/>
-				<button type=\'submit\' class=\'btn btn-default standard-button input-quartier\'>Voir mes commerçants</button>
-			</form>
-		</div>
-	</div>
-</div>";
-$zipcode_popup = preg_replace("#[\n\r]#", "", $zipcode_popup);
-?>
-<script type="text/javascript">
-$j('#GoogleAutoCompleteZipcode').val('');
-$j('#GoogleAutoCompleteInput').keypress(function(event) {
-	if (event.which == 13) {
-		event.preventDefault();
-		window.setTimeout(function(){
-			$j('#form-quartier').submit();
-		}, 500)
-	}
-});
-$j('#form-quartier').submit(function(event){
-	if ($j('#GoogleAutoCompleteZipcode').val() == '') {
-		event.preventDefault();
-		$j.magnificPopup.open({
-			items: {
-				src: '<?= $zipcode_popup ?>',
-				type: 'inline'
-			}
-		});
-	}
-});
-</script>
-<!-- End Google Auto Complete -->
