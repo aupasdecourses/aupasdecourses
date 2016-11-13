@@ -30,13 +30,25 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
         $html[] = '<div id="menu-mobile-'.$id.'" class="menu-mobile level0'.$active.'">';
         $html[] = '<div class="parentMenu">';
         // --- Top Menu Item ---
-        $html[] = '<a class="level'.$level.$active.'" href="'.$catUrl.'">';
+
+        $store_id = Mage::app()->getStore()->getStoreId();
+        $cat = Mage::getModel('catalog/category')->setStoreId($store_id)->load($id);
+        $isclickable = $cat->getResource()->getAttribute('is_clickable')->getFrontend()->getValue($cat);
+        
+        //Clear name
         $name = $this->escapeHtml($category->getName());
         if (Mage::getStoreConfig('custom_menu/general/non_breaking_space')) {
             $name = str_replace(' ', '&nbsp;', $name);
         }
+
+        if ($isclickable == 'Non') {
+            $html[] = '<a class="level'.$level.$active.'" href="javascript:void(0);">';
+        } else {
+            $html[] = '<a class="level'.$level.$active.'" href="'.$catUrl.'">';
+        }
         $html[] = '<span>'.$name.'</span>';
         $html[] = '</a>';
+
         if ($hasSubMenu) {
             $html[] = '<span class="button" rel="submenu-mobile-'.$id.'" onclick="wpSubMenuToggle(this, \'menu-mobile-'.$id.'\', \'submenu-mobile-'.$id.'\');">&nbsp;</span>';
         }
@@ -145,8 +157,14 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
 
     public function drawMobileMenuItem($children, $level = 1)
     {
+        $helper=Mage::helper('apdc_front');
         $keyCurrent = $this->getCurrentCategory()->getId();
         $html = '';
+        $text_allproduct=[
+            "Tous les produits",
+            "Tous",
+            "Fruits et légumes de saison"
+        ];
         foreach ($children as $child) {
             if (is_object($child) && $child->getIsActive()) {
                 // --- class for active category ---
@@ -165,8 +183,22 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
                 if (Mage::getStoreConfig('custom_menu/general/non_breaking_space')) {
                     $name = str_replace(' ', '&nbsp;', $name);
                 }
+
+                $store_id = Mage::app()->getStore()->getStoreId();
+                $cat = Mage::getModel('catalog/category')->setStoreId($store_id)->load($id);
+
                 $html .= '<div class="parentMenu">';
-                $html .= '<a class="itemMenuName level'.$level.$active.'" href="'.$this->getCategoryUrl($child).'"><span>'.$name.'</span></a>';
+                $html .= '<a class="itemMenuName level'.$level.$active.'" href="'.$this->getCategoryUrl($child).'">';
+                //add thumbnail
+                if ($level == 1) {
+                    $html .= '<img class="thumb-menu" src="'.$helper->getThumbnailImageUrl($cat).'"/>';
+                }
+                if ($level ==2 and in_array($name,$text_allproduct)) {
+                    $html .= '<span class="thumb-text-menu">'.strtoupper($name).'</span></a>';
+                }else{
+                    $html .= '<span class="thumb-text-menu">'.$name.'</span></a>';
+                }
+
                 if (count($activeChildren) > 0) {
                     $html .= '<span class="button" rel="submenu-mobile-'.$id.'" onclick="wpSubMenuToggle(this, \'menu-mobile-'.$id.'\', \'submenu-mobile-'.$id.'\');">&nbsp;</span>';
                 }
@@ -189,6 +221,13 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
         $helper=Mage::helper('apdc_front');
         $html = '<div class="itemMenu level'.$level.'">';
         $keyCurrent = $this->getCurrentCategory()->getId();
+
+        $text_allproduct=[
+            "Tous les produits",
+            "Tous",
+            "Fruits et légumes de saison"
+        ];
+
         foreach ($children as $child) {
             if (is_object($child) && $child->getIsActive()) {
                 // --- class for active category ---
@@ -216,7 +255,11 @@ class Apdc_Front_Block_Navigation extends WP_CustomMenu_Block_Navigation
                     if ($level == 1) {
                         $html .= '<img class="thumb-menu" src="'.$helper->getThumbnailImageUrl($cat).'"/>';
                     }
-                    $html .= '<span class="thumb-text-menu">'.$name.'</span></a>';
+                    if ($level ==2 and in_array($name,$text_allproduct)) {
+                        $html .= '<span class="thumb-text-menu">'.strtoupper($name).'</span></a>';
+                    }else{
+                        $html .= '<span class="thumb-text-menu">'.$name.'</span></a>';
+                    }
                 }
                 $activeChildren = $this->_getActiveChildren($child, $level);
                 if (count($activeChildren) > 0) {
