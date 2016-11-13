@@ -658,8 +658,39 @@ h6,
     top: -7px;
 }
 
+.product-options{
+    border:none;
+    padding: 10px 0px 15px;
+}
+
+.product-options .subtitle{
+    text-transform: none;
+    color: red;
+    font-weight: 300;
+    font-size: 12px;
+    font-style: italic;
+    float: right;
+}
+
+.prodcut-options dd select{
+    text-align: center;
+    text-align-last: center;
+    padding: 5px 0;
+    border-radius: 2px;
+    border: 1px solid silver;
+    background: #FFFFFF;
+    font-size: 15px;
+}
+
+.product-options dl.last{
+    margin-bottom:0px;
+}
+
 .product-options-bottom {
     background-color: #fff;
+    border:none;
+    margin-bottom: 0px;
+    padding: 15px 0 20px;
 }
 
 
@@ -3402,6 +3433,7 @@ a.btn:hover {
     float: left;
     margin-right: 10px;
     text-align: center;
+    text-align-last:center;
     padding: 5px 0;
 }
 
@@ -3674,23 +3706,12 @@ a.btn:hover {
     text-decoration: underline;
 }
 
+.long-description{
+    margin-top:10px;
+}
+
 
 /*Tab Infos Sups*/
-
-#product-attribute-specs-table {
-    max-width: 100%;
-    border: none;
-}
-
-#product-attribute-specs-table th {
-    border-right: none;
-    border-bottom: none;
-}
-
-.data-table thead th,
-.data-table tbody td {
-    border-bottom: none;
-}
 
 .block-related .block-title {
     background: #ffffff;

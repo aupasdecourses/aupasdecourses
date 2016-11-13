@@ -45,59 +45,59 @@
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
-
             <div class="product-img-box">
                 <div class="product-name">
                     <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                 </div>
                 <?php echo $this->getChildHtml('media') ?>
-                    <div class="product-secondaryinfos">
-
-
-            <?php $attributes = $_product->getAttributes();
-                $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
-            ?>
-
-             <table class="tags-product">
-                <thead>
-                    <tr>
-                        <?php foreach ($tags as $tag=>$label) {    
-                            $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
-                            if (in_array($attributeValue,['Non','',' ','N/A',null])){}else{?>
-                        <th class="tags-title"><?php echo $label?></th>
-                        <?php }} ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <?php
-                                foreach ($tags as $tag=>$label) {    
+                <div class="product-secondaryinfos">
+                    <?php $attributes = $_product->getAttributes();
+                        $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
+                    ?>
+                    <table class="tags-product">
+                        <thead>
+                            <tr>
+                                <?php foreach ($tags as $tag=>$label) {    
                                     $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
-                                    if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
-                                        <td class='tags-wrapper'>
-                                        <?php if($tag=='producteur'){?>
-                                                <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
-                                            
-                                            <?php }elseif($tag=='origine'){?>
-                                                <?php if (substr($attributeValue, 0, 6) == "France"){?>
-                                                    <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
-                                                <?php }else{?>
-                                                    <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                    if (in_array($attributeValue,['Non','',' ','N/A',null])){}else{?>
+                                <th class="tags-title"><?php echo $label?></th>
+                                <?php }} ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <?php
+                                        foreach ($tags as $tag=>$label) {    
+                                            $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
+                                            if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
+                                                <td class='tags-wrapper'>
+                                                <?php if($tag=='producteur'){?>
+                                                        <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
+                                                    
+                                                    <?php }elseif($tag=='origine'){?>
+                                                        <?php if (substr($attributeValue, 0, 6) == "France"){?>
+                                                            <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
+                                                        <?php }else{?>
+                                                            <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                                        <?php } ?>
+                                                <?php }elseif($tag=='produit_biologique'){?>
+                                                        <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
+                                                <?php } else{?>
+                                                        <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
                                                 <?php } ?>
-                                        <?php }elseif($tag=='produit_biologique'){?>
-                                                <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
-                                        <?php } else{?>
-                                                <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
-                                        <?php } ?>
-                                        </td>
-                                <?php }} 
-                        ?>
-                    </tr>
-                </tbody>
-            </table>
-    </div>
+                                                </td>
+                                        <?php }} 
+                                ?>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="long-description">
+                    <?php if ($_description = $this->getProduct()->getDescription()):?>
+                        <?php echo $_description;?>
+                    <?php endif; ?>
+                </div>
             </div>
-
             <div class="product-shop">
                 <div class="product-name">
                     <div class="h1" itemprop="name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></div>
@@ -105,74 +105,44 @@
                         <div class="nom-commercant"><?php echo $_product->getAttributeText('commercant') ?></div>
                     <?php }?>
                 </div>
-
                 <div class="price-info" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                       <meta itemprop="priceCurrency" content="<?php echo $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode(); ?>"/>
                       <!--<?php echo $this->getChildHtml('product_type_availability_snippet'); ?>-->
                       <?php echo $this->getPriceHtml($_product); ?>
                       <?php echo $this->getChildHtml('bundle_prices') ?>
                       <?php echo $this->getTierPriceHtml() ?>
-
-                    <div class="prix-kilo">
-                        <?php echo $_helper->productAttribute($_product, nl2br($_product->getPrixKiloSite()), 'prix_kilo_site') ?>
-                    </div>
+                      <?php if ($_product->getShortDescription()):?>
+                            <div class="short-description">
+                                <div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                            </div>
+                       <?php endif;?>
+                        <div class="prix-kilo">
+                            <?php echo $_helper->productAttribute($_product, nl2br($_product->getPrixKiloSite()), 'prix_kilo_site') ?>
+                        </div>
                 </div>
-
-                <div class="extra-info">
-                    <?php echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
-                    <?php echo $this->getChildHtml('product_type_availability'); ?>
-                </div>
-
-                <?php echo $this->getChildHtml('alert_urls') ?>
-
-                <?php if ($_product->getShortDescription()):?>
-                    <div class="short-description">
-                        <div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
-                    </div>
-                <?php endif;?>
-
-
-
-
                 <?php echo $this->getChildHtml('other');?>
-
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                 <?php endif;?>
-
             </div>
-
             <div class="add-to-cart-wrapper">
                 <?php echo $this->getChildHtml('product_type_data') ?>
                 <?php echo $this->getChildHtml('extrahint') ?>
-
                 <?php if (!$this->hasOptions()):?>
                     <div class="add-to-box">
                         <?php if($_product->isSaleable()): ?>
                             <?php echo $this->getChildHtml('addtocart') ?>
-                            <!-- <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
-                                <span class="or"><?php echo $this->__('OR') ?></span>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php echo $this->getChildHtml('addto') ?>
-                        <?php echo $this->getChildHtml('sharing') ?>-->
+                        <?php endif;?>
                     </div>
                     <?php echo $this->getChildHtml('extra_buttons') ?>
-                <?php elseif (!$_product->isSaleable()): ?>
-                    <div class="add-to-box">
-                        <?php echo $this->getChildHtml('addto') ?>
-                        <?php echo $this->getChildHtml('sharing') ?>
-                    </div>
                 <?php endif; ?>
             </div>
 
             <?php echo $this->getChildHtml('related_products') ?>
-
-            <div class="clearer"></div>
-            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-            <?php endif;?>
         </form>
+        <?php echo $this->getChildHtml('upsell_products') ?>
+        <?php echo $this->getChildHtml('product_additional_data') ?>
         <script type="text/javascript">
         //<![CDATA[
             var productAddToCartForm = new VarienForm('product_addtocart_form');
@@ -283,23 +253,4 @@
         //]]>
         </script>
     </div>
-
-
-    <div class="product-collateral toggle-content tabs">
-        <?php if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):?>
-            <dl id="collateral-tabs" class="collateral-tabs">
-                <?php foreach ($detailedInfoGroup as $alias => $html):
-                ?>
-                    <dt class="tab"><span><?php echo $this->escapeHtml($this->getChildData($alias, 'title')) ?></span></dt>
-                    <dd class="tab-container">
-                        <div class="tab-content"><?php echo $html ?></div>
-                    </dd>
-                <?php endforeach;?>
-            </dl>
-        <?php endif; ?>
-    </div>
-
-    <?php echo $this->getChildHtml('upsell_products') ?>
-    <?php echo $this->getChildHtml('product_additional_data') ?>
-
 </div>
