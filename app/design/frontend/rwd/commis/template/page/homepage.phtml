@@ -28,6 +28,7 @@
 /**
  * Template for Mage_Page_Block_Html
  */
+$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
 ?>
 
 <!DOCTYPE html>
@@ -71,21 +72,6 @@
 <?php echo $this->getAbsoluteFooter() ?>
 <script>
     $j(document).ready(function() {
-     
-      $j("#carrousel-home").owlCarousel({
-            items:1,
-            itemsScaleUp : true,
-            singleItem:true,
-
-            //Basic Speeds
-            slideSpeed : 200,
-            paginationSpeed : 800,
-            rewindSpeed : 1000,
-         
-            //Autoplay
-            autoPlay : true,
-            stopOnHover : true,
-      });
 
       $j("#carrousel-reassurance").owlCarousel({
             items:4,

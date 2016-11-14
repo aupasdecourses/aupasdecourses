@@ -90,10 +90,10 @@
 			).appendTo(elem);
 			
 			if(this=="Hours"){
-			elem.append('<span class="countdown-divider">heures et</span>');
+			elem.append('<span class="countdown-divider">h</span>');
 			}
 			if(this=="Minutes"){
-			elem.append('<span class="countdown-divider">minutes</span>');
+			elem.append('<span class="countdown-divider">mn</span>');
 			}
 			if(this=="Seconds"){
 			elem.append('<span class="countdown-divider">s</span>');
@@ -106,9 +106,9 @@
 		var interval = new Date().getHours()-options.timestamp.getHours();
 
 		if(interval>=0){
-			elem.after('<div class="countdown-text"> pour se faire livrer demain soir!</div>');
+			elem.after('<div class="countdown-text"> pour vous faire livrer demain soir!</div>');
 		}else if(interval<0){
-			elem.after('<div class="countdown-text"> pour se faire livrer ce soir!</div>');
+			elem.after('<div class="countdown-text"> pour vous faire livrer ce soir!</div>');
 		}
 
 	}

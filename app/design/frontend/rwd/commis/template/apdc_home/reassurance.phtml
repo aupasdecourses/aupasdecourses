@@ -7,7 +7,7 @@
 				<div class="reassurance-outer first-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">COMMANDEZ EN LIGNE</div>
-						<div class="reassurance-text">en une seule fois<br/>aux mêmes prix qu'en magasin</div>
+						<div class="reassurance-text">au même prix qu'en magasin, en une seule livraison quel que soit le nombre de commerçants</div>
 					</div>
 				</div>
 			</div>
@@ -23,26 +23,26 @@
 				<div class="reassurance-outer third-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">DU MARDI AU VENDREDI</div>
-						<div class="reassurance-text">Livraison le jour même pour une commande avant 15h.</div>
+						<div class="reassurance-text">Livraison le jour même (pour une commande avant 15h) et jusqu'à 4 jours en avance.</div>
 					</div>
 				</div>
 			</div>
-			<div>
-				<div class="reassurance-outer fourth-item">
-						<div class="reassurance-inner">
-								<div class="reassurance-title">10€ OFFERTS</div>
-								<div class="reassurance-text">En parrainant vos proches </br><a href="https://www.aupasdecourses.com/batignolles/sponsorship/"><i>Cliquez pour en savoir plus</i></a></div>
-						</div>
+			<?php 
+				$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
+				if ($payment_activated == true) : ?>
+			    <div>
+					<div class="reassurance-outer fourth-item">
+							<div class="reassurance-inner">
+								<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
+									<div id="countdown"></div>
+								</div>
+							</div>
+							<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
+			   				<script type='text/javascript 'src='/js/countdown/js/script.js'></script>
+					</div>
 				</div>
-			</div>
+			<?php endif ?>
 		</div>
 	</div>
-<?php $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment'); ?>
-<?php if ($payment_activated == true) : ?>
-	<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
-    <script type='text/javascript 'src='/js/countdown/js/script.js'></script>
-	<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
-		<div id="countdown"></div>
-	</div>
-<?php endif ?>
+
 </div>

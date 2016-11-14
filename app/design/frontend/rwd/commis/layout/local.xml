@@ -166,12 +166,6 @@
             <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
             </block>
         </reference>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/2columns-left.phtml</template>
-            </action>
-        </reference>
-        <remove name="product_list" />
     </catalog_category_view>
     <!-- Category (Not Anchor) => 'Mon Primeur' -->
     <catalog_category_default>
@@ -193,7 +187,6 @@
         <reference name="content">
             <block type="commercants/fiche" template="commercants/commercantnavigation.phtml" name="listecommercants"></block>
         </reference>
-        <remove name="product_list" />
         <reference name="left_first">
             <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
                 <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
@@ -231,7 +224,6 @@
                 <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
             </block>
         </reference>
-        <remove name="product_list" />
     </PAGE_COMMERCANT>
     <catalog_product_view>
         <remove name="product.reviews" />
@@ -440,6 +432,94 @@
         </reference>
     </hipay_mapi_payment>
     <catalog_category_layered_nochildren>
+        <reference name="content">
+            <remove name="product_list2"/>
+            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
+                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
+                <block type="core/text_list" name="product_list.after" as="after"/>
+                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
+                    </block>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>empty</layout>
+                        <count>6</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>one_column</layout>
+                        <count>5</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>two_columns_left</layout>
+                        <count>4</count>
+                    </action>
+                     <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_right</layout>
+                            <count>4</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>three_columns</layout>
+                        <count>3</count>
+                    </action>
+                    <action method="setToolbarBlockName">
+                        <name>product_list_toolbar</name>
+                    </action>
+                    <action method="setColumnCount">
+                        <count>4</count>
+                    </action>
+            </block>
+        </reference>
+    </catalog_category_layered_nochildren>
+    <GROUP_CATEGORY>
+        <reference name="content">
+            <remove name="product_list2"/>
+            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
+                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
+                <block type="core/text_list" name="product_list.after" as="after"/>
+                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
+                    </block>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>empty</layout>
+                        <count>6</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>one_column</layout>
+                        <count>5</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>two_columns_left</layout>
+                        <count>4</count>
+                    </action>
+                     <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_right</layout>
+                            <count>4</count>
+                    </action>
+                    <action method="addColumnCountLayoutDepend">
+                        <layout>three_columns</layout>
+                        <count>3</count>
+                    </action>
+                    <action method="setToolbarBlockName">
+                        <name>product_list_toolbar</name>
+                    </action>
+                    <action method="setColumnCount">
+                        <count>4</count>
+                    </action>
+            </block>
+        </reference>
+    </GROUP_CATEGORY>
+    <catalog_category_default>
+        <reference name="product_list3">
+            <action method="setColumnCount"><count>5</count></action>
+        </reference>
+        <remove name="product_list"/>
+    </catalog_category_default>
+    <catalog_category_layered>
+        <reference name="product_list3">
+            <action method="setColumnCount"><count>5</count></action>
+        </reference>
+        <remove name="product_list"/>
+    </catalog_category_layered>
+    <catalog_category_layered_nochildren>
         <reference name="head">
              <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
              <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
@@ -454,9 +534,11 @@
             <!-- Recently viewed items -->
             <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
         </reference> 
-        <reference name="catalog.leftnav">  
-            <action method="unsetChild"><alias>category_filter</alias></action>
+        <reference name="product_list3">
+            <action method="setColumnCount"><count>5</count></action>
         </reference>
+        <remove name="catalog.leftnav"/> 
+        <remove name="product_list"/> 
     </catalog_category_layered_nochildren>
     <GROUP_CATEGORY>
         <reference name="head">

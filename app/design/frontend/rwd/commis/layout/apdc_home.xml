@@ -37,26 +37,6 @@
             <remove name="cms.wrapper" />
             <!-- Inclusion du Carroussel et des liens droite-->
             <block type="core/template" name="headband" template="page/html/headband.phtml" />
-            <block type="core/template" name="home-carroussel-links" as="home-carroussel-links" template="apdc_home/carroussel-and-links.phtml">
-                <block type="cms/block" name="carroussel-home-page" as="carroussel-home-page">
-                    <action method="setBlockId">
-                        <block_id>carroussel-home-page</block_id>
-                    </action>
-                </block>
-                <block type="cms/block" name="cms_livraison" as="cms_livraison">
-                    <action method="setBlockId">
-                        <block_id>block_livraison</block_id>
-                    </action>
-                </block>
-            </block>
-            <!-- Reassurance -->
-            <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
-                <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />
-            </block>
-            <!-- Inclusion du block promos & produits favoris-->
-            <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
-                <block type="apdc_catalog/selection" name="home-selection" template="catalog/blockselection/selection_all.phtml"></block>
-            </block>
             <!-- Inclusion des commerçants du Commis -->
             <block type="commercants/fiche" template="commercants/fiche.phtml" name="commercants-fiche">
                 <block type="cms/block" name="texte-intro-liste-commercants">
@@ -64,6 +44,14 @@
                         <block_id>texte_intro_liste_commercants</block_id>
                     </action>
                 </block>
+            </block>
+            <!-- Inclusion du block promos & produits favoris-->
+            <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
+                <block type="apdc_catalog/selection" name="home-selection" template="catalog/blockselection/selection_all.phtml"></block>
+            </block>
+            <!-- Reassurance -->
+            <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
+                <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />
             </block>
         </reference>
     </cms_index_index>

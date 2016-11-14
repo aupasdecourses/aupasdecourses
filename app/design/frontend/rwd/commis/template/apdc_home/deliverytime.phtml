@@ -1,22 +1,4 @@
 <?php
-	//Version for Amasty Delivery Module
-	if(Mage::helper('core')->isModuleEnabled('amdeliverydate')){
-		$hlp = Mage::helper('amdeliverydate');
-		$storeId = $this->getCurrentStore();
-		$options = $hlp->getTIntervals($storeId);
-		$count=1;
-		foreach($options as $timeint){
-			if($timeint<>''){
-				if($count%2<>1){
-					echo $timeint.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-				}else{
-					echo $timeint.'</br>';
-				}
-			}
-			$count+=1;
-		}
-	}
-
 	//Version for Mage World Delivery Module
 	if(Mage::helper('core')->isModuleEnabled('MW_Ddate')){
 		$hlp = Mage::helper('ddate');

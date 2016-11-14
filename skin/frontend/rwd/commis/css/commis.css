@@ -262,9 +262,13 @@ h6,
     }
 }
 
-.main-container,
-.footer-container {
+.main-container
+{
     max-width: 1200px;
+}
+
+.footer-container {
+    max-width: 100%;
 }
 
 
@@ -2637,6 +2641,7 @@ p.product-name a:hover,
 .footer-container,
 .copyright-cards-container {
     background: #3ab64b;
+    max-width: 100%;
 }
 
 .copyright-cards-container {
@@ -2644,7 +2649,6 @@ p.product-name a:hover,
     font-style: italic;
     background: #1e555a;
     position: relative;
-    max-width: 1200px;
     margin: 0px auto;
     padding: 30px;
 }
@@ -2718,7 +2722,6 @@ p.product-name a:hover,
  */
 
 .promos-block {
-    margin-top: 15px;
     margin-bottom: 0px;
 }
 
@@ -2913,18 +2916,19 @@ p.product-name a:hover,
 /*--Homepage Countdown --*/
 
 .livraison-countdown {
-    margin-top: 25px;
     text-align: center;
+    font-weight: 600;
 }
 
 .countdown-text {
     display: inline;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .countdownHolder {
-    display: inline;
-    font: 25px "Montserrat", sans-serif
+    display: block;
+    font: 20px "Montserrat", sans-serif;
+    width:auto;
 }
 
 .countdownHolder .countDays {
@@ -2952,7 +2956,7 @@ p.product-name a:hover,
 }
 
 .countdownHolder .countdown-divider {
-    font-size: 20px;
+    font-size: 16px;
     font-family: Raleway, arial, sans-serif;
     margin-left: 3px;
     margin-right: 5px;
@@ -2987,7 +2991,7 @@ p.product-name a:hover,
  */
 
 .commercants-list {
-    padding: 0px 30px 20px 30px;
+    padding: 0px 30px;
 }
 
 .commercants-intro p {
