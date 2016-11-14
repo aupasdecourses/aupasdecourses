@@ -294,7 +294,7 @@ a.level3:hover {
       height:auto;
     }
     #supermenu li>a .deploy-menu-button {
-      background-color:rgba(0,0,0, 0.05);
+      background-color: rgba(0,0,0, 0.03);
       width: 40px;
     }
     #supermenu li>a .deploy-menu-button i {

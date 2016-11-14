@@ -1000,21 +1000,25 @@ label {
         width:100%;
         height: 65px;
         border-top: 1px solid #EDEDED;
-        transition: all 0.3s ease 0s;
+        transition: width 0.3s ease 0s,height 0.3s ease 0s;
+        margin-top: 60px;
     }
     .sticky-header .page-header-container {
         height: 40px;
-        transform: translateX(50px) translateY(-51px);
         width: calc(100% - 100px);
-        transition: all 0.3s ease 0.3s;
+        transition: width 0.3s ease 0s;
         z-index: 10;
+        position: fixed;
+        right: 0;
+        top: 0;
+        margin-top: 0;
     }
     #topmenu {
         transition: transform 0.3s ease 0s;
     }
     .sticky-header #topmenu {
         position: fixed;
-        top: 50px;
+        top: 40px;
         left: 0;
         right: 0;
         bottom: 0px;
@@ -1023,7 +1027,7 @@ label {
     .sticky-header #header-nav {
         overflow: auto;
         position: fixed;
-        top: 50px;
+        top: 40px;
         bottom: 0px;
         left: 0;
         right: 0;
@@ -1139,7 +1143,7 @@ label {
     }
     .sticky-header .page-header {
         position:fixed;
-        max-height: 50px;
+        max-height: 40px;
     }
     .sticky-header {
         margin-top: 100px;
@@ -1160,12 +1164,18 @@ label {
     opacity: 0.8;
 }
 
-#logo_smalldisplay,
+#logo_smalldisplay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
 .logo {
     max-height:200px;
     transition: all 1s ease 0.3s;
     max-width: 3000px;
 }
+
 @media only screen and (min-width: 771px) {
     
     .logo {
@@ -1181,14 +1191,26 @@ label {
     }
 }
 @media only screen and (max-width: 770px) {
-     
-    .sticky-header .logo,
+
     .sticky-header #logo_smalldisplay {
-        /* max-height:0; */
-        /* padding:0; */
         margin:0;
-        max-width: 90px;
+        width: 100px;
         transition: all 0.3s ease 0s;
+        padding-bottom: 0;
+        padding-top: 0;
+        height: 40px;
+        background-color: white;
+        right: initial;
+    }
+    .sticky-header #logo_smalldisplay .logo {
+        position:static;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+    }
+    .sticky-header #logo_smalldisplay .logo img {
+        max-height:35px
+        
     }
 }
 
@@ -1246,6 +1268,7 @@ label {
     position: static;
     vertical-align:middle;
     width: auto;
+    height: inherit;
 }
 
 .skip-links .skip-content.skip-active {
@@ -1273,7 +1296,7 @@ label {
     .skip-link {
         border:none;
         line-height:initial;
-        height: 100%;
+        height: inherit;
         width: 100%;
     }
     .skip-links {
@@ -1282,13 +1305,14 @@ label {
         width: 100%;
         border: none;
         position: relative;
+        height: inherit;
     }
     .skip-container {
         border-right: 1px solid lightgrey;
     }
 
     .skip-nav {
-        background: rgba(204, 94, 51, 0.9) none repeat scroll 0% 0%;
+        background: rgba(204, 94, 51, 1) none repeat scroll 0% 0%;
     }
     .skip-links .skip-content.skip-active {
         left: 0;
@@ -1296,6 +1320,12 @@ label {
     }
     .sticky-header .skip-links span.label {
         display:none;
+    }
+    .sticky-header .skip-links .skip-content.skip-active {
+        position:fixed;
+        left: 0;
+        right: 0;
+        top: 40px!important;
     }
 
 }
@@ -2592,7 +2622,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - RÃ©assurance
+ * Homepage - RÃƒÆ’Ã‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -2752,7 +2782,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Liste CommerÃ§ants
+ * Homepage - Liste CommerÃƒÆ’Ã‚Â§ants
  */
 
 .commercants-list {
@@ -3040,7 +3070,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Commercants liste complÃ¨te
+ * Commercants liste complÃƒÆ’Ã‚Â¨te
  * ============================================ */
 
 .commercant_announcment {
@@ -3051,7 +3081,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Page CommerÃ§ant (Sub category)
+ * Page CommerÃƒÆ’Ã‚Â§ant (Sub category)
  * ============================================ */
 
 .commercant_name {
@@ -3266,52 +3296,4 @@ a.btn:hover {
 }
 
 .products-list .product-shop .product-primary,
-.products-list .product-shop .desc {
-    width: 65%;
-}
-
-.products-list .product-shop .product-secondary {
-    width: 35%;
-}
-
-.products-grid .product-name,
-.products-list .product-name {
-    margin-bottom: 0px;
-}
-
-.product-info .actions form {
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-}
-
-.product-label {
-    position: absolute;
-    top: 80%;
-    left: 5%;
-    background-color: #164d26;
-    color: #FFF;
-    padding: 5px;
-    font-size: 0.8em;
-}
-
-.product-origine {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    background-color: #FFF;
-    color: #333;
-    padding: 5px;
-    font-size: 0.8em;
-}
-
-.product-origine img {
-    width: auto !important;
-    display: inline;
-    margin-right: 5px;
-}
-
-.produit-biologique {
-    position: absolute;
-    bottom: 5%;
-    lef
+.product

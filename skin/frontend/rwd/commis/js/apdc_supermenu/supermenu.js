@@ -33,7 +33,7 @@
     });
 
     $(window).scroll(function() {
-      if ($(this).scrollTop() > 1){  
+      if ($(this).scrollTop() > 60){  
         $('body').addClass('sticky-header');
       } else{
         $('body').removeClass('sticky-header');
