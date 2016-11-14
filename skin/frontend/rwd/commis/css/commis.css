@@ -995,6 +995,14 @@ label {
 }
 
 @media screen and (max-width: 771px){
+    .global-site-notice {
+        margin-bottom: -60px;
+        margin-top:60px;
+        transition: margin 0.1s ease 0s;
+    }
+    .sticky-header .global-site-notice {
+        margin-bottom:0;
+    }
     .page-header-container {
         display: table;
         width:100%;
@@ -1169,10 +1177,10 @@ label {
     top: 0;
     left: 0;
     right: 0;
+    background-color: #ffffff;
 }
 .logo {
     max-height:200px;
-    transition: all 1s ease 0.3s;
     max-width: 3000px;
 }
 
@@ -1195,7 +1203,6 @@ label {
     .sticky-header #logo_smalldisplay {
         margin:0;
         width: 100px;
-        transition: all 0.3s ease 0s;
         padding-bottom: 0;
         padding-top: 0;
         height: 40px;
@@ -3296,4 +3303,4 @@ a.btn:hover {
 }
 
 .products-list .product-shop .product-primary,
-.product
+.produc
