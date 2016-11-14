@@ -19,7 +19,6 @@ while(($file = readdir($content)) !== FALSE)
 }
 closedir($content);
 
-
 if (!empty($files))
 {
 	sort($files);
