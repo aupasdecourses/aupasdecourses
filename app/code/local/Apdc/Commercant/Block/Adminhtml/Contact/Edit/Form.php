@@ -49,7 +49,7 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Edit_Form extends Mage_Adminhtml_B
         $fieldset->addField('email', 'text', [
             'name' => 'email',
             'label' => $this->__('Email'),
-            'required' => false,
+            'required' => true,
         ]);
 
         $fieldset->addField('phone', 'text', [
@@ -63,6 +63,7 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Edit_Form extends Mage_Adminhtml_B
             'label' => $this->__('Contact roles'),
             'required' => true,
             'values' => Mage::getModel('apdc_commercant/source_contact_type')->toOptionArray(),
+            'note' => 'Define how this contact can be associated to commercants and shop',
         ]);
 
         $data = $model->getData();

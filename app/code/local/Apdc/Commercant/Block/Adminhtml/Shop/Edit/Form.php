@@ -66,7 +66,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
 
         $availableManagers = Mage::getModel('apdc_commercant/contact')
             ->getCollection()
-            ->addFieldToFilter('type', Apdc_Commercant_Model_Source_Contact_Type::TYPE_MANAGER)
+            ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_MANAGER)
             ->toOptionArray();
         $fieldset->addField('id_contact_manager', 'select', [
             'name' => 'id_contact_manager',
@@ -77,7 +77,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
 
         $availableEmployees = Mage::getModel('apdc_commercant/contact')
             ->getCollection()
-            ->addFieldToFilter('type', Apdc_Commercant_Model_Source_Contact_Type::TYPE_EMPLOYEE)
+            ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_EMPLOYEE)
             ->toOptionArray();
         $fieldset->addField('id_contact_employee', 'select', [
             'name' => 'id_contact_employee',
@@ -89,8 +89,9 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
         $fieldset->addField('id_category', 'text', [
             'name' => 'id_category',
             'label' => $this->__('Category ID'),
-            'required' => false,
+            'required' => true,
             'values' => [],
+            'note' => 'Category owning the products associated to this shop',
         ]);
 
 
@@ -130,7 +131,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             ['legend' => $this->__('Closing periods')]
         );
         $fieldset->addType('closing_periods', Mage::getConfig()->getBlockClassName('apdc_commercant/adminhtml_form_element_closing'));
-        $field = $fieldset->addField('closing_periods', 'closing_periods', [
+        $fieldset->addField('closing_periods', 'closing_periods', [
             'name' => 'closing_periods',
             'label' => $this->__('Closing periods'),
         ]);
@@ -182,7 +183,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             ]
         );
         $timetableFieldset->addField('timetable_hint', 'note', [
-            'text' => $this->__('Expected format is hh:mm-hh:mm, e.g. 9:30-17:00')
+            'text' => $this->__('Expected format is hh:mm-hh:mm, e.g. 9:30-17:00. Leave empty if the shop is closed.')
         ]);
         $days = Mage::helper('apdc_commercant')->getDays();
         foreach ($days as $index => $day) {
