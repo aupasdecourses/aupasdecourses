@@ -62,7 +62,8 @@ class RefundController extends Controller
 
 		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'order' => $order
+			'order' => $order,
+			'stores' => $mage->getMerchantsOrdersByStore(-1)
 		]);
 	}
 
