@@ -1,0 +1,51 @@
+<?php
+/** @var Mage_Page_Block_Html_Topmenu_Renderer $this */
+/** @var Varien_Data_Tree_Node $menuTree */
+
+$html = '';
+$nbCategoryColumns = 9;
+$children = $menuTree->getChildren();
+$menuTree->setCounter(1);
+if ($menuTree->getMenuMainStaticBlock()) {
+    $html .= '<li class="template-column block-advertising">';
+    $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
+    $html .= '</li>';
+}
+$cpt = 1;
+foreach ($children as $child) {
+
+    $this->initChild($child, $menuTree);
+
+    $html .= '<li class="template-column">';
+
+    if ($child->getThumbnail()) {
+        $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
+        $html .= '<img class="img-responsive" src="' . $thumbnail . '" />';
+    }
+    $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
+    $html .= $this->escapeHtml($this->__($child->getName()));
+    $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+    $html .= '</a>';
+
+    if ($child->hasChildren()) {
+        $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
+        foreach ($child->getChildren() as $subChild) {
+            $html .= '<li>';
+            $html .= '<a style="' . $subChild->getLinkStyle() . '" href="'. $subChild->getUrl() .'" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</a>';
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+    }
+
+    $html .= '</li>';
+
+    $counter = $menuTree->getCounter();
+    $counter++;
+    $menuTree->setCounter($counter);
+    $cpt++;
+    if ($cpt > $nbCategoryColumns) {
+        break;
+    }
+}
+
+return $html;
