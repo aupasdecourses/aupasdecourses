@@ -26,6 +26,7 @@ class From extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
+			'attr' => [ 'class' => 'inline'],
 			'data_class' => 'AppBundle\Entity\From'
 		));
 	}

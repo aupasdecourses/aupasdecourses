@@ -2,15 +2,15 @@ body {
 	padding-top:		75px;
 }
 
-form div div {
+form.inline div div {
 	display:			inline-block;
 }
 
-form div {
+form.inline div {
 	display:			inline-block;
 }
 
-form {
+form.inline {
 	display:			inline-block;
 }
 
