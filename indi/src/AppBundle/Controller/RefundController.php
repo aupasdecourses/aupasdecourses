@@ -54,17 +54,16 @@ class RefundController extends Controller
 
 		foreach ($order as $merchant_id => $data) {
 			$form_upload->add(preg_replace("/[^-a-zA-Z0-9:]| /", "_", $data['merchant']['name']), FileType::class, [
-				'label' => [ "Yolo"/*$data['merchant']['name']*/ ],
+				'label' => $data['merchant']['name'],
 				'attr'	=> [
 					'class'	=> 'form-control'
 					]
 			]);
-			// << =====
 		}
 
 		return $this->render('refund/upload.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'forms' => $form_upload->getForm()->createView(),
+			'forms' => [ $form_upload->getForm()->createView() ],
 			'order' => $order
 		]);		
 	}
