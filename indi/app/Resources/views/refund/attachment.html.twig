@@ -4,40 +4,32 @@
 {% block body %}
 
 <div class="container">
-	{{dump(order)}}
-	{% for merchant_id in order %}
-	{{ total }}
-	<div id="{{ merchant_id }}" class="order">
-		<table class="table table-striped">
-			{% for product in merchant_id.products %}
-			{{dump(product)}}
-			{% endfor %}
-
-			{#	<tr>
-				<th>Nom</th>
-				<th>Quantite</th>
-				<th>Description</th>
-				<th>Prix</th>
-				<th>Total</th>
-			</tr>
-			#}
-			{#{% for product in order.products %}
-			<tr>
-				<td>{{ product.nom }}</td>
-				<td>{{ product.quantite }}</td>
-				<td>{{ product.description }}</td>
-				<td>{{ product.prix_unitaire ~" € (" ~ product.prix_kilo ~")"}}</td>
-				<td>{{ product.prix_total }}</td>
-			</tr>
-			{% endfor %}
-			#}
-			{#	<tr>
-				<td><b>TOTAL</b></td>
-				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
-				<td colspan="2"><b>{{ order.total_prix }}</b></td>
-			</tr> #}
-		</table>
-	</div>
-	{% endfor %}
+	<table class="table table-striped">
+		<tr>
+			<th>Commercant</th>
+			<th>Produit</th>
+			<th>Description</th>
+			<th>Quantite</th>
+			<th>Prix</th>
+			<th>Total</th>
+		</tr>
+		{% for merchant_id in order %}
+		{% for product in merchant_id.products %}
+		<tr>
+			<td>{{ merchant_id.merchant.name }}</td>
+			<td>{{ product.nom }}</td>
+			<td>{{ product.description }}</td>
+			<td>{{ product.quantite }}</td>
+			<td>{{ product.prix_unitaire ~" € (" ~ product.prix_kilo ~")"}}</td>
+			<td>{{ product.prix_total }}</td>
+		</tr>
+		{% endfor %}
+		{% endfor %}
+		<tr>
+			<td><b>TOTAL</b></td>
+			<td colspan="4"><b></b></td>
+			<td><b>{{ total}}</b></td>
+		</tr>
+	</table>
 </div>
 {% endblock %}
