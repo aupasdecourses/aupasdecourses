@@ -86,11 +86,19 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             'values' => $availableEmployees,
         ]);
 
-        $fieldset->addField('id_category', 'text', [
+        $commercantCategories = Mage::getModel('catalog/category')
+            ->getCollection()
+            ->addAttributeToSelect('name')
+            ->addAttributeToFilter('estcom_commercant', 70);
+        $values = [];
+        foreach ($commercantCategories as $category) {
+            $values[$category->getId()] = $category->getName();
+        }
+        $fieldset->addField('id_category', 'select', [
             'name' => 'id_category',
-            'label' => $this->__('Category ID'),
+            'label' => $this->__('Category'),
             'required' => true,
-            'values' => [],
+            'values' => $values,
             'note' => 'Category owning the products associated to this shop',
         ]);
 
