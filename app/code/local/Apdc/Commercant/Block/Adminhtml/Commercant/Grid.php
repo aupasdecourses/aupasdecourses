@@ -43,6 +43,6 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Grid extends Mage_Adminhtml_Blo
      */
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
+        return $this->getUrl('*/*/edit', ['id_commercant' => $row->getId()]);
     }
 }

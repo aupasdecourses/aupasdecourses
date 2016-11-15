@@ -30,7 +30,7 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
     public function editAction()
     {
         $this->_title($this->__('Magasin'));
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id_shop');
         $entity = Mage::getModel('apdc_commercant/shop');
 
         if ($id) {
@@ -94,5 +94,33 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
         }
 
         return $this->_redirect('*/*/');
+    }
+
+    public function deleteAction()
+    {
+        $id = $this->getRequest()->getParam('id_shop');
+        $entity = Mage::getModel('apdc_commercant/shop');
+
+        if (!$id) {
+            $this->_redirect('*/*');
+            return;
+        }
+
+        $entity->load($id);
+        if (!$entity->getId()) {
+            Mage::getSingleton('adminhtml/session')
+                ->addError($this->__('This entity does not exist'));
+            $this->_redirect('*/*');
+            return;
+        }
+
+        try {
+            $entity->delete();
+            Mage::getSingleton('adminhtml/session')->addSuccess($this->__('The entity has been deleted.'));
+            $this->_redirect('*/*');
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError('The entity cannot be deleted. Please check it is not associated with any other object.');
+            $this->_redirect('*/*');
+        }
     }
 }

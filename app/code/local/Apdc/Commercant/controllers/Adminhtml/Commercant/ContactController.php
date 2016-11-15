@@ -30,7 +30,7 @@ class Apdc_Commercant_Adminhtml_Commercant_ContactController extends Mage_Adminh
     public function editAction()
     {
         $this->_title($this->__('Contact'));
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id_contact');
         $entity = Mage::getModel('apdc_commercant/contact');
 
         if ($id) {
@@ -79,5 +79,33 @@ class Apdc_Commercant_Adminhtml_Commercant_ContactController extends Mage_Adminh
             return $this->_redirect('*/*/edit', ['id' => $id]);
         }
         return $this->_redirect('*/*/');
+    }
+
+    public function deleteAction()
+    {
+        $id = $this->getRequest()->getParam('id_contact');
+        $entity = Mage::getModel('apdc_commercant/contact');
+
+        if (!$id) {
+            $this->_redirect('*/*');
+            return;
+        }
+
+        $entity->load($id);
+        if (!$entity->getId()) {
+            Mage::getSingleton('adminhtml/session')
+                ->addError($this->__('This entity does not exist'));
+            $this->_redirect('*/*');
+            return;
+        }
+
+        try {
+            $entity->delete();
+            Mage::getSingleton('adminhtml/session')->addSuccess($this->__('The entity has been deleted.'));
+            $this->_redirect('*/*');
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError('The entity cannot be deleted. Please check it is not associated with any other object.');
+            $this->_redirect('*/*');
+        }
     }
 }

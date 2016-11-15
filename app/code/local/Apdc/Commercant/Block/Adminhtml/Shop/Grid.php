@@ -43,6 +43,6 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
      */
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
+        return $this->getUrl('*/*/edit', ['id_shop' => $row->getId()]);
     }
 }

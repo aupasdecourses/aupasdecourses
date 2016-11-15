@@ -77,7 +77,7 @@ class Apdc_Commercant_Model_Resource_Contact extends Mage_Core_Model_Resource_Db
             'contact_id = ?'     => (int) $object->getId(),
         );
 
-        $this->_getWriteAdapter()->delete($this->getTable('apdc_commercant/contanct_role_assigned'), $condition);
+        $this->_getWriteAdapter()->delete($this->getTable('apdc_commercant/contact_role_assigned'), $condition);
 
         return parent::_beforeDelete($object);
     }
