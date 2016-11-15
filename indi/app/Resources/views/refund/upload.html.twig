@@ -3,7 +3,8 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+	{% include 'forms/default.html.twig' %}
 	<pre>
-		{{ dump(order) }}
+		{#{ dump(order) }#}
 	</pre>
 {% endblock %}

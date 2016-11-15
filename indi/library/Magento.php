@@ -212,10 +212,7 @@ class Magento
 		$merchants = $this->getMerchants();
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
 
-		$rsl = [
-			-1 => 0.0
-
-		];
+		$rsl = [ -1 => [ 'merchant' => [ 'name' => 'All', 'total' => 0.0 ] ] ];
 		foreach ($orders as $order) {
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
@@ -227,7 +224,7 @@ class Magento
 				}
 				$rsl[$prod_data['commercant_id']]['products'][] = $prod_data;
 				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
-				$rsl[-1] += $prod_data['prix_total'];
+				$rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
 			}
 		}
 		return ($rsl);
