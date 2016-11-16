@@ -26,7 +26,7 @@ class UserController extends Controller
 		if ($mage->isLogged())
 			return $this->redirectToRoute('root');
 		else {
-			if ($form_login->isValid()) {
+			if ($form_login->isSubmitted() && $form_login->isValid()) {
 				if ($mage->login($entity_login->username, $entity_login->password))
 					return $this->redirectToRoute('root');
 			}

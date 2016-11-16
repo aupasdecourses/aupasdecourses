@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 include_once 'Magento.php';
@@ -52,18 +53,44 @@ class RefundController extends Controller
 		$entity_upload = new \AppBundle\Entity\Upload();
 		$form_upload = $this->createFormBuilder($entity_upload);
 
+		$attrNames = [];
 		foreach ($order as $merchant_id => $data) {
-			$form_upload->add(preg_replace("/[^-a-zA-Z0-9:]| /", "_", $data['merchant']['name']), FileType::class, [
+			$name = preg_replace("/[^-a-zA-Z0-9:]| /", "_", $data['merchant']['name']);
+			$attrNames[$merchant_id] = $name;
+			$form_upload->add($name, FileType::class, [
+				'required'    => false,
 				'label' => $data['merchant']['name'],
 				'attr'	=> [
 					'class'	=> 'form-control'
 					]
 			]);
 		}
+		$form_upload->add('Upload', SubmitType::class);
+		$form_upload = $form_upload->getForm();
+
+		if (isset($_FILES['form'])) {
+			echo "<pre>";
+			print_r($_FILES);
+			echo "</pre>";
+			foreach ($attrNames as $merchant_id => $name) {
+				if (!$_FILES['form']['error'][$name] && $_FILES['form']['size'][$name] > 0) {
+					$extentions;
+					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extention);
+					$file = $id;
+					if ($name <> 'All')
+						$file .= "-{$merchant_id}";
+					$file .= $extention[1];
+
+					$tmp_file = $_FILES['form']['tmp_name'][$name];
+
+					echo $tmp_file." -> ".$file.'<br />';
+				}
+			}
+		}
 
 		return $this->render('refund/upload.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'forms' => [ $form_upload->getForm()->createView() ],
+			'forms' => [ $form_upload->createView() ],
 			'order' => $order
 		]);		
 	}

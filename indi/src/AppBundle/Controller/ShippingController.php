@@ -23,7 +23,7 @@ class ShippingController extends Controller
 
 		$form_from->handleRequest($request);
 
-		if ($form_from->isValid()) {
+		if ($form_from->isSubmitted() && $form_from->isValid()) {
 			return $this->redirectToRoute('shippingAll', [
 				'from' => $entity_from->from
 				]);

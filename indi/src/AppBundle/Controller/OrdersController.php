@@ -26,7 +26,7 @@ class OrdersController extends Controller
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
 
-		if ($form_id->isValid()) {
+		if ($form_id->isSubmitted() && $form_id->isValid()) {
 			return $this->redirectToRoute('ordersOne', [
 				'id' => $entity_id->id
 			]);

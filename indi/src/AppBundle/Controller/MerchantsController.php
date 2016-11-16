@@ -23,7 +23,7 @@ class MerchantsController extends Controller
 
 		$form_fromtoMerchant->handleRequest($request);
 
-		if ($form_fromtoMerchant->isValid()) {
+		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
 			if ($entity_fromtoMerchant->merchant <> -1) {
 				return $this->redirectToRoute('merchantsOne', [
 					'id' => $entity_fromtoMerchant->merchant,
