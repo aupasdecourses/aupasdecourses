@@ -69,9 +69,6 @@ class RefundController extends Controller
 		$form_upload = $form_upload->getForm();
 
 		if (isset($_FILES['form'])) {
-			echo "<pre>";
-			print_r($_FILES);
-			echo "</pre>";
 			foreach ($attrNames as $merchant_id => $name) {
 				if (!$_FILES['form']['error'][$name] && $_FILES['form']['size'][$name] > 0) {
 					$extentions;
