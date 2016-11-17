@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('error_reporting', E_ALL);
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +68,8 @@ class RefundController extends Controller
 		return $this->render('refund/upload.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'forms' => $form_upload->getForm()->createView(),
-			'order' => $order
+			'order' => $order,
+			'order_id' => $id
 		]);		
 	}
 
@@ -78,11 +82,13 @@ class RefundController extends Controller
 		$order = $mage->getOrderByMerchants($id);
 		$total = $order[-1]['merchant']['total'];
 		unset($order[-1]);
-
+ 
 		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'order' => $order,
-			'total' => $total
+			'total' => $total,
+			'order_id' => $id,
+			'refunds' => $mage->getRefunds($orderId)
 		]);
 	}
 
@@ -99,7 +105,8 @@ class RefundController extends Controller
 		return $this->render('refund/resume.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'order' => $order,
-			'total' => $total
+			'total' => $total,
+			'order_id' => $id
 		]);
 	}
 }

@@ -310,4 +310,29 @@ class Magento
 		}
 		return ($rsl);
 	}
+
+	public function getRefunds($orderId = -1){
+		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
+		$refundItems->addFieldToFilter('order_item_id', [ 'eq' => '11320' ]);
+		
+		$tableRefund = [];
+		foreach ($refundItems as $item) {
+			$tableRefund[$item->getData('order_item_id')]['refund_item_id'] = $item->getData('refund_item_id');
+			$tableRefund[$item->getData('order_item_id')]['order_item_id'] = $item->getData('order_item_id');
+			$tableRefund[$item->getData('order_item_id')]['item_name'] = $item->getData('item_name');
+			$tableRefund[$item->getData('order_item_id')]['commercant'] = $item->getData('commercant');
+			$tableRefund[$item->getData('order_item_id')]['commercant_id'] = $item->getData('commercant_id');
+			$tableRefund[$item->getData('order_item_id')]['order_id'] = $item->getData('order_id');
+			$tableRefund[$item->getData('order_item_id')]['in_ticket'] = $item->getData('in_ticket');
+			$tableRefund[$item->getData('order_item_id')]['prix_initial'] = $item->getData('prix_initial');
+			$tableRefund[$item->getData('order_item_id')]['prix_final'] = $item->getData('prix_final');
+			$tableRefund[$item->getData('order_item_id')]['diffprixfinal'] = $item->getData('diffprixfinal');
+			$tableRefund[$item->getData('order_item_id')]['comment'] = $item->getData('comment');
+		}
+
+//		return($tableRefund);
+		echo'<pre>';
+		var_dump($tableRefund);
+		echo'</pre>';
+		}
 }
