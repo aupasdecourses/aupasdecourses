@@ -47,7 +47,7 @@
     <div class="col-sm-6">
     <fieldset>
         <ul class="form-list">
-            <label for="billing-address-select"><?php echo $this->__('Adresse de facturation') ?></label>
+            <label class="control-label" for="billing-address-select"><?php echo $this->__('Adresse de facturation') ?></label>
         <?php if ($this->customerHasAddresses()): ?>
             <li class="wide">
                 <div class="input-box">
@@ -197,7 +197,7 @@
     <div class="col-sm-6">
     <fieldset>
         <ul class="form-list">
-            <label for="shipping-address-select"><?php echo $this->__('Adresse de livraison') ?></label>
+            <label class="control-label" for="shipping-address-select"><?php echo $this->__('Adresse de livraison') ?></label>
         <?php if ($this->customerHasAddresses()): ?>
            <li class="wide">
                <div class="input-box">
@@ -301,9 +301,9 @@
                 <div class="col-sm-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-6" for="batiment">Bâtiment</label>
+                            <label class="col-sm-6 control-label" for="batiment">Bâtiment</label>
                             <div class="col-sm-5">
-                                <input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class=" required-entry input-text required-entry" type="text"/>
+                                <input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class="input-text" type="text"/>
                                 <div type="anchor" id="anchor_batiment"></div><div style="padding: 4px;"></div>
                             </div>
                         </div>
@@ -311,10 +311,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-6" for="etage">Etage</label>
+                        <div class="form-group required">
+                            <label class="col-sm-6 control-label" for="etage">Etage</label>
                             <div class="col-sm-5">
-                                <input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class=" required-entry input-text required-entry" type="text"/>
+                                <input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="required-entry input-text" type="text"/>
                                 <div type="anchor" id="anchor_etage"></div><div style="padding: 4px;"></div>
                             </div>
                         </div>
@@ -325,7 +325,7 @@
                 <div class="col-sm-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-6" for="codeporte1">Code porte n°1</label>
+                            <label class="col-sm-6 control-label" for="codeporte1">Code porte n°1</label>
                             <div class="col-sm-6">
                                 <input id="codeporte1" name="amorderattr[codeporte1]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte1');?>" class="input-text" type="text"/>
                                 <div type="anchor" id="anchor_codeporte1"></div><div style="padding: 4px;"></div>
@@ -336,7 +336,7 @@
                 <div class="col-sm-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-6" for="codeporte2">Code porte n°2</label>
+                            <label class="col-sm-6 control-label" for="codeporte2">Code porte n°2</label>
                             <div class="col-sm-6">
                                 <input id="codeporte2" name="amorderattr[codeporte2]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte2');?>" class="input-text" type="text"/>
                                 <div type="anchor" id="anchor_codeporte2"></div><div style="padding: 4px;"></div>
@@ -348,17 +348,17 @@
         </div>
         <div class="col-sm-6">
             <div class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-5" for="contactvoisin">Contact en cas d'absence</label>
+                <div class="form-group required">
+                    <label class="col-sm-5 control-label" for="contactvoisin">Contact en cas d'absence</label>
                     <div class="col-sm-7">
-                        <input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" required-entry input-text required-entry" type="text"/>
+                        <input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" required-entry input-text" type="text" placeholder="Nom du contact"/>
                         <div type="anchor" id="anchor_contactvoisin"></div><div style="padding: 4px;"></div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5" for="telcontact">Téléphone du contact</label>
+                <div class="form-group required">
+                    <label class="col-sm-5 control-label" for="telcontact">Téléphone du contact</label>
                     <div class="col-sm-7">
-                        <input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class=" required-entry input-text required-entry" type="text"/>
+                        <input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class=" required-entry input-text" type="text"/>
                         <div type="anchor" id="anchor_telcontact"></div><div style="padding: 4px;"></div>
                     </div>
                 </div>
@@ -375,8 +375,8 @@
         </div>
     </div>
 </div>
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     <div class="buttons-set" id="billing-buttons-container">
-        <!-- <p class="required"><?php echo $this->__('* Required Fields') ?></p> -->
         <p class="back-link"><a href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
         <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" onclick="billing.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
         <span class="please-wait" id="billing-please-wait" style="display:none;">

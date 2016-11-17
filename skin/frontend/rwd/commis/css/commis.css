@@ -3857,7 +3857,7 @@ a.btn:hover {
     font-style: normal;
     font-size: 14px;
     text-rendering: optimizelegibility;
-    line-height: 1.2em;
+    margin:0;
 }
 
 .cart-table .item-options {
@@ -3899,6 +3899,16 @@ a.btn:hover {
  * Checkout One Page
  * ============================================ */
 
+ .form-horizontal .control-label {
+  padding-top: 0px;
+  line-height: 16px;
+}
+
+.form-group.required .control-label:after, .form-list .control-label:after {
+  content:"*";
+  color:red;
+  font-size: 20px;
+}
 
 /* Sections styling */
 
@@ -3983,6 +3993,11 @@ a.btn:hover {
     height: 20px;
 }
 
+.disablerow {
+    background-color: #EEEEEE !important;
+    color: #BDBDBD !important;
+}
+
 .block-progress dd {
     padding-left: 15px;
     margin-bottom: 10px;
@@ -4053,7 +4068,7 @@ input[type=text] {
 }
 
 #amorderattr label {
-    text-align: right;
+    text-align: left;
 }
 
 
@@ -4318,7 +4333,6 @@ p.required,
     border: none;
     max-width: 250px;
     padding: 5px;
-    text-align: center;
     white-space: nowrap;
     background-color: white;
 }
