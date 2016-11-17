@@ -353,7 +353,7 @@ class generatePdf
         $pages[0]->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         $pages[0]->drawText("Date de Prise de Commande: {$order['order_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 7));
         $pages[0]->drawText("Date de Livraison: {$order['delivery_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 8));
-        $pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
+//        $pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
         $pages[0]->drawText('Remplacement equivalent: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));    // <===
         if ($order['equivalent_replacement']) {
             $pages[0]->drawText('oui', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
