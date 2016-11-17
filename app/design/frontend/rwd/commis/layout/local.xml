@@ -132,11 +132,7 @@
         <remove name="wishlist_link"/>
         <remove name="cart_sidebar.cart_promotion"/>
         <remove name="cart_sidebar.extra_actions"/>
-        <remove name="left_first"/>
-        <remove name="left"/>
-        <remove name="emailcatcher"/>
         <!-- <remove name="headband"/> -->
-        <remove name="right"/>
         <remove name="bottom.container"/>
         <remove name="cms_footer_links"/>
         <remove name="cms_footer_links_sm"/>
