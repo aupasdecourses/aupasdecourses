@@ -53,9 +53,17 @@ foreach ($children as $child) {
     }
 
     if ($child->hasChildren()) {
-        $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
-        $html .=     $this->render($child, '');
-        $html .= '</ul>';
+        if ($child->getLevel() == 0) {
+            $html .= '<div class="' . $child->getSubMenuClasses() . '">';
+            $html .= '<ul>';
+            $html .=     $this->render($child, '');
+            $html .= '</ul>';
+            $html .= '</div>';
+        } else {
+            $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
+            $html .=     $this->render($child, '');
+            $html .= '</ul>';
+        }
     }
 
     $html .= '</li>';

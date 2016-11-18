@@ -20,18 +20,29 @@ foreach ($children as $child) {
 
     if ($child->getThumbnail()) {
         $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
-        $html .= '<img class="img-responsive" src="' . $thumbnail . '" />';
+        $html .= '<div class="cat-thumbnail"><img class="img-responsive" src="' . $thumbnail . '" /></div>';
     }
-    $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
-    $html .= $this->escapeHtml($this->__($child->getName()));
-    $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
-    $html .= '</a>';
+    if ($child->getIsClickable()) {
+        $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
+        $html .= $this->escapeHtml($this->__($child->getName()));
+        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        $html .= '</a>';
+    } else {
+        $html .= '<span class="template-column-title" style="' . $child->getLinkStyle() . '" class="'. $child->getLinkClasses() .'">';
+        $html .= $this->escapeHtml($this->__($child->getName()));
+        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        $html .= '</span>';
+    }
 
     if ($child->hasChildren()) {
         $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
         foreach ($child->getChildren() as $subChild) {
             $html .= '<li>';
-            $html .= '<a style="' . $subChild->getLinkStyle() . '" href="'. $subChild->getUrl() .'" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</a>';
+            if ($subChild->getIsClickable()) {
+                $html .= '<a style="' . $subChild->getLinkStyle() . '" href="'. $subChild->getUrl() .'" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</a>';
+            } else {
+                $html .= '<span style="' . $subChild->getLinkStyle() . '" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</span>';
+            }
             $html .= '</li>';
         }
         $html .= '</ul>';

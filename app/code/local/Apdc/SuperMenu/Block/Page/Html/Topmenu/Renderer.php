@@ -250,11 +250,8 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             );
             if ($child->getLevel() == 0) {
                 $subMenuClasses[] = 'dropdown-menu';
-                //$subMenuClasses[] = 'col-sm-12';
             } else if ($child->getLevel() == 1) {
                 $subMenuClasses[] = 'dropdown-menu-template template-content';
-                //$subMenuClasses[] = 'col-md-offset-2 col-sm-offset-4';
-                //$subMenuClasses[] = 'col-md-10 col-sm-8';
             }
         }
         $child->setSubMenuClasses(implode(' ', $subMenuClasses));

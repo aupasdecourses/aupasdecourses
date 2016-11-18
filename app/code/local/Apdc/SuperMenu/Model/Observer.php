@@ -36,6 +36,7 @@ class Apdc_SuperMenu_Model_Observer
         $select->columns('menu_main_static_block');
         $select->columns('menu_static_block1');
         $select->columns('thumbnail');
+        $select->columns('is_clickable');
     }
 
     /**
@@ -86,7 +87,8 @@ class Apdc_SuperMenu_Model_Observer
                 'menu_template' => $category->getMenuTemplate(),
                 'menu_main_static_block' => $category->getMenuMainStaticBlock(),
                 'menu_static_block1' => $category->getMenuStaticBlock1(),
-                'thumbnail' => $category->getThumbnail()
+                'thumbnail' => $category->getThumbnail(),
+                'is_clickable' => $category->getIsClickable()
             );
             $categoryNode = new Varien_Data_Tree_Node($categoryData, 'id', $tree, $parentCategoryNode);
             $parentCategoryNode->addChild($categoryNode);

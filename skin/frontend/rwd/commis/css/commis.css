@@ -990,7 +990,6 @@ label {
 .page-header-container,
 #wp-nav-container {
     position: relative;
-    max-width: 1200px;
     margin: 0px auto;
 }
 
@@ -1050,6 +1049,21 @@ label {
         overflow: initial;
         position: relative;
     }
+    .page-header-container {
+        position:fixed;
+        background-color:#ffffff;
+        z-index:99;
+        top: 0;
+        transition: height 0.5s ease;
+    }
+    .sticky-header .page-header-container {
+        height: 45px;
+        box-shadow: 0px 4px 30px -12px #808080;
+    }
+    #topmenu {
+        margin-top: 70px;
+    }
+    
 }
 #header {
     display: block;
@@ -1158,14 +1172,17 @@ label {
     }
 
 }
-
-.logo img {
-    max-width: 100%;
+.logo-link {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    padding:10px;
+    width: 100%;
 }
 
-.logo .small {
-    display: block;
-    margin: 0 auto;
+.logo-link img {
+    height:100%;
 }
 
 .logo:hover {
@@ -1178,24 +1195,28 @@ label {
     left: 0;
     right: 0;
     background-color: #ffffff;
-}
-.logo {
-    max-height:200px;
-    max-width: 3000px;
+    text-align: center;
+    height: 60px;
 }
 
 @media only screen and (min-width: 771px) {
     
     .logo {
-        min-height: 70px;
-        float: left;
+    padding: 0;
+    min-width: initial;
+    min-height: initial;
+    width: 130px;
     }
     .logo .small {
         display: none;
     }
     .logo .large {
         display: block;
-        height: 50px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .sticky-header .logo-link {
+        padding:4px 10px;
     }
 }
 @media only screen and (max-width: 770px) {
@@ -1209,16 +1230,17 @@ label {
         background-color: white;
         right: initial;
     }
-    .sticky-header #logo_smalldisplay .logo {
+    .sticky-header #logo_smalldisplay .logo-link {
         position:static;
         height: 40px;
         padding: 0;
         margin: 0;
     }
-    .sticky-header #logo_smalldisplay .logo img {
+    .sticky-header #logo_smalldisplay .logo-link img {
         max-height:35px
         
     }
+
 }
 
 
@@ -1506,11 +1528,14 @@ label {
     }
     
     .skip-links .skip-content.skip-active {
-        right: 5px!important;
+        right: 3px!important;
         top: 67px!important;
         left: initial!important;
         margin: 0;
         background-color: #ffffff;
+    }
+    .sticky-header .skip-links .skip-content.skip-active {
+        top: 45px!important;
     }
     #header-account.skip-active a:hover,
     #header-help a:hover {
@@ -1540,6 +1565,16 @@ label {
     }
     #header-help > li > a:focus {
         background: none;
+    }
+    .sticky-header #header-search {
+        height: 30px;
+        top: 0;
+    }
+    .sticky-header #header-search .input-text {
+        font-size:12px;
+    }
+    .sticky-header .skip-container .skip-link {
+        height:90%;
     }
 }
 
@@ -2629,7 +2664,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - RÃƒÆ’Ã‚Â©assurance
+ * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -2789,7 +2824,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Liste CommerÃƒÆ’Ã‚Â§ants
+ * Homepage - Liste CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ants
  */
 
 .commercants-list {
@@ -3077,7 +3112,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Commercants liste complÃƒÆ’Ã‚Â¨te
+ * Commercants liste complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te
  * ============================================ */
 
 .commercant_announcment {
@@ -3088,7 +3123,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Page CommerÃƒÆ’Ã‚Â§ant (Sub category)
+ * Page CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ant (Sub category)
  * ============================================ */
 
 .commercant_name {
@@ -3265,42 +3300,4 @@ a.btn:hover {
 
 .pager li > a,
 .pager li > span {
-    padding: 4px 10px;
-    line-height: 20px;
-    width: auto;
-    height: auto;
-}
-
-.pages .next,
-.pages .previous {
-    width: auto;
-    height: auto;
-    padding: 12px;
-}
-
-.pages a,
-.pages .current {
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    padding: 4px 10px;
-    line-height: 20px;
-    vertical-align: bottom;
-}
-
-
-/*
-* Visualisation en list
- */
-
-.products-list .btn-cart-custom {
-    display: block;
-    padding-left: 10px;
-    font-size: 13px;
-    width: 70px;
-    font-family: "Montserrat", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
-    font-weight: lighter;
-}
-
-.products-list .product-shop .product-primary,
-.produc
+    paddin
