@@ -17,4 +17,15 @@
 	        </adminhtml>
         </blocks>
     </global>
+    <adminhtml>
+        <translate>
+          <modules>
+            <Apdc_Cart>
+              <files>
+                <default>Apdc_Cart.csv</default>
+              </files>
+            </Apdc_Cart>
+          </modules>
+        </translate>
+    </adminhtml>
 </config>
