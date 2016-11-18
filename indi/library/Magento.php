@@ -313,7 +313,21 @@ class Magento
 
 	public function getRefunds($orderId = -1){
 		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
-		$refundItems->addFieldToFilter('order_item_id', [ 'eq' => '11320' ]);
+	
+		$refundItems->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id',
+			array(
+				'mwddate_store.ddate_id'
+			));
+		return ($refundItems);		
+
+/*
+	$refundItems->addFieldToFilter('order_item_id', [ 'eq' => '11320' ]);
+		 */
+echo'<pre>';
+		var_dump($refundItems);
+		echo'</pre>';
+ 		
+		
 		
 		$tableRefund = [];
 		foreach ($refundItems as $item) {
@@ -334,5 +348,5 @@ class Magento
 		echo'<pre>';
 		var_dump($tableRefund);
 		echo'</pre>';
-		}
+ 	}
 }
