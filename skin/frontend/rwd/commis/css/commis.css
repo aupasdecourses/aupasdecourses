@@ -1792,8 +1792,8 @@ label {
     .skip-cart .count {
         border-radius: 12px;
         display: inline-block;
-        top: -60px;
-        position: relative;
+        top: 2px;
+        position: absolute;
         z-index: 5;
         width: 22px;
         height: 22px;
@@ -1803,7 +1803,7 @@ label {
         line-height: 22px;
         text-align: center;
         font-weight: 600;
-        left: 25px;
+        right: 0;
     }
     .skip-cart .count:before {
         content: '';
