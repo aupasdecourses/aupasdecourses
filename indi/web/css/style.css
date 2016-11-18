@@ -19,5 +19,13 @@ span#logo {
 }
 
 .error {
-	background-color:	red;
+	background-color:	rgba(255,0,0,0.7);
+}
+
+.success {
+	background-color:	rgba(51,204,51,0.7);
+}
+
+.warnig {
+	background-color:	rgba(255,153,0,0.7);
 }

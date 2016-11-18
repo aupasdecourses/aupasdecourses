@@ -2,6 +2,10 @@
 
 namespace AppBundle\Controller;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,34 +22,6 @@ class RefundController extends Controller
 	const	ERROR = 0;
 	const	SUCCESS = 1;
 	const	WARNING = 2;
-
-	private static function check_upload_status($id, $order, &$rsl = null) {
-		$ticket_folder = \Magento::mediapath().'/attachments/'.$id;
-		if (!($dir = opendir($ticket_folder)))
-			return self::ERROR;
-		$dir_files = [];
-		while (($dir_entry = readdir($dir)) <> false) {
-			preg_match("/(.*)(\..*)$/", $dir_entry, $file_name);
-			$dir_files[] = $file_name[1];
-		}
-		closedir($dir);
-		$rsl = [];
-		$err = false;
-		foreach ($order as $merchant_id => $osef) {
-			if ($merchant_id == -1 && in_array($id, $dir_files)) {
-				$rsl[] = $merchant_id;
-				return self::WARNING;
-			}
-			if (!in_array("{$id}-{$merchant_id}")) {
-				$err = true;
-				continue ;
-			}
-			$rsl[] = $merchant_id;
-		}
-		if ($err <> false)
-			return self::ERROR;
-		return self::SUCCESS;
-	}
 
 	public function indexAction(Request $request, $from)
 	{
@@ -74,6 +50,34 @@ class RefundController extends Controller
 		]);
 	}
 
+	private static function check_upload_status($id, $order, &$rsl = []) {
+		$ticket_folder = \Magento::mediapath().'/attachments/'.$id;
+		if (!($dir = opendir($ticket_folder)))
+			return self::ERROR;
+		$dir_files = [];
+		while (($dir_entry = readdir($dir)) <> false) {
+			if ($dir_entry == '.' || $dir_entry == '..')
+				continue ;
+			if (preg_match("/(.*)(\..*)$/", $dir_entry, $file_name))
+				$dir_files[] = $file_name[1];
+		}
+		closedir($dir);
+
+		$rsl = [];
+		$err = self::SUCCESS;
+		foreach ($order as $merchant_id => $osef) {
+			if ($merchant_id == -1 && in_array("{$id}", $dir_files)) {
+				$err = self::WARNING;
+			} else if (!in_array("{$id}-{$merchant_id}", $dir_files)) {
+				$err = ($err <> self::WARNING) ? self::ERROR : $err;
+				continue ;
+			}
+			$rsl[] = $merchant_id;
+		}
+
+		return $err;
+	}
+
 	public function refundUploadAction(Request $request, $id)
 	{
 		$mage = \Magento::getInstance();
@@ -85,17 +89,19 @@ class RefundController extends Controller
 		$entity_upload = new \AppBundle\Entity\Upload();
 		$form_upload = $this->createFormBuilder($entity_upload);
 
-		// check upload
+		$rsl;
+		self::check_upload_status($id, $order, $rsl);
 
 		$attrNames = [];
 		foreach ($order as $merchant_id => $data) {
 			$name = preg_replace("/[^-a-zA-Z0-9:]| /", "_", $data['merchant']['name']);
 			$attrNames[$merchant_id] = $name;
+			$class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
 			$form_upload->add($name, FileType::class, [
 				'required'    => false,
 				'label' => $data['merchant']['name'],
 				'attr'	=> [
-					'class'	=> 'form-control'
+					'class'	=> "form-control{$class}",
 					]
 			]);
 		}
@@ -121,6 +127,9 @@ class RefundController extends Controller
 					}
 				}
 			}
+			$err = self::check_upload_status($id, $order, $rsl);
+			if ($err <> self::ERROR)
+				return $this->redirectToRoute('refundAttachment', [ 'id' => $id ]);
 		}
 
 		return $this->render('refund/upload.html.twig', [
@@ -137,8 +146,6 @@ class RefundController extends Controller
 			return $this->redirectToRoute('userLogin');
 
 		$order = $mage->getOrderByMerchants($id);
-
-		// check upload and redirect if not
 
 		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
