@@ -69,7 +69,8 @@ class RefundController extends Controller
 			if ($merchant_id == -1 && in_array("{$id}", $dir_files)) {
 				$err = self::WARNING;
 			} else if (!in_array("{$id}-{$merchant_id}", $dir_files)) {
-				$err = ($err <> self::WARNING) ? self::ERROR : $err;
+				if ($merchant_id <> -1)
+					$err = ($err <> self::WARNING) ? self::ERROR : $err;
 				continue ;
 			}
 			$rsl[] = $merchant_id;
@@ -127,9 +128,11 @@ class RefundController extends Controller
 					}
 				}
 			}
-			$err = self::check_upload_status($id, $order, $rsl);
+			$err = self::check_upload_status($id, $order);
 			if ($err <> self::ERROR)
 				return $this->redirectToRoute('refundAttachment', [ 'id' => $id ]);
+			else
+				return $this->redirectToRoute('refundUpload', [ 'id' => $id ]);
 		}
 
 		return $this->render('refund/upload.html.twig', [
