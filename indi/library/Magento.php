@@ -18,6 +18,10 @@ class Magento
 		\Mage::app();
 	}
 
+	public static function mediapath() {
+		return realpath(__DIR__.'/../../media');
+	}
+
 	public function isLogged() {
 		\Mage::getSingleton('core/session',['name' => 'adminhtml']);
 		if (isset($_SESSION['delivery'])) {

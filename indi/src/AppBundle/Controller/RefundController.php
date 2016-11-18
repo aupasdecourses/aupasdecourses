@@ -15,6 +15,38 @@ include_once 'Magento.php';
 
 class RefundController extends Controller
 {
+	const	ERROR = 0;
+	const	SUCCESS = 1;
+	const	WARNING = 2;
+
+	private static function check_upload_status($id, $order, &$rsl = null) {
+		$ticket_folder = \Magento::mediapath().'/attachments/'.$id;
+		if (!($dir = opendir($ticket_folder)))
+			return self::ERROR;
+		$dir_files = [];
+		while (($dir_entry = readdir($dir)) <> false) {
+			preg_match("/(.*)(\..*)$/", $dir_entry, $file_name);
+			$dir_files[] = $file_name[1];
+		}
+		closedir($dir);
+		$rsl = [];
+		$err = false;
+		foreach ($order as $merchant_id => $osef) {
+			if ($merchant_id == -1 && in_array($id, $dir_files)) {
+				$rsl[] = $merchant_id;
+				return self::WARNING;
+			}
+			if (!in_array("{$id}-{$merchant_id}")) {
+				$err = true;
+				continue ;
+			}
+			$rsl[] = $merchant_id;
+		}
+		if ($err <> false)
+			return self::ERROR;
+		return self::SUCCESS;
+	}
+
 	public function indexAction(Request $request, $from)
 	{
 		$mage = \Magento::getInstance();
@@ -29,7 +61,7 @@ class RefundController extends Controller
 		if ($form_from->isValid())
 			return $this->redirectToRoute('refundIndex', [ 'from' => $entity_from->from ]);
 		if (!isset($from))
-			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d') ]);
+			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime('-1 day')) ]);
 
 		$form_from->get('from')->setData($from);
 
@@ -53,6 +85,8 @@ class RefundController extends Controller
 		$entity_upload = new \AppBundle\Entity\Upload();
 		$form_upload = $this->createFormBuilder($entity_upload);
 
+		// check upload
+
 		$attrNames = [];
 		foreach ($order as $merchant_id => $data) {
 			$name = preg_replace("/[^-a-zA-Z0-9:]| /", "_", $data['merchant']['name']);
@@ -65,6 +99,7 @@ class RefundController extends Controller
 					]
 			]);
 		}
+
 		$form_upload->add('Upload', SubmitType::class);
 		$form_upload = $form_upload->getForm();
 
@@ -72,15 +107,18 @@ class RefundController extends Controller
 			foreach ($attrNames as $merchant_id => $name) {
 				if (!$_FILES['form']['error'][$name] && $_FILES['form']['size'][$name] > 0) {
 					$extentions;
-					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extention);
-					$file = $id;
-					if ($name <> 'All')
-						$file .= "-{$merchant_id}";
-					$file .= $extention[1];
-
+					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extentions);
 					$tmp_file = $_FILES['form']['tmp_name'][$name];
-
-					echo $tmp_file." -> ".$file.'<br />';
+					$folder = \Magento::mediapath().'/attachments/'.$id;
+					if (!file_exists($folder))
+						mkdir($folder);
+					if (file_exists($folder)) {
+						$file = "{$folder}/{$id}";
+						if ($name <> 'All')
+							$file .= "-{$merchant_id}";
+						$file .= $extentions[1];
+						copy($tmp_file, $file);
+					}
 				}
 			}
 		}
@@ -99,6 +137,8 @@ class RefundController extends Controller
 			return $this->redirectToRoute('userLogin');
 
 		$order = $mage->getOrderByMerchants($id);
+
+		// check upload and redirect if not
 
 		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
