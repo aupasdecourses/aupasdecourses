@@ -156,7 +156,7 @@ class RefundController extends Controller
 		]);
 	}
 
-	public function refundResumeAction(Request $request, $id)
+	public function refundDigestAction(Request $request, $id)
 	{
 		$mage = \Magento::getInstance();
 		if(!$mage->isLogged())
@@ -164,7 +164,7 @@ class RefundController extends Controller
 
 		$order = $mage->getOrderByMerchants($id);
 
-		return $this->render('refund/resume.html.twig', [
+		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'order' => $order
 		]);

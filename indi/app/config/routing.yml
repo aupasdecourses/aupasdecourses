@@ -80,6 +80,6 @@ refundAttachment:
   requirements: { id:"[0-9]+" }
 
 refundResume:
-  path: /refund/{id}/resume/
-  defaults: { _controller: AppBundle:Refund:refundResume}
+  path: /refund/{id}/digest/
+  defaults: { _controller: AppBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
