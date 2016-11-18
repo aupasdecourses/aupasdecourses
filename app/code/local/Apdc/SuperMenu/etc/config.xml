@@ -76,6 +76,7 @@
           <menu_main_static_block />
           <menu_static_block1 />
           <thumbnail />
+          <is_clickable />
         </attributes>
       </collection>
     </category>
