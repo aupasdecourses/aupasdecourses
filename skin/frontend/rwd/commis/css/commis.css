@@ -2076,11 +2076,19 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
 }
 
 #cart-sidebar a.btn-edit,
-a.remove {
+a.action-mini-cart {
     color: #333;
     font-family: Raleway, "Helvetica Neue";
     font-weight: 500;
     font-size: 14px;
+    float:right;
+    margin-left:8px;
+}
+
+a.action-mini-cart:hover{
+    text-decoration: underline;
+    color:#333;
+    background:none;
 }
 
 .header-minicart .block-subtitle .close:hover {

@@ -120,6 +120,9 @@
                             <?php endif; ?>
 
                         <?php endif; //Can apply MSRP ?>
+                        <?php if ($isVisibleProduct && !$this->isOnCheckoutPage()): ?>
+                            <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo $this->__('Edit item') ?>" class="action-mini-cart"><i class="fa fa-pencil"></i> <span style="font-size:12px">Modifier</span></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <tr class="qty-wrapper">
@@ -156,7 +159,7 @@
                         <?php if ($isVisibleProduct): ?>
                             <?php if (!$this->isOnCheckoutPage()): ?>
                                 <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo $this->__('Remove This Item') ?>"
-                                   data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>" class="remove" style="float:right;margin-left:8px;"><i class="fa fa-trash"></i> <span style="font-size:12px">Supprimer</span></a>
+                                   data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>" class="action-mini-cart"><i class="fa fa-trash"></i> <span style="font-size:12px">Supprimer</span></a>
                             <?php else: ?>
                                 <!-- <span><?php echo $this->__('Remove Item') ?></span> -->
                             <?php endif; ?>
