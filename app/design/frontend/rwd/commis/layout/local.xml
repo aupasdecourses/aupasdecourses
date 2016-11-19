@@ -10,7 +10,6 @@
         <remove name="wishlist_link"/>
         <remove name="cart_sidebar.cart_promotion"/>
         <remove name="cart_sidebar.extra_actions"/>
-        <remove name="page_content_heading"/>
         <remove name="footer_currency"/>
         <remove name="right.poll"/>
         <remove name="paypal.partner.right.logo"/>
