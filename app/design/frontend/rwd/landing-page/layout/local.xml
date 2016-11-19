@@ -85,7 +85,6 @@
         <remove name="right"/>
         <remove name="global_cookie_notice"/>
         <remove name="custommenu-content"/>
-        <remove name="balloz.toolbar"/>
         <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">
