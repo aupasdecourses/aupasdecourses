@@ -2752,7 +2752,7 @@ p.product-name a:hover,
 }
 
 .commercant-selection .title-block {
-    width: 250px;
+    width: 420px;
 }
 
 @media screen and (max-width: 770px) {
@@ -2974,11 +2974,14 @@ p.product-name a:hover,
 
 #carrousel-selection-home .owl-item {
     text-align: center;
+    padding: 0 10px;
 }
 
 #carrousel-selection-home .owl-item img {
     margin: auto;
     margin-bottom: 5px;
+    max-width: 100%;
+    height:auto;
 }
 
 #carrousel-selection-home .owl-item h2 {
@@ -3012,9 +3015,9 @@ p.product-name a:hover,
 }
 
 .commercant-item {
-    font-size: 0.95em;
     height: auto;
     margin-bottom: 10px;
+    padding: 0 5px;
 }
 
 .commercant-item .product-name {
@@ -3565,8 +3568,8 @@ a.btn:hover {
 
 .produit-biologique-selection {
     position: absolute;
-    bottom: 19%;
-    left: 7%;
+    bottom: 27%;
+    left: 4%;
     background-color: #FFF;
     color: #333;
     padding: 5px;

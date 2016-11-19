@@ -32,11 +32,6 @@ $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
 ?>
 
 <!DOCTYPE html>
-
-<!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
 
 <head>
@@ -53,9 +48,8 @@ $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
         <div class="main-container col1-layout">
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
-                <?php // This left_first block will display above the main content on smaller viewports ?>
                 <?php if ($_leftContent = $this->getChildHtml('left_first')): ?>
-                <div class="col-left sidebar col-left-first"><?php echo $_leftContent;   ?></div>
+                    <div class="col-left sidebar col-left-first"><?php echo $_leftContent;   ?></div>
                 <?php endif; ?>
                 <div class="col-main">
                     <?php echo $this->getChildHtml('global_messages') ?>
@@ -70,32 +64,5 @@ $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
     </div>
 </div>
 <?php echo $this->getAbsoluteFooter() ?>
-<script>
-    $j(document).ready(function() {
-
-      $j("#carrousel-reassurance").owlCarousel({
-            items:4,
-            pagination:false,
-            autoPlay : false,
-            navigation : true
-      });
-
-      $j("#carrousel-selection-home").owlCarousel({
-            items:4,
-            itemsScaleUp : true,
-            pagination:false,
-            autoPlay : false,
-            navigation : true
-      });
-
-      $j("#carrousel-commercants").owlCarousel({
-            items:3,
-            pagination:false,
-            autoPlay : false,
-            navigation : true
-      });
-     
-    });
-</script>
 </body>
 </html>

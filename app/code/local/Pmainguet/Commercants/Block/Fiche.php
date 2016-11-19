@@ -3,40 +3,43 @@
 class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 
 	const MODEL='commercants_model/fiche1';
-	//A modifier pour récupérer les catégories de Magento
-	public $category=['Mon Boucher'=>'Bouchers','Mon Epicier'=>'Epiciers','Mon Boulanger'=>'Boulangers','Mon Primeur'=>'Primeurs'];
 
 	public function gettable(){
 	    $fiche = Mage::getModel(self::MODEL)->setOrder('commercant_id', 'desc');
 	    return $fiche;
   	}
 
-  	//Return list of all Commercant categories, filtered by store
   	public function getListCommercant(){
-
   		$storeid=Mage::app()->getStore()->getId();
   		$rootId=Mage::app()->getStore($storeid)->getRootCategoryId();
+  		$data=array();
 
-	    $categories = Mage::getModel('catalog/category')
+	    $commercants = Mage::getModel('catalog/category')
                          ->getCollection()
-                         ->addAttributeToSelect('*')
+                         ->addAttributeToSelect(array('name','image','adresse_commercant','url_path'))
                          ->addIsActiveFilter()
                          ->addFieldToFilter('path', array('like'=> "1/$rootId/%"))
                          ->addAttributeToFilter('level', array('eq'=>3))
                          //70 est la value_id de l'option du select, correspondant à 'Oui'                        
                          ->addAttributeToFilter('estcom_commercant',70)
                          ->load();
-		return $categories;
+
+		foreach ($commercants as $commercant){
+			$commercant=$commercant->getData();
+			$sub=[
+				'name'=>$commercant['name'],
+				'stripped_name'=>$this->stripTags($commercant['name'], null, true),
+				'image'=>$commercant['image'],
+				'src'=>Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'],
+				'adresse'=>$commercant['adresse_commercant'],
+				'url'=>$commercant['url_path']
+			];
+			$data[]=$sub;
+		}
+
+		return $data;
+
 	}
-
-
-	public function getListPerCat($category){
-	   $categories = Mage::getModel('catalog/category')->load($category)
-	   					->getChildrenCategories()
-                         ->addAttributeToSelect('*')
-                         ->addIsActiveFilter();
-		return $categories;
-	}  	
 
   	//En duplicata d'une fonction du controller => voir si possible d'utiliser Helper pour la partager entre les deux
   	public function strtoupperFr($string) {

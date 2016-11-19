@@ -21,8 +21,6 @@
                 <rel>skin_js</rel>
                 <href>owl-carrousel/owl.carousel.min.js</href>
             </action>
-            <!--      <action method="addItem"><rel>skin_js</rel><href>countdown/js/jquery.countdown.js</href></action>
-          <action method="addItem"><rel>skin_js</rel><href>countdown/js/script.js</href></action> -->
             <action method="addItem">
                 <rel>skin_css</rel>
                 <href>countdown/css/jquery.countdown.css</href>
@@ -38,7 +36,7 @@
             <!-- Inclusion du Carroussel et des liens droite-->
             <block type="core/template" name="headband" template="page/html/headband.phtml" />
             <!-- Inclusion des commerçants du Commis -->
-            <block type="commercants/fiche" template="commercants/fiche.phtml" name="commercants-fiche">
+            <block type="commercants/fiche" template="apdc_home/commercants_quartier.phtml" name="commercants-fiche">
                 <block type="cms/block" name="texte-intro-liste-commercants">
                     <action method="setBlockId">
                         <block_id>texte_intro_liste_commercants</block_id>
@@ -47,7 +45,7 @@
             </block>
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
-                <block type="apdc_catalog/selection" name="home-selection" template="catalog/blockselection/selection_all.phtml"></block>
+                <block type="apdc_catalog/selection" name="home-selection" template="apdc_home/selection_all.phtml"></block>
             </block>
             <!-- Reassurance -->
             <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
