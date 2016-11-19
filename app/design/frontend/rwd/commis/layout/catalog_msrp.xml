@@ -99,11 +99,4 @@ Default layout, loads most of the pages
             <action method="addPriceBlockType"><type>msrp</type><block>catalog/product_price</block><template>wishlist/render/item/price_msrp_item.phtml</template></action>
         </reference>
     </MAP_price_msrp_wishlist_item>
-    <default>
-        <reference name="catalog_product_price_template">
-            <action method="addPriceBlockType"><type>msrp</type><block>catalog/product_price</block><template>catalog/product/price_msrp.phtml</template></action>
-            <action method="addPriceBlockType"><type>msrp_item</type><block>catalog/product_price</block><template>catalog/product/price_msrp_item.phtml</template></action>
-            <action method="addPriceBlockType"><type>msrp_noform</type><block>catalog/product_price</block><template>catalog/product/price_msrp_noform.phtml</template></action>
-        </reference>
-    </default>
 </layout>

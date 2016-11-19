@@ -1,3 +1,6 @@
+<!--OWL CARROUSSEL -->
+<script src="<?php echo $this->getSkinUrl('owl-carrousel/owl.carousel.min.js');?>"></script>
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'jquery.magnific-popup.min.js'?>"></script>
 <!-- Google Auto Complete -->
 <?php
 	$key = Mage::getStoreConfig('api_key/google/google_nav');
@@ -54,7 +57,6 @@
 <script type="text/javascript">
 	function downloadJSAtOnload() {
 	    var jsArray = [
-	       	"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'jquery.magnific-popup.min.js'?>",
 	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'googleanalytics/ga.js'?>",
 	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'tawkto/tawkto.js'?>",
 	        //"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'GoogleApi/GoogleApi.js'?>",

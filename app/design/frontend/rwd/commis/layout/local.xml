@@ -1,26 +1,28 @@
 <?xml version="1.0"?>
-<!--
-/*
- * Commis
- * www.petitcommis.fr
- *
- * @description  Layout modifications
- * @author       Author Name
- * @package      packagename_default
- *
- */
--->
 <layout version="0.1.0">
-    <catalog_product_view>
-        <reference name="head">
-            <action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery-1.3.1.min.js</name></action>
-        </reference>
-        <remove name="alert.urls"/>
-        <remove name="product.info.addtocart.paypal.wrapper"/>
-        <remove name="bml.right.logo"/>
-        <remove name="product.info.addtocart.paypaluk.wrapper"/>
-    </catalog_product_view>
     <default>
+        <!-- Local.xml -->
+        <!--remove unneeded blocks-->
+        <remove name="optional_zip_countries"/>
+        <remove name="store_language"/>
+        <remove name="top.container"/>
+        <remove name="currency"/>
+        <remove name="wishlist_link"/>
+        <remove name="cart_sidebar.cart_promotion"/>
+        <remove name="cart_sidebar.extra_actions"/>
+        <remove name="page_content_heading"/>
+        <remove name="footer_currency"/>
+        <remove name="right.poll"/>
+        <remove name="paypal.partner.right.logo"/>
+        <remove name="bml.right.logo"/>
+        <!-- attention au page sur 2 colonnes comme l'account client -->
+        <remove name="left"/>
+        <remove name="left_first"/>
+        <!-- attention au page sur 2 colonnes comme le checkout -->
+        <remove name="right"/>
+        <remove name="bottom.container"/>
+        <remove name="custommenu-content"/>
+        <remove name="emailcatcher"/>
         <reference name="root">
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -54,9 +56,6 @@
                 <href>https://www.aupasdecourses.com</href>
                 <hreflang>fr</hreflang>
             </action>
-            <!-- <action method="addCss">
-                <name>css/bootstrap.css</name>
-            </action> -->
             <action method="addCss">
                 <name>css/bootstrap-social.css</name>
             </action>
@@ -72,6 +71,12 @@
                 <href>js/custom.js</href>
             </action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+        </reference>
+        <reference name="header">
+            <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
+        </reference>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
         </reference>
         <reference name="right">
             <!--Remove whishlist -->
@@ -124,19 +129,6 @@
         <reference name="left">
             <remove name="catalog.leftnav" />
         </reference>
-        <!--remove unneeded blocks-->
-        <remove name="optional_zip_countries"/>
-        <remove name="store_language"/>
-        <remove name="top.container"/>
-        <remove name="currency"/>
-        <remove name="wishlist_link"/>
-        <remove name="cart_sidebar.cart_promotion"/>
-        <remove name="cart_sidebar.extra_actions"/>
-        <!-- <remove name="headband"/> -->
-        <remove name="bottom.container"/>
-        <remove name="cms_footer_links"/>
-        <remove name="cms_footer_links_sm"/>
-        <remove name="custommenu-content"/>
         <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">
@@ -156,6 +148,22 @@
             </block>
         </reference> -->
     </default>
+
+      <!-- Homepage, from catalog.xml -->
+    <page_homepage>
+        <label>Homepage</label>
+        <reference name="content">
+        <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
+            <action method="setProductsCount"><count>10</count></action>
+            <action method="addPriceBlockType">
+                <type>bundle</type>
+                <block>bundle/catalog_product_price</block>
+                <template>bundle/catalog/product/price.phtml</template>
+            </action>
+            <action method="setColumnCount"><count>6</count></action>
+        </block>
+        </reference>
+    </page_homepage>
     
     <catalog_category_view>
         <reference name="right">
@@ -223,6 +231,11 @@
     </PAGE_COMMERCANT>
     <catalog_product_view>
         <remove name="product.reviews" />
+        <remove name="product.attributes"/>
+        <remove name="alert.urls"/>
+        <remove name="product.info.addtocart.paypal.wrapper"/>
+        <remove name="bml.right.logo"/>
+        <remove name="product.info.addtocart.paypaluk.wrapper"/>
         <reference name="product.info.upsell">
             <action method="setColumnCount">
                 <columns>5</columns>
@@ -232,7 +245,12 @@
                 <limit>4</limit>
             </action>
         </reference>
-        <remove name="product.attributes"/>
+        <reference name="head">
+            <action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery-1.3.1.min.js</name></action>
+        </reference>
+    </catalog_product_view>
+        <catalog_product_view>
+        
     </catalog_product_view>
     <PRODUCT_TYPE_bundle>
         <remove name="bundle.tierprices" />
@@ -330,26 +348,6 @@
             </action>
         </reference>
     </customer_logged_out>
-    <!-- <customer_logged_in>
-         <reference name="top.links">
-            <action method="addLink" translate="label title">
-                <label>Parrainez un ami</label>
-                <url>sponsorship/</url>
-                <title>Parrainez un ami</title>
-                <prepare/>
-                <urlParams/>
-                <position>10</position>
-            </action>
-             <action method="addLink" translate="label title">
-                <label>Mon historique</label>
-                <url>sales/order/history/</url>
-                <title>Mon historique</title>
-                <prepare/>
-                <urlParams/>
-                <position>25</position>
-            </action>
-        </reference>
-    </customer_logged_in> -->
     <customer_account_changeforgotten translate="label">
         <label>Reset a Password</label>
         <remove name="right" />

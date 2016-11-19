@@ -37,62 +37,6 @@ Supported layout update handles (special):
 
 -->
 <layout version="0.1.0">
-
-  <!-- Homepage -->
-  
-  <page_homepage>
-    <label>Homepage</label>
-    <reference name="content">
-    <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
-        <action method="setProductsCount"><count>10</count></action>
-        <action method="addPriceBlockType">
-            <type>bundle</type>
-            <block>bundle/catalog_product_price</block>
-            <template>bundle/catalog/product/price.phtml</template>
-        </action>
-        <action method="setColumnCount"><count>6</count></action>
-    </block>
-</reference>
-  </page_homepage>
-  
-  
-<!--
-Default layout, loads most of the pages
--->
-
-    <default>
-
-        <!-- Mage_Catalog -->
-        <reference name="left">
-            <!--<block type="core/template" name="left.permanent.callout" template="callouts/left_col.phtml">-->
-                <!--<action method="setImgSrc"><src>images/media/col_left_callout.jpg</src></action>-->
-                <!--<action method="setImgAlt" translate="alt" module="catalog"><alt>Our customer service is available 24/7. Call us at (555) 555-0123.</alt></action>-->
-                <!--<action method="setLinkUrl"><url>checkout/cart</url></action>-->
-            <!--</block>-->
-        </reference>
-        <reference name="right">
-            <block type="catalog/product_compare_sidebar" before="cart_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
-            <!--<block type="core/template" name="right.permanent.callout" template="callouts/right_col.phtml">-->
-                <!--<action method="setImgSrc"><src>images/media/col_right_callout.jpg</src></action>-->
-                <!--<action method="setImgAlt" translate="alt" module="catalog"><alt>Keep your eyes open for our special Back to School items and save A LOT!</alt></action>-->
-            <!--</block>-->
-        </reference>
-        <reference name="footer_links">
-            
-        </reference>
-        <block type="catalog/product_price_template" name="catalog_product_price_template" />
-	    <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
-        <action method="setProductsCount"><count>10</count></action>
-        <action method="addPriceBlockType">
-            <type>bundle</type>
-            <block>bundle/catalog_product_price</block>
-            <template>bundle/catalog/product/price.phtml</template>
-        </action>
-        <action method="setColumnCount"><count>6</count></action>
-    </block>
-    </default>
-
-
 <!--
 Category default layout
 -->
@@ -157,12 +101,6 @@ Compare products page
             <block type="catalog/product_compare_list" name="catalog.compare.list" template="catalog/product/compare/list.phtml"/>
         </reference>
     </catalog_product_compare_index>
-
-    <customer_account_index>
-        <reference name="right">
-            <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
-        </reference>
-    </customer_account_index>
 
 <!--
 Product view

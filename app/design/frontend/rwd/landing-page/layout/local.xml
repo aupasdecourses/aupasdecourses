@@ -56,10 +56,7 @@
                 <!-- JQUERY -->
                 <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
                 <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
-                <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
-                <!-- OTHERS -->
-                <action method="addItem"><rel>skin_js</rel><href>owl-carrousel/owl.carousel.min.js</href></action>
-                
+                <action method="addJs"><script>lib/jquery/noconflict.js</script></action>                
                 <!-- =========================
                      END SCRIPTS   
                 ============================== -->
@@ -68,24 +65,6 @@
         <reference name="footer">
             <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
         </reference>
-        <!-- balloz start -->
-        <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>css/balloz/developer-toolbar/toolbar.css</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/balloz/developer-toolbar/toolbar.js</name></action>
-        </reference>
-
-        <reference name="before_body_end">
-            <block type="developertoolbar/toolbar" name="balloz.toolbar" template="balloz/developertoolbar/toolbar.phtml">
-                <block type="developertoolbar/panel_info" name="balloz.toolbar.panels.info" template="balloz/developertoolbar/panels/info.phtml" />
-                <block type="developertoolbar/panel_blocks" name="balloz.toolbar.panels.blocks" template="balloz/developertoolbar/panels/blocks.phtml" />
-                <block type="developertoolbar/panel_timers" name="balloz.toolbar.panels.timers" template="balloz/developertoolbar/panels/timers.phtml" />
-                <block type="developertoolbar/panel_queries" name="balloz.toolbar.panels.queries" template="balloz/developertoolbar/panels/queries.phtml" />
-                <block type="developertoolbar/panel_handles" name="balloz.toolbar.panels.handles" template="balloz/developertoolbar/panels/handles.phtml" />
-                <block type="developertoolbar/panel_debug" name="balloz.toolbar.panels.debug" template="balloz/developertoolbar/panels/debug.phtml" />
-            </block>
-        </reference>
-        <!-- balloz end -->
-
         <remove name="global_notices"/>
         <remove name="top.links"/>
         <remove name="store_language"/>

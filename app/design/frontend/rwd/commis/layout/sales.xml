@@ -516,11 +516,4 @@ Guest
             </block>
         </reference>
     </sales_guest_printcreditmemo>
-
-     <default>
-        <reference name="footer_links2">
-            <block type="sales/guest_links" name="return_link"/>
-            <action method="addLinkBlock"><blockName>return_link</blockName></action>
-        </reference>
-    </default>
 </layout>
