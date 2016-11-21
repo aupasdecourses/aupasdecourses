@@ -63,7 +63,7 @@ class Magento
 		$S = [];
 		$app = \Mage::app();
 		$stores = $app->getStores();
-		foreach ($stores as $id => $osef) {
+		foreach ($stores as $id => $idc) {
 			$S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
 			$S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
 		}
@@ -168,6 +168,7 @@ class Magento
 
 	private function ProductParsing($product) {
 		$prod_data = [
+			'id' => $product->getItemId(),
 			'nom' => $product->getName(),
 				'prix_kilo'		=>	$product->getPrixKiloSite(),
 				'quantite'		=>	round($product->getQtyOrdered(), 0),
@@ -311,42 +312,35 @@ class Magento
 		return ($rsl);
 	}
 
-	public function getRefunds($orderId = -1){
-		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
-	
-		$refundItems->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id',
-			array(
-				'mwddate_store.ddate_id'
-			));
-		return ($refundItems);		
-
-/*
-	$refundItems->addFieldToFilter('order_item_id', [ 'eq' => '11320' ]);
-		 */
-echo'<pre>';
-		var_dump($refundItems);
-		echo'</pre>';
- 		
-		
-		
-		$tableRefund = [];
-		foreach ($refundItems as $item) {
-			$tableRefund[$item->getData('order_item_id')]['refund_item_id'] = $item->getData('refund_item_id');
-			$tableRefund[$item->getData('order_item_id')]['order_item_id'] = $item->getData('order_item_id');
-			$tableRefund[$item->getData('order_item_id')]['item_name'] = $item->getData('item_name');
-			$tableRefund[$item->getData('order_item_id')]['commercant'] = $item->getData('commercant');
-			$tableRefund[$item->getData('order_item_id')]['commercant_id'] = $item->getData('commercant_id');
-			$tableRefund[$item->getData('order_item_id')]['order_id'] = $item->getData('order_id');
-			$tableRefund[$item->getData('order_item_id')]['in_ticket'] = $item->getData('in_ticket');
-			$tableRefund[$item->getData('order_item_id')]['prix_initial'] = $item->getData('prix_initial');
-			$tableRefund[$item->getData('order_item_id')]['prix_final'] = $item->getData('prix_final');
-			$tableRefund[$item->getData('order_item_id')]['diffprixfinal'] = $item->getData('diffprixfinal');
-			$tableRefund[$item->getData('order_item_id')]['comment'] = $item->getData('comment');
+	public function getRefunds($orderId){
+		$orders = $this->OrdersQuery(null, null, -1, $orderId);
+		$rsl = [];
+		$table_id = [];
+		$refundTable = [];
+		foreach ($orders as $order) {
+			$orderHeader = $this->OrderHeaderParsing($order);
+			$products = $order->getAllItems();
+			foreach ($products as $product) {
+				$prod_data = $this->ProductParsing($product);
+				$table_id[] = $prod_data['id'];
+				$orderHeader['products'][$prod_data['id']] = $prod_data;
+				$orderHeader['total_quantite'] += $prod_data['quantite'];
+				$orderHeader['total_prix'] += $prod_data['prix_total'];
+			}
+			$rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
 		}
+		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
+		$refundItems->addFieldToFilter('order_item_id', array('in' => $table_id));
+			foreach ($refundItems as $refundItem){
+				/*echo'<pre>';
+				print_R($refundItem);
+				echo'</pre>';	*/
+			// inserer donnees refund dans tableau $result
+			
+			
+			
+			}
+		print_R($refundItem);
 
-//		return($tableRefund);
-		echo'<pre>';
-		var_dump($tableRefund);
-		echo'</pre>';
- 	}
+	}
 }

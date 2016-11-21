@@ -88,7 +88,7 @@ class RefundController extends Controller
 			'order' => $order,
 			'total' => $total,
 			'order_id' => $id,
-			'refunds' => $mage->getRefunds($orderId)
+			'refunds' => $mage->getRefunds($id)
 		]);
 	}
 
