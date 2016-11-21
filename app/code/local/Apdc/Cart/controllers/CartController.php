@@ -4,11 +4,9 @@
  * Shopping cart controller
  */
 
-require_once 'Mage/Checkout/controllers/CartController.php';
-
+require_once Mage::getModuleDir('controllers', 'Mage_Checkout') . DS . 'CartController.php';
 class Apdc_Cart_CartController extends Mage_Checkout_CartController
 {
-
     /**
      * Minicart delete action.
      */
@@ -93,4 +91,41 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
+
+    /**
+     * ajaxUpdateMiniCartAccordion 
+     * 
+     * @return void
+     */
+    public function ajaxUpdateCartAccordionAction()
+    {
+        $postData = $this->getRequest()->getPost();
+        $response = array();
+        if((int)$postData['isAjax'] == 1 && (int)$postData['commercant'] > 0){
+
+            $apdcCart = Mage::getSingleton('checkout/session')->getApdcCart();
+            if (!$apdcCart) {
+                $apdcCart = new Varien_Object();
+                $apdcCart->setAccordion(array());
+            }
+            $accordion = $apdcCart->getAccordion();
+            if (isset($postData['open']) && (int)$postData['open'] == 1) {
+                $accordion[(int)$postData['commercant']] = 1;
+            } else {
+                $accordion[(int)$postData['commercant']] = 0;
+            }
+            $apdcCart->setAccordion($accordion);
+            Mage::getSingleton('checkout/session')->setApdcCart($apdcCart);
+            $response = array(
+                'status' => 'OK',
+            );
+        } else {
+            $response = array(
+                'status' => 'ERROR',
+                'message' => $this->__('Cannot update cart accordion')
+            );
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+    }
+
 }

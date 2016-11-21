@@ -16,6 +16,11 @@
                     <sales_items_abstract>Apdc_Cart_Block_Adminhtml_Sales_Items_Abstract</sales_items_abstract>
                 </rewrite>
             </adminhtml>
+            <checkout>
+                <rewrite>
+                    <cart_sidebar>Apdc_Cart_Block_Cart_Sidebar</cart_sidebar>
+                </rewrite>
+            </checkout>
         </blocks>
         <models>
             <apdccart>
@@ -27,12 +32,12 @@
                 </rewrite>
             </checkout>
         </models>
-        <rewrite>
-            <ajax_cart> <!--This can be any unique id -->
-                <from><![CDATA[#^/checkout/cart/#]]></from>  <!-- the URL which u want to override-->
-                <to>/addajax/index/</to>  <!-- destination url -->
-            </ajax_cart>
-        </rewrite>
+        <!--<rewrite>-->
+            <!--<ajax_cart> [>This can be any unique id <]-->
+                <!--<from><![CDATA[#^/checkout/cart/#]]></from>  [> the URL which u want to override<]-->
+                <!--<to>/addajax/index/</to>  [> destination url <]-->
+            <!--</ajax_cart>-->
+        <!--</rewrite>-->
         <fieldsets>
             <sales_convert_quote_item>
                 <item_comment>
@@ -55,6 +60,13 @@
             </updates>
         </layout>
         <routers>
+          <checkout>
+            <args>
+              <modules>
+                <apdccart before="Mage_Checkout">Apdc_Cart</apdccart>
+              </modules>
+            </args>
+          </checkout>
             <addajax>
                 <use>standard</use>
                 <args>
@@ -62,13 +74,6 @@
                     <frontName>addajax</frontName>
                 </args>
             </addajax>
-          <checkout>
-            <args>
-              <modules>
-                <Apdc_Cart before="Mage_Checkout">Apdc_Cart</Apdc_Cart>
-              </modules>
-            </args>
-          </checkout>
         </routers>
     </frontend>
     <adminhtml>

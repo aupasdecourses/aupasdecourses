@@ -707,7 +707,9 @@ h6,
 .limiter select {
     width: 60px;
 }
-
+.pages li {
+    padding-left:3px;
+}
 .pages a,
 .pages .current {
     display: inline-block;
@@ -718,9 +720,9 @@ h6,
     vertical-align: middle;
     white-space: nowrap;
     line-height: 30px;
-    width: 25px;
+    width: 30px;
     height: 30px;
-    padding: 0;
+    padding: 0!important;
     color: #339933;
     font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
 }
@@ -732,6 +734,7 @@ h6,
     width: 30px;
     background-color: #FFFFFF;
     cursor: default;
+    border-radius: 50%;
 }
 
 .pages .next,
@@ -1535,7 +1538,7 @@ label {
         background-color: #ffffff;
     }
     .sticky-header .skip-links .skip-content.skip-active {
-        top: 45px!important;
+        /* top: 45px!important; */
     }
     #header-account.skip-active a:hover,
     #header-help a:hover {
@@ -1897,8 +1900,11 @@ label {
     color: #339933;
 }
 
-.checkout-types.minicart {
-    float: right;
+.checkout-types.minicart .button {
+    float:none;
+    width:100%;
+    color:#ffffff;
+
 }
 
 .header-minicart .minicart-actions .cart-link {
@@ -3238,66 +3244,4 @@ a.btn:hover {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.commercant_product_cat .linkcat {
-    margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.commercant_product_cat .description a:hover {
-    text-decoration: none;
-    color: inherit;
-}
-
-.category-products {
-    display: inline-block;
-    width: 100%;
-}
-
-
-/* ============================================ *
- * Products List
- * ============================================ */
-
-
-/*
-* - Add to Cart
-*/
-
-#qty {
-    width: 40px;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    text-align: center;
-    padding: 5px 0;
-}
-
-.label_qty {
-    float: left;
-    margin: 5px;
-}
-
-
-/*
-* Visualisation en grid
- */
-
-.products-grid .btn-cart-custom {
-    font-size: 13px;
-    font-weight: lighter;
-    float: left;
-    padding: 7px 5px;
-}
-
-.products-grid .actions {
-    padding-top: 5px;
-}
-
-.pager li > a,
-.pager li > span {
-    paddin
+    fon

@@ -4,11 +4,16 @@
     	<reference name="minicart_head">
     		<action method="setTemplate"><template>apdc_cart/cart/minicart.phtml</template></action>
     	</reference>
+      <reference name="head">
+        <action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>
+      </reference>
     	<reference name="minicart_content">
-            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-            <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+          <action method="setTemplate"><template>apdc_cart/cart/minicart/items.phtml</template></action>
+          <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+          <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+          <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+          <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
         </reference>
     </default>
     <checkout_cart_index>
@@ -38,161 +43,4 @@
             </block>
         </reference>
     </checkout_cart_index>
-    <catalog_category_layered_nochildren>
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
-            </block>
-        </reference>
-    </catalog_category_layered_nochildren>
-    <GROUP_CATEGORY>
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
-            </block>
-        </reference>
-    </GROUP_CATEGORY>
-    <addajax_index_options>
-        <reference name="root">
-            <action method="setTemplate"><template>page/empty.phtml</template></action>
-        </reference>
-        <remove name="head"/>
-        <reference name="root">
-            <block type="page/html_head" name="head_light" as="head_light">
-                <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
-                <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
-                <action method="addJs"><script>prototype/prototype.js</script></action>
-                <action method="addJs"><script>lib/ccard.js</script></action>
-                <action method="addJs"><script>prototype/validation.js</script></action>
-                <action method="addJs"><script>varien/js.js</script></action>
-                <action method="addJs"><script>varien/form.js</script></action>
-                <action method="addJs"><script>mage/translate.js</script></action>
-                <action method="addJs"><script>mage/cookies.js</script></action>
-                <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
-                <action method="removeItem"><type>skin_js</type><name>js/ie6.js</name></action>
-                <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
-                <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
-                <action method="addItem"><type>skin_css</type><name>css/styles-ie8.css</name><params/><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
-                <action method="addItem"><type>skin_css</type><name>css/commis-ie8.css</name><params/><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
-                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
-                <action method="addItem"><type>skin_css</type><name>css/commis.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
-                <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css</href></action>
-            </block>
-        </reference>
-        <reference name="content">
-            <block type="catalog/product_view" name="product.info" template="apdc_cart/catalog/product/addajax/options.phtml">
-                 
-                <block type="catalog/product_view" name="product.info.addtocart" as="addtocart" template="catalog/product/view/addtocart.phtml"/>
- 
-                <block type="catalog/product_view" name="product.info.options.wrapper" as="product_options_wrapper" template="catalog/product/view/options/wrapper.phtml" translate="label">
-                    <label>Info Column Options Wrapper</label>
-                    <block type="core/template" name="options_js" template="catalog/product/view/options/js.phtml"/>
-                    <block type="catalog/product_view_options" name="product.info.options" as="product_options" template="catalog/product/view/options.phtml">
-                        <action method="addOptionRenderer"><type>text</type><block>catalog/product_view_options_type_text</block><template>catalog/product/view/options/type/text.phtml</template></action>
-                        <action method="addOptionRenderer"><type>file</type><block>catalog/product_view_options_type_file</block><template>catalog/product/view/options/type/file.phtml</template></action>
-                        <action method="addOptionRenderer"><type>select</type><block>catalog/product_view_options_type_select</block><template>catalog/product/view/options/type/select.phtml</template></action>
-                        <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
-                </block>
-                        <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
-                    </block>
-                <block type="catalog/product_view" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="catalog/product/view/options/wrapper/bottom.phtml" translate="label">
-                    <label>Bottom Block Options Wrapper</label>
-                    <action method="insert"><block>product.tierprices</block></action>
-                    <block type="catalog/product_view" name="product.clone_prices" as="prices" template="catalog/product/view/price_clone.phtml"/>
-                    <action method="append"><block>product.info.addtocart</block></action>
-                    <action method="append"><block>product.info.addto</block></action>
-                </block>
- 
-                <block type="core/template_facade" name="product.info.container1" as="container1">
-                    <action method="setDataByKey"><key>alias_in_layout</key><value>container1</value></action>
-                    <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
-                    <action method="append"><block>product.info.options.wrapper</block></action>
-                    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
-                </block>
-                <block type="core/template_facade" name="product.info.container2" as="container2">
-                    <action method="setDataByKey"><key>alias_in_layout</key><value>container2</value></action>
-                    <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
-                    <action method="append"><block>product.info.options.wrapper</block></action>
-                    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
-                </block>
-                <action method="unsetCallChild"><child>container1</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
-                <action method="unsetCallChild"><child>container2</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
-            </block>
-        </reference>
-    </addajax_index_options>
-    <addajax_index_update>
-        <remove name="roots"/>
-        <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="apdc_cart/cart/totals.phtml"/>
-        <block type="apdccart/cart_total_shipping" name="shipping_total_renderer" />
-        <block type="apdccart/cart_total_subtotal" name="subtotal_total_renderer" />
-        <block type="apdccart/cart_total_grand" name="grand_total_total_renderer" />
-    </addajax_index_update>
-    <catalogsearch_result_index >
-        <reference name="search_result_list">
-                <action method="setColumnCount"><columns>4</columns></action>
-                <action method="setTemplate"><template>apdc_cart/catalog/product/addajax/list_search.phtml</template></action>
-        </reference>
-    </catalogsearch_result_index>
 </layout>

@@ -34,6 +34,9 @@
         <Apdc_Cart>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Checkout />
+            </depends>
         </Apdc_Cart>
         <Apdc_Customer>
             <active>true</active>
@@ -46,7 +49,7 @@
     	</Apdc_Checkout>
         <Apdc_Coupon>
             <codePool>local</codePool>
-            <active>true</active>
+            <active>false</active>
         </Apdc_Coupon>
         <Apdc_Home>
             <codePool>local</codePool>
