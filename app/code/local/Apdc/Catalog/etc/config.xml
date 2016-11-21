@@ -16,5 +16,25 @@
                 </rewrite>
             </catalog>
         </blocks>
+        <models>
+          <apdc_catalog>
+            <class>Apdc_Catalog_Model</class>
+          </apdc_catalog>
+          <swatches>
+            <rewrite>
+              <observer>Apdc_Catalog_Model_Observer_CybageSwatches</observer>
+            </rewrite>
+          </swatches>
+
+        </models>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <apdc_catalog>
+                    <file>apdc_catalog.xml</file>
+                </apdc_catalog>
+            </updates>
+        </layout>
+    </frontend>
 </config>

@@ -21,8 +21,6 @@
                 <rel>skin_js</rel>
                 <href>owl-carrousel/owl.carousel.min.js</href>
             </action>
-            <!--      <action method="addItem"><rel>skin_js</rel><href>countdown/js/jquery.countdown.js</href></action>
-          <action method="addItem"><rel>skin_js</rel><href>countdown/js/script.js</href></action> -->
             <action method="addItem">
                 <rel>skin_css</rel>
                 <href>countdown/css/jquery.countdown.css</href>
@@ -64,6 +62,15 @@
                         <block_id>texte_intro_liste_commercants</block_id>
                     </action>
                 </block>
+            </block>
+            <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
+                <action method="setProductsCount"><count>10</count></action>
+                <action method="addPriceBlockType">
+                    <type>bundle</type>
+                    <block>bundle/catalog_product_price</block>
+                    <template>bundle/catalog/product/price.phtml</template>
+                </action>
+                <action method="setColumnCount"><count>6</count></action>
             </block>
         </reference>
     </cms_index_index>

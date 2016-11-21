@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+	    <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
+        <action method="setProductsCount"><count>10</count></action>
+        <action method="addPriceBlockType">
+            <type>bundle</type>
+            <block>bundle/catalog_product_price</block>
+            <template>bundle/catalog/product/price.phtml</template>
+        </action>
+        <action method="setColumnCount"><count>6</count></action>
+    </block>
+    </default>
+    <catalog_category_view>
+        <reference name="right">
+            <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
+            </block>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/2columns-left.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_view>
+
+    <!-- Category (Not Anchor) => 'Mon Primeur' -->
+    <catalog_category_default>
+        <label>Catalog Category (Non-Anchor)</label>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+          <block type="commercants/fiche" template="commercants/commercantnavigation.phtml" name="listecommercants" before="category.products" />
+        </reference>
+
+        <reference name="product_list">
+          <action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
+        </reference>
+
+    </catalog_category_default>
+
+    <catalog_category_layered translate="label">
+        <label>Catalog Category (Anchor)</label>
+        <reference name="product_list">
+          <action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
+        </reference>
+    </catalog_category_layered>
+
+    <catalog_product_view>
+        <remove name="product.reviews" />
+        <reference name="product.info.upsell">
+            <action method="setColumnCount">
+                <columns>5</columns>
+            </action>
+            <action method="setItemLimit">
+                <type>upsell</type>
+                <limit>4</limit>
+            </action>
+        </reference>
+    </catalog_product_view>
+
+    <PRODUCT_TYPE_bundle>
+        <remove name="bundle.tierprices" />
+        <remove name="product.info.sharing" />
+        <remove name="product.info.addtocart.paypaluk.wrapper" />
+        <reference name="product.info.options.wrapper.bottom">
+            <action method="setTemplate">
+                <template>apdc_bundle/catalog/product/view/options/wrapper/bottom.phtml</template>
+            </action>
+        </reference>
+        <reference name="product.info">
+            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>apdc_bundle/catalog/product/price.phtml</template></action>
+        </reference>
+        <reference name="bundle.prices">
+            <action method="setTemplate">
+                <template>apdc_bundle/catalog/product/view/prices.phtml</template>
+            </action>
+        </reference>
+        <reference name="product.info.bundle.options">
+            <action method="setTemplate">
+                <template>apdc_bundle/catalog/product/view/type/bundle/options.phtml</template>
+            </action>
+            <action method="addRenderer"><type>select</type><block>bundle/catalog_product_view_type_bundle_option_select</block><template>apdc_bundle/catalog/product/view/type/bundle/option/select.phtml</template></action>
+            <action method="addRenderer"><type>multi</type><block>bundle/catalog_product_view_type_bundle_option_multi</block><template>apdc_bundle/catalog/product/view/type/bundle/option/multi.phtml</template></action>
+            <action method="addRenderer"><type>radio</type><block>bundle/catalog_product_view_type_bundle_option_radio</block><template>apdc_bundle/catalog/product/view/type/bundle/option/radio.phtml</template></action>
+            <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block><template>apdc_bundle/catalog/product/view/type/bundle/option/checkbox.phtml</template></action>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+
+
+    <!-- Page Commerçant => 'Primeur Clémence' -->
+    <PAGE_COMMERCANT>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addItem">
+                <rel>skin_css</rel>
+                <href>owl-carrousel/owl.carousel.css</href>
+            </action>
+            <action method="addItem">
+                <rel>skin_css</rel>
+                <href>owl-carrousel/owl.theme.css</href>
+            </action>
+            <action method="addItem">
+                <rel>skin_js</rel>
+                <href>owl-carrousel/owl.carousel.min.js</href>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
+                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
+                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
+            </block>
+        </reference>
+        <remove name="product_list" />
+    </PAGE_COMMERCANT>
+
+
+
+    <GROUP_CATEGORY>
+
+    </GROUP_CATEGORY>
+
+</layout>

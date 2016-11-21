@@ -117,159 +117,8 @@
         <reference name="global_notices">
             <block type="page/html_cookieNotice" name="global_cookie_notice_head" as="global_cookie_notice_head" template="page/html/cookienotice.phtml" />
         </reference>
-        <reference name="left">
-            <remove name="catalog.leftnav" />
-        </reference>
-        <!--remove unneeded blocks-->
-        <!-- <remove name="optional_zip_countries"/>
-        <remove name="store_language"/>
-        <remove name="top.container"/>
-        <remove name="welcome"/>
-        <remove name="currency"/>
-        <remove name="wishlist_link"/>
-        <remove name="cart_sidebar.cart_promotion"/>
-        <remove name="cart_sidebar.extra_actions"/>
-        <remove name="left_first"/>
-        <remove name="left"/>
-        <remove name="emailcatcher"/>
-        <remove name="headband"/>
-        <remove name="right"/>
-        <remove name="bottom.container"/>
-        <remove name="store_switcher"/>
-        <remove name="cms_footer_links"/>
-        <remove name="cms_footer_links_sm"/>
-        <remove name="custommenu-content"/> -->
-        <!-- <reference name="head">
-            <block type="core/text" name="hotjar">
-                <action method="setText">
-                    <text>
-                        <![CDATA[<script>
-                            (function(h,o,t,j,a,r){
-                                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                                h._hjSettings={hjid:275054,hjsv:5};
-                                a=o.getElementsByTagName('head')[0];
-                                r=o.createElement('script');r.async=1;
-                                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                                a.appendChild(r);
-                            })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-                        </script>]]>
-                    </text>
-                </action>
-            </block>
-        </reference> -->
     </default>
     
-    <catalog_category_view>
-        <reference name="right">
-            <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
-            </block>
-        </reference>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/2columns-left.phtml</template>
-            </action>
-        </reference>
-        <remove name="product_list" />
-    </catalog_category_view>
-    <!-- Category (Not Anchor) => 'Mon Primeur' -->
-    <catalog_category_default>
-        <reference name="head">
-            <action method="addLinkRel">
-                <rel>stylesheet</rel>
-                <href>//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css</href>
-            </action>
-            <action method="addLinkRel">
-                <rel>js</rel>
-                <href>//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.js</href>
-            </action>
-        </reference>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
-        </reference>
-        <reference name="content">
-            <block type="commercants/fiche" template="commercants/commercantnavigation.phtml" name="listecommercants"></block>
-        </reference>
-        <remove name="product_list" />
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
-            </block>
-            <!-- Recently purchased items -->
-            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first" />
-            <!-- Recently viewed items -->
-            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first" />
-        </reference>
-    </catalog_category_default>
-    <!-- Page Commerçant => 'Primeur Clémence' -->
-    <PAGE_COMMERCANT>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
-        </reference>
-        <reference name="head">
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.carousel.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.theme.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_js</rel>
-                <href>owl-carrousel/owl.carousel.min.js</href>
-            </action>
-        </reference>
-        <reference name="content">
-            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
-                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
-            </block>
-        </reference>
-        <remove name="product_list" />
-    </PAGE_COMMERCANT>
-    <catalog_product_view>
-        <remove name="product.reviews" />
-        <reference name="product.info.upsell">
-            <action method="setColumnCount">
-                <columns>5</columns>
-            </action>
-            <action method="setItemLimit">
-                <type>upsell</type>
-                <limit>4</limit>
-            </action>
-        </reference>
-    </catalog_product_view>
-    <PRODUCT_TYPE_bundle>
-        <remove name="bundle.tierprices" />
-        <remove name="product.info.sharing" />
-        <remove name="product.info.addtocart.paypaluk.wrapper" />
-        <reference name="product.info.options.wrapper.bottom">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/options/wrapper/bottom.phtml</template>
-            </action>
-        </reference>
-        <reference name="product.info">
-            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>apdc_bundle/catalog/product/price.phtml</template></action>
-        </reference>
-        <reference name="bundle.prices">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/prices.phtml</template>
-            </action>
-        </reference>
-        <reference name="product.info.bundle.options">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/type/bundle/options.phtml</template>
-            </action>
-            <action method="addRenderer"><type>select</type><block>bundle/catalog_product_view_type_bundle_option_select</block><template>apdc_bundle/catalog/product/view/type/bundle/option/select.phtml</template></action>
-            <action method="addRenderer"><type>multi</type><block>bundle/catalog_product_view_type_bundle_option_multi</block><template>apdc_bundle/catalog/product/view/type/bundle/option/multi.phtml</template></action>
-            <action method="addRenderer"><type>radio</type><block>bundle/catalog_product_view_type_bundle_option_radio</block><template>apdc_bundle/catalog/product/view/type/bundle/option/radio.phtml</template></action>
-            <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block><template>apdc_bundle/catalog/product/view/type/bundle/option/checkbox.phtml</template></action>
-        </reference>
-    </PRODUCT_TYPE_bundle>
     <!-- Product listings by commerçants 'Fruits'-->
     <checkout_onepage_index>
         <reference name="head">
@@ -339,26 +188,6 @@
             </action>
         </reference>
     </customer_logged_out>
-    <!-- <customer_logged_in>
-         <reference name="top.links">
-            <action method="addLink" translate="label title">
-                <label>Parrainez un ami</label>
-                <url>sponsorship/</url>
-                <title>Parrainez un ami</title>
-                <prepare/>
-                <urlParams/>
-                <position>10</position>
-            </action>
-             <action method="addLink" translate="label title">
-                <label>Mon historique</label>
-                <url>sales/order/history/</url>
-                <title>Mon historique</title>
-                <prepare/>
-                <urlParams/>
-                <position>25</position>
-            </action>
-        </reference>
-    </customer_logged_in> -->
     <customer_account_changeforgotten translate="label">
         <label>Reset a Password</label>
         <remove name="right" />
@@ -436,51 +265,14 @@
             </block>
         </reference>
     </hipay_mapi_payment>
-    <catalog_category_layered_nochildren>
-        <reference name="head">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <remove name="headercommercant"/>
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
-            </block>
-            <!-- Recently purchased items -->
-            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
-            <!-- Recently viewed items -->
-            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
-        </reference> 
-        <reference name="catalog.leftnav">  
-            <action method="unsetChild"><alias>category_filter</alias></action>
-        </reference>
-    </catalog_category_layered_nochildren>
-    <GROUP_CATEGORY>
-        <reference name="head">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <remove name="headercommercant"/>
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
-            </block>
-            <!-- Recently purchased items -->
-            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
-            <!-- Recently viewed items -->
-            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
-        </reference> 
-        <reference name="catalog.leftnav">  
-            <action method="unsetChild"><alias>category_filter</alias></action>
-        </reference>
-    </GROUP_CATEGORY>
-    <catalogsearch_result_index >
-        <reference name="root">
-            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
-        </reference>
-         <reference name="head">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-    </catalogsearch_result_index>
+    
+    <!--<catalogsearch_result_index >-->
+        <!--<reference name="root">-->
+            <!--<action method="setTemplate"><template>page/2columns-left.phtml</template></action>-->
+        <!--</reference>-->
+         <!--<reference name="head">-->
+             <!--<action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>-->
+             <!--<action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>-->
+        <!--</reference>-->
+    <!--</catalogsearch_result_index>-->
 </layout>

@@ -30,11 +30,19 @@ class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 	}
 
 
-	public function getListPerCat($category){
-	   $categories = Mage::getModel('catalog/category')->load($category)
-	   					->getChildrenCategories()
-                         ->addAttributeToSelect('*')
-                         ->addIsActiveFilter();
+	/**
+	 * getListPerCat 
+	 * 
+	 * @param Mage_Catalog_Model_Category $category category 
+	 * 
+	 * @return Mage_Catalog_Model_Resource_Category_Collection
+	 */
+    public function getListPerCat(Mage_Catalog_Model_Category $category)
+    {
+        $children = $category->getChildren();
+        $categories = Mage::getModel('catalog/category')->getCollection()
+            ->addFieldToFilter('entity_id', array('in' => explode(',', $children)))
+            ->addIsActiveFilter();
 		return $categories;
 	}  	
 
