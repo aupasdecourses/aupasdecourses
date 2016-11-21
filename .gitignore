@@ -40,6 +40,8 @@
 ehthumbs.db
 Thumbs.db
 
+tags
+
 /.htaccess
 .htpasswrd
 /app/etc/local.xml
