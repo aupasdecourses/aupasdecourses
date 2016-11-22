@@ -125,10 +125,12 @@ class RefundController extends Controller
 				}
 			}
 			$err = self::check_upload_status($id, $order);
-			if ($err <> self::ERROR)
+			if ($err <> self::ERROR) {
+				// << ===
 				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
-			else
+			} else {
 				return $this->redirectToRoute('refundUpload', [ 'id' => $id ]);
+			}
 		}
 
 		return $this->render('refund/upload.html.twig', [
