@@ -126,7 +126,7 @@ class RefundController extends Controller
 			}
 			$err = self::check_upload_status($id, $order);
 			if ($err <> self::ERROR)
-				return $this->redirectToRoute('refundAttachment', [ 'id' => $id ]);
+				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
 			else
 				return $this->redirectToRoute('refundUpload', [ 'id' => $id ]);
 		}
@@ -138,7 +138,7 @@ class RefundController extends Controller
 		]);		
 	}
 
-	public function refundAttachmentAction(Request $request, $id)
+	public function refundInputAction(Request $request, $id)
 	{
 		$mage = \Magento::getInstance();
 		if(!$mage->isLogged())
@@ -146,7 +146,7 @@ class RefundController extends Controller
 
 		$order = $mage->getRefunds($id);
 
-		return $this->render('refund/attachment.html.twig', [
+		return $this->render('refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'stores' => $order,
 			'order_id' => $id,
