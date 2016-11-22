@@ -176,6 +176,17 @@ a.level2:visited {
     line-height: 22px;
 }
 
+.item-main-block {
+    color:#333;
+    font-size: 18px;
+    font-family: Courgette;
+    font-weight: 500;
+    margin: 10px 0;
+    text-align: left;
+    display: block;
+    line-height: 25px;
+}
+
 
 
 a.level2:hover,
