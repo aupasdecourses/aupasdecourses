@@ -190,8 +190,9 @@ a.level3:hover {
   }
   .menu-open .main-container,
   .menu-open .footer-container,
-  .menu-open .copyright-cards-container {
-    transform:translateY(400px);
+  .menu-open .copyright-cards-container,
+  .cms-index-index.menu-open .page-title {
+    transform: translateY(360px);
   }
   #supermenu li a.column-commercant {
     width: 320px;
