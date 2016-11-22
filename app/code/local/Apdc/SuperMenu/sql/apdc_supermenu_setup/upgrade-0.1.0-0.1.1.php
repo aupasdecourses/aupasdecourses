@@ -1,14 +1,14 @@
 <?php
 
 $colors = array(
-    'primeur' => '#3cad27',
-    'boucher' => '#e42f43',
-    'fromager' => '#f09646',
-    'poissonnier' => '#4880d4',
-    'caviste' => '#da2321',
-    'boulanger' => '#eb9900',
-    'epicerie fine' => '#24349e',
-    'traiteur' => '#e85100'
+    'primeur' => '#3ab64b',
+    'boucher' => '#f3606f',
+    'fromager' => '#faae37',
+    'poissonnier' => '#5496d7',
+    'caviste' => '#c62753',
+    'boulanger' => '#f57320',
+    'epicerie fine' => '#2f4da8',
+    'traiteur' => '#272b32'
 );
 $rayons = Mage::getModel('catalog/category')->getCollection()
     ->addFieldToFilter('level', 2)

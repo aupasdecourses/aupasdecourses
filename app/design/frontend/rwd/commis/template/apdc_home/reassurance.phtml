@@ -7,7 +7,13 @@
 				<div class="reassurance-outer first-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">COMMANDEZ EN LIGNE</div>
-						<div class="reassurance-text">au même prix qu'en magasin, en une seule livraison quel que soit le nombre de commerçants</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>Les mêmes prix qu'en magasin</li>
+								<li>Une livraison unique quel que soit le nombre de commerçants</li>
+								<li>Livraison le jour même pour une commande avant 15h</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -15,15 +21,24 @@
 				<div class="reassurance-outer second-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">NOS CRENEAUX DE LIVRAISON</div>
-						<div class="reassurance-text"><?php echo $this->getChildHtml('deliverytime-home')?></div>						
+						<div class="reassurance-text">
+							<p style="margin-bottom: 0px;text-align:center;">Du Lundi au Vendredi</p>
+							<?php echo $this->getChildHtml('deliverytime-home')?>
+						</div>						
 					</div>
 				</div>
 			</div>
 			<div>
 				<div class="reassurance-outer third-item">
 					<div class="reassurance-inner">
-						<div class="reassurance-title">DU MARDI AU VENDREDI</div>
-						<div class="reassurance-text">Livraison le jour même (pour une commande avant 15h) et jusqu'à 4 jours en avance.</div>
+						<div class="reassurance-title">TARIF DE LA LIVRAISON</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>9€ pour une commande < 45€</li>
+								<li>6€ pour une commande < 90€</li>
+								<li>3€ pour une commande > 90€</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -33,6 +48,7 @@
 			    <div>
 					<div class="reassurance-outer fourth-item">
 							<div class="reassurance-inner">
+								<div class="reassurance-title">COMMANDEZ JUSQU'A 4 JOURS EN AVANCE</div>
 								<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
 									<div id="countdown"></div>
 								</div>
