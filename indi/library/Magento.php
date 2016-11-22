@@ -190,6 +190,44 @@ class Magento
 		return ($prod_data);
 	}
 
+	private function addEntryToModel($model, $data) {
+		foreach ($datas as $k => $v) {
+			$model->setData($k, $v);
+		}
+		$model->save();
+	}
+
+	private function updateEntryToModel($model, Array $filters, Array $data) {
+		$entry = $model->getCollection();
+		foreach ($filters as $k => $v) {
+			$entry->addFieldToFilter($k, $v);
+		}
+		if (($id = $entry->getFirstItem()->getId()) <> null) {
+			$model->load($id);
+			foreach ($data as $k => $v) {
+				$model->setData($k, $v);
+			}
+			$model->save();
+		} else {
+			$this->addEntryToModel($model, $data);
+		}
+	}
+
+	public function addEntryToOrderField(Array $data) {
+		$this->addEntryToModel(
+			\Mage::getModel('amorderattach/order_field'),
+			$data
+		);
+	}
+
+	public function updateEntryToOrderField(Array $filters, Array $data) {
+		$this->updateEntryToModel(
+			\Mage::getModel('amorderattach/order_field'),
+			$filters,
+			$data
+		);
+	}
+
 	public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1) {
 		if (!isset($dfrom))
 			$dfrom = date('Y-m-d');
