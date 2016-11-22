@@ -1033,11 +1033,6 @@ label {
 }
 
 @media screen and (max-width: 771px){
-    .global-site-notice {
-        margin-bottom: -60px;
-        margin-top:60px;
-        transition: margin 0.1s ease 0s;
-    }
     .sticky-header .global-site-notice {
         margin-bottom:0;
     }
