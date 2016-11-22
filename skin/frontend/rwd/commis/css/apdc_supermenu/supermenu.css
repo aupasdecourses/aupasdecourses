@@ -224,14 +224,15 @@ a.level3:hover {
   }
   #supermenu div.level0>ul {
     float:left;
-    width:320px;
-    overflow: auto;
+    width:330px;
+    overflow-x:hidden; 
+    overflow-y: auto;
     height: 100%;
   }
   #supermenu .menu-template-content {
     display:block;
     float:right;
-    width:calc(100% - 320px);
+    width:calc(100% - 330px);
     height: 100%;
     overflow: auto;
     display: inline-block;
