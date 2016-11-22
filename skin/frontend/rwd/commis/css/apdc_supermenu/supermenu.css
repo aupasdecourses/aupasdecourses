@@ -32,16 +32,18 @@
     text-transform: normal;
     color:#4B777B;
     font-weight:bold;
-    font-size:24px;
+    font-size:20px;
 }
 #supermenu #storename a:hover {
 	background-color:#ffffff!important;
 	color:#68C775;
 }
+
 #supermenu li.level0 {
     font-family: "Montserrat", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     height: 48px;
     margin: 0px 5px 5px 0px;
+    font-size: 16px;
 }
 
 #supermenu li.level0>a {
@@ -101,7 +103,7 @@
 }
 
 
-#supermenu li.level1> a img.thumbnail_commercant {
+#supermenu li.level1> a img.thumbnail_commercant, .cat-thumbnail {
   border-radius:50%;
   transform: translate(5px, 4px);
 }
@@ -120,6 +122,7 @@ ul.nav a {
 
 #supermenu ul.level2 {
   margin-bottom: 15px;
+  padding-left: 30px;
 }
 #supermenu ul.level2>li {
   display:table-row;
@@ -162,12 +165,14 @@ a.level1:hover {
 a.level2:link,
 a.level2:visited {
     color:#333;
-    font-size: 20px;
+    font-size: 18px;
     font-family: Courgette;
     font-weight: 500;
     margin: 0 auto;
     text-align: center;
     display: block;
+    height: 65px;
+    line-height: 22px;
 }
 
 
@@ -276,7 +281,23 @@ a.level3:hover {
   #supermenu .template-column:nth-child(even) {
     clear:none;
   }
-  #supermenu .template-column .cat-thumbnail {position: relative;width: 120px;height: 120px;margin: 2px auto 5px auto;overflow: hidden;border-radius: 50%;box-shadow: 0px 0px 9px -2px #000;background-origin: border-box;background-position: 50% 50%;}
+  #supermenu .template-column .cat-thumbnail img {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 2px auto 5px auto;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0px 0px 9px -2px #000;
+    background-origin: border-box;
+    background-position: 50% 50%;
+  }
+
+  #supermenu .template-column .cat-name {
+    padding: 0 0 0 10px;
+    text-align: left;
+    margin-top: 10px;
+  }
 
 }
 @media (min-width: 800px) {

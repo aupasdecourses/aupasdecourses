@@ -1018,7 +1018,7 @@ label {
 }
 
 .page-header-container {
-    height: 70px;
+    height: 60px;
 }
 
 
@@ -1096,7 +1096,7 @@ label {
         box-shadow: 0px 4px 30px -12px #808080;
     }
     #topmenu {
-        margin-top: 70px;
+        margin-top: 60px;
     }
     
 }
@@ -1187,13 +1187,9 @@ label {
     .logo .small {
     max-height: 47px;
     }
-
-    #header-search #search {
-        margin-top: 15px;
-        margin-bottom: -10px;
-    }
-    #header-search button {
-        margin-top: 15px;
+    .logo-link img {
+        margin-left: auto;
+        margin-right: auto;
     }
     .page-header {
         margin: 0px;
@@ -1207,12 +1203,13 @@ label {
     }
 
 }
+
 .logo-link {
     display: inline-block;
     margin: 0 auto;
     text-align: center;
     height: 100%;
-    padding:10px;
+    padding:8px 10px;
     width: 100%;
 }
 
@@ -1261,6 +1258,7 @@ label {
         width: 100px;
         padding-bottom: 0;
         padding-top: 0;
+        padding-left: 10px;
         height: 40px;
         background-color: white;
         right: initial;
@@ -1373,6 +1371,14 @@ label {
     }
     .skip-container {
         border-right: 1px solid lightgrey;
+        padding-left: 0;
+        padding-right: 0;
+        width: 20%;
+    }
+
+    .skip-container.hidden-sm{
+        border-right: 0px;
+        display: none;
     }
 
     .skip-nav {
@@ -1506,16 +1512,11 @@ label {
         display: table-cell;
         position: static;
         vertical-align: middle;
-        width: 50px;
         padding: 0 5px;
     }
     .skip-account,
     .skip-cart {
         position:relative;
-    }
-    .skip-referral {
-        position: absolute;
-        top: 10px;
     }
     .skip-container {
         text-transform: uppercase;
@@ -1529,14 +1530,16 @@ label {
     }
     .skip-container .skip-link {
         width:70px;
-        height: 60px;
+        height: 50px;
     }
     #header-search {
-        position:static;
+        position: static;
         float: none;
         border: none;
         box-shadow: none;
         width: 100%;
+        padding-top: 10px;
+        height: 50px;
     }
 
     .dropdown.skip-help {
@@ -1546,10 +1549,6 @@ label {
         vertical-align: middle;
         width: 50px;
         padding: 0 5px;
-    }
-    .skip-referral {
-        right: 240px;
-        padding: 0;
     }
     .skip-referral .label {
         padding: 0px 5px;
@@ -1604,6 +1603,8 @@ label {
     .sticky-header #header-search {
         height: 30px;
         top: 0;
+        padding-top: 0;
+        margin-top: 0;
     }
     .sticky-header #header-search .input-text {
         font-size:12px;
@@ -1790,7 +1791,7 @@ label {
 
 @media screen and (max-width: 770px) {
     .skip-cart .count {
-        top: -60px;
+        top: -45px;
         right: -30px;
     }
 }
@@ -3347,7 +3348,6 @@ a.btn:hover {
 
 .pager li > a,
 .pager li > span {
-<<<<<<< HEAD
     padding: 4px 10px;
     line-height: 20px;
     width: auto;
@@ -4032,9 +4032,6 @@ input[type=text] {
     padding: 10px;
     text-transform: uppercase;
     background-color: #f2efe3;
-    margin-left: -30px;
-    margin-top: -10px;
-    margin-right: -30px;
     color: rgb(99, 99, 99);
 }
 
@@ -4470,6 +4467,3 @@ ul.links li {
     padding-left: 40px;
     padding-right: 40px;
 }
-=======
-    paddin
->>>>>>> 3e6b4bb2059243a21153d5799dbaed3f48a739b8

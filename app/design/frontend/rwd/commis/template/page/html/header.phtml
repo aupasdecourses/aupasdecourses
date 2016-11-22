@@ -70,14 +70,14 @@
             </div>
 	         <!-- Skip Links -->
 	         <div class="skip-links">
-                <div class="skip-container skip-container-header-nav">
+                <div class="skip-container skip-container-header-nav col-sm-3">
                     <a href="#header-nav" class="skip-link skip-nav">
                         <i class="fa fa-bars"></i>
                         <span class="label"><?php echo $this->__('Menu'); ?></span>
                     </a>
                 </div>
 
-                <div class="skip-container skip-container-header-search">
+                <div class="skip-container skip-container-header-search col-sm-2">
                     <a href="#header-search" class="skip-link skip-search">
                          <i class="fa fa-search"></i>
                         <span class="label"><?php echo $this->__('Search'); ?></span>
@@ -91,7 +91,7 @@
 
                 <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
                 <?php if($session->isLoggedIn()) : ?>
-                    <div class="skip-container">
+                    <div class="skip-container hidden-sm">
                         <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
                             <i class="fa fa-bullhorn"></i>
                             <span class="label">Parrainez</span>
@@ -100,7 +100,7 @@
                 <?php endif; ?>
 
 
-                <div class="skip-help skip-container">
+                <div class="skip-help skip-container col-sm-2">
                     <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
                         <i class="fa fa-question-circle"></i>
                         <span class="label">FAQ</span>
@@ -114,7 +114,7 @@
                     </ul>
                 </div>
 
-                <div class="header-account-container skip-container">
+                <div class="header-account-container skip-container col-sm-2">
                      <a href="#header-account" class="skip-link skip-account">
                         <i class="fa fa-heart"></i>
                         <?php if($this->helper('customer')->isLoggedIn()) : ?>
@@ -131,7 +131,7 @@
                 </div>
                 
 	            <!-- Cart -->
-	            <div class="header-minicart skip-container">
+	            <div class="header-minicart skip-container col-sm-3">
 	                <?php echo $this->getChildHtml('minicart_head'); ?>
 	            </div>
 
@@ -145,6 +145,5 @@
         </div>
 	</div>
 </header>
-
-
 <?php echo $this->getChildHtml('topContainer'); ?>
+<?php echo $this->getChildHtml('page_content_heading'); ?>

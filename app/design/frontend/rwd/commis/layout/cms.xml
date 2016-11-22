@@ -26,22 +26,6 @@
  */
 -->
 <layout version="0.1.0">    
-    <cms_page translate="label">
-        <label>CMS Pages (All)</label>
-        <remove name="left.permanent.callout"/>
-
-        <update handle="cms_menu"/>
-        
-        <reference name="content">
-            <block type="core/template" name="page_content_heading" template="cms/content_heading.phtml"/>
-            <block type="page/html_wrapper" name="cms.wrapper" translate="label">
-                <label>CMS Content Wrapper</label>
-                <action method="setElementClass"><value>std</value></action>
-                <block type="cms/page" name="cms_page"/>
-            </block>
-        </reference>
-    </cms_page>
-
     <cms_index_index translate="label">
         <label>CMS Home Page</label>
     </cms_index_index>

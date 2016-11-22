@@ -24,7 +24,11 @@ foreach ($children as $child) {
     }
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
-        $html .= $this->escapeHtml($this->__($child->getName()));
+        if ($child->getThumbnail()) {
+            $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
+            $html .= '<div class="cat-thumbnail col-xs-4"><img src="' . $thumbnail . '"/></div>';
+        }
+        $html .= '<span class="cat-name col-xs-8">'.$this->escapeHtml($this->__($child->getName())).'</span>';
         $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
         $html .= '</a>';
     } else {
