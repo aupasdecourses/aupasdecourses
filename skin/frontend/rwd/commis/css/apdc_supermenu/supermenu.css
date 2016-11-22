@@ -107,6 +107,7 @@
   border-radius:50%;
   transform: translate(5px, 4px);
 }
+
 #supermenu li.level1> a span {
   position: absolute;
   left: 80px; 
@@ -385,7 +386,7 @@ a.level3:hover {
     .dropdown-submenu>.dropdown-menu-template {
       position:static;
     }
-    #supermenu .dropdown-menu-template .block-advertising,
+    #supermenu .dropdown-menu-template .block-static-menu,
     #supermenu .template-column .cat-thumbnail {
       display:none;
     }

@@ -7,7 +7,7 @@ $nbCategoryColumns = 3;
 $children = $menuTree->getChildren();
 $menuTree->setCounter(1);
 if ($menuTree->getMenuMainStaticBlock()) {
-    $html .= '<li class="template-column block-advertising">';
+    $html .= '<li class="template-column block-static-menu">';
     $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
     $html .= '</li>';
 }
@@ -64,7 +64,7 @@ foreach ($children as $child) {
 }
 
 if ($menuTree->getMenuStaticBlock1()) {
-    $html .= '<li class="template-column block-advertising">';
+    $html .= '<li class="template-column block-static-menu">';
     $html .= $this->getStaticBlockHtml($menuTree->getMenuStaticBlock1());
     $html .= '</li>';
 }
