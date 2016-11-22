@@ -2060,6 +2060,14 @@ a.action-mini-cart:hover{
     font-weight: lighter;
 }
 
+.thumb-menu {
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
 /* ================================================= *
  * General Product List Styles (not module-specific)
