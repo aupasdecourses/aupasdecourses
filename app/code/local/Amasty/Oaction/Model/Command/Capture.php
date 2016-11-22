@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Capture extends Amasty_Oaction_Model_Command_Abstract
@@ -78,15 +78,19 @@ class Amasty_Oaction_Model_Command_Capture extends Amasty_Oaction_Model_Command_
                 //update status    
                 $status = Mage::getStoreConfig('amoaction/capture/status', $order->getStoreId());    
                 if ($status) {
-                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', false); 
+                    $notify = parent::orderUpdateNotify($status);
+                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', $notify);
                 }
                 
                 ++$numAffectedOrders;
             }
             catch (Exception $e) {
-                $err = $e->getCustomMessage() ? $e->getCustomMessage() : $e->getMessage();
-                $this->_errors[] = $hlp->__(
-                    'Can not capture invoice for order #%s: %s', $orderCode, $err);
+                if ('Mage_Api_Exception' == get_class($e)) {
+                    $err = $e->getCustomMessage();
+                } else {
+                    $err = $e->getMessage();
+                }
+                $this->_errors[] = $hlp->__('Can not capture invoice for order #%s: %s', $orderCode, $err);
             }
             $order = null;
             unset($order); 

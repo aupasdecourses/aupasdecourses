@@ -30,7 +30,7 @@ define('SALT', 'Tud72sT2');
 define('AMASTY_MW_DATE',date("Y-m-d", mktime(0, 0, 0, 1, 20, 2016)));
 
 //Define type of orders to display based on status (global variables)
-$GLOBALS['ORDER_STATUS_NODISPLAY']=array('pending_payment','payment_review','holded','closed','canceled');
+$GLOBALS['ORDER_STATUS_NODISPLAY']=array('pending', 'pending_payment','payment_review','holded','closed','canceled');
 $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']=2016000249;
 
 ?>

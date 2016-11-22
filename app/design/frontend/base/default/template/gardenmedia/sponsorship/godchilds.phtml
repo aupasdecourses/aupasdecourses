@@ -1,0 +1,51 @@
+<?php $godchilds = $this->getGodchilds(); ?>
+<div class="page-title">
+    <h1><?php echo $this->__('My Godchilds') ?></h1>
+</div>
+<div id="sponsorship-godchilds">
+    <?php if ($godchilds->count() > 0) : ?>
+        <p><?php echo $this->__('You have %s godchilds', $godchilds->count()); ?></p>
+        <table class="data-table orders" id="my-godchilds-table">
+            <colgroup>
+                <col width="1">
+                <col width="1">
+                <col width="1">
+                <col width="1">
+            </colgroup>
+            <thead>
+                <tr class="first last">
+                    <th class="name"><?php echo $this->__('Name'); ?></th>
+                    <th class="date"><?php echo $this->__('Since'); ?></th>
+                    <th class="reward"><?php echo $this->__('Coupon Generated'); ?></th>
+                    <th class="used"><?php echo $this->__('Coupon Used'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($godchilds as $godchild) : ?>
+                <tr class="<?php echo $godchild->getIsUsed() ? 'coupon_used' : 'coupon_not_used'; ?>">
+                    <td class="name"><?php echo $godchild->getName(); ?></td>
+                    <td class="date"><span class="nobr"><?php echo $this->formatDate($godchild->getCreatedAt()); ?></span></td>
+                    <td class="reward">
+                        <?php if ($godchild->getHasRewards()) : ?>
+                            <?php echo $this->__('Yes'); ?>
+                        <?php else : ?>
+                            <?php echo $this->__('No'); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td class="used">
+                        <?php if ($godchild->getIsUsed()) : ?>
+                            <?php echo $this->__('Yes'); ?>
+                        <?php else : ?>
+                            <?php echo $this->__('No'); ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <script type="text/javascript">decorateTable('my-godchilds-table');</script>
+    <?php else : ?>
+        <?php echo $this->__('Actually you don\'t have any godchild.'); ?>
+    <?php endif; ?>
+</div>

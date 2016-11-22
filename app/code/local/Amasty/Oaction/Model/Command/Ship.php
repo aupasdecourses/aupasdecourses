@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Ship extends Amasty_Oaction_Model_Command_Abstract
@@ -63,9 +63,11 @@ class Amasty_Oaction_Model_Command_Ship extends Amasty_Oaction_Model_Command_Abs
                 
                 //update status    
                 $status = Mage::getStoreConfig('amoaction/ship/status', $order->getStoreId());    
-                if ($status)  
-                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', false);    
-                    
+                if ($status) {
+                    $notify = parent::orderUpdateNotify($status);
+                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', $notify);
+                }
+
                 if ($shipmentCode && $notifyCustomer){ 
                     $shipment = Mage::getModel('sales/order_shipment')
                         ->loadByIncrementId($shipmentCode);
@@ -82,9 +84,12 @@ class Amasty_Oaction_Model_Command_Ship extends Amasty_Oaction_Model_Command_Abs
                 
                 ++$numAffectedOrders;           
             } catch (Exception $e) {
-                $err = $e->getCustomMessage() ? $e->getCustomMessage() : $e->getMessage();
-                $this->_errors[] = $hlp->__(
-                    'Can not ship order #%s: %s', $orderCode, $err);
+                if ('Mage_Api_Exception' == get_class($e)) {
+                    $err = $e->getCustomMessage();
+                } else {
+                    $err = $e->getMessage();
+                }
+                $this->_errors[] = $hlp->__('Can not ship order #%s: %s', $orderCode, $err);
             }
             $order = null;
             unset($order); 
@@ -114,10 +119,17 @@ class Amasty_Oaction_Model_Command_Ship extends Amasty_Oaction_Model_Command_Abs
    
     private function _getTitleByCode($code, $storeId)
     {
-        $title = Mage::getStoreConfig('carriers/' . $code . '/title', $storeId);
         if ($code == 'custom') {
-            $title = Mage::getStoreConfig('amoaction/ship/title');
-        } 
+            $title = Mage::getStoreConfig('amoaction/ship/title', $storeId);
+        } else {
+            $carriers = Mage::getModel('amoaction/source_carriers')->toOptionArray($storeId);
+            foreach ($carriers as $carrier) {
+                if ($code == $carrier['value']) {
+                    $title = $carrier['label'];
+                    break;
+                }
+            }
+        }
         if (!$title)
             $title = $code;
             
