@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
-
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-	ATTACHMENT
-	<pre>
-		{#{ dump(order) }#}
-	</pre>
+<div class="container">
+	<table class="table table-striped">
+		<tr>
+			<th>Commercant</th>
+			<th>Produit</th>
+			<th>Description</th>
+			<th>Prix Unitaire ( Prix Kilo )</th>
+			<th>Quantite</th>
+			<th>Prix Total</th>
+			<th>Prix Final</th>
+			<th>Difference</th>
+			<th>Sur Ticket</th>
+		</tr>
+		{% for store in stores %}
+		{% for order_id in store %}
+		{% for product in order_id.products %}
+		<tr>
+			<td>{{ product.commercant_name }}</td>
+			<td>{{ product.nom }}</td>
+			<td>{{ product.description }}</td>
+			<td>{{ product.prix_unitaire ~" ( " ~ product.prix_kilo ~ " € )"}}</td>
+			<td>{{ product.quantite }}</td>
+			<td>{{ product.prix_total ~" € "}}</td>
+			<td>{{ product.final_prix ~ " € "}}</td>
+			<td>{{ product.final_prix_diff ~ " € "}}</td>
+			<td>{{ product.in_tick}}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td><b>TOTAL</b></td>
+			<td colspan="7"><b></b></td>
+			<td><b>{{ order_id.total_prix }}</b></td>
+		</tr>
+		{% endfor %}
+		{% endfor %}
+	</table>
+</div>
+
+<a href="{{ path('refundUpload', { 'id' : order_id }) }}">Etape Précédente</a>
+<a href="{{ path('refundResume', { 'id' : order_id }) }}">Etape Suivante</a>
+
 {% endblock %}

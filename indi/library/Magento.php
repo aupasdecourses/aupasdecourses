@@ -67,7 +67,7 @@ class Magento
 		$S = [];
 		$app = \Mage::app();
 		$stores = $app->getStores();
-		foreach ($stores as $id => $osef) {
+		foreach ($stores as $id => $idc) {
 			$S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
 			$S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
 		}
@@ -172,6 +172,7 @@ class Magento
 
 	private function ProductParsing($product) {
 		$prod_data = [
+			'id' => $product->getItemId(),
 			'nom' => $product->getName(),
 				'prix_kilo'		=>	$product->getPrixKiloSite(),
 				'quantite'		=>	round($product->getQtyOrdered(), 0),
@@ -313,5 +314,36 @@ class Magento
 			$rsl[$commercant['store']][$cid] = $commercant;
 		}
 		return ($rsl);
+	}
+
+	public function getRefunds($orderId){
+		$commercants = $this->getMerchants();
+		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
+		$orders = $this->OrdersQuery(null, null, -1, $orderId);
+		$rsl = [];
+		$table_id = [];
+		$refundTable = [];
+		foreach ($orders as $order) {
+			$orderHeader = $this->OrderHeaderParsing($order);
+			$products = $order->getAllItems();
+			foreach ($products as $product) {
+				$prod_data = $this->ProductParsing($product);
+				$prod_data['commercant_name'] = $commercants[$prod_data['commercant_id']]['name'];
+				$table_id[] = $prod_data['id'];
+				$orderHeader['products'][$prod_data['id']] = $prod_data;
+				$orderHeader['total_quantite'] += $prod_data['quantite'];
+				$orderHeader['total_prix'] += $prod_data['prix_total'];
+			}
+			$rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
+		}
+		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
+		$refundItems->addFieldToFilter('order_item_id', array('in' => $table_id));
+		foreach ($refundItems as $refundItem){
+			// inserer donnees refund dans tableau $result
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix'] = $refundItem['prix_final'];
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix_diff'] = $refundItem['diffprixfinal'];
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['in_tick'] = $refundItem['in_ticket'];
+		}
+		return($rsl);
 	}
 }
