@@ -78,5 +78,14 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_SuperMenu>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Mage_Page />
+              <Mage_Cms />
+            </depends>
+        </Apdc_SuperMenu>
     </modules>
 </config>

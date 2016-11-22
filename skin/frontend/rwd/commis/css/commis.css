@@ -1018,30 +1018,88 @@ label {
 }
 
 .page-header-container {
-    height: 90px;
+    height: 70px;
 }
 
-@media screen and (max-width:770px) {
-    .page-header-container {
-        min-height: 120px;
-        height: auto;
-    }
-}
 
 .page-header-container,
 #wp-nav-container {
     position: relative;
-    max-width: 1200px;
     margin: 0px auto;
 }
 
-
-/*@media screen and (min-width: 771px){
-  .page-header-container, #wp-nav-container{
-      max-height: 70px;
-  }
-}*/
-
+@media screen and (max-width: 771px){
+    .global-site-notice {
+        margin-bottom: -60px;
+        margin-top:60px;
+        transition: margin 0.1s ease 0s;
+    }
+    .sticky-header .global-site-notice {
+        margin-bottom:0;
+    }
+    .page-header-container {
+        display: table;
+        width:100%;
+        height: 65px;
+        border-top: 1px solid #EDEDED;
+        transition: width 0.3s ease 0s,height 0.3s ease 0s;
+        margin-top: 60px;
+    }
+    .sticky-header .page-header-container {
+        height: 40px;
+        width: calc(100% - 100px);
+        transition: width 0.3s ease 0s;
+        z-index: 10;
+        position: fixed;
+        right: 0;
+        top: 0;
+        margin-top: 0;
+    }
+    #topmenu {
+        transition: transform 0.3s ease 0s;
+    }
+    .sticky-header #topmenu {
+        position: fixed;
+        top: 40px;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        z-index: 9;
+    }
+    .sticky-header #header-nav {
+        overflow: auto;
+        position: fixed;
+        top: 40px;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        /* padding-bottom: 50px; */
+    }
+}
+@media screen and (min-width: 771px){
+    .skip-links {
+        clear: none;
+        display: table;
+        height: 100%;
+        overflow: initial;
+        position: relative;
+    }
+    .page-header-container {
+        position:fixed;
+        background-color:#ffffff;
+        z-index:99;
+        top: 0;
+        transition: height 0.5s ease;
+    }
+    .sticky-header .page-header-container {
+        height: 45px;
+        box-shadow: 0px 4px 30px -12px #808080;
+    }
+    #topmenu {
+        margin-top: 70px;
+    }
+    
+}
 #header {
     display: block;
     z-index: 10;
@@ -1088,11 +1146,7 @@ label {
     display: inline-block;
     width: auto;
     max-width: 180px;
-    min-width: 100px;
-    min-height: 50px;
-    height: 50px;
-    position: absolute;
-    left: 5px;
+    height: 100%;
 }
 
 @media screen and (max-width:770px) {
@@ -1122,25 +1176,18 @@ label {
 
 @media only screen and (max-width: 770px) {
     .logo {
-        margin-top: 0px;
-        margin-bottom: 0px;
         max-width: 100%;
         width: 100%;
         position: relative;
         display: block;
-        margin-bottom: 11px;
-        margin-left: 0px;
-        left: 0px;
+        margin-bottom: 5px;
+        padding-top: 3px;
+        float: none;
     }
     .logo .small {
-        position: absolute;
-        left: 30%;
-        top: 4px;
-        max-height: 47px;
+    max-height: 47px;
     }
-    .page-header {
-        margin: 0px;
-    }
+
     #header-search #search {
         margin-top: 15px;
         margin-bottom: -10px;
@@ -1148,305 +1195,89 @@ label {
     #header-search button {
         margin-top: 15px;
     }
+    .page-header {
+        margin: 0px;
+    }
+    .sticky-header .page-header {
+        position:fixed;
+        max-height: 40px;
+    }
+    .sticky-header {
+        margin-top: 100px;
+    }
+
+}
+.logo-link {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    padding:10px;
+    width: 100%;
 }
 
-.logo img {
-    max-width: 100%;
-}
-
-.logo .small {
-    display: block;
-    margin: auto;
-    margin-top: -3px;
-    position: relative;
-    left: auto;
-    top: auto;
+.logo-link img {
+    height:100%;
 }
 
 .logo:hover {
     opacity: 0.8;
 }
 
+#logo_smalldisplay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    text-align: center;
+    height: 60px;
+}
+
 @media only screen and (min-width: 771px) {
+    
     .logo {
-        /*max-width: 300px;*/
-        /*min-height: 90px;*/
+    padding: 0;
+    min-width: initial;
+    min-height: initial;
+    width: 130px;
     }
     .logo .small {
         display: none;
     }
     .logo .large {
         display: block;
-        height: 50px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .sticky-header .logo-link {
+        padding:4px 10px;
     }
 }
+@media only screen and (max-width: 770px) {
 
-
-/* ============================================ *
- * Custom Top Menu
- * ============================================ */
-
-#topmenu {
-    border-bottom: 1px solid rgb(233, 233, 233);
-}
-
-#custom-topmenu {
-    float: right;
-    display: inline-block;
-    margin-right: 20px;
-    margin-top: 16px;
-}
-
-#custommenu {
-    margin: 0px 0px 0px;
-}
-
-#custom-topmenu li {
-    margin-left: 15px;
-    float: left;
-}
-
-#custom-topmenu ul li a {
-    display: block;
-    float: left;
-}
-
-#custom-topmenu ul li a:hover {
-    color: #FFF;
-    text-decoration: underline;
-}
-
-div.wp-custom-menu-popup {
-    background-color: #FFF;
-    border: 0px;
-}
-
-div.wp-custom-menu-popup::before {
-    z-index: -1;
-    content: "";
-    position: absolute;
-    top: 0px;
-    right: -999em;
-    bottom: 0px;
-    left: -999em;
-    margin: auto;
-    width: auto;
-    height: auto;
-    float: none;
-    background: #FFF none repeat scroll 0% 0%;
-    border: 1px solid rgb(67, 41, 24);
-    transform: none;
-    transition: border-top 1ms linear 200ms, border-bottom 100ms linear 0s;
-}
-
-div.menu a:link,
-div.menu a:visited {
-    background: transparent;
-}
-
-div.menu {
-    font-family: "Montserrat", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
-    height: 48px;
-    margin: 0px 5px 0px 0px;
-}
-
-div.menu:hover,
-div.menu:active,
-div.menu:focus {
-    background-color: rgb(67, 41, 24);
-}
-
-div.menu a:hover span,
-div.menu.act a span,
-div.menu.active a span,
-div.menu a:hover,
-div.menu.act a,
-div.menu.active a {
-    color: #FFF;
-}
-
-div.menu:hover a {
-    color: white;
-}
-
-div.menu a span {
-    font-weight: 400;
-    font-size: 16px;
-}
-
-div.menu a:link,
-div.menu a:visited {
-    line-height: 24px;
-    height: 100%;
-    color: #fff;
-}
-
-.parentMenu {
-    height: 100%;
-}
-
-a.level1:link,
-a.level1:visited {
-    margin-bottom: 0px;
-    font-family: "Courgette";
-    font-size: 20px;
-    color: rgb(67, 41, 24);
-}
-
-a.level1:hover {
-    color: rgb(112, 15, 61);
-}
-
-a.level2:link,
-a.level2:visited {
-    color: rgb(67, 41, 24);
-    font-size: 14px;
-    font-family: Montserrat;
-    font-weight: 500;
-    margin-left: 0px;
-}
-
-@media screen and (max-width: 770px) {
-    a.level2:link,
-    a.level2:visited {
-        margin-bottom: 0px;
+    .sticky-header #logo_smalldisplay {
+        margin:0;
+        width: 100px;
+        padding-bottom: 0;
+        padding-top: 0;
+        height: 40px;
+        background-color: white;
+        right: initial;
     }
-}
-
-a.level2:hover,
-a.level3:hover {
-    color: rgb(112, 15, 61) !important;
-    text-decoration: underline !important;
-}
-
-div.parentMenu.menu0 {
-    display: none;
-}
-
-.itemMenuName.level1,
-a.itemMenuName.level2 span {
-    line-height: 22px;
-}
-
-.thumb-menu {
-    width: 45px;
-    height: 45px;
-    border-radius: 50px;
-    display: inline-block;
-    vertical-align: middle;
-    /*add round shape*/
-}
-
-.thumb-text-menu {
-    width: 80%;
-    display: inline-block;
-    padding-left: 10px;
-    vertical-align: middle;
-    /*add round shape*/
-}
-
-@media screen and (min-width: 771px) {
-    a.level3:link,
-    a.level3:visited {
-        padding-left: 20px;
-        color: rgb(67, 41, 24);
-        font-size: 14px;
-        font-family: Raleway;
-        font-weight: 500;
+    .sticky-header #logo_smalldisplay .logo-link {
+        position:static;
+        height: 40px;
+        padding: 0;
+        margin: 0;
     }
-    .itemMenuName.level3 {
-        padding-bottom: 9px;
+    .sticky-header #logo_smalldisplay .logo-link img {
+        max-height:35px
+        
     }
+
 }
 
-.menu-mobile .parentMenu a.level3:link,
-.menu-mobile .parentMenu a.level3:visited {
-    margin-left: 60px;
-    text-transform: none;
-    font-size: 13px;
-}
-
-
-/*--Menu block__*/
-
-.block1 {
-    width: 75%;
-    display: inline-block;
-    vertical-align: top;
-    padding-top: 10px;
-}
-
-div.block2 {
-    display: inline-block;
-    float: left;
-    padding-top: 10px;
-    width: 25%;
-}
-
-div.block2 a {
-    display: block;
-    padding: 5px;
-    overflow: hidden;
-}
-
-div.block2 img {
-    width: 100%;
-}
-
-div.block2 p {
-    margin-top: 10px;
-    font-size: 16px;
-    text-align: center;
-    font-style: italic;
-    color: #333;
-}
-
-div.itemSubMenu.level1 {
-    max-height: 400px;
-    overflow: auto;
-}
-
-div.itemSubMenu.level1::-webkit-scrollbar {
-    width: 6px;
-    /* for vertical scrollbars */
-    height: 12px;
-    /* for horizontal scrollbars */
-}
-
-div.itemSubMenu.level1::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    width: 1px;
-}
-
-div.itemSubMenu.level1::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-
-/*--Mobile menu--*/
-
-.menu-mobile .parentMenu a:link,
-.menu-mobile .parentMenu a:visited {
-    color: #333;
-}
-
-@media screen and (max-width: 770px) {
-    #header-account li a {
-        font-family: Montserrat, Raleway, Verdana, arial, sans-serif;
-        background-color: #EDEDED;
-        text-transform: uppercase;
-        color: #333;
-        padding: 10px 0px 10px 10px;
-        display: block;
-        line-height: inherit;
-    }
-    .no-touch #header-account a:hover,
-    .no-touch .nav-primary a:hover {
-        background-color: #FFF;
-        text-decoration: none;
-        color: #333;
-    }
-}
 
 
 /* ============================================ *
@@ -1468,22 +1299,6 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     display: block;
 }
 
-
-/* ============================================ *
- * Header Search
- * ============================================ */
-
-@media only screen and (min-width: 771px) {
-    #header-search {
-        display: block;
-        position: absolute;
-        top: 18px;
-        left: 250px;
-        max-width: 280px;
-        padding: 0px;
-        width: 40%;
-    }
-}
 
 
 /* ============================================ *
@@ -1510,6 +1325,25 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     color: #333;
 }
 
+.skip-container {
+    background: none;
+    display:table-cell;
+    float: none;
+    position: static;
+    vertical-align:middle;
+    width: auto;
+    height: inherit;
+}
+
+.skip-links .skip-content.skip-active {
+    position: absolute;
+    top: 100%;
+    z-index: 99999;
+    background-color: #EDEDED;
+    border-radius: 0px 0px 4px 4px;
+    margin-top: 0;
+}
+
 @media only screen and (min-width: 500px) {
     .skip-nav {
         width: 25%;
@@ -1523,18 +1357,41 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
 }
 
 @media screen and (max-width:771px) {
-    .skip-links {
-        margin-top: 60px;
-        overflow: visible;
-    }
     .skip-link {
-        background: none;
-        width: 20%;
-        height: 60px;
+        border:none;
+        line-height:initial;
+        height: inherit;
+        width: 100%;
     }
+    .skip-links {
+        overflow: visible;
+        display: table-row;
+        width: 100%;
+        border: none;
+        position: relative;
+        height: inherit;
+    }
+    .skip-container {
+        border-right: 1px solid lightgrey;
+    }
+
     .skip-nav {
-        background: rgba(204, 94, 51, 0.9) none repeat scroll 0% 0%;
+        background: rgba(204, 94, 51, 1) none repeat scroll 0% 0%;
     }
+    .skip-links .skip-content.skip-active {
+        left: 0;
+        width: 100%;
+    }
+    .sticky-header .skip-links span.label {
+        display:none;
+    }
+    .sticky-header .skip-links .skip-content.skip-active {
+        position:fixed;
+        left: 0;
+        right: 0;
+        top: 40px!important;
+    }
+
 }
 
 .skip-link .label {
@@ -1582,12 +1439,6 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     width: 100%;
     padding-right: 40px;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
-}
-
-@media screen and (max-width:770px) {
-    #search_mini_form .input-box {
-        margin-top: 40px;
-    }
 }
 
 #search,
@@ -1651,31 +1502,50 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
 }
 
 @media only screen and (min-width: 771px) {
-    .skip-links {
-        height: 0;
+    .header-account-container {
+        display: table-cell;
+        position: static;
+        vertical-align: middle;
+        width: 50px;
+        padding: 0 5px;
     }
     .skip-account,
-    .skip-cart,
-    .dropdown.skip-help,
+    .skip-cart {
+        position:relative;
+    }
     .skip-referral {
         position: absolute;
         top: 10px;
     }
-    .skip-account,
-    .skip-cart,
-    .skip-help,
-    .skip-referral {
-        width: auto;
-        padding: 0 10px;
+    .skip-container {
         text-transform: uppercase;
-        height: 50px;
     }
-    .skip-account {
-        right: 100px;
+    .skip-container-header-nav {
+        display:none;
     }
+    .skip-container-header-search {
+        width: 100%;
+        padding: 0 10px;
+    }
+    .skip-container .skip-link {
+        width:70px;
+        height: 60px;
+    }
+    #header-search {
+        position:static;
+        float: none;
+        border: none;
+        box-shadow: none;
+        width: 100%;
+    }
+
     .dropdown.skip-help {
-        right: 180px;
         padding: 0;
+        position: static;
+        display: table-cell;
+        vertical-align: middle;
+        width: 50px;
+        padding: 0 5px;
     }
     .skip-referral {
         right: 240px;
@@ -1688,21 +1558,19 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     .dropdown-menu.links,
     #header-help {
         z-index: 200000;
-        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
         text-transform: none;
         width: 320px;
-        border: 1px solid #CCC;
     }
-    #header-account.skip-active {
-        top: 60px;
-        right: 30px;
+    
+    .skip-links .skip-content.skip-active {
+        right: 3px!important;
+        top: 67px!important;
+        left: initial!important;
+        margin: 0;
+        background-color: #ffffff;
     }
-    #header-help {
-        right: -150px;
-        top: 48px;
-        left: auto;
-        border-radius: 0px;
+    .sticky-header .skip-links .skip-content.skip-active {
+        top: 45px!important;
     }
     #header-account.skip-active a:hover,
     #header-help a:hover {
@@ -1733,20 +1601,29 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     #header-help > li > a:focus {
         background: none;
     }
+    .sticky-header #header-search {
+        height: 30px;
+        top: 0;
+    }
+    .sticky-header #header-search .input-text {
+        font-size:12px;
+    }
+    .sticky-header .skip-container .skip-link {
+        height:90%;
+    }
 }
 
 @media screen and (max-width: 770px) {
     #header-help {
         width: 100%;
         text-align: center;
-        top: 55px;
+        top: 100%;
         box-shadow: none;
     }
     #header-help > li > a {
         padding: 10px 0px 10px 10px;
     }
     #header-account .links {
-        margin-top: 55px;
     }
     .skip-account i,
     .skip-cart i,
@@ -1827,29 +1704,17 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
 
 @media only screen and (min-width: 771px) {
     .skip-cart {
-        position: absolute;
-        top: 10px;
-        right: 30px;
-        width: auto;
+        position: relative;
         padding: 0 10px;
     }
     #header-cart.skip-active {
-        border: 1px solid #CCC;
-        display: block;
-        position: absolute;
         z-index: 200000;
-        top: 60px;
-        right: 30px;
-        width: 320px;
-        background: #FFF none repeat scroll 0% 0%;
+        text-transform: initial;
     }
 }
 
 @media screen and (max-width: 770px) {
     .header-minicart a.skip-cart {
-        position: absolute;
-        top: 63px;
-        right: 0px;
     }
 }
 
@@ -1945,6 +1810,13 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
 }
 
 @media only screen and (min-width: 771px) {
+    .header-minicart {
+        display: table-cell;
+        position: static;
+        vertical-align: middle;
+        width: 50px;
+        padding: 0 5px;
+    }
     .skip-cart {
         color: #333;
         text-transform: uppercase;
@@ -1955,8 +1827,8 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
     .skip-cart .count {
         border-radius: 12px;
         display: inline-block;
-        top: -60px;
-        position: relative;
+        top: 2px;
+        position: absolute;
         z-index: 5;
         width: 22px;
         height: 22px;
@@ -1966,7 +1838,7 @@ div.itemSubMenu.level1::-webkit-scrollbar-thumb {
         line-height: 22px;
         text-align: center;
         font-weight: 600;
-        left: 25px;
+        right: 0;
     }
     .skip-cart .count:before {
         content: '';
@@ -2834,7 +2706,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Réassurance
+ * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -2998,7 +2870,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Liste Commerçants
+ * Homepage - Liste CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ants
  */
 
 .commercants-list {
@@ -3286,7 +3158,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Commercants liste complète
+ * Commercants liste complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te
  * ============================================ */
 
 .commercant_announcment {
@@ -3297,7 +3169,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Page Commerçant (Sub category)
+ * Page CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ant (Sub category)
  * ============================================ */
 
 .commercant_name {
@@ -3475,6 +3347,7 @@ a.btn:hover {
 
 .pager li > a,
 .pager li > span {
+<<<<<<< HEAD
     padding: 4px 10px;
     line-height: 20px;
     width: auto;
@@ -4597,3 +4470,6 @@ ul.links li {
     padding-left: 40px;
     padding-right: 40px;
 }
+=======
+    paddin
+>>>>>>> 3e6b4bb2059243a21153d5799dbaed3f48a739b8

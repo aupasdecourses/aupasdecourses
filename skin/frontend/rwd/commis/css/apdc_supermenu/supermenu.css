@@ -1,0 +1,408 @@
+
+#supermenu {
+  position: relative;
+  margin: 0px auto;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 0;
+}
+
+#supermenu .menu-template-content {
+  display:none;
+}
+.main-container,
+.footer-container,
+.copyright-cards-container {
+  transform:translate(0);
+}
+
+#supermenu a {
+ color:#333;
+}
+
+#topmenu {
+    border-top: 1px solid rgb(233, 233, 233);
+}
+
+#supermenu #storename a {
+    font-family: "Courgette";
+    text-transform: none;
+    display: block;
+    position: relative;
+    text-transform: normal;
+    color:#4B777B;
+    font-weight:bold;
+    font-size:24px;
+}
+#supermenu #storename a:hover {
+	background-color:#ffffff!important;
+	color:#68C775;
+}
+#supermenu li.level0 {
+    font-family: "Montserrat", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+    height: 48px;
+    margin: 0px 5px 5px 0px;
+}
+
+#supermenu li.level0>a {
+  text-transform: uppercase;
+  position:relative;
+  display: block;
+   /* used for :after => inherit */
+  border: none;
+}
+#supermenu li.level0.active>a span {border-bottom: 1px solid;padding-bottom: 2px;}
+
+#supermenu li.level0.open>a:after {
+  content:"";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: transparent;
+  z-index: 99;
+  transform: translate(-50%, 0);
+  color: inherit;
+  border-top-color: inherit;
+}
+
+
+
+#supermenu .nav>li {
+  position:static;
+}
+
+#supermenu li>a .deploy-menu-button {
+  position:absolute;
+  right:0px;
+  top:0;
+  text-align:center;
+  width: 20px;
+  height:100%;
+  cursor:pointer;
+}
+#supermenu li>a .deploy-menu-button i {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%) rotate(270deg);
+  transition:transform 0.3s ease;
+}
+
+#supermenu li.level1> a {
+  border-bottom: solid 1px #e2e2e2;
+  height: 60px;
+  white-space:normal;
+  position:relative;
+  display: block;
+}
+
+
+#supermenu li.level1> a img.thumbnail_commercant {
+  border-radius:50%;
+  transform: translate(5px, 4px);
+}
+#supermenu li.level1> a span {
+  position: absolute;
+  left: 80px; 
+  top: 50%;
+  transform: translate(0, -50%);
+}
+ul.nav a {
+  outline: none;
+}
+#supermenu ul.level1>li {
+  display:table-cell;
+}
+
+#supermenu ul.level2 {
+  margin-bottom: 15px;
+}
+#supermenu ul.level2>li {
+  display:table-row;
+}
+#supermenu ul.level2 a {
+  color: #333333;
+  display: table-row;
+}
+#supermenu ul.level2 a i {
+  display:table-cell;
+  padding-right:3px;
+}
+.dropdown .dropdown-submenu {
+  position:static;
+  margin: 0;
+  padding: 0;
+  float: none;
+}
+.dropdown-submenu.open>.dropdown-menu-template {
+    display: block;
+}
+
+/* ============================================ *
+ * Custom Top Menu
+ * ============================================ */
+
+a.level1:link,
+a.level1:visited {
+    margin-bottom: 0px;
+    font-family: "Courgette";
+    font-size: 20px;
+    color: rgb(67, 41, 24);
+}
+
+a.level1:hover {
+    color: rgb(112, 15, 61);
+}
+
+.template-column-title,
+a.level2:link,
+a.level2:visited {
+    color:#333;
+    font-size: 20px;
+    font-family: Courgette;
+    font-weight: 500;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+}
+
+
+
+a.level2:hover,
+a.level3:hover {
+    color: rgb(112, 15, 61) !important;
+    text-decoration: underline !important;
+}
+
+@media (min-width: 772px) {
+  #supermenu > .container-fluid {
+    padding:0;
+  }
+  .menu-open .main-container,
+  .menu-open .footer-container,
+  .menu-open .copyright-cards-container {
+    transform:translateY(400px);
+  }
+  #supermenu li a.column-commercant {
+    width: 320px;
+    display: block;
+  }
+  #supermenu div.level0,
+  #supermenu ul.level0 {
+    height: 360px;
+    overflow: hidden;
+    z-index: 98;
+    padding-top: 20px;
+    border-radius: 0;
+    border: 1px solid #dcdcdc;
+    box-shadow: 5px 6px 20px -4px rgba(0, 0, 0, 0.33);
+    border-width: 1px 0px 0px 0px;
+    width: 100%;
+    padding-bottom: 0;
+  }
+  #supermenu div.level0>ul {
+    float:left;
+    width:320px;
+    overflow: auto;
+    height: 100%;
+  }
+  #supermenu .menu-template-content {
+    display:block;
+    float:right;
+    width:calc(100% - 320px);
+    height: 100%;
+    overflow: auto;
+    display: inline-block;
+  }
+
+
+
+  #supermenu .deploy-menu-button {
+    display:none;
+  }
+  #supermenu .column-commercant .deploy-menu-button {
+    display:block;
+    color:#ccc;
+  }
+  #supermenu li.open>.column-commercant .deploy-menu-button {
+    color:black;
+  }
+  #supermenu li.open>.column-commercant .deploy-menu-button i {
+    transform: translate(-50%, -50%) rotate(630deg);
+  }
+
+
+
+  .dropdown-submenu>.dropdown-menu-template {
+    top: 0;
+    bottom:0;
+    right: 0px;
+    border: none;
+    border-radius:0;
+    box-shadow:none;
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    overflow-x: hidden;
+    overflow-y:auto;
+    max-height: initial;
+    margin: 20px 0 5px 0px;
+    width: calc(100% - 320px);
+    height: 360px;
+  }
+  .dropdown-submenu.open>.dropdown-menu-template {
+    display:none;
+  }
+  #supermenu .template-column {
+    width: 50%;
+    padding: 0 15px;
+    float: left;
+  }
+  #supermenu .template-column:nth-child(odd) {
+    clear:left;
+  }
+  #supermenu .template-column:nth-child(even) {
+    clear:none;
+  }
+  #supermenu .template-column .cat-thumbnail {position: relative;width: 120px;height: 120px;margin: 2px auto 5px auto;overflow: hidden;border-radius: 50%;box-shadow: 0px 0px 9px -2px #000;background-origin: border-box;background-position: 50% 50%;}
+
+}
+@media (min-width: 800px) {
+  #supermenu .template-column {
+    width: 33.3333%;
+  }
+  #supermenu .template-column:nth-child(1n+0) {
+    clear:none;
+  }
+  #supermenu .template-column:nth-child(3n+1) {
+    clear:left;
+  }
+}
+
+@media (min-width: 992px) {
+  #supermenu .template-column {
+    width: 25%;
+  }
+  #supermenu .template-column:nth-child(1n+0) {
+    clear:none;
+  }
+  #supermenu .template-column:nth-child(4n+1) {
+    clear:left;
+  }
+}
+@media (min-width: 1100px) {
+  #supermenu .template-column {
+    width: 20%;
+  }
+  #supermenu .template-column:nth-child(1n+0) {
+    clear:none;
+  }
+  #supermenu .template-column:nth-child(5n+1) {
+    clear:left;
+  }
+}
+@media screen and (max-width: 771px) {
+      a.level2:link,
+    a.level2:visited {
+        margin-bottom: 0px;
+    }
+    #header-account li a {
+        font-family: Montserrat, Raleway, Verdana, arial, sans-serif;
+        background-color: #EDEDED;
+        text-transform: uppercase;
+        color: #333;
+        padding: 10px 0px 10px 10px;
+        display: block;
+        line-height: inherit;
+    }
+    .no-touch #header-account a:hover,
+    .no-touch .nav-primary a:hover {
+        background-color: #FFF;
+        text-decoration: none;
+        color: #333;
+    }
+    #supermenu li.level0 {
+      height:auto;
+    }
+    #supermenu li>a .deploy-menu-button {
+      background-color: rgba(0,0,0, 0.03);
+      width: 40px;
+    }
+    #supermenu li>a .deploy-menu-button i {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    #supermenu li.open>a .deploy-menu-button i {
+      transform: translate(-50%, -50%) rotate(540deg);
+    }
+
+
+    #supermenu div.level0,
+    #supermenu ul.level0 {
+      position:static;
+      min-height: initial;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+    }
+
+
+    .dropdown-submenu>a:after {
+      content:none;
+    }
+    .dropdown-submenu>.dropdown-menu-template {
+      position:static;
+    }
+    #supermenu .dropdown-menu-template .block-advertising,
+    #supermenu .template-column .cat-thumbnail {
+      display:none;
+    }
+    #supermenu ul.level1>li {
+      display:block;
+      border-bottom:1px solid lightgrey;
+      padding: 0 0px 0 15px;
+    }
+    #supermenu ul.level1 li>a {
+      background-color:#ffffff;
+    }
+
+    #supermenu a.level2:link, a.level2:visited {
+      text-align:left;
+      height:40px;
+      line-height:40px;
+      position: relative;
+    }
+    #supermenu ul.level1 ul.level2 {
+      margin-bottom: 0px;
+    }
+
+    #supermenu ul.level2>li {
+      height:30px;
+    }
+    #supermenu li > ul {
+      display:block;
+      max-height:0;
+      transition:max-height 0.5s ease, opacity 0s ease 0.5s;
+      opacity:0;
+      overflow:hidden;
+    }
+    #supermenu li.open> ul {
+      max-height:800px;
+      opacity:1;
+      transition-delay:0s;
+      max-width: 100%;
+    }
+
+}
+
