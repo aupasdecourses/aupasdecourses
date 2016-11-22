@@ -135,12 +135,6 @@
             <remove name="footer_links" />
             <remove name="footer_links2" />
         </reference>
-        <reference name="before_body_end">
-            <remove name="global_cookie_notice" />
-        </reference>
-        <reference name="global_notices">
-            <block type="page/html_cookieNotice" name="global_cookie_notice_head" as="global_cookie_notice_head" template="page/html/cookienotice.phtml" />
-        </reference>
         <reference name="left">
             <remove name="catalog.leftnav" />
         </reference>

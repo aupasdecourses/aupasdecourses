@@ -978,6 +978,10 @@ label {
     background: #1e555a none repeat scroll 0% 0%;
     font-weight: 600;
     font-size: 14px;
+    position: fixed;
+    z-index: 99;
+    bottom: 0px;
+    width: 100%;
 }
 
 .global-site-notice .notice-inner {
