@@ -2,35 +2,41 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-
 <div class="container">
 	<table class="table table-striped">
 		<tr>
 			<th>Commercant</th>
 			<th>Produit</th>
 			<th>Description</th>
-			<th>Prix Unitaire</th>
+			<th>Prix Unitaire ( Prix Kilo )</th>
 			<th>Quantite</th>
-			<th>Total Commande</th>
-			<th>Total Ticket(input)</th>
+			<th>Prix Total</th>
+			<th>Prix Final</th>
+			<th>Difference</th>
+			<th>Sur Ticket</th>
 		</tr>
-		{% for merchant_id in order %}
-		{% for product in merchant_id.products %}
+		{% for store in stores %}
+		{% for order_id in store %}
+		{% for product in order_id.products %}
 		<tr>
-			<td>{{ merchant_id.merchant.name }}</td>
+			<td>{{ product.commercant_name }}</td>
 			<td>{{ product.nom }}</td>
 			<td>{{ product.description }}</td>
-			<td>{{ product.prix_unitaire ~" € "}}</td>
+			<td>{{ product.prix_unitaire ~" ( " ~ product.prix_kilo ~ " € )"}}</td>
 			<td>{{ product.quantite }}</td>
-			<td>{{ product.prix_total }}</td>
+			<td>{{ product.prix_total ~" € "}}</td>
+			<td>{{ product.final_prix ~ " € "}}</td>
+			<td>{{ product.final_prix_diff ~ " € "}}</td>
+			<td>{{ product.in_tick}}</td>
 		</tr>
-		{% endfor %}
 		{% endfor %}
 		<tr>
 			<td><b>TOTAL</b></td>
-			<td colspan="4"><b></b></td>
-			<td><b>{{ total}}</b></td>
+			<td colspan="7"><b></b></td>
+			<td><b>{{ order_id.total_prix }}</b></td>
 		</tr>
+		{% endfor %}
+		{% endfor %}
 	</table>
 </div>
 

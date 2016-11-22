@@ -79,16 +79,12 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$order = $mage->getOrderByMerchants($id);
-		$total = $order[-1]['merchant']['total'];
-		unset($order[-1]);
+		$order = $mage->getRefunds($id);
  
 		return $this->render('refund/attachment.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'order' => $order,
-			'total' => $total,
+			'stores' => $order,
 			'order_id' => $id,
-			'refunds' => $mage->getRefunds($id)
 		]);
 	}
 

@@ -313,6 +313,8 @@ class Magento
 	}
 
 	public function getRefunds($orderId){
+		$commercants = $this->getMerchants();
+		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
 		$rsl = [];
 		$table_id = [];
@@ -322,6 +324,7 @@ class Magento
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product);
+				$prod_data['commercant_name'] = $commercants[$prod_data['commercant_id']]['name'];
 				$table_id[] = $prod_data['id'];
 				$orderHeader['products'][$prod_data['id']] = $prod_data;
 				$orderHeader['total_quantite'] += $prod_data['quantite'];
@@ -331,16 +334,12 @@ class Magento
 		}
 		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
 		$refundItems->addFieldToFilter('order_item_id', array('in' => $table_id));
-			foreach ($refundItems as $refundItem){
-				/*echo'<pre>';
-				print_R($refundItem);
-				echo'</pre>';	*/
+		foreach ($refundItems as $refundItem){
 			// inserer donnees refund dans tableau $result
-			
-			
-			
-			}
-		print_R($refundItem);
-
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix'] = $refundItem['prix_final'];
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix_diff'] = $refundItem['diffprixfinal'];
+			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['in_tick'] = $refundItem['in_ticket'];
+		}
+		return($rsl);
 	}
 }
