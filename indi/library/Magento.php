@@ -95,7 +95,6 @@ class Magento
 	}
 
 	private function OrdersQuery($dfrom, $dto, $commercantId = -1, $orderId = -1) {
-		// set magento database query ===>
 		$orders = \Mage::getModel('sales/order')->getCollection();
 		$orders->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id',
 			array(
@@ -120,6 +119,12 @@ class Magento
 				'telcontact'			=>	'order_attribute.telcontact',
 				'info'					=>	'order_attribute.infoscomplementaires'
 			));
+		$orders->getSelect()->join(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
+			array (
+				'upload'				=>	'attachment.upload',
+				'input'					=>	'attachment.input',
+				'digest'				=>	'attachment.digest',
+			));
 		$orders->addFilterToMap('ddate', 'mwddate.ddate');
 		$orders->addFilterToMap('dtime', 'mwdtime.interval')
 			->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
@@ -138,8 +143,6 @@ class Magento
 				)->where("order_item.commercant={$commercantId}")->group('order_item.order_id');
 			}
 		}
-		// <===
-
 		return ($orders);
 	}
 
@@ -147,9 +150,13 @@ class Magento
 		$orderHeader = [];
 
 		$shipping = $order->getShippingAddress();
+		$orderHeader['mid']				=	$order->getData('entity_id');
 		$orderHeader['id']				=	$order->getData('increment_id');
 		$orderHeader['store']			=	\Mage::app()->getStore($order->getData('store_id'))->getName();
 		$orderHeader['status']			=	$order->getStatusLabel();
+		$orderHeader['upload']			=	$order->getData('upload');
+		$orderHeader['input']			=	$order->getData('input');
+		$orderHeader['digest']			=	$order->getData('digest');
 		$orderHeader['customer_id']		=	$order->getData('customer_id');
 		$orderHeader['first_name']		=	$shipping->getData('firstname');
 		$orderHeader['last_name']		=	$shipping->getData('lastname');
@@ -197,19 +204,19 @@ class Magento
 		$model->save();
 	}
 
-	private function updateEntryToModel($model, Array $filters, Array $data) {
+	private function updateEntryToModel($model, Array $filters, Array $updatedFields) {
 		$entry = $model->getCollection();
 		foreach ($filters as $k => $v) {
 			$entry->addFieldToFilter($k, $v);
 		}
 		if (($id = $entry->getFirstItem()->getId()) <> null) {
 			$model->load($id);
-			foreach ($data as $k => $v) {
+			foreach ($updatedFields as $k => $v) {
 				$model->setData($k, $v);
 			}
 			$model->save();
 		} else {
-			$this->addEntryToModel($model, $data);
+			$this->addEntryToModel($model, $updatedFields);
 		}
 	}
 
@@ -220,11 +227,11 @@ class Magento
 		);
 	}
 
-	public function updateEntryToOrderField(Array $filters, Array $data) {
+	public function updateEntryToOrderField(Array $filters, Array $updatedFields) {
 		$this->updateEntryToModel(
 			\Mage::getModel('amorderattach/order_field'),
 			$filters,
-			$data
+			$updatedFields
 		);
 	}
 
@@ -257,7 +264,7 @@ class Magento
 
 		$rsl = [ -1 => [ 'merchant' => [ 'name' => 'All', 'total' => 0.0 ] ] ];
 		foreach ($orders as $order) {
-			$orderHeader = $this->OrderHeaderParsing($order);
+			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product);

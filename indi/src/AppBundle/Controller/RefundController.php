@@ -2,6 +2,10 @@
 
 namespace AppBundle\Controller;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +42,7 @@ class RefundController extends Controller
 		$form_from->get('from')->setData($from);
 
 		$orders = $mage->getOrders($from);
-		 
+
 		return $this->render('refund/index.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ],
@@ -126,7 +130,11 @@ class RefundController extends Controller
 			}
 			$err = self::check_upload_status($id, $order);
 			if ($err <> self::ERROR) {
-				// << ===
+				if ($err == self::SUCCESS)
+					$status = 'done';
+				else
+					$status = 'joker';
+				$mage->updateEntryToOrderField([ 'order_id' => $order[-1]['order']['mid']], [ 'upload' => $status]);
 				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
 			} else {
 				return $this->redirectToRoute('refundUpload', [ 'id' => $id ]);

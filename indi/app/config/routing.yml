@@ -79,7 +79,7 @@ refundInput:
   defaults: { _controller: AppBundle:Refund:refundInput}
   requirements: { id:"[0-9]+" }
 
-refundResume:
+refundDigest:
   path: /refund/{id}/digest/
   defaults: { _controller: AppBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
