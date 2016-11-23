@@ -71,6 +71,9 @@
   border-top-color: inherit;
 }
 
+#supermenu .close-menu {
+  display:none;
+}
 
 
 #supermenu .nav>li {
@@ -228,6 +231,22 @@ a.level3:hover {
     overflow-x:hidden; 
     overflow-y: auto;
     height: 100%;
+  }
+  #supermenu .close-menu {
+    display:block;
+    position:absolute;
+    top: 2px;
+    right: 5px;
+    font-size: 30px;
+    opacity:0.6;
+    color:lightgrey;
+    z-index:99;
+    cursor: pointer;
+    transition:opacity 0.3s ease, color 0.3s ease;
+  }
+  #supermenu .close-menu:hover {
+    opacity:1;
+    color:#333333;
   }
   #supermenu .menu-template-content {
     display:block;

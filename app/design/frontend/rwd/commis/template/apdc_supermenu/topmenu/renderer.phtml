@@ -55,6 +55,7 @@ foreach ($children as $child) {
     if ($child->hasChildren()) {
         if ($child->getLevel() == 0) {
             $html .= '<div class="' . $child->getSubMenuClasses() . '">';
+            $html .= '<div class="close-menu fa fa-close"></div>';
             $html .= '<ul>';
             $html .=     $this->render($child, '');
             $html .= '</ul>';
