@@ -3835,11 +3835,6 @@ a.btn:hover {
 }
 
 @media only screen and (min-width: 980px) {
-    .customer-account-login .col-main {
-        float: left;
-        width: 68.75%;
-        padding-right: 20px;
-    }
     .customer-account-login .col-right,
     .customer-account-login .col-left {
         width: 31.25%;
@@ -3850,8 +3845,12 @@ a.btn:hover {
     }
 }
 
-.product-options ul.options-list label,
+/*.product-options ul.options-list label,
 .col2-set .form-list .control label {
+    width: 80%;
+}*/
+
+.product-options ul.options-list label {
     width: 80%;
 }
 

@@ -302,6 +302,30 @@
         </reference>
     </customer_account>
 
+    <sales_order_view translate="label">
+        <remove name="amorderattach.attachment"/>
+        <label>Customer My Account Order View</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/totals_account.phtml">
+                    <action method="setLabelProperties"><value>colspan="6" class="a-right"</value></action>
+                    <action method="setValueProperties"><value>class="last a-right"</value></action>
+                    <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml" />
+                </block>
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order_remboursements.phtml"/>
+            </block>
+            <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
+                <block type="sales/order_items" name="order_items" template="apdc_customer/account/order_items.phtml">
+                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
+                </block>
+            </block>
+            <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
+        </reference>
+    </sales_order_view>
+
     <cms_page translate="label">
         <label>CMS Pages (All)</label>
         <remove name="left.permanent.callout"/>
