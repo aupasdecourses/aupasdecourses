@@ -93,23 +93,24 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
     {
         $storeId = Mage::app()->getStore()->getId();
         $order = $observer->getEvent()->getOrder();
-        $customerEmail = $order->getCustomerEmail();
-        $collection = Mage::getModel('monkey/lastorder')->getCollection()
-            ->addFieldToFilter('email', array('eq' => $customerEmail));
-        if(count($collection) > 0){
-            //When saving the new date is automatically placed.
-            $item = $collection->getFirstItem();
-            $item->save();
-        }else{
-            Mage::getModel('monkey/lastorder')
-                ->setEmail($customerEmail)
-                ->save();
-        }
-        if ((($this->_getCampaignCookie() &&
-                    $this->_getEmailCookie()) || Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ACTIVE, $storeId) == 2 || Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ACTIVE, $storeId) == 3) &&
-            $this->isActive()
-        ) {
-            $this->logSale($order);
+        if (is_object($order) && $order->getId()) {
+            $customerEmail = $order->getCustomerEmail();
+            $collection = Mage::getModel('monkey/lastorder')->getCollection()
+                ->addFieldToFilter('email', array('eq' => $customerEmail));
+            if (count($collection) > 0) {
+                //When saving the new date is automatically placed.
+                $item = $collection->getFirstItem();
+                $item->save();
+            } else {
+                Mage::getModel('monkey/lastorder')
+                    ->setEmail($customerEmail)
+                    ->save();
+            }
+            if ((Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ACTIVE, $storeId) == 2 || Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ACTIVE, $storeId) == 1) &&
+                $this->isActive()
+            ) {
+                $this->logSale($order);
+            }
         }
         return $observer;
     }
@@ -122,7 +123,7 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
      */
     public function logSale($order)
     {
-
+        Mage::log(__METHOD__, null, 'ebizmarts.com', true);
         $this->_order = $order;
         $api = Mage::getSingleton('monkey/api', array('store' => $this->_order->getStoreId()));
         if (!$api) {
@@ -151,13 +152,19 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
 
         $emailCookie = $this->_getEmailCookie();
         $campaignCookie = $this->_getCampaignCookie();
+        $this->_deleteCampaignCookie();
 
         $this->setItemstoSend($this->_order->getStoreId());
         $rs = false;
+        $email = null;
+        $campaignId = null;
         if ($emailCookie && $campaignCookie) {
             $this->_info ['email_id'] = $emailCookie;
             $this->_info ['campaign_id'] = $campaignCookie;
+            $email = $emailCookie;
+            $campaignId = $campaignCookie;
             if (Mage::getStoreConfig('monkey/general/checkout_async')) {
+
                 $collection = Mage::getModel('monkey/asyncorders')->getCollection();
                 $alreadyOnDb = false;
                 foreach ($collection as $order) {
@@ -182,7 +189,8 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
                 $rs = $api->campaignEcommOrderAdd($this->_info);
             }
         } else {
-            $this->_info ['email'] = $this->_order->getCustomerEmail();
+            $email = $this->_order->getCustomerEmail();
+            $this->_info ['email'] = $email;
             if (Mage::getStoreConfig('monkey/general/checkout_async')) {
                 $collection = Mage::getModel('monkey/asyncorders')->getCollection();
                 $alreadyOnDb = false;
@@ -209,7 +217,7 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
         }
 
         if ($rs === TRUE) {
-            $this->_logCall();
+            $this->_logCall($email, $campaignId);
             return true;
         } else {
             return $rs;
@@ -259,10 +267,10 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
             }
 
             $names = array();
-            $cat_ids = $product->getCategoryIds();
+            $catIds = $product->getCategoryIds();
 
-            if (is_array($cat_ids) && count($cat_ids) > 0) {
-                foreach($cat_ids as $id){
+            if (is_array($catIds) && count($catIds) > 0) {
+                foreach ($catIds as $id) {
                     $category = Mage::getModel('catalog/category')->load($id);
                     $names[] = $category->getName();
                     $mcitem['category_id'] = $id;
@@ -273,7 +281,7 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
 //                }
             }
             $mcitem['category_name'] = (count($names)) ? implode(" - ", $names) : 'None';
-            if(!$mcitem['category_id']) {
+            if (!isset($mcitem['category_id'])) {
                 $mcitem['category_id'] = 0;
             }
             $mcitem['qty'] = $item->getQtyOrdered();
@@ -302,7 +310,19 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
      */
     protected function _getCampaignCookie()
     {
-        return $this->getCookie()->get('magemonkey_campaign_id');
+        $cookie = Mage::getModel('core/cookie')->get('magemonkey_campaign_id');
+        if ($cookie && Mage::getModel('core/cookie')->getLifetime('magemonkey_campaign_id') == 3600) {
+            return $cookie;
+        } else {
+            return null;
+        }
+    }
+
+    protected function _deleteCampaignCookie()
+    {
+        if ($this->_getCampaignCookie()) {
+            Mage::getModel('core/cookie')->delete('magemonkey_campaign_id');
+        }
     }
 
     /**
@@ -310,13 +330,13 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
      *
      * @return Ebizmarts_MageMonkey_Model_Ecommerce
      */
-    protected function _logCall()
+    protected function _logCall($email, $campaignCookie = null)
     {
         return Mage::getModel('monkey/ecommerce')
             ->setOrderIncrementId($this->_order->getIncrementId())
             ->setOrderId($this->_order->getId())
-            ->setMcCampaignId($this->_getCampaignCookie())
-            ->setMcEmailId($this->_getEmailCookie())
+            ->setMcCampaignId($campaignCookie)
+            ->setMcEmailId($email)
             ->setCreatedAt(Mage::getModel('core/date')->gmtDate())
             ->setStoreId($this->_order->getStoreId())
             ->save();
@@ -328,7 +348,6 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
      */
     public function autoExportJobs($storeId)
     {
-        $allow_sent = false;
         //Get status options selected in the Configuration
         $states = explode(',', Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ORDER_STATUS, $storeId));
         $max = Mage::getStoreConfig(Ebizmarts_MageMonkey_Model_Config::ECOMMERCE360_ORDER_MAX, $storeId);
@@ -342,16 +361,20 @@ class Ebizmarts_MageMonkey_Model_Ecommerce360
                 $orders = Mage::getResourceModel('sales/order_collection')->addFieldToFilter('main_table.store_id', array('eq' => $storeId));
 //                $orders->getSelect()->joinLeft(array('ecommerce' => Mage::getSingleton('core/resource')->getTableName('monkey/ecommerce')), 'main_table.entity_id = ecommerce.order_id', 'main_table.*')->where('ecommerce.order_id is null AND main_table.status = \'' . $state . '\'')
 //                    ->limit($max - $count);
-                $orders->getSelect()->where('main_table.status = \'' . $state . '\' ' .
+                $orders->getSelect()->where(
+                    'main_table.status = \'' . $state . '\' ' .
                     'AND main_table.entity_id NOT IN ' .
-                    "(SELECT ecommerce.order_id FROM {$ecommerceTable} AS ecommerce WHERE ecommerce.store_id = {$storeId})")
+                    "(SELECT ecommerce.order_id FROM {$ecommerceTable} AS ecommerce WHERE ecommerce.store_id = {$storeId})"
+                )
                     ->limit($max - $count);
             } else {
                 $orders = Mage::getResourceModel('sales/order_collection')->addFieldToFilter('main_table.store_id', array('eq' => $storeId));
 //                $orders->getSelect()->joinLeft(array('ecommerce' => Mage::getSingleton('core/resource')->getTableName('monkey/ecommerce')), 'main_table.entity_id = ecommerce.order_id', 'main_table.*')->where('ecommerce.order_id is null')
 //                    ->limit($max - $count);
-                $orders->getSelect()->where('main_table.entity_id NOT IN ' .
-                    "(SELECT ecommerce.order_id FROM {$ecommerceTable} AS ecommerce WHERE ecommerce.store_id = {$storeId})")
+                $orders->getSelect()->where(
+                    'main_table.entity_id NOT IN ' .
+                    "(SELECT ecommerce.order_id FROM {$ecommerceTable} AS ecommerce WHERE ecommerce.store_id = {$storeId})"
+                )
                     ->limit($max - $count);
             }
             $count += count($orders);

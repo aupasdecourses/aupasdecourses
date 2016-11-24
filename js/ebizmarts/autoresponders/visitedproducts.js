@@ -4,13 +4,15 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
  */
-(function () {
+;(function () {
     function markVisited(productID) {
-        new Ajax.Request('/ebizautoresponder/autoresponder/markVisitedProducts?product_id=' + productID, {
+        new Ajax.Request(
+            '/ebizautoresponder/autoresponder/markVisitedProducts?product_id=' + productID, {
             method: 'get',
             onSuccess: function (transport) {
             }
-        });
+            }
+        );
     }
 
     var cb = function () {
@@ -18,14 +20,16 @@
             productID = '';
         if ($product) {
             productID = $product.value;
-            new Ajax.Request('/ebizautoresponder/autoresponder/getVisitedProductsConfig?product_id=' + productID, {
+            new Ajax.Request(
+                '/ebizautoresponder/autoresponder/getVisitedProductsConfig?product_id=' + productID, {
                 method: 'get',
                 onSuccess: function (transport) {
                     if (transport.responseJSON.time > -1) {
                         markVisited.delay(transport.responseJSON.time, productID);
                     }
                 }
-            });
+                }
+            );
         }
     }
     if (document.loaded) {

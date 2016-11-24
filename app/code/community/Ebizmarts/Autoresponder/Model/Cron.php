@@ -17,7 +17,15 @@ class Ebizmarts_Autoresponder_Model_Cron
         $allStores = Mage::app()->getStores();
         foreach ($allStores as $storeId => $val) {
             if (Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::GENERAL_ACTIVE, $storeId)) {
+                $emulation = Mage::getSingleton('core/app_emulation');
+                $environment = $emulation->startEnvironmentEmulation(
+                    $storeId,
+                    Mage_Core_Model_App_Area::AREA_FRONTEND,
+                    true
+                );
+                Mage::app()->getTranslator()->init('frontend', true);
                 $this->_processStore($storeId);
+                $emulation->stopEnvironmentEmulation($environment);
             }
         }
     }
@@ -27,9 +35,8 @@ class Ebizmarts_Autoresponder_Model_Cron
      */
     protected function _processStore($storeId)
     {
-        //Mage::app()->setCurrentStore($storeId);
         Mage::unregister('_singleton/core/design_package');
-        Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
+        Mage::app()->setCurrentStore($storeId);
         Mage::getSingleton('core/design_package')->setStore($storeId);
 
         if (Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::NEWORDER_ACTIVE, $storeId) && Mage::helper('ebizmarts_autoresponder')->isSetTime(Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::NEWORDER_CRON_TIME, $storeId))) {
@@ -135,8 +142,16 @@ class Ebizmarts_Autoresponder_Model_Cron
         $moreselect = "MONTH(at_dob.value) = $month AND DAY(at_dob.value) = $day";
 
 
-        $collection->addAttributeToFilter('dob', array('neq' => 'null'))
-            ->addFieldToFilter('store_id', array('eq' => $storeId));
+        $collection->addAttributeToFilter('dob', array('neq' => 'null'));
+        $defaultStore = Mage::app()->getStore($storeId)->getWebsite()->getDefaultStore();
+        $normalFilter = array('eq' => $storeId);
+        if ($storeId == $defaultStore->getId()) {
+            $newFilter = array('eq' => '0');
+            $collection->addFieldToFilter('store_id', array($normalFilter, $newFilter));
+        } else {
+            $collection->addFieldToFilter('store_id', $normalFilter);
+        }
+
         if (count($customerGroups)) {
             $collection->addFieldToFilter('group_id', array('in' => $customerGroups));
         }
@@ -203,7 +218,14 @@ class Ebizmarts_Autoresponder_Model_Cron
         if (count($customerGroups)) {
             $collection->addFieldToFilter('group_id', array('in' => $customerGroups));
         }
-        $collection->addFieldToFilter('store_id', array('eq' => $storeId));
+        $defaultStore = Mage::app()->getStore($storeId)->getWebsite()->getDefaultStore();
+        $normalFilter = array('eq' => $storeId);
+        if ($storeId == $defaultStore->getId()) {
+            $newFilter = array('eq' => '0');
+            $collection->addFieldToFilter('store_id', array($normalFilter, $newFilter));
+        } else {
+            $collection->addFieldToFilter('store_id', $normalFilter);
+        }
 
         foreach ($collection as $customer) {
             $customerId = $customer->getEntityId();
@@ -355,7 +377,7 @@ class Ebizmarts_Autoresponder_Model_Cron
 
         $collection = Mage::getResourceModel('sales/order_collection');
         $collection->addFieldToFilter('main_table.store_id', array('eq' => $storeId))
-            ->addFieldToFilter('main_table.created_at',array('from'=>$from,'to'=>$to))
+            ->addFieldToFilter('main_table.created_at', array('from' => $from, 'to' => $to))
             ->addFieldToFilter('main_table.status', array('eq' => $status));
 //        Mage::log((string)$collection->getSelect());
         if (count($customerGroups)) {
@@ -438,12 +460,12 @@ class Ebizmarts_Autoresponder_Model_Cron
         $collection->addFieldToFilter('main_table.added_at', array('from' => $from, 'to' => $to))
             ->addFieldToFilter('main_table.store_id', array('eq' => $storeId))
             ->setOrder('main_table.wishlist_id');
-        $wishlist_ant = -1;
-        $wishlistId = $collection->getFirstItem()->getWishlistId();
+        $wishlistAnt = -1;
         $products = array();
         foreach ($collection as $item) {
-            if ($wishlistId != $wishlist_ant) {
-                if ($wishlist_ant != -1 && count($products) > 0) {
+            $wishlistId = $item->getWishlistId();
+            if ($wishlistId != $wishlistAnt) {
+                if ($wishlistAnt != -1 && count($products) > 0) {
                     $translate = Mage::getSingleton('core/translate');
                     $email = $customer->getEmail();
                     if (Mage::helper('ebizmarts_autoresponder')->isSubscribed($email, 'wishlist', $storeId)) {
@@ -473,8 +495,7 @@ class Ebizmarts_Autoresponder_Model_Cron
                     }
 
                 }
-                $wishlist_ant = $wishlistId;
-                $wishlistId = $item->getWishlistId();
+                $wishlistAnt = $wishlistId;
                 $wishlist = Mage::getModel('wishlist/wishlist')->load($wishlistId);
                 $customer = Mage::getModel('customer/customer')->load($wishlist->getCustomerId());
                 $products = array();
@@ -543,7 +564,7 @@ class Ebizmarts_Autoresponder_Model_Cron
                     if (Mage::helper('ebizmarts_autoresponder')->isSubscribed($email, 'visitedproducts', $storeId)) {
                         $translate = Mage::getSingleton('core/translate');
                         $name = $customer->getFirstname() . ' ' . $customer->getLastname();
-                        $this->_sendVisitedProductEmail($email,$storeId,$products,$name,$tags);
+                        $this->_sendVisitedProductEmail($email, $storeId, $products, $name, $tags);
                     }
                 }
                 $products = array();
@@ -575,7 +596,7 @@ class Ebizmarts_Autoresponder_Model_Cron
                 $translate = Mage::getSingleton('core/translate');
                 $email = $item->getCustomerEmail();
                 $name = 'customer';
-                $this->_sendVisitedProductEmail($email,$storeId,$products,$name,$tags);
+                $this->_sendVisitedProductEmail($email, $storeId, $products, $name, $tags);
             }
         }
         if (count($products)) {
@@ -584,24 +605,32 @@ class Ebizmarts_Autoresponder_Model_Cron
                 if (Mage::helper('ebizmarts_autoresponder')->isSubscribed($email, 'visitedproducts', $storeId)) {
                     $translate = Mage::getSingleton('core/translate');
                     $name = $customer->getFirstname() . ' ' . $customer->getLastname();
-                    $this->_sendVisitedProductEmail($email,$storeId,$products,$name,$tags);
+                    $this->_sendVisitedProductEmail($email, $storeId, $products, $name, $tags);
                 }
             } else {
                 //add customer by email placed on Abandoned Cart Popup
                 $email = $item->getCustomerEmail();
                 $name = 'customer';
-                $this->_sendVisitedProductEmail($email,$storeId,$products,$name,$tags);
+                $this->_sendVisitedProductEmail($email, $storeId, $products, $name, $tags);
             }
         }
 
     }
-    protected function _sendVisitedProductEmail($email,$storeId,$products,$name,$tags)
+
+    protected function _sendVisitedProductEmail($email, $storeId, $products, $name, $tags)
     {
         $mailSubject = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::VISITED_SUBJECT, $storeId);
         $senderId = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::GENERAL_SENDER, $storeId);
         $sender = array('name' => Mage::getStoreConfig("trans_email/ident_$senderId/name", $storeId), 'email' => Mage::getStoreConfig("trans_email/ident_$senderId/email", $storeId));
         $templateId = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::VISITED_TEMPLATE, $storeId);
-        $url = Mage::getModel('core/url')->setStore($storeId)->getUrl() . 'ebizautoresponder/autoresponder/unsubscribe?list=visitedproducts&email=' . $email . '&store=' . $storeId;
+        $store = Mage::getModel('core/store')->load($storeId);
+        $storeCode = $store->getCode();
+        $storeCodeUrl = Mage::getStoreConfig('web/url/use_store', $storeId);
+        if ($storeCodeUrl) {
+            $url = Mage::getModel('core/url')->setStore($storeId)->getUrl() . $storeCode . '/ebizautoresponder/autoresponder/unsubscribe?list=visitedproducts&email=' . $email . '&store=' . $storeId;
+        } else {
+            $url = Mage::getModel('core/url')->setStore($storeId)->getUrl() . 'ebizautoresponder/autoresponder/unsubscribe?list=visitedproducts&email=' . $email . '&store=' . $storeId;
+        }
         $vars = array('name' => $name, 'tags' => array($tags), 'products' => $products, 'url' => $url);
 
         $customer = Mage::getModel('customer/customer')
@@ -626,6 +655,7 @@ class Ebizmarts_Autoresponder_Model_Cron
         Mage::helper('ebizmarts_abandonedcart')->saveMail('visitedproducts', $email, $name, "", $storeId);
 
     }
+
     /**
      * Process and send all notifications of Back To Stock
      * @param $storeId
@@ -719,7 +749,7 @@ class Ebizmarts_Autoresponder_Model_Cron
                 $collection
                     ->addFieldToFilter('is_active', array('eq' => 1))
                     ->addFieldToFilter('alert_id', array('eq' => $productStockAlert->getAlertId()))
-                ->addFieldToFilter('store_id', array('eq' => $storeId));
+                    ->addFieldToFilter('store_id', array('eq' => $storeId));
 
                 if (count($collection) > 0) {
 
@@ -787,25 +817,25 @@ class Ebizmarts_Autoresponder_Model_Cron
 
     /**
      * Back to Stock : Disable Alerts and Subscribers for a specific Product ID
-     * @param int $product_id
+     * @param int $productId
      * @return bool
      */
-    private function disableStockAlertsForProduct($product_id)
+    private function disableStockAlertsForProduct($productId)
     {
-        if (!$product_id) {
+        if (!$productId) {
             return false;
         }
 
         $stockAlert = Mage::getModel('ebizmarts_autoresponder/backtostockalert')->getCollection();
         $stockAlert->addFieldToFilter('is_active', array('eq' => 1));
-        $stockAlert->addFieldToFilter('product_id', array('eq' => $product_id));
+        $stockAlert->addFieldToFilter('product_id', array('eq' => $productId));
 
         if ($stockAlert->getSize() > 0) {
             foreach ($stockAlert as $alert) {
-                $alert_id = $alert->getAlertId();
+                $alertId = $alert->getAlertId();
 
                 $subscribers = Mage::getModel('ebizmarts_autoresponder/backtostock')->getCollection();
-                $subscribers->addFieldToFilter('alert_id', array('eq' => $alert_id));
+                $subscribers->addFieldToFilter('alert_id', array('eq' => $alertId));
 
                 foreach ($subscribers as $subscriber) {
                     $subscriber->setIsActive(0);
@@ -817,7 +847,7 @@ class Ebizmarts_Autoresponder_Model_Cron
             }
         }
 
-        Mage::helper('ebizmarts_autoresponder')->log('Back to Stock Notifications deactivated in database for Product ID ' . $product_id);
+        Mage::helper('ebizmarts_autoresponder')->log('Back to Stock Notifications deactivated in database for Product ID ' . $productId);
     }
 
     /**
@@ -862,15 +892,17 @@ class Ebizmarts_Autoresponder_Model_Cron
 
     protected function _createNewCoupon($store, $email, $string)
     {
+        $websiteid = Mage::getModel('core/store')->load($store)->getWebsiteId();
         $collection = Mage::getModel('salesrule/rule')->getCollection()
-            ->addFieldToFilter('name', array('like' => $string . $email));
+            ->addFieldToFilter('name', array('like' => $string . $email))
+            ->addFieldToFilter('website_id', array('eq' => $websiteid));
+
         if (!count($collection)) {
             $couponamount = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::BIRTHDAY_DISCOUNT, $store);
             $couponexpiredays = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::BIRTHDAY_EXPIRE, $store);
             $coupontype = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::BIRTHDAY_DISCOUNT_TYPE, $store);
             $couponlength = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::BIRTHDAY_LENGTH, $store);
             $couponlabel = Mage::getStoreConfig(Ebizmarts_Autoresponder_Model_Config::BIRTHDAY_COUPON_LABEL, $store);
-            $websiteid = Mage::getModel('core/store')->load($store)->getWebsiteId();
 
             $fromDate = date("Y-m-d");
             $toDate = date('Y-m-d', strtotime($fromDate . " + $couponexpiredays day"));
@@ -881,14 +913,14 @@ class Ebizmarts_Autoresponder_Model_Cron
                 $action = 'by_percent';
                 $discount = "$couponamount%";
             }
-            $customer_group = new Mage_Customer_Model_Group();
-            $allGroups = $customer_group->getCollection()->toOptionHash();
+            $customerGroup = new Mage_Customer_Model_Group();
+            $allGroups = $customerGroup->getCollection()->toOptionHash();
             $groups = array();
             foreach ($allGroups as $groupid => $name) {
                 $groups[] = $groupid;
             }
-            $coupon_rule = Mage::getModel('salesrule/rule');
-            $coupon_rule->setName($string . ' ' . $email)
+            $couponRule = Mage::getModel('salesrule/rule');
+            $couponRule->setName($string . ' ' . $email)
                 ->setDescription($string . ' ' . $email)
                 ->setStopRulesProcessing(0)
                 ->setFromDate($fromDate)
@@ -912,8 +944,8 @@ class Ebizmarts_Autoresponder_Model_Cron
                 ->setIsRss(0)
                 ->setWebsiteIds($websiteid);
             $uniqueId = Mage::getSingleton('salesrule/coupon_codegenerator', array('length' => $couponlength))->generateCode();
-            $coupon_rule->setCouponCode($uniqueId);
-            $coupon_rule->save();
+            $couponRule->setCouponCode($uniqueId);
+            $couponRule->save();
             return array($uniqueId, $discount, $toDate);
         } else {
             $coupon = $collection->getFirstItem();
@@ -926,7 +958,7 @@ class Ebizmarts_Autoresponder_Model_Cron
         }
     }
 
-    function _getIntervalUnitSql($interval, $unit)
+    protected function _getIntervalUnitSql($interval, $unit)
     {
         return sprintf('INTERVAL %d %s', $interval, $unit);
     }
