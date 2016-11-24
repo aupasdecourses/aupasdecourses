@@ -21,6 +21,7 @@ class Ebizmarts_AbandonedCart_Model_EventObserver
 
         $cleanCache = false;
         $store = is_null($observer->getEvent()->getStore()) ? Mage::app()->getDefaultStoreView()->getCode() : $observer->getEvent()->getStore();
+        $config = null;
         if (!Mage::helper('ebizmarts_mandrill')->useTransactionalService()) {
             $config = new Mage_Core_Model_Config();
             $config->saveConfig(Ebizmarts_AbandonedCart_Model_Config::ACTIVE, false, $scope, $store);
@@ -76,7 +77,7 @@ class Ebizmarts_AbandonedCart_Model_EventObserver
         if (!Mage::getSingleton('customer/session')->isLoggedIn() && Mage::getStoreConfig(Ebizmarts_AbandonedCart_Model_Config::ENABLE_POPUP, $quote->getStoreId())) {
             $action = Mage::app()->getRequest()->getActionName();
             $onCheckout = ($action == 'saveOrder' || $action == 'savePayment' || $action == 'saveShippingMethod' || $action == 'saveBilling');
-            if(Mage::getModel('core/cookie')->get('email') && Mage::getModel('core/cookie')->get('email')!= 'none' && !$onCheckout) {
+            if (Mage::getModel('core/cookie')->get('email') && Mage::getModel('core/cookie')->get('email')!= 'none' && !$onCheckout) {
 //            if (isset($_COOKIE['email']) && $_COOKIE['email'] != 'none' && !$onCheckout) {
                 $emailCookie = Mage::getModel('core/cookie')->get('email');
                 $emailCookieArr = explode('/', $emailCookie);
