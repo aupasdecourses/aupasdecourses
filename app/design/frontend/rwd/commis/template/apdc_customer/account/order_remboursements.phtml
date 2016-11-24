@@ -1,6 +1,0 @@
-<?php $refund_totals=Mage::helper('pmainguet_delivery')->getRefundorderdata($this->getOrder());
-    foreach($refund_totals as $refund){
-        echo '<tr><td>'.$refund["commercant"].'</td>';
-        echo '<td>'.$refund["del_amount_refunded"].'</td></tr>';
-    }
-?>

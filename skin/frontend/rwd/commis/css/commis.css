@@ -4230,6 +4230,19 @@ p.required,
  * Customer Account - Frontend
  * ============================================ */
 
+/* Headers */
+
+.my-account .page-head.button-level{
+    margin-bottom:20px;
+}
+
+.my-account h1{
+    margin-bottom:10px;
+}
+
+.my-account #my-orders-table{
+    margin-bottom: 20px;
+}
 
 /*Infos orders*/
 
@@ -4374,7 +4387,6 @@ h2.popup_title {
     font-size: 20px;
     color: #3FA342;
 }
-
 
 /*Referrals*/
 

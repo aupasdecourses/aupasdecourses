@@ -287,6 +287,6 @@ $_refund=Mage::helper('pmainguet_delivery')->getRefunditemdata($_item);
         <?php endif; ?>
     </td>
     <td><?php echo $this->getOrder()->formatPrice($_refund['prix_final']) ?></td>
-    <td><?php echo $this->getOrder()->formatPrice($_refund['diffprixfinal']) ?></td>
-    <td><?php echo $_refund['comment'] ?></td>
+    <td><strong><?php echo $this->getOrder()->formatPrice($_refund['diffprixfinal']) ?></strong></td>
+    <td><?php $text= ($_refund['comment']<>"") ? $_refund['comment'] : "Aucun"; echo $text;?></td>
 </tr>

@@ -1,11 +1,10 @@
 <?php $_order = $this->getOrder() ;?>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<div class="page-head button-level">
-    <h1><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?>
-        <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
-        </br><a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-cart"><?php echo $this->__('Reorder') ?></a>
-    <?php endif ?>
-    </h1>
+<div class="page-title">
+    <h1><?php echo $this->__('Commande #%s', $_order->getRealOrderId()) ?></h1>
+    <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
+        <a href="<?php echo $this->getReorderUrl($_order) ?>" class="button" type="button" title="Commandez de nouveau" value="Appliquer">Commandez de nouveau</a>
+    <?php endif;?>
 </div>
 <h2 class="table-caption"><?php echo $this->__('Informations générales') ?></h2>
 <div class="row">
@@ -22,6 +21,7 @@
     </div>
     <div class="col-sm-6">
         <ul>
+            <li><strong><?= $this->__('Statut de la commande: ')?></strong><?= $_order->getStatusLabel()?></li>
             <li><strong><?php echo $this->__('Méthode de paiement: ') ?></strong><?php echo $this->getPaymentInfoHtml() ?></li>
         </ul>
     </div>
@@ -29,10 +29,10 @@
 <div class="row">
     <div class="col-sm-6">
         <strong><?php echo $this->__('Votre adresse de livraison') ?></strong>
-        <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+        <p><?php echo $_order->getShippingAddress()->format('string') ?></p>
     </div>
     <div class="col-sm-6">
         <strong><?php echo $this->__('Votre adresse de facturation') ?></strong>
-        <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+        <p><?php echo $_order->getBillingAddress()->format('string') ?></p>
     </div>
 </div>
