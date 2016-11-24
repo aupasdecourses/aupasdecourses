@@ -146,17 +146,6 @@
         <remove name="left"/>
         <remove name="left_first"/>
         <label>Homepage</label>
-        <reference name="content">
-        <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
-            <action method="setProductsCount"><count>10</count></action>
-            <action method="addPriceBlockType">
-                <type>bundle</type>
-                <block>bundle/catalog_product_price</block>
-                <template>bundle/catalog/product/price.phtml</template>
-            </action>
-            <action method="setColumnCount"><count>6</count></action>
-        </block>
-        </reference>
     </page_homepage>
     
     <catalog_category_view>
