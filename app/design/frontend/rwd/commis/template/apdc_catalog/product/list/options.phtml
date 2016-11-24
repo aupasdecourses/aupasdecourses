@@ -1,0 +1,22 @@
+<?php $_product = $this->getProduct(); ?>
+<?php if ($_product->getTypeId() == 'configurable' || $_product->getHasOptions()) : ?>
+    <script type="text/javascript">
+        var optionsPrice<?php echo $_product->getId(); ?> = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+    </script>
+<?php endif; ?>
+
+<?php if ($_product->getTypeId() == 'configurable'): ?>
+    <?php echo $this->getChild('product_options.configurable')->setProduct($_product)->toHtml(); ?>
+<?php endif; ?>
+
+<?php if ($_product->getHasOptions()) : ?>
+    <?php $options = $_product->getProductOptionsCollection(); ?>
+    <?php if ($options->count() > 0) : ?>
+        <?php foreach ($options as $option) : ?>
+            <?php $option->setProduct($_product); ?>
+            <?php $_product->addOption($option); ?>
+        <?php endforeach ; ?>
+        <?php echo $this->getChildHtml('options_js'); ?>
+        <?php echo $this->getChild('product.info.options')->setProduct($_product)->toHtml(); ?>
+    <?php endif; ?>
+<?php endif; ?>

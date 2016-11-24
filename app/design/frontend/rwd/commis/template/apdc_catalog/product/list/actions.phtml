@@ -1,0 +1,8 @@
+<?php $_product = $this->getProduct(); ?>
+<div class="actions row">
+    <?php if ($_product->isSaleable()): ?>
+        <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+    <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
+        <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+    <?php endif; ?>
+</div>

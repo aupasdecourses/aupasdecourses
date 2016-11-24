@@ -640,8 +640,8 @@ h6,
     padding: 8px;
     border: 1px solid #339933;
     background-color: #F6F6F6;
-    top: 21px;
-    left: -100px;
+    top: 0px;
+    left: 0px;
 }
 
 .truncated .truncated_full_value .item-options:after {
@@ -667,9 +667,7 @@ h6,
  * Product Image
  */
 
-.no-touch .product-image:hover {
-    border-color: #339933;
-}
+.no-touch .product-image:hover {border: 1px solid #ededed;}
 
 
 /* -------------------------------------------- *
@@ -1080,6 +1078,11 @@ label {
     background: white;
     border: none;
 }
+.main-container {
+    position: relative;
+    z-index: 1;
+}
+
 
 .header-language-background {
     padding-top: 0px;

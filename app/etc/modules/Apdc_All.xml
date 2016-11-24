@@ -30,6 +30,10 @@
         <Apdc_Catalog>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Cybage_Swatches />
+            </depends>
         </Apdc_Catalog>
         <Apdc_Cart>
             <active>true</active>

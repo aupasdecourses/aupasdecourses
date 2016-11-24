@@ -6,6 +6,7 @@
     padding-top: 47px;
     position: fixed;
     top: 0;
+    width: 100%;
 }
 
 .header-minicart #header-cart .block-subtitle {
@@ -141,6 +142,7 @@ a.remove {
     border-bottom: 3px solid black;
     position: relative;
     cursor: pointer;
+    width: 100%;
 }
 .header-minicart #header-cart a:hover {
     background-color:#ffffff;

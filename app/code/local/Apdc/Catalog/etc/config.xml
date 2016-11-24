@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Catalog>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Apdc_Catalog>
     </modules>
     <global>
@@ -13,20 +13,33 @@
             <catalog>
                 <rewrite>
                     <product_list_related>Apdc_Catalog_Block_Product_List_Related</product_list_related>
+                    <product_view_type_configurable>Apdc_Catalog_Block_Product_View_Type_Configurable</product_view_type_configurable>
                 </rewrite>
             </catalog>
         </blocks>
-        <models>
-          <apdc_catalog>
-            <class>Apdc_Catalog_Model</class>
-          </apdc_catalog>
-          <swatches>
-            <rewrite>
-              <observer>Apdc_Catalog_Model_Observer_CybageSwatches</observer>
-            </rewrite>
-          </swatches>
 
-        </models>
+      <models>
+        <apdc_catalog>
+          <class>Apdc_Catalog_Model</class>
+        </apdc_catalog>
+        <swatches>
+          <rewrite>
+            <observer>Apdc_Catalog_Model_Observer_CybageSwatches</observer>
+          </rewrite>
+        </swatches>
+      </models>
+
+      <resources>
+        <apdc_catalog_setup>
+          <setup>
+            <module>Apdc_Catalog</module>
+            <class>Mage_Catalog_Model_Resource_Setup</class>
+          </setup>
+          <connection>
+            <use>core_setup</use>
+          </connection>
+        </apdc_catalog_setup>
+      </resources>
     </global>
     <frontend>
         <layout>
@@ -36,5 +49,12 @@
                 </apdc_catalog>
             </updates>
         </layout>
+         <product>
+              <collection>
+                   <attributes>
+                      <has_options />                                            
+                   </attributes>
+              </collection>
+          </product>
     </frontend>
 </config>
