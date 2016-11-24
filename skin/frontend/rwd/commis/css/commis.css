@@ -2740,12 +2740,16 @@ p.product-name a:hover,
 }
 
 .reassurance-outer {
-    margin: 0px;
-    padding: 5px;
-    height: 100%;
-    color: rgb(34,34,34);
-    margin-left: 5px;
-    margin-right: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    background: #Fff none repeat scroll 0% 0%;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 15px 20px;
+    overflow: hidden;
+    border: 0px solid #161616;
+    border-radius: 3px;
+    min-height: 230px;
 }
 
 .reassurance-outer.first-item {
@@ -2764,10 +2768,9 @@ p.product-name a:hover,
 .homepage-reassurance .reassurance-title {
     font-family: Montserrat, Raleway, Verdana;
     font-weight: normal;
-    border-top:2px rgb(64,64,64) solid;
-    border-bottom:2px rgb(64,64,64) solid;
     padding: 3px;
     text-align:center;
+    font-size: 16px;
 }
 
 .homepage-reassurance .reassurance-text {
