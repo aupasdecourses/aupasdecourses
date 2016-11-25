@@ -34,7 +34,33 @@
         <label>All Pages</label>
         <block type="page/html" name="root" output="toHtml" template="page/2columns-left.phtml">
 
-            <block type="page/html_head" name="head" as="head"></block>
+            <block type="page/html_head" name="head" as="head">
+                <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+                <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+                <action method="addJs"><script>prototype/prototype.js</script></action>
+                <action method="addJs"><script>prototype/validation.js</script></action>
+                <action method="addJs"><script>scriptaculous/builder.js</script></action>
+                <action method="addJs"><script>scriptaculous/effects.js</script></action>
+                <action method="addJs"><script>scriptaculous/dragdrop.js</script></action>
+                <action method="addJs"><script>scriptaculous/controls.js</script></action>
+                <action method="addJs"><script>scriptaculous/slider.js</script></action>
+                <action method="addJs"><script>varien/js.js</script></action>
+                <action method="addJs"><script>varien/form.js</script></action>
+                <action method="addJs"><script>mage/translate.js</script></action>
+
+                <!-- Remove items which the RWD package is not dependent upon -->
+                <action method="removeItem"><type>skin_js</type><name>js/ie6.js</name></action>
+
+                <!-- Add stylesheets with media queries for use by modern browsers -->
+                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+
+                <!-- Sets viewport meta tag using text block -->
+                <block type="core/text" name="head.viewport">
+                    <action method="setText"><text><![CDATA[<meta name="viewport" content="initial-scale=1.0, width=device-width" />]]>&#10;</text></action>
+                </block>
+                <!-- MAGNIFIC POPUP -->
+                <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
+            </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">
                 <label>Page Top</label>
