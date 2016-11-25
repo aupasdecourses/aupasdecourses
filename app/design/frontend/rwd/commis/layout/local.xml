@@ -64,20 +64,8 @@
         </reference>
         <reference name="before_body_end">
             <block type="page/html_head" name="jsfooter" template="apdc_base/jsfooter.phtml">
-                
                 <action method="addCss"><name>css/bootstrap-social.css</name></action>
                 <action method="addJs"><script>mage/cookies.js</script></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/modernizr.custom.min.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/selectivizr.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/matchMedia.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/matchMedia.addListener.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/app.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/slideshow.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
             </block>
         </reference>
