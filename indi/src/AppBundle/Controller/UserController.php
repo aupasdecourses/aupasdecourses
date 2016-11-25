@@ -32,7 +32,7 @@ class UserController extends Controller
 			}
 
 			return $this->render('login/index.html.twig', [
-				'forms' => [$form_login->createView()]
+				'forms' => [ $form_login->createView() ]
 			]);
 		}
 	}

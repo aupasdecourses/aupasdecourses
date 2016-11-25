@@ -5,16 +5,16 @@
 {% block body %}
 	{% include 'forms/default.html.twig' %}
 
-	<table style>
+	<table class='table'>
 		{% for order in orders %}
 			<tr>
 				<td>{{ order.id }}</td>
 				<td>
 					{% if order.upload == 'none' %}
 						<a href='{{ path('refundUpload', {id: order.id}) }}' class='error'>upload</a>
-					{% elseif order.upload == 'joker'%}
+					{% elseif order.upload == 'joker' %}
 						<a href='{{ path('refundUpload', {id: order.id}) }}' class='warning'>upload</a>
-					{% elseif order.upload == 'done'%}
+					{% elseif order.upload == 'done' %}
 						<a href='{{ path('refundUpload', {id: order.id}) }}' class='success'>upload</a>
 					{% endif %}
 				</td>
@@ -22,7 +22,7 @@
 					{% if order.upload != 'none' %}
 						{% if order.input == 'none' %}
 							<a href='{{ path('refundInput', {id: order.id}) }}' class='error'>input</a>
-						{% elseif order.input == 'done'%}
+						{% elseif order.input == 'done' %}
 							<a href='{{ path('refundInput', {id: order.id}) }}' class='success'>input</a>
 						{% endif %}
 					{% else %}

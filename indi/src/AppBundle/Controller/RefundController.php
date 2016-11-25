@@ -51,7 +51,7 @@ class RefundController extends Controller
 	}
 
 	private static function check_upload_status($id, $order, &$rsl = []) {
-		$ticket_folder = \Magento::mediapath().'/attachments/'.$id;
+		$ticket_folder = \Magento::mediaPath().'/attachments/'.$id;
 		if (!($dir = opendir($ticket_folder)))
 			return self::ERROR;
 		$dir_files = [];
@@ -77,6 +77,28 @@ class RefundController extends Controller
 		}
 
 		return $err;
+	}
+
+	private static function getUploadedFiles($id) {
+		$dir_files = [];
+		$ticket_folder = \Magento::mediaPath().'/attachments/'.$id;
+		$ticket_url = \Magento::mediaUrl().'attachments/'.$id;
+		if (($dir = opendir($ticket_folder))) {
+			while (($dir_entry = readdir($dir)) <> false) {
+				if ($dir_entry == '.' || $dir_entry == '..')
+					continue ;
+				preg_match("/{$id}-?([0-9]*)\.(.*)/", $dir_entry, $sp);
+				if ($sp[1] == '') {
+					$dir_files[-1]['path'] = $ticket_folder.'/'.$dir_entry;
+					$dir_files[-1]['url'] = $ticket_url.'/'.$dir_entry;
+				} else {
+					$dir_files[$sp[1]]['path'] = $ticket_folder.'/'.$dir_entry;
+					$dir_files[$sp[1]]['url'] = $ticket_url.'/'.$dir_entry;
+				}
+			}
+			closedir($dir);
+		}
+		return ($dir_files);
 	}
 
 	public function refundUploadAction(Request $request, $id)
@@ -116,7 +138,7 @@ class RefundController extends Controller
 					$extentions;
 					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extentions);
 					$tmp_file = $_FILES['form']['tmp_name'][$name];
-					$folder = \Magento::mediapath().'/attachments/'.$id;
+					$folder = \Magento::mediaPath().'/attachments/'.$id;
 					if (!file_exists($folder))
 						mkdir($folder);
 					if (file_exists($folder)) {
@@ -171,8 +193,14 @@ class RefundController extends Controller
 
 		$order = $mage->getOrderByMerchants($id);
 
+		$total = $order[-1]['merchant']['total'];
+		unset ($order[-1]['merchant']['total']);
+
+		$files = $this->getUploadedFiles($id);
+
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
+			'files' => $files,
 			'order' => $order,
 			'total' => $total,
 			'order_id' => $id

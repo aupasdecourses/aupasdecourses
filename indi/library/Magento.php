@@ -18,8 +18,12 @@ class Magento
 		\Mage::app();
 	}
 
-	public static function mediapath() {
+	public static function mediaPath() {
 		return realpath(__DIR__.'/../../media');
+	}
+
+	public static function mediaUrl() {
+		return \Mage::getBaseUrl('media');
 	}
 
 	public function isLogged() {

@@ -1,36 +1,42 @@
 {% extends 'base.html.twig' %}
+
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-<h1> Recapitulatif </h1>
-<hr>
-<div class="container">
-	<table class="table table-striped">
-		<tr>
-			<th>Commercant</th>
-			<th>Produit</th>
-			<th>Description</th>
-			<th>Quantite</th>
-			<th>Prix</th>
-			<th>Total</th>
-		</tr>
-		{% for merchant_id in order %}
-		{% for product in merchant_id.products %}
-		<tr>
-			<td>{{ merchant_id.merchant.name }}</td>
-			<td>{{ product.nom }}</td>
-			<td>{{ product.description }}</td>
-			<td>{{ product.quantite }}</td>
-			<td>{{ product.prix_unitaire ~" € (" ~ product.prix_kilo ~")"}}</td>
-			<td>{{ product.prix_total }}</td>
-		</tr>
-		{% endfor %}
-		{% endfor %}
-		<tr>
-			<td><b>TOTAL</b></td>
-			<td colspan="4"><b></b></td>
-			<td><b>{{ total}}</b></td>
-		</tr>
-	</table>
-</div>
+	<div class="container">
+		<div id="ticket_Carousel" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				{% set i = 0 %}
+				{% for merchant_id, file in files %}
+					<li data-target="#ticket_carousel" data-slide-to="{{i}}" class="{{(i > 0) ? '' : 'active'}}"></li>
+					{% set i = i + 1 %}
+				{% endfor %}
+			</ol>
+			<div lass="carousel-inner" role="listbox">
+				{% set i = 0 %}
+				{% for merchant_id, file in files %}
+					<div class="item{{( i > 0) ? '' : ' active'}}">
+						<img src="{{file.url}}" class="{{( i > 0) ? '' : 'active'}}" width="460" height="345">
+						<div class="carousel-caption">						
+							total | diff en euro
+						<div>						
+					</div>
+					{% set i = i + 1 %}
+				{% endfor %}
+			</div>
+			<a class="left carousel-control" href="#ticket_carousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#ticket_carousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ path('root') }}js/carousel.js"></script>
 {% endblock %}
