@@ -32,7 +32,7 @@ class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 				'image'=>$commercant['image'],
 				'src'=>Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'],
 				'adresse'=>$commercant['adresse_commercant'],
-				'url'=>$commercant['url_path']
+				'url'=>Mage::getUrl($commercant['url_path'])
 			];
 			$data[]=$sub;
 		}
