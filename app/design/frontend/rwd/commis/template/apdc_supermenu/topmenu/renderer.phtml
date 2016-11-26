@@ -39,7 +39,7 @@ foreach ($children as $child) {
     $html .= '<li '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
 
-    if($child->getLevel() <= 1 && $child->isActive()) {
+    if($child->getLevel() <= 1) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
         if ($child->getLevel() == 1 && $child->getThumbnail()) {
             $thumbnail = $this->getResizedImage($child->getThumbnail(), 50, 50);
