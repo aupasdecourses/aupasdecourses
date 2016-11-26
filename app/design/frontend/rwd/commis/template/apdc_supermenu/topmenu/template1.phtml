@@ -18,10 +18,6 @@ foreach ($children as $child) {
 
     $html .= '<li class="template-column">';
 
-    if ($child->getThumbnail()) {
-        $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
-        $html .= '<div class="cat-thumbnail"><img class="img-responsive" src="' . $thumbnail . '" /></div>';
-    }
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
         if ($child->getThumbnail()) {
