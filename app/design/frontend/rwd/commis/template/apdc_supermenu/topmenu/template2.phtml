@@ -22,9 +22,9 @@ foreach ($children as $child) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
         if ($child->getThumbnail()) {
             $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
-            $html .= '<div class="cat-thumbnail col-xs-4"><img src="' . $thumbnail . '"/></div>';
+            $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
         }
-        $html .= '<span class="cat-name col-xs-8">'.$this->escapeHtml($this->__($child->getName())).'</span>';
+        $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';
         $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
         $html .= '</a>';
     } else {

@@ -17,7 +17,7 @@
 }
 
 #supermenu a {
- color:#333;
+ color:rgba(0,0,0,0.87);
 }
 
 #topmenu {
@@ -98,7 +98,8 @@
 }
 
 #supermenu li.level1> a {
-  border-bottom: solid 1px #e2e2e2;
+  background-color: #f5f5f5;
+  border-bottom: solid 1px #e4e4e4;
   height: 60px;
   white-space:normal;
   position:relative;
@@ -109,6 +110,16 @@
 #supermenu li.level1> a img.thumbnail_commercant, .cat-thumbnail {
   border-radius:50%;
   transform: translate(5px, 4px);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#supermenu li.level1> a img.thumbnail_commercant{
+    margin-left: 10px;
+}
+
+.template-column .cat-thumbnail{
+    width: 20%;
 }
 
 #supermenu li.level1> a span {
@@ -188,9 +199,19 @@ a.level2:visited {
     text-align: left;
     display: block;
     line-height: 25px;
+    height: 50px;
 }
 
-
+.info-commercant{
+  margin-top: 30px;
+  margin-left:10px;
+}
+.info-commercant, .info-commercant a{
+    font-family: Montserrat, Raleway, sans-serif;
+    font-size: 14px;
+    color: rgba(0,0,0,0.54) !important;
+    line-height: 20px;
+}
 
 a.level2:hover,
 a.level3:hover {
@@ -318,18 +339,24 @@ a.level3:hover {
     position: relative;
     width: 50px;
     height: 50px;
-    margin: 2px auto 5px auto;
     overflow: hidden;
     border-radius: 50%;
-    box-shadow: 0px 0px 9px -2px #000;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     background-origin: border-box;
     background-position: 50% 50%;
   }
 
   #supermenu .template-column .cat-name {
-    padding: 0 0 0 10px;
+    width: 80%;
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 20px;
     text-align: left;
     margin-top: 10px;
+  }
+
+  .main-cats{
+      margin-top: -10px;
   }
 
 }

@@ -1,21 +1,4 @@
 /**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
  *
  * @category    design
  * @package     rwd_commis
@@ -23,14 +6,9 @@
  * @license     
  */
 
-
 /* ============================================ *
  * General  
  * ============================================ */
-
-.page {
-    /*background-image: url("https://www.aupasdecourses.com/skin/frontend/rwd/commis/images/swirl_pattern.png");*/
-}
 
 body,
 button,
@@ -39,7 +17,7 @@ select,
 table,
 textarea {
     font-family: Raleway, "Helvetica Neue", Verdana, Arial, sans-serif;
-    color: #222;
+    color: rgba(0,0,0,0.87);
     font-size: 14px;
     line-height: 1.5;
 }
@@ -281,7 +259,7 @@ h6,
     text-transform: none;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     margin: 7px 0px;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     border-bottom: 1px solid #EBEBEB;
     padding-bottom: 5px;
 }
@@ -289,17 +267,17 @@ h6,
 .block-account li strong,
 .block-cms-menu li strong {
     font-weight: 600;
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .block-account li a,
 .block-cms-menu li a {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .block-account li a:hover,
 .block-cms-menu li a:hover {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 
@@ -1325,7 +1303,7 @@ label {
 }
 
 .skip-link {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .skip-container {
@@ -1587,7 +1565,7 @@ label {
         padding: 0 10px;
         line-height: 33px;
         text-align: center;
-        color: #333;
+        color: rgba(0,0,0,0.87);
     }
     #header-account,
     #header-help {
@@ -1824,7 +1802,7 @@ label {
         padding: 0 5px;
     }
     .skip-cart {
-        color: #333;
+        color: rgba(0,0,0,0.87);
         text-transform: uppercase;
     }
     .skip-cart:hover {
@@ -1912,7 +1890,7 @@ label {
 }
 
 .header-minicart .product-details .product-name a {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .header-minicart .info-wrapper td {
@@ -1930,7 +1908,7 @@ label {
 
 .header-minicart .subtotal .label {
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     text-transform: uppercase;
 }
 
@@ -1955,7 +1933,7 @@ label {
 
 #cart-sidebar a.btn-edit,
 a.action-mini-cart {
-    color: #333;
+    color: rgba(0,0,0,0.87);
     font-family: Raleway, "Helvetica Neue";
     font-weight: 500;
     font-size: 14px;
@@ -1965,7 +1943,7 @@ a.action-mini-cart {
 
 a.action-mini-cart:hover{
     text-decoration: underline;
-    color:#333;
+    color:rgba(0,0,0,0.87);
     background:none;
 }
 
@@ -2358,7 +2336,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav dl dd ol > li > a {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .block-layered-nav dl dd ol > li > a:hover {
@@ -2405,7 +2383,7 @@ p.product-name a:hover,
 
 .block .block-title,
 .block-layered-nav .block-subtitle--filter {
-    background: #333 none repeat scroll 0% 0%;
+    background: rgba(0,0,0,0.87) none repeat scroll 0% 0%;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
@@ -2426,7 +2404,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav .block-subtitle--filter:hover {
-    background-color: #333;
+    background-color: rgba(0,0,0,0.87);
     text-decoration: underline;
 }
 
@@ -2436,8 +2414,8 @@ p.product-name a:hover,
     font-weight: bold;
     border-width: 1px medium;
     border-style: solid none;
-    border-color: #333 -moz-use-text-color #EBEBEB;
-    color: #333;
+    border-color: rgba(0,0,0,0.87) -moz-use-text-color #EBEBEB;
+    color: rgba(0,0,0,0.87);
     background: white;
 }
 
@@ -2460,7 +2438,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav .currently ol li .label {
-    color: #333;
+    color: rgba(0,0,0,0.87);
     font-size: 1em;
 }
 
@@ -2488,7 +2466,7 @@ p.product-name a:hover,
 }
 
 .footer .block-title {
-    color: #333;
+    color: rgba(0,0,0,0.87);
     border-top: none;
     font-weight: 600;
 }
@@ -3011,7 +2989,7 @@ h6 {
     border: 1px solid #EBE7E2;
     background: none repeat scroll 0% 0% padding-box rgba(164, 138, 122, 0.43);
     padding: 5px;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     box-shadow: 0.5px 0.866px 3px 0px rgba(0, 0, 0, 0.2);
     border-radius: 2px;
 }
@@ -3032,7 +3010,7 @@ h6 {
     display: block;
     margin: 2px 0px 5px;
     font-weight: normal;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     font-family: "Montserrat";
     line-height: 1.25;
     text-transform: uppercase;
@@ -3058,7 +3036,7 @@ h6 {
 
 a.btn:hover {
     background: #6F462D;
-    border-clor: #333;
+    border-clor: rgba(0,0,0,0.87);
     color: #FFF;
 }
 
@@ -3073,7 +3051,7 @@ a.btn:hover {
 
 a.btn:hover {
     background: none repeat scroll 0% 0% #432918;
-    border-color: #333;
+    border-color: rgba(0,0,0,0.87);
     color: #FFF;
 }
 
@@ -3097,7 +3075,7 @@ a.btn:hover {
 }
 
 .block-livraison a {
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .block-livraison .prix {
@@ -3285,7 +3263,7 @@ a.btn:hover {
     left: 5px;
     width: 80%;
     background-color: #FFF;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     opacity: 0.85;
 }
 
@@ -3437,7 +3415,7 @@ a.btn:hover {
     top: 5%;
     right: 5%;
     background-color: #FFF;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     padding: 5px;
     font-size: 0.8em;
 }
@@ -3453,7 +3431,7 @@ a.btn:hover {
     bottom: 5%;
     left: 5%;
     background-color: #FFF;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     padding: 2px;
     font-size: 0.8em;
 }
@@ -3469,7 +3447,7 @@ a.btn:hover {
     bottom: 27%;
     left: 4%;
     background-color: #FFF;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     padding: 5px;
     font-size: 0.9em;
 }
@@ -3547,7 +3525,7 @@ a.btn:hover {
     font-size: 0.8em;
     padding: 10px;
     background-color: #ECECEC;
-    color: #333;
+    color: rgba(0,0,0,0.87);
 }
 
 .tag_origine img.origine_flag {
@@ -3593,7 +3571,7 @@ a.btn:hover {
 }
 
 .product-collateral > dl > dt {
-    background: #333 none repeat scroll 0% 0%;
+    background: rgba(0,0,0,0.87) none repeat scroll 0% 0%;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
@@ -3603,7 +3581,7 @@ a.btn:hover {
 }
 
 .product-collateral > dl > dt:hover {
-    background-color: #333;
+    background-color: rgba(0,0,0,0.87);
 }
 
 .product-collateral > dl > dt:hover {
@@ -3623,12 +3601,12 @@ a.btn:hover {
 }
 
 .block-related .block-title h2 {
-    color: #333;
+    color: rgba(0,0,0,0.87);
     margin: 10px 0px 0px 0px;
 }
 
 .box-up-sell h2 {
-    color: #333;
+    color: rgba(0,0,0,0.87);
     margin: 10px 0px 0px 0px;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif !important;
     font-weight: 400 !important;
@@ -3780,7 +3758,7 @@ a.btn:hover {
     line-height: 1.2;
     text-rendering: optimizeLegibility;
     text-transform: uppercase;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     margin: 10px 0px;
 }
 
@@ -4286,7 +4264,7 @@ p.form-instructions,
 
 .popup_content {
     overflow: auto;
-    color: #333;
+    color: rgba(0,0,0,0.87);
     font: 16px "Raleway", Arial, sans-serif;
     background: #FFF;
     border-radius: 0px;
