@@ -1,0 +1,56 @@
+<?php 
+$helper = Mage::helper("agegate");
+$cookieExpire = $helper->getCookieExpire();
+$blockId = $helper->getBlockId();
+$agree = $helper->getAgree();
+$showPop = $helper->showPopUp();
+$height = $helper->getHeight();
+$width = $helper->getWidth();
+
+if($showPop):
+?>
+<div class="age-outer-bg">&nbsp;</div>
+<div class="age-pop-up ageconf" style="height:<?php echo $height; ?>; width:<?php echo $width; ?>">
+	<div class="verify">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHtml(); ?>
+        <div class="block-button">
+        	<a class="button" href="#" id="enter" title="Enter">Oui</a>
+            <a class="button" href="<?= Mage::getBaseUrl();?>" id="no" title="Exit">Non</a>
+        </div>
+        <p style="font-size:12px;font-style:italic;margin-top:10px;">L’abus d’alcool est dangereux pour la santé, à consommer avec modération. L’alcool ne doit pas être consommé par les femmes enceintes. </p>
+    </div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+
+		var ageverif_cookie ="<?= Mage::getModel("core/cookie")->get("ageverification");?>";
+		var verify_cookie ="<?= Mage::getModel("core/cookie")->get("verify");?>";
+
+		if(ageverif_cookie!="Y" || verify_cookie!="Y"){
+			jQuery('.age-outer-bg').fadeIn();
+			jQuery('.age-pop-up.ageconf').addClass('open');						
+
+	    	jQuery.ajax({
+	      		url: "<?= Mage::getBaseUrl();?>agegate/index/setagecookie",
+	      		type: "POST",
+	      		data: {name:"ageverification",statut:"Y"},
+	      		cache:false,
+	      		headers: { "cache-control": "no-cache" },
+	    	});
+		}
+		// Close popup
+		jQuery('.age-pop-up #enter').click(function(e){
+			jQuery.ajax({
+	      		url: "<?= Mage::getBaseUrl();?>agegate/index/setagecookie",
+	      		type: "POST",
+	      		data: {"name":"verify","statut":"Y"},
+	      		cache:false,
+	      		headers: { "cache-control": "no-cache" },
+	    	});
+			e.preventDefault();
+			jQuery('.age-outer-bg').fadeOut();
+			jQuery('.age-pop-up').removeClass('open');
+		});
+})
+</script>
+<?php endif; ?>
