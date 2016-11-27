@@ -1,7 +1,7 @@
 <?php
-$installer=$this;
+$installer = Mage::getResourceModel('catalog/setup','catalog_setup');
 $installer->startSetup();
-$installer->addAttribute(Mage_Catalog_Model_Category::ENTITY, 'show_age_popup', array(
+$installer->addAttribute('catalog_product', 'show_age_popup', array(
 'group' => 'General',
 'input' => 'select',
 'type' => 'int',
