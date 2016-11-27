@@ -3,9 +3,31 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+
+	<table>
+		<tr>
+			<td>
+				<div id='ticket-gallery' class='gallery'>
+					{% for merchant_id, file in files %}
+						<div class='item link' value="{{file.url}}">
+							<img src="{{file.url}}" />
+						</div>
+						<br />
+					{% endfor %}
+				</div>
+			</td>
+			<td>
+
+			</td>
+		</tr>
+	</table>
+
+
+	{#
 	<div id="ticket_carousel" class="owl-carousel">
 		{% for merchant_id, file in files %}
-			<img class="item" src="{{file.url}}">
+			<img class="item link" src="{{file.url}}">
 		{% endfor %}
 	</div>
+	#}
 {% endblock %}

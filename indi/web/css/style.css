@@ -30,3 +30,30 @@ span#logo {
 	background-color:	rgba(255,153,0,0.7);
 }
 
+#ticket-gallery {
+	display:	table;
+	margin:		auto;
+}
+
+.gallery .item {
+	display:		inline-block;
+	vertical-align:	middle;
+	width:			75px;
+	height:			75px;
+}
+
+.gallery .item:hover{
+	background-color:	rgba(255,153,0,0.7);
+	box-shadow:			0px 0px 5px rgba(255,153,0,0.7);
+}
+
+.gallery img.link,
+.gallery .link img {
+	display:		table;
+	margin:			auto;
+	max-width:		75px;
+	max-height:		75px;
+	width:			auto;
+	height:			auto;
+}
+
