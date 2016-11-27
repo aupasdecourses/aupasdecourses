@@ -30,12 +30,3 @@ span#logo {
 	background-color:	rgba(255,153,0,0.7);
 }
 
-.multi-item-carousel .carousel-inner > .item {
-	transition: 500ms ease-in-out left;
-}
-
-.carousel-inner > .item > img,
-.carousel-inner > .item > a > img {
-	width: 70%;
-	margin: auto;
-}

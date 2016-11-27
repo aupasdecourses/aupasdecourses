@@ -3,40 +3,9 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-	<div class="container">
-		<div id="ticket_Carousel" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				{% set i = 0 %}
-				{% for merchant_id, file in files %}
-					<li data-target="#ticket_carousel" data-slide-to="{{i}}" class="{{(i > 0) ? '' : 'active'}}"></li>
-					{% set i = i + 1 %}
-				{% endfor %}
-			</ol>
-			<div lass="carousel-inner" role="listbox">
-				{% set i = 0 %}
-				{% for merchant_id, file in files %}
-					<div class="item{{( i > 0) ? '' : ' active'}}">
-						<img src="{{file.url}}" class="{{( i > 0) ? '' : 'active'}}" width="460" height="345">
-						<div class="carousel-caption">						
-							total | diff en euro
-						<div>						
-					</div>
-					{% set i = i + 1 %}
-				{% endfor %}
-			</div>
-			<a class="left carousel-control" href="#ticket_carousel" role="button" data-slide="prev">
-				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="right carousel-control" href="#ticket_carousel" role="button" data-slide="next">
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
+	<div id="ticket_carousel" class="owl-carousel">
+		{% for merchant_id, file in files %}
+			<img class="item" src="{{file.url}}">
+		{% endfor %}
 	</div>
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	<script type="text/javascript" src="{{ path('root') }}js/carousel.js"></script>
 {% endblock %}
