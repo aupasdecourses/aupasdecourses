@@ -5,9 +5,12 @@ class Vsourz_Agegate_IndexController extends Mage_Core_Controller_Front_Action
     public function setagecookieAction()
     {
         $params = $this->getRequest()->getParams();
-        try {
-            Mage::getModel('core/cookie')->set($params['name'], $params['statut']);
-        } catch (Exception $e) {
+        $name_verif=["ageverification","verify"];
+        if(in_array($params['name'],$name_verif) && $params['statut']=="Y"){
+            try {
+                Mage::getModel('core/cookie')->set($params['name'], $params['statut']);
+            } catch (Exception $e) {
+            }
         }
     }
 }
