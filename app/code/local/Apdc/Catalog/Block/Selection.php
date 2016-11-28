@@ -24,7 +24,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
                 $data['html_bio']='';
             }
 
-            $data['url_path']=(isset($entity_data['url_path'])) ? $entity_data['url_path'] : '';
+            $data['url_path']=(isset($entity_data['url_path'])) ? Mage::getUrl($entity_data['url_path']) : '';
             $src= $this->helper('catalog/image')->init($entity, 'small_image')->resize(250, 250);
             $data['image_src']=(isset($src)) ? $this->htmlEscape($src) : '';
             $label=$this->getImageLabel($entity, 'small_image');
