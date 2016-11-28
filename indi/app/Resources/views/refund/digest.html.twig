@@ -3,8 +3,7 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-
-	<table>
+	<table style='width: 450px; height: 400px; border: 1px solid black;'>
 		<tr>
 			<td>
 				<div id='ticket-gallery' class='gallery'>
@@ -17,17 +16,8 @@
 				</div>
 			</td>
 			<td>
-
+				<div id='ticket-show' style='width: 350px; height: 400px;'></div>
 			</td>
 		</tr>
 	</table>
-
-
-	{#
-	<div id="ticket_carousel" class="owl-carousel">
-		{% for merchant_id, file in files %}
-			<img class="item link" src="{{file.url}}">
-		{% endfor %}
-	</div>
-	#}
 {% endblock %}

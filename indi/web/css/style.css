@@ -15,7 +15,7 @@ form.inline {
 }
 
 span#logo {
-	margin-top: -7px;
+	margin-top:			-7px;
 }
 
 .error {
@@ -31,8 +31,8 @@ span#logo {
 }
 
 #ticket-gallery {
-	display:	table;
-	margin:		auto;
+	display:			table;
+	margin:				auto;
 }
 
 .gallery .item {

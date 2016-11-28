@@ -1,8 +1,35 @@
 
+$(document).ready(function() {
+	var gallery = $('#ticket-gallery');
+
+	if (gallery.length) {
+		var value = $('#ticket-gallery .item:first').attr('value');
+
+		$('#ticket-show').empty();
+
+		OpenSeadragon({
+			id: 'ticket-show',
+			prefixUrl: '/media/osd/',
+			tileSources: {
+				type: 'image',
+				url: value
+			}
+		});
+	}
+});
+
 $('.gallery .link').on('click', function(event){
 	var value = $(this).attr('value');
 
-	console.log(value);
+	$('#ticket-show').empty();
 
+	OpenSeadragon({
+		id: 'ticket-show',
+		prefixUrl: '/media/osd/',
+		tileSources: {
+			type: 'image',
+			url: value
+		}
+	});
 });
 
