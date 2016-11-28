@@ -52,15 +52,11 @@ class Vsourz_Agegate_Helper_Data extends Mage_Core_Helper_Abstract
 
         //check category page
         if (Mage::registry('current_category')!==null && Mage::registry('current_category')->getShowAgePopup() == 1) {
-            Mage::log("Current cat ".Mage::registry('current_category'),null,"popup.log");
-            Mage::log("Current cat popup ".Mage::registry('current_category')->getShowAgePopup(),null,"popup.log");
             $check = true;
         }
 
         //check product page
         if (Mage::registry('current_product')!==null && Mage::registry('current_product')->getShowAgePopup() == 1) {
-            Mage::log("Current product ".Mage::registry('current_product'),null,"popup.log");
-            Mage::log("Current product popup ".Mage::registry('current_product')->getShowAgePopup(),null,"popup.log");
             $check = true;
         }
 
