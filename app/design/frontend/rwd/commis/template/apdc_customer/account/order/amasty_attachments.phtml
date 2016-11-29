@@ -6,9 +6,9 @@
  */
 ?>
 <?php
-$order                   = Mage::registry('current_order');
+$order = Mage::registry('current_order');
 $field = Mage::getModel('amorderattach/field')->load('ticket_commercant', 'code');
-$content= Mage::getModel('amorderattach/order_field')->load(615, 'order_id')->getTicketCommercant();
+$content= Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id')->getTicketCommercant();
 
 if($field->getCustomerVisibility()=="view"):
 ?>
