@@ -2,6 +2,7 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+	{#
 <div class="container">
 	<table class="table table-striped">
 		<tr>
@@ -39,8 +40,6 @@
 		{% endfor %}
 	</table>
 </div>
-
-<a href="{{ path('refundUpload', { 'id' : order_id }) }}">Etape Précédente</a>
-<a href="{{ path('refundResume', { 'id' : order_id }) }}">Etape Suivante</a>
+#}
 
 {% endblock %}

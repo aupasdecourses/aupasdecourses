@@ -65,7 +65,6 @@ class Magento
 		$categories = \Mage::getModel('catalog/category')->getCollection()
 			->addAttributeToSelect('*')
 			->addFieldToFilter('estcom_commercant', [ 'neq' => false ]);
-			//->addIsActiveFilter();
 		if ($commercantId <> -1)
 			$categories->addFieldToFilter("att_com_id", [ 'eq' => $commercantId ]);
 		$S = [];
@@ -366,33 +365,33 @@ class Magento
 	}
 
 	public function getRefunds($orderId){
-		$commercants = $this->getMerchants();
-		$orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
+		$merchants = $this->getMerchants();
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
-		$rsl = [];
-		$table_id = [];
-		$refundTable = [];
+
+		$rsl = [ -1 => [ 'merchant' => [ 'name' => 'All', 'total' => 0.0 ] ] ];
 		foreach ($orders as $order) {
-			$orderHeader = $this->OrderHeaderParsing($order);
-			$products = $order->getAllItems();
+			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
+			$products =  \Mage::getModel('sales/order_item')->getCollection();
+			$products->addFieldToFilter('main_table.order_id', ['eq' => $rsl[-1]['order']['mid']]);
+			$products->getSelect()->join(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
+				'refund_prix' => 'refund.prix_final',
+				'refund_diff' => 'refund.diffprixfinal'
+			]);
+
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product);
-				$prod_data['commercant_name'] = $commercants[$prod_data['commercant_id']]['name'];
-				$table_id[] = $prod_data['id'];
-				$orderHeader['products'][$prod_data['id']] = $prod_data;
-				$orderHeader['total_quantite'] += $prod_data['quantite'];
-				$orderHeader['total_prix'] += $prod_data['prix_total'];
+				$prod_data['refund_prix'] = $product->getData('refund_prix');
+				$prod_data['refund_diff'] = $product->getData('refund_diff');
+				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
+					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
+					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
+				}
+				$rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
+				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
 			}
-			$rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
 		}
-		$refundItems = \Mage::getModel('pmainguet_delivery/refund_items')->getCollection();
-		$refundItems->addFieldToFilter('order_item_id', array('in' => $table_id));
-		foreach ($refundItems as $refundItem){
-			// inserer donnees refund dans tableau $result
-			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix'] = $refundItem['prix_final'];
-			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['final_prix_diff'] = $refundItem['diffprixfinal'];
-			$rsl[$orderHeader['store']][$orderHeader['id']]['products'][$refundItem->getData('order_item_id')]['in_tick'] = $refundItem['in_ticket'];
-		}
-		return($rsl);
+		return ($rsl);
+
 	}
 }

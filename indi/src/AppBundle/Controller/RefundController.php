@@ -178,6 +178,10 @@ class RefundController extends Controller
 
 		$order = $mage->getRefunds($id);
 
+echo '<pre>';
+print_r($order);
+echo '</pre>';
+
 		return $this->render('refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'stores' => $order,
