@@ -27,12 +27,12 @@ class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 		foreach ($commercants as $commercant){
 			$commercant=$commercant->getData();
 			$sub=[
-				'name'=>$commercant['name'],
-				'stripped_name'=>$this->stripTags($commercant['name'], null, true),
-				'image'=>$commercant['image'],
-				'src'=>Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'],
-				'adresse'=>$commercant['adresse_commercant'],
-				'url'=>Mage::getUrl($commercant['url_path'])
+				'name'=>(isset($commercant['name'])) ? $commercant['name'] : "",
+				'stripped_name'=>(isset($commercant['name'])) ? $this->stripTags($commercant['name'], null, true) : "",
+				'image'=>(isset($commercant['image'])) ? $commercant['image'] : "",
+				'src'=>(isset($commercant['image'])) ? Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+				'adresse'=>(isset($commercant['adresse_commercant'])) ? $commercant['adresse_commercant'] : "",
+				'url'=>(isset($commercant['url_path'])) ? Mage::getUrl($commercant['url_path']) : "",
 			];
 			$data[]=$sub;
 		}
