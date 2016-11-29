@@ -4255,6 +4255,10 @@ p.form-instructions,
     font-family: "Raleway", Verdana, Arial, sans-serif;
 }
 
+img.ticket_commercant{
+    max-width:300px;
+}
+
 
 /*-- Popup first visit --*/
 

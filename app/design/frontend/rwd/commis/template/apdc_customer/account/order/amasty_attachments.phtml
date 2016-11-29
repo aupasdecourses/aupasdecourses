@@ -22,7 +22,15 @@ if($field->getCustomerVisibility()=="view"):
         ?>
         <ul>
             <?php foreach ($val as $img): ?>
-                    <li>Voir les tickets: <a href="<?php echo $this->getUrl('attaches/order/download', array('file' => $img, 'customer_id' => Mage::getSingleton('customer/session')->getCustomerId())); ?>"><?php echo $img; ?></a></li>
+                    <li>Voir les tickets:
+                        <?php if($img<>""):
+                            $url_src=$this->getUrl('attaches/order/download', array('file' => $img, 'customer_id' => Mage::getSingleton('customer/session')->getCustomerId()));
+                            ?>
+                            <a href="<?= $url_src?>"><img class="ticket_commercant" src="<?= $url_src?>"/></a>
+                        <?php else:?>
+                            <span>Pas de tickets commerçants (pour l'instant)</span>
+                        <?php endif;?>
+                    </li>
             <?php endforeach; ?>
         </ul>
     </div>
