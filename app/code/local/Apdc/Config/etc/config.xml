@@ -12,6 +12,9 @@
         <Apdc_Config>
             <version>0.1.0</version>
         </Apdc_Config>
+        <depends>
+            <Mage_Core />
+        </depends>
     </modules>
     <global>
         <blocks>
@@ -30,6 +33,11 @@
                     <sitemap>Apdc_Config_Model_Sitemap</sitemap> 
                 </rewrite>
             </sitemap>  
+            <core>  
+                <rewrite>  
+                    <design_package>Apdc_Config_Model_Designpackage</design_package> 
+                </rewrite>
+            </core>  
         </models>
         <events>
             <controller_action_layout_load_before>

@@ -3,48 +3,43 @@
 class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
 
 	const MODEL='commercants_model/fiche1';
-	//A modifier pour récupérer les catégories de Magento
-	public $category=['Mon Boucher'=>'Bouchers','Mon Epicier'=>'Epiciers','Mon Boulanger'=>'Boulangers','Mon Primeur'=>'Primeurs'];
 
 	public function gettable(){
 	    $fiche = Mage::getModel(self::MODEL)->setOrder('commercant_id', 'desc');
 	    return $fiche;
   	}
 
-  	//Return list of all Commercant categories, filtered by store
   	public function getListCommercant(){
-
   		$storeid=Mage::app()->getStore()->getId();
   		$rootId=Mage::app()->getStore($storeid)->getRootCategoryId();
+  		$data=array();
 
-	    $categories = Mage::getModel('catalog/category')
+	    $commercants = Mage::getModel('catalog/category')
                          ->getCollection()
-                         ->addAttributeToSelect('*')
+                         ->addAttributeToSelect(array('name','image','adresse_commercant','url_path'))
                          ->addIsActiveFilter()
                          ->addFieldToFilter('path', array('like'=> "1/$rootId/%"))
                          ->addAttributeToFilter('level', array('eq'=>3))
                          //70 est la value_id de l'option du select, correspondant à 'Oui'                        
                          ->addAttributeToFilter('estcom_commercant',70)
                          ->load();
-		return $categories;
+
+		foreach ($commercants as $commercant){
+			$commercant=$commercant->getData();
+			$sub=[
+				'name'=>(isset($commercant['name'])) ? $commercant['name'] : "",
+				'stripped_name'=>(isset($commercant['name'])) ? $this->stripTags($commercant['name'], null, true) : "",
+				'image'=>(isset($commercant['image'])) ? $commercant['image'] : "",
+				'src'=>(isset($commercant['image'])) ? Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+				'adresse'=>(isset($commercant['adresse_commercant'])) ? $commercant['adresse_commercant'] : "",
+				'url'=>(isset($commercant['url_path'])) ? Mage::getUrl($commercant['url_path']) : "",
+			];
+			$data[]=$sub;
+		}
+
+		return $data;
+
 	}
-
-
-	/**
-	 * getListPerCat 
-	 * 
-	 * @param Mage_Catalog_Model_Category $category category 
-	 * 
-	 * @return Mage_Catalog_Model_Resource_Category_Collection
-	 */
-    public function getListPerCat(Mage_Catalog_Model_Category $category)
-    {
-        $children = $category->getChildren();
-        $categories = Mage::getModel('catalog/category')->getCollection()
-            ->addFieldToFilter('entity_id', array('in' => explode(',', $children)))
-            ->addIsActiveFilter();
-		return $categories;
-	}  	
 
   	//En duplicata d'une fonction du controller => voir si possible d'utiliser Helper pour la partager entre les deux
   	public function strtoupperFr($string) {

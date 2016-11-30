@@ -47,7 +47,7 @@
 	           <use>standard</use>
 	           <args>
 	               <module>Apdc_SuperMenu</module>
-	               <frontName>sponsorship</frontName>
+	               <frontName>supermenu</frontName>
 	           </args>
 	       </apdc_supermenu>
 	   </routers>

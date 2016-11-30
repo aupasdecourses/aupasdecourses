@@ -11,8 +11,9 @@ $force = $this->getForce();
 
         //save old clicked lists and then removes element
         var subscribeValue = '';
+        var checkedLists = '';
         if ($('magemonkey-subscribe')) {
-            var checkedLists = $('magemonkey-subscribe').getValue();
+            checkedLists = $('magemonkey-subscribe').getValue();
             subscribeValue = checkedLists + ',';
             $('magemonkey-subscribe').remove();
         }
@@ -68,19 +69,19 @@ $force = $this->getForce();
 
         }
 
-    }
+    };
     addGroupToPost = function (element) {
-
-        if (element.checked) {
-
+        if ((element.checked && element.type == 'checkbox') || (element.type == 'select-one' && element.value)) {
             try {
-                var group = new Element('input', {
-                    name: element.readAttribute('name'),
-                    id: "subscribe" + element.readAttribute('id'),
-                    value: element.getValue(),
-                    checked: true,
-                    type: "checkbox"
-                });
+                var group = element.cloneNode(false);
+                if (element.type == 'select-one') {
+                    var option = new Element('option', {
+                        text: element.value,
+                        value: element.value,
+                        selected: 'selected'
+                    });
+                    group.appendChild(option);
+                }
                 Element.insert(Form.findFirstElement(payment.form), group);
             } catch (notelem) {
                 $("co-payment-form").insert(group);
@@ -90,7 +91,7 @@ $force = $this->getForce();
                 $("subscribe" + element.readAttribute('id')).remove();
             }
         }
-    }
+    };
     addElementToPost = function (element) {
         var formInputId = element.readAttribute('id') + '-serialize';
         if ($(formInputId)) {
@@ -106,7 +107,7 @@ $force = $this->getForce();
 
         Element.insert(Form.findFirstElement(payment.form), inp);
 
-    }
+    };
 </script>
 <div class="buttons-set"<?php if ($check === 3): ?> style="display:none;"<?php endif; ?>>
     <!-- General Subscription -->
@@ -262,7 +263,7 @@ $force = $this->getForce();
     //
     //    }
     //Handle newsletter groups subscribe/unsubscribe checkbox events
-    $$('.interest-groupings input').each(function (group) {
+    $$('.interest-groupings input, select').each(function (group) {
         group.observe('change', function () {
             addGroupToPost(group);
         });

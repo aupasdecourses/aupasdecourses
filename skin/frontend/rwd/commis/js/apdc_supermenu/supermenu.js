@@ -4,11 +4,24 @@
   updateScreenWidth();
 	$(document).ready(function(){
     checkStickyHeader();
+
+
+    // setMenuOpen : add menu-open class to the body when menu is open (to manage translating all page content)
     $(document).on('click', function(event) {
       window.setTimeout(setMenuOpen, 0);
     });
     $('#supermenu').on('click', function(event) {
       window.setTimeout(setMenuOpen, 0);
+    });
+
+
+    // Close menu only when clicking on links or close menu
+    $(document).on('click', '#supermenu .dropdown-menu', function (e) {
+      if (jQuery(e.target).hasClass('close-menu') || e.target.nodeName.toLowerCase() === 'a') {
+        return;
+      } else {
+        e.stopPropagation();
+      }
     });
 		$('.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
       if (screenWidth > mobileWidth) {
