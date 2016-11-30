@@ -1,5 +1,19 @@
 <?php
 	$commercants=$this->getListCommercant();
+
+	$commercant=array();
+	$helper = Mage::helper('catalog/category');
+ 	$categoriesCollection = $helper->getStoreCategories('name', true, false)->addAttributeToFilter('estcom_commercant', 70);
+ 	foreach($categoriesCollection as $cat){
+ 		$result[$cat->getId()]=[
+	 		'url_path' => $cat->getUrlPath(),
+	 		'src' => $cat->getThumbnail(),
+ 		];
+ 	}
+
+ 	$shops=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category',array('in' => array_keys($result)));
+
+
 ?>
 <div id="commercants-block" class="row hp-section commercants-block">
 	<div class="commercants-list col-md-12">
@@ -8,13 +22,13 @@
 		<div class="row">
 			<div class="commercants-main products-grid col-md-12">
 				<div id="carrousel-commercants" class="owl-carousel">
-					<?php foreach ($commercants as $commercant):?>
+					<?php foreach ($shops as $shop):?>
 							<div class="commercant-item">
-					            <a class="product-image" href="<?= $commercant['url'];?>" title="<?= $commercant['stripped_name'];?>">
-					                <img src="<?= $commercant['src'];?>" width="100%" alt="<?= $commercant['stripped_name'];?>" title="<?= $commercant['stripped_name'];?>" />
+					            <a class="product-image" href="<?= $result[$shop->getIdCategory()]['url_path'] ?>" title="">
+					                <img src="<?= $result[$shop->getIdCategory()]['src'] ?>" width="100%" alt="" title="<?= $shop->getName();?>" />
 					            </a>
-					            <h3 class="product-name"><?= $commercant['name'];?></h3>
-					            <span><?= $commercant['adresse'];?></span>
+					            <h3 class="product-name"><?= $shop->getName();?></h3>
+					            <span><?= $shop->getStreet().$shop->getPostcode().$shop->getCity();?></span>
 					        </div>    	
 					<?php endforeach; ?>
 						<div class="commercant-item">
