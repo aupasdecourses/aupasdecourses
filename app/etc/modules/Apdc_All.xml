@@ -78,6 +78,13 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_SalesRule>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_SalesRule />
+            </depends>
+        </Apdc_SalesRule>
         <Apdc_SuperMenu>
             <active>true</active>
             <codePool>local</codePool>
