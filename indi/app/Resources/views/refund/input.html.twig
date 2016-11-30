@@ -2,37 +2,52 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-	{{dump(order)}}
-	{% for merchant_id, merchant_part in order %}
-		<div class='row'>
-			<table class='table'>
-				<tr>
-					<td>
-						<div id='{{merchant_id}}' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchantt_part.merchant.ticket}}'></div>
-					</td>
-					<td>
-						<!-- refund table with form inputs -->
-					</td>
-				</tr>
-			</table>
-		</div>
-	{% endfor %}
+	{{ form_start(form) }}
+		{% for merchant_id, merchant_part in order %}
+			<div class='row'>
+				<table>
+					<tr>
+						<td>
+							<div id='{{merchant_id}}' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
+						</td>
+						<td>
+							<h1>{{merchant_part.merchant.name}}</h1>
+							<table class='table'>
+								<tr>
+									<th>Produit</th>
+									<th>Description</th>
+									<th>Quantite</th>
+									<th>Prix Unitaire</th>
+									<th>Total Commande</th>
+									<th>Total Ticket</th>
+									<th>Differentiel</th>
+									<th>Commentaire</th>
+								</tr>
+								{% for product_id, product in merchant_part.products %}
+									<tr>
+										<td>{{product.nom}}</td>
+										<td>{{product.description}}</td>
+										<td>{{product.quantite}}</td>
+										<td>{{product.prix_kilo}}</td>
+										<td>{{product.prix_total}}</td>
+										<td>
+											<input type='text' name='{{product_id}}[prix]' value='{{product.refund_prix}}' />
+										</td>
+										<td>
+											<input type='text' name='{{product_id}}[diff]' value='{{product.refund_diff}}'/>
+										</td>
+										<td>
+											<!-- <input type='text' name='{#{product_id}}[com]' value='{{product.refund_com}#}'/> -->
+										</td>
+									</tr>
+								{% endfor %}
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr />
+		{% endfor %}
 	<!-- submit -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('merchant-ticket').on('load', function(event){
-				var id = $(this).attr('id');
-				var value = $(this).attr('value');
-
-				OpenSeadragon({
-					id: id,
-					prefixUrl: '/media/osd/',
-					tileSources: {
-						type: 'image',
-						url: value
-					}
-				});
-			});
-		});
-	</script>	
+	{{ form_end(form) }}
 {% endblock %}

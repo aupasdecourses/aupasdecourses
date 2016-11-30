@@ -180,15 +180,27 @@ class RefundController extends Controller
 
 		$files = $this->getUploadedFiles($id);
 
-		foreach($files as $file_id => $info) {
-			$order[$file_id]['merchant']['ticket'] = $info;
+		foreach ($order as $merchant_id => $merchant_part) {
+			if (isset($files[$merchant_id]))
+				$order[$merchant_id]['merchant']['ticket'] = $files[$merchant_id]['url'];
+			else
+				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
 		}
+		ksort($order);
 
-		unset ($order[-1]);
+		$total = $order[-1]['merchant']['total'];
+		unset($order[-1]);
+
+		$entity_input = new \AppBundle\Entity\Input();
+		$form_input = $this->createFormBuilder($entity_input);
+
+		$form_input = $form_input->getForm();
 
 		return $this->render('refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
+			'form' => $form_input->createView(),
 			'order' => $order,
+			'total' => $total,
 			'order_id' => $id,
 		]);
 	}
@@ -205,6 +217,7 @@ class RefundController extends Controller
 		unset ($order[-1]);
 
 		$files = $this->getUploadedFiles($id);
+		ksort($files);
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
