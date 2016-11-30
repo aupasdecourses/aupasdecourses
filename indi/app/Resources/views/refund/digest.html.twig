@@ -16,8 +16,43 @@
 				</div>
 			</td>
 			<td>
-				<div id='ticket-show' style='width: 350px; height: 400px;'></div>
+				<div id='ticket-show' style='min-width: 350px; min-height: 400px; width: 100%; height: 100%;'></div>
 			</td>
 		</tr>
 	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var gallery = $('#ticket-gallery');
+		
+			if (gallery.length) {
+				var value = $('#ticket-gallery .item:first').attr('value');
+		
+				$('#ticket-show').empty();
+		
+				OpenSeadragon({
+					id: 'ticket-show',
+					prefixUrl: '/media/osd/',
+					tileSources: {
+						type: 'image',
+						url: value
+					}
+				});
+			}
+		});
+		
+		$('#ticket-gallery .link').on('click', function(event){
+			var value = $(this).attr('value');
+		
+			$('#ticket-show').empty();
+		
+			OpenSeadragon({
+				id: 'ticket-show',
+				prefixUrl: '/media/osd/',
+				tileSources: {
+					type: 'image',
+					url: value
+				}
+			});
+		});
+	</script>
 {% endblock %}

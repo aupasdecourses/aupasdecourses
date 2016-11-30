@@ -2,44 +2,37 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
-	{#
-<div class="container">
-	<table class="table table-striped">
-		<tr>
-			<th>Commercant</th>
-			<th>Produit</th>
-			<th>Description</th>
-			<th>Prix Unitaire ( Prix Kilo )</th>
-			<th>Quantite</th>
-			<th>Prix Total</th>
-			<th>Prix Final</th>
-			<th>Difference</th>
-			<th>Sur Ticket</th>
-		</tr>
-		{% for store in stores %}
-		{% for order_id in store %}
-		{% for product in order_id.products %}
-		<tr>
-			<td>{{ product.commercant_name }}</td>
-			<td>{{ product.nom }}</td>
-			<td>{{ product.description }}</td>
-			<td>{{ product.prix_unitaire ~" ( " ~ product.prix_kilo ~ " € )"}}</td>
-			<td>{{ product.quantite }}</td>
-			<td>{{ product.prix_total ~" € "}}</td>
-			<td>{{ product.final_prix ~ " € "}}</td>
-			<td>{{ product.final_prix_diff ~ " € "}}</td>
-			<td>{{ product.in_tick}}</td>
-		</tr>
-		{% endfor %}
-		<tr>
-			<td><b>TOTAL</b></td>
-			<td colspan="7"><b></b></td>
-			<td><b>{{ order_id.total_prix }}</b></td>
-		</tr>
-		{% endfor %}
-		{% endfor %}
-	</table>
-</div>
-#}
+	{{dump(order)}}
+	{% for merchant_id, merchant_part in order %}
+		<div class='row'>
+			<table class='table'>
+				<tr>
+					<td>
+						<div id='{{merchant_id}}' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchantt_part.merchant.ticket}}'></div>
+					</td>
+					<td>
+						<!-- refund table with form inputs -->
+					</td>
+				</tr>
+			</table>
+		</div>
+	{% endfor %}
+	<!-- submit -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('merchant-ticket').on('load', function(event){
+				var id = $(this).attr('id');
+				var value = $(this).attr('value');
 
+				OpenSeadragon({
+					id: id,
+					prefixUrl: '/media/osd/',
+					tileSources: {
+						type: 'image',
+						url: value
+					}
+				});
+			});
+		});
+	</script>	
 {% endblock %}

@@ -178,13 +178,17 @@ class RefundController extends Controller
 
 		$order = $mage->getRefunds($id);
 
-echo '<pre>';
-print_r($order);
-echo '</pre>';
+		$files = $this->getUploadedFiles($id);
+
+		foreach($files as $file_id => $info) {
+			$order[$file_id]['merchant']['ticket'] = $info;
+		}
+
+		unset ($order[-1]);
 
 		return $this->render('refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'stores' => $order,
+			'order' => $order,
 			'order_id' => $id,
 		]);
 	}
@@ -198,7 +202,7 @@ echo '</pre>';
 		$order = $mage->getOrderByMerchants($id);
 
 		$total = $order[-1]['merchant']['total'];
-		unset ($order[-1]['merchant']['total']);
+		unset ($order[-1]);
 
 		$files = $this->getUploadedFiles($id);
 
