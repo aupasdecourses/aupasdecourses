@@ -109,6 +109,10 @@
         <reference name="global_notices">
             <block type="page/html_cookieNotice" name="global_cookie_notice_head" as="global_cookie_notice_head" template="page/html/cookienotice.phtml" />
         </reference>
+
+        <reference name="left">
+          <remove name="catalog.leftnav" />
+        </reference>
     </default>
 
       <!-- Homepage, from catalog.xml -->

@@ -13,11 +13,9 @@
     </default>
 
     <catalog_category_view>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/2columns-left.phtml</template>
-            </action>
-        </reference>
+        <remove name="right"/>
+        <remove name="left"/>
+        <remove name="left_first"/>
 
         <reference name="head">
           <action method="addItem"><type>skin_css</type><file>css/apdc_catalog/category_view.css</file></action>
@@ -45,18 +43,34 @@
     <catalog_category_default>
         <label>Catalog Category (Non-Anchor)</label>
 
-        <reference name="root">
-            <action method="setTemplate"><template>page/1column.phtml</template></action>
-        </reference>
 
-        <reference name="content">
-          <block type="commercants/fiche" template="commercants/commercantnavigation.phtml" name="listecommercants" before="category.products" />
-        </reference>
+
+				<!--<reference name="left_first">-->
+            <!--<block type="catalog/navigation" name="catalog.leftnav" after="currency" template="catalog/navigation/left.phtml">-->
+                <!--<block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />-->
+            <!--</block>-->
+        <!--</reference>-->
 
         <reference name="product_list">
           <action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
           <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
           <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
+          <action method="setColumnCount"><count>5</count></action>
+        </reference>
+
+        <reference name="product_list.name.after">
+          <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml" />
+          <block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
+            <block type="catalog/product_view_type_configurable" name="product_options.configurable" template="apdc_catalog/product/list/options/configurable.phtml" />
+            <block type="core/template" name="options_js" template="catalog/product/view/options/js.phtml"/>
+            <block type="catalog/product_view_options" name="product.info.options" template="apdc_catalog/product/list/options/custom-options.phtml">
+                <action method="addOptionRenderer"><type>text</type><block>catalog/product_view_options_type_text</block><template>catalog/product/view/options/type/text.phtml</template></action>
+                <action method="addOptionRenderer"><type>file</type><block>catalog/product_view_options_type_file</block><template>catalog/product/view/options/type/file.phtml</template></action>
+                <action method="addOptionRenderer"><type>select</type><block>catalog/product_view_options_type_select</block><template>catalog/product/view/options/type/select.phtml</template></action>
+                <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
+            </block>
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
+          </block>
         </reference>
     </catalog_category_default>
 
@@ -67,6 +81,9 @@
           <action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
           <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
           <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
+
+          <action method="setColumnCount"><count>5</count></action>
+
         </reference>
 
         <reference name="product_list.name.after">
@@ -86,7 +103,17 @@
     </catalog_category_layered>
 
     <catalog_product_view>
+        <remove name="right"/>
+        <remove name="left"/>
+        <remove name="left_first"/>
         <remove name="product.reviews" />
+        <remove name="html_calendar" />
+        <remove name="product.attributes"/>
+        <remove name="alert.urls"/>
+        <remove name="product.info.extrahint" />
+        <remove name="product.info.additional"/>
+        <remove name="product.info.additional.recurring.schedule"/>
+        <remove name="product.info.options.recurring"/>
         <reference name="product.info.upsell">
             <action method="setColumnCount">
                 <columns>5</columns>
@@ -96,7 +123,25 @@
                 <limit>4</limit>
             </action>
         </reference>
+        <reference name="head">
+          <action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery-1.3.1.min.js</name></action>
+        </reference>
     </catalog_product_view>
+
+    <PRODUCT_TYPE_simple>
+      <remove name="product.info.simple.extra" />
+      <remove name="product.info.availability" />
+    </PRODUCT_TYPE_simple>
+
+    <PRODUCT_TYPE_configurable>
+      <remove name="product.info.configurable.extra" />
+      <remove name="product.info.availability" />
+    </PRODUCT_TYPE_configurable>
+
+    <PRODUCT_TYPE_grouped>
+      <remove name="product.info.grouped.extra" />
+      <remove name="product.info.availability" />
+    </PRODUCT_TYPE_grouped>
 
     <PRODUCT_TYPE_bundle>
         <remove name="bundle.tierprices" />
