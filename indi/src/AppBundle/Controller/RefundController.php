@@ -195,6 +195,17 @@ class RefundController extends Controller
 		$form_input = $this->createFormBuilder($entity_input);
 
 		$form_input = $form_input->getForm();
+		$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
+
+		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token'])) {
+			// save to BDD
+
+			echo '<pre>';
+			print_r($_POST);
+			echo '</pre>';
+
+			// if all good redirect to digest
+		}
 
 		return $this->render('refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],

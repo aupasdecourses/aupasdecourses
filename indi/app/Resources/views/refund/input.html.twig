@@ -8,11 +8,11 @@
 				<table>
 					<tr>
 						<td>
-							<div id='{{merchant_id}}' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
+							<div id='{{merchant_id}}-ticket-img' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
 						</td>
 						<td>
 							<h1>{{merchant_part.merchant.name}}</h1>
-							<table class='table'>
+							<table id='{{merchant_id}}' class='merchant table'>
 								<tr>
 									<th>Produit</th>
 									<th>Description</th>
@@ -29,18 +29,28 @@
 										<td>{{product.description}}</td>
 										<td>{{product.quantite}}</td>
 										<td>{{product.prix_kilo}}</td>
-										<td>{{product.prix_total}}</td>
 										<td>
-											<input type='text' name='{{product_id}}[prix]' value='{{product.refund_prix}}' />
+											<span id='{{product_id}}-total'>{{product.prix_total}}</span>
 										</td>
 										<td>
-											<input type='text' name='{{product_id}}[diff]' value='{{product.refund_diff}}'/>
+											<input id='{{product_id}}-ticket' class='ticket' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix}}' />
+										</td>
+										<td>
+											{% set class = ((product.refund_diff == 0) ? 'success' : ((product.refund_diff > 0) ? 'warning' : 'error')) %}
+											<p id='{{product_id}}-diff' class='diff {{class}}'>{{product.refund_diff}}</p>
 										</td>
 										<td>
 											<!-- <input type='text' name='{#{product_id}}[com]' value='{{product.refund_com}#}'/> -->
 										</td>
 									</tr>
 								{% endfor %}
+								<tr>
+									<th colspan='4'>TOTAL</th>
+									<td><p id='{{merchant_id}}-total'>{{merchant_part.merchant.total}}</p></td>
+									<td><p id='{{merchant_id}}-ticket-total'>{{merchant_id}}-ticket</p></td>
+									<td><p id='{{merchant_id}}-diff'>{{merchant_id}}-diff</p></td>
+									<td></td>
+								</tr>
 							</table>
 						</td>
 					</tr>
@@ -48,6 +58,6 @@
 			</div>
 			<hr />
 		{% endfor %}
-	<!-- submit -->
+		<input type='submit' name='submit' value='submit' />
 	{{ form_end(form) }}
 {% endblock %}

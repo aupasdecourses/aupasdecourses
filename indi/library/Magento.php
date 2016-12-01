@@ -238,6 +238,21 @@ class Magento
 		);
 	}
 
+	public function addEntryToRefundItem(Array $data) {
+		$this->addEntryToModel(
+			\Mage::getModel('sales/refund_item'),
+			$data
+		);
+	}
+
+	public function updateEntryToRefundItem(Array $filters, Array $updatedFields) {
+		$this->updateEntryToModel(
+			\Mage::getModel('sales/refund_item'),
+			$filters,
+			$updatedFields
+		);
+	}
+
 	public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1) {
 		if (!isset($dfrom))
 			$dfrom = date('Y-m-d');
@@ -392,6 +407,5 @@ class Magento
 			}
 		}
 		return ($rsl);
-
 	}
 }
