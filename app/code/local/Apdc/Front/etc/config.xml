@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Front>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
         </Apdc_Front>
     </modules>
     <global>
@@ -15,11 +15,6 @@
                     <html_footer>Apdc_Front_Block_Page_Html_Footer</html_footer>
                 </rewrite>
             </page>
-            <custommenu>
-                <rewrite>
-                    <navigation>Apdc_Front_Block_Navigation</navigation>
-                </rewrite>
-            </custommenu>
         </blocks>
         <helpers>
             <apdc_front>

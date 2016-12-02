@@ -5,28 +5,15 @@ $j(function(){
 	//Get current date
 		currentdate=new Date();
 		dd=currentdate.getDate();
-		mm=currentdate.getMonth()+1;
+		mm=currentdate.getMonth();
 		yy=currentdate.getFullYear();
 		hh=currentdate.getHours();
 		mn=currentdate.getMinutes();
 		ss=currentdate.getSeconds();
-		currentdate=new Date(yy,mm-1,dd,hh,mn,ss);
+		currentdate=new Date(yy,mm,dd,hh,mn,ss);
 
 	//Set date to 3pm
-		ts = new Date(yy, mm-1, dd,15,0,0);
-	
-	// var holidays=[
-	// 		new Date(yy,0,1,5,0,0).getTime(), //Jour de l'an
-	// 		new Date(yy,3,6,5,0,0).getTime(), //Lundi de Pâques
-	// 		new Date(yy,4,1,5,0,0).getTime(), //Fête du travail
-	// 		new Date(yy,4,8,5,0,0).getTime(), //Armistice 1945
-	// 		new Date(yy,4,14,5,0,0).getTime(), //Jeudi de l'Ascencion
-	// 		new Date(yy,4,25,5,0,0).getTime(), //Lundi de Pentecôte
-	// 		new Date(yy,6,14,5,0,0).getTime(), //Fete nationale
-	// 		new Date(yy,10,1,5,0,0).getTime(), //Toussaint
-	// 		new Date(yy,10,11,5,0,0).getTime(), //Armistice 1918
-	// 		new Date(yy,11,25,5,0,0).getTime(), //Noel
-	// 	];
+		ts = new Date(yy, mm, dd,15,0,0);
 
 		var holidays=[
 			"1-1",   //Jour de l'an
@@ -41,7 +28,7 @@ $j(function(){
 			"25-12"  //Noel
 		];
 
-	var testdate=new Date(yy,mm-1,dd);
+	var testdate=new Date(yy,mm,dd+1,10,0,0);
 
 	if(currentdate.getDay()==1){
 		//Affichage le lundi

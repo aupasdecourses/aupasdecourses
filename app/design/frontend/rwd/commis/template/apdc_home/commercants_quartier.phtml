@@ -1,0 +1,40 @@
+<?php
+	$commercants=$this->getListCommercant();
+?>
+<div id="commercants-block" class="row hp-section commercants-block">
+	<div class="commercants-list col-md-12">
+		<div class="title-block">Vos Commer&ccedil;ants de <?= Mage::app()->getStore()->getName();?></div>
+		<div class="colored-line"></div>
+		<div class="row">
+			<div class="commercants-main products-grid col-md-12">
+				<div id="carrousel-commercants" class="owl-carousel">
+					<?php foreach ($commercants as $commercant):?>
+							<div class="commercant-item">
+					            <a class="product-image" href="<?= $commercant['url'];?>" title="<?= $commercant['stripped_name'];?>">
+					                <img src="<?= $commercant['src'];?>" width="100%" alt="<?= $commercant['stripped_name'];?>" title="<?= $commercant['stripped_name'];?>" />
+					            </a>
+					            <h3 class="product-name"><?= $commercant['name'];?></h3>
+					            <span><?= $commercant['adresse'];?></span>
+					        </div>    	
+					<?php endforeach; ?>
+						<div class="commercant-item">
+				            <a class="product-image" href="<?php echo Mage::getUrl('formulaire/index/commercantsmanquants')?>" title="A venir">
+				                <img src="<?php echo Mage::getBaseUrl('media').'resource/commerçant_dummy.png'?>" width="100%" alt="" title="" />
+				            </a>
+				            <h3 class="product-name" style="text-align:center;"><a href="<?php echo Mage::getBaseUrl().'commercant-form/'?>">Suggérez nous votre commerçant, Cliquez ici!</a></h3>
+				        </div>  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $j(document).ready(function() {
+      $j("#carrousel-commercants").owlCarousel({
+            items:3,
+            pagination:false,
+            autoPlay : false,
+            navigation : true
+      });
+    });
+</script>

@@ -1,11 +1,15 @@
 <?php
     //Récupération de la fiche du commerçant
-    $current_cat=Mage::registry('current_category');
-    $current_cat_Name=$current_cat->getName();	
+    $current_cat=Mage::registry('current_category');  
+    $current_cat_data=$current_cat->getData();
+    $horaires=str_replace(',','</br>',$current_cat_data['horaires_commercant']);
+    $url_adresse="https://www.google.fr/maps/place/".str_replace(" ","+", $current_cat_data['adresse_commercant']);
+    $delivery_days=$current_cat->getResource()->getAttribute('delivery_days')->getFrontend()->getValue($current_cat);
+
  ?>
 <div class="row">
 	<div class="page-title category-title col-xs-12">
-	    <h1 class="subtitle commercant_name"><?php echo $current_cat_Name ?></h1>
+	    <h1 class="subtitle commercant_name"><?= $current_cat_data['name'] ?></h1>
 	</div>
 </div>
 <div class="row">
@@ -20,7 +24,7 @@
 				<h2 class="title-block" style="width:300px">La petite histoire</h2>
 				<div class="colored-line"></div>
 				<div class="desc-commercant">
-					<p><?php echo $current_cat->getData('description') ?></p>
+					<p><?= $current_cat_data['description'] ?></p>
 				</div>
 			</div>
 		</div>
@@ -31,28 +35,14 @@
 			<div class="colored-line"></div>
 			<div class="col-md-6">
 				<dl class="dl-horizontal infos-commercant">
-				  <dt>Adresse</dt>
-				  <dd><a href="https://www.google.fr/maps/place/<?php echo str_replace(" ","+",$current_cat->getData('adresse_commercant'));?>" target="_blank"><?php echo $current_cat->getData('adresse_commercant');?></a>
-				  </dd>
-				   <dt>Horaires</dt>
-				   <dd>
-				   		<?php $array=explode(',',$current_cat->getData('horaires_commercant'));
-				   		foreach($array as $day){
-				   			echo $day.'<br/>';
-				   		} 
-				   		?>
-				   	</dd>
-				   <!--
-				   <dt>Badge</dt>
-				  <dd><?php echo $current_cat->getData('badge_commercant') ?></dd>-->
+				  <dt>Adresse</dt><dd><a href="$url_adresse" target="_blank"><?= $current_cat_data['adresse_commercant'];?></a></dd>
+				   <dt>Horaires</dt><dd><?= $horaires?></dd>
 				</dl>
 			</div>
 			<div class="col-md-6">
 				<dl class="dl-horizontal infos-commercant">
-				  <dt>Jour livraisons</dt>
-				  <dd><?php echo $current_cat->getData('livraison_commercant') ?></dd>
-				  <dt>Téléphone</dt>
-				  <dd><?php echo $current_cat->getData('telephone') ?></dd>
+				  <dt>Jour livraisons</dt><dd><?= $delivery_days ?></dd>
+				  <dt>Téléphone</dt><dd><?= $current_cat_data['telephone'] ?></dd>
 				</dl>
 			</div>
 		</div>
@@ -65,20 +55,4 @@
 	<div class="col-sm-12 block_selection">
 		<?php echo $this->getChildHtml('blockselection')?>
 	</div>
-	<!-- <div class="col-md-6 block_lastorders">
-		<?php echo $this->getChildHtml('lastorder')?>
-	</div> -->
 </div>
-
-<script>
-    $j(document).ready(function() {
-     
-      $j("#carrousel-cats").owlCarousel({
-            items:4,
-            pagination:false,
-            autoPlay : false,
-            navigation : true
-      });
-     
-    });
-</script>

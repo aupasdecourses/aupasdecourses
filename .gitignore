@@ -44,30 +44,42 @@
 ehthumbs.db
 Thumbs.db
 
+# Ignore config files #
 /.htaccess
 .htpasswrd
 /app/etc/local.xml
+/maintenance.flag
+/mage-dbdump.sh
+
+# Ignore cron files #
 /cron.php
 /cron.sh
+
+#ignore downloader, install and compile folders#
 /downloader
 /includes
-#index.php
 /install.php
-LICENSE*
-/media
-/robots.txt
 /var
 /dev
 /tmp
-#shell
 /pkginfo
 /sitemap
 /sitemap_accueil
+
+#ignore media & attachments#
+/media
 /delivery/attachments
+/delivery/uploads/files/
+
+#ignore robots.txt#
+/robots.txt
+
+#ignore magmi temp files #
 /magmi/conf/magmi.ini
 /magmi/state
-/maintenance.flag
-/mage-dbdump.sh
+/magmi/.htaccess
+
+#ignore blog files
 /blog/wp-config.php
 /blog/wp-content/uploads/
 /blog/wp-content/blogs.dir/
@@ -80,8 +92,15 @@ LICENSE*
 /blog/*.log
 /blog/wp-content/cache/
 /blog/wp-content/backups/
-/magmi/.htaccess
+
 *.default
-/delivery/attachments
-/delivery/uploads/files/
+
+# ignore dev tools #
 /app/code/local/Alanstormdotcom
+/app/code/local/Balloz/
+/app/design/frontend/base/default/layout/balloz_developertoolbar.xml
+/app/design/frontend/base/default/template/balloz/
+/app/etc/modules/Balloz_DeveloperToolbar.xml
+/delivery/vendor/
+/skin/frontend/base/default/css/balloz/
+/skin/frontend/base/default/js/balloz/
