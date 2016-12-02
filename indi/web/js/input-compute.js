@@ -10,28 +10,31 @@ $(document).ready(function() {
 	}
 
 	var r_ticket = /([0-9]*)-diff/;
-	$('.merchant').each(function(){
+
+	$('.merchant').each(function() {
 		var merchant_id = $(this).attr('id');
 		var somme_ticket = 0;
 		var somme_diff = 0;
 
-		$('#' + merchant_id + ' .diff').each(function(){
-			var item_id = r_ticket.exec($(this).attr('id'))[1];
-			somme_ticket += parseFloat($('#' + item_id + '-ticket').attr('value'));
+		function update_diff(merchant_id) {
+			$('#' + merchant_id + ' .diff').each(function() {
+				var item_id = r_ticket.exec($(this).attr('id'))[1];
+				somme_ticket += parseFloat($('#' + item_id + '-ticket').attr('value'));
 
-			var this_diff = parseFloat($(this).html());
-			somme_diff += this_diff;
+				var this_diff = parseFloat($(this).html());
+				somme_diff += this_diff;
 
-			set_diff_color($(this), this_diff);
-		});
+				set_diff_color($(this), this_diff);
+			});
+		}
+
+		update_diff(merchant_id);
 		$('#' + merchant_id + '-ticket-total').html(somme_ticket.toFixed(2));
 		$('#' + merchant_id + '-diff').html(somme_diff.toFixed(2));
 		set_diff_color($('#' + merchant_id + '-diff'), somme_diff);
 	});
-	$('.class').on('change', function(){
-		;
-	});
 });
+	
 
 //	var r_ticket = /([0-9]*)\[ticket\]/;
 //
