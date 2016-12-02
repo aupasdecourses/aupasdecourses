@@ -36,7 +36,6 @@
 											<input id='{{product_id}}-ticket' class='ticket' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix}}' />
 										</td>
 										<td>
-											{% set class = ((product.refund_diff == 0) ? 'success' : ((product.refund_diff > 0) ? 'warning' : 'error')) %}
 											<p id='{{product_id}}-diff' class='diff {{class}}'>{{product.refund_diff}}</p>
 										</td>
 										<td>
@@ -47,8 +46,8 @@
 								<tr>
 									<th colspan='4'>TOTAL</th>
 									<td><p id='{{merchant_id}}-total'>{{merchant_part.merchant.total}}</p></td>
-									<td><p id='{{merchant_id}}-ticket-total'>{{merchant_id}}-ticket</p></td>
-									<td><p id='{{merchant_id}}-diff'>{{merchant_id}}-diff</p></td>
+									<td><p id='{{merchant_id}}-ticket-total'></p></td>
+									<td><p id='{{merchant_id}}-diff'></p></td>
 									<td></td>
 								</tr>
 							</table>
