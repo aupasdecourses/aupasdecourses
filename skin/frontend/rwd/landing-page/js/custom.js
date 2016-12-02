@@ -1,4 +1,19 @@
 /* =================================
+===  POPUP-GMAPS           ====
+=================================== */
+$j(document).ready(function() {
+  $j('.popup-gmaps').magnificPopup({
+    disableOn: 700,
+    type: 'iframe',
+    mainClass: 'mfp-fade',
+    removalDelay: 160,
+    preloader: false,
+
+    fixedContentPos: false
+  });
+});
+
+/* =================================
 ===  CAROUSEL FOR COMMENTS           ====
 =================================== */
 $j(document).ready(function() {$j("#carousel-how").owlCarousel({autoPlay: 6000,itemsCustom : [[0, 1],[768, 3]],stopOnHover:true});});
@@ -87,3 +102,28 @@ $j("#scroll-button").click(function() {
         scrollTop: $j("#concept").offset().top},
         'slow');
 });
+
+/* =================================
+===  GOOGLE AUTOCOMPLETE          ====
+=================================== */
+
+// $j('#GoogleAutoCompleteZipcode').val('');
+// $j('#GoogleAutoCompleteInput').keypress(function(event) {
+//   if (event.which == 13) {
+//     event.preventDefault();
+//     window.setTimeout(function(){
+//       $j('#form-quartier').submit();
+//     }, 500)
+//   }
+// });
+// $j('#form-quartier').submit(function(event){
+//   if ($j('#GoogleAutoCompleteZipcode').val() == '') {
+//     event.preventDefault();
+//     $j.magnificPopup.open({
+//       items: {
+//         src: '<?= $zipcode_popup ?>',
+//         type: 'inline'
+//       }
+//     });
+//   }
+// });

@@ -13,6 +13,12 @@
     </default>
     <checkout_cart_index>
         <remove name="checkout.cart.shipping"/>
+        <remove name="checkout.cart.methods.paypaluk_express.top"/>
+        <remove name="checkout.cart.methods.paypal_express.top"/>
+        <remove name="checkout.cart.methods.multishipping"/>
+        <remove name="checkout.cart.methods.paypal_express.bottom"/>
+        <remove name="checkout.cart.methods.paypaluk_express.bottom"/>
+        <remove name="checkout.cart.crosssell"/>
     	<reference name="head">
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
         </reference>
@@ -38,82 +44,6 @@
             </block>
         </reference>
     </checkout_cart_index>
-    <catalog_category_layered_nochildren>
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
-            </block>
-        </reference>
-    </catalog_category_layered_nochildren>
-    <GROUP_CATEGORY>
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
-            </block>
-        </reference>
-    </GROUP_CATEGORY>
     <addajax_index_options>
         <reference name="root">
             <action method="setTemplate"><template>page/empty.phtml</template></action>
@@ -155,7 +85,6 @@
                         <action method="addOptionRenderer"><type>select</type><block>catalog/product_view_options_type_select</block><template>catalog/product/view/options/type/select.phtml</template></action>
                         <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
                 </block>
-                        <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
                     </block>
                 <block type="catalog/product_view" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="catalog/product/view/options/wrapper/bottom.phtml" translate="label">
                     <label>Bottom Block Options Wrapper</label>

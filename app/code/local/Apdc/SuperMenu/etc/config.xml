@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<config>
+
+	<modules>
+		<Apdc_SuperMenu>
+			<version>0.1.1</version>
+		</Apdc_SuperMenu>
+	</modules>
+
+	<global>
+		<blocks>
+			<apdc_supermenu>
+				<class>Apdc_SuperMenu_Block</class>
+			</apdc_supermenu>
+      <page>
+        <rewrite>
+          <html_topmenu_renderer>Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer</html_topmenu_renderer>
+        </rewrite>
+      </page>
+		</blocks>
+		<helpers>
+			<apdc_supermenu>
+				<class>Apdc_SuperMenu_Helper</class>
+			</apdc_supermenu>
+		</helpers>
+		<models>
+			<apdc_supermenu>
+				<class>Apdc_SuperMenu_Model</class>
+			</apdc_supermenu>
+    </models>
+		<resources>
+			<apdc_supermenu_setup>
+				<setup>
+					<module>Apdc_SuperMenu</module>
+          <class>Mage_Catalog_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</apdc_supermenu_setup>
+		</resources>
+	</global>
+	
+	<frontend>
+	   <routers>
+	       <apdc_supermenu>
+	           <use>standard</use>
+	           <args>
+	               <module>Apdc_SuperMenu</module>
+	               <frontName>supermenu</frontName>
+	           </args>
+	       </apdc_supermenu>
+	   </routers>
+	   <layout>
+	       <updates>
+	           <apdc_supermenu>
+                <file>apdc_supermenu.xml</file>
+	           </apdc_supermenu>
+	       </updates>
+	   </layout>
+	   <translate>
+	       <modules>
+	           <Apdc_SuperMenu>
+	               <files>
+	                   <default>Apdc_SuperMenu.csv</default>
+	               </files>
+	           </Apdc_SuperMenu>
+	       </modules>
+	   </translate>
+    <category>
+      <collection>
+        <attributes>
+          <menu_bg_color />
+          <menu_text_color />
+          <menu_template />
+          <menu_main_static_block />
+          <menu_static_block1 />
+          <thumbnail />
+          <is_clickable />
+        </attributes>
+      </collection>
+    </category>
+		<events>
+      <catalog_category_flat_loadnodes_before>
+        <observers>
+          <apdc_supermenu_load_custom_category_attributes>
+            <type>singleton</type>
+            <class>apdc_supermenu/observer</class>
+            <method>loadCustomCategoryAttributes</method>
+          </apdc_supermenu_load_custom_category_attributes>
+        </observers>
+      </catalog_category_flat_loadnodes_before>
+      <apdc_page_block_html_topmenu_gethtml_before>
+        <observers>
+          <apdc_supermenu_get_categories>
+            <type>singleton</type>
+            <class>apdc_supermenu/observer</class>
+            <method>addCatalogToTopmenuItems</method>
+          </apdc_supermenu_get_categories>
+        </observers>
+      </apdc_page_block_html_topmenu_gethtml_before>
+    </events>
+	</frontend>
+
+	<adminhtml>
+	  <translate>
+      <modules>
+        <Apdc_SuperMenu>
+          <files>
+            <default>Apdc_SuperMenu.csv</default>
+          </files>
+        </Apdc_SuperMenu>
+      </modules>
+    </translate>
+
+    <acl>
+      <resources>
+        <admin>
+          <children>
+            <customer>
+              <children>
+                <apdc_supermenu translate="title" module="apdc_supermenu">
+                  <title>Sponsorship</title>
+                  <children>
+                      <sponsor translate="title" module="apdc_supermenu">
+                          <title>View Sponsors</title>
+                          <sort_order>100</sort_order>
+                      </sponsor>
+                      <godchild translate="title" module="apdc_supermenu">
+                          <title>View Godchilds</title>
+                          <sort_order>110</sort_order>
+                      </godchild>
+                  </children>
+                </apdc_supermenu>
+              </children>
+            </customer>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <apdc_supermenu translate="title" module="apdc_supermenu">
+                      <title>Sponsorship Configuration</title>
+                    </apdc_supermenu>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+	</adminhtml>
+</config>

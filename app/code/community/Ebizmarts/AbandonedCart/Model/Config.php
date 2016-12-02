@@ -33,7 +33,6 @@ class Ebizmarts_AbandonedCart_Model_Config
     const FOURTH_SUBJECT = "ebizmarts_abandonedcart/general/subject4";
     const FIFTH_SUBJECT = "ebizmarts_abandonedcart/general/subject5";
     const LOG = "ebizmarts_abandonedcart/general/log";
-    const AUTOLOGIN = "ebizmarts_abandonedcart/general/autologin";
     const ABANDONED_TAGS = 'global/ebizmarts_abandonedcart/mandrill-tag';
     const IN_DAYS = 0;
     const IN_HOURS = 1;
@@ -89,5 +88,10 @@ class Ebizmarts_AbandonedCart_Model_Config
     const POPUP_COUPON_DISCOUNTTYPE = 'ebizmarts_abandonedcart/emailcatcher/popup_discounttype';
     const POPUP_COUPON_DISCOUNT = 'ebizmarts_abandonedcart/emailcatcher/popup_discount';
     const POPUP_COUPON_LABEL = 'ebizmarts_abandonedcart/emailcatcher/popup_couponlabel';
+
+    const GANALYTICS_ACTIVE = 'ebizmarts_abandonedcart/ganalytics/analytics_active';
+    const GANALYTICS_SOURCE = 'ebizmarts_abandonedcart/ganalytics/analytics_source';
+    const GANALYTICS_MEDIUM = 'ebizmarts_abandonedcart/ganalytics/analytics_medium';
+    const GANALYTICS_CAMPAIGN = 'ebizmarts_abandonedcart/ganalytics/analytics_campaign';
 
 }

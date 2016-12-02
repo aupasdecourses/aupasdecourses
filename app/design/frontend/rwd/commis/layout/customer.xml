@@ -43,21 +43,6 @@ Supported layout update handles (special):
 <layout version="0.1.0">
 
 <!--
-Default layout, loads most of the pages
--->
-
-    <default>
-        <!-- Mage_Customer -->
-        <reference name="top.links">
-            <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
-            <!-- <action method="addLink" translate="label title before_text" module="customer"><label>Register</label><url helper="customer/getRegisterUrl" /><title>Register</title><prepare/><urlParams/><position>100</position><li/><a/></action>-->
-        </reference>
-        <reference name="footer_links2">
-            <action method="addLink" translate="label title" module="catalog"><label>My Account</label><url helper="customer/getAccountUrl" /><title>My Account</title></action>
-        </reference>
-    </default>
-
-<!--
 Load this update on every page when customer is logged in
 -->
 
@@ -215,8 +200,6 @@ Customer account pages, rendered for all tabs in dashboard
 
     <customer_account translate="label">
         <label>Customer My Account (All Pages)</label>
-        <!--remove name="catalog.compare.sidebar"/>
-        <remove name="sale.reorder.sidebar"/-->
         <!-- Mage_Customer -->
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
@@ -238,14 +221,7 @@ Customer account pages, rendered for all tabs in dashboard
             </block>
         </reference>
         <reference name="left">
-            <!--<block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml">-->
-                <!--<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>-->
-                <!--<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>-->
-                <!--<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>-->
-            <!--</block>-->
-            <block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
             <remove name="tags_popular"/>
-
         </reference>
     </customer_account>
 

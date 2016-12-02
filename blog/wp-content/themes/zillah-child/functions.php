@@ -49,3 +49,19 @@ function zillah_child_jetpack_comment_sub_blog()
     return __('Me notifier par mail des nouveaux commentaires.', 'jetpack');
 }
 add_filter('jetpack_subscribe_comment_label', 'zillah_child_jetpack_comment_sub_blog');
+
+/**
+ * Set up the WordPress core custom header feature.
+ *
+ * @uses zillah_header_style()
+ */
+function zillah_child_custom_header_setup() {
+    add_theme_support( 'custom-header', apply_filters( 'zillah_custom_header_args', array(
+        'default-image'          => '',
+        'default-text-color'     => '7fcaad',
+        'width'                  => 1700,
+        'height'                 => 400,
+        'flex-height'            => true,
+    ) ) );
+}
+add_action( 'after_setup_theme', 'zillah_child_custom_header_setup',20 );

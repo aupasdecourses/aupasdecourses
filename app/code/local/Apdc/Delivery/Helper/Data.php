@@ -23,7 +23,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
    		return preg_replace("/\\\\u([a-f0-9]{4})/e", "iconv('UCS-4LE','UTF-8',pack('V', hexdec('U$1')))", $json);
 	}
 
-	function liste_store_id(){
+	public function liste_store_id(){
 		$allStores = Mage::app()->getStores();
 		$return=array();
 		foreach ($allStores as $_eachStoreId => $val) 
@@ -34,7 +34,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 	#Renvoie la liste des id commerçants (les ids de l'attributs produits "commercant", le concernant)- présent dans magento.php dans delivery
-	function liste_commercant_id()
+	public function liste_commercant_id()
 	{
 		//Get all store ids
 		$storeIds=$this->liste_store_id();
@@ -62,7 +62,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - présent dans magento.php dans delivery
-	function info_commercant($attcomid)
+	public function info_commercant($attcomid)
 	{
 	        $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
 	        foreach ($categories as $category) {
@@ -73,7 +73,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	        }
 	}
 
-	function getgooglecsv($comid){
+	public function getgooglecsv($comid){
 
 		$cat=$this->info_commercant($comid);
 		return [
@@ -83,5 +83,25 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 			];
 			
 	}
+
+	public function getRefunditemdata($item)
+    {
+        $refund_items = Mage::getModel('pmainguet_delivery/refund_items');
+        $item = $refund_items->load($item->getData('item_id'), 'order_item_id');
+        $response = $item->getData();
+        return $response;
+    }  
+
+    public function getRefundorderdata($order)
+    {
+        $refund_order = Mage::getModel('pmainguet_delivery/refund_order');
+        $orders = $refund_order->getCollection()->addFieldToFilter('order_id', array('in' => $order->getIncrementId()));
+        $response = array();
+        foreach ($orders as $o) {
+                $response[$o->getData('commercant')] = $o->getData();
+            }
+
+        return $response;
+    }
 
 }

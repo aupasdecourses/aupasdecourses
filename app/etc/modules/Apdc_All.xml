@@ -78,9 +78,21 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+<<<<<<< HEAD
         <Apdc_Commercant>
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Commercant>
+=======
+        <Apdc_SuperMenu>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Mage_Page />
+              <Mage_Cms />
+            </depends>
+        </Apdc_SuperMenu>
+>>>>>>> 104711a8e7d643b493778b0ad96885bc5a76a624
     </modules>
 </config>

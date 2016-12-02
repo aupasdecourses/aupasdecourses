@@ -1,28 +1,42 @@
-<?php $current_cat_Id=Mage::registry('current_category')->getId();?>
+<?php
+	$current_cat_Id=Mage::registry('current_category')->getId();
+	$childrenCat = Mage::getModel('catalog/category')->getCategories($current_cat_Id);
+?>
 <div class="commercant_product_cat commercant-selection">
-		<h2 class="title-block" style="width:300px">Les rayons</h2>
-		<div class="colored-line"></div>
-		<?php
-		$childrenCat = Mage::getModel('catalog/category')->getCategories($current_cat_Id);?>
-		<div class="col-md-12">
-			    <div id="carrousel-cats" class="owl-carousel">
-					<?php
-						foreach ($childrenCat as $cat) {
-							$cat=Mage::getModel('catalog/category')->load($cat->getId());?>
-								<div class="linkcat">
-									<a href="<?php echo $cat->getUrl()?>">
-									<div class="img-wrapper">
-									    <img class="img-responsive img-thumbnail" src="<?php echo $this->getThumbnailUrl($cat)?>" alt="<?php echo $this->htmlEscape($cat->getName())?>" title="<?php echo $this->htmlEscape($cat->getName())?>" />
-									    <div class="description">
-									    		<span><?php echo $this->htmlEscape($cat->getName())?></span>
-									    </div>
-									</div>
-									</a>
-							    </div>
-						<?php } 
+	<h2 class="title-block" style="width:300px">Les rayons</h2>
+	<div class="colored-line"></div>
+	<div class="col-md-12">
+		    <div id="carrousel-cats" class="owl-carousel">
+				<?php foreach ($childrenCat as $cat):
+					  $cat=Mage::getModel('catalog/category')->load($cat->getId());
+					  $cat_name=$this->htmlEscape($cat->getName());
+				?>
+							<div class="linkcat">
+								<a href="<?= $cat->getUrl()?>">
+								<div class="img-wrapper">
+								    <img class="img-responsive img-thumbnail" src="<?= $this->getThumbnailUrl($cat)?>" alt="<?=$cat_name?>" title="<?=$cat_name?>" />
+								    <div class="description">
+								    		<span><?=$cat_name?></span>
+								    </div>
+								</div>
+								</a>
+						    </div>
+				<?php endforeach;
 					//Reset the category to the current category, otherwise use last category data in foreach loop
 					Mage::getSingleton('catalog/layer')->setCurrentCategory($current_cat_Id);  
-					?>
-				</div>
-		</div>
+				?>
+			</div>
 	</div>
+</div>
+<script>
+    $j(document).ready(function() {
+     
+      $j("#carrousel-cats").owlCarousel({
+            items:4,
+            pagination:false,
+            autoPlay : false,
+            navigation : true
+      });
+     
+    });
+</script>

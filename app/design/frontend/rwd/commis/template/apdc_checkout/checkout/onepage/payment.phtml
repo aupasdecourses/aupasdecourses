@@ -47,7 +47,7 @@
                 <h3><?php echo $this->__('En cas de non disponibilité') ?></h3>
                 <div id="amorderattr" class="form-horizontal">
                     <div class="form-group">
-                        <label for="produit_equivalent" class="col-sm-6 label-checkout">Remplacer par un produit équivalent</label>
+                        <label for="produit_equivalent" class="col-sm-9 label-checkout">Je fais confiance aux commerçants pour trouver un produit équivalent</label>
                         <div class="col-sm-3">
                             <select id="produit_equivalent" name="amorderattr[produit_equivalent]" class="required-entry required-entry select" style="height:33px;text-align:center;">
                                 <option value="1" selected="selected">Oui</option>
@@ -59,7 +59,8 @@
                 </div>
             </div>
     </form>
-    <div class="col-sm-6">
+    <div class="col-sm-1 hidden-xs"></div>
+    <div class="col-sm-5">
         <?php echo $this->getChildHtml('ajaxcoupon'); ?>
     </div>
 </div>
