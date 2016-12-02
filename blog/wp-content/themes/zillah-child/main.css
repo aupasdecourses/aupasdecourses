@@ -76,7 +76,7 @@ a:hover, a:focus, a:active {
     }
 
     .header-inner-site-branding {
-        padding: 0 0;
+        padding: 0 0 !important;
     }
 
     .content-inner-wrap,
