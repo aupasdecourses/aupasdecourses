@@ -34,6 +34,21 @@ a:hover, a:focus, a:active {
     text-decoration: none;
 }
 
+.color-overlay{
+    height: 100%;
+    padding: 124px 0;
+    background: -webkit-linear-gradient(90deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
+    background: -moz-linear-gradient(0deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
+    background: linear-gradient(0deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
+    background-position: 50% 50%;
+    -webkit-background-origin: padding-box;
+    background-origin: padding-box;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-background-size: auto auto;
+    background-size: auto auto;
+}
+
 .site-title a {
     color: #6ca790;
     opacity: 1;
@@ -49,17 +64,17 @@ a:hover, a:focus, a:active {
 
 @media screen and (min-width: 1200px) {
 
-	.container {
-		width: 970px;
-	}
+    .container {
+        width: 970px;
+    }
 
 }
 
 @media screen and (min-width: 1600px) {
 
-	.container {
-		width: 1200px;
-	}
+    .container {
+        width: 1200px;
+    }
 
     .entry-content {
         font-size: 16px;
@@ -75,7 +90,7 @@ a:hover, a:focus, a:active {
     }
 
     .header-inner-site-branding {
-        padding: 124px 0;
+        padding: 0 0;
     }
 
     .content-inner-wrap,

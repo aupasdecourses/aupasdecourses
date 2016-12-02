@@ -72,13 +72,15 @@
 		</div>
 
 		<div class="header-inner-site-branding">
-			<div class="container container-header-logo">
-						<div class="site-branding-wrap">
-					<div class="site-branding">
-						<?php zillah_brand(); ?>
-					</div><!-- .site-branding -->
-				</div>
-			</div><!-- .container-header-logo -->
+			<div class="color-overlay"/>
+				<div class="container container-header-logo">
+							<div class="site-branding-wrap">
+								<div class="site-branding">
+									<?php zillah_brand(); ?>
+								</div><!-- .site-branding -->
+					</div>
+				</div><!-- .container-header-logo -->
+			</div>
 		</div>
 
 	</header><!-- #masthead -->
