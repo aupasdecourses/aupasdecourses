@@ -64,17 +64,17 @@ a:hover, a:focus, a:active {
 
 @media screen and (min-width: 1200px) {
 
-	.container {
-		width: 970px;
-	}
+    .container {
+        width: 970px;
+    }
 
 }
 
 @media screen and (min-width: 1600px) {
 
-	.container {
-		width: 1200px;
-	}
+    .container {
+        width: 1200px;
+    }
 
     .entry-content {
         font-size: 16px;
@@ -90,7 +90,7 @@ a:hover, a:focus, a:active {
     }
 
     .header-inner-site-branding {
-        padding: 0 0;
+        padding: 0 0 !important;
     }
 
     .content-inner-wrap,
