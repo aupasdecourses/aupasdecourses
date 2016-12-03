@@ -83,6 +83,8 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                 $i++;
             }
             $data['closing_periods'] = serialize($closingData);
+        } else {
+            $data['closing_periods'] = serialize([]);
         }
 
         $model->setData($data);

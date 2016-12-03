@@ -101,6 +101,16 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             'values' => $values,
             'note' => 'Category owning the products associated to this shop',
         ]);
+        $values = Mage::getSingleton('eav/config')
+            ->getAttribute('catalog_product', 'commercant')
+            ->getSource()
+            ->getAllOptions();
+        $fieldset->addField('id_attribut_commercant', 'select', [
+            'name' => 'id_attribut_commercant',
+            'label' => $this->__('Attribut Commercant'),
+            'required' => true,
+            'values' => $values,
+        ]);
 
 
         $fieldset = $form->addFieldset(
