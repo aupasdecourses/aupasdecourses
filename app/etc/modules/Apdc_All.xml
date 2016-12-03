@@ -94,5 +94,9 @@
               <Mage_Cms />
             </depends>
         </Apdc_SuperMenu>
+        <Apdc_Commercant>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Commercant>
     </modules>
 </config>
