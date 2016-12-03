@@ -29,14 +29,17 @@
 			<div class="colored-line"></div>
 			<div class="col-md-6">
 				<dl class="dl-horizontal infos-commercant">
-				  <dt>Adresse</dt><dd><a href="$url_adresse" target="_blank"><?= $shop_info['adresse'];?></a></dd>
-				   <dt>Horaires</dt><dd><?= $shop_info['timetable']?></dd>
+				  <dt>Adresse</dt>
+				  	<dd>
+				  		<a href="$url_adresse" target="_blank"><?= $shop_info['adresse'];?></a>
+				  		<iframe class="map-commercant" src="https://www.google.com/maps?q=<?= $shop_info['name'];?>+<?= $shop_info['adresse'];?>&output=embed"></iframe>
+				  	</dd>
 				</dl>
 			</div>
 			<div class="col-md-6">
 				<dl class="dl-horizontal infos-commercant">
 				  <dt>Jour livraisons</dt><dd><?= $shop_info['delivery_days'] ?></dd>
-				  <dt>Téléphone</dt><dd><?= $shop_info['phone'] ?></dd>
+				  <dt>Horaires du magasin</dt><dd><?= $shop_info['timetable']?></dd>
 				</dl>
 			</div>
 		</div>

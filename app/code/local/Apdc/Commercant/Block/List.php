@@ -53,11 +53,18 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
         $shop_info["phone"]=$data["phone"];
         $shop_info["website"]=$data["website"];;
-        $shop_info["timetable"]=implode(",",$data["timetable"]);
         $shop_info["closing_periods"]=$data["closing_periods"];;
         $shop_info["description"]=$current_cat->getDescription();
         $shop_info["delivery_days"]="Du Mardi au Vendredi";
         $shop_info["image"]=$current_cat->getImageURL();
+
+        $html="";
+        $days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+        foreach($data["timetable"] as $day=>$hours){
+            $hours=($hours=="")?"Fermé":$hours;
+            $html.=$days[$day].": ".$hours."</br>";
+        }
+        $shop_info["timetable"]=$html;
 
         return $shop_info;
     }

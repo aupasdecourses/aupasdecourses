@@ -2866,7 +2866,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Liste CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ants
+ * Homepage - Liste Commercants
  */
 
 .commercants-list {
@@ -3154,7 +3154,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Commercants liste complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te
+ * Commercants liste complete
  * ============================================ */
 
 .commercant_announcment {
@@ -3165,7 +3165,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Page CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ant (Sub category)
+ * Page Commercant (Sub category)
  * ============================================ */
 
 .commercant_name {
@@ -3220,6 +3220,7 @@ a.btn:hover {
 .infos-commercant dt {
     text-transform: uppercase;
     font-family: Montserrat, Raleway, Verdana, Arial, sans-serif;
+    white-space:normal;
 }
 
 .dl-horizontal.infos-commercant dd {
@@ -3298,6 +3299,11 @@ a.btn:hover {
 .category-products {
     display: inline-block;
     width: 100%;
+}
+
+.map-commercant{
+    border: none;
+    margin-top: 10px;
 }
 
 

@@ -25,10 +25,8 @@ class Apdc_Commercant_Block_Adminhtml_Form_Element_Closing extends Varien_Data_F
             btn.parentNode.remove();
         }
         </script>";
-        if($this->getValue()<>""){
-            foreach ($this->getValue() as $rowValue) {
-                $html .= '<div>'.$this->_getRowHtml($rowValue).'</div>';
-            }
+        foreach ($this->getValue() as $rowValue) {
+            $html .= '<div>'.$this->_getRowHtml($rowValue).'</div>';
         }
         $html .= '</div>';
         $html .= '<button type="button" onclick="addPeriod()">Add a period</button>';
