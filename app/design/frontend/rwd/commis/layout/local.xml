@@ -147,9 +147,9 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
-                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
+            <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
+                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml" />
+                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
             </block>
         </reference>
     </PAGE_COMMERCANT>

@@ -99,11 +99,4 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
         return $itemarray;
     }
 
-    public function getPriceHtml($product)
-    {
-        $this->setTemplate('blockselection/price.phtml');
-        $this->setProduct($product);
-
-        return $this->toHtml();
-    }
 }

@@ -1,5 +1,5 @@
 <?php
-	$commercants=$this->getListCommercant();
+	$shops=$this->getListShops();
 ?>
 <div id="commercants-block" class="row hp-section commercants-block">
 	<div class="commercants-list col-md-12">
@@ -10,11 +10,11 @@
 				<div id="carrousel-commercants" class="owl-carousel">
 					<?php foreach ($shops as $shop):?>
 							<div class="commercant-item">
-					            <a class="product-image" href="<?= $result[$shop->getIdCategory()]['url_path'] ?>" title="">
-					                <img src="<?= $result[$shop->getIdCategory()]['src'] ?>" width="100%" alt="" title="<?= $shop->getName();?>" />
+					            <a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
+					                <img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
 					            </a>
-					            <h3 class="product-name"><?= $shop->getName();?></h3>
-					            <span><?= $shop->getStreet().$shop->getPostcode().$shop->getCity();?></span>
+					            <h3 class="product-name"><?= $shop['name'];?></h3>
+					            <span><?= $shop['adresse'];?></span>
 					        </div>    	
 					<?php endforeach; ?>
 						<div class="commercant-item">
