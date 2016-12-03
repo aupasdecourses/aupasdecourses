@@ -26,7 +26,8 @@ class Apdc_Commercant_Block_Adminhtml_Form_Element_Closing extends Varien_Data_F
         }
         </script>";
 
-        foreach ($this->getValue() as $rowValue) {
+        $value = is_array($this->getValue()) ? $this->getValue() : [];
+        foreach ($value as $rowValue) {
             $html .= '<div>'.$this->_getRowHtml($rowValue).'</div>';
         }
         $html .= '</div>';
