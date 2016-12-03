@@ -10,29 +10,28 @@ class Pmainguet_Commercants_Block_Fiche extends Mage_Catalog_Block_Product{
   	}
 
   	public function getListCommercant(){
-  		$storeid=Mage::app()->getStore()->getId();
-  		$rootId=Mage::app()->getStore($storeid)->getRootCategoryId();
-  		$data=array();
 
-	    $commercants = Mage::getModel('catalog/category')
-                         ->getCollection()
-                         ->addAttributeToSelect(array('name','image','adresse_commercant','url_path'))
-                         ->addIsActiveFilter()
-                         ->addFieldToFilter('path', array('like'=> "1/$rootId/%"))
-                         ->addAttributeToFilter('level', array('eq'=>3))
-                         //70 est la value_id de l'option du select, correspondant à 'Oui'                        
-                         ->addAttributeToFilter('estcom_commercant',70)
-                         ->load();
+  		$commercant=array();
+		$helper = Mage::helper('catalog/category');
+	 	$categoriesCollection = $helper->getStoreCategories('name', true, false)->addAttributeToFilter('estcom_commercant', 70)->addAttributeToSelect(array('url_path','src'));
+	 	foreach($categoriesCollection as $cat){
+	 		$result[$cat->getId()]=[
+		 		'url_path' => $cat->getUrlPath(),
+		 		'src' => $cat->getThumbnail(),
+	 		];
+	 	}
 
-		foreach ($commercants as $commercant){
-			$commercant=$commercant->getData();
+	 	$shops=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category',array('in' => array_keys($result)));
+
+	 	$data=array();
+
+		foreach ($shops as $shop){
+			$shop=$shop->getData();
 			$sub=[
-				'name'=>(isset($commercant['name'])) ? $commercant['name'] : "",
-				'stripped_name'=>(isset($commercant['name'])) ? $this->stripTags($commercant['name'], null, true) : "",
-				'image'=>(isset($commercant['image'])) ? $commercant['image'] : "",
-				'src'=>(isset($commercant['image'])) ? Mage::getBaseUrl('media').'catalog/category/'.$commercant['image'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
-				'adresse'=>(isset($commercant['adresse_commercant'])) ? $commercant['adresse_commercant'] : "",
-				'url'=>(isset($commercant['url_path'])) ? Mage::getUrl($commercant['url_path']) : "",
+				'name'=>(isset($shop['name'])) ? $shop['name'] : "",
+				'src'=>(isset($result[$shop->getIdCategory()]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$result[$shop->getIdCategory()]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+				'adresse'=>(isset($shop['street'])) ? $shop['street'].$shop['postcode'].$shop['city'] : "",
+				'url'=>(isset($result[$shop->getIdCategory()]['url_path'])) ? Mage::getUrl($result[$shop->getIdCategory()]['url_path']) : "",
 			];
 			$data[]=$sub;
 		}

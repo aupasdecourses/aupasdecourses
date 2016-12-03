@@ -1,19 +1,5 @@
 <?php
 	$commercants=$this->getListCommercant();
-
-	$commercant=array();
-	$helper = Mage::helper('catalog/category');
- 	$categoriesCollection = $helper->getStoreCategories('name', true, false)->addAttributeToFilter('estcom_commercant', 70);
- 	foreach($categoriesCollection as $cat){
- 		$result[$cat->getId()]=[
-	 		'url_path' => $cat->getUrlPath(),
-	 		'src' => $cat->getThumbnail(),
- 		];
- 	}
-
- 	$shops=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category',array('in' => array_keys($result)));
-
-
 ?>
 <div id="commercants-block" class="row hp-section commercants-block">
 	<div class="commercants-list col-md-12">

@@ -9,12 +9,12 @@
                     <children>
                         <commercant>
                             <title>Commercant</title>
-                            <sort_order>20</sort_order>
+                            <sort_order>30</sort_order>
                             <action>adminhtml/commercant_commercant/index</action>
                         </commercant>
                         <shop>
                             <title>Magasin</title>
-                            <sort_order>30</sort_order>
+                            <sort_order>40</sort_order>
                             <action>adminhtml/commercant_shop/index</action>
                         </shop>
                         <contact>
@@ -24,7 +24,7 @@
                         </contact>
                         <bank_information>
                             <title>Infos bancaires</title>
-                            <sort_order>40</sort_order>
+                            <sort_order>20</sort_order>
                             <action>adminhtml/commercant_bankinfo/index</action>
                         </bank_information>
                     </children>
