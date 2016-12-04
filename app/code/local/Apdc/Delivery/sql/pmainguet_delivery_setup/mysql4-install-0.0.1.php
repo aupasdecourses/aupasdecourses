@@ -14,17 +14,10 @@ $table = $installer->getConnection()
         'nullable'  => false,
         'primary'   => true,
         ), 'Refund Item Id')
-    ->addColumn('order_item_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-        'unsigned'  => true,
-        'nullable'  => true,
-        'default' => NULL,
-        ), 'Order Item Id')
     ->addColumn('item_name', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
         ), 'Item name')
     ->addColumn('commercant', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
         ), 'Commercant')
-    ->addColumn('commercant_id', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
-        ), 'Commercant Id')
     ->addColumn('order_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned'  => true,
         'nullable'  => false,
@@ -62,17 +55,9 @@ $table = $installer->getConnection()
         ), 'Order Id')
     ->addColumn('commercant', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
         ), 'Commercant')
-    ->addColumn('commercant_id', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
-        ), 'Commercant Id')
-    ->addColumn('final_row_total', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,4', array(
-        'default'   => 0.0000,
-        ), 'Row Total')
     ->addColumn('del_amount_refunded', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,4', array(
         'default'   => 0.0000,
         ), 'Delivery Amount Refunded')
-    ->addColumn('del_tax_refunded', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,4', array(
-        'default'   => 0.0000,
-        ), 'Delivery Tax Refunded')
     ->addColumn('comment', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
         'nullable'  => false,
         ), 'Comment');

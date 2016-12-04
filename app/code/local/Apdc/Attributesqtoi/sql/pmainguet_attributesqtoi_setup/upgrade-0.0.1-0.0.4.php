@@ -5,11 +5,7 @@ $installer = new Mage_Sales_Model_Resource_Setup('core_setup');
  * Add 'custom_attribute' attribute for entities
  */
 $entities = array(
-    'quote',
-    'quote_address',
     'quote_item',
-    'quote_address_item',
-    'order',
     'order_item',
 );
 $options = array(
@@ -18,6 +14,6 @@ $options = array(
     'required' => false
 );
 foreach ($entities as $entity) {
-    $installer->addAttribute($entity, 'commercant_id', $options);
+    $installer->addAttribute($entity, 'prix_kilo_site', $options);
 }
 $installer->endSetup();

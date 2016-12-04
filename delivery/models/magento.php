@@ -656,33 +656,6 @@ function verif_validation($table_order, $order_id, $sku)
     return $sku_valide;
 }
 
-//Classer les produits par commerçant
-function sort_by_commercant($ordered_items)
-{
-    $sort_items = [];
-    foreach ($ordered_items as $item) {
-
-            //récupère l'information 'commerçant' dans sales_flat_order_item pour les commandes après 11-06-2015
-            if ($item->getData('commercant_id') !== null) {
-                $commercant = $item->getData('commercant_id');
-                if (!isset($sort_items[$commercant])) {
-                    $sort_items[$commercant] = array();
-                }
-                $sort_items[$commercant][] = $item;
-            } else {
-                // $product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-                    // $commercant = $product->getCategoryIds()[2];
-                    // if (!isset($sort_items[$commercant])) {
-                    //         $sort_items[$commercant] = array();
-                    // }
-                    // $sort_items[$commercant][]=$item;
-            }
-    }
-    ksort($sort_items);
-
-    return $sort_items;
-}
-
 //Get list of order ids
 function get_list_orderid()
 {
