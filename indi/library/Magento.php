@@ -180,10 +180,11 @@ class Magento
 		return $orderHeader;
 	}
 
-	private function ProductParsing($product) {
+	private function ProductParsing($product, $order_id) {
 		$prod_data = [
 			'id' => $product->getItemId(),
-			'nom' => $product->getName(),
+				'nom' => $product->getName(),
+				'order_id' => $order_id,
 				'prix_kilo'		=>	$product->getPrixKiloSite(),
 				'quantite'		=>	round($product->getQtyOrdered(), 0),
 				'description'	=>	$product->getShortDescription(),
@@ -266,7 +267,7 @@ class Magento
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$orderHeader['products'][] = $prod_data;
 				$orderHeader['total_quantite'] += $prod_data['quantite'];
 				$orderHeader['total_prix'] += $prod_data['prix_total'];
@@ -285,7 +286,7 @@ class Magento
 			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
 					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
 					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
@@ -311,7 +312,7 @@ class Magento
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$orderHeader['products'][] = $prod_data;
 				$orderHeader['total_quantite'] += $prod_data['quantite'];
 				$orderHeader['total_prix'] += $prod_data['prix_total'];
@@ -337,7 +338,7 @@ class Magento
 			if ($commercantId <> -1)
 				$products->addFieldToFilter('commercant', [ 'eq' => $commercantId ]);
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
@@ -364,7 +365,7 @@ class Magento
 			if ($commercantId <> -1)
 				$products->addFieldToFilter('commercant', [ 'eq' => $commercantId ]);
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
@@ -394,7 +395,7 @@ class Magento
 			]);
 
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$prod_data['refund_prix'] = $product->getData('refund_prix');
 				$prod_data['refund_diff'] = $product->getData('refund_diff');
 				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
@@ -402,6 +403,7 @@ class Magento
 					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
 				}
 				$rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
+				// <=====================
 				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
 				$rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
 			}

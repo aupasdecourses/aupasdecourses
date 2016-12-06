@@ -121,10 +121,10 @@ class RefundController extends Controller
 			$attrNames[$merchant_id] = $name;
 			$class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
 			$form_upload->add($name, FileType::class, [
-				'required'    => false,
-				'label' => $data['merchant']['name'],
-				'attr'	=> [
-					'class'	=> "form-control{$class}",
+				'required'  => false,
+				'label'		=> $data['merchant']['name'],
+				'attr'		=> [
+					'class'		=> "form-control{$class}",
 					]
 			]);
 		}
@@ -198,13 +198,42 @@ class RefundController extends Controller
 		$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
 
 		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token'])) {
-			// save to BDD
+			$rsl_table = [];
+			$error = false;
+			foreach ($order as $merchant_id => $o_data) {
+				foreach ($o_data['products'] as $product_id => $p_data) {
+					if (isset($_POST['form'][$product_id])) {
+						$rsl_table[$product_id] = [
+							'item_name'		=> $p_data['nom'],
+							'merchant_name'	=> $o_data['name'],
+							'commercant_id'	=> $o_data['merchant']['id'],
+							'order_id'		=> $p_data['order_id'], // $id maybe ??
+							'prix_initial'	=> $p_data['prix_total'],
+							'prix_final'	=> doubleval($_POST['form'][$product_id]['ticket']),
+							'diffprixfinal'	=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
+							'comment'		=> $_POST['form'][$product_id]['comment'],
+						];
+					} else {
+						$error = true;
+					}
+				}
+			}
 
-			echo '<pre>';
-			print_r($_POST);
-			echo '</pre>';
+echo '<pre>';
+print_r($rsl_table);
+echo '</pre>';
 
-			// if all good redirect to digest
+// if success
+// ddb update
+
+			// foreach ($rsl_table as $product_id => )
+			// $mage->updateEntryToOrderField([ 'order_id' => $order[-1]['order']['mid']], [ 'upload' => $status]);
+
+			if ($error == false) {
+				// set input status done
+			} else {
+				// redirect to digest
+			}
 		}
 
 		return $this->render('refund/input.html.twig', [
