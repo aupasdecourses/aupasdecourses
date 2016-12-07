@@ -246,21 +246,33 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$order = $mage->getOrderByMerchants($id);
+		$order = $mage->getRefunds($id);
 
 		$total = $order[-1]['merchant']['total'];
+		$refund_total = $order[-1]['merchant']['refund_total'];
+		$refund_diff = $order[-1]['merchant']['refund_diff'];
+		$order_header = $order[-1]['order'];
 		unset ($order[-1]);
 
 		$files = $this->getUploadedFiles($id);
 		ksort($files);
 
-		//$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
+echo "<pre>";
+print_r($order);
+echo "</pre>";
+
+//		if form ????
+
+//		$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'files' => $files,
-			'order' => $order,
 			'total' => $total,
+			'refund_total' => $refund_total,
+			'refund_diff' => $refund_diff,
+			'order_header' => $order_header,
+			'order' => $order,
 			'order_id' => $id
 		]);
 	}

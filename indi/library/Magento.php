@@ -384,7 +384,16 @@ class Magento
 		$merchants = $this->getMerchants();
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
 
-		$rsl = [ -1 => [ 'merchant' => [ 'name' => 'All', 'total' => 0.0 ] ] ];
+		$rsl = [
+			-1 => [
+				'merchant'	=> [
+					'name'		=> 'All',
+					'total'		=> 0.0,
+					'refund_total'	=> 0.0,
+					'refund_prix'	=> 0.0,
+				]
+			]
+		];
 		foreach ($orders as $order) {
 			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
 			$products =  \Mage::getModel('sales/order_item')->getCollection();
@@ -403,11 +412,17 @@ class Magento
 				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
 					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
 					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
 				}
 				$rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
 				// <=====================
 				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
+				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 			}
 		}
 		return ($rsl);
