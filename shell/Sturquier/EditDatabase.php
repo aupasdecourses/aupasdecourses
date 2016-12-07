@@ -11,42 +11,39 @@ require_once '../abstract.php';
 
 class Sturquier_EditDatabase extends Mage_Shell_Abstract
 {
-	
 	public function run()
 	{
-		
-	$order = Mage::getModel('amorderattach/order_field');	
-	$orders = $order->getCollection();
+		$order = Mage::getModel('amorderattach/order_field');	
+		$orders = $order->getCollection();
 
-	foreach($orders as $ord)
-	{
-		$data = $ord->getData();
-		
-		/* SUPPRESSION COLONNE TICKET_COMMERCANT */
-		try 
+		foreach($orders as $ord)
 		{
-			$data['commentaires_client'] = $comment_client;
-			$data['commentaires_commercant'] = $comment_commercant;
+			$data = $ord->getData();
 
-			$data['commentaires_commande'] = $data['commentaires_commande'].$data['commentaires_fraislivraison'];
-			$data['remboursements'] = $data['remboursements'].$data['commentaires_ticket'];	
+			try 
+			{
+				$data['commentaires_client'] = $comment_client;
+				$data['commentaires_commercant'] = $comment_commercant;
 
-			$data['commentaires_client'] = $data['commentaires_commande'];
-			$data['commentaires_commercant'] = $data['remboursements'];
+				$data['commentaires_commande'] = $data['commentaires_commande'].$data['commentaires_fraislivraison'];
+				$data['remboursements'] = $data['remboursements'].$data['commentaires_ticket'];	
 
-			unset($data['ticket_commercant']);
-			unset($data['commentaires_commande']);
-			unset($data['commentaires_fraislivraison']);
-			unset($data['remboursements']);
-			unset($data['commentaires_ticket']);
+				$data['commentaires_client'] = $data['commentaires_commande'];
+				$data['commentaires_commercant'] = $data['remboursements'];
 
-			$new_orders = Mage::getModel('amorderattach/order_field')->setData($data);
-			$new_orders->save();
-		} catch (Exception $e) 
-		{
-			echo $e->getMessage()."\n";
+				unset($data['ticket_commercant']);
+				unset($data['commentaires_commande']);
+				unset($data['commentaires_fraislivraison']);
+				unset($data['remboursements']);
+				unset($data['commentaires_ticket']);
+
+				$new_orders = Mage::getModel('amorderattach/order_field')->setData($data);
+				$new_orders->save();
+			} catch (Exception $e) 
+			{
+				echo $e->getMessage()."\n";
+			}
 		}
-	}
 	}
 
 	/* Instructions d'utilisation */
