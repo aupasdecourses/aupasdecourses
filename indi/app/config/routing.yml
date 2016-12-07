@@ -83,3 +83,7 @@ refundDigest:
   path: /refund/{id}/digest/
   defaults: { _controller: AppBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
+
+toolUpload:
+  path: /tool/upload/
+  defaults: { _controller: AppBundle:Tool:upload}
