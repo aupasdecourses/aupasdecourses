@@ -1,10 +1,11 @@
 function set_diff_color(elem, diff) {
+	console.log(diff);
 	elem.removeClass('success warning error');
 	if (!diff)
 		elem.addClass('success');
 	else if (diff > 0)
 		elem.addClass('warning');
-	else
+	else if (diff < 0 || isNaN(diff))
 		elem.addClass('error');
 }
 

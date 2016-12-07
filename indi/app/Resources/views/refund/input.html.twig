@@ -36,7 +36,7 @@
 											<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix}}' />
 										</td>
 										<td>
-											<p id='{{product_id}}-diff' class='diff {{class}}'>{{product.refund_diff}}</p>
+											<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff}}</p>
 										</td>
 										<td>
 											<input type='text' name='form[{{product_id}}][comment]' value='{{product.refund_com}}'/>
@@ -58,5 +58,6 @@
 			<hr />
 		{% endfor %}
 		<input type='submit' name='submit' value='submit' />
+		<input type='submit' name='submit' value='next' />
 	{{ form_end(form) }}
 {% endblock %}

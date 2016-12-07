@@ -189,6 +189,8 @@ class RefundController extends Controller
 		ksort($order);
 
 		$total = $order[-1]['merchant']['total'];
+		$order_mid = $order[-1]['order']['mid'];
+		$input_status = $order[-1]['order']['input'];
 		unset($order[-1]);
 
 		$entity_input = new \AppBundle\Entity\Input();
@@ -197,42 +199,35 @@ class RefundController extends Controller
 		$form_input = $form_input->getForm();
 		$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
 
-		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token'])) {
+		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token']) && $input_status == 'none') {
 			$rsl_table = [];
-			$error = false;
 			foreach ($order as $merchant_id => $o_data) {
 				foreach ($o_data['products'] as $product_id => $p_data) {
 					if (isset($_POST['form'][$product_id])) {
 						$rsl_table[$product_id] = [
+							'order_item_id'	=> $product_id,
 							'item_name'		=> $p_data['nom'],
-							'merchant_name'	=> $o_data['name'],
+							'commercant'	=> $o_data['name'],
 							'commercant_id'	=> $o_data['merchant']['id'],
-							'order_id'		=> $p_data['order_id'], // $id maybe ??
+							'order_id'		=> $p_data['order_id'],
 							'prix_initial'	=> $p_data['prix_total'],
 							'prix_final'	=> doubleval($_POST['form'][$product_id]['ticket']),
 							'diffprixfinal'	=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
 							'comment'		=> $_POST['form'][$product_id]['comment'],
 						];
-					} else {
-						$error = true;
+						unset($_POST['form'][$product_id]);
 					}
 				}
 			}
+			
+			foreach ($rsl_table as $product_id => $data) {
+				$mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
+			}
 
-echo '<pre>';
-print_r($rsl_table);
-echo '</pre>';
-
-// if success
-// ddb update
-
-			// foreach ($rsl_table as $product_id => )
-			// $mage->updateEntryToOrderField([ 'order_id' => $order[-1]['order']['mid']], [ 'upload' => $status]);
-
-			if ($error == false) {
-				// set input status done
+			if ($_POST['submit'] == 'next') {
+				return $this->redirectToRoute('refundDigest', [ 'id' => $id ]);
 			} else {
-				// redirect to digest
+				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
 			}
 		}
 
@@ -258,6 +253,8 @@ echo '</pre>';
 
 		$files = $this->getUploadedFiles($id);
 		ksort($files);
+
+		//$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
