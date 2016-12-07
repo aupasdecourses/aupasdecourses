@@ -18,65 +18,34 @@ class Sturquier_EditDatabase extends Mage_Shell_Abstract
 	$order = Mage::getModel('amorderattach/order_field');	
 	$orders = $order->getCollection();
 
-	$comment_client ='commentaire du client';
-	$comment_commercant ='commentaire du commercant';
-
-	
 	foreach($orders as $ord)
 	{
-	if (is_null(Mage::getSingleton('amorderattach/order_field')->getCollection()->addFieldToFilter('commentaire_client', $comment_client)))
-	{
-		$data = array(
-			'commentaire_client' => $comment_client,
-			'commentaire_commercant' => $comment_commercant,
-		);
-
-		try {
-			$new_orders = Mage::getModel('amorderattach/order_field')->setData($data);
-			$new_orders->save();
-			echo "Columns added.\n";
-		} catch (Exception $e)
-		{
-			echo "Unable to add columns.\n";
-		}
-		echo "It works.\n";
-	}
-	
 		$data = $ord->getData();
-
-		/* SUPPRESSION COLONNE SCREENSHOT */
-		/*try 
+		
+		/* SUPPRESSION COLONNE TICKET_COMMERCANT */
+		try 
 		{
-			unset($data['screenshot']);
+			$data['commentaires_client'] = $comment_client;
+			$data['commentaires_commercant'] = $comment_commercant;
+
+			$data['commentaires_commande'] = $data['commentaires_commande'].$data['commentaires_fraislivraison'];
+			$data['remboursements'] = $data['remboursements'].$data['commentaires_ticket'];	
+
+			$data['commentaires_client'] = $data['commentaires_commande'];
+			$data['commentaires_commercant'] = $data['remboursements'];
+
+			unset($data['ticket_commercant']);
+			unset($data['commentaires_commande']);
+			unset($data['commentaires_fraislivraison']);
+			unset($data['remboursements']);
+			unset($data['commentaires_ticket']);
+
 			$new_orders = Mage::getModel('amorderattach/order_field')->setData($data);
 			$new_orders->save();
-			echo "Screenshot remoted.\n";
 		} catch (Exception $e) 
 		{
 			echo $e->getMessage()."\n";
 		}
-		 */
-/*
-  $order->addColumn('commentaire_client', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
-			'nullable' => true,
-			'default'  => '',
-		))
-		->addColumn('commentaire_commercant', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
-			'nullable' => true,
-			'default'  => '',
-		));
-
-	try {
-		$order->save();
-		echo "Columns have been added.\n";
-	} catch (Exception $e) {
-		echo $e->getMessage()."\n";
-	}*/
-
-		echo'<pre>';
-		print_R($data);
-		echo'</pre>';
-
 	}
 	}
 
