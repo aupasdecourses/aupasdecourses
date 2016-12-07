@@ -257,13 +257,17 @@ class RefundController extends Controller
 		$files = $this->getUploadedFiles($id);
 		ksort($files);
 
+		$entity_submit = new \AppBundle\Entity\Model();
+		$form_submit = $this->createFormBuilder($entity_submit);
+
+		$form_submit->handleRequest($request);
+		if ($form_submit->isSubmitted) {
+//			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
+		}
+
 echo "<pre>";
 print_r($order);
 echo "</pre>";
-
-//		if form ????
-
-//		$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
