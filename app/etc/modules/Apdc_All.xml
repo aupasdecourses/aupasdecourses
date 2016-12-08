@@ -85,6 +85,13 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_SalesRule>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_SalesRule />
+            </depends>
+        </Apdc_SalesRule>
         <Apdc_SuperMenu>
             <active>true</active>
             <codePool>local</codePool>
@@ -94,5 +101,9 @@
               <Mage_Cms />
             </depends>
         </Apdc_SuperMenu>
+        <Apdc_Commercant>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Commercant>
     </modules>
 </config>
