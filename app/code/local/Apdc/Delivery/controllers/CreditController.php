@@ -264,10 +264,7 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
             $data = array(
                 'order_id' => $orderId,
                 'commercant' => $commercant,
-                'commercant_id' => '',
-                'final_row_total' => '',
                 'del_amount_refunded' => $value['value'],
-                'del_tax_refunded' => '',
                 'comment' => $value['comment'],
                 'creditmemo_id' => $creditmemo_id,
             );

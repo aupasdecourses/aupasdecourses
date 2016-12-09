@@ -24,6 +24,10 @@
 ##################
 *.sw*
 
+# Orig Merged files #
+##################
+*.orig
+
 # Logs and databases #
 ######################
 *.log

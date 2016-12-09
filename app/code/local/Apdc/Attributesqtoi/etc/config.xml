@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Attributesqtoi>
-            <version>0.0.6</version>
+            <version>0.0.7</version>
         </Apdc_Attributesqtoi>
     </modules>
     <global>
@@ -12,7 +12,6 @@
                     <product_attributes>
                         <marge_arriere />
                         <commercant />
-                        <commercant_id />
                         <prix_kilo_site />
                         <short_description />
                     </product_attributes>
@@ -27,9 +26,6 @@
                 <commercant>
                     <to_order_item>*</to_order_item>
                 </commercant>
-                <commercant_id>
-                    <to_order_item>*</to_order_item>
-                </commercant_id>
                 <prix_kilo_site>
                     <to_order_item>*</to_order_item>
                 </prix_kilo_site>
@@ -44,9 +40,6 @@
                 <commercant>
                     <to_quote_item>*</to_quote_item>
                 </commercant>
-                <commercant_id>
-                    <to_quote_item>*</to_quote_item>
-                </commercant_id>
                 <prix_kilo_site>
                     <to_quote_item>*</to_quote_item>
                 </prix_kilo_site>
