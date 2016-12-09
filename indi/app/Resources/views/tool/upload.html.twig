@@ -2,34 +2,32 @@
 {% use 'menu/default.html.twig' %}
 
 {% block body %}
-{#{% include 'forms/default.html.twig' %}#}	
 
 <div class="row">
 	<h1>Upload et traitement des images catalogue</h1>
 	<div class="col-sm-12 paragraph">
 		<p>1. Selectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Selectionner les fichiers". Les photos seront téléchargées automatiquement
 		</p>
-		<div id="progress">
-			<div class="bar" style="width:0%"></div>
-		</div>
-		<div id="file_uploaded">
-		</div>
+		{{ form(form) }}
+		<br/>
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>2. Optimisez les photos automatiquement</p>
-		<input type='submit' name='optimiser' value='Optimiser les photos' />
+		<input type='button' name='optimiser' value='Optimiser photos' />
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>3. Connectez vous à Magmi pour mettre à jour le catalogue</p>
-		<a href="">Ouvrir Magmi</a>
+		<a href="/magmi/web/magmi.php">Ouvrir Magmi</a>
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>4. Réindexez tous les index (sauf Redirections URL) sous Magento</p>
-		<input type='submit' name='reindex' value='Reindexer Magmi' />
+		<input type='button' name='reindex' value='Reindexer Magmi' />
 	</div>
 </div>
+
+{{ oneup_uploader_endpoint('gallery') }}
 
 {% endblock %}

@@ -87,3 +87,7 @@ refundDigest:
 toolUpload:
   path: /tool/upload/
   defaults: { _controller: AppBundle:Tool:upload}
+
+oneup_uploader:
+    resource: .
+    type: uploader

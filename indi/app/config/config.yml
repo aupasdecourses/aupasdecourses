@@ -67,3 +67,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#blueImp bundle which enable to load many files
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: fineuploader
+            storage: 
+                directory: "%kernel.root_dir%/Resources/views/tool/"
+            error_handler: oneup_uploader.error_handler.noop
