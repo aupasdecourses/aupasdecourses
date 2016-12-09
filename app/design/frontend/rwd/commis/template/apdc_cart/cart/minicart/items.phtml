@@ -116,5 +116,14 @@ $apdcAccordion = $this->getApdcCartAccordion();
     <?php endif ?>
 </div>
 <script type="text/javascript">
+<?php if ($countItems) : ?>
+var apdcProductAddedToCart = <?php echo json_encode($this->getApdcProductAddedToCartFromCommercantItems($commercants)); ?>;
+<?php else : ?>
+var apdcProductAddedToCart = {};
+<?php endif; ?>
+jQuery(document).ready(function() {
+    jQuery(document).trigger('apdcUpdateAddToCartButtons');
+    jQuery(document).trigger('minicartLoaded');
+});
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
 </script>

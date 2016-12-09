@@ -82,4 +82,51 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
         }
         return array();
     }
+
+    /**
+     * getApdcProductAddedToCartFromCommercantItems 
+     * 
+     * @param array $commercantItems commercantItems 
+     * 
+     * @return array
+     */
+    public function getApdcProductAddedToCartFromCommercantItems($commercantItems)
+    {
+        $productAdded = array();
+        foreach ($commercantItems as $commercant) {
+            if (isset($commercant['items'])) {
+                foreach ($commercant['items'] as $item) {
+                    if (!isset($productAdded[$item->getProductId()])) {
+                        $productAdded[$item->getProductId()] = array(
+                            'product' => $item->getProduct()->getData(),
+                            'options' => array(),
+                            'itemId' => $item->getId()
+                        );
+                    }
+
+                    $buyRequest = $item->getBuyRequest();
+                    $options = array();
+                    if ($buyRequest->getSuperAttribute()) {
+                        foreach ($buyRequest->getSuperAttribute() as $id => $value) {
+                            $options[] = $id . '-' . $value;
+                        }
+                    }
+                    if ($buyRequest->getOptions()) {
+                        foreach ($buyRequest->getOptions() as $id => $value) {
+                            $options[] = $id . '-' . $value;
+                        }
+                    }
+                    if (!empty($options)) {
+                        $productAdded[$item->getProductId()]['options'][implode('_', $options)] = array(
+                            'qty' => $buyRequest->getQty(),
+                            'itemId' => $item->getId()
+                        );
+                    } else {
+                        $productAdded[$item->getProductId()]['qty'] = $item->getQty();
+                    }
+                }
+            }
+        }
+        return $productAdded;
+    }
 }

@@ -22,6 +22,13 @@
                 </rewrite>
             </checkout>
         </blocks>
+
+        <helpers>
+          <apdccart>
+            <class>Apdc_Cart_Helper</class>
+          </apdccart>
+        </helpers>
+
         <models>
             <apdccart>
                 <class>Apdc_Cart_Model</class>
@@ -32,12 +39,6 @@
                 </rewrite>
             </checkout>
         </models>
-        <!--<rewrite>-->
-            <!--<ajax_cart> [>This can be any unique id <]-->
-                <!--<from><![CDATA[#^/checkout/cart/#]]></from>  [> the URL which u want to override<]-->
-                <!--<to>/addajax/index/</to>  [> destination url <]-->
-            <!--</ajax_cart>-->
-        <!--</rewrite>-->
         <fieldsets>
             <sales_convert_quote_item>
                 <item_comment>

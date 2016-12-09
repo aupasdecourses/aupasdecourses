@@ -7,16 +7,20 @@ require_once 'Mage/Checkout/controllers/CartController.php';
 
 class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
 
-        public function addAction()
+    public function addAction()
     {
         $cart   = $this->_getCart();
-        $params = $this->getRequest()->getParams();
-        if($params['isAjax']==1){
+        $params = $this->getRequest()->getPost();
+        if ($params['isAjax'] == 1) {
+            if (!$this->_validateFormKey()) {
+                Mage::throwException('Invalid form key');
+                return;
+            }
             $response = array();
             try {
                 if (isset($params['qty'])) {
                     $filter = new Zend_Filter_LocalizedToNormalized(
-                    array('locale' => Mage::app()->getLocale()->getLocaleCode())
+                        array('locale' => Mage::app()->getLocale()->getLocaleCode())
                     );
                     $params['qty'] = $filter->filter($params['qty']);
                 }
@@ -79,7 +83,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
             }
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             return;
-        }else{
+        } else {
             return parent::addAction();
         }
     }

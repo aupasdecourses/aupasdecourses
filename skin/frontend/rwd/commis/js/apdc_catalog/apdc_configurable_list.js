@@ -136,6 +136,7 @@ Product.Config.prototype = {
         if (jQuery('#attr-image-container-' + element.value + '-' + this.config.productId).length > 0) {
             jQuery('#attr-image-container-' + element.value + '-' + this.config.productId).addClass('option-selected');
         }
+        jQuery('#' + element.id).trigger('change');
     },
 
     configure: function(event){
@@ -417,7 +418,16 @@ Product.Config.prototype = {
         }
 
         $$('#attribute' + attributeId).each(function(select){
-            select.value = optionId;    
+          select.value = optionId;    
+          for (var i=0; i < select.options.length; ++i) {
+            var option = select.options[i];
+            if (option.value == optionId) {
+              option.selected = true;
+            } else {
+              option.selected = false;
+            }
+          }
+          jQuery('#attribute' + attributeId).trigger('change');
         });
         this.configureElement($('attribute' + attributeId));
     },

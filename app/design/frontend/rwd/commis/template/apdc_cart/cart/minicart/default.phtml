@@ -51,14 +51,14 @@
             <?php endif; ?>
         </div>
         <div class="item-cell item-qty">
-            <div class="qty-sub btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>"><i class="fa fa-minus"></i></div>
+            <div class="qty-sub btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-minus"></i></div>
             <div class="qty-text"><?php echo $this->getQty(); ?></div>
-            <div class="qty-add btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>"><i class="fa fa-plus"></i></div>
+            <div class="qty-add btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-plus"></i></div>
 
             <input
                 type="hidden"
                 id="qinput-<?php echo $_item->getId(); ?>"
-                data-link="<?php echo $this->getAjaxUpdateUrl() ?>"
+                data-link="<?php echo $this->helper('apdccart')->getAjaxUpdateUrl($_item) ?>"
                 data-item-id="<?php echo $_item->getId(); ?>"
                 class="qty cart-item-quantity" name=""
                 value="<?php echo $this->getQty()?>"
@@ -101,9 +101,9 @@
                 </div>
                 <?php if (!$this->isOnCheckoutPage()): ?>
                     <div>
-                    <a href="<?php echo $this->getAjaxDeleteUrl() ?>" title="<?php echo $this->__('Remove This Item') ?>"
+                    <a href="<?php echo $this->helper('apdccart')->getAjaxDeleteUrl($_item) ?>" title="<?php echo $this->__('Remove This Item') ?>"
                        data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
-                       class="remove">
+                       class="remove" id="btn-minicart-remove-<?php echo $_item->getId(); ?>" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>">
                         <i class="fa fa-trash"></i>
                     </a>
                     </div>
@@ -118,16 +118,18 @@
     <div class="item-row item-details">
         <div class="truncated">
             <div class="truncated_full_value">
-                <dl class="item-options">
+                <ul class="item-options">
                     <?php foreach ($_options as $_option) : ?>
-                    <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                    <dd>
+                    <li>
+                        <label><?php echo $this->escapeHtml($_option['label']) ?></label>
+                        <span>
                         <?php if (is_array($_option['value'])): ?>
                         <?php echo nl2br(implode("\n", $_option['value'])) ?>
                         <?php else: ?>
                         <?php echo $_option['value'] ?>
                         <?php endif; ?>
-                    </dd>
+                        </span>
+                    </li>
                     <?php endforeach; ?>
                 </dl>
             </div>

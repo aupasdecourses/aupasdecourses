@@ -615,15 +615,16 @@ h6,
  * ============================================ */
 
 .truncated .truncated_full_value .item-options {
-    display: none;
-    position: absolute;
+    display: block;
+    position: static;
     z-index: 300;
-    width: 200px;
+    width: 100%;
     padding: 8px;
     border: 1px solid #339933;
     background-color: #F6F6F6;
-    top: 0px;
-    left: 0px;
+    top: initial;
+    left: initial;
+    height: auto;
 }
 
 .truncated .truncated_full_value .item-options:after {
@@ -2707,7 +2708,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
+ * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -2875,7 +2876,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - Liste CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ants
+ * Homepage - Liste CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ants
  */
 
 .commercants-list {
@@ -3163,7 +3164,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Commercants liste complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te
+ * Commercants liste complÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨te
  * ============================================ */
 
 .commercant_announcment {
@@ -3174,7 +3175,7 @@ a.btn:hover {
 
 
 /* ============================================ *
- * Page CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ant (Sub category)
+ * Page CommerÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ant (Sub category)
  * ============================================ */
 
 .commercant_name {
@@ -3348,31 +3349,6 @@ a.btn:hover {
 
 .products-grid .actions {
     padding-top: 5px;
-}
-
-.pager li > a,
-.pager li > span {
-    padding: 4px 10px;
-    line-height: 20px;
-    width: auto;
-    height: auto;
-}
-
-.pages .next,
-.pages .previous {
-    width: auto;
-    height: auto;
-    padding: 12px;
-}
-
-.pages a,
-.pages .current {
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    padding: 4px 10px;
-    line-height: 20px;
-    vertical-align: bottom;
 }
 
 

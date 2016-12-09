@@ -62,7 +62,7 @@
             <?php /*if ($i++%$_columnCount==0): ?>
             <?php endif*/ ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($_product) ?>" method="post" class="product-item-info" id="product_addtocart_form_<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                <form action="<?php echo $this->helper('apdccart')->getAjaxAddUrl($_product) ?>" method="post" class="product-item-info apdc-add-to-cart-form" id="product_addtocart_form_<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
 
                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                         <?php $_imgSize = 210; ?>
@@ -116,7 +116,9 @@
             <?php endif*/ ?>
         <?php endforeach ?>
     </ul>
-    <script type="text/javascript">decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last'])</script>
+    <script type="text/javascript">
+        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last'])
+    </script>
 
     <div class="toolbar-bottom">
         <?php echo $this->getToolbarHtml() ?>

@@ -63,7 +63,7 @@ Minicart.prototype = {
             .unbind('focus.minicart')
             .bind('focus.minicart', function() {
                 cart.previousVal = $j(this).val();
-                cart.displayQuantityButton($j(this))
+                cart.displayQuantityButton($j(this));
             })
             .bind('blur.minicart', function() {
                 cart.revertInvalidValue(this);

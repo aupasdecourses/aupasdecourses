@@ -169,7 +169,7 @@ a.remove {
 .header-minicart #header-cart .mini-commercant-name.closed + .commercant-product-list {
     max-height:0px;
 }
-.header-minicart #header-cart .commercant-product-list .item {display: table;padding: 0;margin: 0;width: 100%;}
+.header-minicart #header-cart .commercant-product-list .item {display: block;padding: 0;margin: 0;width: 100%;}
 .header-minicart #header-cart .commercant-product-list .item-row {display: table-row;}
 .header-minicart #header-cart .commercant-product-list .item-cell {display: table-cell;vertical-align: middle;padding: 5px;}
 .header-minicart #header-cart .commercant-product-list .item-cell.item-image {
@@ -180,6 +180,7 @@ a.remove {
     color: #333;
     font-size: 11px;
     line-height: 11px;
+    cursor: help;
 }
 .header-minicart #header-cart .commercant-product-list .item-cell.item-qty {
     width: 70px;
@@ -217,3 +218,23 @@ a.remove {
 .header-minicart #header-cart .commercant-product-list .item-cell.item-qty .quantity-button {
     display:none;    
 }
+
+.header-minicart #header-cart .commercant-product-list .item-details {
+    display:none;
+}
+.header-minicart #header-cart .commercant-product-list .item-details.display {
+    display: block;
+}
+.header-minicart #header-cart .commercant-product-list .item-details .truncated {
+    cursor: default;
+    width: 100%;
+}
+.header-minicart #header-cart .commercant-product-list .item-details .truncated .truncated_full_value {
+    width: 100%;
+}
+.header-minicart #header-cart .commercant-product-list .item-details .item-options {margin: 0;}
+.header-minicart #header-cart .commercant-product-list .item-details .item-options li {margin: 0;padding: 4px 5px;}
+.header-minicart #header-cart .commercant-product-list .item-details .item-options li:last-child {border:none;padding-bottom: 0;}
+
+.header-minicart #header-cart .commercant-product-list .item-details .item-options label {display: inline-block;}
+.header-minicart #header-cart .commercant-product-list .item-details .item-options span {display: inline-block;}

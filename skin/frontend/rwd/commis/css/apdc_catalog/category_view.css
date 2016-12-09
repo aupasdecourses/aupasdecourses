@@ -91,6 +91,17 @@
   width: 100%;
   text-align: right;
 }
+.apdc-products-grid .product-item-info .actions .action-group {
+  display:inline-block;
+  position:relative;
+}
+.apdc-products-grid .product-item-info .actions .loader {
+  position: absolute;
+  left: 50%;
+  margin-left: -15px;
+  display: none;
+}
+.apdc-products-grid .product-item-info .actions button:disabled {opacity: 0.2;}
 .product-item-info .display-hover {
   display:none;
   background: #fff;
@@ -104,6 +115,9 @@
   right: -1px;
   z-index: 2;
   text-align: left;
+}
+.apdc-products-grid .product-item-info .actions .action-group .qty-buttons {
+  display:none;
 }
 .product-item-info:hover .display-hover {
   display:block;
