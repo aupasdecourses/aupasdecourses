@@ -89,5 +89,5 @@ toolUpload:
   defaults: { _controller: AppBundle:Tool:upload}
 
 oneup_uploader:
-    resource: .
+    resource: . 
     type: uploader

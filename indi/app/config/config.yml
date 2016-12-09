@@ -72,7 +72,7 @@ swiftmailer:
 oneup_uploader:
     mappings:
         gallery:
-            frontend: fineuploader
-            storage: 
-                directory: "%kernel.root_dir%/Resources/views/tool/"
+            frontend: blueimp
             error_handler: oneup_uploader.error_handler.noop
+            root_folder: true
+            max_size: -1

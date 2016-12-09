@@ -8,26 +8,46 @@
 	<div class="col-sm-12 paragraph">
 		<p>1. Selectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Selectionner les fichiers". Les photos seront téléchargées automatiquement
 		</p>
-		{{ form(form) }}
-		<br/>
+		<input class="btn-lg" id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple>
+		<div id="progress">
+			<div class="bar" style="width:0%;"></div>
+		</div>
+		<div id="file_uploaded"></div>
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>2. Optimisez les photos automatiquement</p>
-		<input type='button' name='optimiser' value='Optimiser photos' />
-	</div>
+		<input class="btn btn-lg btn-primary" type='button' id="button_optimiser" value='Optimiser photos' />
+		<div id="ajax-wait-optimiser" style="display: inline; margin-left: 10px;">
+			<img class="ajax-modal" style="display:none;" src="/delivery/ajax-loader.gif"/>
+			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
+			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
+			<span class="ajax-msg" style="font-weight:bold;"></span>
+		</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>3. Connectez vous à Magmi pour mettre à jour le catalogue</p>
-		<a href="/magmi/web/magmi.php">Ouvrir Magmi</a>
+		<a href="/magmi/web/magmi.php" class="btn btn-lg btn-primary" role="button" aria-disabled="true" target="_blank">Ouvrir Magmi</a>
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>4. Réindexez tous les index (sauf Redirections URL) sous Magento</p>
-		<input type='button' name='reindex' value='Reindexer Magmi' />
+		<input type="button" id="button_reindex" class="btn btn-lg btn-primary" value="Reindexer Magmi" />
+		<div id="ajax-wait-reindex" style="display:inline; margin-left: 10px;">
+			<img class="ajax-modal" style="display:none;" src="/delivery/ajax-loader.gif"/>
+			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
+			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
+			<span class="ajax-msg" style="font-weight:bold;"></span>
 	</div>
 </div>
 
-{{ oneup_uploader_endpoint('gallery') }}
-
+<style>
+    .bar {
+		height: 18px;
+		background: green;
+		}
+	.paragraph {
+		margin-bottom: 10px;
+		}
+</style>
 {% endblock %}
