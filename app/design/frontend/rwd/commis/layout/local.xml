@@ -120,6 +120,9 @@
         <remove name="right"/>
         <remove name="left"/>
         <remove name="left_first"/>
+        <reference name="product_list3">
+            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
+        </reference>
     </catalog_category_view>
     
     <!-- Page Commerçant => 'Primeur Clémence' -->
@@ -416,33 +419,9 @@
                 <block type="core/text_list" name="product_list.after" as="after"/>
                 <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
                     <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
+                </block>
+                <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+                <action method="setColumnCount"><count>5</count></action>
             </block>
         </reference>
         <reference name="jsfooter">
@@ -458,9 +437,6 @@
             <!-- Recently viewed items -->
             <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
         </reference> 
-        <reference name="product_list3">
-            <action method="setColumnCount"><count>5</count></action>
-        </reference>
     </catalog_category_layered_nochildren>
 
     <GROUP_CATEGORY>
@@ -473,9 +449,7 @@
                     <block type="page/html_pager" name="product_list_toolbar_pager"/>
                 </block>
                 <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
-                <action method="setColumnCount">
-                    <count>5</count>
-                </action>
+                <action method="setColumnCount"><count>5</count></action>
             </block>
         </reference>
         <reference name="jsfooter">
