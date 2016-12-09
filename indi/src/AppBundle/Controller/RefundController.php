@@ -258,16 +258,16 @@ class RefundController extends Controller
 		ksort($files);
 
 		$entity_submit = new \AppBundle\Entity\Model();
-		$form_submit = $this->createFormBuilder($entity_submit);
+		$form_submit = $this->createForm(\AppBundle\Form\Submit::class, $entity_submit);
 
 		$form_submit->handleRequest($request);
 		if ($form_submit->isSubmitted) {
-//			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
+			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
 		}
 
-echo "<pre>";
-print_r($order);
-echo "</pre>";
+//echo "<pre>";
+//print_r($order);
+//echo "</pre>";
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
@@ -277,7 +277,8 @@ echo "</pre>";
 			'refund_diff' => $refund_diff,
 			'order_header' => $order_header,
 			'order' => $order,
-			'order_id' => $id
+			'order_id' => $id,
+			'forms' => [ $form_submit->createView() ],
 		]);
 	}
 }
