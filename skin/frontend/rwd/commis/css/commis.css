@@ -2165,6 +2165,7 @@ p.product-name a:hover,
     color: #339933;
     margin-bottom: 0px;
     border: 0;
+    min-width:200px;
 }
 
 

@@ -27,6 +27,7 @@
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
+            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
         </reference>
         <reference name="checkout.payment.methods.child0">
             <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
