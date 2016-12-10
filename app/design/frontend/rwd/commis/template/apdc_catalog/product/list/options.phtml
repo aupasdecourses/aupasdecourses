@@ -1,5 +1,6 @@
 <?php $_product = $this->getProduct(); ?>
 <?php if ($_product->getTypeId() == 'configurable' || $_product->getHasOptions()) : ?>
+    <div class="hover-title option-title"><?php echo $this->__('Choose your options'); ?></div>
     <script type="text/javascript">
         var optionsPrice<?php echo $_product->getId(); ?> = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
     </script>

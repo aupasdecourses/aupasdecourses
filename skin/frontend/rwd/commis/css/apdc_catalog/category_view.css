@@ -116,6 +116,20 @@
   z-index: 2;
   text-align: left;
 }
+.product-item-info .display-hover .hover-title {
+  font-weight:bold;
+  border-bottom:1px solid lightgrey;
+  margin-bottom:10px;
+
+
+}
+.product-item-info .display-hover .product-availability .available {
+  font-weight: bold;
+}
+.product-item-info .display-hover .product-availability .fa-check {
+  color:#3ab64b;
+}
+
 .apdc-products-grid .product-item-info .actions .action-group .qty-buttons {
   display:none;
 }
