@@ -32,17 +32,6 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
     }
   
    public function getCommercantname($object){
-
-    //Old version with category ids
-    // $category_ids=$object->getProduct()->getCategoryIds();
-    // $category = Mage::getModel('catalog/category')->load($category_ids[count($category_ids)-3]);
-    // if ($category->getIsActive()) {
-    //     $name=$category->getName();
-    //     $url=$category->getUrl();
-    //     return [$name,$url];
-    // }
-
-        //New version
         $name=$object->getProduct()->getAttributeText('commercant');
 
         if($name==NULL || $name==""){

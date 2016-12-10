@@ -53,6 +53,7 @@
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
+            <remove name="checkout_cart_link"/>
         </reference>
         <reference name="right">
             <!--Remove whishlist -->
@@ -190,19 +191,18 @@
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
-            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
-                <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
-                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
-                </block>
-                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
-            </block>
             <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
                 <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
                     <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
                 </block>
+                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
+                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
+                </block>
             </block>
-            <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" >
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
                 <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
             </block>
         </reference>

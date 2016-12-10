@@ -62,30 +62,25 @@ function liste_commercant_id($filter = 'none')
 {
     $return = [];
 
-    //with attribute ids
-    // $attr = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('commercant')->getData()[0];
-    // $attributeModel = Mage::getModel('eav/entity_attribute')->load($attr['attribute_id']);
-    // $src =    $attributeModel->getSource()->getAllOptions(false);
-    // foreach ($src as $s) {
-    //     $return[$s['value']]=$s['label'];
-    // }
-
-    //with active categories
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter();
-    foreach ($categories as $cat) {
-        if ($cat->getData('estcom_commercant') == true) {
-            if ($filter == 'none') {
-                $return[$cat->getData('att_com_id')] = $cat->getName();
-            } elseif ($filter == 'store') {
-                $storeid = explode('/', $cat->getPath())[1];
-                $return[$storeid][$cat->getData('att_com_id')] = array(
-                    'name' => $cat->getName(),
-                    'adresse' => $cat->getAdresseCommercant(),
-                    'telephone' => $cat->getTelephone()." / ".$cat->getPortable(),
-                );
-            }
+    //with Apdc_Commercant module
+    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
+    if ($filter == 'none') {
+        foreach ($shops as $shop) {
+            $return[$shop->getIdAttributCommercant()] = $shop->getName();
+        }
+    } elseif ($filter == 'store') {
+        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+        $shops->addFilterToMap('path', 'catalog_category_entity.path');
+        foreach ($shops as $shop) {
+            $storeid = explode('/', $shop->getPath())[1];
+            $return[$storeid][$shop->getIdAttributCommercant()] = array(
+                'name' => $shop->getName(),
+                'adresse' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+                'telephone' => $shop->getPhone(),
+            );
         }
     }
+
     arsort($return);
 
     return $return;
@@ -123,7 +118,7 @@ function all_orders($var = 'mwddate', $commercantId = 'all')
     try {
         $orders = Mage::getModel('sales/order')->getCollection();
         //N'affiche que les commandes de moins de 3 mois
-        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m')-3, date('d'), date('Y')));
+        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m') - 3, date('d'), date('Y')));
 
         //Ajout de MWDDate (pour les commandes après le 12 janvier environ)
         if ($var == 'mwddate') {
@@ -172,13 +167,14 @@ function orders_fortheday($date, $commercantId = 'all', $var = 'mwddate')
     $date = date('Y-m-d H:i:s', mktime(0, 0, 0, intval($d[1]), intval($d[2]), intval($d[0])));
     if ($var == 'mwddate') {
         $orders->addAttributeToFilter('ddate', array(
-            'in' => $date
+            'in' => $date,
         ));
     } else {
         $orders->addAttributeToFilter('delivery_date', array(
             'in' => $date,
         ));
     }
+
     return $orders;
 }
 
@@ -263,15 +259,21 @@ function comid_item($item, $order)
 }
 
 //Récupère l'information contenu dans la categorie principale du commerçant avec le ID de l'attribut produits "commercant"
-function commercant($attcomid)
+function shop($id)
 {
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
-    foreach ($categories as $category) {
-        $categ = Mage::getModel('catalog/category')->load($category->getId());
-        if ($categ->getAttComId() == $attcomid) {
-            return $categ;
-        }
-    }
+    $shop_info=array();
+    $data=Mage::getModel('apdc_commercant/shop')->load($id, 'id_attribut_commercant')->getData();
+
+    $shop_info["name"]=$data["name"];
+    $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
+    $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
+    $shop_info["phone"]=$data["phone"];
+    $shop_info["website"]=$data["website"];;
+    $shop_info["timetable"]=implode(",",$data["timetable"]);
+    $shop_info["closing_periods"]=$data["closing_periods"];;
+    $shop_info["delivery_days"]="Du Mardi au Vendredi";
+
+    return $shop_info;
 }
 
 //Récupère l'information marge dans la table order
@@ -303,10 +305,10 @@ function startsWith($haystack, $needle)
 function getOrderAttachments($order)
 {
     $attachments = Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
-    $remboursement_client = "|*REMBOURSEMENTS*|</br>".$attachments->getData('remboursements')."</br>";
-    $commentaires_ticket = "|*COM. TICKET*|</br>".$attachments->getData('commentaires_ticket')."</br>";
-    $commentaires_interne = "|*COM. INTERNE*|</br>".$attachments->getData('commentaires_commande')."</br>";
-    $commentaires_fraislivraison = "|*COM. FRAISLIV*|</br>".$attachments->getData('commentaires_fraislivraison');
+    $remboursement_client = '|*REMBOURSEMENTS*|</br>'.$attachments->getData('remboursements').'</br>';
+    $commentaires_ticket = '|*COM. TICKET*|</br>'.$attachments->getData('commentaires_ticket').'</br>';
+    $commentaires_interne = '|*COM. INTERNE*|</br>'.$attachments->getData('commentaires_commande').'</br>';
+    $commentaires_fraislivraison = '|*COM. FRAISLIV*|</br>'.$attachments->getData('commentaires_fraislivraison');
 
     $comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
 
@@ -322,11 +324,11 @@ function getOrderComments($order)
         $comment_status = $status->getData('status');
         $comment = $status->getData('comment');
         if ($comment_status == 'processing' && $comment != null && $comment != '' && !startsWith($comment, 'Notification paiement Hipay') && !startsWith($comment, 'Le client a payé par Hipay avec succès')) {
-            $order_comments .= "=> ".$comment.'<br/>';
+            $order_comments .= '=> '.$comment.'<br/>';
         }
     }
 
-    return "|*ORDER HISTORY*|</br>".$order_comments;
+    return '|*ORDER HISTORY*|</br>'.$order_comments;
 }
 
 function getRefundorderdata($order, $output)
@@ -654,33 +656,6 @@ function verif_validation($table_order, $order_id, $sku)
     return $sku_valide;
 }
 
-//Classer les produits par commerçant
-function sort_by_commercant($ordered_items)
-{
-    $sort_items = [];
-    foreach ($ordered_items as $item) {
-
-            //récupère l'information 'commerçant' dans sales_flat_order_item pour les commandes après 11-06-2015
-            if ($item->getData('commercant_id') !== null) {
-                $commercant = $item->getData('commercant_id');
-                if (!isset($sort_items[$commercant])) {
-                    $sort_items[$commercant] = array();
-                }
-                $sort_items[$commercant][] = $item;
-            } else {
-                // $product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-                    // $commercant = $product->getCategoryIds()[2];
-                    // if (!isset($sort_items[$commercant])) {
-                    //         $sort_items[$commercant] = array();
-                    // }
-                    // $sort_items[$commercant][]=$item;
-            }
-    }
-    ksort($sort_items);
-
-    return $sort_items;
-}
-
 //Get list of order ids
 function get_list_orderid()
 {
@@ -803,16 +778,15 @@ function data_coupon($debut, $fin)
         ]);
 
         arsort($data);
-
     }
 
-    $data_conso=[];
-    foreach($data as $row){
-        if($row['Coupon Code']){
-            $data_conso[$row['Coupon Code']][]=$row['increment_id'];
+    $data_conso = [];
+    foreach ($data as $row) {
+        if ($row['Coupon Code']) {
+            $data_conso[$row['Coupon Code']][] = $row['increment_id'];
         }
     }
-        
+
     return $data_conso;
 }
 
