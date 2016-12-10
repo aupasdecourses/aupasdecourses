@@ -6,17 +6,19 @@ $html = '';
 $nbCategoryColumns = 4;
 $children = $menuTree->getChildren();
 $menuTree->setCounter(1);
+$mainStaticBlock = false;
 if ($menuTree->getMenuMainStaticBlock()) {
     $html .= '<li class="template-column block-static-menu">';
     $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
     $html .= '</li>';
+    $mainStaticBlock = true;
 }
 $cpt = 1;
 foreach ($children as $child) {
 
     $this->initChild($child, $menuTree);
 
-    $html .= '<li class="template-column">';
+    $html .= '<li class="template-column ' . $this->getTemplateColumnClasses($child, $cpt, $mainStaticBlock) . '">';
 
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
@@ -53,7 +55,9 @@ foreach ($children as $child) {
     $counter = $menuTree->getCounter();
     $counter++;
     $menuTree->setCounter($counter);
-    $cpt++;
+    if ($child->getShowInNavigation() != 3) {
+        $cpt++;
+    }
     if ($cpt > $nbCategoryColumns) {
         break;
     }

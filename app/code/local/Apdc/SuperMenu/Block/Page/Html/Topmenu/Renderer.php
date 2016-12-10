@@ -169,6 +169,8 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             }
         }
 
+        $classes[] = $this->getShowInNavigationClasses($item);
+
         return $classes;
     }
 
@@ -299,5 +301,53 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         } else {
             return Mage::getBaseUrl('media').'catalog/category/' . $image;
         }
+    }
+
+
+    /**
+     * getTemplateColumnClasses 
+     * 
+     * @param Mage_Catalog_Model_Category $item            : item 
+     * @param int                         $cpt             : column number
+     * @param boolean                     $mainStaticBlock : Is there any static block before
+     * 
+     * @return array
+     */
+    public function getTemplateColumnClasses($item, $cpt, $mainStaticBlock)
+    {
+        $classes = array();
+        $classes[] = $this->getShowInNavigationClasses($item);
+        if (!$mainStaticBlock) {
+            $cpt--;
+        }
+        if ($cpt % 5 == 0) {
+            $classes[] = 'template-5-cols';
+        }
+        if ($cpt % 4 == 0) {
+            $classes[] = 'template-4-cols';
+        }
+        if ($cpt % 3 == 0) {
+            $classes[] = 'template-3-cols';
+        }
+
+        return implode(' ', $classes);
+    }
+
+    /**
+     * getShowInNavigationClasses 
+     * 
+     * @param Mage_Catalog_Model_Category $item item 
+     * 
+     * @return string
+     */
+    public function getShowInNavigationClasses($item)
+    {
+        $classes = '';
+        if ($item->getShowInNavigation() == 2) {
+            $classes = 'hidden-xs';
+        } else if ($item->getShowInNavigation() == 3) {
+            $classes = 'visible-xs';
+        }
+        return $classes;
     }
 }
