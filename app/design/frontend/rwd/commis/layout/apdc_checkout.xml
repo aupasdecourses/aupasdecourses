@@ -27,6 +27,7 @@
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
+            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
         </reference>
         <reference name="checkout.payment.methods.child0">
             <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
@@ -47,7 +48,6 @@
                 <action method="setElementId"><value>checkout-progress-wrapper</value></action>
                 <block type="checkout/onepage_progress" name="checkout.progress" before="-" template="apdc_checkout/checkout/onepage/progress.phtml">
                     <block type="checkout/onepage_progress" name="billing.progress" template="apdc_checkout/checkout/onepage/progress/billing.phtml"></block>
-                    <block type="checkout/onepage_progress" name="shippingmethod.progress" template="apdc_checkout/checkout/onepage/progress/shipping_method.phtml"></block>
                     <block type="checkout/onepage_progress" name="payment.progress" template="apdc_checkout/checkout/onepage/progress/payment.phtml"></block>
                 </block>
             </block>
@@ -56,7 +56,6 @@
             <block type="checkout/onepage_progress" name="root" output="toHtml" template="apdc_checkout/checkout/onepage/progress.phtml">
                 <action method="setInfoTemplate"><method></method><template></template></action>
                 <block type="checkout/onepage_progress" name="billing.progress" template="apdc_checkout/checkout/onepage/progress/billing.phtml"></block>
-                <block type="checkout/onepage_progress" name="shippingmethod.progress" template="apdc_checkout/checkout/onepage/progress/shipping_method.phtml"></block>
                 <block type="checkout/onepage_progress" name="payment.progress" template="apdc_checkout/checkout/onepage/progress/payment.phtml"></block>
             </block>
             <reference name='root'>
