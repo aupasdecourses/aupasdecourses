@@ -403,6 +403,7 @@ class Magento
 				'refund_diff'	=> 'refund.diffprixfinal',
 				'refund_com'	=> 'refund.comment'
 			]);
+			// adyen join or in query ??
 
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product, $orderId);

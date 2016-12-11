@@ -255,23 +255,29 @@ class RefundController extends Controller
 		unset ($order[-1]);
 
 		$files = $this->getUploadedFiles($id);
-		ksort($files);
+		foreach ($order as $merchant_id => $merchant_part) {
+			if (isset($files[$merchant_id]))
+				$order[$merchant_id]['merchant']['ticket'] = $files[$merchant_id]['url'];
+			else
+				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
+		}
+		ksort($order);
 
 		$entity_submit = new \AppBundle\Entity\Model();
 		$form_submit = $this->createForm(\AppBundle\Form\Submit::class, $entity_submit);
 
 		$form_submit->handleRequest($request);
-		if ($form_submit->isSubmitted) {
-			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
-		}
+		if ($form_submit->isSubmitted()) {
+//			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
 
-//echo "<pre>";
-//print_r($order);
-//echo "</pre>";
+echo "<pre>";
+print_r($order);
+echo "</pre>";
+
+		}
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'files' => $files,
 			'total' => $total,
 			'refund_total' => $refund_total,
 			'refund_diff' => $refund_diff,
