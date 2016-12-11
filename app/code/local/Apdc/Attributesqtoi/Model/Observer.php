@@ -10,9 +10,6 @@ class Apdc_Attributesqtoi_Model_Observer extends Varien_Object
         $product = $observer->getProduct();
         $quoteItem->setCommercant($product->getCommercant());
         $quoteItem->setMargeArriere($product->getMargeArriere());
-        if(isset($product->getCategoryIds()[2])){
-            $quoteItem->setCommercantId($product->getCategoryIds()[2]);
-        }
         $quoteItem->setPrixKiloSite($product->getPrixKiloSite());
         $quoteItem->setShortDescription($product->getShortDescription());
     }

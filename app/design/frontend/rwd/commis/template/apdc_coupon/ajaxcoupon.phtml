@@ -96,7 +96,7 @@
             if(jQuery('#coupon_code').val() == ''){return false;}
             jQuery('#coupon-please-wait').show();
             jQuery.ajax({
-                url: '<?php echo $this->getUrl('customcheckout/ajaxcoupon_index/customcouponPost') ?>',
+                url: '<?php echo $this->getUrl('ajaxcoupon/index/customcouponPost') ?>',
                 dataType: 'json',
                 data: data1, 
                 type:'POST',

@@ -1,0 +1,18 @@
+<?php if ($this->getAgreements()): ?>
+<form action="" id="checkout-agreements" onsubmit="return false;">
+<ol class="checkout-agreements">
+<?php foreach ($this->getAgreements() as $_a): ?>
+    <li>
+        <p class="agree">
+            <input type="checkbox" id="cgv-checkbox" value="1" title="<?php echo $this->escapeHtml($_a->getCheckboxText()) ?>" class="checkbox" /><label for="agreement-<?php echo $_a->getId()?>">J'ai lu et j'accepte les <a href="<?= Mage::getUrl('mentions-legales-cgv')?>" target="_blank">Conditions Générales de Vente</a></label>
+        </p>
+    </li>
+<?php endforeach ?>
+</ol>
+</form>
+<?php endif;?>
+<ul class="form-list" style="margin-top:20px;">
+    <div class="hipay_infobox_headline">
+        <a style="color:#333" href="https://www.hipaywallet.com/" target="_blank"><?php echo Mage::helper('hipaymod')->__('Paiement 100% sécurisé en ligne via') ?><img style="display:inline;margin-left:5px;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>frontend/base/default/images/himediapayments/hipay/hipay_logo.png"/></a>
+    </div>
+</ul>

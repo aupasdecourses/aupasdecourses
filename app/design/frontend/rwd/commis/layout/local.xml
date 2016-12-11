@@ -53,6 +53,7 @@
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
+            <remove name="checkout_cart_link"/>
         </reference>
         <reference name="right">
             <!--Remove whishlist -->
@@ -120,6 +121,9 @@
         <remove name="right"/>
         <remove name="left"/>
         <remove name="left_first"/>
+        <reference name="product_list3">
+            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
+        </reference>
     </catalog_category_view>
     
     <!-- Page Commerçant => 'Primeur Clémence' -->
@@ -147,9 +151,9 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
-                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
+            <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
+                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml" />
+                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
             </block>
         </reference>
     </PAGE_COMMERCANT>
@@ -273,19 +277,18 @@
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
-            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
-                <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
-                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
-                </block>
-                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
-            </block>
             <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
                 <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
                     <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
                 </block>
+                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
+                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
+                </block>
             </block>
-            <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" >
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
                 <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
             </block>
         </reference>
@@ -416,33 +419,9 @@
                 <block type="core/text_list" name="product_list.after" as="after"/>
                 <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
                     <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
+                </block>
+                <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+                <action method="setColumnCount"><count>5</count></action>
             </block>
         </reference>
         <reference name="jsfooter">
@@ -458,9 +437,6 @@
             <!-- Recently viewed items -->
             <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
         </reference> 
-        <reference name="product_list3">
-            <action method="setColumnCount"><count>5</count></action>
-        </reference>
     </catalog_category_layered_nochildren>
 
     <GROUP_CATEGORY>
@@ -472,9 +448,8 @@
                 <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
                     <block type="page/html_pager" name="product_list_toolbar_pager"/>
                 </block>
-                <action method="setColumnCount">
-                    <count>5</count>
-                </action>
+                <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+                <action method="setColumnCount"><count>5</count></action>
             </block>
         </reference>
         <reference name="jsfooter">

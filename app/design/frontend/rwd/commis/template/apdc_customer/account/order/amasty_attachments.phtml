@@ -14,7 +14,6 @@ if($field->getCustomerVisibility()=="view"):
 ?>
 <div class="row">
     <div class="col-sm-12">
-        <h2><?php echo $this->__('Tickets Commerçants') ?></h2>
         <?php
         if (!is_array($content)) {
             $val = explode(';', $content);
@@ -22,22 +21,17 @@ if($field->getCustomerVisibility()=="view"):
         ?>
         <ul>
             <?php foreach ($val as $img): ?>
-                    <li>Voir les tickets:
+                    <li>Voir les tickets commerçants:
                         <?php if($img<>""):
                             $url_src=$this->getUrl('attaches/order/download', array('file' => $img, 'customer_id' => Mage::getSingleton('customer/session')->getCustomerId()));
                             ?>
                             <a href="<?= $url_src?>"><img class="ticket_commercant" src="<?= $url_src?>"/></a>
                         <?php else:?>
-                            <span>Pas de tickets commerçants (pour l'instant)</span>
+                            <span>Pas de tickets (pour l'instant)</span>
                         <?php endif;?>
                     </li>
             <?php endforeach; ?>
         </ul>
     </div>
 <?php endif;?>
-</div>
-<div class="row">
-    <div class="col-sm-12 buttons-set">
-        <p class="back-link"><a href="<?php echo Mage::getUrl('sales/order/history') ?>"><small>&laquo; </small>Revenir à la liste des commandes</a></p>
-    </div>
 </div>
