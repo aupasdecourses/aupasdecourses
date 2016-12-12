@@ -42,4 +42,11 @@ class Apdc_Customer_Model_Observer_Frontend
             $controller->getResponse()->setRedirect($url);
         }
     }
+
+    public function customerRegistrationAllowed(Varien_Event_Observer $observer)
+    {
+        if (Mage::app()->getWebsite()->getCode() == 'apdc_main') {
+            $observer->getResult()->setIsAllowed(false);
+        }
+    }
 }
