@@ -49,4 +49,14 @@ class Apdc_Customer_Model_Observer_Frontend
             $observer->getResult()->setIsAllowed(false);
         }
     }
+
+    public function customerLoggedIn(Varien_Event_Observer $observer)
+    {
+        if (Mage::app()->getWebsite()->getCode() == 'apdc_main') {
+            /** @var Mage_Customer_Model_Customer $customer */
+            $customer = $observer->getCustomer();
+            $store = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore();
+            Mage::getSingleton('customer/session')->setBeforeAuthUrl($store->getBaseUrl());
+        }
+    }
 }
