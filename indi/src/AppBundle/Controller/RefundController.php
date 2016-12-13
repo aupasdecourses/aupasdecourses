@@ -268,7 +268,11 @@ class RefundController extends Controller
 
 		$form_submit->handleRequest($request);
 		if ($form_submit->isSubmitted()) {
-//			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]);
+			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
+
+			// facture (invoice)
+			// credimemo 
+			// remboursement (adyen refund) $total, $refund_total, $refund_diff
 
 echo "<pre>";
 print_r($order);
