@@ -88,6 +88,10 @@ toolUpload:
   path: /tool/upload/
   defaults: { _controller: AppBundle:Tool:upload}
 
+toolOptimise:
+  path: /shipping/
+  defaults: { _controller: AppBundle:Tool:optimise}
+
 oneup_uploader:
     resource: . 
     type: uploader

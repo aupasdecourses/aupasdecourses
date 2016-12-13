@@ -26,4 +26,12 @@ class ToolController extends Controller
 			'user' => $_SESSION['delivery']['username'],
 		]);
 	}
+
+	public function optimiseAction(Request $request)
+	{
+
+		return  $this->render('shipping/index.html.twig', [
+			'user' => $_SESSION['delivery']['username'],
+		]);
+	}
 }

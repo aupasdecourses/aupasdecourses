@@ -17,13 +17,8 @@
 
 	<div class="col-sm-12 paragraph">
 		<p>2. Optimisez les photos automatiquement</p>
-		<input class="btn btn-lg btn-primary" type='button' id="button_optimiser" value='Optimiser photos' />
-		<div id="ajax-wait-optimiser" style="display: inline; margin-left: 10px;">
-			<img class="ajax-modal" style="display:none;" src="/delivery/ajax-loader.gif"/>
-			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
-			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
-			<span class="ajax-msg" style="font-weight:bold;"></span>
-		</div>
+		<a href="/delivery/libs/processimage/photos_produits.sh" class="btn btn-lg btn-primary" role="button" aria-disabled="true" target="_blank">Optimiser photos</a>
+	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>3. Connectez vous à Magmi pour mettre à jour le catalogue</p>
@@ -50,4 +45,29 @@
 		margin-bottom: 10px;
 		}
 </style>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+	$(function () {
+			$('#fileupload').fileupload({
+				done: function (e, data) {
+					$.each(data.result.files, function (index, file) {
+					    $('<p/>').text(file.name).appendTo($('#file_uploaded'));
+				 });
+				},
+				progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				$('#progress .bar').css(
+					'width',
+				    progress + '%'
+				);
+			}	
+			});
+		});
+	</script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
+
 {% endblock %}
