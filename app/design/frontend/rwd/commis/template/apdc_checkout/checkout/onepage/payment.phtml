@@ -34,8 +34,9 @@
 </script>
 <div class="row">
     <form action="" id="co-payment-form">
-        <div class="sp-methods" id="checkout-payment-method-load">
-           <!-- Content dynamically loaded. Content from the methods.phtml is loaded during the ajax call -->
+        <div class="fieldset">
+            <?php echo $this->getChildChildHtml('methods_additional', '', true, true) ?>
+            <?php echo $this->getChildHtml('methods') ?>
         </div>
         <div class="tool-tip" id="payment-tool-tip" style="display:none;">
             <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>"><?php echo $this->__('Close') ?></a></div>
