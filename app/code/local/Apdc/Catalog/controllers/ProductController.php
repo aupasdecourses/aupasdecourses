@@ -38,16 +38,33 @@ class Apdc_Catalog_ProductController extends Mage_Catalog_ProductController
             $response = array();
             try {
 
-                $categoryId = (int) $this->getRequest()->getParam('category', false);
-                $productId  = (int) $this->getRequest()->getParam('id');
-                $specifyOptions = $this->getRequest()->getParam('options', false);
+                $productId  = (int) $this->getRequest()->getParam('productId');
+                $itemId = (int) $this->getRequest()->getParam('itemId');
 
+                $params = new Varien_Object();
+                $params->setCategoryId(false);
+
+                if ($itemId > 0) {
+                    $cart = Mage::getSingleton('checkout/cart');
+                    $quoteItem = $cart->getQuote()->getItemById($itemId);
+
+                    if (!$quoteItem) {
+                        Mage::throwException($this->__('Quote item is not found.'));
+                    }
+                    $params->setConfigureMode(true);
+                    $params->setBuyRequest($quoteItem->getBuyRequest());
+                    $productId = $quoteItem->getProduct()->getId();
+                } else if ($productId > 0) {
+                    $specifyOptions = $this->getRequest()->getParam('options', false);
+                    $params->setSpecifyOptions($specifyOptions);
+                }
+
+                if (!$productId > 0) {
+                    Mage::throwException($this->__('Product not found'));
+                }
                 // Prepare helper and params
                 $viewHelper = Mage::helper('apdc_catalog/product_view');
 
-                $params = new Varien_Object();
-                $params->setCategoryId($categoryId);
-                $params->setSpecifyOptions($specifyOptions);
 
                 // Render page
                 $viewHelper->prepareAndRender($productId, $this, $params);

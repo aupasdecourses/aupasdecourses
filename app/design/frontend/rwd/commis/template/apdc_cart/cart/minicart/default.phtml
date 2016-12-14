@@ -95,7 +95,7 @@
 
             <?php if ($isVisibleProduct): ?>
                 <div>
-                <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo $this->__('Edit item') ?>" class="btn-edit">
+                <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
                     <i class="fa fa-edit"></i>
                 </a>
                 </div>

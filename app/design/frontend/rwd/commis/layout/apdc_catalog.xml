@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <default>
-	    <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
-        <action method="setProductsCount"><count>10</count></action>
-        <action method="addPriceBlockType">
-            <type>bundle</type>
-            <block>bundle/catalog_product_price</block>
-            <template>bundle/catalog/product/price.phtml</template>
-        </action>
-        <action method="setColumnCount"><count>6</count></action>
-    </block>
-    </default>
+      <default>
+        <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
+          <action method="setProductsCount"><count>10</count></action>
+          <action method="addPriceBlockType">
+              <type>bundle</type>
+              <block>bundle/catalog_product_price</block>
+              <template>bundle/catalog/product/price.phtml</template>
+          </action>
+          <action method="setColumnCount"><count>6</count></action>
+      </block>
 
-    <apdc_catalog_product_quick_view>
-      <reference name="content" before="-">
+      <reference name="head">
+          <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_quickview.js</file></action>
+      </reference>
+      <reference name="before_body_end">
         <block type="core/template" name="product_quickView" template="apdc_catalog/product/quick-view.phtml" />
       </reference>
-    </apdc_catalog_product_quick_view>
+
+    </default>
 
     <apdc_catalog_product_list>
-
-        <update handle="apdc_popup" />
 
         <reference name="product_list">
           <action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
@@ -52,12 +52,12 @@
         <remove name="left_first"/>
 
         <reference name="head">
+          <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
           <action method="addItem"><type>skin_css</type><file>css/apdc_catalog/category_view.css</file></action>
           <action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-options.css</file></action>
           <action method="addJs"><file>varien/product.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
-          <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_optionsPrices.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_configurable.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_custom_options.js</file></action>

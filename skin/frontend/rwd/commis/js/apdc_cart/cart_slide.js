@@ -1,5 +1,13 @@
+if (typeof(apdcProductQuickViewPopup) === 'undefined') {
+  var apdcProductQuickViewPopup = null;
+}
 (function($) {
   $(document).ready(function() {
+    if (apdcProductQuickViewPopup === null) {
+      apdcProductQuickViewPopup = new ApdcPopup({
+        id:'product-quick-view'
+      });
+    }
     $('.page-header-container').on('click', '.header-minicart .mini-commercant-name', function() {
       $(this).toggleClass('closed');
       if (cartSlideUpdateAccordionUrl) { // see template /apdc_cart/minicart/items.phtml
@@ -45,6 +53,52 @@
       $(this).addClass('display');
       $(this).parents('.item').find('.item-details').stop().slideDown('fast');
     });
+
+    var itemShowedInPopup = {};
+    $('.page-header-container').on('click', '.show-item-popup', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var self = this;
+      apdcQuickView.checkRequirements(function() {
+        showItemQuickView(self)
+      });
+    });
+
+    function showItemQuickView(elt) {
+      var itemId = $(elt).data('item-id');
+
+      apdcProductQuickViewPopup.showLoading();
+
+      if (typeof(itemShowedInPopup[itemId]) !== 'undefined') {
+        apdcProductQuickViewPopup.updateContent(itemShowedInPopup[itemId]);
+      } else {
+        var ajaxUrl = $(elt).data('ajax-product-popup');
+
+        data = new FormData();
+        data.append('isAjax', 1);
+        data.append('itemId', itemId);
+
+        $.ajax({
+          url: ajaxUrl,
+          data: data,
+          processData: false,
+          contentType: false,
+          type: 'POST'
+        })
+        .done(function(response) {
+          if (response.status === 'SUCCESS') {
+            itemShowedInPopup[itemId] = response.html;
+            apdcProductQuickViewPopup.updateContent(response.html);
+          } else if (response.status === 'ERROR') {
+            var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
+            apdcProductQuickViewPopup.updateContent(message);
+          }
+        })
+        .fail(function() {
+          console.log('failed');
+        });
+      }
+    }
   });
 
   $(document).on('minicartAddQty', function(event, itemId, productId) {

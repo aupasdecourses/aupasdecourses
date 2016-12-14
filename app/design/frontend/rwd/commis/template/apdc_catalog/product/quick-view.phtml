@@ -1,8 +1,41 @@
-<!--
-<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_configurable_list.js'); ?>"></script>
--->
-<?php
-//<script type="text/javascript" src="/skin/frontend/rwd/commis/js/configurableswatches/product-media.js"></script>
-//<script type="text/javascript" src="/skin/frontend/base/default/js/cybage/swatches/configurable.js"></script>
-?>
-
+<script type="text/javascript">
+// CHECK REQUIREMENTS FOR QUICK VIEW
+var apdcQuickView = new ApdcQuickView([
+    {
+        type:'css',
+        url:'<?php echo $this->getSkinUrl('css/apdc_catalog/product-options.css'); ?>',
+    },
+    {
+        type:'js',
+        url: '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>varien/product.js',
+        test : [
+            'Product'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_configurable.js'); ?>',
+        test: [
+            'Product',
+            'ApdcConfig'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_optionsPrices.js'); ?>',
+        test: [
+            'Product',
+            'OptionsPrice',
+            'reloadWithContainer'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_custom_options.js'); ?>',
+        test: [
+            'Product',
+            'Options'
+        ]
+    }
+]);
+</script>

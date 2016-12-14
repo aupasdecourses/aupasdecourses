@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-  <apdc_popup>
+  <default>
     <reference name="head">
       <action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
       <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
@@ -8,5 +8,5 @@
     <reference name="before_body_end">
       <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
     </reference>
-  </apdc_popup>
+  </default>
 </layout>
