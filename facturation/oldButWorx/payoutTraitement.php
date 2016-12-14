@@ -1,5 +1,10 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+include("logs.php");
+
 // HTML ARRAY FROM POST FORM
 $htmlArray = array (
 	"amount" => array(
@@ -44,7 +49,9 @@ if(FALSE === $ch)
 	throw new Exception('failed to initialize');
 
 
-curl_setopt($ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/servlet/Payout/v12/storeDetailAndSubmitThirdParty");
+
+
+curl_setopt($ch, CURLOPT_URL, $url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -52,7 +59,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
 
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
-curl_setopt($ch, CURLOPT_USERPWD, "storePayout_104791@Company.AuPasDeCourses:9GsnR!sm3]*w7>rh%^bHSd!@2");
+curl_setopt($ch, CURLOPT_USERPWD, "$log:$pwd");
 
 curl_setopt($ch, CURLOPT_POST,true);
 
