@@ -37,6 +37,9 @@ class Apdc_Catalog_Block_Product_View_Type_Configurable extends Cybage_Swatches_
                 }
             }
         }
+        if ($this->getProduct()->getConfigurableContainerId()) {
+            $config['containerId'] = $this->getProduct()->getConfigurableContainerId();
+        }
         return Zend_Json::encode($config);
     }
 }

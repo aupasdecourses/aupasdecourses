@@ -1,5 +1,6 @@
 <?php $_product = $this->getProduct(); ?>
 <?php if ($_product->getTypeId() == 'configurable' || $_product->getHasOptions()) : ?>
+<div class="product-options">
     <div class="hover-title option-title"><?php echo $this->__('Choose your options'); ?></div>
     <script type="text/javascript">
         var optionsPrice<?php echo $_product->getId(); ?> = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
@@ -20,4 +21,8 @@
         <?php echo $this->getChildHtml('options_js'); ?>
         <?php echo $this->getChild('product.info.options')->setProduct($_product)->toHtml(); ?>
     <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($_product->getTypeId() == 'configurable' || $_product->getHasOptions()) : ?>
+</div>
 <?php endif; ?>

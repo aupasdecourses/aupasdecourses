@@ -85,6 +85,10 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_Popup>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Popup>
         <Apdc_SalesRule>
             <active>true</active>
             <codePool>local</codePool>

@@ -27,14 +27,15 @@ if (typeof Product == 'undefined') {
 }
 
 /**************************** CONFIGURABLE PRODUCT **************************/
-Product.Config = Class.create();
-Product.Config.prototype = {
+Product.ApdcConfig = Class.create();
+Product.ApdcConfig.prototype = {
     initialize: function(config){
         this.config     = config;
         this.taxConfig  = this.config.taxConfig;
         if (config.containerId) {
             this.settings   = $$('#' + config.containerId + ' ' + '.super-attribute-select_' + this.config.productId);
         } else {
+            this.config.containerId = '';
             this.settings   = $$('.super-attribute-select_' + this.config.productId);
         }
         this.state      = new Hash();
@@ -75,7 +76,7 @@ Product.Config.prototype = {
             this.values = {};
             this.settings.each(function(element) {
                 if (element.value) {
-                    var elementAttributeId = element.id.replace(/[a-z]*/, '');
+                    var elementAttributeId = this.getElementAttributeId(element.id);
                     var attributeId = this.getAttributeId(elementAttributeId);
                     this.values[attributeId] = element.value;
                 }
@@ -89,7 +90,7 @@ Product.Config.prototype = {
 
         // fill state
         this.settings.each(function(element){
-            var elementAttributeId = element.id.replace(/[a-z]*/, '');
+            var elementAttributeId = this.getElementAttributeId(element.id);
             var attributeId = this.getAttributeId(elementAttributeId);
             if(attributeId && this.config.attributes[attributeId]) {
                 element.config = this.config.attributes[attributeId];
@@ -132,9 +133,9 @@ Product.Config.prototype = {
         element.value = (typeof(this.values[attributeId]) == 'undefined')? '' : this.values[attributeId];
 
 
-        jQuery('#swatch-images-' + attributeId + '-' + this.config.productId + ' .attr-image-container').removeClass('option-selected');
-        if (jQuery('#attr-image-container-' + element.value + '-' + this.config.productId).length > 0) {
-            jQuery('#attr-image-container-' + element.value + '-' + this.config.productId).addClass('option-selected');
+        jQuery('#' + this.config.containerId + 'swatch-images-' + attributeId + '-' + this.config.productId + ' .attr-image-container').removeClass('option-selected');
+        if (jQuery('#' + this.config.containerId + 'attr-image-container-' + element.value + '-' + this.config.productId).length > 0) {
+            jQuery('#' + this.config.containerId + 'attr-image-container-' + element.value + '-' + this.config.productId).addClass('option-selected');
         }
         jQuery('#' + element.id).trigger('change');
     },
@@ -189,7 +190,7 @@ Product.Config.prototype = {
     },
 
     fillSelect: function(element){
-        var elementAttributeId = element.id.replace(/[a-z]*/, '');
+        var elementAttributeId = this.getElementAttributeId(element.id);
         var attributeId = this.getAttributeId(elementAttributeId);
 
         var options = this.getAttributeOptions(attributeId);
@@ -205,14 +206,15 @@ Product.Config.prototype = {
         if(options) {
 
           if (this.config.attributes[attributeId].use_swatches) {
-              if ($('swatch-images-' + attributeId + '-' + this.config.productId)) {
-                  $('swatch-images-' + attributeId + '-' + this.config.productId).parentNode.removeChild($('swatch-images-' + attributeId + '-' + this.config.productId));
+              $(this.config.containerId + 'attribute' + elementAttributeId).addClassName('no-display');
+              if ($(this.config.containerId + 'swatch-images-' + attributeId + '-' + this.config.productId)) {
+                  $(this.config.containerId + 'swatch-images-' + attributeId + '-' + this.config.productId).parentNode.removeChild($(this.config.containerId + 'swatch-images-' + attributeId + '-' + this.config.productId));
               }
               contentDiv = new Element(
                 'div',
                 { 
                   'class': 'settings-swatch-container', 
-                  'id': 'swatch-images-' + attributeId + '-' + this.config.productId
+                  'id': this.config.containerId + 'swatch-images-' + attributeId + '-' + this.config.productId
                 }
               );
                   
@@ -240,7 +242,7 @@ Product.Config.prototype = {
                     if (this.config.attributes[attributeId].use_swatches) {
                         var imgContainer = new Element('div', { 
                             'class': 'attr-image-container', 
-                            'id': 'attr-image-container-' + options[i].id + '-' + this.config.productId
+                            'id': this.config.containerId + 'attr-image-container-' + options[i].id + '-' + this.config.productId
                         });
                         
                         contentDiv.insert(imgContainer);
@@ -249,7 +251,7 @@ Product.Config.prototype = {
                         if (options[i].image) {
                             swatch = new Element('img', { 
                                 'class': 'attr-image', 
-                                'id': 'attr-image-' + options[i].id + '-' + this.config.productId,
+                                'id': this.config.containerId + 'attr-image-' + options[i].id + '-' + this.config.productId,
                                 'src': options[i].image,
                                 'alt': options[i].label,
                                 'title': options[i].label,
@@ -262,7 +264,7 @@ Product.Config.prototype = {
                             style += ' line-height:' + this.config.swatches_size_list + 'px';
                             swatch = new Element('div', { 
                                 'class': 'attr-text', 
-                                'id': 'attr-image-' + options[i].id + '-' + this.config.productId,
+                                'id': this.config.containerId + 'attr-image-' + options[i].id + '-' + this.config.productId,
                                 'alt': options[i].label,
                                 'title': options[i].label,
                                 'style': style
@@ -375,8 +377,12 @@ Product.Config.prototype = {
             }
         }
 
-        window['optionsPrice' + this.config.productId].changePrice('config', {'price': price, 'oldPrice': oldPrice});
-        window['optionsPrice' + this.config.productId].reload();
+        window['optionsPrice' + this.config.containerId.replace(/-/g,'_') + this.config.productId].changePrice('config', {'price': price, 'oldPrice': oldPrice});
+        if (this.config.containerId !== '') {
+          window['optionsPrice' + this.config.containerId.replace(/-/g, '_') + this.config.productId].reloadWithContainer(this.config.containerId);
+        } else {
+          window['optionsPrice' + this.config.containerId.replace(/-/g, '_') + this.config.productId].reload();
+        }
 
         return price;
     },
@@ -385,23 +391,41 @@ Product.Config.prototype = {
         if (this.config.disablePriceReload) {
             return;
         }
-        if ($('old-price-'+this.config.productId)) {
+        var price;
+        var selected;
+        if (this.config.containerId !== '') {
+          if ($$('#' + this.config.containerId + ' #old-price-'+this.config.productId).length > 0) {
 
-            var price = parseFloat(this.config.oldPrice);
-            for(var i=this.settings.length-1;i>=0;i--){
-                var selected = this.settings[i].options[this.settings[i].selectedIndex];
-                if(selected.config){
-                    price+= parseFloat(selected.config.price);
-                }
-            }
-            if (price < 0)
-                price = 0;
-            price = this.formatPrice(price);
+              price = parseFloat(this.config.oldPrice);
+              for(var i=this.settings.length-1;i>=0;i--){
+                  selected = this.settings[i].options[this.settings[i].selectedIndex];
+                  if(selected.config){
+                      price+= parseFloat(selected.config.price);
+                  }
+              }
+              if (price < 0)
+                  price = 0;
+              price = this.formatPrice(price);
 
-            if($('old-price-'+this.config.productId)){
-                $('old-price-'+this.config.productId).innerHTML = price;
-            }
+              $$('#' + this.config.containerId + ' #old-price-'+this.config.productId)[0].innerHTML = price;
 
+          }
+        } else {
+          if ($('old-price-'+this.config.productId)) {
+
+              price = parseFloat(this.config.oldPrice);
+              for(var j=this.settings.length-1;j>=0;j--){
+                  selected = this.settings[j].options[this.settings[j].selectedIndex];
+                  if(selected.config){
+                      price+= parseFloat(selected.config.price);
+                  }
+              }
+              if (price < 0)
+                  price = 0;
+              price = this.formatPrice(price);
+
+              $('old-price-'+this.config.productId).innerHTML = price;
+          }
         }
     },
 
@@ -410,14 +434,15 @@ Product.Config.prototype = {
         attributeId = element.parentNode.parentNode.id.replace(/[a-z-]*/, '');
         var optionId = element.id.replace(/[a-z-]*/, '');
 
-        jQuery('#swatch-images-' + attributeId + ' .attr-image-container').removeClass('option-selected');
-        jQuery('#attr-image-container-' + optionId).addClass('option-selected');
+        jQuery('#' + this.config.containerId + 'swatch-images-' + attributeId + ' .attr-image-container').removeClass('option-selected');
+        jQuery('#' + this.config.containerId + 'attr-image-container-' + optionId).addClass('option-selected');
         var position = optionId.indexOf('-');
         if ('-1' != position) {
             optionId = optionId.substring(0, position);
         }
 
-        $$('#attribute' + attributeId).each(function(select){
+        var self = this;
+        $$('#' + this.config.containerId + 'attribute' + attributeId).each(function(select){
           select.value = optionId;    
           for (var i=0; i < select.options.length; ++i) {
             var option = select.options[i];
@@ -427,9 +452,9 @@ Product.Config.prototype = {
               option.selected = false;
             }
           }
-          jQuery('#attribute' + attributeId).trigger('change');
+          jQuery('#' + self.config.containerId + 'attribute' + attributeId).trigger('change');
         });
-        this.configureElement($('attribute' + attributeId));
+        this.configureElement($(this.config.containerId + 'attribute' + attributeId));
     },
 
     getAttributeId: function(elementAttributeId) {
@@ -439,5 +464,41 @@ Product.Config.prototype = {
             attributeId = elementAttributeId.substring(0, position);
         }
         return attributeId;
+    },
+    getElementAttributeId: function(elementId) {
+      var id = elementId;
+      if (this.config.containerId !== '') {
+        id = elementId.replace(this.config.containerId, '');
+      }
+      return id.replace(/[a-z]*/, '');
+    }
+};
+
+PDPSwatchesData = Class.create();
+PDPSwatchesData.prototype = 
+{
+    initialize : function(additionalData)
+    {
+        this.additionalData = additionalData;
+    },
+    
+    getGalleryInfo : function(label,url,galleryUrl){
+        var liContent = "<li><a href='#' onclick=\"popWin('"+galleryUrl+"', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;\" title='"+label+"'><img src="+url+" width='56' height='56' alt='"+label+"' /></a></li>";
+
+        return liContent;
+    },
+
+    hasselectValue : function(selectValue)
+    {
+        return ('undefined' != typeof(this.additionalData[selectValue]));
+    },
+    
+    getData : function(selectValue, param)
+    {
+        if (this.hasselectValue(selectValue) && 'undefined' != typeof(this.additionalData[selectValue][param]))
+        {
+            return this.additionalData[selectValue][param];
+        }
+        return false;
     }
 };

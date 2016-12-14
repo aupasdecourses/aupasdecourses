@@ -9,9 +9,14 @@ var opConfig = {
 };
 Product.Options = Class.create();
 Product.Options.prototype = {
-    initialize : function(config, productId) {
+    initialize : function(config, productId, containerId) {
         this.config = config;
         this.productId = productId;
+
+        this.containerId = '';
+        if (typeof(containerId) !== 'undefined') {
+          this.containerId = containerId;
+        }
         this.reloadPrice();
         var self = this;
         document.observe("dom:loaded", function() {
@@ -24,6 +29,7 @@ Product.Options.prototype = {
     reloadPrice : function() {
         var config = this.config;
         var productId = this.productId;
+        var containerId = this.containerId;
         var skipIds = [];
         $$('body .product-custom-option').each(function(element){
             var optionId = 0;
@@ -73,13 +79,21 @@ Product.Options.prototype = {
                             } else {
                                 curConfig = {price: 0};
                             }
-                            window['optionsPrice' + productId].addCustomPrices(optionId + '-' + selectOption.value, curConfig);
-                            window['optionsPrice' + productId].reload();
+                            window['optionsPrice' + containerId.replace(/-/g,'_') + productId].addCustomPrices(optionId + '-' + selectOption.value, curConfig);
+                            if (containerId !== '') {
+                              window['optionsPrice' + containerId.replace(/-/g,'_') + productId].reloadWithContainer(containerId);
+                            } else {
+                              window['optionsPrice' + containerId.replace(/-/g,'_') + productId].reload();
+                            }
                         }
                     });
                 } else {
-                    window['optionsPrice' + productId].addCustomPrices(element.id || optionId, curConfig);
-                    window['optionsPrice' + productId].reload();
+                    window['optionsPrice' + containerId.replace(/-/g,'_') + productId].addCustomPrices(element.id || optionId, curConfig);
+                    if (containerId !== '') {
+                      window['optionsPrice' + containerId.replace(/-/g,'_') + productId].reloadWithContainer(containerId);
+                    } else {
+                      window['optionsPrice' + containerId.replace(/-/g,'_') + productId].reload();
+                    }
                 }
             }
         });

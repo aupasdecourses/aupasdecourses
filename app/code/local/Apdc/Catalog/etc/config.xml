@@ -17,6 +17,12 @@
                 </rewrite>
             </catalog>
         </blocks>
+        <helpers>
+          <apdc_catalog>
+            <class>Apdc_Catalog_Helper</class>
+          </apdc_catalog>
+        </helpers>
+
 
       <models>
         <apdc_catalog>
@@ -49,12 +55,21 @@
                 </apdc_catalog>
             </updates>
         </layout>
-         <product>
-              <collection>
-                   <attributes>
-                      <has_options />                                            
-                   </attributes>
-              </collection>
-          </product>
+        <product>
+            <collection>
+                 <attributes>
+                    <has_options />                                            
+                 </attributes>
+            </collection>
+        </product>
+        <routers>
+          <catalog>
+            <args>
+              <modules>
+                <apdc_catalog before="Mage_Catalog">Apdc_Catalog</apdc_catalog>
+              </modules>
+            </args>
+          </catalog>
+        </routers>
     </frontend>
 </config>

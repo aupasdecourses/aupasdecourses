@@ -93,14 +93,12 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
   function startLoading(productId)
   {
     var actions = $('#product_addtocart_form_' + productId).find('.actions');
-    actions.find('button').prop('disabled', true);
-    actions.find('.loader').show();
+    actions.find('.action-loading').show();
   }
   function finishLoading()
   {
     var actions = $('.product-info').find('.actions');
-    actions.find('button').prop('disabled', false);
-    actions.find('.loader').hide();
+    actions.find('.action-loading').hide();
     counterBlink();
   }
 

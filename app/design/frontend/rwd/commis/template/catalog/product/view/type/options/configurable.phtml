@@ -27,6 +27,7 @@
 
 <?php
 $_product    = $this->getProduct();
+$containerId = ($_product->getConfigurableContainerId() ? $_product->getConfigurableContainerId() : '');
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $_jsonConfig = $this->getJsonConfig();
 $_renderers = $this->getChild('attr_renderers')->getSortedChildren();
@@ -49,10 +50,10 @@ $_renderers = $this->getChild('attr_renderers')->getSortedChildren();
 
         if (!$_rendered):
         ?>
-        <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel() ?></label></dt>
+        <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel(); ?></label></dt>
         <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
             <div class="input-box">
-                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
+                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="<?php echo $containerId; ?>attribute<?php echo $_attribute->getAttributeId() . '-' . $_product->getId(); ?>" class="required-entry super-attribute-select form-control super-attribute-select_<?php echo $_product->getId(); ?>">
                     <option><?php echo $this->__('Choose an Option...') ?></option>
                   </select>
               </div>

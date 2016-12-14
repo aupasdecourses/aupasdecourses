@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+
+	<modules>
+		<Apdc_Popup>
+			<version>0.1.0</version>
+		</Apdc_Popup>
+	</modules>
+
+	<global>
+		<blocks>
+			<apdc_popup>
+				<class>Apdc_Popup_Block</class>
+			</apdc_popup>
+		</blocks>
+		<helpers>
+			<apdc_popup>
+				<class>Apdc_Popup_Helper</class>
+			</apdc_popup>
+		</helpers>
+	</global>
+  <frontend>
+	   <layout>
+	       <updates>
+	           <apdc_popup>
+                <file>apdc_popup.xml</file>
+	           </apdc_popup>
+	       </updates>
+	   </layout>
+     <routers>
+        <apdc_popup>
+            <use>standard</use>
+            <args>
+                <module>Apdc_Popup</module>
+                <frontName>apdc_popup</frontName>
+            </args>
+        </apdc_popup>
+    </routers>
+  </frontend>
+	
+</config>

@@ -19,6 +19,6 @@ $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 </dl>
  
 <script type="text/javascript">
-    var spConfig_<?php echo $_product->getId()?> = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+    var spConfig_<?php echo $_product->getId()?> = new Product.ApdcConfig(<?php echo $this->getJsonConfig() ?>);
 </script>
 <?php endif;?>
