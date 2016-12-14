@@ -86,6 +86,9 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
         } else {
             $data['closing_periods'] = serialize([]);
         }
+        if (isset($data['delivery_days'])) {
+            $data['delivery_days'] = serialize($data['delivery_days']);
+        }
 
         $model->setData($data);
         $model->save();
