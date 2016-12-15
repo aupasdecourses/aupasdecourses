@@ -44,8 +44,8 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_url' => $this->get_full_url().'/files/',
+            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/gallery/',
+            'upload_url' => $this->get_full_url().'/gallery/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -464,7 +464,6 @@ class UploadHandler
 
     protected function get_unique_filename($file_path, $name, $size, $type, $error,
             $index, $content_range) {
-
         while(is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
         }

@@ -43,9 +43,6 @@ $_refund=Mage::helper('pmainguet_delivery')->getRefunditemdata($_item);
             <?php echo $addtInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <?php echo $this->escapeHtml($_item->getDescription()) ?>
-        <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
-            <a href="#" id="order-item-gift-message-link-<?php echo $_item->getId() ?>" class="gift-message-link" onclick="return giftMessageToogle('<?php echo $_item->getId() ?>')"><?php echo $this->__('Gift Message') ?></a>
-        <?php endif; ?>
     </td>
     <td class="a-right" data-rwd-label="<?php echo $this->__('Price') ?>">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
@@ -286,7 +283,7 @@ $_refund=Mage::helper('pmainguet_delivery')->getRefunditemdata($_item);
             </span>
         <?php endif; ?>
     </td>
-    <td><?= (isset($_refund['prix_final'])) ? $this->getOrder()->formatPrice($_refund['prix_final']) : $this->getOrder()->formatPrice(0) ?></td>
-    <td><strong><?= (isset($_refund['diffprixfinal'])) ? $this->getOrder()->formatPrice($_refund['diffprixfinal']) : $this->getOrder()->formatPrice(0) ?></strong></td>
-    <td><?= (isset($_refund['comment']) && $_refund['comment']<>"") ? $_refund['comment'] : "Aucun" ?></td>
+    <td><?= (isset($_refund['prix_final'])) ? $this->getOrder()->formatPrice($_refund['prix_final']) : "-" ?></td>
+    <td><strong><?= (isset($_refund['diffprixfinal'])) ? $this->getOrder()->formatPrice($_refund['diffprixfinal']) : "-" ?></strong></td>
+    <td><?= (isset($_refund['comment']) && $_refund['comment']<>"") ? $_refund['comment'] : "-" ?></td>
 </tr>

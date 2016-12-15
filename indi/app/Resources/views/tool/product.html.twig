@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+{% use 'menu/default.html.twig' %}
+
+{% block body %}
+
+<style>
+    .bar {
+		height: 18px;
+		background: green;
+		}
+	.paragraph {
+		margin-bottom: 10px;
+		}
+</style>
+<div class="row">
+	<h1>Upload et traitement des images catalogue</h1>
+	<div class="col-sm-12 paragraph">
+		<p>1. Selectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Selectionner les fichiers". Les photos seront téléchargées automatiquement
+		</p>
+		<input class="btn-lg" id="fileupload" type="file" name="files[]"  multiple>
+		<div id="progress">
+			<div class="bar" style="width: 0%;"></div>
+		</div>
+		<div id="file_uploaded">
+		</div>
+	</div>
+
+	<div class="col-sm-12 paragraph">
+		<p>2. Optimisez les photos automatiquement</p>
+		<button id="button_optimiser" class="btn btn-lg btn-primary" onclick="process('optimiser');">Optimiser photos</button>
+		<div id ="ajax-wait-optimiser" style="display:inline; margin-left:10px;">
+			<img class="ajax-modal" style="display:none;" src="{{ asset('ajax-loader.gif') }}"/>
+			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
+			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
+			<span class="ajax-msg" style="font-weight:bold;"></span>
+		</div>
+	</div>
+
+	<div class="col-sm-12 paragraph">
+		<p>3. Connectez vous à Magmi pour mettre à jour le catalogue</p>
+		<a href="/magmi/web/magmi.php" class="btn btn-lg btn-primary" role="button" aria-disabled="true" target="_blank">Ouvrir Magmi</a>
+	</div>
+
+	<div class="col-sm-12 paragraph">
+		<p>4. Réindexez tous les index (sauf Redirections URL) sous Magento</p>
+		<button id="button_reindex" class="btn btn-lg btn-primary" onclick="process('reindex');">Reindexer Magento</button>
+		<div id="ajax-wait-reindex" style="display:inline; margin-left: 10px;">
+			<img class="ajax-modal" style="display:none;" src="{{ asset('ajax-loader.gif') }}"/>
+			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
+			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
+			<span class="ajax-msg" style="font-weight:bold;"></span>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/bootstrap.3.2.0.min.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+	function init_msg(action){
+		    //diplay loading and erase message
+		    $('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
+			$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'none'});
+			$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'none'});
+			$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'none','color':'auto'});
+			$('#button_'+action).prop('disabled', true);
+			 }
+
+	function process(action){
+		// display loading and erase msg
+		init_msg(action);
+		$.ajax({
+				url: '/indi/library/processimage/script.php',
+			    type: 'POST',
+				data: {action: action},
+				success: function(msg) {
+					if(msg!="error"){
+					$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+					$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'inline'});
+					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'green'}).html(msg);
+					$('#button_'+action).prop('disabled', false);
+					} else {
+						$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+						$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'inline'});
+						$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
+						$('#button_'+action).prop('disabled', false);
+					}
+				},
+				error: function(msg) {
+					alert(msg);
+			}
+		});
+	};
+
+	$(function () {
+			$('#fileupload').fileupload({
+				url: '/indi/web/uploads/index.php',
+				dataType: 'json',
+				done: function (e,data) {
+					$.each(data.result.files, function(index, file){
+						$('<p/>').text(file.name).appendTo($('#file_uploaded'));
+					});
+				},
+				progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				$('#progress .bar').css(
+					'width',
+				    progress + '%'
+				);
+			}	
+			});
+	});
+	</script>
+	
+{% endblock %}

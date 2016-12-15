@@ -84,13 +84,9 @@ refundDigest:
   defaults: { _controller: AppBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
 
-toolUpload:
-  path: /tool/upload/
-  defaults: { _controller: AppBundle:Tool:upload}
-
-toolOptimise:
-  path: /shipping/
-  defaults: { _controller: AppBundle:Tool:optimise}
+toolProduct:
+  path: /tool/product/
+  defaults: { _controller: AppBundle:Tool:product}
 
 oneup_uploader:
     resource: . 

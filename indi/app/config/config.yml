@@ -74,5 +74,3 @@ oneup_uploader:
         gallery:
             frontend: blueimp
             error_handler: oneup_uploader.error_handler.noop
-            root_folder: true
-            max_size: -1

@@ -4,6 +4,8 @@ include '../../app/Mage.php';
 
 class Magento
 {
+	use credimemo;
+
 	const AUTHORIZED_GROUP = ['Administrators'];
 
 	static private $_this;
@@ -180,10 +182,11 @@ class Magento
 		return $orderHeader;
 	}
 
-	private function ProductParsing($product) {
+	private function ProductParsing($product, $order_id) {
 		$prod_data = [
 			'id' => $product->getItemId(),
-			'nom' => $product->getName(),
+				'nom' => $product->getName(),
+				'order_id' => $order_id,
 				'prix_kilo'		=>	$product->getPrixKiloSite(),
 				'quantite'		=>	round($product->getQtyOrdered(), 0),
 				'description'	=>	$product->getShortDescription(),
@@ -240,14 +243,14 @@ class Magento
 
 	public function addEntryToRefundItem(Array $data) {
 		$this->addEntryToModel(
-			\Mage::getModel('sales/refund_item'),
+			\Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')),
 			$data
 		);
 	}
 
 	public function updateEntryToRefundItem(Array $filters, Array $updatedFields) {
 		$this->updateEntryToModel(
-			\Mage::getModel('sales/refund_item'),
+			\Mage::getModel('pmainguet_delivery/refund_items'),
 			$filters,
 			$updatedFields
 		);
@@ -266,7 +269,7 @@ class Magento
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$orderHeader['products'][] = $prod_data;
 				$orderHeader['total_quantite'] += $prod_data['quantite'];
 				$orderHeader['total_prix'] += $prod_data['prix_total'];
@@ -285,7 +288,7 @@ class Magento
 			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
 					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
 					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
@@ -311,7 +314,7 @@ class Magento
 			$orderHeader = $this->OrderHeaderParsing($order);
 			$products = $order->getAllItems();
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$orderHeader['products'][] = $prod_data;
 				$orderHeader['total_quantite'] += $prod_data['quantite'];
 				$orderHeader['total_prix'] += $prod_data['prix_total'];
@@ -337,7 +340,7 @@ class Magento
 			if ($commercantId <> -1)
 				$products->addFieldToFilter('commercant', [ 'eq' => $commercantId ]);
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
@@ -364,7 +367,7 @@ class Magento
 			if ($commercantId <> -1)
 				$products->addFieldToFilter('commercant', [ 'eq' => $commercantId ]);
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
@@ -382,28 +385,50 @@ class Magento
 	public function getRefunds($orderId){
 		$merchants = $this->getMerchants();
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
-
-		$rsl = [ -1 => [ 'merchant' => [ 'name' => 'All', 'total' => 0.0 ] ] ];
+//		$orders->getSelect()->join(['adyen' => \Mage::getSingleton('core/resource')->getTableName('adyen/event_data')], 'adyen.merchant_reference=main_table.increment_id', [
+//			'pspreference' => 'adyen.pspreference'
+//		]);
+//echo \Mage::getSingleton('core/resource')->getTableName('adyen/event_data');
+		$rsl = [
+			-1 => [
+				'merchant'	=> [
+					'name'		=> 'All',
+					'total'		=> 0.0,
+					'refund_total'	=> 0.0,
+					'refund_prix'	=> 0.0,
+				]
+			]
+		];
 		foreach ($orders as $order) {
 			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
+//			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
 			$products =  \Mage::getModel('sales/order_item')->getCollection();
 			$products->addFieldToFilter('main_table.order_id', ['eq' => $rsl[-1]['order']['mid']]);
 			$products->getSelect()->join(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
-				'refund_prix' => 'refund.prix_final',
-				'refund_diff' => 'refund.diffprixfinal'
+				'refund_prix'	=> 'refund.prix_final',
+				'refund_diff'	=> 'refund.diffprixfinal',
+				'refund_com'	=> 'refund.comment'
 			]);
 
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product);
+				$prod_data = $this->ProductParsing($product, $orderId);
 				$prod_data['refund_prix'] = $product->getData('refund_prix');
 				$prod_data['refund_diff'] = $product->getData('refund_diff');
-				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])){
+				$prod_data['refund_com'] = $product->getData('refund_com');
+				if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
 					$rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
 					$rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
 				}
 				$rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
+				// <=====================
 				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
+				$rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
+				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 			}
 		}
 		return ($rsl);

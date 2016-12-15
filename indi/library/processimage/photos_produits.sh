@@ -1,12 +1,9 @@
 #!/bin/bash
-#need to install image-magick and bc
-
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
-cd ../../uploads/files
+cd ../../web/uploads/gallery
 dir="temp"
 mkdir "$dir"
-
 #convert png if exist
 echo "Convert png if exist ..."
 mogrify -format jpg *.png
@@ -46,7 +43,7 @@ echo "Done!"
 #move to media/import folder
 pwd
 for f in "$dir"/*.jpg; do
-mv "$f" ../../../media/import
+mv "$f" /home/sturquier/www/media/import
 done
 echo "Done!"
 

@@ -12,10 +12,4 @@
 
 error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');
-
-if($_GET['type']=="categories" || $_GET['type']=="commercants"){
-	require('CatcomHandler.php');
-	$upload_handler = new CatcomHandler();
-}elseif($_GET['type']=="produits"){
-	$upload_handler = new UploadHandler();
-}
+$upload_handler = new UploadHandler();

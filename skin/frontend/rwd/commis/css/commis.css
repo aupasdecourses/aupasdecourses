@@ -6,6 +6,7 @@
  * @license     
  */
 
+
 /* ============================================ *
  * General  
  * ============================================ */
@@ -17,7 +18,7 @@ select,
 table,
 textarea {
     font-family: Raleway, "Helvetica Neue", Verdana, Arial, sans-serif;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font-size: 14px;
     line-height: 1.5;
 }
@@ -240,8 +241,7 @@ h6,
     }
 }
 
-.main-container
-{
+.main-container {
     max-width: 1200px;
 }
 
@@ -259,7 +259,7 @@ h6,
     text-transform: none;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     margin: 7px 0px;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     border-bottom: 1px solid #EBEBEB;
     padding-bottom: 5px;
 }
@@ -267,17 +267,17 @@ h6,
 .block-account li strong,
 .block-cms-menu li strong {
     font-weight: 600;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .block-account li a,
 .block-cms-menu li a {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .block-account li a:hover,
 .block-cms-menu li a:hover {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 
@@ -640,12 +640,12 @@ h6,
     top: -7px;
 }
 
-.product-options{
-    border:none;
+.product-options {
+    border: none;
     padding: 10px 0px 15px;
 }
 
-.product-options .subtitle{
+.product-options .subtitle {
     text-transform: none;
     color: red;
     font-weight: 300;
@@ -654,7 +654,7 @@ h6,
     float: right;
 }
 
-.prodcut-options dd select{
+.prodcut-options dd select {
     text-align: center;
     text-align-last: center;
     padding: 5px 0;
@@ -664,24 +664,26 @@ h6,
     font-size: 15px;
 }
 
-.product-options dl.last{
-    margin-bottom:0px;
+.product-options dl.last {
+    margin-bottom: 0px;
 }
 
 .product-options-bottom {
     background-color: #fff;
-    border:none;
+    border: none;
     margin-bottom: 0px;
     padding: 15px 0 20px;
 }
 
+
 /* Popup option */
 
-@media only screen and (max-width: 479px){
+@media only screen and (max-width: 479px) {
     .product-options {
-        margin:0;
+        margin: 0;
     }
 }
+
 
 /* -------------------------------------------- *
  * Product Image
@@ -929,12 +931,12 @@ label {
 }
 
 .product-options ul.options-list label {
-    white-space:normal;
+    white-space: normal;
     line-height: 1.25;
     padding: 0;
 }
 
-.product-options ul.options-list input.checkbox{
+.product-options ul.options-list input.checkbox {
     margin-left: 30px;
     margin-top: 6px;
 }
@@ -1008,8 +1010,8 @@ label {
 
 .page-header-container {
     height: 60px;
+    width: 100%;
 }
-
 
 .page-header-container,
 #wp-nav-container {
@@ -1017,16 +1019,14 @@ label {
     margin: 0px auto;
 }
 
-@media screen and (max-width: 771px){
+@media screen and (max-width: 771px) {
     .sticky-header .global-site-notice {
-        margin-bottom:0;
+        margin-bottom: 0;
     }
     .page-header-container {
         display: table;
-        width:100%;
-        height: 65px;
         border-top: 1px solid #EDEDED;
-        transition: width 0.3s ease 0s,height 0.3s ease 0s;
+        transition: width 0.3s ease 0s, height 0.3s ease 0s;
         margin-top: 60px;
     }
     .sticky-header .page-header-container {
@@ -1059,7 +1059,8 @@ label {
         /* padding-bottom: 50px; */
     }
 }
-@media screen and (min-width: 771px){
+
+@media screen and (min-width: 771px) {
     .skip-links {
         clear: none;
         display: table;
@@ -1068,9 +1069,9 @@ label {
         position: relative;
     }
     .page-header-container {
-        position:fixed;
-        background-color:#ffffff;
-        z-index:99;
+        position: fixed;
+        background-color: #ffffff;
+        z-index: 99;
         top: 0;
         transition: height 0.5s ease;
     }
@@ -1081,8 +1082,8 @@ label {
     #topmenu {
         margin-top: 60px;
     }
-    
 }
+
 #header {
     display: block;
     z-index: 10;
@@ -1168,7 +1169,7 @@ label {
         float: none;
     }
     .logo .small {
-    max-height: 47px;
+        max-height: 47px;
     }
     .logo-link img {
         margin-left: auto;
@@ -1178,13 +1179,12 @@ label {
         margin: 0px;
     }
     .sticky-header .page-header {
-        position:fixed;
+        position: fixed;
         max-height: 40px;
     }
     .sticky-header {
         margin-top: 100px;
     }
-
 }
 
 .logo-link {
@@ -1192,12 +1192,12 @@ label {
     margin: 0 auto;
     text-align: center;
     height: 100%;
-    padding:8px 10px;
+    padding: 8px 10px;
     width: 100%;
 }
 
 .logo-link img {
-    height:100%;
+    height: 100%;
 }
 
 .logo:hover {
@@ -1215,12 +1215,11 @@ label {
 }
 
 @media only screen and (min-width: 771px) {
-    
     .logo {
-    padding: 0;
-    min-width: initial;
-    min-height: initial;
-    width: 130px;
+        padding: 0;
+        min-width: initial;
+        min-height: initial;
+        width: 130px;
     }
     .logo .small {
         display: none;
@@ -1231,13 +1230,13 @@ label {
         margin: 0 auto;
     }
     .sticky-header .logo-link {
-        padding:4px 10px;
+        padding: 4px 10px;
     }
 }
-@media only screen and (max-width: 770px) {
 
+@media only screen and (max-width: 770px) {
     .sticky-header #logo_smalldisplay {
-        margin:0;
+        margin: 0;
         width: 100px;
         padding-bottom: 0;
         padding-top: 0;
@@ -1247,18 +1246,15 @@ label {
         right: initial;
     }
     .sticky-header #logo_smalldisplay .logo-link {
-        position:static;
+        position: static;
         height: 40px;
         padding: 0;
         margin: 0;
     }
     .sticky-header #logo_smalldisplay .logo-link img {
-        max-height:35px
-        
+        max-height: 35px
     }
-
 }
-
 
 
 /* ============================================ *
@@ -1279,7 +1275,6 @@ label {
     text-transform: uppercase;
     display: block;
 }
-
 
 
 /* ============================================ *
@@ -1303,15 +1298,15 @@ label {
 }
 
 .skip-link {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .skip-container {
     background: none;
-    display:table-cell;
+    display: table-cell;
     float: none;
     position: static;
-    vertical-align:middle;
+    vertical-align: middle;
     width: auto;
     height: inherit;
 }
@@ -1339,8 +1334,8 @@ label {
 
 @media screen and (max-width:771px) {
     .skip-link {
-        border:none;
-        line-height:initial;
+        border: none;
+        line-height: initial;
         height: inherit;
         width: 100%;
     }
@@ -1358,12 +1353,10 @@ label {
         padding-right: 0;
         width: 20%;
     }
-
-    .skip-container.hidden-sm{
+    .skip-container.hidden-sm {
         border-right: 0px;
         display: none;
     }
-
     .skip-nav {
         background: rgba(204, 94, 51, 1) none repeat scroll 0% 0%;
     }
@@ -1372,15 +1365,14 @@ label {
         width: 100%;
     }
     .sticky-header .skip-links span.label {
-        display:none;
+        display: none;
     }
     .sticky-header .skip-links .skip-content.skip-active {
-        position:fixed;
+        position: fixed;
         left: 0;
         right: 0;
         top: 40px!important;
     }
-
 }
 
 .skip-link .label {
@@ -1446,8 +1438,15 @@ label {
     padding-left: 40px;
 }
 
-#search::-webkit-input-placeholder{color:#999;font-weight: 700;}
-#search::-moz-placeholder {color:#999;font-weight: 700;}
+#search::-webkit-input-placeholder {
+    color: #999;
+    font-weight: 700;
+}
+
+#search::-moz-placeholder {
+    color: #999;
+    font-weight: 700;
+}
 
 .search-autocomplete::before {
     border: none;
@@ -1499,20 +1498,20 @@ label {
     }
     .skip-account,
     .skip-cart {
-        position:relative;
+        position: relative;
     }
     .skip-container {
         text-transform: uppercase;
     }
     .skip-container-header-nav {
-        display:none;
+        display: none;
     }
     .skip-container-header-search {
         width: 100%;
         padding: 0 10px;
     }
     .skip-container .skip-link {
-        width:70px;
+        width: 70px;
         height: 50px;
     }
     #header-search {
@@ -1524,7 +1523,6 @@ label {
         padding-top: 5px;
         height: 50px;
     }
-
     .dropdown.skip-help {
         padding: 0;
         position: static;
@@ -1543,7 +1541,6 @@ label {
         text-transform: none;
         width: 320px;
     }
-    
     .skip-links .skip-content.skip-active {
         right: 3px!important;
         top: 67px!important;
@@ -1565,7 +1562,7 @@ label {
         padding: 0 10px;
         line-height: 33px;
         text-align: center;
-        color: rgba(0,0,0,0.87);
+        color: rgba(0, 0, 0, 0.87);
     }
     #header-account,
     #header-help {
@@ -1590,10 +1587,10 @@ label {
         margin-top: 0;
     }
     .sticky-header #header-search .input-text {
-        font-size:12px;
+        font-size: 12px;
     }
     .sticky-header .skip-container .skip-link {
-        height:90%;
+        height: 90%;
     }
 }
 
@@ -1607,8 +1604,7 @@ label {
     #header-help > li > a {
         padding: 10px 0px 10px 10px;
     }
-    #header-account .links {
-    }
+    #header-account .links {}
     .skip-account i,
     .skip-cart i,
     .skip-help i,
@@ -1698,8 +1694,7 @@ label {
 }
 
 @media screen and (max-width: 770px) {
-    .header-minicart a.skip-cart {
-    }
+    .header-minicart a.skip-cart {}
 }
 
 #discount-coupon-form label,
@@ -1802,7 +1797,7 @@ label {
         padding: 0 5px;
     }
     .skip-cart {
-        color: rgba(0,0,0,0.87);
+        color: rgba(0, 0, 0, 0.87);
         text-transform: uppercase;
     }
     .skip-cart:hover {
@@ -1890,7 +1885,7 @@ label {
 }
 
 .header-minicart .product-details .product-name a {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .header-minicart .info-wrapper td {
@@ -1908,7 +1903,7 @@ label {
 
 .header-minicart .subtotal .label {
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     text-transform: uppercase;
 }
 
@@ -1933,18 +1928,18 @@ label {
 
 #cart-sidebar a.btn-edit,
 a.action-mini-cart {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font-family: Raleway, "Helvetica Neue";
     font-weight: 500;
     font-size: 14px;
-    float:right;
-    margin-left:8px;
+    float: right;
+    margin-left: 8px;
 }
 
-a.action-mini-cart:hover{
+a.action-mini-cart:hover {
     text-decoration: underline;
-    color:rgba(0,0,0,0.87);
-    background:none;
+    color: rgba(0, 0, 0, 0.87);
+    background: none;
 }
 
 .header-minicart .block-subtitle .close:hover {
@@ -2169,6 +2164,7 @@ p.product-name a:hover,
     color: #339933;
     margin-bottom: 0px;
     border: 0;
+    min-width:200px;
 }
 
 
@@ -2336,7 +2332,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav dl dd ol > li > a {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .block-layered-nav dl dd ol > li > a:hover {
@@ -2383,7 +2379,7 @@ p.product-name a:hover,
 
 .block .block-title,
 .block-layered-nav .block-subtitle--filter {
-    background: rgba(0,0,0,0.87) none repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0.87) none repeat scroll 0% 0%;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
@@ -2404,7 +2400,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav .block-subtitle--filter:hover {
-    background-color: rgba(0,0,0,0.87);
+    background-color: rgba(0, 0, 0, 0.87);
     text-decoration: underline;
 }
 
@@ -2414,8 +2410,8 @@ p.product-name a:hover,
     font-weight: bold;
     border-width: 1px medium;
     border-style: solid none;
-    border-color: rgba(0,0,0,0.87) -moz-use-text-color #EBEBEB;
-    color: rgba(0,0,0,0.87);
+    border-color: rgba(0, 0, 0, 0.87) -moz-use-text-color #EBEBEB;
+    color: rgba(0, 0, 0, 0.87);
     background: white;
 }
 
@@ -2438,7 +2434,7 @@ p.product-name a:hover,
 }
 
 .block-layered-nav .currently ol li .label {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font-size: 1em;
 }
 
@@ -2466,7 +2462,7 @@ p.product-name a:hover,
 }
 
 .footer .block-title {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     border-top: none;
     font-weight: 600;
 }
@@ -2725,7 +2721,7 @@ p.product-name a:hover,
 }
 
 .reassurance-outer {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     background: #Fff none repeat scroll 0% 0%;
     margin-bottom: 20px;
     margin-left: 10px;
@@ -2754,7 +2750,7 @@ p.product-name a:hover,
     font-family: Montserrat, Raleway, Verdana;
     font-weight: normal;
     padding: 3px;
-    text-align:center;
+    text-align: center;
     font-size: 16px;
 }
 
@@ -2765,7 +2761,7 @@ p.product-name a:hover,
 }
 
 .reassurance-outer.fourth-item a {
-    color: rgb(64,64,64);
+    color: rgb(64, 64, 64);
 }
 
 .reassurance-outer.fourth-item .icone-reassurance {
@@ -2804,7 +2800,7 @@ p.product-name a:hover,
 .countdownHolder {
     display: block;
     font: 20px "Montserrat", sans-serif;
-    width:auto;
+    width: auto;
 }
 
 .countdownHolder .countDays {
@@ -2857,7 +2853,7 @@ p.product-name a:hover,
     margin: auto;
     margin-bottom: 5px;
     max-width: 100%;
-    height:auto;
+    height: auto;
 }
 
 #carrousel-selection-home .owl-item h2 {
@@ -2989,7 +2985,7 @@ h6 {
     border: 1px solid #EBE7E2;
     background: none repeat scroll 0% 0% padding-box rgba(164, 138, 122, 0.43);
     padding: 5px;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     box-shadow: 0.5px 0.866px 3px 0px rgba(0, 0, 0, 0.2);
     border-radius: 2px;
 }
@@ -3010,7 +3006,7 @@ h6 {
     display: block;
     margin: 2px 0px 5px;
     font-weight: normal;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font-family: "Montserrat";
     line-height: 1.25;
     text-transform: uppercase;
@@ -3036,7 +3032,7 @@ h6 {
 
 a.btn:hover {
     background: #6F462D;
-    border-clor: rgba(0,0,0,0.87);
+    border-clor: rgba(0, 0, 0, 0.87);
     color: #FFF;
 }
 
@@ -3051,7 +3047,7 @@ a.btn:hover {
 
 a.btn:hover {
     background: none repeat scroll 0% 0% #432918;
-    border-color: rgba(0,0,0,0.87);
+    border-color: rgba(0, 0, 0, 0.87);
     color: #FFF;
 }
 
@@ -3075,7 +3071,7 @@ a.btn:hover {
 }
 
 .block-livraison a {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .block-livraison .prix {
@@ -3220,7 +3216,7 @@ a.btn:hover {
 .infos-commercant dt {
     text-transform: uppercase;
     font-family: Montserrat, Raleway, Verdana, Arial, sans-serif;
-    white-space:normal;
+    white-space: normal;
 }
 
 .dl-horizontal.infos-commercant dd {
@@ -3264,7 +3260,7 @@ a.btn:hover {
     left: 5px;
     width: 80%;
     background-color: #FFF;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     opacity: 0.85;
 }
 
@@ -3301,7 +3297,7 @@ a.btn:hover {
     width: 100%;
 }
 
-.map-commercant{
+.map-commercant {
     border: none;
     margin-top: 10px;
 }
@@ -3322,7 +3318,7 @@ a.btn:hover {
     float: left;
     margin-right: 10px;
     text-align: center;
-    text-align-last:center;
+    text-align-last: center;
     padding: 5px 0;
 }
 
@@ -3421,7 +3417,7 @@ a.btn:hover {
     top: 5%;
     right: 5%;
     background-color: #FFF;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     padding: 5px;
     font-size: 0.8em;
 }
@@ -3437,7 +3433,7 @@ a.btn:hover {
     bottom: 5%;
     left: 5%;
     background-color: #FFF;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     padding: 2px;
     font-size: 0.8em;
 }
@@ -3453,7 +3449,7 @@ a.btn:hover {
     bottom: 27%;
     left: 4%;
     background-color: #FFF;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     padding: 5px;
     font-size: 0.9em;
 }
@@ -3531,7 +3527,7 @@ a.btn:hover {
     font-size: 0.8em;
     padding: 10px;
     background-color: #ECECEC;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .tag_origine img.origine_flag {
@@ -3577,7 +3573,7 @@ a.btn:hover {
 }
 
 .product-collateral > dl > dt {
-    background: rgba(0,0,0,0.87) none repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0.87) none repeat scroll 0% 0%;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
@@ -3587,7 +3583,7 @@ a.btn:hover {
 }
 
 .product-collateral > dl > dt:hover {
-    background-color: rgba(0,0,0,0.87);
+    background-color: rgba(0, 0, 0, 0.87);
 }
 
 .product-collateral > dl > dt:hover {
@@ -3595,8 +3591,8 @@ a.btn:hover {
     text-decoration: underline;
 }
 
-.long-description{
-    margin-top:10px;
+.long-description {
+    margin-top: 10px;
 }
 
 
@@ -3607,12 +3603,12 @@ a.btn:hover {
 }
 
 .block-related .block-title h2 {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     margin: 10px 0px 0px 0px;
 }
 
 .box-up-sell h2 {
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     margin: 10px 0px 0px 0px;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif !important;
     font-weight: 400 !important;
@@ -3742,7 +3738,7 @@ a.btn:hover {
     font-style: normal;
     font-size: 14px;
     text-rendering: optimizelegibility;
-    margin:0;
+    margin: 0;
 }
 
 .cart-table .item-options {
@@ -3764,7 +3760,7 @@ a.btn:hover {
     line-height: 1.2;
     text-rendering: optimizeLegibility;
     text-transform: uppercase;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     margin: 10px 0px;
 }
 
@@ -3784,16 +3780,18 @@ a.btn:hover {
  * Checkout One Page
  * ============================================ */
 
- .form-horizontal .control-label {
-  padding-top: 0px;
-  line-height: 16px;
+.form-horizontal .control-label {
+    padding-top: 0px;
+    line-height: 16px;
 }
 
-.form-group.required .control-label:after, .form-list .control-label:after {
-  content:"*";
-  color:red;
-  font-size: 20px;
+.form-group.required .control-label:after,
+.form-list .control-label:after {
+    content: "*";
+    color: red;
+    font-size: 20px;
 }
+
 
 /* Sections styling */
 
@@ -3838,6 +3836,7 @@ a.btn:hover {
         padding-left: 0;
     }
 }
+
 
 /*.product-options ul.options-list label,
 .col2-set .form-list .control label {
@@ -4179,7 +4178,7 @@ input[type=text] {
 
 .delivery-time {
     font-size: 16px;
-    text-align:center;
+    text-align: center;
 }
 
 
@@ -4193,6 +4192,7 @@ input[type=text] {
     text-transform: uppercase;
     font-size: 28px;
 }
+
 
 /* ============================================ *
  * Formulaires de contact
@@ -4224,19 +4224,21 @@ p.required,
  * Customer Account - Frontend
  * ============================================ */
 
+
 /* Headers */
 
-.my-account .page-head.button-level{
-    margin-bottom:20px;
-}
-
-.my-account h1{
-    margin-bottom:10px;
-}
-
-.my-account #my-orders-table{
+.my-account .page-head.button-level {
     margin-bottom: 20px;
 }
+
+.my-account h1 {
+    margin-bottom: 10px;
+}
+
+.my-account #my-orders-table {
+    margin-bottom: 20px;
+}
+
 
 /*Infos orders*/
 
@@ -4261,8 +4263,8 @@ p.form-instructions,
     font-family: "Raleway", Verdana, Arial, sans-serif;
 }
 
-img.ticket_commercant{
-    max-width:300px;
+img.ticket_commercant {
+    max-width: 300px;
 }
 
 
@@ -4274,7 +4276,7 @@ img.ticket_commercant{
 
 .popup_content {
     overflow: auto;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font: 16px "Raleway", Arial, sans-serif;
     background: #FFF;
     border-radius: 0px;
@@ -4385,6 +4387,7 @@ h2.popup_title {
     font-size: 20px;
     color: #3FA342;
 }
+
 
 /*Referrals*/
 
