@@ -439,38 +439,6 @@
         </reference> 
     </catalog_category_layered_nochildren>
 
-    <PAGE_GENERALE>
-        <remove name="right"/>
-        <remove name="headercommercant"/>
-        <remove name="catalog.leftnav"/> 
-        <remove name="product_list"/> 
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                </block>
-                <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
-                <action method="setColumnCount"><count>5</count></action>
-            </block>
-        </reference>
-        <reference name="jsfooter">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
-            </block>
-            <!-- Recently purchased items -->
-            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
-            <!-- Recently viewed items -->
-            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
-        </reference> 
-    </PAGE_GENERALE>
-
     <GROUP_CATEGORY>
         <reference name="content">
             <remove name="product_list2"/>
