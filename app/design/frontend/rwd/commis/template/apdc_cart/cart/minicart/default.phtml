@@ -46,7 +46,7 @@
             <?php if ($this->hasProductUrl()): ?>
                 </a>
             <?php endif; ?>
-            <?php if ($_options = $this->getOptionList()):?>
+            <?php if ($_options = $this->getOptionList() || !empty($_item->getItemComment())):?>
                 <a href="#" onclick="return false;" class="details"><?php echo $this->__('Details') ?> <i class="fa fa-caret-down"></i></a>
             <?php endif; ?>
         </div>
@@ -114,23 +114,31 @@
 
         </div>
     </div>
-    <?php if ($_options = $this->getOptionList()):?>
+    <?php if ($this->getOptionList() || !empty($_item->getItemComment())):?>
     <div class="item-row item-details">
         <div class="truncated">
             <div class="truncated_full_value">
                 <ul class="item-options">
-                    <?php foreach ($_options as $_option) : ?>
-                    <li>
-                        <label><?php echo $this->escapeHtml($_option['label']) ?></label>
-                        <span>
-                        <?php if (is_array($_option['value'])): ?>
-                        <?php echo nl2br(implode("\n", $_option['value'])) ?>
-                        <?php else: ?>
-                        <?php echo $_option['value'] ?>
-                        <?php endif; ?>
-                        </span>
-                    </li>
-                    <?php endforeach; ?>
+                    <?php if (!empty($_item->getItemComment())) : ?>
+                        <li>
+                            <label><?php echo $this->__('Your comment'); ?></label>
+                            <span><?php echo $_item->getItemComment(); ?></span>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($_options = $this->getOptionList()) : ?>
+                        <?php foreach ($_options as $_option) : ?>
+                        <li>
+                            <label><?php echo $this->escapeHtml($_option['label']) ?></label>
+                            <span>
+                            <?php if (is_array($_option['value'])): ?>
+                            <?php echo nl2br(implode("\n", $_option['value'])) ?>
+                            <?php else: ?>
+                            <?php echo $_option['value'] ?>
+                            <?php endif; ?>
+                            </span>
+                        </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </dl>
             </div>
         </div>

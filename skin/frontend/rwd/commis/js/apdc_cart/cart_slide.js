@@ -60,7 +60,7 @@ if (typeof(apdcProductQuickViewPopup) === 'undefined') {
       e.stopPropagation();
       var self = this;
       apdcQuickView.checkRequirements(function() {
-        showItemQuickView(self)
+        showItemQuickView(self);
       });
     });
 
@@ -90,7 +90,7 @@ if (typeof(apdcProductQuickViewPopup) === 'undefined') {
             itemShowedInPopup[itemId] = response.html;
             apdcProductQuickViewPopup.updateContent(response.html);
           } else if (response.status === 'ERROR') {
-            var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
+            var message = '<ul class="messages"><li class="error-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
             apdcProductQuickViewPopup.updateContent(message);
           }
         })

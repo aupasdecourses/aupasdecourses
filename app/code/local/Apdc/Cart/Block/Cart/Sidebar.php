@@ -119,10 +119,12 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     if (!empty($options)) {
                         $productAdded[$item->getProductId()]['options'][implode('_', $options)] = array(
                             'qty' => $buyRequest->getQty(),
+                            'comment' => html_entity_decode($item->getItemComment()),
                             'itemId' => $item->getId()
                         );
                     } else {
                         $productAdded[$item->getProductId()]['qty'] = $item->getQty();
+                        $productAdded[$item->getProductId()]['comment'] = html_entity_decode($item->getItemComment());
                     }
                 }
             }

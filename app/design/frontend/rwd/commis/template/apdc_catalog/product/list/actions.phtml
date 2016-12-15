@@ -10,7 +10,7 @@
 
         <?php if ($_product->isSaleable()): ?>
         <div class="pull-right">
-            <input type="hidden" id="selected-optionKey-<?php echo $_product->getId(); ?>" />
+            <input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
             <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart simple-add-to-cart-button"><span><span><i class="fa fa-cart-plus"></i> <?php echo $this->__('Add to Cart') ?></span></span></button>
             <div class="qty-buttons">
                 <button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>

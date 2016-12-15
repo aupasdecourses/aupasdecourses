@@ -7,6 +7,8 @@
       <reference name="head">
         <action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
         <action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_item_comment.js</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
       </reference>
     	<reference name="minicart_content">
           <action method="setTemplate"><template>apdc_cart/cart/minicart/items.phtml</template></action>
@@ -49,4 +51,15 @@
             </block>
         </reference>
     </checkout_cart_index>
+
+    <catalog_product_view>
+      <reference name="product.info">
+        <block type="catalog/product_view" name="cart_item_comments" template="apdc_cart/catalog/product/item_comment.phtml" />
+      </reference>
+
+      <block type="catalog/product_view" name="cart_item_comments.options.bottom" template="apdc_cart/catalog/product/item_comment.phtml" />
+      <reference name="product.info.options.wrapper.bottom">
+        <action method="insert"><block>cart_item_comments.options.bottom</block></action>
+      </reference>
+    </catalog_product_view>
 </layout>

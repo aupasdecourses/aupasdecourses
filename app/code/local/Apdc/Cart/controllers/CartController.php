@@ -19,12 +19,17 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
         $result = array();
         if ($id) {
             try {
+                $item = $this->_getCart()->getQuote()->getItemById($id);
+                $productId = $item->getProduct()->getId();
                 $this->_getCart()->removeItem($id)->save();
 
                 $result['qty'] = $this->_getCart()->getSummaryQty();
+                $result['product_id'] = $productId;
 
                 $this->loadLayout();
-                $result['content'] = $this->getLayout()->getBlock('minicart_content')->toHtml();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $productId);
+                $result['content'] = $minicartContent->toHtml();
 
                 $result['success'] = 1;
                 $result['message'] = $this->__('Item was removed successfully.');

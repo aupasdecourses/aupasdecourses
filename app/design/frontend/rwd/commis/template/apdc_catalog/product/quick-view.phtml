@@ -6,6 +6,10 @@ var apdcQuickView = new ApdcQuickView([
         url:'<?php echo $this->getSkinUrl('css/apdc_catalog/product-options.css'); ?>',
     },
     {
+        type:'css',
+        url:'<?php echo $this->getSkinUrl('css/apdc_catalog/product-add-to-cart.css'); ?>',
+    },
+    {
         type:'js',
         url: '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>varien/product.js',
         test : [
@@ -37,5 +41,9 @@ var apdcQuickView = new ApdcQuickView([
             'Options'
         ]
     }
-]);
+]);   
+jQuery(document).ready(function() {
+    jQuery(document).trigger('apdcUpdateAddToCartButtons');
+    jQuery(document).trigger('minicartLoaded');
+});
 </script>
