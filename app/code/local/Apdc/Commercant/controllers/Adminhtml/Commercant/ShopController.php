@@ -90,6 +90,13 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
             $data['delivery_days'] = serialize($data['delivery_days']);
         }
 
+        foreach (['id_contact_manager', 'id_contact_employee', 'id_contact_employee_bis'] as $key) {
+            if (empty($data[$key])) {
+                // explicitely set the value to NULL to avoid foreign key issues
+                $data[$key] = null;
+            }
+        }
+
         $model->setData($data);
         $model->save();
         Mage::getSingleton('adminhtml/session')->addSuccess($this->__('The entity has been saved.'));
