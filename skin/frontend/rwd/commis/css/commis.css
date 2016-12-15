@@ -4152,7 +4152,7 @@ input[type=text] {
 }
 
 .cms-page-view .std p,
-.cms-no-route .std p {
+.cms-no-route .std p, .seasonal-banner p {
     color: #636363;
     font-family: inherit;
     font-size: 1.2em;
