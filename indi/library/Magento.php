@@ -4,6 +4,8 @@ include '../../app/Mage.php';
 
 class Magento
 {
+	use credimemo;
+
 	const AUTHORIZED_GROUP = ['Administrators'];
 
 	static private $_this;
@@ -383,7 +385,10 @@ class Magento
 	public function getRefunds($orderId){
 		$merchants = $this->getMerchants();
 		$orders = $this->OrdersQuery(null, null, -1, $orderId);
-
+//		$orders->getSelect()->join(['adyen' => \Mage::getSingleton('core/resource')->getTableName('adyen/event_data')], 'adyen.merchant_reference=main_table.increment_id', [
+//			'pspreference' => 'adyen.pspreference'
+//		]);
+//echo \Mage::getSingleton('core/resource')->getTableName('adyen/event_data');
 		$rsl = [
 			-1 => [
 				'merchant'	=> [
@@ -396,6 +401,7 @@ class Magento
 		];
 		foreach ($orders as $order) {
 			$rsl[-1]['order'] = $this->OrderHeaderParsing($order);
+//			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
 			$products =  \Mage::getModel('sales/order_item')->getCollection();
 			$products->addFieldToFilter('main_table.order_id', ['eq' => $rsl[-1]['order']['mid']]);
 			$products->getSelect()->join(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
@@ -403,7 +409,6 @@ class Magento
 				'refund_diff'	=> 'refund.diffprixfinal',
 				'refund_com'	=> 'refund.comment'
 			]);
-			// adyen join or in query ??
 
 			foreach ($products as $product) {
 				$prod_data = $this->ProductParsing($product, $orderId);

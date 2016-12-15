@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 include_once 'Magento.php';
+include_once 'Adyen.php';
 
 class RefundController extends Controller
 {
@@ -267,22 +268,25 @@ class RefundController extends Controller
 		$form_submit = $this->createForm(\AppBundle\Form\Submit::class, $entity_submit);
 
 		$form_submit->handleRequest($request);
+		$msg = '';
 		if ($form_submit->isSubmitted()) {
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
 
-			// facture (invoice)
-			// credimemo 
-			// remboursement (adyen refund) $total, $refund_total, $refund_diff
+			try {
+				$mage->processcreditAction($id, $order);
+		//		$adyen = new \Adyen();
+		//		$adyen->refund('AuPasDeCoursesFR', $refund_diff, $order_header['pspreference'], "{id-R}");
 
-echo "<pre>";
-print_r($order);
-echo "</pre>";
-
+		//		send mail
+			} catch (\Exception $e) {
+				$msg = $e->getMessage();
+			}
 		}
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'total' => $total,
+			'msg' => $msg,
 			'refund_total' => $refund_total,
 			'refund_diff' => $refund_diff,
 			'order_header' => $order_header,

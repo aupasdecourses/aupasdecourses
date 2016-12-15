@@ -3,6 +3,7 @@
 {% use '/menu/default.html.twig' %}
 
 {% block body %}
+	<div>{{msg}}</div>
 	{% for merchant_id, merchant_part in order %}
 		<div class='row'>
 			<table>
