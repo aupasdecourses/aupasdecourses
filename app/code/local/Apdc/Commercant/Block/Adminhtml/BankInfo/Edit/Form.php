@@ -75,6 +75,12 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit_Form extends Mage_Adminhtml_
             'required' => false,
             'path' => $model->getMediaSubpath('status'),
         ]);
+        $fieldset->addField('licence', 'file', [
+            'name' => 'licence',
+            'label' => $this->__('Licence'),
+            'required' => false,
+            'path' => $model->getMediaSubpath('licence'),
+        ]);
 
         $fieldset = $form->addFieldset(
             'bank',
