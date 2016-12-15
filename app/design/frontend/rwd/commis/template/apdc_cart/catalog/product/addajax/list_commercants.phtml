@@ -36,11 +36,6 @@
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
     $apdc_helper = Mage::helper('apdc_front');
-
-	$parent_cat= Mage::getSingleton('catalog/layer')->getCurrentCategory()->getParentCategory();
-	$currentCat = Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName();
-	$parentCat = Mage::getSingleton('catalog/layer')->getCurrentCategory()->getParentCategory()->getName();  
-
 ?>
 
 <?php if(!$_productCollection->count()): ?>
@@ -48,8 +43,8 @@
 <?php else: ?>
 <div class="page-title">
     <h1 class="subtitle category_name">
-    	<img class="thumb-menu" src="<?php echo $apdc_helper->getThumbnailImageUrl($parent_cat);?>"/>
-    	<span class="commercant_name"><?php echo $parentCat;?></span><?php echo ' - '.$currentCat; ?></h1>
+    	<img class="thumb-menu" src="<?= $apdc_helper->getCatThumbnailUrl();?>"/>
+    	<span class="commercant_name"><?= $apdc_helper->getCatTitle();?></span></h1>
 </div>
 <div class="category-products">
     <?php echo $this->getToolbarHtml() ?>
