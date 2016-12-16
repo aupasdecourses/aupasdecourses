@@ -8,16 +8,14 @@ if($commercants):?>
 	<ul id="list_commercants_days">
 	<?php foreach($commercants as $name=>$days):?>
 		<li>
-			<b><?php echo $name;?></b>
-			<?php echo ': ';
-			if($days[0]==""){
-				echo '<span class="color:red;">Pas de livraison cette semaine</span>';
-			}else{
-				echo 'Livraison uniquement ';
-				foreach($days as $d){
+			<?php if(empty($days)):?>
+				<span><b><?php echo $name;?>: </b>Pas de livraison cette semaine</span>;
+			<?php elseif(count($days)<4):?>
+				<span><b><?php echo $name;?></b>: Livraison uniquement
+					<?php foreach($days as $d){
 					echo $d.', ';
-				}
-			}?>
+					}?></span>
+			<?php endif;?>
 		</li>
 	<?php endforeach;?>
 	</ul>

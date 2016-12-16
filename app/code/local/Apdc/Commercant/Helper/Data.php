@@ -7,6 +7,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 {
     public function getDays()
     {
-        return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     }
+
 }
