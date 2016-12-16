@@ -11,6 +11,9 @@
  */
 
 error_reporting(E_ALL | E_STRICT);
+
 require('UploadHandler.php');
+require('CatcomHandler.php');
 
 $upload_handler = new UploadHandler();
+$catcom_handler = new CatcomHandler();

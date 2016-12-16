@@ -25,4 +25,25 @@ class ToolController extends Controller
 		]);
 	}
 
+	public function merchantAction(Request $request)
+	{
+		$mage = \Magento::getInstance();
+		if(!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		return $this->render('tool/merchant.html.twig', [
+			'user' => $_SESSION['delivery']['username'],
+		]);
+	}
+
+	public function categoryAction(Request $request)
+	{
+		$mage = \Magento::getInstance();
+		if(!$mage->isLogged())
+			return $this->redirectToRoute('userLogin');
+
+		return $this->render('tool/category.html.twig', [
+			'user' => $_SESSION['delivery']['username'],
+		]);
+	}
 }

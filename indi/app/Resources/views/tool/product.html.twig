@@ -4,13 +4,13 @@
 {% block body %}
 
 <style>
-    .bar {
-		height: 18px;
-		background: green;
-		}
+.bar {
+	height: 18px;
+	background: green;
+}
 	.paragraph {
 		margin-bottom: 10px;
-		}
+	}
 </style>
 <div class="row">
 	<h1>Upload et traitement des images catalogue</h1>
@@ -49,12 +49,12 @@
 			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
 			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
 			<span class="ajax-msg" style="font-weight:bold;"></span>
+		</div>
 	</div>
-</div>
 
-{% endblock %}
+	{% endblock %}
 
-{% block javascripts %}
+	{% block javascripts %}
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/bootstrap.3.2.0.min.js"></script>
@@ -62,59 +62,59 @@
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
 	<script type="text/javascript">
-	function init_msg(action){
-		    //diplay loading and erase message
-		    $('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
-			$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'none'});
-			$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'none'});
-			$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'none','color':'auto'});
-			$('#button_'+action).prop('disabled', true);
-			 }
+function init_msg(action){
+	//diplay loading and erase message
+	$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
+	$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'none'});
+	$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'none'});
+	$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'none','color':'auto'});
+	$('#button_'+action).prop('disabled', true);
+}
 
-	function process(action){
-		// display loading and erase msg
-		init_msg(action);
-		$.ajax({
-				url: '/indi/library/processimage/script.php',
-			    type: 'POST',
-				data: {action: action},
-				success: function(msg) {
-					if(msg!="error"){
-					$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
-					$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'inline'});
-					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'green'}).html(msg);
-					$('#button_'+action).prop('disabled', false);
-					} else {
-						$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
-						$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'inline'});
-						$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
-						$('#button_'+action).prop('disabled', false);
-					}
-				},
-				error: function(msg) {
-					alert(msg);
+function process(action){
+	// display loading and erase msg
+	init_msg(action);
+	$.ajax({
+		url: '/indi/library/processimage/script.php',
+		type: 'POST',
+		data: {action: action},
+		success: function(msg) {
+			if(msg!="error"){
+				$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+				$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'inline'});
+				$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'green'}).html(msg);
+				$('#button_'+action).prop('disabled', false);
+			} else {
+				$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+				$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'inline'});
+				$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
+				$('#button_'+action).prop('disabled', false);
 			}
-		});
-	};
-
-	$(function () {
-			$('#fileupload').fileupload({
-				url: '/indi/web/uploads/index.php',
-				dataType: 'json',
-				done: function (e,data) {
-					$.each(data.result.files, function(index, file){
-						$('<p/>').text(file.name).appendTo($('#file_uploaded'));
-					});
-				},
-				progressall: function (e, data) {
-				var progress = parseInt(data.loaded / data.total * 100, 10);
-				$('#progress .bar').css(
-					'width',
-				    progress + '%'
-				);
-			}	
-			});
+		},
+		error: function(msg) {
+			alert(msg);
+		}
 	});
+};
+
+$(function () {
+	$('#fileupload').fileupload({
+		url: '/indi/web/uploads/index.php',
+		dataType: 'json',
+		done: function (e,data) {
+			$.each(data.result.files, function(index, file){
+				$('<p/>').text(file.name).appendTo($('#file_uploaded'));
+			});
+		},
+		progressall: function (e, data) {
+			var progress = parseInt(data.loaded / data.total * 100, 10);
+			$('#progress .bar').css(
+					'width',
+					progress + '%'
+					);
+		}	
+	});
+});
 	</script>
-	
-{% endblock %}
+
+	{% endblock %}

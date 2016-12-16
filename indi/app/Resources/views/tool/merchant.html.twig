@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% use 'menu/default.html.twig' %}
+
+{% block body %}
+<style>
+.bar {
+	height: 18px;
+	background: green;
+}
+	.paragraph {
+		margin-bottom: 10px;
+	}
+</style>
+
+<div class="row">
+	<h1>Traitement des photos commercants</h1>
+	<div class="col-sm-12 paragraph">
+		<p>1. Selectionnez l'image commercants, vous pourrez ensuite télécharger les versions optimisées en cliquant sur les liens qui apparaitront. Il ne vous restera plus qu'à les uploader via l'interface Magento dans la catégorie correspondante
+		</p>
+		<input class="btn-lg" id="fileupload" type="file" name="files[]" multiple>
+		<div id="progress">
+			<div class="bar" style="width:0%;"></div>
+		</div>
+		<div id="file_uploaded">
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/bootstrap.3.2.0.min.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
+<script type="text/javascript">
+
+$(function () {
+	action="commercants";
+	$('#fileupload').fileupload({
+		url: '/indi/web/uploads/indexCatcom.php',
+		dataType: 'json',
+		done: function (e,data) {
+			$.each(data.result.files, function(index, file){
+				
+				$.ajax({
+					url: '/indi/library/processimage/script.php',
+					type: 'POST',
+					data: {action: action,
+							image:file.name},
+					success: function(msg) {
+						alert(msg);
+					},
+					error: function(msg){
+						alert(msg);
+					}
+			});
+			var base_url=file.url.split("/");
+			base_url=base_url.splice(0,base_url.length-1).join("/");
+
+			$('<p/>').html('<a href="'+base_url+'/thumbnail.jpg" target="_blank" download>thumbnail.jpg</a>').appendTo($('#file_uploaded'));
+			$('<p/>').html('<a href="'+base_url+'/full.jpg" target="_blank" download>full.jpg</a>').appendTo($('#file_uploaded'));
+			});
+		},
+		progressall: function (e, data) {
+			var progress = parseInt(data.loaded / data.total * 100, 10);
+			$('#progress .bar').css(
+					'width',
+					progress + '%'
+					);
+		}	
+	});
+});
+</script>
+
+{% endblock %}

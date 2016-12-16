@@ -88,6 +88,14 @@ toolProduct:
   path: /tool/product/
   defaults: { _controller: AppBundle:Tool:product}
 
+toolMerchant:
+  path: /tool/merchant/
+  defaults: { _controller: AppBundle:Tool:merchant}
+
+toolCategory:
+  path: /tool/category/
+  defaults: { _controller: AppBundle:Tool:category}
+
 oneup_uploader:
     resource: . 
     type: uploader
