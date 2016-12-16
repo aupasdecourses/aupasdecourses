@@ -10,7 +10,7 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit extends Mage_Adminhtml_Block
         $this->_objectId = 'id_bank_information';
         $this->_blockGroup = 'apdc_commercant';
         $this->_controller = 'adminhtml_bankInfo';
-        $this->_headerText = $this->__('Infos bancaires');
+        $this->_headerText = $this->__('Infos bancaires &amp; légales');
 
         parent::__construct();
     }

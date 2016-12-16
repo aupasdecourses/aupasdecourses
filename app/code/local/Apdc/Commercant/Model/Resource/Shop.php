@@ -24,6 +24,12 @@ class Apdc_Commercant_Model_Resource_Shop extends Mage_Core_Model_Resource_Db_Ab
         }
         $shop->setData('closing_periods', $periods);
 
+        $deliveryDays = @unserialize($shop->getData('delivery_days'));
+        if ($deliveryDays === false) {
+            $deliveryDays = [];
+        }
+        $shop->setData('delivery_days', $deliveryDays);
+
         return parent::_afterLoad($shop);
     }
 }

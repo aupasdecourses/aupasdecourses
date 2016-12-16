@@ -45,6 +45,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
         ]);
 
         $availableBankInfo = Mage::getModel('apdc_commercant/bankInfo')->getCollection()->toOptionArray();
+        array_unshift($availableBankInfo, ['value' => '', 'label' => '']);
         $fieldset->addField('id_bank_information', 'select', [
             'name' => 'id_bank_information',
             'label' => $this->__('Bank information'),
@@ -56,6 +57,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
             ->getCollection()
             ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_CEO)
             ->toOptionArray();
+        array_unshift($availableCeos, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_ceo', 'select', [
             'name' => 'id_contact_ceo',
             'label' => $this->__('CEO contact'),
@@ -67,6 +69,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
             ->getCollection()
             ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_BILLING)
             ->toOptionArray();
+        array_unshift($availableBillingContacts, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_billing', 'select', [
             'name' => 'id_contact_billing',
             'label' => $this->__('Billing contact'),
