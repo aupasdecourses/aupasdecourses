@@ -123,7 +123,11 @@ var apdcProductAddedToCart = {};
 <?php endif; ?>
 <?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
 jQuery(document).ready(function() {
-    jQuery(document).trigger('apdcUpdateAddToCartButtons'<?php echo ($productId ? ', ' . $productId : ''); ?>);
+    <?php if ($productId) : ?>
+        jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change');
+    <?php else : ?>
+        jQuery('.apdc-add-to-cart-form').trigger('change');
+    <?php endif; ?>
     jQuery(document).trigger('minicartLoaded');
 });
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';

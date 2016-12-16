@@ -1,0 +1,8 @@
+<?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change');
+    //jQuery(document).trigger('apdcUpdateAddToCartButtons'<?php echo ($productId ? ', ' . $productId : ''); ?>);
+    //jQuery(document).trigger('minicartLoaded');
+});
+</script>

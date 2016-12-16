@@ -54,18 +54,26 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
             }
             if (!$item->isDeleted() && !$item->getParentItemId()) {
                 $commercant = $item->getCommercant();
-                if (!$commercant) {
-                    if (isset($parentCommercantId[$item->getItemId()])) {
-                        $commercant = $parentCommercantId[$item->getItemId()];
+                if ($item->getProduct()->getTypeId() == 'bundle') {
+                    if (!isset($commercants['bundle'])) {
+                        $commercants['bundle']['name'] = $this->__('Bundle products');
+                        $commercants['bundle']['items'] = array();
                     }
-                    continue;
+                    $commercants['bundle']['items'][] = $item;
+                } else {
+                    if (!$commercant) {
+                        if (isset($parentCommercantId[$item->getItemId()])) {
+                            $commercant = $parentCommercantId[$item->getItemId()];
+                        }
+                        continue;
+                    }
+                    if (!isset($commercants[$commercant])) {
+                        $name = $product->setCommercant($commercant);
+                        $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
+                        $commercants[$commercant]['items'] = array();
+                    }
+                    $commercants[$item->getCommercant()]['items'][] = $item;
                 }
-                if (!isset($commercants[$commercant])) {
-                    $name = $product->setCommercant($commercant);
-                    $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
-                    $commercants[$commercant]['items'] = array();
-                }
-                $commercants[$item->getCommercant()]['items'][] = $item;
             }
         }
         return $commercants;
@@ -119,12 +127,12 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     if (!empty($options)) {
                         $productAdded[$item->getProductId()]['options'][implode('_', $options)] = array(
                             'qty' => $buyRequest->getQty(),
-                            'comment' => html_entity_decode($item->getItemComment()),
+                            'comment' => html_entity_decode($item->getItemComment(), ENT_QUOTES, 'UTF-8'),
                             'itemId' => $item->getId()
                         );
                     } else {
                         $productAdded[$item->getProductId()]['qty'] = $item->getQty();
-                        $productAdded[$item->getProductId()]['comment'] = html_entity_decode($item->getItemComment());
+                        $productAdded[$item->getProductId()]['comment'] = html_entity_decode($item->getItemComment(), ENT_QUOTES, 'UTF-8');
                     }
                 }
             }

@@ -80,6 +80,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $response['message'] = $this->__('Cannot add the item to shopping cart.');
                 Mage::logException($e);
             }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             return;
         } else {
@@ -99,7 +100,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
             $itemId = (int) $this->getRequest()->getParam('item_id');
             $response = array();
             try {
-                $comment = filter_var($this->getRequest()->getParam('item_comment'), FILTER_SANITIZE_SPECIAL_CHARS);
+                $comment = htmlentities($this->getRequest()->getParam('item_comment'), ENT_QUOTES, 'UTF-8');
                 $item = $this->_getCart()->getQuote()->getItemById($itemId);
                 $item->setItemComment($comment)
                     ->save();
@@ -130,6 +131,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $response['message'] = $this->__('Cannot add your comment to the item.');
                 Mage::logException($e);
             }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             return;
         }
@@ -207,6 +209,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $response['message'] = $this->__('Cannot update shopping cart.');
                 Mage::logException($e);
             }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             return;
     }

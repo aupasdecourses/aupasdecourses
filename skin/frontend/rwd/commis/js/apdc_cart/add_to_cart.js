@@ -3,60 +3,61 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
 }
 (function($) {
   $(document).ready(function() {
-    $('.main').on('click', ':submit', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    $(document).on('click', ':submit', function(e) {
       var form = $(this).parents('form');
-      var productId = parseInt(form.data('product-id'));
-      var itemId = 0;
-      if (this.value == 'btn-cart-qty-plus') {
-        itemId = parseInt($(this).data('item-id'));
-        $(document).trigger('minicartAddQty', [itemId, productId]);
-      } else if (this.value == 'btn-cart-qty-minus') {
-        itemId = parseInt($(this).data('item-id'));
-        $(document).trigger('minicartRemoveQty', [itemId, productId]);
-      } else if (this.value == 'btn-cart-remove') {
-        itemId = parseInt($(this).data('item-id'));
-        $('#btn-minicart-remove-' + itemId).click();
-      } else {
-        var varienForm = new VarienForm(form.attr('id'));
-        if (varienForm.validator.validate()) {
-          var ajaxUrl = form.data('ajax-action');
-          var data = new FormData(form[0]);
-          data.append('isAjax', 1);
+      if (form.hasClass('apdc-add-to-cart-form')) {
+        e.preventDefault();
+        e.stopPropagation();
+        var productId = parseInt(form.data('product-id'));
+        var itemId = 0;
+        if (this.value == 'btn-cart-qty-plus') {
+          itemId = parseInt($(this).data('item-id'));
+          $(document).trigger('minicartAddQty', [itemId, productId]);
+        } else if (this.value == 'btn-cart-qty-minus') {
+          itemId = parseInt($(this).data('item-id'));
+          $(document).trigger('minicartRemoveQty', [itemId, productId]);
+        } else if (this.value == 'btn-cart-remove') {
+          itemId = parseInt($(this).data('item-id'));
+          $('#btn-minicart-remove-' + itemId).click();
+        } else {
+          var varienForm = new VarienForm(form.attr('id'));
+          if (varienForm.validator.validate()) {
+            var ajaxUrl = form.data('ajax-action');
+            var data = new FormData(form[0]);
+            data.append('isAjax', 1);
 
-          var actions = $(form).find('.actions');
-          $.ajax({
-            url: ajaxUrl,
-            data: data,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            beforeSend: function() {
-              startLoading(productId);
-            }
-            
-          })
-          .done(function(response) {
-            response = response.evalJSON();
-            if (response.status === 'SUCCESS') {
-              if($('.header-minicart').length > 0){
-                $('.header-minicart').html(response.minicarthead);
+            var actions = $(form).find('.actions');
+            $.ajax({
+              url: ajaxUrl,
+              data: data,
+              processData: false,
+              contentType: false,
+              type: 'POST',
+              beforeSend: function() {
+                startLoading(productId);
               }
-            }
-          })
-          .fail(function() {
-            console.log('failed');
-          })
-          .always(function() {
-            finishLoading();
-          });
+              
+            })
+            .done(function(response) {
+              if (response.status === 'SUCCESS') {
+                if($('.header-minicart').length > 0){
+                  $('.header-minicart').html(response.minicarthead);
+                }
+              }
+            })
+            .fail(function() {
+              console.log('failed');
+            })
+            .always(function() {
+              finishLoading();
+            });
+          }
         }
+        return false;
       }
-      return false;
     });
 
-    $('.main').on('change', '.apdc-add-to-cart-form', function(event) {
+    $(document).on('change', '.apdc-add-to-cart-form', function(event) {
       var optionKeyTab = [];
       var optionKey = '';
       var formId = $(this).attr('id');
@@ -75,7 +76,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         optionKey = optionKeyTab.join('_');
       }
       $('.selected-optionKey-' + productId).val(optionKey);
-      $(document).trigger('apdcUpdateAddToCartButtons', [productId]);
+      $(document).trigger('apdcProductFormChanged', [productId]);
     });
   });
 
@@ -115,7 +116,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
 
   // used to change the add to cart button. 
   // If the product already added to cart, we must display + and - buttons with the qty already added.
-  $(document).on('apdcUpdateAddToCartButtons', function(event, fromProductId) {
+  $(document).on('apdcProductFormChanged', function(event, fromProductId) {
 
     // init display of add to cart button
     $('.actions .simple-add-to-cart-button').show();

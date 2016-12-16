@@ -15,10 +15,15 @@
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_quickview.js</file></action>
       </reference>
       <reference name="before_body_end">
-        <block type="core/template" name="product_quickView" template="apdc_catalog/product/quick-view.phtml" />
+        <block type="core/template" name="product_quickView_check_dependencies" template="apdc_catalog/product/quick-view/check-dependencies.phtml" />
       </reference>
-
     </default>
+
+    <apdc_quickview_onload>
+      <reference name="content">
+        <block type="catalog/product_view" name="product_quickview_onload" template="apdc_catalog/product/quick-view/onload.phtml" />
+      </reference>
+    </apdc_quickview_onload>
 
     <apdc_catalog_product_list>
 
@@ -142,6 +147,14 @@
         <remove name="bundle.tierprices" />
         <remove name="product.info.sharing" />
         <remove name="product.info.addtocart.paypaluk.wrapper" />
+
+        <reference name="head">
+          <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_bundle.js</file></action>
+        </reference>
+
+        <reference name="product.info.bundle">
+          <action method="setTemplate"><file>apdc_bundle/catalog/product/view/type/bundle.phtml</file></action>
+        </reference>
         <reference name="product.info.options.wrapper.bottom">
             <action method="setTemplate">
                 <template>apdc_bundle/catalog/product/view/options/wrapper/bottom.phtml</template>

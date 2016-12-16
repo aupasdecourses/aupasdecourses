@@ -26,11 +26,19 @@ var apdcQuickView = new ApdcQuickView([
     },
     {
         type:'js',
-        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_optionsPrices.js'); ?>',
+        url: '<?php echo $this->getSkinUrl('js/bundle.js'); ?>',
         test: [
             'Product',
             'OptionsPrice',
             'reloadWithContainer'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_optionsPrices.js'); ?>',
+        test : [
+            'Product',
+            'Bundle'
         ]
     },
     {
@@ -41,9 +49,5 @@ var apdcQuickView = new ApdcQuickView([
             'Options'
         ]
     }
-]);   
-jQuery(document).ready(function() {
-    jQuery(document).trigger('apdcUpdateAddToCartButtons');
-    jQuery(document).trigger('minicartLoaded');
-});
+]);
 </script>

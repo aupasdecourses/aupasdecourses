@@ -53,6 +53,7 @@ class Apdc_Catalog_Helper_Product_View extends Mage_Catalog_Helper_Product_View
 
         $controller->getLayout()->getUpdate()->addHandle(array(
             'default',
+            'apdc_quickview_onload',
             'catalog_product_view',
             'PRODUCT_TYPE_' . $product->getTypeId(),
             'PRODUCT_' . $product->getId()
@@ -78,6 +79,7 @@ class Apdc_Catalog_Helper_Product_View extends Mage_Catalog_Helper_Product_View
         $this->initProductLayout($product, $controller);
 
 
+        $block = $controller->getLayout()->getBlock('product_quickview_onload')->setData('product_id', $product->getId());
         $controller->getLayout()->removeOutputBlock('root')->addOutputBlock('content');
         if ($product->getTypeId() == 'configurable' || $product->getHasOptions()) {
             $product->setConfigurableContainerId('product-quick-view-popup');
