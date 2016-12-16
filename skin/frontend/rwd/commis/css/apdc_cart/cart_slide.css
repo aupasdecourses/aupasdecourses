@@ -182,6 +182,10 @@ a.remove {
     line-height: 11px;
     cursor: help;
 }
+.header-minicart #header-cart .commercant-product-list .item-cell.item-name a.details {
+    display:block;
+}
+
 .header-minicart #header-cart .commercant-product-list .item-cell.item-qty {
     width: 70px;
 }
