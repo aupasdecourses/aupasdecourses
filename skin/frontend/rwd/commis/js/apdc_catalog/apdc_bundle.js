@@ -25,6 +25,8 @@
 if(typeof Product=='undefined') {
     var Product = {};
 }
+var ApdcBundleLoaded = true;
+
 /**************************** BUNDLE PRODUCT **************************/
 Product.Bundle.prototype.origInitialize = Product.Bundle.prototype.initialize;
 Product.Bundle.prototype.initialize = function(config, productId, containerId) {

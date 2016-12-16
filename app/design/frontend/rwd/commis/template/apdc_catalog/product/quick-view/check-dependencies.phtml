@@ -29,8 +29,14 @@ var apdcQuickView = new ApdcQuickView([
         url: '<?php echo $this->getSkinUrl('js/bundle.js'); ?>',
         test: [
             'Product',
-            'OptionsPrice',
-            'reloadWithContainer'
+            'Bundle'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_bundle.js'); ?>',
+        test : [
+            'ApdcBundleLoaded',
         ]
     },
     {
@@ -38,7 +44,8 @@ var apdcQuickView = new ApdcQuickView([
         url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_optionsPrices.js'); ?>',
         test : [
             'Product',
-            'Bundle'
+            'OptionsPrice',
+            'reloadWithContainer'
         ]
     },
     {

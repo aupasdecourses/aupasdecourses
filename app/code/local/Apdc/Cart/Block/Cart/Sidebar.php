@@ -124,6 +124,17 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                             $options[] = $id . '-' . $value;
                         }
                     }
+                    if ($buyRequest->getBundleOption()) {
+                        foreach ($buyRequest->getBundleOption() as $id => $values) {
+                            if (is_array($values)) {
+                                foreach ($values as $value) {
+                                    $options[] = $id . '-' . $value;
+                                }
+                            } else {
+                                $options[] = $id . '-' . $values;
+                            }
+                        }
+                    }
                     if (!empty($options)) {
                         $productAdded[$item->getProductId()]['options'][implode('_', $options)] = array(
                             'qty' => $buyRequest->getQty(),

@@ -72,6 +72,19 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         var optionId = parseInt(this.value);
         optionKeyTab.push(attributeId + '-' + optionId);
       });
+      $(this).find('[name^="bundle_option["]').each(function() {
+        var attributeId = 0;
+        var optionId = 0;
+        if (this.type && this.type === 'checkbox' && this.checked) {
+          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
+          optionId = parseInt(this.value);
+          optionKeyTab.push(attributeId + '-' + optionId);
+        } else if (this.type && this.type === 'hidden') {
+          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
+          optionId = parseInt(this.value);
+          optionKeyTab.push(attributeId + '-' + optionId);
+        }
+      });
       if (optionKeyTab.length > 0) {
         optionKey = optionKeyTab.join('_');
       }
