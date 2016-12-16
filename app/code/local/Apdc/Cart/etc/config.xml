@@ -81,7 +81,7 @@
         <layout>
             <updates>
                 <item_comment>
-                    <file>apdc_cart.xml</file>
+                    <file>apdc/apdc_cart.xml</file>
                 </item_comment>
             </updates>
         </layout>
