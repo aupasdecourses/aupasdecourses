@@ -55,9 +55,12 @@ class GardenMedia_Sponsorship_Model_Customer_Form extends Mage_Customer_Model_Fo
         }
 
         if (isset($data['sponsor_code'])) {
-            $sponsor = Mage::getModel('gm_sponsorship/sponsor')->load($data['sponsor_code'], 'sponsor_code');
-            if (!$sponsor || !$sponsor->getId()) {
-                $errors[] = Mage::helper('gm_sponsorship')->__('Sponsor Code is not valid');
+            $sponsorCode = trim($data['sponsor_code']);
+            if (!empty($sponsorCode)) {
+                $sponsor = Mage::getModel('gm_sponsorship/sponsor')->load($sponsorCode, 'sponsor_code');
+                if (!$sponsor || !$sponsor->getId()) {
+                    $errors[] = Mage::helper('gm_sponsorship')->__('Sponsor Code is not valid');
+                }
             }
         }
         if (count($errors) == 0) {

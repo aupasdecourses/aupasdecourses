@@ -11,7 +11,7 @@
         <h1>Upload et traitement des images catalogue</h1>
         <div class="col-sm-12 paragraph">
             <p>1. Sélectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Sélectionner les fichiers". Les photos seront téléchargées automatiquement.</p>
-            <input class="btn-lg" id="fileupload" type="file" name="files[]" data-url="uploads/" multiple>
+            <input class="btn-lg" id="fileupload" type="file" name="files[]" multiple>
             <div id="progress">
                 <div class="bar" style="width: 0%;"></div>
             </div>
@@ -93,7 +93,7 @@
 
     $(function () {
         $('#fileupload').fileupload({
-            url: 'uploads/',
+            url: 'uploads/index.php?type=produits',
             dataType: 'json',
             done: function (e, data) {
                 $.each(data.result.files, function (index, file) {
