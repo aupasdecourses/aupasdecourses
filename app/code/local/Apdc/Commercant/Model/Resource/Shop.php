@@ -32,4 +32,11 @@ class Apdc_Commercant_Model_Resource_Shop extends Mage_Core_Model_Resource_Db_Ab
 
         return parent::_afterLoad($shop);
     }
+
+    protected function _beforeSave(Mage_Core_Model_Abstract $shop)
+    {
+        if (null !== $days = $shop->getData('delivery_days')) {
+            $shop->setData('delivery_days', serialize($days));
+        }
+    }
 }
