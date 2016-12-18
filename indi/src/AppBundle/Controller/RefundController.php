@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 include_once 'Magento.php';
+include_once 'Adyen.php';
 
 class RefundController extends Controller
 {
@@ -121,10 +122,10 @@ class RefundController extends Controller
 			$attrNames[$merchant_id] = $name;
 			$class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
 			$form_upload->add($name, FileType::class, [
-				'required'    => false,
-				'label' => $data['merchant']['name'],
-				'attr'	=> [
-					'class'	=> "form-control{$class}",
+				'required'  => false,
+				'label'		=> $data['merchant']['name'],
+				'attr'		=> [
+					'class'		=> "form-control{$class}",
 					]
 			]);
 		}
@@ -189,6 +190,8 @@ class RefundController extends Controller
 		ksort($order);
 
 		$total = $order[-1]['merchant']['total'];
+		$order_mid = $order[-1]['order']['mid'];
+		$input_status = $order[-1]['order']['input'];
 		unset($order[-1]);
 
 		$entity_input = new \AppBundle\Entity\Input();
@@ -197,14 +200,36 @@ class RefundController extends Controller
 		$form_input = $form_input->getForm();
 		$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
 
-		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token'])) {
-			// save to BDD
+		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token']) && $input_status == 'none') {
+			$rsl_table = [];
+			foreach ($order as $merchant_id => $o_data) {
+				foreach ($o_data['products'] as $product_id => $p_data) {
+					if (isset($_POST['form'][$product_id])) {
+						$rsl_table[$product_id] = [
+							'order_item_id'	=> $product_id,
+							'item_name'		=> $p_data['nom'],
+							'commercant'	=> $o_data['name'],
+							'commercant_id'	=> $o_data['merchant']['id'],
+							'order_id'		=> $p_data['order_id'],
+							'prix_initial'	=> $p_data['prix_total'],
+							'prix_final'	=> doubleval($_POST['form'][$product_id]['ticket']),
+							'diffprixfinal'	=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
+							'comment'		=> $_POST['form'][$product_id]['comment'],
+						];
+						unset($_POST['form'][$product_id]);
+					}
+				}
+			}
+			
+			foreach ($rsl_table as $product_id => $data) {
+				$mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
+			}
 
-			echo '<pre>';
-			print_r($_POST);
-			echo '</pre>';
-
-			// if all good redirect to digest
+			if ($_POST['submit'] == 'next') {
+				return $this->redirectToRoute('refundDigest', [ 'id' => $id ]);
+			} else {
+				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
+			}
 		}
 
 		return $this->render('refund/input.html.twig', [
@@ -222,20 +247,52 @@ class RefundController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$order = $mage->getOrderByMerchants($id);
+		$order = $mage->getRefunds($id);
 
 		$total = $order[-1]['merchant']['total'];
+		$refund_total = $order[-1]['merchant']['refund_total'];
+		$refund_diff = $order[-1]['merchant']['refund_diff'];
+		$order_header = $order[-1]['order'];
 		unset ($order[-1]);
 
 		$files = $this->getUploadedFiles($id);
-		ksort($files);
+		foreach ($order as $merchant_id => $merchant_part) {
+			if (isset($files[$merchant_id]))
+				$order[$merchant_id]['merchant']['ticket'] = $files[$merchant_id]['url'];
+			else
+				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
+		}
+		ksort($order);
+
+		$entity_submit = new \AppBundle\Entity\Model();
+		$form_submit = $this->createForm(\AppBundle\Form\Submit::class, $entity_submit);
+
+		$form_submit->handleRequest($request);
+		$msg = '';
+		if ($form_submit->isSubmitted()) {
+			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
+
+			try {
+				$mage->processcreditAction($id, $order);
+		//		$adyen = new \Adyen();
+		//		$adyen->refund('AuPasDeCoursesFR', $refund_diff, $order_header['pspreference'], "{id-R}");
+
+		//		send mail
+			} catch (\Exception $e) {
+				$msg = $e->getMessage();
+			}
+		}
 
 		return $this->render('refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
-			'files' => $files,
-			'order' => $order,
 			'total' => $total,
-			'order_id' => $id
+			'msg' => $msg,
+			'refund_total' => $refund_total,
+			'refund_diff' => $refund_diff,
+			'order_header' => $order_header,
+			'order' => $order,
+			'order_id' => $id,
+			'forms' => [ $form_submit->createView() ],
 		]);
 	}
 }

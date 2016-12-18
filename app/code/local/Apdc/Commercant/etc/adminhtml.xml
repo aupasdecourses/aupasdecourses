@@ -23,7 +23,7 @@
                             <action>adminhtml/commercant_contact/index</action>
                         </contact>
                         <bank_information>
-                            <title>Infos bancaires</title>
+                            <title>Infos bancaires &amp; légales</title>
                             <sort_order>20</sort_order>
                             <action>adminhtml/commercant_bankinfo/index</action>
                         </bank_information>
