@@ -37,5 +37,16 @@
         </apdc_popup>
     </routers>
   </frontend>
+    <admin>
+      <routers>
+        <adminhtml>
+          <args>
+            <modules>
+              <apdc_popup after="Mage_Adminhtml">Apdc_Popup_Adminhtml</apdc_popup>
+            </modules>
+          </args>
+        </adminhtml>
+      </routers>
+    </admin>
 	
 </config>

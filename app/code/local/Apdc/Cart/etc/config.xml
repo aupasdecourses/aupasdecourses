@@ -13,7 +13,7 @@
             </apdccart>
             <adminhtml>
                 <rewrite>
-                    <sales_items_abstract>Apdc_Cart_Block_Adminhtml_Sales_Items_Abstract</sales_items_abstract>
+                    <sales_order_create_items_grid>Apdc_Cart_Block_Adminhtml_Sales_Order_Create_Items_Grid</sales_order_create_items_grid>
                 </rewrite>
             </adminhtml>
             <checkout>
@@ -86,4 +86,15 @@
             </updates>
         </layout>
     </adminhtml>
+    <admin>
+      <routers>
+        <adminhtml>
+          <args>
+            <modules>
+              <apdc_cart after="Mage_Adminhtml">Apdc_Cart_Adminhtml</apdc_cart>
+            </modules>
+          </args>
+        </adminhtml>
+      </routers>
+    </admin>
 </config>

@@ -1,0 +1,63 @@
+.apdc-popup {
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index: 9999;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  display:none;
+}
+.apdc-popup.display {
+  display:block;
+}
+.apdc-popup-overlay {
+  background-color:rgba(0,0,0, 0.7);
+  width:100%;
+  height:100%;
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  z-index: 2;
+}
+.apdc-popup-container {
+  background-color:white;
+  border-radius: 10px;
+  border:1px solid lightgrey;
+  width: 90%;
+  height: 90%;
+  padding:20px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:3;
+}
+
+.apdc-popup-content {overflow: auto;height: 100%;width: 100%;}
+
+.apdc-popup-close {
+  position:absolute;
+  top: -15px;
+  right: -15px;
+  cursor:pointer;
+  font-size:35px;
+  background-color: white;
+  width: 36px;
+  height: 36px;
+  text-align:center;
+  border-radius:35px;
+}
+.apdc-popup-close .fa {
+  display:block;
+}
+.apdc-popup-loading {
+  display:inline-block;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+}
