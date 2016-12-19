@@ -61,7 +61,7 @@
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> col-lg-3 col-md-3 col-sm-4 col-xs-6">
             <form action="<?php echo $_product->getProductUrl() ?>" data-ajax-action="<?php echo $this->helper('apdccart')->getAjaxAddUrl($_product) ?>" method="post" class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $_product->getId(); ?>" id="product_addtocart_form_<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> data-product-id="<?php echo $_product->getId(); ?>">
 
-                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
                         <?php $_imgSize = 210; ?>
                         <img id="product-collection-image-<?php echo $_product->getId(); ?>"
                              src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize); ?>"
@@ -71,7 +71,7 @@
                     </a>
                     <div class="product-info row">
                         <div class="product-info-left product-info-column">
-                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                             <p class="product-commercant-name">
                                 <?php echo Mage::getResourceSingleton('catalog/product')
                                         ->getAttribute('commercant')

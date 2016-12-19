@@ -5,13 +5,10 @@
             <div class="loader"></div>
         </div>
         <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
-            <div class="container-fluid">
-                <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="col-xs-12 btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>"><i class="fa fa-eye"></i> <?php echo $this->__('View Details') ?></a>
+            <div class="pull-right">
+                <a title="<?php echo $this->quoteEscape($this->__('Edit Options')) ?>" class="col-xs-12 button btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Edit Options') ?></a>
             </div>
         <?php else : ?>
-            <div class="pull-left">
-                <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>"><i class="fa fa-eye"></i> <?php echo $this->__('View Details') ?></a>
-            </div>
 
             <?php if ($_product->isSaleable()): ?>
             <div class="pull-right">
