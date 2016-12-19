@@ -38,6 +38,10 @@
             <?php echo $this->getChildChildHtml('methods_additional', '', true, true) ?>
             <?php echo $this->getChildHtml('methods') ?>
         </div>
+        <div class="tool-tip" id="payment-tool-tip" style="display:none;">
+            <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>"><?php echo $this->__('Close') ?></a></div>
+            <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" /></div>
+        </div>
         <?php echo $this->getChildChildHtml('additional') ?>
         <div class="col-sm-6">
             <h3><?php echo $this->__('En cas de non disponibilité') ?></h3>
@@ -74,6 +78,23 @@
     //<![CDATA[
         review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
     //]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    function toggleToolTip(event){
+        if($('payment-tool-tip')){
+            $('payment-tool-tip').setStyle({
+                top: (Event.pointerY(event)-560)+'px'//,
+                //left: (Event.pointerX(event)+100)+'px'
+            })
+            $('payment-tool-tip').toggle();
+        }
+        Event.stop(event);
+    }
+    if($('payment-tool-tip-close')){
+        Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+    }
+//]]>
 </script>
 <script type="text/javascript">
 //<![CDATA[
