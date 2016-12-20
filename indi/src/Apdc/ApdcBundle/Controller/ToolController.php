@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Apdc\ApdcBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
