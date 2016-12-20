@@ -29,7 +29,7 @@ class Apdc_Config_Model_Designpackage extends Mage_Core_Model_Design_Package
         }
 
         // merge into target file
-        $targetFilename = md5(implode(',', $files) . "|{$hostname}|{$port}") .time().'.css';
+        $targetFilename = md5(implode(',', $files) . "|{$hostname}|{$port}") ."-".date('Y-m-d').'.css';
         $mergeFilesResult = $this->_mergeFiles(
             $files, $targetDir . DS . $targetFilename,
             false,
