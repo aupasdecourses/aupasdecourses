@@ -1,0 +1,38 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-attributes"><?php echo $this->__('Your comment'); ?></h4>
+    </div>
+    <div class="hor-scroll">
+        <div class="fieldset " id="amorderattr">
+            <div class="hor-scroll">
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <tr>
+                            <td class="label">
+                                <label for="produit_equivalent"><?php echo $this->__('Comment'); ?> <span class="required">*</span></label>
+                            </td>
+                            <td class="value">
+                                <textarea id="item-comment-textarea"></textarea>
+                                <input type="hidden" id="item-comment-id" />
+                                <input type="hidden" id="item-comment-ajax-url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/apdcCart/updateItemCommentAjax'); ?>?isAjax=true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                            </td>
+                            <td class="value">
+                                <button type="submit" class="scalable cancel" value="cancel_comment" id="cancel-item-comment">
+                                    <span><span><?php echo $this->__('Cancel'); ?></span></span>
+                                </button>
+                                <button type="submit" class="scalable save" value="save_comment" id="save-item-comment">
+                                    <span><span><?php echo $this->__('Save'); ?></span></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -30,10 +30,20 @@
         <Apdc_Catalog>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Apdc_Popup />
+              <Cybage_Swatches />
+            </depends>
         </Apdc_Catalog>
         <Apdc_Cart>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Checkout />
+              <Apdc_Popup />
+              <Apdc_Catalog />
+            </depends>
         </Apdc_Cart>
         <Apdc_Customer>
             <active>true</active>
@@ -46,7 +56,7 @@
     	</Apdc_Checkout>
         <Apdc_Coupon>
             <codePool>local</codePool>
-            <active>true</active>
+            <active>false</active>
         </Apdc_Coupon>
         <Apdc_Home>
             <codePool>local</codePool>
@@ -78,6 +88,10 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_Popup>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Popup>
         <Apdc_SalesRule>
             <active>true</active>
             <codePool>local</codePool>

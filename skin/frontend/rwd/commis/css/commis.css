@@ -615,15 +615,16 @@ h6,
  * ============================================ */
 
 .truncated .truncated_full_value .item-options {
-    display: none;
-    position: absolute;
+    display: block;
+    position: static;
     z-index: 300;
-    width: 200px;
+    width: 100%;
     padding: 8px;
     border: 1px solid #339933;
     background-color: #F6F6F6;
-    top: 21px;
-    left: -100px;
+    top: initial;
+    left: initial;
+    height: auto;
 }
 
 .truncated .truncated_full_value .item-options:after {
@@ -689,9 +690,7 @@ h6,
  * Product Image
  */
 
-.no-touch .product-image:hover {
-    border-color: #339933;
-}
+.no-touch .product-image:hover {border: 1px solid #ededed;}
 
 
 /* -------------------------------------------- *
@@ -729,7 +728,9 @@ h6,
 .limiter select {
     width: 60px;
 }
-
+.pages li {
+    padding-left:3px;
+}
 .pages a,
 .pages .current {
     display: inline-block;
@@ -740,9 +741,9 @@ h6,
     vertical-align: middle;
     white-space: nowrap;
     line-height: 30px;
-    width: 25px;
+    width: 30px;
     height: 30px;
-    padding: 0;
+    padding: 0!important;
     color: #339933;
     font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
 }
@@ -754,6 +755,7 @@ h6,
     width: 30px;
     background-color: #FFFFFF;
     cursor: default;
+    border-radius: 50%;
 }
 
 .pages .next,
@@ -1096,6 +1098,11 @@ label {
     background: white;
     border: none;
 }
+.main-container {
+    position: relative;
+    z-index: 1;
+}
+
 
 .header-language-background {
     padding-top: 0px;
@@ -1549,7 +1556,7 @@ label {
         background-color: #ffffff;
     }
     .sticky-header .skip-links .skip-content.skip-active {
-        top: 45px!important;
+        /* top: 45px!important; */
     }
     #header-account.skip-active a:hover,
     #header-help a:hover {
@@ -1911,8 +1918,11 @@ label {
     color: #339933;
 }
 
-.checkout-types.minicart {
-    float: right;
+.checkout-types.minicart .button {
+    float:none;
+    width:100%;
+    color:#ffffff;
+
 }
 
 .header-minicart .minicart-actions .cart-link {
@@ -2694,7 +2704,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
+ * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -3341,31 +3351,6 @@ a.btn:hover {
 
 .products-grid .actions {
     padding-top: 5px;
-}
-
-.pager li > a,
-.pager li > span {
-    padding: 4px 10px;
-    line-height: 20px;
-    width: auto;
-    height: auto;
-}
-
-.pages .next,
-.pages .previous {
-    width: auto;
-    height: auto;
-    padding: 12px;
-}
-
-.pages a,
-.pages .current {
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    padding: 4px 10px;
-    line-height: 20px;
-    vertical-align: bottom;
 }
 
 
@@ -4487,3 +4472,4 @@ ul.links li {
     padding-left: 40px;
     padding-right: 40px;
 }
+

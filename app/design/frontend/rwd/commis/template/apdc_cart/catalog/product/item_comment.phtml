@@ -1,0 +1,16 @@
+<?php $product = $this->getProduct(); ?>
+<?php $containerId = ($product->getConfigurableContainerId() ? $product->getConfigurableContainerId() . '_' : ''); ?>
+<div class="input-box hide apdc-cart-item-comment apdc-cart-item-comment-<?php echo $product->getId(); ?>" id="apdc-cart-item-comment-<?php echo $containerId . $product->getId(); ?>" data-ajax-url="<?php echo $this->getUrl('checkout/index/addCommentAjax', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+    <label><?php echo $this->__('Commentaire pour ce produit :'); ?></label>
+    <div class="apdc-cart-item-comment-messages"></div>
+    <div class="input-box">
+        <div class="loading"><div class="loader"></div></div>
+        <input type="hidden" class="apdc-cart-item-comment-item-id" name="item_id" />
+        <textarea class="input-text form-control col-xs-12" name="item_comment"></textarea>
+        <button type="button" class="pull-right btn-success btn-sm apdc-cart-item-comment-save" title="<?php $this->__('Ajout mon commentaire'); ?>">
+            <span><span>
+                <i class="fa fa-save"></i> <?php echo $this->__('Enregistrer');  ?>
+            </span></span>
+        </button>
+    </div>
+</div>

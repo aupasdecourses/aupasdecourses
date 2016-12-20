@@ -1,0 +1,10 @@
+#item_comment_popup-container {
+  width:50%;
+  height:320px;
+}
+
+#item_comment_popup-close {
+  font-size: 25px;
+  font-weight: 400;
+}
+

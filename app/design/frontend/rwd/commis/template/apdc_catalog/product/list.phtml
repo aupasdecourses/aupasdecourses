@@ -1,0 +1,136 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+/* @var $this Mage_Catalog_Block_Product_List */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_productCollection->addAttributeToSelect('has_options');
+    $_helper = $this->helper('catalog/output');
+    $apdc_helper = Mage::helper('apdc_front');
+
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<div class="page-title">
+    <h1 class="subtitle category_name">
+        <img class="thumb-menu" src="<?= $apdc_helper->getCatThumbnailUrl();?>"/>
+        <span class="commercant_name"><?= $apdc_helper->getCatTitle();?></span></h1>
+</div>
+<div class="category-products">
+    <?php echo $this->getToolbarHtml() ?>
+
+    <?php // Grid Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+    <ul class="apdc-products-grid row">
+        <?php $i=0; foreach ($_productCollection as $_product): ?>
+            <?php /*if ($i++%$_columnCount==0): ?>
+            <?php endif*/ ?>
+            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <form action="<?php echo $_product->getProductUrl() ?>" data-ajax-action="<?php echo $this->helper('apdccart')->getAjaxAddUrl($_product) ?>" method="post" class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $_product->getId(); ?>" id="product_addtocart_form_<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> data-product-id="<?php echo $_product->getId(); ?>">
+
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+                        <?php $_imgSize = 210; ?>
+                        <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                             src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize); ?>"
+                             alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+
+                        <?php echo $this->getChild('product_labels')->setData('product', $_product)->toHtml(); ?>
+                    </a>
+                    <div class="product-info row">
+                        <div class="product-info-left product-info-column">
+                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                            <p class="product-commercant-name">
+                                <?php echo Mage::getResourceSingleton('catalog/product')
+                                        ->getAttribute('commercant')
+                                        ->getSource()
+                                        ->getOptionText($_product->getData('commercant')); ?>
+                            </p>
+                        </div>
+                        <div class="product-info-right product-info-column">
+                            <?php echo $this->getPriceHtml($_product, true) ?>
+
+                            <?php if($_product->getData('prix_kilo_site')) :?>
+                                <div class="product-short_desc">		            
+                                    <?php echo $_product->getData('prix_kilo_site'); ?>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
+                        <?php echo $this->getChild('product_actions')->setProduct($_product)->toHtml(); ?>
+
+                    </div>
+                    <div class="display-hover">
+                        <?php
+                        // Provides extra blocks on which to hang some features for products in the list
+                        // Features providing UI elements targeting this block will display directly below the product name
+                        if ($this->getChild('name.after')) {
+                            $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                            foreach ($_nameAfterChildren as $_nameAfterChildName) {
+                                $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                $_nameAfterChild->setProduct($_product);
+                                echo $_nameAfterChild->toHtml();
+                            }
+                        }
+                        ?>
+                    </div>
+                </form>
+            </li>
+            <?php /*if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+            <?php endif*/ ?>
+        <?php endforeach ?>
+    </ul>
+    <script type="text/javascript">
+        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last'])
+    </script>
+
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>
+<?php endif; ?>
+<?php
+// Provides a block where additional page components may be attached, primarily good for in-page JavaScript
+if ($this->getChild('after')) {
+    $_afterChildren = $this->getChild('after')->getSortedChildren();
+    foreach ($_afterChildren as $_afterChildName) {
+        $_afterChild = $this->getChild('after')->getChild($_afterChildName);
+        //set product collection on after blocks
+        $_afterChild->setProductCollection($_productCollection);
+        echo $_afterChild->toHtml();
+    }
+}
+?>

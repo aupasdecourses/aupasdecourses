@@ -59,8 +59,8 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
                 ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('category_id', $category_id)
-                ->addFieldToFilter('status', 1);
-                //->addFieldToFilter('on_selection',True);
+                ->addFieldToFilter('status', 1)
+                ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
         $collection->getSelect()->orderRand();
         $collection->setPageSize(10);
         

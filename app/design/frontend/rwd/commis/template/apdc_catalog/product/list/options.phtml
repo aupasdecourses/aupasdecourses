@@ -1,0 +1,26 @@
+<?php $_product = $this->getProduct(); ?>
+<?php if ($_product->getHasOptions() && $_product->getTypeId() != Mage_Catalog_Model_Product_Type::TYPE_BUNDLE && !$_product->isGrouped()) : ?>
+<div class="product-options">
+    <div class="hover-title option-title"><?php echo $this->__('Choose your options'); ?></div>
+    <script type="text/javascript">
+        var optionsPrice<?php echo $_product->getId(); ?> = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+    </script>
+
+    <?php if ($_product->isConfigurable()): ?>
+        <?php echo $this->getChild('product_options.configurable')->setProduct($_product)->toHtml(); ?>
+    <?php endif; ?>
+
+    <?php if ($_product->getHasOptions()) : ?>
+        <?php $options = $_product->getProductOptionsCollection(); ?>
+        <?php if ($options->count() > 0) : ?>
+            <?php foreach ($options as $option) : ?>
+                <?php $option->setProduct($_product); ?>
+                <?php $_product->addOption($option); ?>
+            <?php endforeach ; ?>
+            <?php echo $this->getChildHtml('options_js'); ?>
+            <?php echo $this->getChild('product.info.options')->setProduct($_product)->toHtml(); ?>
+        <?php endif; ?>
+    <?php endif; ?>
+
+</div>
+<?php endif; ?>

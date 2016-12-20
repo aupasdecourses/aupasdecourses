@@ -122,4 +122,21 @@ Advanced search results
         </reference>
     </catalogsearch_term_popular>
 
+
+    <catalogsearch_result_index >
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+         <reference name="jsfooter">
+             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
+             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
+        </reference>
+        <reference name="search.result">
+            <action method="setTemplate"><template>apdc_catalog/catalogsearch/result.phtml</template></action>
+        </reference>
+        <reference name="search_result_list">
+            <action method="setColumnCount"><count>5</count></action>            
+        </reference>
+    </catalogsearch_result_index>
 </layout>
