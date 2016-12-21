@@ -38,7 +38,7 @@ class MerchantsController extends Controller
 			}
 		}
 
-		return $this->render('merchants/index.html.twig', [
+		return $this->render('ApdcApdcBundle::merchants/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
@@ -61,7 +61,7 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant->get('to')->setData($to);
 		$form_fromtoMerchant->get('merchant')->setData($id);
 
-		return $this->render('merchants/one.html.twig', [
+		return $this->render('ApdcApdcBundle::merchants/one.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
@@ -84,7 +84,7 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
 
-		return $this->render('merchants/all.html.twig', [
+		return $this->render('ApdcApdcBundle::merchants/all.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),

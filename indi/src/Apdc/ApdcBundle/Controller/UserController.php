@@ -31,7 +31,7 @@ class UserController extends Controller
 					return $this->redirectToRoute('root');
 			}
 
-			return $this->render('login/index.html.twig', [
+			return $this->render('ApdcApdcBundle::login/index.html.twig', [
 				'forms' => [ $form_login->createView() ]
 			]);
 		}

@@ -37,7 +37,7 @@ class OrdersController extends Controller
 			]);
 		}
 
-		return $this->render('orders/index.html.twig', [
+		return $this->render('ApdcApdcBundle::orders/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
@@ -62,7 +62,7 @@ class OrdersController extends Controller
 		]);
 		$form_id->get('id')->setData($id);
 
-		return $this->render('orders/one.html.twig', [
+		return $this->render('ApdcApdcBundle::orders/one.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
@@ -90,7 +90,7 @@ class OrdersController extends Controller
 		$form_fromto->get('from')->setData($from);
 		$form_fromto->get('to')->setData($to);
 
-		return $this->render('orders/all.html.twig', [
+		return $this->render('ApdcApdcBundle::orders/all.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),

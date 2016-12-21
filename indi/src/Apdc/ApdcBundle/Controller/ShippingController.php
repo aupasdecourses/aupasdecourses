@@ -29,7 +29,7 @@ class ShippingController extends Controller
 				]);
 		}
 
-		return $this->render('shipping/index.html.twig', [
+		return $this->render('ApdcApdcBundle::shipping/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
@@ -48,7 +48,7 @@ class ShippingController extends Controller
 
 		$form_from->get('from')->setData($from);
 
-		return $this->render('shipping/all.html.twig', [
+		return $this->render('ApdcApdcBundle::shipping/all.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getOrdersByStore($from)

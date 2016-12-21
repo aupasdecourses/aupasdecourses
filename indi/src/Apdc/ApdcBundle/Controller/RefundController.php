@@ -44,7 +44,7 @@ class RefundController extends Controller
 
 		$orders = $mage->getOrders($from);
 
-		return $this->render('refund/index.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ],
 			'orders' => $orders
@@ -164,7 +164,7 @@ class RefundController extends Controller
 			}
 		}
 
-		return $this->render('refund/upload.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'forms' => [ $form_upload->createView() ],
 			'order' => $order
@@ -232,7 +232,7 @@ class RefundController extends Controller
 			}
 		}
 
-		return $this->render('refund/input.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/input.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'form' => $form_input->createView(),
 			'order' => $order,
@@ -283,7 +283,7 @@ class RefundController extends Controller
 			}
 		}
 
-		return $this->render('refund/digest.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 			'total' => $total,
 			'msg' => $msg,

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'ApdcApdcBundle::base.html.twig' %}
 
-{% use 'menu/default.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	{% include 'forms/default.html.twig' %}
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<div class="container">
 		{% for merchant_id, merchant in merchants %}
 			<div class="merchant">

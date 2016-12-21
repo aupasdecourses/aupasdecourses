@@ -20,7 +20,7 @@ class ToolController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('tool/product.html.twig', [
+		return $this->render('ApdcApdcBundle::tool/product.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 		]);
 	}
@@ -31,7 +31,7 @@ class ToolController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('tool/merchant.html.twig', [
+		return $this->render('ApdcApdcBundle::tool/merchant.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 		]);
 	}
@@ -42,7 +42,7 @@ class ToolController extends Controller
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		return $this->render('tool/category.html.twig', [
+		return $this->render('ApdcApdcBundle::tool/category.html.twig', [
 			'user' => $_SESSION['delivery']['username'],
 		]);
 	}

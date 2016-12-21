@@ -1,5 +1,5 @@
-{% extends 'base.html.twig' %}
-{% use 'menu/default.html.twig' %}
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
 <style>
@@ -13,9 +13,9 @@
 </style>
 
 <div class="row">
-	<h1>Traitement des photos commercants</h1>
+	<h1>Traitement des photos categories</h1>
 	<div class="col-sm-12 paragraph">
-		<p>1. Selectionnez l'image commercants, vous pourrez ensuite télécharger les versions optimisées en cliquant sur les liens qui apparaitront. Il ne vous restera plus qu'à les uploader via l'interface Magento dans la catégorie correspondante
+		<p>1. Selectionnez l'image categories, vous pourrez ensuite télécharger les versions optimisées en cliquant sur les liens qui apparaitront. Il ne vous restera plus qu'à les uploader via l'interface Magento dans la catégorie correspondante
 		</p>
 		<input class="btn-lg" id="fileupload" type="file" name="files[]" multiple>
 		<div id="progress">
@@ -37,7 +37,7 @@
 <script type="text/javascript">
 
 $(function () {
-	action="commercants";
+	action="categories";
 	$('#fileupload').fileupload({
 		url: '/indi/web/uploads/indexCatcom.php',
 		dataType: 'json',

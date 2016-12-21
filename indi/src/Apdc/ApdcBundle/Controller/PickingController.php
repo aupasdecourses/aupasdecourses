@@ -29,7 +29,7 @@ class PickingController extends Controller
 				]);
 		}
 
-		return $this->render('picking/index.html.twig', [
+		return $this->render('ApdcApdcBundle::picking/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
@@ -48,7 +48,7 @@ class PickingController extends Controller
 
 		$form_from->get('from')->setData($from);
 
-		return $this->render('picking/all.html.twig', [
+		return $this->render('ApdcApdcBundle::picking/all.html.twig', [
 				'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)

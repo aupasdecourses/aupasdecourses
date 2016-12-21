@@ -53,7 +53,7 @@ class DefaultController extends Controller
 		$form_from_picking->handleRequest($request);
 		$form_from_shipping->handleRequest($request);
 
-		return $this->render('home/index.html.twig', [
+		return $this->render('ApdcApdcBundle::home/index.html.twig', [
 			'user'	=> $_SESSION['delivery']['username'],
 			'orders' => [
 				$form_fromto->createView(),
