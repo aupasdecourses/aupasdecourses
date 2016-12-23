@@ -2,6 +2,6 @@ services:
 #    apdc_apdc.example:
 #        class: Apdc\ApdcBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-
-    apdc_apdc.spam:
-        class: Apdc\ApdcBundle\Library\Spam
+#
+    apdc_apdc.magento:
+        class: Apdc\ApdcBundle\Library\Magento

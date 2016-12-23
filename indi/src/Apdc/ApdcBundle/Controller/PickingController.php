@@ -8,13 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-include_once 'Magento.php';
+//include_once 'Magento.php';
 
 class PickingController extends Controller
 {
+	private function getMage(){
+		$mage = $this->container->get('apdc_apdc.magento');
+		return $mage;
+	}
+
     public function indexAction(Request $request)
     {
-		$mage = \Magento::getInstance();
+	//	$mage = \Magento::getInstance();
+		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -37,7 +43,8 @@ class PickingController extends Controller
 
     public function pickingAllAction(Request $request, $from)
     {
-		$mage = \Magento::getInstance();
+	//	$mage = \Magento::getInstance();
+		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
