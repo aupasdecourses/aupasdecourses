@@ -67,18 +67,6 @@ $apdcAccordion = $this->getApdcCartAccordion();
                 <?php endforeach; ?>
             </ul>
         </div>
-        <script type="text/javascript">
-            truncateOptions();
-            decorateList('cart-sidebar', 'none-recursive');
-            var Mini = null;
-            $j('document').ready(function() {
-                var minicartOptions  = {
-                    formKey:           "<?php echo $this->getFormKey();?>"
-                }
-                Mini = new Minicart(minicartOptions);
-                Mini.init();
-            });
-        </script>
 
         <div id="minicart-widgets">
             <?php echo $this->getChildHtml('cart_promotion') ?>
@@ -133,4 +121,16 @@ jQuery(document).ready(function() {
     jQuery(document).trigger('minicartLoaded');
 });
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
+
+
+truncateOptions();
+decorateList('cart-sidebar', 'none-recursive');
+var Mini = null;
+$j('document').ready(function() {
+    var minicartOptions  = {
+        formKey:           "<?php echo $this->getFormKey();?>"
+    }
+    Mini = new Minicart(minicartOptions);
+    Mini.init();
+});
 </script>

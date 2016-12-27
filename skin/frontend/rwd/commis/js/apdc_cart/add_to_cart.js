@@ -9,6 +9,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         e.preventDefault();
         e.stopPropagation();
         var productId = parseInt(form.data('product-id'));
+        var containerId = form.data('container_id');
         var itemId = 0;
 
         var $qty = null;
