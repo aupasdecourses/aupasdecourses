@@ -60,6 +60,7 @@
                 id="qinput-<?php echo $_item->getId(); ?>"
                 data-link="<?php echo $this->helper('apdccart')->getAjaxUpdateUrl($_item) ?>"
                 data-item-id="<?php echo $_item->getId(); ?>"
+                data-product-id="<?php echo $_item->getProductId(); ?>"
                 class="qty cart-item-quantity" name=""
                 value="<?php echo $this->getQty()?>"
                 <?php if ($this->isOnCheckoutPage()) echo 'disabled'; ?>
@@ -67,6 +68,7 @@
 
             <button id="qbutton-<?php echo $_item->getId(); ?>"
                     data-item-id="<?php echo $_item->getId(); ?>"
+                    data-product-id="<?php echo $_item->getProductId(); ?>"
                     disabled="disabled"
                     data-update
                     class="button quantity-button">

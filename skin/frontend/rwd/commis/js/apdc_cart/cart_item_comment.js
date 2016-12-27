@@ -24,13 +24,14 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           type: 'POST',
           beforeSend: function() {
             startLoading(productId);
+            $(document).trigger('startUpdateMiniCartContent');
           }
           
         })
         .done(function(response) {
           if (response.status === 'SUCCESS') {
             if($('.header-minicart').length > 0){
-              $('.header-minicart').html(response.minicarthead);
+              $(document).trigger('updateMiniCartContent', [response]);
               message = '<ul class="messages"><li class="success-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
               $('.apdc-cart-item-comment-' + productId + ' .apdc-cart-item-comment-messages').html(message).slideDown('fast');
               if (cartItemCommentMessageInterval) {

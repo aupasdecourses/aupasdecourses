@@ -1,17 +1,17 @@
 <?php $_product = $this->getProduct(); ?>
 <div class="actions">
-    <div class="action-group">
+    <div class="action-group pull-right">
         <div class="action-loading">
             <div class="loader"></div>
         </div>
         <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
-            <div class="pull-right">
+            <div>
                 <a title="<?php echo $this->quoteEscape($this->__('Edit Options')) ?>" class="col-xs-12 button btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Edit Options') ?></a>
             </div>
         <?php else : ?>
 
             <?php if ($_product->isSaleable()): ?>
-            <div class="pull-right">
+            <div>
                 <input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
                 <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart simple-add-to-cart-button"><span><span><i class="fa fa-cart-plus"></i> <?php echo $this->__('Add to Cart') ?></span></span></button>
                 <div class="qty-buttons">

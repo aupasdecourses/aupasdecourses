@@ -16,7 +16,6 @@
 .apdc-add-to-cart-form .actions .action-group {
   display:inline-block;
   position:relative;
-  width: 100%;
 }
 
 .apdc-cart-item-comment .input-box {
@@ -32,6 +31,7 @@
   display: none;
   z-index: 999;
   width: 100%;
+  text-align: center;
 }
 .apdc-cart-item-comment .loading {
   height:100%;

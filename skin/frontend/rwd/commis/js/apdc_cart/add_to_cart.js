@@ -10,12 +10,26 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         e.stopPropagation();
         var productId = parseInt(form.data('product-id'));
         var itemId = 0;
+
+        var $qty = null;
+        var qty = 0;
+
         if (this.value == 'btn-cart-qty-plus') {
           itemId = parseInt($(this).data('item-id'));
+          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+          qty = parseInt($qty.html(), 10);
+          $qty.html(++qty);
           $(document).trigger('minicartAddQty', [itemId, productId]);
         } else if (this.value == 'btn-cart-qty-minus') {
           itemId = parseInt($(this).data('item-id'));
-          $(document).trigger('minicartRemoveQty', [itemId, productId]);
+          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+          qty = parseInt($qty.html(), 10);
+          if (qty > 1) {
+            $qty.html(--qty);
+            $(document).trigger('minicartRemoveQty', [itemId, productId]);
+          } else {
+            $('#btn-minicart-remove-' + itemId).click();
+          }
         } else if (this.value == 'btn-cart-remove') {
           itemId = parseInt($(this).data('item-id'));
           $('#btn-minicart-remove-' + itemId).click();
@@ -35,13 +49,13 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
               type: 'POST',
               beforeSend: function() {
                 startLoading(productId);
+                $(document).trigger('startUpdateMiniCartContent');
               }
-              
             })
-            .done(function(response) {
-              if (response.status === 'SUCCESS') {
+            .done(function(result) {
+              if (result.status === 'SUCCESS') {
                 if($('.header-minicart').length > 0){
-                  $('.header-minicart').html(response.minicarthead);
+                  $(document).trigger('updateMiniCartContent', [result]);
                 }
               }
             })
@@ -114,13 +128,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     counterBlink();
   }
 
-  $(document).on('minicartAddQty', function(event, itemId, productId) {
-    startLoading(productId);
-  });
-  $(document).on('minicartRemoveQty', function(event, itemId, productId) {
-    startLoading(productId);
-  });
-  $(document).on('minicartRemoveItem', function(event, itemId, productId) {
+  $(document).on('updateCartStartLoading', function(event, itemId, productId) {
     startLoading(productId);
   });
   $(document).on('minicartLoaded', function(event) {
