@@ -113,13 +113,25 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     $buyRequest = $item->getBuyRequest();
                     $options = array();
                     if ($buyRequest->getSuperAttribute()) {
-                        foreach ($buyRequest->getSuperAttribute() as $id => $value) {
-                            $options[] = $id . '-' . $value;
+                        foreach ($buyRequest->getSuperAttribute() as $id => $values) {
+                            if (is_array($values)) {
+                                foreach ($values as $value) {
+                                    $options[] = $id . '-' . $value;
+                                }
+                            } else {
+                                $options[] = $id . '-' . $values;
+                            }
                         }
                     }
                     if ($buyRequest->getOptions()) {
-                        foreach ($buyRequest->getOptions() as $id => $value) {
-                            $options[] = $id . '-' . $value;
+                        foreach ($buyRequest->getOptions() as $id => $values) {
+                            if (is_array($values)) {
+                                foreach ($values as $value) {
+                                    $options[] = $id . '-' . $value;
+                                }
+                            } else {
+                                $options[] = $id . '-' . $values;
+                            }
                         }
                     }
                     if ($buyRequest->getBundleOption()) {

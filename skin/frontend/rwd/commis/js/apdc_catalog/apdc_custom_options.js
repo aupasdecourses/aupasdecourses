@@ -23,7 +23,7 @@ Product.Options.prototype = {
           self.reloadPrice.bind(self);
           var parent = jQuery('.apdc-product-custom-options[data-product-id=' + self.productId + ']');
           parent.find('select').addClass('form-control');
-          parent.find('input').addClass('form-control');
+          parent.find('input[type!="radio"][type!="checkbox"]').addClass('form-control');
         });
     },
     reloadPrice : function() {

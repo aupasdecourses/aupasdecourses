@@ -76,27 +76,22 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       var optionKey = '';
       var formId = $(this).attr('id');
       var productId = parseInt($(this).data('product-id'));
-      $(this).find('select[name^="super_attribute["]').each(function() {
-        var attributeId = parseInt(this.name.replace('super_attribute[', '').replace(']', ''));
-        var optionId = parseInt(this.value);
-        optionKeyTab.push(attributeId + '-' + optionId);
+      $(this).find('[name^="super_attribute["]').each(function() {
+        var tabOptions = extractOptions(this, 'super_attribute');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
+        }
       });
-      $(this).find('select[name^="options["]').each(function() {
-        var attributeId = parseInt(this.name.replace('options[', '').replace(']', ''));
-        var optionId = parseInt(this.value);
-        optionKeyTab.push(attributeId + '-' + optionId);
+      $(this).find('[name^="options["]').each(function() {
+        var tabOptions = extractOptions(this, 'options');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
+        }
       });
       $(this).find('[name^="bundle_option["]').each(function() {
-        var attributeId = 0;
-        var optionId = 0;
-        if (this.type && this.type === 'checkbox' && this.checked) {
-          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
-          optionId = parseInt(this.value);
-          optionKeyTab.push(attributeId + '-' + optionId);
-        } else if (this.type && this.type === 'hidden') {
-          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
-          optionId = parseInt(this.value);
-          optionKeyTab.push(attributeId + '-' + optionId);
+        var tabOptions = extractOptions(this, 'bundle_option');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
         }
       });
       if (optionKeyTab.length > 0) {
@@ -106,6 +101,33 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       $(document).trigger('apdcProductFormChanged', [productId]);
     });
   });
+
+  function extractOptions(elt, name) {
+    var optionId = 0;
+    var optionKeyTab = [];
+    var attributeId = parseInt(elt.name.replace(name + '[', '').replace(']', '').replace('[]', ''));
+
+    if (elt.type && (elt.type === 'checkbox' || elt.type === 'radio') && elt.checked) {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'hidden') {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'select-one') {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'select-multiple') {
+      var optionsIds = $(elt).val();
+      var options = $(elt).find('option');
+      options.each(function() {
+        if (this.selected) {
+          optionKeyTab.push(attributeId + '-' + this.value);
+        }
+      });
+    }
+
+    return optionKeyTab;
+  }
 
   function counterBlink() {
     var blinkInterval = setInterval(function() {
