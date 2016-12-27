@@ -142,13 +142,19 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     // init display of add to cart button
     $('.actions .simple-add-to-cart-button').show();
     $('.actions .qty-buttons').hide();
+    $('.actions .btn.show-product-popup').hide();
+    $('.actions .btn-cart.show-product-popup').show();
 
     if (Object.keys(apdcProductAddedToCart).length > 0) {
-      for (var productId in apdcProductAddedToCart) {
-        var productAdded = apdcProductAddedToCart[productId];
-        if ($('.product_addtocart_form_' + productId).length > 0) {
+      $('.apdc-add-to-cart-form').each(function() {
+        var productId = $(this).data('product-id');
+        if (typeof(apdcProductAddedToCart[productId]) !== 'undefined') {
+          var productAdded = apdcProductAddedToCart[productId];
           var qty = null;
           var itemId = null;
+          if (productAdded.product.type_id === 'bundle') {
+              apdcUpdateBundleButtons(productId);
+          }
           if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options.length > 0)) {
             var optionKey = $('.selected-optionKey-' + productId).val();
             if (typeof(productAdded.options[optionKey]) !== 'undefined') {
@@ -163,7 +169,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             apdcUpdateQtyButtons(productId, itemId, qty);
           }
         }
-      }
+      });
     }
     $(document).trigger('apdcUpdateAddToCartButtons_end', [fromProductId]);
   });
@@ -188,6 +194,13 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         productContainer.find('.btn-cart-remove').hide();
       }
     }
+  }
+
+  function apdcUpdateBundleButtons(productId, qty)
+  {
+    var productContainer = $('.product_addtocart_form_' + productId);
+    productContainer.find('.btn.show-product-popup').show();
+    productContainer.find('.btn-cart.show-product-popup').hide();
   }
 
 })(jQuery);

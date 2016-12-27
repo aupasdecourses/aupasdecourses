@@ -46,6 +46,10 @@
 .apdc-add-to-cart-form .actions .action-group .show-product-popup {
   float: left;
 }
+.apdc-add-to-cart-form .actions .action-group .btn.show-product-popup {
+  display:none;
+}
+
 .apdc-add-to-cart-form .actions button:disabled {opacity: 0.2;}
 .apdc-add-to-cart-form .actions .action-group .qty-buttons {
   display:none;

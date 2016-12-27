@@ -7,6 +7,7 @@
         <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
             <div>
                 <a title="<?php echo $this->quoteEscape($this->__('Edit Options')) ?>" class="col-xs-12 button btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Edit Options') ?></a>
+                <a title="<?php echo $this->quoteEscape($this->__('Add to cart')) ?>" class="col-xs-12 button btn-cart show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Add to cart') ?></a>
             </div>
         <?php else : ?>
 

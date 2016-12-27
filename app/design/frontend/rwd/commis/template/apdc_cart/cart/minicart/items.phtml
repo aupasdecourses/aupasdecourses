@@ -38,8 +38,6 @@ if(empty($_cartQty)) {
 }
 $apdcAccordion = $this->getApdcCartAccordion();
 ?>
-<div id="minicart-error-message" class="minicart-message"></div>
-<div id="minicart-success-message" class="minicart-message"></div>
 
 <div class="minicart-wrapper">
 
@@ -47,6 +45,9 @@ $apdcAccordion = $this->getApdcCartAccordion();
         <?php echo $this->__('Your Cart') ?>
         <a class="btn close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i>&nbsp;<?php echo $this->quoteEscape($this->__('Close')); ?></a>
     </p>
+
+    <div id="minicart-error-message" class="minicart-message"></div>
+    <div id="minicart-success-message" class="minicart-message"></div>
 
     <?php $commercants = $this->getItemsByCommercant() ?>
     <?php $countItems = count($commercants); ?>
