@@ -129,9 +129,14 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     return optionKeyTab;
   }
 
+  var blinkInterval = null;
   function counterBlink() {
     if (parseInt($('.header-minicart .count').html(), 10) > 0) {
-      var blinkInterval = setInterval(function() {
+      $('.header-minicart .count').stop();
+      if (blinkInterval !== null) {
+        window.clearInterval(blinkInterval);
+      }
+      blinkInterval = setInterval(function() {
         $('.header-minicart .count').fadeOut(100).fadeIn(100);
       }, 200);
       setTimeout(function() {
@@ -179,7 +184,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           if (productAdded.product.type_id === 'bundle') {
               apdcUpdateBundleButtons(productId);
           }
-          if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options.length > 0)) {
+          if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options).length > 0) {
             var optionKey = $('.selected-optionKey-' + productId).val();
             if (typeof(productAdded.options[optionKey]) !== 'undefined') {
                 itemId = productAdded.options[optionKey].itemId;

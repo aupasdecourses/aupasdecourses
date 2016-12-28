@@ -1551,7 +1551,7 @@ label {
     .skip-links .skip-content.skip-active {
         right: 3px!important;
         top: 67px!important;
-        left: initial!important;
+        left: auto!important;
         margin: 0;
         background-color: #ffffff;
     }
@@ -1942,8 +1942,8 @@ a.action-mini-cart {
     font-family: Raleway, "Helvetica Neue";
     font-weight: 500;
     font-size: 14px;
-    float: right;
-    margin-left: 8px;
+    float: none;
+    margin: 0px;
 }
 
 a.action-mini-cart:hover {

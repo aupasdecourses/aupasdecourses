@@ -24,6 +24,9 @@
   padding: 0;
   margin-bottom: 10px;
 }
+.apdc-cart-item-comment textarea {
+  width:80%;
+}
 .apdc-cart-item-comment .loading,
 .apdc-add-to-cart-form .actions .action-loading {
   background-color: rgba(255, 255, 255, 0.8);

@@ -144,12 +144,12 @@ Minicart.prototype = {
         var input = $j(this.selectors.quantityInputPrefix + $j(el).data('item-id'));
         var quantity = parseInt(input.val(), 10);
         input.parent('.item-cell').find('.qty-text').html(quantity);
-        cart.hideMessage();
 
         if (this.updateTimeout !== null) {
           window.clearTimeout(this.updateTimeout);
         }
         this.updateTimeout = window.setTimeout(function() {
+          cart.hideMessage();
           $j(document).trigger('updateCartStartLoading', [$j(el).data('item-id'), $j(el).data('product-id')]);
           cart.showOverlay();
           $j.ajax({
@@ -170,7 +170,7 @@ Minicart.prototype = {
                   cart.showMessage(result);
               }
           }).error(function(result) {
-              console.log(result);
+              //console.log(result);
               cart.hideOverlay();
               cart.showError(cart.defaultErrorMessage);
           });
