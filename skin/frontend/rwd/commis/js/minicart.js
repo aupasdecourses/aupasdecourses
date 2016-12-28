@@ -194,7 +194,12 @@ Minicart.prototype = {
 
     updateCartQty: function(qty) {
         if (typeof qty != 'undefined') {
-            $j(this.selectors.qty).text(qty);
+          $j(this.selectors.qty).text(qty);
+          if (qty > 0) {
+            $j(this.selectors.qty).show();
+          } else {
+            $j(this.selectors.qty).hide();
+          }
         }
     },
 

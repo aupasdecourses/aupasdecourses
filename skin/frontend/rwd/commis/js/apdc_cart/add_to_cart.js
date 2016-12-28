@@ -130,12 +130,14 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
   }
 
   function counterBlink() {
-    var blinkInterval = setInterval(function() {
-      $('.header-minicart .count').fadeOut(100).fadeIn(100);
-    }, 200);
-    setTimeout(function() {
-      clearInterval(blinkInterval);
-    }, 1500);
+    if (parseInt($('.header-minicart .count').html(), 10) > 0) {
+      var blinkInterval = setInterval(function() {
+        $('.header-minicart .count').fadeOut(100).fadeIn(100);
+      }, 200);
+      setTimeout(function() {
+        clearInterval(blinkInterval);
+      }, 1500);
+    }
   }
 
   function startLoading(productId)
