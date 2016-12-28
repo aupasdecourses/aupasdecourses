@@ -26,7 +26,14 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             $fieldset->addField('id_shop', 'hidden', ['name' => 'id_shop']);
         }
 
+        $fieldset->addField('enabled', 'select', [
+            'name' => 'enabled',
+            'label' => $this->__('Enabled'),
+            'required' => false,
+            'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
+        ]);
         $commercants = Mage::getModel('apdc_commercant/commercant')->getCollection()->toOptionArray();
+        array_unshift($commercants, ['value' => '', 'label' => '']);
         $fieldset->addField('id_commercant', 'select', [
             'name' => 'id_commercant',
             'label' => $this->__('Commercant'),
@@ -68,10 +75,11 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             ->getCollection()
             ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_MANAGER)
             ->toOptionArray();
+        array_unshift($availableManagers, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_manager', 'select', [
             'name' => 'id_contact_manager',
             'label' => $this->__('Manager contact'),
-            'required' => false,
+            'required' => true,
             'values' => $availableManagers,
         ]);
 
@@ -79,18 +87,26 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             ->getCollection()
             ->addRoleFilter(Apdc_Commercant_Model_Source_Contact_Type::TYPE_EMPLOYEE)
             ->toOptionArray();
+        array_unshift($availableEmployees, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_employee', 'select', [
             'name' => 'id_contact_employee',
             'label' => $this->__('Employee contact'),
             'required' => false,
             'values' => $availableEmployees,
         ]);
+        $fieldset->addField('id_contact_employee_bis', 'select', [
+            'name' => 'id_contact_employee_bis',
+            'label' => $this->__('Employee contact 2'),
+            'required' => false,
+            'values' => $availableEmployees,
+        ]);
 
         $commercantCategories = Mage::getModel('catalog/category')
             ->getCollection()
+            ->setOrder('name')
             ->addAttributeToSelect('name')
             ->addAttributeToFilter('estcom_commercant', 70);
-        $values = [];
+        $values = [''=> ''];
         foreach ($commercantCategories as $category) {
             $values[$category->getId()] = $category->getName();
         }
@@ -204,12 +220,22 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
             'text' => $this->__('Expected format is hh:mm-hh:mm, e.g. 9:30-17:00. Leave empty if the shop is closed.')
         ]);
         $days = Mage::helper('apdc_commercant')->getDays();
+        $deliveryDaysValues = [];
         foreach ($days as $index => $day) {
             $timetableFieldset->addField('timetable_'.$index, 'text', [
                 'name' => 'timetable['.$index.']',
                 'label' => $this->__($day),
                 'required' => false,
             ]);
+
+            $deliveryDaysValues[] = ['value' =>  $index + 1, 'label' => $this->__($day)];
         }
+
+        $timetableFieldset->addField('delivery_days', 'multiselect', [
+            'name' => 'delivery_days',
+            'label' => $this->__('Delivery days'),
+            'required' => false,
+            'values' => $deliveryDaysValues,
+        ]);
     }
 }

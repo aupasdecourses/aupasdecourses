@@ -64,13 +64,8 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - présent dans magento.php dans delivery
 	public function info_commercant($attcomid)
 	{
-	        $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
-	        foreach ($categories as $category) {
-	            $categ = Mage::getModel("catalog/category")->load($category->getId());
-	            if ($categ->getAttComId()==$attcomid) {
-	                return $categ;
-	            }
-	        }
+	    	$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $attcomid)->getFirstItem();   
+            return $shop;
 	}
 
 	public function getgooglecsv($comid){
@@ -78,8 +73,8 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 		$cat=$this->info_commercant($comid);
 		return [
 			"name"=>$cat->getName(),
-			"key"=>$cat->getData('gs_key'),
-			"gid"=>$cat->getData('gs_gid')
+			"key"=>$cat->getData('google_key'),
+			"gid"=>$cat->getData('google_id')
 			];
 			
 	}

@@ -93,7 +93,7 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
                                   'quote' => $this->getOnepage()->getQuote(), ));
                         $this->getOnepage()->getQuote()->collectTotals();
                         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-                        Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom(true));
+                        Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
 
                         $result['goto_section'] = 'payment';
                         $result['update_section'] = array(
