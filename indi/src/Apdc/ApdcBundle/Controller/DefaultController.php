@@ -2,21 +2,12 @@
 
 namespace Apdc\ApdcBundle\Controller;
 
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('error_reporting', E_ALL);
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-//use Apdc\ApdcBundle\Helper\MageHelper;
-//include_once 'Magento.php';
-
 class DefaultController extends Controller
 {
-//	public $tmp = new MageHelper();
 	
 	private function getMage()
 	{	
@@ -26,11 +17,7 @@ class DefaultController extends Controller
  
 	public function indexAction(Request $request)
 	{
-	//	new MageHelper();
-//		$mage=$tmp->getMage();
-
 		$mage = $this->getMage();
-//		$mage = \Magento::getInstance();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 	 

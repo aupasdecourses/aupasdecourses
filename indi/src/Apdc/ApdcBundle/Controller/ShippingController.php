@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-//include_once "Magento.php";
-
 class ShippingController extends Controller
 {
 	private function getMage()
@@ -20,7 +18,6 @@ class ShippingController extends Controller
 
     public function indexAction(Request $request)
     {
-		//$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
@@ -44,7 +41,6 @@ class ShippingController extends Controller
 
     public function shippingAllAction(Request $request, $from)
     {
-	//	$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');

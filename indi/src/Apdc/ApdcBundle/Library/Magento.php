@@ -22,11 +22,11 @@ class Magento
 		\Mage::app();
 	}
 
-	public static function mediaPath() {
+	public function mediaPath() {
 		return realpath(__DIR__.'/../../media');
 	}
 
-	public static function mediaUrl() {
+	public function mediaUrl() {
 		return \Mage::getBaseUrl('media');
 	}
 

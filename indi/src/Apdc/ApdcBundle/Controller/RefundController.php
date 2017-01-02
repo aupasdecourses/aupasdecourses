@@ -2,10 +2,6 @@
 
 namespace Apdc\ApdcBundle\Controller;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('error_reporting', E_ALL);
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-include_once 'Magento.php';
-include_once 'Adyen.php';
+//include_once 'Adyen.php';
 
 class RefundController extends Controller
 {
@@ -24,9 +19,17 @@ class RefundController extends Controller
 	const	SUCCESS = 1;
 	const	WARNING = 2;
 
+	private function getMage(){
+	
+		$mage = $this->container->get('apdc_apdc.magento');
+		return $mage;
+	}
+
+
 	public function indexAction(Request $request, $from)
 	{
-		$mage = \Magento::getInstance();
+		$mage = $this->getMage();
+
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -51,8 +54,9 @@ class RefundController extends Controller
 		]);
 	}
 
-	private static function check_upload_status($id, $order, &$rsl = []) {
-		$ticket_folder = \Magento::mediaPath().'/attachments/'.$id;
+	private function check_upload_status($id, $order, &$rsl = []) {
+		$mage = $this->getMage();
+		$ticket_folder = $mage->mediaPath().'/attachments/'.$id;
 		if (!($dir = opendir($ticket_folder)))
 			return self::ERROR;
 		$dir_files = [];
@@ -80,10 +84,11 @@ class RefundController extends Controller
 		return $err;
 	}
 
-	private static function getUploadedFiles($id) {
+	private function getUploadedFiles($id) {
 		$dir_files = [];
-		$ticket_folder = \Magento::mediaPath().'/attachments/'.$id;
-		$ticket_url = \Magento::mediaUrl().'attachments/'.$id;
+		$mage = $this->getMage();
+		$ticket_folder = $mage->mediaPath().'/attachments/'.$id;
+		$ticket_url = $mage->mediaUrl().'attachments/'.$id;
 		if (($dir = opendir($ticket_folder))) {
 			while (($dir_entry = readdir($dir)) <> false) {
 				if ($dir_entry == '.' || $dir_entry == '..')
@@ -104,7 +109,7 @@ class RefundController extends Controller
 
 	public function refundUploadAction(Request $request, $id)
 	{
-		$mage = \Magento::getInstance();
+		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -139,7 +144,7 @@ class RefundController extends Controller
 					$extentions;
 					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extentions);
 					$tmp_file = $_FILES['form']['tmp_name'][$name];
-					$folder = \Magento::mediaPath().'/attachments/'.$id;
+					$folder = $mage->mediaPath().'/attachments/'.$id;
 					if (!file_exists($folder))
 						mkdir($folder);
 					if (file_exists($folder)) {
@@ -173,7 +178,7 @@ class RefundController extends Controller
 
 	public function refundInputAction(Request $request, $id)
 	{
-		$mage = \Magento::getInstance();
+		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -243,7 +248,7 @@ class RefundController extends Controller
 
 	public function refundDigestAction(Request $request, $id)
 	{
-		$mage = \Magento::getInstance();
+		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -273,7 +278,7 @@ class RefundController extends Controller
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
 
 			try {
-				$mage->processcreditAction($id, $order);
+		//		$mage->processcreditAction($id, $order);
 		//		$adyen = new \Adyen();
 		//		$adyen->refund('AuPasDeCoursesFR', $refund_diff, $order_header['pspreference'], "{id-R}");
 

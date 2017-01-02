@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
-//include_once 'Magento.php';
-
 class ToolController extends Controller
 {
 
@@ -22,7 +19,6 @@ class ToolController extends Controller
 
 	public function productAction(Request $request)
 	{
-	//	$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
@@ -34,7 +30,6 @@ class ToolController extends Controller
 
 	public function merchantAction(Request $request)
 	{
-//		$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
@@ -46,7 +41,6 @@ class ToolController extends Controller
 
 	public function categoryAction(Request $request)
 	{
-	//	$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');

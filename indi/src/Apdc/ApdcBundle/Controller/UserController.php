@@ -8,18 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-//include_once 'Magento.php';
-
 class UserController extends Controller
 {
-/*
-	private function getMage()
-	{	
-		$mage = $this->container->get('apdc_apdc.magento');
-	
-		return $mage;
-	}
-*/
 
     public function indexAction(Request $request)
     {
@@ -28,13 +18,11 @@ class UserController extends Controller
 
 	public function loginAction(Request $request) {
 
-		//		$mage = $this->getMage();
 		$mage = $this->container->get('apdc_apdc.magento');
 		$entity_login = new \AppBundle\Entity\Login();
 		$form_login = $this->createForm(\AppBundle\Form\Login::class, $entity_login);
 		$form_login->handleRequest($request);
 
-		//$mage = \Magento::getInstance();
 		if ($mage->isLogged())
 			return $this->redirectToRoute('root');
 		else {
@@ -50,8 +38,6 @@ class UserController extends Controller
 	}
 
 	public function logoutAction(Request $request) {
-//		$mage = \Magento::getInstance();
-//			$mage = $this->getMage();
 		$mage = $this->container->get('apdc_apdc.magento');
 		$mage->logout();
 		return $this->redirectToRoute('root');

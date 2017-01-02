@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-//include_once 'Magento.php';
-
 class OrdersController extends Controller
 {
 
@@ -19,10 +17,8 @@ class OrdersController extends Controller
 		return $mage;
 	}
 
-
 	public function indexAction(Request $request)
 	{
-	//	$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
@@ -57,7 +53,6 @@ class OrdersController extends Controller
 
 	public function ordersOneAction(Request $request, $id)
 	{
-	//	$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
@@ -84,7 +79,6 @@ class OrdersController extends Controller
 
 	public function ordersAllAction(Request $request, $from, $to)
 	{
-//		$mage = \Magento::getInstance();
 		$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');

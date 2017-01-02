@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
-//include_once 'Magento.php';
+include_once 'Magento.php';
 
 class MerchantsController extends Controller
 {
@@ -22,8 +22,8 @@ class MerchantsController extends Controller
 
     public function indexAction(Request $request)
     {
-//		$mage = \Magento::getInstance();
-		$mage = $this->getMage();
+		$mage = \Magento::getInstance();
+	//	$mage = $this->getMage();
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
