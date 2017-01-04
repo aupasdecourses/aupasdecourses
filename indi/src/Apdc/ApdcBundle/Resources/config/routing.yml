@@ -95,5 +95,3 @@ toolMerchant:
 toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
-
-

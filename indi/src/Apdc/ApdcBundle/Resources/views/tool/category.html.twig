@@ -45,7 +45,7 @@ $(function () {
 			$.each(data.result.files, function(index, file){
 				
 				$.ajax({
-					url: '/indi/library/processimage/script.php',
+					url: '/indi/web/shell/script.php',
 					type: 'POST',
 					data: {action: action,
 							image:file.name},

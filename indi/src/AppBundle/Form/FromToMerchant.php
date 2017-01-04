@@ -10,12 +10,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-include_once 'Magento.php';
+use Apdc\ApdcBundle\Library\Magento;
 
 class FromToMerchant extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$merchants = new Magento();
+
 		$builder->add('from', TextType::class, [
 			'required' => true,
 			'label' => 'From:',
@@ -30,7 +32,7 @@ class FromToMerchant extends AbstractType
 				'class' => 'form-control datepicker'
 			]
 		]);
-		$merchants = \Magento::getInstance()->getMerchants();
+		$merchants->getMerchants();
 		$choices = ['All' => -1];
 		foreach($merchants as $com_id => $merchant) {
 			$choices[$merchant['name']] = $com_id;

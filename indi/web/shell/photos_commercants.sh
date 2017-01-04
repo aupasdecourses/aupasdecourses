@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-    echo $0: usage: photo_categories nom_fichier
+    echo $0: usage: photo_commercants nom_fichier
     exit 1
 fi
 
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
-cd ../../web/uploads/gallery
+cd ../uploads/gallery
 URL="$(pwd)"
 echo $URL
 src_com="${URL}/"$1
@@ -28,8 +28,8 @@ function math(){
 function save(){
 
   # read target width and height from function parameters
-  local dst_com_w=400;
-  local dst_com_h=300;
+  local dst_com_w=600;
+  local dst_com_h=450;
   local dst_thb_com_w=100;
   local dst_thb_com_h=100;
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
-cd ../../web/uploads/gallery
+cd ../uploads/gallery
 dir="temp"
 mkdir "$dir"
 #convert png if exist

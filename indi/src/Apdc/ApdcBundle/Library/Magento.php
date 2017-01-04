@@ -2,6 +2,8 @@
 
 namespace Apdc\ApdcBundle\Library;
 
+use Apdc\ApdcBundle\Library\Credimemo;
+
 include '../../app/Mage.php';
 
 class Magento

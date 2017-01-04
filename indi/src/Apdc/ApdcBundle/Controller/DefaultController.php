@@ -30,12 +30,12 @@ class DefaultController extends Controller
 		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
-/*
+
 		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
- */
+ 
 		$entity_from_picking = new\AppBundle\Entity\From();
 		$form_from_picking = $this->createForm(\AppBundle\Form\From::class, $entity_from_picking, [
 			'action' => $this->generateUrl('pickingIndex')
@@ -48,7 +48,7 @@ class DefaultController extends Controller
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
-//		$form_fromtoMerchant->handleRequest($request);
+		$form_fromtoMerchant->handleRequest($request);
 		$form_from_picking->handleRequest($request);
 		$form_from_shipping->handleRequest($request);
 
@@ -59,7 +59,7 @@ class DefaultController extends Controller
 					$form_id->createView(),
 				],
 			'merchants' => [
-//					$form_fromtoMerchant->createView(),
+					$form_fromtoMerchant->createView(),
 				],
 			'picking' => [
 					$form_from_picking->createView(),
