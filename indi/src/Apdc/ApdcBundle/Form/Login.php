@@ -1,33 +1,40 @@
 <?php
 
-namespace AppBundle\Form;
+namespace Apdc\ApdcBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class From extends AbstractType
+class Login extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('from', TextType::class, [
+		$builder->add('username', TextType::class, [
 			'required' => true,
-			'label' => 'From:',
+			'label' => 'Username:',
 			'attr' => [
-				'class' => 'form-control datepicker'
+				'class' => 'form-control'
 			]
 		]);
-		$builder->add('Search', SubmitType::class);
+		$builder->add('password', PasswordType::class, [
+			'required' => true,
+			'label' => 'Password:',
+			'attr' => [
+				'class' => 'form-control'
+			]
+		]);
+		$builder->add('Login', SubmitType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			'attr' => [ 'class' => 'inline'],
-			'data_class' => 'AppBundle\Entity\From'
+			'data_class' => 'Apdc\ApdcBundle\Entity\Login'
 		));
 	}
 }

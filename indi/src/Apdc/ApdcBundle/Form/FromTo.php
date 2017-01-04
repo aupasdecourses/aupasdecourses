@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace Apdc\ApdcBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,7 +34,7 @@ class FromTo extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'attr' => [ 'class' => 'inline'],
-			'data_class' => 'AppBundle\Entity\FromTo'
+			'data_class' => 'Apdc\ApdcBundle\Entity\FromTo'
 		));
 	}
 }

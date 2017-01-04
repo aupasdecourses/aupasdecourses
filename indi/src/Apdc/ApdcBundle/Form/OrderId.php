@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace Apdc\ApdcBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +27,7 @@ class OrderId extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'attr' => [ 'class' => 'inline'],
-			'data_class' => 'AppBundle\Entity\OrderId'
+			'data_class' => 'Apdc\ApdcBundle\Entity\OrderId'
 		));
 	}
 }

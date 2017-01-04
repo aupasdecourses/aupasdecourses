@@ -1,5 +1,7 @@
 <?php
 
+namespace Apdc\ApdcBundle\Services;
+
 trait credimemo {
 	private function canCreditmemo(\Mage_Sales_Model_Order $order)
 	{

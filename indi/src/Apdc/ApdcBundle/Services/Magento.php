@@ -1,8 +1,8 @@
 <?php
 
-namespace Apdc\ApdcBundle\Library;
+namespace Apdc\ApdcBundle\Services;
 
-use Apdc\ApdcBundle\Library\Credimemo;
+use Apdc\ApdcBundle\Services\Credimemo;
 
 include '../../app/Mage.php';
 

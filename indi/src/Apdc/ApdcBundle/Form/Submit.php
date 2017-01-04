@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace Apdc\ApdcBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,7 +12,7 @@ class Submit extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-//		$builder->add('Submit', SubmitType::class);
+		$builder->add('Submit', SubmitType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

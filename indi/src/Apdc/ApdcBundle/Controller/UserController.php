@@ -5,22 +5,21 @@ namespace Apdc\ApdcBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
 
-    public function indexAction(Request $request)
-    {
+	public function indexAction(Request $request)
+	{
 		return $this->redirectToRoute('userLogin', []);
-    }
+	}
 
-	public function loginAction(Request $request) {
-
+	public function loginAction(Request $request) 
+	{
 		$mage = $this->container->get('apdc_apdc.magento');
-		$entity_login = new \AppBundle\Entity\Login();
-		$form_login = $this->createForm(\AppBundle\Form\Login::class, $entity_login);
+		$entity_login = new \Apdc\ApdcBundle\Entity\Login();
+		$form_login = $this->createForm(\Apdc\ApdcBundle\Form\Login::class, $entity_login);
 		$form_login->handleRequest($request);
 
 		if ($mage->isLogged())
@@ -37,7 +36,8 @@ class UserController extends Controller
 		}
 	}
 
-	public function logoutAction(Request $request) {
+	public function logoutAction(Request $request) 
+	{
 		$mage = $this->container->get('apdc_apdc.magento');
 		$mage->logout();
 		return $this->redirectToRoute('root');

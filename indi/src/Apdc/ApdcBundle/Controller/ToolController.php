@@ -12,14 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ToolController extends Controller
 {
 
-	private function getMage(){
-		$mage = $this->container->get('apdc_apdc.magento');
-		return $mage;
-	}
-
 	public function productAction(Request $request)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -30,7 +25,7 @@ class ToolController extends Controller
 
 	public function merchantAction(Request $request)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -41,7 +36,7 @@ class ToolController extends Controller
 
 	public function categoryAction(Request $request)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 

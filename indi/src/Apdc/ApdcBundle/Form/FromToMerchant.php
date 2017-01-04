@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace Apdc\ApdcBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use Apdc\ApdcBundle\Library\Magento;
+use Apdc\ApdcBundle\Services\Magento;
 
 class FromToMerchant extends AbstractType
 {
@@ -52,7 +52,7 @@ class FromToMerchant extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'attr' => [ 'class' => 'inline'],
-			'data_class' => 'AppBundle\Entity\FromToMerchant'
+			'data_class' => 'Apdc\ApdcBundle\Entity\FromToMerchant'
 		));
 	}
 }

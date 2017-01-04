@@ -11,22 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 class OrdersController extends Controller
 {
 
-	private function getMage()
-	{
-		$mage = $this->container->get('apdc_apdc.magento');
-		return $mage;
-	}
-
 	public function indexAction(Request $request)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto);
-		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id);
+		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id);
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
@@ -53,16 +47,16 @@ class OrdersController extends Controller
 
 	public function ordersOneAction(Request $request, $id)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
-		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 		$form_id->get('id')->setData($id);
@@ -79,16 +73,16 @@ class OrdersController extends Controller
 
 	public function ordersAllAction(Request $request, $from, $to)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
-		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 

@@ -10,20 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShippingController extends Controller
 {
-	private function getMage()
-	{
-		$mage = $this->container->get('apdc_apdc.magento');
-		return $mage;
-	}
 
     public function indexAction(Request $request)
     {
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_from = new\AppBundle\Entity\From();
-		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from);
+		$entity_from = new\Apdc\ApdcBundle\Entity\From();
+		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
 
 		$form_from->handleRequest($request);
 
@@ -41,12 +36,12 @@ class ShippingController extends Controller
 
     public function shippingAllAction(Request $request, $from)
     {
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_from = new \AppBundle\Entity\From();
-		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from, [
+		$entity_from = new \Apdc\ApdcBundle\Entity\From();
+		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from, [
 				'action' => $this->generateUrl('shippingIndex'),
 			]);
 

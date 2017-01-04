@@ -8,41 +8,35 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-	
-	private function getMage()
-	{	
-		$mage = $this->container->get('apdc_apdc.magento');
-		return $mage;
-	}
  
 	public function indexAction(Request $request)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 	 
-		$entity_fromto = new \AppBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\AppBundle\Form\FromTo::class, $entity_fromto, [
+		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex')
 		]);
 
-		$entity_id = new \AppBundle\Entity\OrderId();
-		$form_id = $this->createForm(\AppBundle\Form\OrderId::class, $entity_id, [
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
-		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
  
-		$entity_from_picking = new\AppBundle\Entity\From();
-		$form_from_picking = $this->createForm(\AppBundle\Form\From::class, $entity_from_picking, [
+		$entity_from_picking = new\Apdc\ApdcBundle\Entity\From();
+		$form_from_picking = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from_picking, [
 			'action' => $this->generateUrl('pickingIndex')
 		]);
 
-		$entity_from_shipping = new\AppBundle\Entity\From();
-		$form_from_shipping = $this->createForm(\AppBundle\Form\From::class, $entity_from_shipping, [
+		$entity_from_shipping = new\Apdc\ApdcBundle\Entity\From();
+		$form_from_shipping = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from_shipping, [
 			'action' => $this->generateUrl('shippingIndex')
 		]);
 

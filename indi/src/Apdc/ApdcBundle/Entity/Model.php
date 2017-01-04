@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Apdc\ApdcBundle\Entity;
 
 class Model {
 	public function __get($key) {

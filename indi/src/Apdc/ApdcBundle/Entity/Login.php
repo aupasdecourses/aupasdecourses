@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Apdc\ApdcBundle\Entity;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Login extends \AppBundle\Entity\Model {
+class Login extends \Apdc\ApdcBundle\Entity\Model {
 	protected $_username;
 	protected $_password;
 

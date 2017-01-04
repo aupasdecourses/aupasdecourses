@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Apdc\ApdcBundle\Entity;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class FromTo extends \AppBundle\Entity\Model {
+class FromTo extends \Apdc\ApdcBundle\Entity\Model {
 	protected $_from;
 	protected $_to;
 

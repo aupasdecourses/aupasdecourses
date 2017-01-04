@@ -19,22 +19,15 @@ class RefundController extends Controller
 	const	SUCCESS = 1;
 	const	WARNING = 2;
 
-	private function getMage(){
-	
-		$mage = $this->container->get('apdc_apdc.magento');
-		return $mage;
-	}
-
-
 	public function indexAction(Request $request, $from)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_from = new\AppBundle\Entity\From();
-		$form_from = $this->createForm(\AppBundle\Form\From::class, $entity_from);
+		$entity_from = new\Apdc\ApdcBundle\Entity\From();
+		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
 		
 		$form_from->handleRequest($request);
 
@@ -55,7 +48,9 @@ class RefundController extends Controller
 	}
 
 	private function check_upload_status($id, $order, &$rsl = []) {
-		$mage = $this->getMage();
+		
+		$mage = $this->container->get('apdc_apdc.magento');
+
 		$ticket_folder = $mage->mediaPath().'/attachments/'.$id;
 		if (!($dir = opendir($ticket_folder)))
 			return self::ERROR;
@@ -86,7 +81,9 @@ class RefundController extends Controller
 
 	private function getUploadedFiles($id) {
 		$dir_files = [];
-		$mage = $this->getMage();
+		
+		$mage = $this->container->get('apdc_apdc.magento');
+
 		$ticket_folder = $mage->mediaPath().'/attachments/'.$id;
 		$ticket_url = $mage->mediaUrl().'attachments/'.$id;
 		if (($dir = opendir($ticket_folder))) {
@@ -109,13 +106,14 @@ class RefundController extends Controller
 
 	public function refundUploadAction(Request $request, $id)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
+
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
 		$order = $mage->getOrderByMerchants($id);
 
-		$entity_upload = new \AppBundle\Entity\Upload();
+		$entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
 		$form_upload = $this->createFormBuilder($entity_upload);
 
 		$rsl;
@@ -178,7 +176,7 @@ class RefundController extends Controller
 
 	public function refundInputAction(Request $request, $id)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -199,7 +197,7 @@ class RefundController extends Controller
 		$input_status = $order[-1]['order']['input'];
 		unset($order[-1]);
 
-		$entity_input = new \AppBundle\Entity\Input();
+		$entity_input = new \Apdc\ApdcBundle\Entity\Input();
 		$form_input = $this->createFormBuilder($entity_input);
 
 		$form_input = $form_input->getForm();
@@ -248,7 +246,8 @@ class RefundController extends Controller
 
 	public function refundDigestAction(Request $request, $id)
 	{
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
+
 		if(!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
@@ -269,8 +268,8 @@ class RefundController extends Controller
 		}
 		ksort($order);
 
-		$entity_submit = new \AppBundle\Entity\Model();
-		$form_submit = $this->createForm(\AppBundle\Form\Submit::class, $entity_submit);
+		$entity_submit = new \Apdc\ApdcBundle\Entity\Model();
+		$form_submit = $this->createForm(\Apdc\ApdcBundle\Form\Submit::class, $entity_submit);
 
 		$form_submit->handleRequest($request);
 		$msg = '';

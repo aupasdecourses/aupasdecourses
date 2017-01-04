@@ -1,6 +1,6 @@
 <?php
 
-class CatcomHandler 
+class CategAndMerchHandler 
 {
 	public function get_unique_filename($file_path, $name, $size, $type, $error, $index, $content_range)
 	{
@@ -20,5 +20,5 @@ class CatcomHandler
 			$name = $this->upcount_name($name);
 		}
 		return $oldname;	
-}
+	}
 }

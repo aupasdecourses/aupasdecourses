@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Apdc\ApdcBundle\Entity;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class FromToMerchant extends \AppBundle\Entity\Model {
+class FromToMerchant extends \Apdc\ApdcBundle\Entity\Model {
 	protected $_from;
 	protected $_to;
 	protected $_merchant;

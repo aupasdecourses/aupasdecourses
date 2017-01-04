@@ -10,22 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MerchantsController extends Controller
 {
-	
-	private function getMage()
-	{	
-		$mage = $this->container->get('apdc_apdc.magento');
-	
-		return $mage;
-	}
 
     public function indexAction(Request $request)
     {
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
 
 		$form_fromtoMerchant->handleRequest($request);
 
@@ -54,12 +47,12 @@ class MerchantsController extends Controller
 
     public function merchantsOneAction(Request $request, $id, $from, $to)
     {
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
@@ -78,12 +71,12 @@ class MerchantsController extends Controller
     
     public function merchantsAllAction(Request $request, $from, $to)
     {
-		$mage = $this->getMage();
+		$mage = $this->container->get('apdc_apdc.magento');
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 
-		$entity_fromtoMerchant = new \AppBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\AppBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
