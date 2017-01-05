@@ -33,7 +33,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 		return $return;
 	}
 
-	#Renvoie la liste des id commerçants (les ids de l'attributs produits "commercant", le concernant)- présent dans magento.php dans delivery
+	#Renvoie la liste des id commerçants (les ids de l'attribut produit "commerçant", par store, avec leur nom (utilisé uniquement dans MAGMI)
 	public function liste_commercant_id()
 	{
 		//Get all store ids
@@ -61,7 +61,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	    return $return;
 	}
 
-	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - présent dans magento.php dans delivery
+	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - uniquement utilisé par getgooglecsv pour MAGMI
 	public function info_commercant($attcomid)
 	{
 	    	$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $attcomid)->getFirstItem();   

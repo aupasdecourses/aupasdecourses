@@ -74,8 +74,7 @@ class Pmainguet_Abstract extends Mage_Shell_Abstract
 
     //Création des entités magasins
     public function create_magasinentity($name,$namecommercant,$id_contact,$id_category,$id_attribut_commercant,$zipcode,$googlesheets){
-        $shops=Mage::getModel('apdc_commercant/shop')->getCollection();
-        $shop=$shops->addFieldToFilter('name', $name)->getFirstItem();
+        $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('name', $name)->getFirstItem();
         if (null == $shop->getId()) {
             $shop=Mage::getSingleton('apdc_commercant/shop');
             $data=[
