@@ -35,7 +35,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 
 	#Renvoie la liste des id commerçants (les ids de l'attribut produit "commerçant", par store, avec leur nom (utilisé uniquement dans MAGMI)
 
-	function liste_commercant_id()
+	public function liste_commercant_id()
 	{
 	    $return = [];
 

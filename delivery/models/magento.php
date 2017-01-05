@@ -56,7 +56,7 @@ function list_rootcatid($displayby = 'name')
 
 //* --- Récupération des informations commerçants avec numéro ID --*//
 
-//LISTE COMMERCANT, VIA COMMERCANT_ID
+//LISTE COMMERCANT PAR STORE ET ID ATTRIBUT COMMERCANT
 
 function liste_commercant_id($filter = 'none')
 {
@@ -73,6 +73,7 @@ function liste_commercant_id($filter = 'none')
         $shops->addFilterToMap('path', 'catalog_category_entity.path');
         foreach ($shops as $shop) {
             $storeid = explode('/', $shop->getPath())[1];
+
             $return[$storeid][$shop->getIdAttributCommercant()] = array(
                 'name' => $shop->getName(),
                 'adresse' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
@@ -82,6 +83,26 @@ function liste_commercant_id($filter = 'none')
     }
 
     arsort($return);
+
+    return $return;
+}
+
+//INFO COMMERCANT, VIA ID ATTRIBUT COMMERCANT
+
+function info_commercant_id($id_attribut_commercant)
+{
+    $return = [];
+
+    //with Apdc_Commercant module
+    $shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant)->getFirstItem();
+    $return = array(
+        'name' => $shop->getName(),
+        'adresse' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+        'telephone' => $shop->getPhone(),
+        'mail_contact' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+        'mail_pro' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+        'mail_3' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+    );
 
     return $return;
 }
