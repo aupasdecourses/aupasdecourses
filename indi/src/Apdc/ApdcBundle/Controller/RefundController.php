@@ -201,9 +201,9 @@ class RefundController extends Controller
 		$form_input = $this->createFormBuilder($entity_input);
 
 		$form_input = $form_input->getForm();
-		$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
+		//$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
 
-		if (isset($_POST['submit']) && ($form_input_token == $_POST['form']['_token']) && $input_status == 'none') {
+		if (isset($_POST['submit']) /*&& ($form_input_token == $_POST['form']['_token'])*/ && $input_status == 'none') {
 			$rsl_table = [];
 			foreach ($order as $merchant_id => $o_data) {
 				foreach ($o_data['products'] as $product_id => $p_data) {

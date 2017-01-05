@@ -2,8 +2,9 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<div class="container">
+		<h1> Livraisons </h1><br/>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 		<hr>
 		{% for store, orders in stores %}
 			<table style="width: 100%">
@@ -44,5 +45,6 @@
 				</tr>
 			</table>
 		{% endfor %}
-	</div>	
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

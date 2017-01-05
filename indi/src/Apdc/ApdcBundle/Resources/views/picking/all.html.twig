@@ -1,8 +1,9 @@
 {% extends 'ApdcApdcBundle::base.html.twig' %}
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 {% block body %}
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<div class="container">
+	<h1> Enlevements </h1><br/>
+		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 		<hr>
 		{% for store, commercants in stores %}
 			<table style="width: 100%">
@@ -48,4 +49,5 @@
 			</table>	
 		{% endfor %}
 	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

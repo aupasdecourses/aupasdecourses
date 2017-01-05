@@ -2,11 +2,11 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 
 <div class="container">
+	<h1> Commandes  </h1><br/>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<hr>
-	<h1> Commandes : </h1><br/>
 	{% for order_id, order in orders %}
 	<table style="width:100%">
 		<tr>
@@ -104,4 +104,5 @@
 	</table>
 	{% endfor %}
 </div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

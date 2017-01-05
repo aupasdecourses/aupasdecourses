@@ -14,6 +14,7 @@
 </style>
 <div class="row">
 	<h1>Upload et traitement des images catalogue</h1>
+	<hr>
 	<div class="col-sm-12 paragraph">
 		<p>1. Selectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Selectionner les fichiers". Les photos seront téléchargées automatiquement
 		</p>
@@ -22,7 +23,7 @@
 			<div class="bar" style="width: 0%;"></div>
 		</div>
 		<div id="file_uploaded">
-		</div>
+		</div><hr>
 	</div>
 
 	<div class="col-sm-12 paragraph">
@@ -33,12 +34,12 @@
 			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
 			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
 			<span class="ajax-msg" style="font-weight:bold;"></span>
-		</div>
+		</div><hr>
 	</div>
 
 	<div class="col-sm-12 paragraph">
 		<p>3. Connectez vous à Magmi pour mettre à jour le catalogue</p>
-		<a href="/magmi/web/magmi.php" class="btn btn-lg btn-primary" role="button" aria-disabled="true" target="_blank">Ouvrir Magmi</a>
+		<a href="/magmi/web/magmi.php" class="btn btn-lg btn-primary" role="button" aria-disabled="true" target="_blank">Ouvrir Magmi</a><hr>
 	</div>
 
 	<div class="col-sm-12 paragraph">
@@ -49,7 +50,7 @@
 			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
 			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
 			<span class="ajax-msg" style="font-weight:bold;"></span>
-		</div>
+		</div><hr>
 	</div>
 
 	{% endblock %}
@@ -116,5 +117,5 @@ $(function () {
 	});
 });
 	</script>
-
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 	{% endblock %}

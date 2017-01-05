@@ -3,12 +3,15 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+<div class="container">
+	<h1> Remboursement </h1>
+{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+</div>
 
 	<table class='table'>
 		{% for order in orders %}
 			<tr>
-				<td>{{ order.id }}</td>
+				<td><a href="{{path('refundUpload', {id: order.id}) }}" target="_blanc">{{ order.id }}</a></td>
 				<td>
 					{% if order.upload == 'none' %}
 						<a href='{{ path('refundUpload', {id: order.id}) }}' class='error'>upload</a>
@@ -43,4 +46,5 @@
 			</tr>
 		{% endfor %}
 	<table>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

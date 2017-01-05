@@ -3,7 +3,11 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+	<div class="container">
+	<h1>Remboursement : récapitulatif</h1></br>
+	</div>
 	<div>{{msg}}</div>
+	<hr>
 	{% for merchant_id, merchant_part in order %}
 		<div class='row'>
 			<table>
@@ -73,4 +77,5 @@
 		</tr>
 	</table>
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

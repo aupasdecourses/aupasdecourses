@@ -23,3 +23,8 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        #secured_area:
+        #     form_login:
+        #       csrf_token_generator: security.csrf.token_manager
+        #       csrf_parameter: _csrf_security_token
+        #       csrf_token_id: authenticate

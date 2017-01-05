@@ -3,5 +3,14 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+<div class="container">
+	<h1> Remboursement : Upload des fichiers </h1>
+</div>
+<hr>
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<br>
+	<div class="container">
+		<td><a href="{{ path('refundIndex') }}">Index</a></td>
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

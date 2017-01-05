@@ -3,9 +3,9 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<div class="container">
-	<h1> Commercant </h1><br>
+	<h1> Commercants </h1><br>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 		{% for merchant_id, merchant in merchants %}
 			<div class="merchant">
 				<label><h3> {{ merchant.name }}</h3></label><br/>
@@ -86,4 +86,5 @@
 			</div>
 		{% endfor %}
 	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
