@@ -72,7 +72,7 @@ if(!empty($_POST['pdf'])){
     $mail->addAttachment($attachment);                  
     try {
         $fin=$mail->send($transport);
-        echo "<br/>Mail envoyé à ".commercant($_POST['id_commercant'])->getName().": OK!";
+        echo "<br/>Mail envoyé à ".info_commercant_id($_POST['id_commercant'])['name'].": OK!";
     } catch (Exception $e) {
     	echo "Erreur lors de l'envoi";
         Mage::log($e,null,'email.log');

@@ -11,6 +11,9 @@ $attributes = array(
     'nom_contact',
     'mail_apdc',
     'att_com_id',
+    'mail_contact',
+    'mail_pro',
+    'mail_3',
 );
 foreach ($attributes as $attribute) {
     $installer->removeAttribute('catalog_category', $attribute);

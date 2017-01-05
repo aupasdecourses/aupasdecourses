@@ -434,7 +434,7 @@ $commercants = getCommercant();
 
 $orders_date = date('Y-m-d');
 
-//test $orders_date=date('Y-m-d', mktime(0, 0, 0, 11, 30, 2016));
+//test $orders_date=date('Y-m-d', mktime(0, 0, 0, 1, 6, 2017));
 
 getOrders($commercants, $orders_date);
 
