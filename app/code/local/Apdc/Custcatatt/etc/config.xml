@@ -6,11 +6,6 @@
     </Apdc_Custcatatt>
   </modules>
     <global>
-      <helpers>
-        <custcatatt>
-          <class>Apdc_Custcatatt_Helper</class>
-        </custcatatt>
-      </helpers>
       <models>
         <custcatatt>
           <class>Apdc_Custcatatt_Model</class>
