@@ -25,7 +25,7 @@ function getCommercant()
     foreach ($shops as $shop) {
         $commercants[$shop->getIdAttributCommercant()] = array(
             'name' => $shop->getName(),
-            'adresse' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+            'adresse' => $shop->getStreet().' '.$shop->getPostcode().' '.$shop->getCity(),
             'telephone' => $shop->getPhone(),
             'mail_contact' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
             'mail_pro' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
