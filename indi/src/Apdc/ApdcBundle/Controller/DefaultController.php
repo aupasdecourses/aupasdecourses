@@ -12,6 +12,18 @@ class DefaultController extends Controller
 	public function indexAction(Request $request)
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
+		
+		//$mage->getUsers();
+		//$mage->getRoles();
+
+//		if($mage->getCurrentUser() == 'sturquier')
+//			echo'vous etes sturquier';	
+	
+	
+	
+	
+
+
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 	 
@@ -61,6 +73,6 @@ class DefaultController extends Controller
 			'shipping' => [
 					$form_from_shipping->createView()
 				]
-		]);
+			]);
 	}
 }

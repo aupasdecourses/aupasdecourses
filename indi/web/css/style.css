@@ -64,25 +64,6 @@ span#logo {
 	position:relative !important;
 }
 			  
-.navbar-fixed-top, .navbar-fixed-bottom{
-	position:relative !important;
-}
-
-.navbar-inverse {
-	background-color: none;
-	border: none;
-}
-
-.navbar-fixed-top .navbar-inner{
-	border-radius: 0px;
-	padding-left: 0px;
-	padding-right: 0px;
-}
-
-.navbar-fixed-top, .navbar-fixed-bottom{
-	position:relative !important;
-}
-
 
 /* shadow under the navbar */
 .navbar-fixed-top .navbar-inner {
@@ -90,22 +71,17 @@ span#logo {
 	border-width: 0px 0px 1px;
 }
 
-.navbar>.container>.navbar-header>a.navbar-brand img {
-	height: 45px !important;
-}
-
-.navbar{
-    position:relative !important;
-    margin-bottom: 0px;
-}
-
+/* inner = nice navbar. Change padding and margin ??*/
 .navbar-inner {
     background-color: #FAFAFA;
     background-image: linear-gradient(to bottom, #FFF, #F2F2F2);
 	background-repeat: repeat-x;
 	border: 1px solid #D4D4D4;
+	margin-top:-4%;
+	padding-bottom:1%;
 }
 
+/* brand = Apdc Button (with bike) */
 .navbar-brand{
     padding: 7px 15px;
 }
@@ -176,7 +152,7 @@ a:hover, a:focus {
 /* footer */
 
 #push {
-	margin-top:23.9%; /* Margin-top from home/index.twig */
+	position:fixed;
 }
 
 #push,

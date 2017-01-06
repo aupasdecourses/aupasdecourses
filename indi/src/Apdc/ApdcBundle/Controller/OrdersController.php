@@ -8,12 +8,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class OrdersController extends Controller
 {
 
 	public function indexAction(Request $request)
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
+	
+//		if($mage->getCurrentUser() == 'sturquier')
+			//throw new NotFoundHttpException('ORDERS DENIED FOR STURQUIER');
+			//return $this->redirectToRoute('root');
+		
+	
 		if (!$mage->isLogged())
 			return $this->redirectToRoute('userLogin');
 

@@ -65,6 +65,42 @@ class Magento
 		$adminSession->getCookie()->delete($adminSession->getSessionName());
 		unset($_SESSION['delivery']);
 	}
+/*
+	public function getRoles(){
+	
+		$roles = \Mage::getModel('admin/role')->getCollection()
+			->addFieldToSelect('user_id')
+			->addFieldToSelect('role_name');
+
+		foreach($roles as $role){
+			echo'</br>';
+			print_R($role->getData());
+			echo'</br>';
+		}
+	}
+
+	public function getUsers(){
+
+		$users = \Mage::getModel('admin/user')->getCollection()
+			->addFieldToSelect('user_id')
+			->addFieldToSelect('username');
+
+		foreach($users as $user){
+			echo'</br>';
+			print_R($user->getData());
+			echo'</br>';
+		}
+	}
+ */
+	public function getCurrentUser(){
+	
+		$role_users = \Mage::getResourceModel('admin/roles_user_collection');
+		foreach($role_users as $roleuser){
+			$userId = \Mage::getModel('admin/user')->load($roleuser->getUserId());
+			$userName = $userId->getUsername();
+		}
+		return($userName);
+	}
 
 	public function getMerchants($commercantId = -1) {
 		$commercants = [];

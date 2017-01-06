@@ -1,11 +1,9 @@
 {% block menu %}
+	
 	<nav class="navbar-inner" role="navigation">
 		<div class="container">
 			<a class="navbar-brand" href="{{path ('root') }}"><i class="fa fa-bicycle fa-2x"></i><span>Au Pas De Courses</span></a>
-			<div class="navbar-collapse collapse">
 				<ul class ="nav navbar-nav">
-					<li class='divider-vertical'>
-					</li>
 					<li class="dropdown">
 						<a href="{{ path ('ordersIndex')}}">Commandes</a>
 					</li>
@@ -48,7 +46,6 @@
 						</ul>
 					</li>
 				</ul>
-			</div>
 		</div>
 	</nav>
 {% endblock %}
