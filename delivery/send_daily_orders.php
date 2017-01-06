@@ -433,20 +433,23 @@ class generatePdf
 $commercants = getCommercant();
 
 $orders_date = date('Y-m-d');
+$current_hour=date('H');
 
 //test $orders_date=date('Y-m-d', mktime(0, 0, 0, 1, 6, 2017));
 
 getOrders($commercants, $orders_date);
 
-foreach ($commercants as $commercant) {
-    $commercant_pdf = new generatePdf($commercant, $orders_date);
-    foreach ($commercant['orders'] as $order) {
-        $commercant_pdf->addOrder($order);
-    }
-    if($commercant_pdf->getOrdersCount()!=0){
-        $commercant_pdf->send();
-        Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - envoi réalisé.', null, 'send_daily_order.log');
-    }else{
-     Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - pas d\'envoi au commercant.', null, 'send_daily_order.log');
-    }
-}
+ foreach ($commercants as $commercant) {
+     $commercant_pdf = new generatePdf($commercant, $orders_date);
+     foreach ($commercant['orders'] as $order) {
+         $commercant_pdf->addOrder($order);
+     }
+     if($commercant_pdf->getOrdersCount()!=0 || $current_hour>12){
+        echo $commercant['name']."1\n";
+         $commercant_pdf->send();
+         Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - envoi réalisé.', null, 'send_daily_order.log');
+     }else{
+        echo $commercant['name']."2\n";
+      Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - pas d\'envoi au commercant.', null, 'send_daily_order.log');
+     }
+ }
