@@ -25,6 +25,7 @@
 function Minicart(options) {
     this.formKey = options.formKey;
     this.previousVal = null;
+    this.updateTimeout = null;
 
     this.defaultErrorMessage = 'Error occurred. Try to refresh page.';
 
@@ -44,6 +45,15 @@ function Minicart(options) {
     if (options.selectors) {
         $j.extend(this.selectors, options.selectors);
     }
+    var self = this;
+    $j(document).on('startUpdateMiniCartContent', function() {
+      self.showOverlay();
+    });
+    $j(document).on('updateMiniCartContent', function(event, result) {
+      self.hideOverlay();
+      self.updateCartQty(result.qty);
+      self.updateContentOnUpdate(result);
+    });
 }
 
 Minicart.prototype = {
@@ -72,13 +82,15 @@ Minicart.prototype = {
         $j(this.selectors.quantityButtonClass)
             .unbind('click.quantity')
             .bind('click.quantity', function() {
-                cart.processUpdateQuantity(this);
+              var self = this;
+              cart.processUpdateQuantity(this);
         });
     },
 
     removeItem: function(el) {
         var cart = this;
         if (confirm(el.data('confirm'))) {
+            $j(document).trigger('updateCartStartLoading', [$j(el).data('item-id'), $j(el).data('product-id')]);
             cart.hideMessage();
             cart.showOverlay();
             $j.ajax({
@@ -131,30 +143,38 @@ Minicart.prototype = {
         var cart = this;
         var input = $j(this.selectors.quantityInputPrefix + $j(el).data('item-id'));
         var quantity = parseInt(input.val(), 10);
-        cart.hideMessage();
-        cart.showOverlay();
-        $j.ajax({
-            type: 'post',
-            dataType: 'json',
-            url: input.data('link'),
-            data: {qty: quantity, form_key: cart.formKey}
-        }).done(function(result) {
-            cart.hideOverlay();
-            if (result.success) {
-                cart.updateCartQty(result.qty);
-                if (quantity !== 0) {
-                    cart.updateContentOnUpdate(result);
-                } else {
-                    cart.updateContentOnRemove(result, input.closest('li'));
-                }
-            } else {
-                cart.showMessage(result);
-            }
-        }).error(function(result) {
-            console.log(result);
-            cart.hideOverlay();
-            cart.showError(cart.defaultErrorMessage);
-        });
+        input.parent('.item-cell').find('.qty-text').html(quantity);
+
+        if (this.updateTimeout !== null) {
+          window.clearTimeout(this.updateTimeout);
+        }
+        this.updateTimeout = window.setTimeout(function() {
+          cart.hideMessage();
+          $j(document).trigger('updateCartStartLoading', [$j(el).data('item-id'), $j(el).data('product-id')]);
+          cart.showOverlay();
+          $j.ajax({
+              type: 'post',
+              dataType: 'json',
+              url: input.data('link'),
+              data: {qty: quantity, form_key: cart.formKey}
+          }).done(function(result) {
+              cart.hideOverlay();
+              if (result.success) {
+                  cart.updateCartQty(result.qty);
+                  if (quantity !== 0) {
+                      cart.updateContentOnUpdate(result);
+                  } else {
+                      cart.updateContentOnRemove(result, input.closest('li'));
+                  }
+              } else {
+                  cart.showMessage(result);
+              }
+          }).error(function(result) {
+              //console.log(result);
+              cart.hideOverlay();
+              cart.showError(cart.defaultErrorMessage);
+          });
+        }, 300);
         return false;
     },
 
@@ -174,7 +194,12 @@ Minicart.prototype = {
 
     updateCartQty: function(qty) {
         if (typeof qty != 'undefined') {
-            $j(this.selectors.qty).text(qty);
+          $j(this.selectors.qty).text(qty);
+          if (qty > 0) {
+            $j(this.selectors.qty).show();
+          } else {
+            $j(this.selectors.qty).hide();
+          }
         }
     },
 

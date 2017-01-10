@@ -8,3 +8,13 @@
   font-weight: 400;
 }
 
+.apdc-edit-comment {
+  cursor:pointer;
+}
+
+a.apdc-add-comment {
+  color:#555;
+}
+a.apdc-add-comment:hover {
+  color:#333;
+}

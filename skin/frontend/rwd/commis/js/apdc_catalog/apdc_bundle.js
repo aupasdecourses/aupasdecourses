@@ -82,144 +82,102 @@ Product.Bundle.prototype.reloadPrice = function() {
       window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].changePrice('bundle', calculatedPrice);
       window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].changePrice('nontaxable', dispositionPrice);
       window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].changePrice('priceInclTax', includeTaxPrice);
-      window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].reload();
+
+      if (this.containerId !== '') {
+        window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].reloadWithContainer(this.containerId);
+      } else {
+        window['optionsPrice' + this.containerId.replace(/-/g,'_') + this.productId].reload();
+      }
   }
 
   return calculatedPrice;
 };
 
-/*
-    selectionPrice: function(optionId, selectionId) {
-        if (selectionId == '' || selectionId == 'none') {
-            return 0;
-        }
-        var qty = null;
-        var tierPriceInclTax, tierPriceExclTax;
-        if (this.config.options[optionId].selections[selectionId].customQty == 1 && !this.config['options'][optionId].isMulti) {
-            if ($('bundle-option-' + optionId + '-qty-input')) {
-                qty = $('bundle-option-' + optionId + '-qty-input').value;
-            } else {
-                qty = 1;
-            }
-        } else {
-            qty = this.config.options[optionId].selections[selectionId].qty;
-        }
-        if (this.config.priceType == '0') {
-            price = this.config.options[optionId].selections[selectionId].price;
-            tierPrice = this.config.options[optionId].selections[selectionId].tierPrice;
+Product.Bundle.prototype.selectionPrice = function(optionId, selectionId) {
+  if (selectionId === '' || selectionId === 'none') {
+      return 0;
+  }
+  var qty = null;
+  var tierPriceInclTax, tierPriceExclTax;
+  if (this.config.options[optionId].selections[selectionId].customQty == 1 && !this.config.options[optionId].isMulti) {
 
-            for (var i=0; i < tierPrice.length; i++) {
-                if (Number(tierPrice[i].price_qty) <= qty && Number(tierPrice[i].price) <= price) {
-                    price = tierPrice[i].price;
-                    tierPriceInclTax = tierPrice[i].priceInclTax;
-                    tierPriceExclTax = tierPrice[i].priceExclTax;
-                }
-            }
-        } else {
-            selection = this.config.options[optionId].selections[selectionId];
-            if (selection.priceType == '0') {
-                price = selection.priceValue;
-            } else {
-                price = (this.config.basePrice*selection.priceValue)/100;
-            }
-        }
-        //price += this.config.options[optionId].selections[selectionId].plusDisposition;
-        //price -= this.config.options[optionId].selections[selectionId].minusDisposition;
-        //return price*qty;
-        var disposition = this.config.options[optionId].selections[selectionId].plusDisposition +
-            this.config.options[optionId].selections[selectionId].minusDisposition;
-
-        if (this.config.specialPrice) {
-            newPrice = (price*this.config.specialPrice)/100;
-            price = Math.min(newPrice, price);
-        }
-
-        selection = this.config.options[optionId].selections[selectionId];
-        if (tierPriceInclTax !== undefined && tierPriceExclTax !== undefined) {
-            priceInclTax = tierPriceInclTax;
-            price = tierPriceExclTax;
-        } else if (selection.priceInclTax !== undefined) {
-            priceInclTax = selection.priceInclTax;
-            price = selection.priceExclTax !== undefined ? selection.priceExclTax : selection.price;
-        } else {
-            priceInclTax = price;
-        }
-
-        if (this.config.priceType == '1' || taxCalcMethod == CACL_TOTAL_BASE) {
-            var result = new Array(price*qty, disposition*qty, priceInclTax*qty);
-            return result;
-        }
-        else if (taxCalcMethod == CACL_UNIT_BASE) {
-            price = (Math.round(price*100)/100).toString();
-            disposition = (Math.round(disposition*100)/100).toString();
-            priceInclTax = (Math.round(priceInclTax*100)/100).toString();
-            var result = new Array(price*qty, disposition*qty, priceInclTax*qty);
-            return result;
-        } else { //taxCalcMethod == CACL_ROW_BASE)
-            price = (Math.round(price*qty*100)/100).toString();
-            disposition = (Math.round(disposition*qty*100)/100).toString();
-            priceInclTax = (Math.round(priceInclTax*qty*100)/100).toString();
-            var result = new Array(price, disposition, priceInclTax);
-            return result;
-        }
-    },
-
-    populateQty: function(optionId, selectionId){
-        if (selectionId == '' || selectionId == 'none') {
-            this.showQtyInput(optionId, '0', false);
-            return;
-        }
-        if (this.config.options[optionId].selections[selectionId].customQty == 1) {
-            this.showQtyInput(optionId, this.config.options[optionId].selections[selectionId].qty, true);
-        } else {
-            this.showQtyInput(optionId, this.config.options[optionId].selections[selectionId].qty, false);
-        }
-    },
-
-    showQtyInput: function(optionId, value, canEdit) {
-        elem = $('bundle-option-' + optionId + '-qty-input');
-        elem.value = value;
-        elem.disabled = !canEdit;
-        if (canEdit) {
-            elem.removeClassName('qty-disabled');
-        } else {
-            elem.addClassName('qty-disabled');
-        }
-    },
-
-    changeOptionQty: function (element, event) {
-        var checkQty = true;
-        if (typeof(event) != 'undefined') {
-            if (event.keyCode == 8 || event.keyCode == 46) {
-                checkQty = false;
-            }
-        }
-        if (checkQty && (Number(element.value) == 0 || isNaN(Number(element.value)))) {
-            element.value = 1;
-        }
-        parts = element.id.split('-');
-        optionId = parts[2];
-        if (!this.config['options'][optionId].isMulti) {
-            selectionId = this.config.selected[optionId][0];
-            this.config.options[optionId].selections[selectionId].qty = element.value*1;
-            this.reloadPrice();
-        }
-    },
-
-    validationCallback: function (elmId, result){
-        if (elmId == undefined || $(elmId) == undefined) {
-            return;
-        }
-        var container = $(elmId).up('ul.options-list');
-        if (typeof container != 'undefined') {
-            if (result == 'failed') {
-                container.removeClassName('validation-passed');
-                container.addClassName('validation-failed');
-            } else {
-                container.removeClassName('validation-failed');
-                container.addClassName('validation-passed');
-            }
-        }
+    var selector = 'bundle-option-' + optionId + '-qty-input';
+    if (this.containerId !== '') {
+      selector = this.containerId + ' .' + selector;
     }
-}
-*/
+    if (jQuery('#' + selector)) {
+      qty = jQuery('#' + selector).val();
+    } else {
+      qty = 1;
+    }
+  } else {
+      qty = this.config.options[optionId].selections[selectionId].qty;
+  }
+  if (this.config.priceType == '0') {
+      price = this.config.options[optionId].selections[selectionId].price;
+      tierPrice = this.config.options[optionId].selections[selectionId].tierPrice;
+
+      for (var i=0; i < tierPrice.length; i++) {
+          if (Number(tierPrice[i].price_qty) <= qty && Number(tierPrice[i].price) <= price) {
+              price = tierPrice[i].price;
+              tierPriceInclTax = tierPrice[i].priceInclTax;
+              tierPriceExclTax = tierPrice[i].priceExclTax;
+          }
+      }
+  } else {
+      selection = this.config.options[optionId].selections[selectionId];
+      if (selection.priceType == '0') {
+          price = selection.priceValue;
+      } else {
+          price = (this.config.basePrice*selection.priceValue)/100;
+      }
+  }
+  var disposition = this.config.options[optionId].selections[selectionId].plusDisposition +
+      this.config.options[optionId].selections[selectionId].minusDisposition;
+
+  if (this.config.specialPrice) {
+      newPrice = (price*this.config.specialPrice)/100;
+      price = Math.min(newPrice, price);
+  }
+
+  selection = this.config.options[optionId].selections[selectionId];
+  if (tierPriceInclTax !== undefined && tierPriceExclTax !== undefined) {
+      priceInclTax = tierPriceInclTax;
+      price = tierPriceExclTax;
+  } else if (selection.priceInclTax !== undefined) {
+      priceInclTax = selection.priceInclTax;
+      price = selection.priceExclTax !== undefined ? selection.priceExclTax : selection.price;
+  } else {
+      priceInclTax = price;
+  }
+
+  var result = '';
+  if (this.config.priceType == '1' || taxCalcMethod == CACL_TOTAL_BASE) {
+      result = new Array(price*qty, disposition*qty, priceInclTax*qty);
+  } else if (taxCalcMethod == CACL_UNIT_BASE) {
+      price = (Math.round(price*100)/100).toString();
+      disposition = (Math.round(disposition*100)/100).toString();
+      priceInclTax = (Math.round(priceInclTax*100)/100).toString();
+      result = new Array(price*qty, disposition*qty, priceInclTax*qty);
+  } else { //taxCalcMethod == CACL_ROW_BASE)
+      price = (Math.round(price*qty*100)/100).toString();
+      disposition = (Math.round(disposition*qty*100)/100).toString();
+      priceInclTax = (Math.round(priceInclTax*qty*100)/100).toString();
+      result = new Array(price, disposition, priceInclTax);
+  }
+  return result;
+};
+Product.Bundle.prototype.showQtyInput = function(optionId, value, canEdit) {
+  var selector = 'bundle-option-' + optionId + '-qty-input';
+  if (this.containerId !== '') {
+    selector = this.containerId + ' .' + selector;
+  }
+  elem = jQuery('#' + selector);
+  elem.val(value);
+  elem.prop('disabled', !canEdit);
+  if (canEdit) {
+      elem.removeClass('qty-disabled');
+  } else {
+      elem.addClass('qty-disabled');
+  }
+};

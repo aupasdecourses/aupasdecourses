@@ -54,26 +54,24 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
             }
             if (!$item->isDeleted() && !$item->getParentItemId()) {
                 $commercant = $item->getCommercant();
-                if ($item->getProduct()->getTypeId() == 'bundle') {
-                    if (!isset($commercants['bundle'])) {
-                        $commercants['bundle']['name'] = $this->__('Bundle products');
-                        $commercants['bundle']['items'] = array();
-                    }
-                    $commercants['bundle']['items'][] = $item;
-                } else {
-                    if (!$commercant) {
-                        if (isset($parentCommercantId[$item->getItemId()])) {
-                            $commercant = $parentCommercantId[$item->getItemId()];
+                if (!$commercant) {
+                    if ($item->getProduct()->getTypeId() == 'bundle') {
+                        if (!isset($commercants['bundle'])) {
+                            $commercants['bundle']['name'] = $this->__('Paniers & Plateaux');
+                            $commercants['bundle']['items'] = array();
                         }
-                        continue;
+                        $commercants['bundle']['items'][] = $item;
+                    } else if (isset($parentCommercantId[$item->getItemId()])) {
+                        $commercant = $parentCommercantId[$item->getItemId()];
                     }
-                    if (!isset($commercants[$commercant])) {
-                        $name = $product->setCommercant($commercant);
-                        $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
-                        $commercants[$commercant]['items'] = array();
-                    }
-                    $commercants[$item->getCommercant()]['items'][] = $item;
+                    continue;
                 }
+                if (!isset($commercants[$commercant])) {
+                    $name = $product->setCommercant($commercant);
+                    $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
+                    $commercants[$commercant]['items'] = array();
+                }
+                $commercants[$item->getCommercant()]['items'][] = $item;
             }
         }
         return $commercants;
@@ -115,13 +113,25 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     $buyRequest = $item->getBuyRequest();
                     $options = array();
                     if ($buyRequest->getSuperAttribute()) {
-                        foreach ($buyRequest->getSuperAttribute() as $id => $value) {
-                            $options[] = $id . '-' . $value;
+                        foreach ($buyRequest->getSuperAttribute() as $id => $values) {
+                            if (is_array($values)) {
+                                foreach ($values as $value) {
+                                    $options[] = $id . '-' . $value;
+                                }
+                            } else {
+                                $options[] = $id . '-' . $values;
+                            }
                         }
                     }
                     if ($buyRequest->getOptions()) {
-                        foreach ($buyRequest->getOptions() as $id => $value) {
-                            $options[] = $id . '-' . $value;
+                        foreach ($buyRequest->getOptions() as $id => $values) {
+                            if (is_array($values)) {
+                                foreach ($values as $value) {
+                                    $options[] = $id . '-' . $value;
+                                }
+                            } else {
+                                $options[] = $id . '-' . $values;
+                            }
                         }
                     }
                     if ($buyRequest->getBundleOption()) {

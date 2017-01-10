@@ -10,12 +10,26 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         e.stopPropagation();
         var productId = parseInt(form.data('product-id'));
         var itemId = 0;
+
+        var $qty = null;
+        var qty = 0;
+
         if (this.value == 'btn-cart-qty-plus') {
           itemId = parseInt($(this).data('item-id'));
+          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+          qty = parseInt($qty.html(), 10);
+          $qty.html(++qty);
           $(document).trigger('minicartAddQty', [itemId, productId]);
         } else if (this.value == 'btn-cart-qty-minus') {
           itemId = parseInt($(this).data('item-id'));
-          $(document).trigger('minicartRemoveQty', [itemId, productId]);
+          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+          qty = parseInt($qty.html(), 10);
+          if (qty > 1) {
+            $qty.html(--qty);
+            $(document).trigger('minicartRemoveQty', [itemId, productId]);
+          } else {
+            $('#btn-minicart-remove-' + itemId).click();
+          }
         } else if (this.value == 'btn-cart-remove') {
           itemId = parseInt($(this).data('item-id'));
           $('#btn-minicart-remove-' + itemId).click();
@@ -35,13 +49,13 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
               type: 'POST',
               beforeSend: function() {
                 startLoading(productId);
+                $(document).trigger('startUpdateMiniCartContent');
               }
-              
             })
-            .done(function(response) {
-              if (response.status === 'SUCCESS') {
+            .done(function(result) {
+              if (result.status === 'SUCCESS') {
                 if($('.header-minicart').length > 0){
-                  $('.header-minicart').html(response.minicarthead);
+                  $(document).trigger('updateMiniCartContent', [result]);
                 }
               }
             })
@@ -62,27 +76,22 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       var optionKey = '';
       var formId = $(this).attr('id');
       var productId = parseInt($(this).data('product-id'));
-      $(this).find('select[name^="super_attribute["]').each(function() {
-        var attributeId = parseInt(this.name.replace('super_attribute[', '').replace(']', ''));
-        var optionId = parseInt(this.value);
-        optionKeyTab.push(attributeId + '-' + optionId);
+      $(this).find('[name^="super_attribute["]').each(function() {
+        var tabOptions = extractOptions(this, 'super_attribute');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
+        }
       });
-      $(this).find('select[name^="options["]').each(function() {
-        var attributeId = parseInt(this.name.replace('options[', '').replace(']', ''));
-        var optionId = parseInt(this.value);
-        optionKeyTab.push(attributeId + '-' + optionId);
+      $(this).find('[name^="options["]').each(function() {
+        var tabOptions = extractOptions(this, 'options');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
+        }
       });
       $(this).find('[name^="bundle_option["]').each(function() {
-        var attributeId = 0;
-        var optionId = 0;
-        if (this.type && this.type === 'checkbox' && this.checked) {
-          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
-          optionId = parseInt(this.value);
-          optionKeyTab.push(attributeId + '-' + optionId);
-        } else if (this.type && this.type === 'hidden') {
-          attributeId = parseInt(this.name.replace('bundle_option[', '').replace(']', '').replace('[]', ''));
-          optionId = parseInt(this.value);
-          optionKeyTab.push(attributeId + '-' + optionId);
+        var tabOptions = extractOptions(this, 'bundle_option');
+        for (var i = 0; i < tabOptions.length; ++i) {
+          optionKeyTab.push(tabOptions[i]);
         }
       });
       if (optionKeyTab.length > 0) {
@@ -93,13 +102,47 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     });
   });
 
+  function extractOptions(elt, name) {
+    var optionId = 0;
+    var optionKeyTab = [];
+    var attributeId = parseInt(elt.name.replace(name + '[', '').replace(']', '').replace('[]', ''));
+
+    if (elt.type && (elt.type === 'checkbox' || elt.type === 'radio') && elt.checked) {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'hidden') {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'select-one') {
+      optionId = parseInt(elt.value);
+      optionKeyTab.push(attributeId + '-' + optionId);
+    } else if (elt.type && elt.type === 'select-multiple') {
+      var optionsIds = $(elt).val();
+      var options = $(elt).find('option');
+      options.each(function() {
+        if (this.selected) {
+          optionKeyTab.push(attributeId + '-' + this.value);
+        }
+      });
+    }
+
+    return optionKeyTab;
+  }
+
+  var blinkInterval = null;
   function counterBlink() {
-    var blinkInterval = setInterval(function() {
-      $('.header-minicart .count').fadeOut(100).fadeIn(100);
-    }, 200);
-    setTimeout(function() {
-      clearInterval(blinkInterval);
-    }, 1500);
+    if (parseInt($('.header-minicart .count').html(), 10) > 0) {
+      $('.header-minicart .count').stop();
+      if (blinkInterval !== null) {
+        window.clearInterval(blinkInterval);
+      }
+      blinkInterval = setInterval(function() {
+        $('.header-minicart .count').fadeOut(100).fadeIn(100);
+      }, 200);
+      setTimeout(function() {
+        clearInterval(blinkInterval);
+      }, 1500);
+    }
   }
 
   function startLoading(productId)
@@ -114,13 +157,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     counterBlink();
   }
 
-  $(document).on('minicartAddQty', function(event, itemId, productId) {
-    startLoading(productId);
-  });
-  $(document).on('minicartRemoveQty', function(event, itemId, productId) {
-    startLoading(productId);
-  });
-  $(document).on('minicartRemoveItem', function(event, itemId, productId) {
+  $(document).on('updateCartStartLoading', function(event, itemId, productId) {
     startLoading(productId);
   });
   $(document).on('minicartLoaded', function(event) {
@@ -134,14 +171,20 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     // init display of add to cart button
     $('.actions .simple-add-to-cart-button').show();
     $('.actions .qty-buttons').hide();
+    $('.actions .btn.show-product-popup').hide();
+    $('.actions .btn-cart.show-product-popup').show();
 
     if (Object.keys(apdcProductAddedToCart).length > 0) {
-      for (var productId in apdcProductAddedToCart) {
-        var productAdded = apdcProductAddedToCart[productId];
-        if ($('.product_addtocart_form_' + productId).length > 0) {
+      $('.apdc-add-to-cart-form').each(function() {
+        var productId = $(this).data('product-id');
+        if (typeof(apdcProductAddedToCart[productId]) !== 'undefined') {
+          var productAdded = apdcProductAddedToCart[productId];
           var qty = null;
           var itemId = null;
-          if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options.length > 0)) {
+          if (productAdded.product.type_id === 'bundle') {
+              apdcUpdateBundleButtons(productId);
+          }
+          if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options).length > 0) {
             var optionKey = $('.selected-optionKey-' + productId).val();
             if (typeof(productAdded.options[optionKey]) !== 'undefined') {
                 itemId = productAdded.options[optionKey].itemId;
@@ -155,7 +198,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             apdcUpdateQtyButtons(productId, itemId, qty);
           }
         }
-      }
+      });
     }
     $(document).trigger('apdcUpdateAddToCartButtons_end', [fromProductId]);
   });
@@ -180,6 +223,13 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         productContainer.find('.btn-cart-remove').hide();
       }
     }
+  }
+
+  function apdcUpdateBundleButtons(productId, qty)
+  {
+    var productContainer = $('.product_addtocart_form_' + productId);
+    productContainer.find('.btn.show-product-popup').show();
+    productContainer.find('.btn-cart.show-product-popup').hide();
   }
 
 })(jQuery);

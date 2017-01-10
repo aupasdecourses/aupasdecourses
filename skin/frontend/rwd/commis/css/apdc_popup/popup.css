@@ -54,6 +54,10 @@
 .apdc-popup-close .fa {
   display:block;
 }
+.apdc-popup-close:hover {
+  color:#444;
+}
+
 .apdc-popup-loading {
   display:inline-block;
   position:absolute;

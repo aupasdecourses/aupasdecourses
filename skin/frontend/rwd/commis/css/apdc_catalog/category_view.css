@@ -124,7 +124,15 @@
     font-size: 0.95em;
 }
 
-
+.product-item-info .display-hover .product-options ul.options-list input.radio,
+.product-item-info .display-hover .product-options ul.options-list input.checkbox {
+  margin-left:0;
+  margin-right:5px;
+  margin-top: 5px;
+}
+.product-item-info .display-hover .product-options ul.options-list .label {
+  display:inline-block;
+}
 
 .apdc-products-grid li.col-xs-6:nth-child(odd) {
   clear:left;

@@ -33,6 +33,12 @@
         <?php endif; ?>
         <div class="item-text">
             <?php echo $this->getColumnHtml($_item, 'name') ?>
+            <p id="apdc-add-comment-container-<?php echo $_item->getId(); ?>" <?php if (!empty($_item->getItemComment())) : ?>style="display:none;"<?php endif; ?>>
+                <a href="#" title="<?php echo $this->__('Add comment'); ?>" class="apdc-add-comment" data-item-id="<?php echo $_item->getId(); ?>" data-order-id="<?php echo $_item->getOrderId(); ?>">
+                    <?php echo $this->__('Add comment'); ?>
+                    <img src="<?php echo $this->getSkinUrl('images/amorderattach/edit.png'); ?>" alt="add" title="add comment" />
+                </a>
+            </p>
         </div>
         <?php if ($this->canDisplayContainer()): ?>
         </div>
@@ -243,10 +249,13 @@
         ); ?>
     </td>
 </tr>
-<?php if ($_item->getItemComment()) : ?>
-<tr>
+
+<tr <?php if (empty($_item->getItemComment())) : ?>style="display:none;"<?php endif; ?> id="apdc-edit-comment-container-<?php echo $_item->getId(); ?>">
     <td colspan="10">
-        <strong><?php echo $this->__('Commentaire pour le produit :'); ?></strong>
-        <p><?php echo html_entity_decode($_item->getItemComment(), ENT_QUOTES, 'utf-8'); ?></td></p>
+        <strong>
+            <?php echo $this->__('Commentaire pour le produit :'); ?>
+            <img src="<?php echo $this->getSkinUrl('images/amorderattach/edit.png'); ?>" alt="edit" title="edit comment" data-item-id="<?php echo $_item->getId(); ?>" class="apdc-edit-comment" data-order-id="<?php echo (int) $_item->getOrderId(); ?>" />
+        </strong>
+        <p id="apdc-comment-<?php echo $_item->getId(); ?>"><?php echo html_entity_decode($_item->getItemComment(), ENT_QUOTES, 'utf-8'); ?></p>
+    </td>
 </tr>
-<?php endif; ?>

@@ -38,8 +38,6 @@ if(empty($_cartQty)) {
 }
 $apdcAccordion = $this->getApdcCartAccordion();
 ?>
-<div id="minicart-error-message" class="minicart-message"></div>
-<div id="minicart-success-message" class="minicart-message"></div>
 
 <div class="minicart-wrapper">
 
@@ -47,6 +45,9 @@ $apdcAccordion = $this->getApdcCartAccordion();
         <?php echo $this->__('Your Cart') ?>
         <a class="btn close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i>&nbsp;<?php echo $this->quoteEscape($this->__('Close')); ?></a>
     </p>
+
+    <div id="minicart-error-message" class="minicart-message"></div>
+    <div id="minicart-success-message" class="minicart-message"></div>
 
     <?php $commercants = $this->getItemsByCommercant() ?>
     <?php $countItems = count($commercants); ?>
@@ -66,17 +67,6 @@ $apdcAccordion = $this->getApdcCartAccordion();
                 <?php endforeach; ?>
             </ul>
         </div>
-        <script type="text/javascript">
-            truncateOptions();
-            decorateList('cart-sidebar', 'none-recursive');
-            $j('document').ready(function() {
-                var minicartOptions  = {
-                    formKey:           "<?php echo $this->getFormKey();?>"
-                }
-                var Mini = new Minicart(minicartOptions);
-                Mini.init();
-            });
-        </script>
 
         <div id="minicart-widgets">
             <?php echo $this->getChildHtml('cart_promotion') ?>
@@ -131,4 +121,16 @@ jQuery(document).ready(function() {
     jQuery(document).trigger('minicartLoaded');
 });
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
+
+
+truncateOptions();
+decorateList('cart-sidebar', 'none-recursive');
+var Mini = null;
+$j('document').ready(function() {
+    var minicartOptions  = {
+        formKey:           "<?php echo $this->getFormKey();?>"
+    }
+    Mini = new Minicart(minicartOptions);
+    Mini.init();
+});
 </script>

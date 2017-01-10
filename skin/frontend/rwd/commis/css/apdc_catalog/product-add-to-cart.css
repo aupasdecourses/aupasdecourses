@@ -16,7 +16,6 @@
 .apdc-add-to-cart-form .actions .action-group {
   display:inline-block;
   position:relative;
-  width: 100%;
 }
 
 .apdc-cart-item-comment .input-box {
@@ -25,6 +24,9 @@
   padding: 0;
   margin-bottom: 10px;
 }
+.apdc-cart-item-comment textarea {
+  width:80%;
+}
 .apdc-cart-item-comment .loading,
 .apdc-add-to-cart-form .actions .action-loading {
   background-color: rgba(255, 255, 255, 0.8);
@@ -32,6 +34,7 @@
   display: none;
   z-index: 999;
   width: 100%;
+  text-align: center;
 }
 .apdc-cart-item-comment .loading {
   height:100%;
@@ -46,6 +49,10 @@
 .apdc-add-to-cart-form .actions .action-group .show-product-popup {
   float: left;
 }
+.apdc-add-to-cart-form .actions .action-group .btn.show-product-popup {
+  display:none;
+}
+
 .apdc-add-to-cart-form .actions button:disabled {opacity: 0.2;}
 .apdc-add-to-cart-form .actions .action-group .qty-buttons {
   display:none;

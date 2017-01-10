@@ -1,3 +1,4 @@
+<?php $orderId = Mage::app()->getRequest()->getParam('order_id', 0); ?>
 <div class="entry-edit">
     <div class="entry-edit-head">
         <h4 class="icon-head head-attributes"><?php echo $this->__('Your comment'); ?></h4>
@@ -13,6 +14,7 @@
                             </td>
                             <td class="value">
                                 <textarea id="item-comment-textarea"></textarea>
+                                <input type="hidden" id="item-comment-order-id" value="0" />
                                 <input type="hidden" id="item-comment-id" />
                                 <input type="hidden" id="item-comment-ajax-url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/apdcCart/updateItemCommentAjax'); ?>?isAjax=true" />
                             </td>
