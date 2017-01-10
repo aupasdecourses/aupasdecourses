@@ -23,9 +23,6 @@ class RefundController extends Controller
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
-
 		$entity_from = new\Apdc\ApdcBundle\Entity\From();
 		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
 		
@@ -41,7 +38,6 @@ class RefundController extends Controller
 		$orders = $mage->getOrders($from);
 
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
-			'user' => $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ],
 			'orders' => $orders
 		]);
@@ -108,9 +104,6 @@ class RefundController extends Controller
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		if(!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
-
 		$order = $mage->getOrderByMerchants($id);
 
 		$entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
@@ -168,7 +161,6 @@ class RefundController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
-			'user' => $_SESSION['delivery']['username'],
 			'forms' => [ $form_upload->createView() ],
 			'order' => $order
 		]);		
@@ -177,8 +169,6 @@ class RefundController extends Controller
 	public function refundInputAction(Request $request, $id)
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
-		if(!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$order = $mage->getRefunds($id);
 
@@ -236,7 +226,6 @@ class RefundController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::refund/input.html.twig', [
-			'user' => $_SESSION['delivery']['username'],
 			'form' => $form_input->createView(),
 			'order' => $order,
 			'total' => $total,
@@ -247,9 +236,6 @@ class RefundController extends Controller
 	public function refundDigestAction(Request $request, $id)
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
-
-		if(!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$order = $mage->getRefunds($id);
 
@@ -288,7 +274,6 @@ class RefundController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
-			'user' => $_SESSION['delivery']['username'],
 			'total' => $total,
 			'msg' => $msg,
 			'refund_total' => $refund_total,

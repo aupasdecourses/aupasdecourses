@@ -5,26 +5,20 @@ namespace Apdc\ApdcBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
-
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrdersController extends Controller
 {
-
 	public function indexAction(Request $request)
 	{
+		
+		if(!$this->isGranted('ROLE_ADMIN')){
+			return $this->redirectToRoute('root');
+		}
+	 
+
 		$mage = $this->container->get('apdc_apdc.magento');
 	
-//		if($mage->getCurrentUser() == 'sturquier')
-			//throw new NotFoundHttpException('ORDERS DENIED FOR STURQUIER');
-			//return $this->redirectToRoute('root');
-		
-	
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
-
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
 		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
 		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
@@ -45,7 +39,6 @@ class OrdersController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::orders/index.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()
@@ -55,9 +48,12 @@ class OrdersController extends Controller
 
 	public function ordersOneAction(Request $request, $id)
 	{
+		
+		if(!$this->isGranted('ROLE_ADMIN')){
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
 		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
@@ -70,7 +66,6 @@ class OrdersController extends Controller
 		$form_id->get('id')->setData($id);
 
 		return $this->render('ApdcApdcBundle::orders/one.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()
@@ -81,9 +76,11 @@ class OrdersController extends Controller
 
 	public function ordersAllAction(Request $request, $from, $to)
 	{
+		
+		if(!$this->isGranted('ROLE_ADMIN')){
+			return $this->redirectToRoute('root');
+		}
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
 		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
@@ -98,7 +95,6 @@ class OrdersController extends Controller
 		$form_fromto->get('to')->setData($to);
 
 		return $this->render('ApdcApdcBundle::orders/all.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()

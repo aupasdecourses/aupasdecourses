@@ -6,17 +6,15 @@ root:
   path: '/'
   defaults: { _controller: ApdcApdcBundle:Default:index}
 
-user:
-  path:    /users
-  defaults:   { _controller: ApdcApdcBundle:User:index}
-
 userLogin:
   path:    /users/login
   defaults:   { _controller: ApdcApdcBundle:User:login}
 
+userLoginCheck:
+  path: /users
+
 userLogout:
   path:    /users/logout
-  defaults:   { _controller: ApdcApdcBundle:User:logout}
 
 ordersIndex:
   path:    /orders/

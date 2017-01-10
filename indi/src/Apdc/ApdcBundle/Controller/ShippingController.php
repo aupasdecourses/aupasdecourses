@@ -14,8 +14,6 @@ class ShippingController extends Controller
     public function indexAction(Request $request)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_from = new\Apdc\ApdcBundle\Entity\From();
 		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
@@ -29,7 +27,6 @@ class ShippingController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::shipping/index.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
 	}
@@ -37,8 +34,6 @@ class ShippingController extends Controller
     public function shippingAllAction(Request $request, $from)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_from = new \Apdc\ApdcBundle\Entity\From();
 		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from, [
@@ -48,7 +43,6 @@ class ShippingController extends Controller
 		$form_from->get('from')->setData($from);
 
 		return $this->render('ApdcApdcBundle::shipping/all.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getOrdersByStore($from)
 			]);

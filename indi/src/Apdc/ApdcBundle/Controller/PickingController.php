@@ -15,9 +15,6 @@ class PickingController extends Controller
     {
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
-
 		$entity_from = new\Apdc\ApdcBundle\Entity\From();
 		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
 
@@ -30,7 +27,6 @@ class PickingController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::picking/index.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [ $form_from->createView() ]
 		]);
 	}
@@ -38,8 +34,6 @@ class PickingController extends Controller
     public function pickingAllAction(Request $request, $from)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_from = new \Apdc\ApdcBundle\Entity\From();
 		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from, [
@@ -49,7 +43,6 @@ class PickingController extends Controller
 		$form_from->get('from')->setData($from);
 
 		return $this->render('ApdcApdcBundle::picking/all.html.twig', [
-				'user'	=> $_SESSION['delivery']['username'],
 				'forms' => [ $form_from->createView() ],
 				'stores' => $mage->getMerchantsOrdersByStore(-1, $from)
 			]);

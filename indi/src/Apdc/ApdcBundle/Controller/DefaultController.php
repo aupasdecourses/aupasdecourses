@@ -13,20 +13,6 @@ class DefaultController extends Controller
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
 		
-		//$mage->getUsers();
-		//$mage->getRoles();
-
-//		if($mage->getCurrentUser() == 'sturquier')
-//			echo'vous etes sturquier';	
-	
-	
-	
-	
-
-
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
-	 
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
 		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex')
@@ -59,7 +45,6 @@ class DefaultController extends Controller
 		$form_from_shipping->handleRequest($request);
 
 		return $this->render('ApdcApdcBundle::home/index.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'orders' => [
 				$form_fromto->createView(),
 					$form_id->createView(),

@@ -1,0 +1,28 @@
+Apdc\ApdcBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: Apdc\ApdcBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 255
+            unique: true
+        password:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+            nullable: true
+        salt:
+            type: string
+            length: 255
+        roles:
+            type: array
+    lifecycleCallbacks: {  }

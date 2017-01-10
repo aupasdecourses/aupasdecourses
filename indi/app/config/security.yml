@@ -5,23 +5,6 @@ security:
     acl:
         connection: default
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        apdc_firewall:
-           pattern: ^/
-           anonymous: true
-        #    provider: in_memory
-        #   form_login:
-        #       login_path: users/login
-        #       check_path: login_check
-        #   logout:
-        #       path: users/logout
-        #       target: users/login
-       
         # CSRF TOKEN FOR 'REFUND INPUT ACTION'
         #secured_area:
         #     form_login:
@@ -29,20 +12,40 @@ security:
         #       csrf_parameter: _csrf_security_token
         #       csrf_token_id: authenticate
 
-#   encoders:
-        #Symfony\Component\Security\Core\User\User: plaintext
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Apdc\ApdcBundle\Entity\User: plaintext
 
-#   role_hierarchy:
-#       ROLE_ADMIN:       [ROLE_USER, ROLE_USERRESTRICTED]
-#       ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_USERRESTRICTED, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_LIVREUR]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-       in_memory:
-           memory: ~
-#               users:
-#                   userrestricted: { password: userrestrictedpass, roles: ['ROLE_USERRESTRICTED'] }
-#                   user:           { password: userpass, roles: ['ROLE_USER'] }
-#                   admin:          { password: adminpass, roles: ['ROLE_ADMIN'] }
+        apdc_provider:
+            entity:
+                class: Apdc\ApdcBundle\Entity\User
+                property: username
 
-#   access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    access_control:
+        # - { path: ^/orders, roles: ROLE_ADMIN }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        apdc_login_firewall:
+            pattern: ^/users/login$
+            anonymous: true
+
+        apdc_firewall:
+            pattern: ^/
+            anonymous: false
+            provider: apdc_provider
+            form_login:
+                login_path: userLogin
+                check_path: userLoginCheck
+            logout:
+                path: userLogout
+                target: /users/login
+     

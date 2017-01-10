@@ -14,8 +14,6 @@ class MerchantsController extends Controller
     public function indexAction(Request $request)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
@@ -38,7 +36,6 @@ class MerchantsController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::merchants/index.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			]
@@ -48,8 +45,6 @@ class MerchantsController extends Controller
     public function merchantsOneAction(Request $request, $id, $from, $to)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
@@ -61,7 +56,6 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant->get('merchant')->setData($id);
 
 		return $this->render('ApdcApdcBundle::merchants/one.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
@@ -72,8 +66,6 @@ class MerchantsController extends Controller
     public function merchantsAllAction(Request $request, $from, $to)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
-		if (!$mage->isLogged())
-			return $this->redirectToRoute('userLogin');
 
 		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
@@ -84,7 +76,6 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant->get('to')->setData($to);
 
 		return $this->render('ApdcApdcBundle::merchants/all.html.twig', [
-			'user'	=> $_SESSION['delivery']['username'],
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
