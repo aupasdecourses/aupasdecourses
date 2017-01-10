@@ -41,16 +41,19 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('enabled', [
             'header' => $this->__('Activé'),
             'index' => 'enabled',
+            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Enabled',
         ]);
 
         $this->addColumn('id_category', [
-            'header' => $this->__('Id Catégorie'),
+            'header' => $this->__('Catégorie'),
             'index' => 'id_category',
+            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category',
         ]);
 
         $this->addColumn('id_commercant', [
             'header' => $this->__('Commercant'),
             'index' => 'id_commercant',
+            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Commercant'
         ]);
 
         $this->addColumn('id_attribut_commercant', [
@@ -62,6 +65,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('id_contact_manager', [
             'header' => $this->__('Manager magasin'),
             'index' => 'id_contact_manager',
+            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Contact',
         ]);
 
         parent::_prepareColumns();
