@@ -56,7 +56,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
         $this->addColumn('id_attribut_commercant', [
             'header' => $this->__('Attributs Produits "commercant"'),
             'index' => 'id_attribut_commercant',
-            //'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Productattribute',
+            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Productattribute',
         ]);
 
         $this->addColumn('id_contact_manager', [
