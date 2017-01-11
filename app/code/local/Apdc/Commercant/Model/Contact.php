@@ -9,4 +9,5 @@ class Apdc_Commercant_Model_Contact extends Mage_Core_Model_Abstract
     {
         $this->_init('apdc_commercant/contact');
     }
+
 }

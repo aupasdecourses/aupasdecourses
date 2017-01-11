@@ -49,11 +49,11 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 					//
 					$commercants=Mage::helper('pmainguet_delivery')->liste_commercant_id();
 					?>
-					<?php foreach($commercants as $storename => $data):?>			
+					<?php foreach($commercants as $rootCatName => $data):?>			
 						<table width="49%;" style="display:inline;">
 							<!-- <input id="selectous" type="checkbox" name="selectous" value="tous" /><label>Sélectionner tous</label> -->
 							<thead>
-								<th><?php echo "Quartier ".$storename;?></th>
+								<th><?php echo $rootCatName;?></th>
 							</thead>
 							<tbody>
 							<?php foreach($data as $id => $name):?>

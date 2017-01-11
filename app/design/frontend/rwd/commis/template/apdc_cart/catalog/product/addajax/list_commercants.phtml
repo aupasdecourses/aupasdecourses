@@ -46,6 +46,11 @@
     	<img class="thumb-menu" src="<?= $apdc_helper->getCatThumbnailUrl();?>"/>
     	<span class="commercant_name"><?= $apdc_helper->getCatTitle();?></span></h1>
 </div>
+<?php 
+if(Mage::getModel('cms/block')->load('seasonal_banner')->getIsActive()){
+	echo $this->getChildHtml('seasonal_banner');
+}
+?>
 <div class="category-products">
     <?php echo $this->getToolbarHtml() ?>
     <?php // List mode ?>
