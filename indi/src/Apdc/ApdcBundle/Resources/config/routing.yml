@@ -23,7 +23,7 @@ ordersIndex:
 ordersOne:
   path:    /orders/{id}
   defaults:   { _controller: ApdcApdcBundle:Orders:ordersOne}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 ordersAll:
   path:    /orders/{from}/{to}

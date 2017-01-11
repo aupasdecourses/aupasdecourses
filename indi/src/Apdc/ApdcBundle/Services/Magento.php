@@ -87,16 +87,17 @@ class Magento
 				'telcontact'			=>	'order_attribute.telcontact',
 				'info'					=>	'order_attribute.infoscomplementaires'
 			));
-		$orders->getSelect()->join(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
-			array (
-				'upload'				=>	'attachment.upload',
-				'input'					=>	'attachment.input',
-				'digest'				=>	'attachment.digest',
-			));
+		//Probleme de join left qui élimine les commandes n'ayant pas encore d'attachments
+		// $orders->getSelect()->join(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
+		// 	array (
+		// 		'upload'				=>	'attachment.upload',
+		// 		'input'					=>	'attachment.input',
+		// 		'digest'				=>	'attachment.digest',
+		// 	));
 		$orders->addFilterToMap('ddate', 'mwddate.ddate');
 		$orders->addFilterToMap('dtime', 'mwdtime.interval')
 			->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
-			->addAttributeToSort('dtime', 'asc');
+			->addAttributeToSort('main_table.increment_id', 'dsc');
 		if ($orderId <> -1) {
 			$orders->addFieldToFilter('main_table.increment_id', [ 'eq' => $orderId ]);
 		} else {

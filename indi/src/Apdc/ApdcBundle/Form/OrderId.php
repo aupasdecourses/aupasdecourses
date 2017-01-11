@@ -15,7 +15,7 @@ class OrderId extends AbstractType
     {
 		$builder->add('id', TextType::class, [
 			'required' => true,
-			'label' => 'Id:',
+			'label' => '# Commande:',
 			'attr' => [
 				'class'	=>	'form-control'
 			]
