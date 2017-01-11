@@ -27,38 +27,35 @@ class Magento
 	public function getMerchants($commercantId = -1) {
 		$commercants = [];
 
-		$categories = \Mage::getModel('catalog/category')->getCollection()
-			->addAttributeToSelect('*')
-			->addFieldToFilter('estcom_commercant', [ 'neq' => false ]);
+		$shops =\Mage::getModel('apdc_commercant/shop')->getCollection();
 		if ($commercantId <> -1)
-			$categories->addFieldToFilter("att_com_id", [ 'eq' => $commercantId ]);
-		$S = [];
-		$app = \Mage::app();
-		$stores = $app->getStores();
-		foreach ($stores as $id => $idc) {
-			$S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
-			$S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
-		}
-		foreach ($categories as $category) {
-			$commercants[$category->getData('att_com_id')] = [
-					'active'	=> $category->getData('is_active'),
-					'id'		=> $category->getData('att_com_id'),
-					'store'		=> $S[explode('/', $category->getPath())[1]]['name'],
-					'name'		=> $category->getName(),
-					'addr'		=> $category->getAdresseCommercant(),
-					'phone'		=> $category->getTelephone(),
-					'mobile'	=> $category->getPortable(),
-					'mail3'		=> $category->getData('mail_3'),
-					'mailc'		=> $category->getMailContact(),
-					'mailp'		=> $category->getMailPro(),
-					'orders'	=> []
+			$shops->addFieldToFilter('id_attribut_commercant', [ 'eq' => $commercantId ]);
+		$shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+        $shops->addFilterToMap('path', 'catalog_category_entity.path');
+
+		foreach ($shops as $shop) {
+			$commercants[$shop->getData('id_attribut_commercant')] = [
+					'active'	=> $shop->getData('enabled'),
+					'id'		=> $shop->getData('id_attribut_commercant'),
+					'store'		=> explode('/', $shop->getPath())[1],
+					'name'		=> $shop->getName(),
+					'addr'		=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+					'phone'		=> $shop->getPhone(),
+					'mobile'	=> '',
+					'mail3'		=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+					'mailc'		=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+					'mailp'		=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+					'orders'	=> [],
+					'timetable' => implode(',', $shop->getTimetable()),
+					'closing_periods' => $shop->getClosingPeriods(),
+					'delivery_days' => 'Du Mardi au Vendredi',
 				];
 		}
 		uasort($commercants, function ($lhs, $rhs) {
 			if ($lhs['active'] < $rhs['active'])
-				return true;
-			return false;
-		});
+		 		return true;
+		 	return false;
+		 });
 		return $commercants;
 	}
 
@@ -330,8 +327,9 @@ class Magento
 			$products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
 			if ($commercantId <> -1)
 				$products->addFieldToFilter('commercant', [ 'eq' => $commercantId ]);
+
 			foreach ($products as $product) {
-				$prod_data = $this->ProductParsing($product, $orderId);
+				$prod_data = $this->ProductParsing($product, $orderId);;
 				if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]))
 					$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
 				$commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;

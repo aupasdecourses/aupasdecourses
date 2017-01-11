@@ -32,13 +32,12 @@ class FromToMerchant extends AbstractType
 				'class' => 'form-control datepicker'
 			]
 		]);
-		$merchants->getMerchants();
 		$choices = ['All' => -1];
-		foreach($merchants as $com_id => $merchant) {
+		foreach($merchants->getMerchants() as $com_id => $merchant) {
 			$choices[$merchant['name']] = $com_id;
 		}
 		$builder->add('merchant', ChoiceType::class, [
-			'label' => 'Magasins:',
+			'label' => 'Magasin:',
 			'attr' => [
 				'class' => 'form-control'
 			],
