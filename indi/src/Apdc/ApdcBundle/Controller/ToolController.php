@@ -11,9 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ToolController extends Controller
 {
-
 	public function productAction(Request $request)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		return $this->render('ApdcApdcBundle::tool/product.html.twig');
@@ -21,6 +25,10 @@ class ToolController extends Controller
 
 	public function merchantAction(Request $request)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		return $this->render('ApdcApdcBundle::tool/merchant.html.twig');
@@ -28,6 +36,10 @@ class ToolController extends Controller
 
 	public function categoryAction(Request $request)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		return $this->render('ApdcApdcBundle::tool/category.html.twig');

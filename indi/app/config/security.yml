@@ -13,8 +13,7 @@ security:
         #       csrf_token_id: authenticate
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-        Apdc\ApdcBundle\Entity\User: plaintext
+        Apdc\ApdcBundle\Entity\User: sha512
 
     role_hierarchy:
         ROLE_ADMIN:       [ROLE_DISPATCH]
@@ -22,12 +21,9 @@ security:
 
     providers:
         apdc_provider:
-            entity:
-                class: Apdc\ApdcBundle\Entity\User
-                property: username
+            id: fos_user.user_provider.username
 
     access_control:
-        # - { path: ^/orders, roles: ROLE_ADMIN }
 
     firewalls:
         dev:

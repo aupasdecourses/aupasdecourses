@@ -12,14 +12,6 @@ class Magento
 
 	const AUTHORIZED_GROUP = ['Administrators'];
 
-	//static private $_this;
-
-	/*static function getInstance() {
-		if (!isset(static::$_this))
-			static::$_this = new Magento();
-		return (static::$_this);
-	}*/
-
 	public function __construct() {
 		\Mage::app();
 	}
@@ -30,76 +22,6 @@ class Magento
 
 	public function mediaUrl() {
 		return \Mage::getBaseUrl('media');
-	}
-
-	public function isLogged() {
-		\Mage::getSingleton('core/session',['name' => 'adminhtml']);
-		if (isset($_SESSION['delivery'])) {
-			return (true);
-		}
-		$user = \Mage::getSingleton('admin/session')->getUser();
-		if (isset($user)) {
-			$username = $user->getUsername();
-			$group = \Mage::getModel('admin/user')->load($user->getUserId())->getRole()->getData('role_name');
-			if (in_array($group, self::AUTHORIZED_GROUP)) {
-				$_SESSION['delivery'] = [
-					'username'	=>	$username,
-					'groupname'	=>	$group
-				];
-				return (true);
-			}
-		}
-		return (false);
-	}
-
-	public function login($username = null, $password = null) {
-//		\Mage::app();
-		\Mage::getModel('admin/session')->login($username, $password);
-		return $this->isLogged();
-	}
-
-	public function logout() {
-		\Mage::getSingleton('core/session',['name' => 'adminhtml']);
-		$adminSession = \Mage::getSingleton('admin/session');
-		$adminSession->unsetAll();
-		$adminSession->getCookie()->delete($adminSession->getSessionName());
-		unset($_SESSION['delivery']);
-	}
-/*
-	public function getRoles(){
-	
-		$roles = \Mage::getModel('admin/role')->getCollection()
-			->addFieldToSelect('user_id')
-			->addFieldToSelect('role_name');
-
-		foreach($roles as $role){
-			echo'</br>';
-			print_R($role->getData());
-			echo'</br>';
-		}
-	}
-
-	public function getUsers(){
-
-		$users = \Mage::getModel('admin/user')->getCollection()
-			->addFieldToSelect('user_id')
-			->addFieldToSelect('username');
-
-		foreach($users as $user){
-			echo'</br>';
-			print_R($user->getData());
-			echo'</br>';
-		}
-	}
- */
-	public function getCurrentUser(){
-	
-		$role_users = \Mage::getResourceModel('admin/roles_user_collection');
-		foreach($role_users as $roleuser){
-			$userId = \Mage::getModel('admin/user')->load($roleuser->getUserId());
-			$userName = $userId->getUsername();
-		}
-		return($userName);
 	}
 
 	public function getMerchants($commercantId = -1) {

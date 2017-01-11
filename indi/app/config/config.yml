@@ -78,3 +78,9 @@ oneup_uploader:
             error_handler: oneup_uploader.error_handler.noop
             storage:
                 directory: "%kernel.root_dir%/../web/uploads/gallery/"
+
+#bundle users
+fos_user:
+    db_driver: orm
+    firewall_name: apdc_firewall
+    user_class: Apdc\ApdcBundle\Entity\User
