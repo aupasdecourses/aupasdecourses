@@ -3,6 +3,7 @@
 namespace Apdc\ApdcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -18,6 +19,16 @@ class User implements UserInterface
     /**
      * @var string
      */
+    private $firstname;
+
+    /**
+     * @var string
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     */
     private $username;
 
     /**
@@ -28,21 +39,21 @@ class User implements UserInterface
     /**
      * @var string
      */
-    private $email;
+    private $salt;
 
     /**
      * @var string
      */
-    private $salt;
+    private $email;
 
     /**
      * @var array
      */
-    private $roles = array();
+	private $roles = array();
 
-	public function eraseCredentials()
-	{
+	public function eraseCredentials(){
 	}
+
 
     /**
      * Get id
@@ -52,6 +63,54 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 
     /**
@@ -103,30 +162,6 @@ class User implements UserInterface
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * Set salt
      *
      * @param string $salt
@@ -148,6 +183,30 @@ class User implements UserInterface
     public function getSalt()
     {
         return $this->salt;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**

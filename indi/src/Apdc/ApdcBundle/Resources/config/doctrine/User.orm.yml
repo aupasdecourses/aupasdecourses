@@ -9,6 +9,12 @@ Apdc\ApdcBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
+        firstname:
+            type: string
+            length: 255
+        lastname:
+            type: string
+            length: 255
         username:
             type: string
             length: 255
@@ -16,13 +22,13 @@ Apdc\ApdcBundle\Entity\User:
         password:
             type: string
             length: 255
+        salt:
+            type: string
+            length: 255
         email:
             type: string
             length: 255
             nullable: true
-        salt:
-            type: string
-            length: 255
         roles:
             type: array
     lifecycleCallbacks: {  }
