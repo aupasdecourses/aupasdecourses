@@ -1,0 +1,53 @@
+{% block menu %}
+	
+	<nav class="navbar-inner" role="navigation">
+		<div class="container">
+			<a class="navbar-brand" href="{{path ('root') }}"><i class="fa fa-bicycle fa-2x"></i><span>Au Pas De Courses</span></a>
+				<ul class ="nav navbar-nav">
+				{% if is_granted('ROLE_ADMIN') %}			
+					<li class="dropdown">	
+						<a href="{{ path ('ordersIndex')}}">Commandes</a>
+					</li>
+				{% endif %}
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Dispatch<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('merchantsIndex')}}">Commercants</a></li>
+							<li><a href="{{ path ('pickingIndex')}}">Enlevement</a></li>
+							<li><a href="{{ path ('shippingIndex')}}">Livraisons</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="{{ path ('refundIndex')}}">Remboursement</a>
+					</li>
+					<li>
+						<a href="">Facturation</a>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Stats<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="">Fidelites Clients ???</a></li>
+							<li><a href="">Stats Clients ??? </a></li>
+							<li><a href="">Stats Coupons </a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Outils<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('toolProduct') }}">Photos Produits</a></li>
+							<li><a href="{{ path ('toolMerchant') }}">Photos Commercants</a></li>
+							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">{{ app.user.username }}<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path('userLogout') }}">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+		</div>
+	</nav>
+{% endblock %}

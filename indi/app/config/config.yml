@@ -48,6 +48,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -67,3 +69,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#blueImp bundle which enables to load many files
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp
+            error_handler: oneup_uploader.error_handler.noop
+            storage:
+                directory: "%kernel.root_dir%/../web/uploads/gallery/"

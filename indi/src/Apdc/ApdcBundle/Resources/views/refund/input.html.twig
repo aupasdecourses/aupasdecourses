@@ -1,0 +1,73 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<h1> Remboursement : Input des infos </h1>
+</div>
+<hr>
+	{{ form_start(form) }}
+		{% for merchant_id, merchant_part in order %}
+			<div class='row'>
+				<table>
+					<tr>
+						<td>
+							<div id='{{merchant_id}}-ticket-img' class='merchant-ticket' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
+						</td>
+						<td>
+							<h1>{{merchant_part.merchant.name}}</h1>
+							<table id='{{merchant_id}}' class='merchant table'>
+								<tr>
+									<th>Produit</th>
+									<th>Description</th>
+									<th>Quantite</th>
+									<th>Prix Unitaire</th>
+									<th>Total Commande</th>
+									<th>Total Ticket</th>
+									<th>Differentiel</th>
+									<th>Commentaire</th>
+								</tr>
+								{% for product_id, product in merchant_part.products %}
+									<tr>
+										<td>{{product.nom}}</td>
+										<td>{{product.description}}</td>
+										<td>{{product.quantite}}</td>
+										<td>{{product.prix_kilo}}</td>
+										<td>
+											<span id='{{product_id}}-total'>{{product.prix_total}}</span>
+										</td>
+										<td>
+											<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix}}' />
+										</td>
+										<td>
+											<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff}}</p>
+										</td>
+										<td>
+											<input type='text' name='form[{{product_id}}][comment]' value='{{product.refund_com}}'/>
+										</td>
+									</tr>
+								{% endfor %}
+								<tr>
+									<th colspan='4'>TOTAL</th>
+									<td><p id='{{merchant_id}}-total'>{{merchant_part.merchant.total}}</p></td>
+									<td><p id='{{merchant_id}}-ticket-total'></p></td>
+									<td><p id='{{merchant_id}}-diff-total'></p></td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<hr />
+		{% endfor %}
+		
+	<!--	<input type="hidden" name="_csrf_token"
+					   value="{#{ csrf_token('authenticate') }#}">
+	-->
+		<input type='submit' name='submit' value='submit' />
+		<input type='submit' name='submit' value='next' />
+
+			{{ form_end(form) }}
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
