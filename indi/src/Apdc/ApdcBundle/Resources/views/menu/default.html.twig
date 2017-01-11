@@ -4,11 +4,9 @@
 		<div class="container">
 			<a class="navbar-brand" href="{{path ('root') }}"><i class="fa fa-bicycle fa-2x"></i><span>Au Pas De Courses</span></a>
 				<ul class ="nav navbar-nav">
-				{% if is_granted('ROLE_ADMIN') %}			
 					<li class="dropdown">	
 						<a href="{{ path ('ordersIndex')}}">Commandes</a>
 					</li>
-				{% endif %}
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Dispatch<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -17,6 +15,8 @@
 							<li><a href="{{ path ('shippingIndex')}}">Livraisons</a></li>
 						</ul>
 					</li>
+				
+					{% if is_granted('ROLE_ADMIN') %}			
 					<li>
 						<a href="{{ path ('refundIndex')}}">Remboursement</a>
 					</li>
@@ -39,7 +39,9 @@
 							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
 						</ul>
 					</li>
+					{% endif %}
 				</ul>
+
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">{{ app.user.username }}<span class="caret"></span></a>

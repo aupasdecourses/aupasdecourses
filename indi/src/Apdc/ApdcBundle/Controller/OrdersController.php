@@ -11,12 +11,6 @@ class OrdersController extends Controller
 {
 	public function indexAction(Request $request)
 	{
-		
-		if(!$this->isGranted('ROLE_ADMIN')){
-			return $this->redirectToRoute('root');
-		}
-	 
-
 		$mage = $this->container->get('apdc_apdc.magento');
 	
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
@@ -48,11 +42,6 @@ class OrdersController extends Controller
 
 	public function ordersOneAction(Request $request, $id)
 	{
-		
-		if(!$this->isGranted('ROLE_ADMIN')){
-			return $this->redirectToRoute('root');
-		}
-		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
@@ -76,10 +65,6 @@ class OrdersController extends Controller
 
 	public function ordersAllAction(Request $request, $from, $to)
 	{
-		
-		if(!$this->isGranted('ROLE_ADMIN')){
-			return $this->redirectToRoute('root');
-		}
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();

@@ -21,6 +21,11 @@ class RefundController extends Controller
 
 	public function indexAction(Request $request, $from)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_from = new\Apdc\ApdcBundle\Entity\From();
@@ -102,6 +107,11 @@ class RefundController extends Controller
 
 	public function refundUploadAction(Request $request, $id)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$order = $mage->getOrderByMerchants($id);
@@ -168,6 +178,11 @@ class RefundController extends Controller
 
 	public function refundInputAction(Request $request, $id)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$order = $mage->getRefunds($id);
@@ -232,9 +247,14 @@ class RefundController extends Controller
 			'order_id' => $id,
 		]);
 	}
-
+	
 	public function refundDigestAction(Request $request, $id)
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$order = $mage->getRefunds($id);
