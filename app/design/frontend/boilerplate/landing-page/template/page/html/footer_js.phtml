@@ -1,0 +1,51 @@
+<script>
+	function init() {
+	    var imgDefer = document.getElementsByTagName('img');
+	    for (var i=0; i<imgDefer.length; i++) {
+	        if(imgDefer[i].getAttribute('data-src')) {
+	            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+	        }
+	    }
+	    var vidDefer = document.getElementsByTagName('iframe');
+	    for (var i=0; i<vidDefer.length; i++) {
+	        if(vidDefer[i].getAttribute('data-src')) {
+	            vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
+	        }
+	    }
+	}
+	window.onload = init;
+</script>
+<script type="text/javascript">
+	function downloadJSAtOnload() {
+	    var jsArray = [
+	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'googleanalytics/ga.js'?>",
+	        "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'tawkto/tawkto.js'?>",
+	       	"<?php echo $this->getSkinUrl('js/custom.js');?>"
+	        ];
+	    var arrayLength = jsArray.length;
+	    for (var i = 0; i < arrayLength; i++) {
+	        var element = document.createElement("script");
+	        element.src = jsArray[i];
+	        document.body.appendChild(element);
+	    }
+	}
+	if (window.addEventListener)
+		window.addEventListener("load", downloadJSAtOnload, false);
+	else if (window.attachEvent)
+		window.attachEvent("onload", downloadJSAtOnload);
+	else window.onload = downloadJSAtOnload;
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+	document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '1709948302620869');
+	fbq('track', "PageView");
+</script>
+<noscript>
+	<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1709948302620869&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
