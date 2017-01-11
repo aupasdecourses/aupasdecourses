@@ -4,202 +4,15 @@
 define('TAX_SERVICE', .2);
 define('FLOAT_NUMBER', 2);
 
-/////Connection à Magento => création d'un objet réutilisable par les autres fonctions
-function connect_magento()
-{
-    include CHEMIN_MAGE.'app/Mage.php';
-    umask(0);
-    Mage::app();
-}
+//=> FONCTIONS GENERALES
 
-/////Création des tables commercants, produits, statuts pour limiter les call à MAGENTO
-
-function list_stores($displayby = 'code')
-{
-    //Get all store except "accueil"
-
-    $stores = [];
-    $allStores = Mage::app()->getStores();
-    foreach ($allStores as $_eachStoreId => $val) {
-        $_storeId = Mage::app()->getStore($_eachStoreId)->getId();
-        if ($displayby == 'code') {
-            $_storeCode = Mage::app()->getStore($_eachStoreId)->getCode();
-            $stores[$_storeId] = $_storeCode;
-        } elseif ($displayby == 'name') {
-            $_storeName = Mage::app()->getStore($_eachStoreId)->getName();
-            $stores[$_storeId] = $_storeName;
-        }
-    }
-    if (($key = array_search('Au Pas De Courses Accueil', $stores)) !== false || ($key = array_search('accueil', $stores)) !== false) {
-        unset($stores[$key]);
-    }
-
-    return $stores;
-}
-
-function list_rootcatid($displayby = 'name')
-{
-    $stores = list_stores('name');
-    $rootcatid = [];
-    foreach ($stores as $id => $name) {
-        $current = Mage::app()->setCurrentStore($id);
-        $rootCategoryId = Mage::app()->getStore()->getRootCategoryId();
-        if ($displayby == 'name') {
-            $rootcatid[$rootCategoryId] = $name;
-        } elseif ($displayby == 'id') {
-            $rootcatid[$rootCategoryId] = $id;
-        }
-    }
-
-    return $rootcatid;
-}
-
-//* --- Récupération des informations commerçants avec numéro ID --*//
-
-//LISTE COMMERCANT PAR STORE ET ID ATTRIBUT COMMERCANT
-
-function liste_commercant_id($filter = 'none')
-{
-    $return = [];
-
-    //with Apdc_Commercant module
-    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
-    if ($filter == 'none') {
-        foreach ($shops as $shop) {
-            $return[$shop->getIdAttributCommercant()] = $shop->getName();
-        }
-    } elseif ($filter == 'store') {
-        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
-        $shops->addFilterToMap('path', 'catalog_category_entity.path');
-        foreach ($shops as $shop) {
-            $storeid = explode('/', $shop->getPath())[1];
-
-            $return[$storeid][$shop->getIdAttributCommercant()] = array(
-                'name' => $shop->getName(),
-                'adresse' => $shop->getStreet().' '.$shop->getPostcode().' '.$shop->getCity(),
-                'telephone' => $shop->getPhone(),
-            );
-        }
-    }
-
-    arsort($return);
-
-    return $return;
-}
-
-//INFO COMMERCANT, VIA ID ATTRIBUT COMMERCANT
-
-function info_commercant_id($id_attribut_commercant)
-{
-    $return = [];
-
-    //with Apdc_Commercant module
-    $shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant)->getFirstItem();
-    $return = array(
-        'name' => $shop->getName(),
-        'adresse' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
-        'telephone' => $shop->getPhone(),
-        'mail_contact' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
-        'mail_pro' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
-        'mail_3' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
-    );
-
-    return $return;
-}
-
-//LISTE DES COMMANDES PAR COMMERCANT, VIA COMMERCANT_ID
-function commandes_commercant($id)
-{
-    $collection = Mage::getModel('sales/order')->getCollection();
-    $orders_com = array();
-    foreach ($collection as $order) {
-        $ordered_items = $order->getAllVisibleItems();
-        //$ordered_items = Mage::getResourceModel('sales/order_item_collection')->setOrderFilter($order);
-        foreach ($ordered_items as $item) {
-            //récupère l'information 'commerçant' dans sales_flat_order_item pour les commandes après 11-06-2015
-            if ($item->getCommercant() !== null) {
-                if ($item->getCommercant() == $id) {
-                    array_push($orders_com, $order->getData('increment_id'));
-                }
-            } else {
-                $product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-                if ($product->getCommercant() == $id) {
-                    array_push($orders_com, $order->getData('increment_id'));
-                }
-            }
-        }
-    }
-
-    return $orders_com;
-}
-
-//COMMANDES (OBJETS) PAR COMMERCANTS
-function all_orders($var = 'mwddate', $commercantId = 'all')
-{
-    try {
-        $orders = Mage::getModel('sales/order')->getCollection();
-        //N'affiche que les commandes de moins de 3 mois
-        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m') - 3, date('d'), date('Y')));
-
-        //Ajout de MWDDate (pour les commandes après le 12 janvier environ)
-        if ($var == 'mwddate') {
-            $orders->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
-            $orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate', 'dtime' => 'mwddate.dtimetext'));
-            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
-            $orders->addFilterToMap('ddate', 'mwddate.ddate');
-            $orders->addFilterToMap('dtime', 'mwddate.dtimetext')
-            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-            ->addAttributeToSort('dtime', 'asc');
-            $orders->addAttributeToFilter('main_table.created_at', array(
-                            'from' => $from_date,
-                    ));
-
-        //Amasty Delivery Date
-        } elseif ($var = '') {
-            $orders->getSelect()->join(array('delivery_date' => 'amasty_amdeliverydate_deliverydate'), 'delivery_date.order_id = main_table.entity_id', array('*', 'delivery_date' => 'delivery_date.date', 'delivery_time' => 'delivery_date.time'))->order('delivery_date', 'ASC');
-            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
-            $orders->addFilterToMap('delivery_date', 'delivery_date.date');
-            $orders->addFilterToMap('delivery_time', 'delivery_date.time')
-            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-            ->addAttributeToSort('delivery_time', 'asc');
-            $orders->addAttributeToFilter('main_table.created_at', array(
-                            'from' => $from_date,
-                    ));
-        }
-
-        if ($commercantId != 'all') {
-            $orders->getSelect()->join(
-                array('order_item' => Mage::getSingleton('core/resource')->getTableName('sales/order_item')),
-                'order_item.order_id = main_table.entity_id'
-            )->where('order_item.commercant='.strval($commercantId))->group('order_item.order_id');
-        }
-    } catch (Exception $e) {
-    }
-
-    return $orders;
-}
-
-//Get orders for one commercant for a specific date
-function orders_fortheday($date, $commercantId = 'all', $var = 'mwddate')
-{
-    //$date need to be of format 2016-02-23
-    $orders = all_orders($var, $commercantId);
-    $d = explode('-', $date);
-    $date = date('Y-m-d H:i:s', mktime(0, 0, 0, intval($d[1]), intval($d[2]), intval($d[0])));
-    if ($var == 'mwddate') {
-        $orders->addAttributeToFilter('ddate', array(
-            'in' => $date,
-        ));
-    } else {
-        $orders->addAttributeToFilter('delivery_date', array(
-            'in' => $date,
-        ));
-    }
-
-    return $orders;
-}
-
-//Get Date or Delivery Time Array => would be better to use model/table mwddate & amasty
+/*Get Date or Delivery Time Array => would be better to use model/table mwddate & amasty
+/ Used in
+/var/www/html/apdcdev/delivery/modules/commande/views/commande_commercant.phtml:
+/var/www/html/apdcdev/delivery/modules/commande/views/liste_commande.phtml:
+/var/www/html/apdcdev/delivery/modules/commande/views/liste_commande_client.phtml:
+/var/www/html/apdcdev/delivery/modules/dispatch/views/listing.phtml
+*/
 function datetime_filter($render = 'date', $var = 'mwddate')
 {
     try {
@@ -240,89 +53,264 @@ function datetime_filter($render = 'date', $var = 'mwddate')
     }
 }
 
-//LISTE DES COMMANDES
-function liste_commande()
+/* Used in 
+/var/www/html/apdcdev/delivery/models/magento.php:
+/var/www/html/apdcdev/delivery/modules/facturation/view.php:
+/var/www/html/apdcdev/delivery/modules/facturation/views/facturation.phtml:
+*/
+
+function end_month($date)
 {
-    $orders = Mage::getModel('sales/order')->getCollection();
+    $date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
+    $date = strtotime('-1 second', $date);
+    $date = date('Y-m-d H:i:s', $date);
+
+    return $date;
+}
+
+//Used in /var/www/html/apdcdev/delivery/modules/commande/views/commande_commercant.phtml
+function produit_equivalent_label($order)
+{
+    $prodeq = $order->getData('produit_equivalent');
+    if ($prodeq == 1) {
+        return 'Oui';
+    } else {
+        return 'Non';
+    }
+}
+
+//FONCTIONS MAGENTO
+
+/////Connection à Magento => création d'un objet réutilisable par les autres fonctions
+function connect_magento()
+{
+    include CHEMIN_MAGE.'app/Mage.php';
+    umask(0);
+    Mage::app();
+}
+
+/////Création des tables commercants, produits, statuts pour limiter les call à MAGENTO
+/* Used in
+list_rootcatid($displayby = 'name')
+/var/www/html/apdcdev/delivery/modules/commande/views/liste_commande_client.phtml
+*/
+
+function list_stores($displayby = 'code')
+{
+    //Get all store except "accueil"
+
+    $stores = [];
+    $allStores = Mage::app()->getStores();
+    foreach ($allStores as $_eachStoreId => $val) {
+        $_storeId = Mage::app()->getStore($_eachStoreId)->getId();
+        if ($displayby == 'code') {
+            $_storeCode = Mage::app()->getStore($_eachStoreId)->getCode();
+            $stores[$_storeId] = $_storeCode;
+        } elseif ($displayby == 'name') {
+            $_storeName = Mage::app()->getStore($_eachStoreId)->getName();
+            $stores[$_storeId] = $_storeName;
+        }
+    }
+    if (($key = array_search('Au Pas De Courses Accueil', $stores)) !== false || ($key = array_search('accueil', $stores)) !== false) {
+        unset($stores[$key]);
+    }
+
+    return $stores;
+}
+
+/*Used in
+/var/www/html/apdcdev/delivery/modules/commercant/views/list_commercant_order.phtml:
+/var/www/html/apdcdev/delivery/modules/commercant/views/list_commercant_profil.phtml:
+/var/www/html/apdcdev/delivery/modules/dispatch/views/listing.phtml
+*/
+
+function list_rootcatid($displayby = 'name')
+{
+    $stores = list_stores('name');
+    $rootcatid = [];
+    foreach ($stores as $id => $name) {
+        $current = Mage::app()->setCurrentStore($id);
+        $rootCategoryId = Mage::app()->getStore()->getRootCategoryId();
+        if ($displayby == 'name') {
+            $rootcatid[$rootCategoryId] = $name;
+        } elseif ($displayby == 'id') {
+            $rootcatid[$rootCategoryId] = $id;
+        }
+    }
+
+    return $rootcatid;
+}
+
+//LISTE COMMERCANT PAR STORE ET ID ATTRIBUT COMMERCANT
+
+/*Used in
+/var/www/html/apdcdev/delivery/modules/commande/views/commande_commercant.phtml:
+/var/www/html/apdcdev/delivery/modules/commercant/views/list_commercant_order.phtml:
+/var/www/html/apdcdev/delivery/modules/commercant/views/list_commercant_profil.phtml:
+/var/www/html/apdcdev/delivery/modules/dispatch/views/listing.phtml:
+/var/www/html/apdcdev/delivery/send_daily_orders.php:
+/var/www/html/apdcdev/delivery/uploadpdf.php
+/data_facturation_products()
+*/
+
+function getShops($id = -1, $filter = 'none')
+{
+    $return = [];
+    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
+
+    if ($id == -1) {
+        if ($filter == 'none') {
+            foreach ($shops as $shop) {
+                $return[$shop->getIdAttributCommercant()] = $shop->getName();
+            }
+        } elseif ($filter == 'store') {
+            $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+            $shops->addFilterToMap('path', 'catalog_category_entity.path');
+            foreach ($shops as $shop) {
+                $storeid = explode('/', $shop->getPath())[1];
+
+                $return[$storeid][$shop->getIdAttributCommercant()] = array(
+                    'name' => $shop->getName(),
+                    'adresse' => $shop->getStreet().' '.$shop->getPostcode().' '.$shop->getCity(),
+                    'telephone' => $shop->getPhone(),
+                );
+            }
+        }
+        arsort($return);
+    } else {
+        $data = $shops->load($id, 'id_attribut_commercant')->getData();
+
+        $return['name'] = $data['name'];
+        $return['adresse'] = $data['street'].' '.$data['postcode'].' '.$data['city'];
+        $return['url_adresse'] = 'https://www.google.fr/maps/place/'.str_replace(' ', '+', $return['adresse']);
+        $return['phone'] = $data['phone'];
+        $return['website'] = $data['website'];
+        $return['timetable'] = implode(',', $data['timetable']);
+        $return['closing_periods'] = $data['closing_periods'];
+        $return['delivery_days'] = 'Du Mardi au Vendredi';
+        $return['mail_contact'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail();
+        $return['mail_pro'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail();
+        $return['mail_3'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail();
+    }
+
+    return $return;
+}
+
+//=>FONCTIONS COMMANDES PAR COMMERCANTS/SHOPS
+
+//COMMANDES (OBJETS) PAR COMMERCANTS
+//Used only in function orders_fortheday()*/
+function all_orders($var = 'mwddate', $commercantId = 'all')
+{
+    try {
+        $orders = Mage::getModel('sales/order')->getCollection();
+        //N'affiche que les commandes de moins de 3 mois
+        $from_date = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m') - 3, date('d'), date('Y')));
+
+        //Ajout de MWDDate (pour les commandes après le 12 janvier environ)
+        if ($var == 'mwddate') {
+            $orders->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
+            $orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate', 'dtime' => 'mwddate.dtimetext'));
+            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
+            $orders->addFilterToMap('ddate', 'mwddate.ddate');
+            $orders->addFilterToMap('dtime', 'mwddate.dtimetext')
+            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+            ->addAttributeToSort('dtime', 'asc');
+            $orders->addAttributeToFilter('main_table.created_at', array(
+                            'from' => $from_date,
+                    ));
+
+        //Amasty Delivery Date
+        } elseif ($var = '') {
+            $orders->getSelect()->join(array('delivery_date' => 'amasty_amdeliverydate_deliverydate'), 'delivery_date.order_id = main_table.entity_id', array('*', 'delivery_date' => 'delivery_date.date', 'delivery_time' => 'delivery_date.time'))->order('delivery_date', 'ASC');
+            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
+            $orders->addFilterToMap('delivery_date', 'delivery_date.date');
+            $orders->addFilterToMap('delivery_time', 'delivery_date.time')
+            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+            ->addAttributeToSort('delivery_time', 'asc');
+            $orders->addAttributeToFilter('main_table.created_at', array(
+                            'from' => $from_date,
+                    ));
+        }
+
+        if ($commercantId != 'all') {
+            $orders->getSelect()->join(
+                   array('order_item' => Mage::getSingleton('core/resource')->getTableName('sales/order_item')),
+                'order_item.order_id = main_table.entity_id'
+            )->where('order_item.commercant='.strval($commercantId))->group('order_item.order_id');
+        }
+    } catch (Exception $e) {
+    }
 
     return $orders;
 }
 
-//LISTE DES COMMANDES PAR STATUT
-function liste_commande_statut($statut)
+//Get orders for one commercant for a specific date
+/* Used in
+/var/www/html/apdcdev/delivery/modules/commande/views/commande_commercant.phtml:
+/var/www/html/apdcdev/delivery/modules/commande/views/liste_commande.phtml:
+/var/www/html/apdcdev/delivery/modules/commande/views/liste_commande_client.phtml:
+/var/www/html/apdcdev/delivery/modules/dispatch/views/listing.phtml:
+/var/www/html/apdcdev/delivery/send_daily_orders.php
+*/
+
+function orders_fortheday($date, $commercantId = 'all', $var = 'mwddate')
 {
-    $orders = Mage::getModel('sales/order')->getCollection();
+    //$date need to be of format 2016-02-23
+    $orders = all_orders($var, $commercantId);
+    $d = explode('-', $date);
+    $date = date('Y-m-d H:i:s', mktime(0, 0, 0, intval($d[1]), intval($d[2]), intval($d[0])));
+    if ($var == 'mwddate') {
+        $orders->addAttributeToFilter('ddate', array(
+            'in' => $date,
+        ));
+    } else {
+        $orders->addAttributeToFilter('delivery_date', array(
+            'in' => $date,
+        ));
+    }
 
     return $orders;
 }
 
-//RECUPERER LISTE D'ITEMS D'UNE COMMANDE
-function liste_items($order)
-{
-    $order = Mage::getModel('sales/order')->loadByIncrementId($order->getData('increment_id'));
+//=>FONCTIONS COMMANDES GENERALES
 
-    return $order->getAllVisibleItems();
-}
+//Get list of order ids
+/* Used in
+/var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml:
+/var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml:
+/var/www/html/apdcdev/delivery/modules/clients/views/clients_stat.phtml:
+/var/www/html/apdcdev/delivery/modules/facturation/view.php:
+/var/www/html/apdcdev/delivery/modules/facturation/views/facturation.phtml:
+/var/www/html/apdcdev/delivery/modules/remboursement/view.php
+*/
 
-//Récupère l'information commercant dans la table order
-function comid_item($item, $order)
+function get_list_orderid()
 {
-    $pid = $item->getProductId();
-    $items = $order->getAllItems();
-    $commercant = null;
-    foreach ($items as $itemId => $item) {
-        if ($item->getProductId() == $pid) {
-            $commercant = $item->getCommercant();
-        }
+    $orders = Mage::getResourceModel('sales/order_collection')
+        ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+        ->addAttributeToSelect('increment_id')
+        ->addAttributeToSelect('created_at')
+        ->setOrder('increment_id', 'asc');
+
+    $array_orderid = array();
+
+    foreach ($orders as $order) {
+        $id = $order->getIncrementId();
+        $date = date('d/m/Y', strtotime($order->getCreatedAt()));
+        $array_orderid[$id] = $date;
     }
 
-    return $commercant;
+    return $array_orderid;
 }
 
-//Récupère l'information contenu dans la categorie principale du commerçant avec le ID de l'attribut produits "commercant"
-function shop($id)
-{
-    $shop_info=array();
-    $data=Mage::getModel('apdc_commercant/shop')->load($id, 'id_attribut_commercant')->getData();
-
-    $shop_info["name"]=$data["name"];
-    $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
-    $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
-    $shop_info["phone"]=$data["phone"];
-    $shop_info["website"]=$data["website"];;
-    $shop_info["timetable"]=implode(",",$data["timetable"]);
-    $shop_info["closing_periods"]=$data["closing_periods"];;
-    $shop_info["delivery_days"]="Du Mardi au Vendredi";
-
-    return $shop_info;
-}
-
-//Récupère l'information marge dans la table order
-function marge_item($item, $order)
-{
-    $pid = $item->getProductId();
-    $items = $order->getAllItems();
-    $commercant = null;
-    foreach ($items as $itemId => $item) {
-        if ($item->getProductId() == $pid) {
-            $commercant = $item->getMargeArriere();
-        }
-    }
-
-    return $commercant;
-}
-
-//Check if a string start with something
-
-function startsWith($haystack, $needle)
-{
-    $length = strlen($needle);
-
-    return substr($haystack, 0, $length) === $needle;
-}
+//=> FONCTIONS ATTACHMENTS/COMMENTS
 
 //Get Order Attachments
-
+/*Used in 
+function getRelevantComments($order)
+function getRefundorderdata($order, $output)
+*/
 function getOrderAttachments($order)
 {
     $attachments = Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
@@ -336,8 +324,23 @@ function getOrderAttachments($order)
     return $comments;
 }
 
-//Get Order Comments
+/*Check if a string start with something
+/ Used only in
+function getOrderComments($order)
+*/
 
+function startsWith($haystack, $needle)
+{
+    $length = strlen($needle);
+
+    return substr($haystack, 0, $length) === $needle;
+}
+
+//Get Order Comments
+/*Used in 
+function getRelevantComments($order)
+function getRefundorderdata($order, $output)
+*/
 function getOrderComments($order)
 {
     $order_comments = '';
@@ -352,6 +355,50 @@ function getOrderComments($order)
     return '|*ORDER HISTORY*|</br>'.$order_comments;
 }
 
+//Used in data_clients()
+function getRelevantComments($order)
+{
+    $orderAttachment = getOrderAttachments($order);
+    $order_comments = getOrderComments($order);
+
+    return $orderAttachment.$order_comments;
+}
+
+//=> FONCTIONS FACTURATION
+
+//Récupère l'information commercant dans la table order
+/*Used in function data_facturation_products() */
+function comid_item($item, $order)
+{
+    $pid = $item->getProductId();
+    $items = $order->getAllItems();
+    $commercant = null;
+    foreach ($items as $itemId => $item) {
+        if ($item->getProductId() == $pid) {
+            $commercant = $item->getCommercant();
+        }
+    }
+
+    return $commercant;
+}
+
+//Récupère l'information marge dans la table order
+/*Used in function data_facturation_products() */
+function marge_item($item, $order)
+{
+    $pid = $item->getProductId();
+    $items = $order->getAllItems();
+    $commercant = null;
+    foreach ($items as $itemId => $item) {
+        if ($item->getProductId() == $pid) {
+            $commercant = $item->getMargeArriere();
+        }
+    }
+
+    return $commercant;
+}
+
+//Used in data_facturation_products()
 function getRefundorderdata($order, $output)
 {
     $refund_order = Mage::getModel('pmainguet_delivery/refund_order');
@@ -364,7 +411,7 @@ function getRefundorderdata($order, $output)
         if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
             foreach ($orders as $o) {
                 //$response[$o->getData('commercant')]= $o->getData($output);
-                $response[$o->getData('commercant')].=$orderAttachment;
+                $response[$o->getData('commercant')] .= $orderAttachment;
                 //$response[$o->getData('commercant')].=$order_comments;
             }
         } else {
@@ -380,15 +427,7 @@ function getRefundorderdata($order, $output)
     return $response;
 }
 
-//Used by Stats
-function getRelevantComments($order)
-{
-    $orderAttachment = getOrderAttachments($order);
-    $order_comments = getOrderComments($order);
-
-    return $orderAttachment.$order_comments;
-}
-
+//Used in data_facturation_products()
 function getRefunditemdata($item, $output)
 {
     $refund_items = Mage::getModel('pmainguet_delivery/refund_items');
@@ -398,7 +437,10 @@ function getRefunditemdata($item, $output)
     return $response;
 }
 
-//LISTE DES DONNEES FACTURATION
+//Liste des données de facturation
+/*Used in
+/var/www/html/apdcdev/delivery/modules/facturation/view.php
+*/
 
 function data_facturation_products($debut, $fin)
 {
@@ -408,7 +450,7 @@ function data_facturation_products($debut, $fin)
 
   $debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
 
-    $list_commercant = liste_commercant_id();
+    $list_commercant = getShops();
 
     $orders = Mage::getModel('sales/order')->getCollection()
     ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
@@ -650,15 +692,7 @@ function data_facturation_products($debut, $fin)
     return $data;
 }
 
-function end_month($date)
-{
-    $date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
-    $date = strtotime('-1 second', $date);
-    $date = date('Y-m-d H:i:s', $date);
-
-    return $date;
-}
-
+//Used in /var/www/html/apdcdev/delivery/modules/commande/views/validate.php
 function validate_item($order_id, $comment)
 {
     $magento = connect_magento();
@@ -667,60 +701,9 @@ function validate_item($order_id, $comment)
     $result = $soap->call($session_id, 'sales_order.addComment', array('orderIncrementId' => $order_id, 'status' => 'valid_produit_commercant', 'comment' => $comment));
 }
 
-function verif_validation($table_order, $order_id, $sku)
-{
-    $sku_valide = false;
+//=> FONCTIONS STATISTIQUES
 
-    foreach ($table_order[$order_id]['status_history'] as $key => $array) {
-        if (explode(' - ', $array['comment'])[0] == $sku) {
-            $sku_valide = true;
-        }
-    }
-
-    return $sku_valide;
-}
-
-//Get list of order ids
-function get_list_orderid()
-{
-    $orders = Mage::getResourceModel('sales/order_collection')
-        ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-        ->addAttributeToSelect('increment_id')
-        ->addAttributeToSelect('created_at')
-        ->setOrder('increment_id', 'asc');
-
-    $array_orderid = array();
-
-    foreach ($orders as $order) {
-        $id = $order->getIncrementId();
-        $date = date('d/m/Y', strtotime($order->getCreatedAt()));
-        $array_orderid[$id] = $date;
-    }
-
-    return $array_orderid;
-}
-
-//LISTE DES CLIENTS
-
-function list_clients()
-{
-    $users = mage::getModel('customer/customer')->getCollection()
-         ->addAttributeToSelect('customer_id')
-         ->addAttributeToSelect('firstname')
-         ->addAttributeToSelect('lastname')
-         ->addAttributeToSelect('email');
-
-         //Nom complet
-    //Mail
-    //Créé le
-    //Dernière commande
-    //Dernière connexion
-    //Nombre de commande
-
-    return $users;
-}
-
-//Refactoring surement possible avec data_facturation
+//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml
 function data_clients($debut, $fin)
 {
     $data = [];
@@ -775,6 +758,7 @@ function data_clients($debut, $fin)
 }
 
 //Refactoring surement possible avec data_facturation
+//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml
 function data_coupon($debut, $fin)
 {
     $data = [];
@@ -814,6 +798,10 @@ function data_coupon($debut, $fin)
     return $data_conso;
 }
 
+/* Used only in
+function stats_clients()
+*/
+
 function array_columns($array, $column_name)
 {
     return array_map(
@@ -824,6 +812,7 @@ function array_columns($array, $column_name)
     );
 }
 
+//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_stat.phtml
 function stats_clients()
 {
     $data = [];
@@ -885,16 +874,9 @@ function stats_clients()
     return $data;
 }
 
-function produit_equivalent_label($order)
-{
-    $prodeq = $order->getData('produit_equivalent');
-    if ($prodeq == 1) {
-        return 'Oui';
-    } else {
-        return 'Non';
-    }
-}
+//=>FONCTION FOR FUTURE ORDER RATING MODULE
 
+//used in histogramme
 function getNotes()
 {
     $notationClient = Mage::getSingleton('pmainguet_emailclient/notation')->getCollection();
