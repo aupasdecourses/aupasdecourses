@@ -24,7 +24,7 @@ ApdcPopup.prototype.getTemplate = function() {
   .done(function(response) {
     if (response.status === 'SUCCESS') {
       jQuery('body').append(response.html);
-      window.setTimeout(function() {
+      window.setTimeout(function() {
         self.initActions();
       }, 0);
     }
