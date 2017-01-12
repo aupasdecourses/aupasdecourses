@@ -5,6 +5,11 @@
  */
 class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml_Controller_Action
 {
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('catalog/commercant/shop'); 
+    }
+
     protected function _initAction()
     {
         $this->loadLayout()

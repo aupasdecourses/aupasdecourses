@@ -20,7 +20,7 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit_Form extends Mage_Adminhtml_
 
         $fieldset = $form->addFieldset(
             'base',
-            ['legend' => $this->__('General')]
+            ['legend' => $this->__('Général')]
         );
 
         if ($model->getId()) {
@@ -29,8 +29,9 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit_Form extends Mage_Adminhtml_
 
         $fieldset->addField('owner_name', 'text', [
             'name' => 'owner_name',
-            'label' => $this->__('Owner'),
+            'label' => $this->__('Nom du propriétaire du compte'),
             'required' => true,
+            'note' => $this->__('Utiliser le nom qui apparaît sur le IBAN'),
         ]);
 
         $fieldset->addField('account_iban', 'text', [
@@ -47,13 +48,13 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit_Form extends Mage_Adminhtml_
 
         $fieldset = $form->addFieldset(
             'legal',
-            ['legend' => $this->__('Legal details')]
+            ['legend' => $this->__('Documents légaux')]
         );
         $fieldset->addType('file', Mage::getConfig()->getBlockClassName('apdc_commercant/adminhtml_form_element_file'));
 
         $fieldset->addField('id_card', 'file', [
             'name' => 'id_card',
-            'label' => $this->__('ID Card'),
+            'label' => $this->__('Carte d\'identité'),
             'required' => false,
             'path' => $model->getMediaSubpath('id_card'),
         ]);
@@ -71,49 +72,49 @@ class Apdc_Commercant_Block_Adminhtml_BankInfo_Edit_Form extends Mage_Adminhtml_
         ]);
         $fieldset->addField('status', 'file', [
             'name' => 'status',
-            'label' => $this->__('Status'),
+            'label' => $this->__('Statuts'),
             'required' => false,
             'path' => $model->getMediaSubpath('status'),
         ]);
         $fieldset->addField('licence', 'file', [
             'name' => 'licence',
-            'label' => $this->__('Licence'),
+            'label' => $this->__('Autres docs (licence caviste ...)'),
             'required' => false,
             'path' => $model->getMediaSubpath('licence'),
         ]);
 
         $fieldset = $form->addFieldset(
             'bank',
-            ['legend' => $this->__('Bank details')]
+            ['legend' => $this->__('Détails compte bancaire')]
         );
 
         $fieldset->addField('bank_name', 'text', [
             'name' => 'bank_name',
-            'label' => $this->__('Name'),
+            'label' => $this->__('Nom'),
             'required' => true,
         ]);
 
         $fieldset->addField('bank_street', 'text', [
             'name' => 'bank_street',
-            'label' => $this->__('Address'),
+            'label' => $this->__('Rue'),
             'required' => true,
         ]);
 
         $fieldset->addField('bank_postcode', 'text', [
             'name' => 'bank_postcode',
-            'label' => $this->__('Zip/Postal Code'),
+            'label' => $this->__('Code Postal'),
             'required' => true,
         ]);
 
         $fieldset->addField('bank_city', 'text', [
             'name' => 'bank_city',
-            'label' => $this->__('City'),
+            'label' => $this->__('Ville'),
             'required' => true,
         ]);
         $countries = Mage::getModel('adminhtml/system_config_source_country')->toOptionArray();
         $fieldset->addField('bank_country', 'select', [
             'name' => 'bank_country',
-            'label' => $this->__('Country'),
+            'label' => $this->__('Pays'),
             'required' => true,
             'values' => $countries,
         ]);

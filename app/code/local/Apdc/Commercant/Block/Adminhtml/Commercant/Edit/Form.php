@@ -19,7 +19,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $fieldset = $form->addFieldset(
             'base',
-            ['legend' => $this->__('General')]
+            ['legend' => $this->__('Général')]
         );
 
         if ($model->getId()) {
@@ -28,8 +28,9 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $fieldset->addField('name', 'text', [
             'name' => 'name',
-            'label' => $this->__('Name'),
+            'label' => $this->__('Nom'),
             'required' => true,
+            'note' => $this->__('Utiliser le nom qui apparait sur le KBIS ou par défaut le nom du magasin principal en MAJUSCULE'),
         ]);
 
         $fieldset->addField('siren', 'text', [
@@ -40,7 +41,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $fieldset->addField('vat_number', 'text', [
             'name' => 'vat_number',
-            'label' => $this->__('VAT number'),
+            'label' => $this->__('Numéro TVA'),
             'required' => true,
         ]);
 
@@ -48,7 +49,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
         array_unshift($availableBankInfo, ['value' => '', 'label' => '']);
         $fieldset->addField('id_bank_information', 'select', [
             'name' => 'id_bank_information',
-            'label' => $this->__('Bank information'),
+            'label' => $this->__('Infos bancaires'),
             'required' => false,
             'values' => $availableBankInfo,
         ]);
@@ -60,7 +61,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
         array_unshift($availableCeos, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_ceo', 'select', [
             'name' => 'id_contact_ceo',
-            'label' => $this->__('CEO contact'),
+            'label' => $this->__('Contact gérant'),
             'required' => true,
             'values' => $availableCeos,
         ]);
@@ -72,7 +73,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
         array_unshift($availableBillingContacts, ['value' => '', 'label' => '']);
         $fieldset->addField('id_contact_billing', 'select', [
             'name' => 'id_contact_billing',
-            'label' => $this->__('Billing contact'),
+            'label' => $this->__('Contact facturation'),
             'required' => true,
             'values' => $availableBillingContacts,
         ]);
@@ -80,7 +81,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $fieldset = $form->addFieldset(
             'headquarters',
-            ['legend' => $this->__('Headquarters')]
+            ['legend' => $this->__('Siège social')]
         );
 
         $fieldset->addField('hq_siret', 'text', [
@@ -91,19 +92,19 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
 
         $fieldset->addField('hq_street', 'text', [
             'name' => 'hq_street',
-            'label' => $this->__('Address'),
+            'label' => $this->__('Rue'),
             'required' => true,
         ]);
 
         $fieldset->addField('hq_postcode', 'text', [
             'name' => 'hq_postcode',
-            'label' => $this->__('Zip/Postal Code'),
+            'label' => $this->__('Code Postal'),
             'required' => true,
         ]);
 
         $fieldset->addField('hq_city', 'text', [
             'name' => 'hq_city',
-            'label' => $this->__('City'),
+            'label' => $this->__('Ville'),
             'required' => true,
         ]);
 
@@ -111,7 +112,7 @@ class Apdc_Commercant_Block_Adminhtml_Commercant_Edit_Form extends Mage_Adminhtm
         unset($countries[0]);
         $fieldset->addField('hq_country', 'select', [
             'name' => 'hq_country',
-            'label' => $this->__('Country'),
+            'label' => $this->__('Pays'),
             'required' => true,
             'values' => $countries,
         ]);
