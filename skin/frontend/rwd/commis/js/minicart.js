@@ -22,10 +22,13 @@
  * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+if (typeof(MiniCartUpdateTimeout) === 'undefined') {
+  MiniCartUpdateTimeout = [];
+}
+
 function Minicart(options) {
     this.formKey = options.formKey;
     this.previousVal = null;
-    this.updateTimeout = null;
 
     this.defaultErrorMessage = 'Error occurred. Try to refresh page.';
 
@@ -46,10 +49,10 @@ function Minicart(options) {
         $j.extend(this.selectors, options.selectors);
     }
     var self = this;
-    $j(document).on('startUpdateMiniCartContent', function() {
+    $j(document).off('startUpdateMiniCartContent').on('startUpdateMiniCartContent', function() {
       self.showOverlay();
     });
-    $j(document).on('updateMiniCartContent', function(event, result) {
+    $j(document).off('updateMiniCartContent').on('updateMiniCartContent', function(event, result) {
       self.hideOverlay();
       self.updateCartQty(result.qty);
       self.updateContentOnUpdate(result);
@@ -142,13 +145,14 @@ Minicart.prototype = {
     updateItem: function(el) {
         var cart = this;
         var input = $j(this.selectors.quantityInputPrefix + $j(el).data('item-id'));
+        var itemId = $j(el).data('item-id');
         var quantity = parseInt(input.val(), 10);
         input.parent('.item-cell').find('.qty-text').html(quantity);
 
-        if (this.updateTimeout !== null) {
-          window.clearTimeout(this.updateTimeout);
+        if (MiniCartUpdateTimeout.length > 0 && MiniCartUpdateTimeout[itemId]) {
+          window.clearTimeout(MiniCartUpdateTimeout[itemId]);
         }
-        this.updateTimeout = window.setTimeout(function() {
+        MiniCartUpdateTimeout[itemId] = window.setTimeout(function() {
           cart.hideMessage();
           $j(document).trigger('updateCartStartLoading', [$j(el).data('item-id'), $j(el).data('product-id')]);
           cart.showOverlay();

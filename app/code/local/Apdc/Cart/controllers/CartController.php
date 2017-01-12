@@ -77,7 +77,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $this->_getCart()->save();
 
                 $this->loadLayout();
-                $result['content'] = $this->getLayout()->getBlock('minicart_content')->toHtml();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $quoteItem->getProductId());
+                $result['content'] = $minicartContent->toHtml();
 
                 $result['qty'] = $this->_getCart()->getSummaryQty();
 
