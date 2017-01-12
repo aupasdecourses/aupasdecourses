@@ -3322,14 +3322,11 @@ a.btn:hover {
 * - Add to Cart
 */
 
-#qty {
-    width: 40px;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    text-align: center;
-    text-align-last: center;
-    padding: 5px 0;
+.added-qty {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .label_qty {
@@ -3599,6 +3596,14 @@ a.btn:hover {
     font-weight: 400 !important;
     font-size: 24px;
     margin-bottom: 20px;
+}
+
+/* ============================================ *
+ * Popup produit
+ * ============================================ */
+
+#product-quick-view-popup-content{
+    padding:15px;
 }
 
 

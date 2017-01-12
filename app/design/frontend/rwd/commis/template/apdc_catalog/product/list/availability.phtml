@@ -3,7 +3,7 @@
 <?php $availability = $this->getAvailability($this->getProduct()); ?>
 
 <div class="product-availability">
-    <div class="hover-title product-availability-title"><?php echo $this->__('Disponibilités'); ?></div>
+    <div class="hover-title product-availability-title"><?php echo $this->__('Disponibilité'); ?></div>
     <?php foreach($this->getWeekDays() as $weekDay): ?>
 
         <?php if (in_array($weekDay['value'], $availability)) : ?>

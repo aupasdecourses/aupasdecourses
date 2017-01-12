@@ -76,6 +76,15 @@
                 </args>
             </addajax>
         </routers>
+        <translate>
+            <modules>
+                <Apdc_Cart>
+                    <files>
+                        <default>Apdc_Cart.csv</default>
+                    </files>
+                </Apdc_Cart>
+            </modules>
+        </translate>
     </frontend>
     <adminhtml>
         <layout>

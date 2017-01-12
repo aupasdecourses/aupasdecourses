@@ -22,6 +22,15 @@
                 </apdc_checkout>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Apdc_Checkout>
+                    <files>
+                        <default>Apdc_Checkout.csv</default>
+                    </files>
+                </Apdc_Checkout>
+            </modules>
+        </translate>
     </frontend>
     <global>
         <blocks>
