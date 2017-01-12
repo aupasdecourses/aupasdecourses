@@ -42,11 +42,6 @@
 <?php if(!$_productCollection->count()): ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
-<div class="page-title">
-    <h1 class="subtitle category_name">
-        <img class="thumb-menu" src="<?= $apdc_helper->getCatThumbnailUrl();?>"/>
-        <span class="commercant_name"><?= $apdc_helper->getCatTitle();?></span></h1>
-</div>
 <div class="category-products">
     <?php echo $this->getToolbarHtml() ?>
 

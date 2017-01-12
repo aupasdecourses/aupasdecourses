@@ -48,12 +48,6 @@ a:focus {
     }
 }
 
-@media screen and (min-width:992px) {
-    .col-main {
-        min-height: 600px;
-    }
-}
-
 select {
     background-color: white;
 }
