@@ -5,13 +5,14 @@ namespace Apdc\ApdcBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-//include_once 'Adyen.php';
+use Apdc\ApdcBundle\Entity\Refund;
+use Apdc\ApdcBundle\Form\RefundType;
 
 class RefundController extends Controller
 {
@@ -303,5 +304,34 @@ class RefundController extends Controller
 			'order_id' => $id,
 			'forms' => [ $form_submit->createView() ],
 		]);
+	}
+
+	public function refundAdyenFormAction(Request $request)
+	{
+		$adyen = $this->container->get('apdc_apdc.adyen');
+
+		$refund = new Refund();
+		$form = $this->createForm(RefundType::class, $refund);
+
+		if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+		{
+			/* La variable 'refund' contient les datas du formulaire*/
+						
+			try{
+			$merchantAccount		= $form["merchantAccount"]->getData();
+			$value					= $form["value"]->getData();
+			$originalReference		= $form["originalReference"]->getData();
+			$reference				= $form["reference"]->getData();
+
+			$adyen->refund($merchantAccount, $value, $originalReference, $reference);
+			} catch (Exception $e){
+				echo $e->getMessage();	
+			}
+			return $this->redirectToRoute('refundAdyenForm');
+		}
+		/* A ce stade le formulaire n'est pas valide*/
+		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', array(
+			'form' => $form->createView(),
+		));	
 	}
 }

@@ -5,3 +5,6 @@ services:
 #
     apdc_apdc.magento:
         class: Apdc\ApdcBundle\Services\Magento
+
+    apdc_apdc.adyen:
+        class: Apdc\ApdcBundle\Services\Adyen

@@ -1,5 +1,7 @@
 <?php
 
+namespace Apdc\ApdcBundle\Services;
+
 class Adyen {
 	/* IP SERVOR 137.74.162.115/32	*/
 
@@ -37,13 +39,13 @@ class Adyen {
 		$jsonRefundTable = json_encode($refundTable);
 
 		curl_setopt($this->_ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/servlet/Payment/v18/refund");
-		curl_setopt($this->_ch, CURLOPT_USERPWD,"ws_224975@Company.AuPasDeCourses:N@%n^IStD?2Xc4ISkc[>r@7<g");
+		curl_setopt($this->_ch, CURLOPT_USERPWD,"ws_224975@Company.AuPasDeCourses:J?nBNkZQtJp3zW-7>1{1nm?1/");
 		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $jsonRefundTable);
 		$refundResult = curl_exec($this->_ch);
 
-		if(curl_errno($this->_ch)){
+		if(curl_errno($this->_ch))
 			throw new Exception('Refund Curl Error'.curl_error($this->_ch)); 
-		}
+
 		$refundDecoded = json_decode($refundResult, true);
 		if (!in_array("[refund-received]", $refundDecoded))
 			throw new Exception('Adyen Error, Remboursement non valide');

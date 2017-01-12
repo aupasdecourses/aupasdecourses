@@ -1,0 +1,15 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<h1> Formulaire Adyen Remboursement </h1>
+		
+	{{ form_start(form)}}
+	{{form_errors(form)}}
+	{{form_end(form)}}
+
+</div>
+
+{% endblock %}
