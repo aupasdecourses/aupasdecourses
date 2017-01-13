@@ -85,6 +85,7 @@
         <remove name="right"/>
         <remove name="global_cookie_notice"/>
         <remove name="custommenu-content"/>
+        <remove name="captcha"/>
         <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">

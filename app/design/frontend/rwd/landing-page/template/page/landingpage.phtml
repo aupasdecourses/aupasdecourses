@@ -19,6 +19,9 @@
 				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
 			</video>
 			<div class="top-nav">
+				<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getUrl('customer/account/login');?>" role="button">Se connecter</a>
+				<?php endif ?>
 				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
 			</div>
 			<div class="intro-section">
