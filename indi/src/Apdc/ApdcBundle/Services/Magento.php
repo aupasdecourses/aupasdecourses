@@ -403,4 +403,12 @@ class Magento
 		}
 		return ($rsl);
 	}
+
+	public function getPspReferences(){
+		$references = \Mage::getModel('adyen/order_payment')->getCollection();
+		$reference = [];
+		$reference['pspreference'] = $references->getData('pspreference');
+		
+		return $reference;
+	}
 }

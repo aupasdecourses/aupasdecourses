@@ -25,26 +25,6 @@ protected $list_recurr_details_webservice	= 'ws_224975@Company.AuPasDeCourses';
 protected $list_recurr_details_password		= 'J?nBNkZQtJp3zW-7>1{1nm?1/';
 
 
-public function __construct($store_submit_3party_url, $store_payout_webservice, $store_payout_password, $confirm_3party_url, $decline_3party_url, $review_payout_webservice, $review_payout_password, $refund_url, $refund_webservice, $refund_password, $list_recurr_details_url, $list_recurr_details_webservice, $list_recurr_details_password){
-	$this->store_submit_3party_url			= $store_submit_3party_url;
-	$this->store_payout_webservice			= $store_payout_webservice;
-	$this->store_payout_password			= $store_payout_password;	
-
-	$this->confirm_3party_url				= $confirm_3party_url;
-	$this->decline_3party_url				= $decline_3party_url;
-	$this->review_payout_webservice			= $review_payout_webservice;
-	$this->review_payout_password			= $review_payout_password;
-
-	$this->refund_url						= $refund_url;
-	$this->refund_webservice				= $refund_webservice;
-	$this->refund_password					= $refund_password;
-
-	$this->list_recurr_details_url			= $list_recurr_details_url;
-	$this->list_recurr_details_webservice	= $list_recurr_details_webservice;
-	$this->list_recurr_details_password		= $list_recurr_details_password;
-}
-
-
 public function getStoreSubmit3PartyUrl(){
 	return $this->store_submit_3party_url;
 }

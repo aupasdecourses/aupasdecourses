@@ -306,32 +306,63 @@ class RefundController extends Controller
 		]);
 	}
 
-	public function refundAdyenFormAction(Request $request)
+	public function refundAdyenIndexAction(Request $request, $from)
+	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_from = new\Apdc\ApdcBundle\Entity\From();
+		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
+
+		$form_from->handleRequest($request);
+
+		if ($form_from->isValid())
+			return $this->redirectToRoute('refundAdyenIndex', [ 'from' => $entity_from->from ]);
+		if (!isset($from))
+			return $this->redirectToRoute('refundAdyenIndex', [ 'from' => date('Y-m-d', strtotime('-1 day')) ]);
+
+		$form_from->get('from')->setData($from);
+
+		$orders = $mage->getOrders($from);
+
+		return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
+			'forms' => [ $form_from->createView() ],
+				'orders' => $orders
+			]);
+
+	}
+
+	public function refundAdyenFormAction(Request $request, $id)
 	{
 		$adyen = $this->container->get('apdc_apdc.adyen');
-
+		$logs = $this->container->get('apdc_apdc.adyenlogs');
+		
+		$mage = $this->container->get('apdc_apdc.magento');
+		$references = $mage->getPspReferences();
+		
 		$refund = new Refund();
 		$form = $this->createForm(RefundType::class, $refund);
 
 		if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
-			/* La variable 'refund' contient les datas du formulaire*/
-						
 			try{
 			$merchantAccount		= $form["merchantAccount"]->getData();
 			$value					= $form["value"]->getData();
 			$originalReference		= $form["originalReference"]->getData();
-			$reference				= $form["reference"]->getData();
 
-			$adyen->refund($merchantAccount, $value, $originalReference, $reference);
+			$adyen->refund($merchantAccount, $value, $originalReference);
 			} catch (Exception $e){
 				echo $e->getMessage();	
 			}
 			return $this->redirectToRoute('refundAdyenForm');
 		}
-		/* A ce stade le formulaire n'est pas valide*/
-		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', array(
+			var_dump($references);
+		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
 			'form' => $form->createView(),
-		));	
+		]);	
 	}
 }

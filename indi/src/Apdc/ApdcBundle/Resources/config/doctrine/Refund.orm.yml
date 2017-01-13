@@ -17,6 +17,4 @@ Apdc\ApdcBundle\Entity\Refund:
         value:
             type: float
             nullable: true
-        reference:
-            type: string
     lifecycleCallbacks: {  }

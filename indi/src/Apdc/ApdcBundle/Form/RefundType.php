@@ -17,7 +17,6 @@ class RefundType extends AbstractType
 		$builder->add('merchantAccount', TextType::class)
 				->add('originalReference', TextType::class)
 				->add('value', NumberType::class)
-				->add('reference', TextType::class)
 				->add('submit', SubmitType::class);
     }
     
