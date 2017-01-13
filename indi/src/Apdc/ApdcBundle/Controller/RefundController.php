@@ -342,7 +342,7 @@ class RefundController extends Controller
 		$logs = $this->container->get('apdc_apdc.adyenlogs');
 		
 		$mage = $this->container->get('apdc_apdc.magento');
-		$references = $mage->getPspReferences();
+		$adyenFields = $mage->getAdyenOrderPayment();
 		
 		$refund = new Refund();
 		$form = $this->createForm(RefundType::class, $refund);
@@ -350,19 +350,19 @@ class RefundController extends Controller
 		if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
 			try{
-			$merchantAccount		= $form["merchantAccount"]->getData();
 			$value					= $form["value"]->getData();
 			$originalReference		= $form["originalReference"]->getData();
 
-			$adyen->refund($merchantAccount, $value, $originalReference);
+			$adyen->refund($value, $originalReference);
 			} catch (Exception $e){
 				echo $e->getMessage();	
 			}
-			return $this->redirectToRoute('refundAdyenForm');
+			return $this->redirectToRoute('refundAdyenIndex');
 		}
-			var_dump($references);
+
 		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
 			'form' => $form->createView(),
+			'adyenFields' => $adyenFields
 		]);	
 	}
 }

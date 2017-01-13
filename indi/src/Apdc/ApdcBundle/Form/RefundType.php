@@ -14,8 +14,7 @@ class RefundType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$builder->add('merchantAccount', TextType::class)
-				->add('originalReference', TextType::class)
+		$builder->add('originalReference', TextType::class)
 				->add('value', NumberType::class)
 				->add('submit', SubmitType::class);
     }

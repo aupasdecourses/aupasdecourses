@@ -6,25 +6,12 @@ class Refund
 {
     private $id;
 
-    private $merchantAccount;
     private $originalReference;
     private $value;
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setMerchantAccount($merchantAccount)
-    {
-        $this->merchantAccount = $merchantAccount;
-
-        return $this;
-    }
-
-    public function getMerchantAccount()
-    {
-        return $this->merchantAccount;
     }
 
     public function setOriginalReference($originalReference)

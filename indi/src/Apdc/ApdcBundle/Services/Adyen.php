@@ -30,14 +30,14 @@ class Adyen {
 		curl_close($this->_ch);
 	}
 
-	public function refund($merchantAccount, $value, $originalReference)
+	public function refund($value, $originalReference)
 	{
 		$refund_url			= $this->adyenlogs->getRefundUrl();
 		$refund_webservice	= $this->adyenlogs->getRefundWebservice();
 		$refund_password	= $this->adyenlogs->getRefundPassword();
 	
 		$refundTable = array(
-			"merchantAccount" => $merchantAccount,
+			"merchantAccount" => "AuPasDeCoursesFR",
 			"modificationAmount" => array(
 				"value" => $value,
 				"currency" => "EUR"

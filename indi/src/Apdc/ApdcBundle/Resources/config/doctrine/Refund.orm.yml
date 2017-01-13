@@ -9,9 +9,6 @@ Apdc\ApdcBundle\Entity\Refund:
             generator:
                 strategy: AUTO
     fields:
-        merchantAccount:
-            type: string
-            length: 255
         originalReference:
             type: string
         value:
