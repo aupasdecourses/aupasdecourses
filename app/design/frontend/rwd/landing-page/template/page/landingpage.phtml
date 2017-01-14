@@ -2,6 +2,7 @@
 	$i = rand(1, 17); // generate random number size of the array
 	$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
 	$angledown= $this->getSkinUrl("images/angle-down.png");
+	$_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -20,7 +21,9 @@
 			</video>
 			<div class="top-nav">
 				<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getUrl('customer/account/login');?>" role="button">Se connecter</a>
+				<a class="btn standard-button faq-button" style="float:right;" id="account-login" role="button">Se connecter</a>
+				<?php else: ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?= $_helper->getCustomerWebsite()?>" role="button">Mon quartier</button>
 				<?php endif ?>
 				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
 			</div>
