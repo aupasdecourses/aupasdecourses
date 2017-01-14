@@ -65,6 +65,7 @@
                                                 jQuery('.ddate_selected').show();
                                                 jQuery(option_responsive).parent().hide();
 
+                                                Mage.Cookies.set('delivery_slot', ddatei);
                                             } else {
                                                 jQuery(option_responsive).parent().hide();
                                             }
@@ -153,6 +154,14 @@
                 <div class="col-sm-6"><i class="fa fa-calendar" style="margin-right:5px"></i>Jour de livraison: <span id="showddate:date"></span></div>
                 <div class="col-sm-6"><i class="fa fa-clock-o" style="margin-right:5px"></i>Horaire: <span id="showddate:dtime"></span></div>
             </div>
+            <script type="text/javascript">
+                jQuery(function ($) {
+                    var slot = Mage.Cookies.get('delivery_slot');
+                    if (slot) {
+                        $('#slideshow-holder').find("a[data-ddatei='"+slot+"']").click();
+                    }
+                });
+            </script>
             <div style="margin-top:10px;">
 				<!-- <span id="availablepic"></span>Horaire disponible
                 <span id="unavailablepic"></span>Horaire non disponible</div> -->
