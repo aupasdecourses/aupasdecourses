@@ -1,0 +1,31 @@
+.cms-home-main{
+    header{
+        position: relative;
+        margin-bottom: 210px;
+    }
+    #background_video_container{
+        position: absolute;
+        z-index: -1;
+        height: 600px;
+        overflow: hidden;
+        img.banner{
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    }
+    .intro-section{
+        text-align: center;
+        margin-top: 190px;
+        #logo{
+            max-width: 200px;
+        }
+        h1{
+            color: #fff;
+        }
+        .intro-subtitle{
+            color: #fff;
+        }
+    }
+}

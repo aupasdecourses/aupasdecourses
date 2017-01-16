@@ -11,38 +11,39 @@
 <body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
 	<?php echo $this->getChildHtml('after_body_start') ?>
 	<header class="header" id="faites-vos-courses">
-	<div class="color-overlay">
-		<div id="background_video_container" class="container">
-			<video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">		
-				<!-- <source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
-				<source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
-				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
-			</video>
-			<div class="top-nav">
-				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
-			</div>
-			<div class="intro-section">
-				<img id="logo" src="<?php echo $this->getSkinUrl('images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
-				<h1 class="intro">Faites-vous livrer les bons produits de votre quartier</h1>
-				<p class="intro-subtitle">En ce moment, votre première livraison offerte</p>
-					<!-- <form id='form-quartier' role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
-						<div id="input-group-intro">
-							<input id='GoogleAutoCompleteInput' class='form-control input-quartier' placeholder='Entrez votre adresse' type='text' name='input_addr' />
-							<input id='GoogleAutoCompleteZipcode' class='form-control input-quartier' type='hidden' name="zipcode" />
-							<button id='GoogleAutoCompleteSubmit' class="btn btn-default standard-button input-quartier" type="submit">Voir mes commerçants</button>
-						</div>
-					</form>
-				<div class="col-xs-12 col-md-12"></div>
-				<div class="col-xs-12 col-md-12">
-					<div id="scroll-button" >
-						<p id="small-header">Plus d'infos</p>
-						<div class="arrow bounce"></div>
-					</div>
-				</div> -->
-				<div class="col-md-5"></div>
-			</div>
-		</div>
-	</div>
+        <div id="background_video_container">
+            <!-- <video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">
+                <source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
+                <source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
+                <source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" />
+            </video> -->
+            <img class="banner" src="<?php echo $this->getSkinUrl('dist/images/banner-home.jpg');?>" alt="Au pas de courses">
+        </div>
+        <div class="container">
+            <div class="top-nav">
+                <a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
+            </div>
+            <div class="intro-section">
+                <img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
+                <h1 class="intro">Faites-vous livrer les bons produits de votre quartier</h1>
+                <p class="intro-subtitle">En ce moment, votre première livraison offerte</p>
+                    <!-- <form id='form-quartier' role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
+                        <div id="input-group-intro">
+                            <input id='GoogleAutoCompleteInput' class='form-control input-quartier' placeholder='Entrez votre adresse' type='text' name='input_addr' />
+                            <input id='GoogleAutoCompleteZipcode' class='form-control input-quartier' type='hidden' name="zipcode" />
+                            <button id='GoogleAutoCompleteSubmit' class="btn btn-default standard-button input-quartier" type="submit">Voir mes commerçants</button>
+                        </div>
+                    </form>
+                <div class="col-xs-12 col-md-12"></div>
+                <div class="col-xs-12 col-md-12">
+                    <div id="scroll-button" >
+                        <p id="small-header">Plus d'infos</p>
+                        <div class="arrow bounce"></div>
+                    </div>
+                </div> -->
+                <div class="col-md-5"></div>
+            </div>
+        </div>
 	</header>
 <section class="packages" id="quartiers">
 	<div class="container">
@@ -55,122 +56,147 @@
 		<div class="row">
 			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<img src="<?php echo $this->getSkinUrl('dist/images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">17e-18e-9e-8e</h3>
 				</a>
 			</div>
 			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<img src="<?php echo $this->getSkinUrl('dist/images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">15e</h3>
 				</a>
 			</div>
 			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<img src="<?php echo $this->getSkinUrl('dist/images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">10e-3e-11e</h3>
 				</a>
 			</div>
 			<div class="bouton-quartier col-sm-12 col-md-3">
 				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<img src="<?php echo $this->getSkinUrl('dist/images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">13e</h3>
 				</a>
 			</div>
 		</div>
-		<div class="row">
-			<a class="popup-gmaps" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401" style="display:block;width:100%">Voir nos zones de livraison</a>
+		<div class="row text-center">
+			<a class="popup-gmaps button button-green" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401">Voir nos zones de livraison <i class="fa fa-send"></i></a>
 		</div>
 	</div>
 </section>
-<section class="packages grey-bg" id="concept">
-	<div class="container">
-		<div class="section-header">
-			<h2>Comment cela fonctionne ?</h2>
-			<div class="colored-line"></div>
-			<div class="section-description" >
-				 Une plateforme pour commander et se faire livrer des produits frais et artisanaux de commerces de bouche locaux.
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3 col-sm-12"></div>
-			<div id="carousel-how" class="owl-carousel col-sm-12 col-md-4">
-				<div class="item">
-					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
-						<ul class="package-feature">
-							<li>1 - Commandez en ligne chez les commerçants de votre quartier.</li>
-						</ul>
-					</div>
-				</div>
-				<div class="item">
-					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/shops.png')?>" alt="Les commerçants préparent votre commande">
-						<ul class="package-feature">
-							<li>2 - Les commerçants préparent votre commande</li>
-						</ul>
-					</div>
-				</div>
-				<div class="item">
-					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
-						<ul class="package-feature">
-							<li>3 - On vous livre le tout chez vous, en une fois</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-12"></div>
-		</div>
-	</div>
+<div class="container">
+    <div class="row">
+        <section class="packages col-md-6" id="concept">
+            <div class="section-header">
+                <h2>Comment cela fonctionne ?</h2>
+                <div class="section-description">
+                     Une plateforme pour commander et se faire livrer des produits frais et artisanaux de commerces de bouche locaux.
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Commandez en ligne chez les commerçants de votre quartier.</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/shops.png')?>" alt="Les commerçants préparent votre commande">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Les commerçants préparent votre commande</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">On vous livre le tout chez vous, en une fois</p>
+                </div>
+            </div>
+        </section>
+        <section class="packages col-md-6" id="nos-tarifs">
+            <div class="section-header">
+                <h2>Combien cela coûte ?</h2>
+                <div class="section-description">
+                     La livraison vous coûte
+                </div>
+                <div class="section-description">
+                    <ul>
+                        <li class="price-9"><span>9 €</span><br> Commande &#60;45 €</li>
+                        <li class="price-6"><span>6 €</span><br> Commande 45 - 90 €</li>
+                        <li class="price-3"><span>3 €</span><br> Commande &#62;90 €</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/cargobike.png')?>" alt="Vous commandez au même prix qu'en magasin">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Vous commandez au même prix qu'en magasin</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/cargobike.png')?>" alt="Nous vous remboursons les écarts de poids">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Nous vous remboursons les écarts de poids</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/cargobike.png')?>" alt="Vous payez une seule livraison quel que soit le nombre de commerçants">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Vous payez une seule livraison quel que soit le nombre de commerçants</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<section id="missions" class="container-fluid">
+    <h2>Nos missions et nos valeurs</h2>
+    <div class="row">
+        <div class="col-md-6 item-mission mission-1">
+            <div>
+                <h3>Une éthique</h3>
+                <p>Un fonctionnement raisonné grâce à des livreurs salariés, formés et professionnels.</p>
+            </div>
+        </div>
+        <div class="col-md-3 item-mission mission-2">
+            <div>
+                <h3>Local avant tout !</h3>
+                <p>Le soutien des artisans locaux et indépendants, garants d'un savoir-faire et de produits de qualité.</p>
+            </div>
+        </div>
+        <div class="col-md-3 item-mission mission-3">
+            <div>
+                <h3>Proche de vous</h3>
+                <p>Une livraison de proximité, organisée en tournée et limitée à votre quartier pour offrir une livraison verte et favoriser la proximité.</p>
+            </div>
+        </div>
+    </div>
 </section>
-<section class="packages" id="nos-tarifs">
-	<div class="container">
-		<div class="section-header">
-			<h2>Combien cela coûte ?</h2>
-			<div class="colored-line"></div>
-			<div class="section-description" >
-				<ul>
-					<li>Vous commandez au même prix qu'en magasin,</li>
-					<li>Vous réglez une seule livraison quel que soit le nombre de commerçants,</li>
-					<li>Vous êtes facturé uniquement de ce qui vous est livré</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div id="carousel-price" class="owl-carousel col-sm-12">
-				<div class="item">
-					<div class="single-package">	
-						<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="Montant des produits commandés inférieur à 45€">
-						<ul class="package-feature">
-							<li class="price">9€ la livraison</li>
-							<li>Pour une commande</br> jusqu'à 45€</li>
-						</ul>
-					</div>
-				</div>
-				<div class="item">
-					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Montant des produits commandés entre 45 et 90€">	
-						<ul class="package-feature">
-							<li class="price">6€ la livraison</li>
-							<li>Pour une commande</br> entre 45 et 90€</li>
-						</ul>
-					</div>
-				</div>
-				<div class="item">
-					<div class="single-package">
-						<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Montant des produits commandés au-dessus de 90€">	
-						<ul class="package-feature">
-							<li class="price">3€ la livraison</li>
-							<li>Pour une commande</br> au-delà de 90€</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<p class="section-description" style="font-size: 20px;">Première livraison gratuite avec le code <strong>PANIER</strong>.</p>
-		</div>
-	</div>
+
+<section id="cards" class="container">
+    <div class="row">
+        <div class="col-md-5 clients">
+            <h3>Nos clients</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet impedit facilis quo blanditiis doloremque illum reprehenderit vero praesentium beatae corporis rerum, numquam, labore, temporibus. Eligendi quis placeat voluptates vel voluptatum.</p>
+        </div>
+        <div class="col-md-5 col-md-offset-2 partners">
+            <h3>Nos commerçants partenaires</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat possimus est deserunt, praesentium alias minus cupiditate, reiciendis quia distinctio cum quidem suscipit at et adipisci, molestiae mollitia incidunt maiores hic.</p>
+        </div>
+    </div>
 </section>
+
 <section class="packages grey-bg" id="brief1">
 	<div class="container">
 		<div class="row">

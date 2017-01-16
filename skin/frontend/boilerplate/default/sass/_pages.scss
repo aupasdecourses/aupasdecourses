@@ -1,0 +1,176 @@
+section{
+    & > .container{
+        background-color: #fff;
+    }
+    &#quartiers{
+        & > .container{
+            border-top: 18px dotted $color-second-green;
+            background: url(../images/bottom-pictos.png), #fff;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            background-size: 100%;
+            padding-bottom: 90px;
+            h2{
+                color: $color-main-green;
+            }
+        }
+        .bouton-quartier{
+            text-align: center;
+            margin: 20px auto;
+            &:hover{
+                h3{
+                    color: $color-main-pink;
+                }
+                a{
+                    text-decoration: none;
+                }
+            }
+            h3{
+                font-family: $font-text;
+                font-weight: 700;
+                font-size: 0.875rem;
+                color: $color-black;
+            }
+        }
+    }
+    &#concept{
+        background-color: $color-main-green;
+        padding: 0 60px 30px;
+        h2{
+            color: #fff;
+        }
+        .section-header{
+            margin-bottom: 50px;
+        }
+        .section-description{
+            color: #fff;
+        }
+    }
+    &#nos-tarifs{
+        background-color: #f6f6f6;
+        padding: 0 60px 30px;
+        h2{
+            color: $color-main-pink;
+        }
+        .section-header{
+            margin-bottom: 20px;
+        }
+        .item{
+            p{
+                color: #000;
+            }
+        }
+    }
+    &.packages{
+        h2{
+            font-size: 2.25rem;
+        }
+        .section-description{
+            font-size: 0.875rem;
+        }
+        ul{
+            list-style-type: none;
+            text-align: center;
+            padding: 0;
+            li{
+                display: inline-block;
+                max-width: 30%;
+                margin: 0 5%;
+                font-size: 0.75rem;
+                &.price-9{
+                    color: #fdb172;
+                }
+                &.price-6{
+                    color: #f7b00c;
+                }
+                &.price-3{
+                    color: #f77818;
+                }
+                span{
+                    font-size: 2.125rem;
+                }
+            }
+        }
+        .item{
+            margin-bottom: 20px;
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+            p{
+                color: #fff;
+                font-size: 1.125rem;
+            }
+        }
+    }
+    &#missions{
+        h2{
+            color: $color-dark-blue;
+            margin: 50px auto;
+        }
+        .item-mission{
+            height: 425px;
+            text-align: center;
+            padding: 0 60px;
+            display: flex;
+            & > div{
+                margin: auto;
+            }
+            h3{
+                font-family: $font-text;
+                font-weight: 700;
+                font-size: 1.125rem;
+                color: #fff;
+            }
+            p{
+                color: #fff;
+                font-size: 0.875rem;
+                line-height: 1.5em;
+            }
+        }
+        .mission-1{
+            background: url(../images/mission-1.jpg) no-repeat;
+            background-size: cover;
+        }
+        .mission-2{
+            background: url(../images/mission-2.jpg) no-repeat;
+            background-size: cover;
+        }
+        .mission-3{
+            background: url(../images/mission-3.jpg) no-repeat;
+            background-size: cover;
+        }
+    }
+    &#cards{
+        padding: 100px 0;
+        h3{
+            font-family: $font-text;
+            font-weight: 700;
+            font-size: 1.125rem;
+            text-align: left;
+        }
+        .clients{
+            background-color: #fff;
+            border-top: 5px solid $color-main-pink;
+            padding: 0 40px;
+            h3{
+                color: $color-main-pink;
+            }
+        }
+        .partners{
+            background-color: #fff;
+            border-top: 5px solid $color-blue;
+            padding: 0 40px;
+            h3{
+                color: $color-blue;
+            }
+        }
+    }
+    
+    .section-description{
+        text-align: center;
+        font-size: 1.125rem;
+        color: $color-main-grey;
+    }
+}

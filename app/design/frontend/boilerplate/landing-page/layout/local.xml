@@ -19,7 +19,7 @@
 			<!-- =========================
 			 STYLESHEETS   
 			============================== -->
-			<action method="addItem"><rel>skin_css</rel><href>css/style.css</href></action>
+			<action method="addItem"><rel>skin_css</rel><href>dist/css/main.css</href></action>
 			
 			
 			

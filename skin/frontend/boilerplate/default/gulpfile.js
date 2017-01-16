@@ -25,21 +25,15 @@
 // Load plugins
 var
   gulp         = require('gulp'),
-  less         = require('gulp-less'),
+  sass         = require('gulp-sass'),
   minifycss    = require('gulp-minify-css'),
   uglify       = require('gulp-uglify'),
-  rimraf       = require('gulp-rimraf'),
   concat       = require('gulp-concat'),
-  notify       = require('gulp-notify'),
-  cache        = require('gulp-cache'),
-  livereload   = require('gulp-livereload');
+  cache        = require('gulp-cache');
+
+const autoprefixer = require('gulp-autoprefixer');
 
 var config = {
-
-  // If you do not have the live reload extension installed,
-  // set this to true. We will include the script for you,
-  // just to aid with development.
-  appendLiveReload: false,
 
   // Should CSS & JS be compressed?
   minifyCss: true,
@@ -48,38 +42,42 @@ var config = {
 }
 
 // CSS
-gulp.task('css', function() {
-  var stream = gulp
-    .src('src/less/style.less')
-    .pipe(less().on('error', notify.onError(function (error) {
-      return 'Error compiling LESS: ' + error.message;
-    })))
-    .pipe(gulp.dest('css'));
+'use strict';
 
-  if (config.minifyCss === true) {
-    stream.pipe(minifycss());
-  }
-
-  return stream
-    .pipe(gulp.dest('css'))
-    .pipe(notify({ message: 'Successfully compiled LESS' }));
+gulp.task('css', function () {
+    var styles = [
+        'node_module/bootstrap/dist/css/bootstrap.min.css'
+        //'node_modules/font-awesome/font-awesome.scss'
+    ];
+    
+    return gulp.src([
+        'node_module/bootstrap/dist/css/bootstrap.min.css',
+        'node_modules/font-awesome/font-awesome.scss'])
+    .pipe(concat('styles.css'))
+    .pipe(gulp.dest('dist/css'));
+});
+ 
+gulp.task('sass', function () {
+  return gulp.src('./sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+    .pipe(gulp.dest('dist/css'));
 });
 
 // JS
 gulp.task('js', function() {
   var scripts = [
-    'bower_components/jquery/dist/jquery.js',
-    'bower_components/bootstrap/js/transition.js',
-    'bower_components/bootstrap/js/collapse.js',
-    'bower_components/bootstrap/js/carousel.js',
-    'bower_components/bootstrap/js/dropdown.js',
-    'bower_components/bootstrap/js/modal.js',
-    'src/js/script.js'
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/bootstrap/js/transition.js',
+    'node_modules/bootstrap/js/collapse.js',
+    'node_modules/bootstrap/js/carousel.js',
+    'node_modules/bootstrap/js/dropdown.js',
+    'node_modules/bootstrap/js/modal.js',
+    'js/script.js'
   ];
-
-  if (config.appendLiveReload === true) {
-    scripts.push('src/js/livereload.js');
-  }
 
   var stream = gulp
     .src(scripts)
@@ -90,62 +88,41 @@ gulp.task('js', function() {
   }
 
   return stream
-    .pipe(gulp.dest('js'))
-    .pipe(notify({ message: 'Successfully compiled JavaScript' }));
+    .pipe(gulp.dest('dist/js'));
 });
 
 // Images
 gulp.task('images', function() {
   return gulp
-    .src('src/images/**/*')
-    .pipe(gulp.dest('images'))
-    .pipe(notify({ message: 'Successfully processed image' }));
+    .src('images/**/*')
+    .pipe(gulp.dest('dist/images'));
 });
 
 // Fonts
 gulp.task('fonts', function() {
   return gulp
     .src([
-      'bower_components/bootstrap/fonts/**/*',
-      'bower_components/font-awesome/fonts/**/*'
+      'node_modules/bootstrap/fonts/**/*',
+      'node_modules/font-awesome/fonts/**/*'
     ])
-    .pipe(gulp.dest('fonts'))
-    .pipe(notify({ message: 'Successfully processed font' }));
-});
-
-// Rimraf
-gulp.task('rimraf', function() {
-  return gulp
-    .src(['css', 'js', 'images'], {read: false})
-    .pipe(rimraf());
-});
-
-// Default task
-gulp.task('default', ['rimraf'], function() {
-    gulp.start('css', 'js', 'images', 'fonts');
+    .pipe(gulp.dest('dist/fonts'));
 });
 
 // Watch
 gulp.task('watch', function() {
 
-  // Watch .less files
-  gulp.watch('src/less/**/*.less', ['css']);
+  // Watch .scss files
+  gulp.watch('sass/**/*.scss', ['sass']);
 
   // Watch .js files
-  gulp.watch('src/js/**/*.js', ['js']);
+  gulp.watch('js/**/*.js', ['js']);
 
   // Watch image files
-  gulp.watch('src/images/**/*', ['images']);
+  gulp.watch('images/**/*', ['images']);
 
   // Watch fonts
   gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
-  // Create LiveReload server
-  var server = livereload();
-
-  // Watch any files in , reload on change
-  gulp.watch(['css/style.css', 'js/script.js', 'images/**/*', 'fonts/**/*']).on('change', function(file) {
-    server.changed(file.path);
-  });
-
 });
+
+gulp.task('default', [ 'css', 'sass', 'js', 'images', 'fonts', 'watch' ] );
