@@ -18,6 +18,17 @@ class Pmainguet_Filebatch extends Mage_Shell_Abstract
                     ->getCollection()
                     ->addAttributeToSelect('*');
         foreach($cats as $cat){
+            if($cat->getImage()){
+                echo $cat->getImage()." ";
+            }
+        }
+    }
+
+    public function listcatthumb(){
+        $cats=Mage::getModel('catalog/category')
+                    ->getCollection()
+                    ->addAttributeToSelect('*');
+        foreach($cats as $cat){
             if($cat->getThumbnail()){
                 echo $cat->getThumbnail()." ";
             }
@@ -27,7 +38,7 @@ class Pmainguet_Filebatch extends Mage_Shell_Abstract
     // Implement abstract function Mage_Shell_Abstract::run();
     public function run()
     {
-        $steps = ['listcatimage'];
+        $steps = ['listcatimage','listcatthumb'];
         //get argument passed to shell script
         $step = $this->getArg('step');
         if (in_array($step, $steps)) {
