@@ -3,10 +3,14 @@
 
 {% block body %}
 
-{{ dump(adyenFields) }}
-
 <div class="container">
 	<h1> Formulaire Adyen Remboursement </h1>
+
+	<ul>
+		<li>'Original reference' correspond à la PSP reference</li>
+		<li>{{ "Numero de commande actuel (id simple) : " ~ id }}</li>
+	</ul>
+
 
 
 	{{ form_start(form)}}

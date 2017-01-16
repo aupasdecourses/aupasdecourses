@@ -404,18 +404,22 @@ class Magento
 		return ($rsl);
 	}
 
-	public function getAdyenOrderPayment(){
-		$adyenFields = \Mage::getModel('adyen/order_payment')->getCollection();
-		
-		$refundTab = [];
-		$refundTab['pspreference']			= $adyenFields->getData('pspreference');
-		$refundTab['merchant_reference']	= $adyenFields->getData('merchant_reference');
-		$refundTab['amount']				= $adyenFields->getData('amount');
+	/* Merchant Ref = OrderId. Example : 201600723 */
+	public function getPspRefByMerchantRef()
+	{	
+		$adyenCollection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$ref = [];
 
-		$refund = [];
-		$refund[$refundTab['pspreference']] = $refundTab['pspreference'];
+		foreach($adyenCollection as $adyen)
+		{
 
-		return $refund;
+			$ref[$adyen->getData('merchant_reference')] = [
+				'pspreference'	=> $adyen->getData('pspreference'),
+				'amount'		=> $adyen->getAmount(),
+			];
+		}
+		echo'<pre>';
+		var_dump($ref);
+		echo'<pre>';
 	}
- 
 }
