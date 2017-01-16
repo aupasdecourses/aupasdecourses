@@ -15,6 +15,7 @@ class Pmainguet_CreateStore14 extends Pmainguet_CreateStore
     protected $_city='Paris';
     protected $_zipcode=array('75014');
     protected $_country='FR';
+    protected $_listmailchimp='News & Infos 14e';
 
     protected $_contacts = [
             'Boucherie Pernety'=>[

@@ -23,6 +23,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
     protected $_city;
     protected $_zipcode;
     protected $_country;
+    protected $_listmailchimp;
     protected $_contacts;
     protected $_commercant;
     protected $_magasin;
@@ -689,6 +690,18 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
         echo 'Catégories de '.$this->_codeboutique." activées!\n";
     }
 
+    public function setupMailchimp()
+    {
+        $newstoreid = intval(Mage::getConfig()->getNode('stores')->{$this->_codeboutique}->{'system'}->{'store'}->{'id'});
+        $listid=Mage::getSingleton('monkey/api')->lists(['list_name'=>$this->_listmailchimp], null, 100)['data'][0]['id'];
+        if(!is_null($listid) && $newstoreid<>0){
+            Mage::getConfig()->saveConfig('monkey/general/list', $listid, 'stores', $newstoreid);
+            echo "Mailchimp list set!\n";
+        } else {
+            echo "Cannot find Mailchimp list or store id.\n";
+        }
+    }
+
     public function createsitemap()
     {
         $newstoreid = intval(Mage::getConfig()->getNode('stores')->{$this->_codeboutique}->{'system'}->{'store'}->{'id'});
@@ -750,7 +763,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
     // Implement abstract function Mage_Shell_Abstract::run();
     public function run()
     {
-        $steps = ['createrootcat', 'createstore', 'cmspage', 'attributes', 'creategeneralcat', 'createcommercantcat', 'activatecat', 'createsitemap'];
+        $steps = ['createrootcat', 'createstore', 'cmspage', 'attributes', 'creategeneralcat', 'createcommercantcat', 'activatecat', 'setupMailchimp', 'createsitemap'];
         //get argument passed to shell script
         $step = $this->getArg('step');
         if (in_array($step, $steps)) {
