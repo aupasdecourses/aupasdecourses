@@ -43,9 +43,9 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
         $storeid = Mage::app()->getStore()->getId();
         $collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeid)
                     ->addAttributeToSelect(array('name', 'price', 'small_image', 'short_description', 'produit_biologique', 'origine','url_path'))
-                    ->addFieldToFilter('status', 1);
-                    //->addFieldToFilter('on_selection',True);
-        $collection->getSelect()->orderRand();
+                    ->addFieldToFilter('status', 1)
+                    ->addFieldToFilter('on_selection', 1);
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
         $collection->setPageSize(10);
 
         return $this->formatSelections($collection);
@@ -60,8 +60,9 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('category_id', $category_id)
                 ->addFieldToFilter('status', 1)
+                ->addFieldToFilter('on_selection', 1)
                 ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
-        $collection->getSelect()->orderRand();
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
         $collection->setPageSize(10);
         
         return $this->formatSelections($collection);
