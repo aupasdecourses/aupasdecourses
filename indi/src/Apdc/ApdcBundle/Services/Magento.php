@@ -410,16 +410,45 @@ class Magento
 		$adyenCollection = \Mage::getModel('adyen/order_payment')->getCollection();
 		$ref = [];
 
+		$cpt =1;
 		foreach($adyenCollection as $adyen)
 		{
-
-			$ref[$adyen->getData('merchant_reference')] = [
-				'pspreference'	=> $adyen->getData('pspreference'),
-				'amount'		=> $adyen->getAmount(),
+			/*
+			$ref[$adyen->getData('merchant_reference')]['pspreference']		= $adyen->getData('pspreference');
+			$ref[$adyen->getData('merchant_reference')]['amount']			= $adyen->getAmount();
+			*/
+			/*
+			$ref[] = array(
+				'merchant_ref'	=> $adyen->getData('merchant_reference'),
+				'pspref'		=> $adyen->getData('pspreference'),
+				'amount'		=> $adyen->getData('amount'),
+			);
+			*/
+			/*
+			$ref[$adyen->getData('entity_id')] = [
+				'merchant_reference'	=> $adyen->getData('merchant_reference'),
+				'pspreference'			=> $adyen->getData('pspreference'),
+				'amount'				=> $adyen->getData('amount'),
 			];
+			 */
+			/*
+			$ref[$adyen->getData('merchant_reference')][$cpt]['pspreference']	= $adyen->getData('pspreference');
+			$ref[$adyen->getData('merchant_reference')][$cpt]['amount']			= $adyen->getAmount();
+			*/
+	
+			$ref[$adyen->getData('merchant_reference')][$cpt]['merchant_reference']	= $adyen->getData('merchant_reference');
+			$ref[$adyen->getData('merchant_reference')][$cpt]['pspreference']			= $adyen->getData('pspreference');
+			$ref[$adyen->getData('merchant_reference')][$cpt]['amount']				= $adyen->getAmount();
+			$ref[$adyen->getData('merchant_reference')][$cpt]['total_refunded']		= $adyen->getData('total_refunded');
+	
+			$cpt++;
+			
 		}
+	/*	
 		echo'<pre>';
-		var_dump($ref);
+		print_R($ref);
 		echo'<pre>';
+	 */	 
+		return($ref);
 	}
 }

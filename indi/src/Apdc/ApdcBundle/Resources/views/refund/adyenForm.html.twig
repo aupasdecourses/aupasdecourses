@@ -5,6 +5,47 @@
 
 <div class="container">
 	<h1> Formulaire Adyen Remboursement </h1>
+	<hr>
+	{% for orderId, value in merchantRef %}
+		<table class="width:100%">
+			<tr>
+				<th>
+					<a href="#{{ orderId }}" data-toggle="collapse"><h2>{{ orderId }}</h2></a>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<div id="{{ orderId }}" class="store collapse">
+						<table class="table">
+							<tr>
+								<th>Merchant Ref</th>
+								<th>Psp Ref</th>
+								<th>Montant payé</th>
+								<th>Montant remboursé</th>
+								<th>Lien vers formulaire</th>
+							</tr>
+
+							{% for id, order in value %}
+								<tr>
+									<td>{{order.merchant_reference }}</td>
+									<td>{{order.pspreference }}</td>
+									<td>{{order.amount }}</td>
+									<td>{{order.total_refunded }}</td>
+									<td>{% if order.total_refunded < order.amount and order.total_refunded != 0.00 %}
+										UN LIEN
+										{% endif %}
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>		
+	{% endfor %}
+
+
+
 
 	<ul>
 		<li>'Original reference' correspond à la PSP reference</li>

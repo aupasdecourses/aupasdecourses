@@ -342,7 +342,7 @@ class RefundController extends Controller
 		$logs = $this->container->get('apdc_apdc.adyenlogs');
 		
 		$mage = $this->container->get('apdc_apdc.magento');
-		$psp = $mage->getPspRefByMerchantRef();
+		$merchantRef = $mage->getPspRefByMerchantRef();
 
 		$refund = new Refund();
 		$form = $this->createForm(RefundType::class, $refund);
@@ -362,7 +362,7 @@ class RefundController extends Controller
 		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
 			'form' => $form->createView(),
 			'id' => $id,
-			'psp' => $psp,
+			'merchantRef' => $merchantRef,
 		]);	
 	}
 }
