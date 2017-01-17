@@ -5,6 +5,25 @@ class Apdc_Config_Model_Designpackage extends Mage_Core_Model_Design_Package
 {
 
     /**
+     * Merge specified javascript files and return URL to the merged file on success
+     *
+     * @param $files
+     * @return string
+     */
+    public function getMergedJsUrl($files)
+    {
+        $targetFilename = md5(implode(',', $files))."-".date('Y-m-d').'.js';
+        $targetDir = $this->_initMergerDir('js');
+        if (!$targetDir) {
+            return '';
+        }
+        if ($this->_mergeFiles($files, $targetDir . DS . $targetFilename, false, null, 'js')) {
+            return Mage::getBaseUrl('media', Mage::app()->getRequest()->isSecure()) . 'js/' . $targetFilename;
+        }
+        return '';
+    }
+
+    /**
      * Merge specified css files and return URL to the merged file on success
      *
      * @param $files
