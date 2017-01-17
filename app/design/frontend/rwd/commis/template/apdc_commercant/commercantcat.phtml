@@ -1,6 +1,10 @@
 <?php
 	$current_cat_Id=Mage::registry('current_category')->getId();
-	$childrenCat = Mage::getModel('catalog/category')->getCategories($current_cat_Id);
+	$childrenCat = Mage::getResourceModel('catalog/category_collection')
+    ->addAttributeToSelect('*')
+    ->addAttributeToFilter('is_active', 1)
+    ->addAttributeToFilter('parent_id', $current_cat_Id)
+    ->addAttributeToSort('position');
 ?>
 <div class="commercant_product_cat commercant-selection">
 	<h2 class="title-block" style="width:300px">Les rayons</h2>
