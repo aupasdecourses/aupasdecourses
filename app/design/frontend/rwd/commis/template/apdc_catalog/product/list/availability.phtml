@@ -1,6 +1,12 @@
 <?php $header = ''; ?>
 <?php $body = ''; ?>
-<?php $availability = $this->getAvailability(); ?>
+<?php 
+if($this->getRequest()->getControllerName()=='category'){
+    $availability = $this->getAvailability();
+} else{
+    $availability=$this->getProductAvailability(Mage::registry('current_product'));
+}
+?>
 
 <div class="product-availability">
     <div class="hover-title product-availability-title"><?php echo $this->__('Livraison possible le:'); ?></div>
