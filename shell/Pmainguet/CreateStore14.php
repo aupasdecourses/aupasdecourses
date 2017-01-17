@@ -34,14 +34,14 @@ class Pmainguet_CreateStore14 extends Pmainguet_CreateStore
                 'email'=>'contact@alombredunbouchon.com',
             ],
             "Primeur de Gama"=>[
-                'firstname'=>'xxx',
-                'lastname'=>'Achour',
-                'email'=>'xxxachour@test.fr',
+                'firstname'=>'Achour',
+                'lastname'=>'Primeur Gama',
+                'email'=>'djidji751@hotmail.fr',
             ],
             "Poissonnerie L'Argonaute"=>[
-                'firstname'=>'poissonnerie',
-                'lastname'=>'argonaute',
-                'email'=>'test@argonautue.com',
+                'firstname'=>'Eric',
+                'lastname'=>'Argonaute',
+                'email'=>'sarllargonaute1@yahoo.fr',
             ]];
 
     protected $_commercant = [
@@ -65,24 +65,24 @@ class Pmainguet_CreateStore14 extends Pmainguet_CreateStore
 
     protected $_googlesheets = [
             'Boucherie Pernety'=>array(
-                'google_id'=>'test',
-                'google_key'=>'test',
+                'google_id'=>'1349743815',
+                'google_key'=>'1ehzeE9x_jJsRkC9SyyBcMYq7dMxnacvazOaRsROI-Ps',
             ),
             'Le Pain Au Naturel'=>array(
-                'google_id'=>'e',
-                'google_key'=>'e',
+                'google_id'=>'1504362974',
+                'google_key'=>'1OYIpXIIfdEcbVEKSL-k_bROaGdDRK9QTbKZLZojLW60',
             ),
             "A l'ombre d'un bouchon"=>array(
-                'google_id'=>'',
-                'google_key'=>'',
+                'google_id'=>'1504362974',
+                'google_key'=>'1wAj2R4LY3T1-3VpfgppLLYhwZYMZn-ulHV59pcUGDFA',
             ),
             'Primeur de Gama'=>array(
-                'google_id'=>'',
-                'google_key'=>'',
+                'google_id'=>'2030347927',
+                'google_key'=>'1E6d8fC5Hr319_tUYic0YmKI61wNwbwY4CnRdOS0rjAg',
             ),
             "Poissonnerie L'Argonaute"=>array(
-                'google_id'=>'',
-                'google_key'=>'',
+                'google_id'=>'2131873323',
+                'google_key'=>'1sPqKjkZnWVwCS-lQaVE7ESEyuSkne45tMhr7Wn9m3Tc',
             ),
             ];
 
