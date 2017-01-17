@@ -12,9 +12,13 @@ section{
             padding-bottom: 90px;
             h2{
                 color: $color-main-green;
+                &.soon{
+                    color: $color-main-grey;
+                }
             }
         }
         .bouton-quartier{
+            position: relative;
             text-align: center;
             margin: 20px auto;
             &:hover{
@@ -24,13 +28,43 @@ section{
                 a{
                     text-decoration: none;
                 }
+                span.button{
+                    opacity: 1;
+                }
+                img{
+                    filter: brightness(30%);
+                }
             }
             h3{
                 font-family: $font-text;
                 font-weight: 700;
-                font-size: 0.875rem;
+                font-size: 1.125rem;
                 color: $color-black;
             }
+            span.button{
+                opacity: 0;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: 145px;
+                -webkit-transition: all 200ms ease-in;
+                -moz-transition: all 200ms ease-in;
+                -ms-transition: all 200ms ease-in;
+                -o-transition: all 200ms ease-in;
+                transition: all 200ms ease-in;
+            }
+            img{
+                -webkit-transition: all 200ms ease-in;
+                -moz-transition: all 200ms ease-in;
+                -ms-transition: all 200ms ease-in;
+                -o-transition: all 200ms ease-in;
+                transition: all 200ms ease-in;
+            }
+        }
+        .button{
+            margin-top: 0;
         }
     }
     &#concept{
@@ -95,7 +129,7 @@ section{
             margin-bottom: 20px;
             img{
                 display: block;
-                width: 100%;
+                margin: 10px auto 0;
                 height: auto;
             }
             p{
@@ -126,7 +160,6 @@ section{
             p{
                 color: #fff;
                 font-size: 0.875rem;
-                line-height: 1.5em;
             }
         }
         .mission-1{
@@ -144,6 +177,9 @@ section{
     }
     &#cards{
         padding: 100px 0;
+        background: url(../images/bg-cards.png);
+        background-repeat: no-repeat;
+        background-position: center bottom;
         h3{
             font-family: $font-text;
             font-weight: 700;
@@ -153,17 +189,53 @@ section{
         .clients{
             background-color: #fff;
             border-top: 5px solid $color-main-pink;
-            padding: 0 40px;
+            padding: 0;
             h3{
                 color: $color-main-pink;
+                padding: 0 40px;
+                margin-top: 40px;
+            }
+            p{
+                padding: 0 40px;
+            }
+            img{
+                display: block;
+                width: 100%;
+                margin-top: 30px;
             }
         }
         .partners{
             background-color: #fff;
             border-top: 5px solid $color-blue;
-            padding: 0 40px;
+            padding: 0;
             h3{
                 color: $color-blue;
+                padding: 0 40px;
+                margin-top: 40px;
+            }
+            p{
+                padding: 0 40px;
+            }
+            img{
+                display: block;
+                width: 100%;
+                margin-top: 30px;
+            }
+        }
+    }
+    &#advantages{
+        border-top: 1px solid #eee;
+        padding: 40px 0;
+        .container{
+            background: none;
+        }
+        .item{
+            text-align: center;
+            width: 20%;
+            p{
+                font-size: 0.875rem;
+                font-weight: 700;
+                margin-top: 20px;
             }
         }
     }

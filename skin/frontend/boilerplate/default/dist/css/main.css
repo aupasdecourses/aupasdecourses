@@ -8061,9 +8061,11 @@ p {
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   font-size: 0.875rem;
+  line-height: 1.5em;
   color: #000; }
 
 .button {
+  position: relative;
   display: inline-block;
   padding: 10px 30px;
   margin: 20px auto;
@@ -8071,18 +8073,50 @@ p {
   border-radius: 3px;
   font-size: 1.125rem;
   font-weight: 700; }
+  .button:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 300ms ease-in; }
+  .button:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 3px;
+    transition: all 300ms ease-in; }
+  .button:hover {
+    text-decoration: none; }
+    .button:hover:before, .button:hover:after {
+      width: 100%; }
   .button.button-green {
     background-color: #3ab64b; }
+    .button.button-green:hover {
+      color: #fff; }
+      .button.button-green:hover:before, .button.button-green:hover:after {
+        background-color: #1e555a; }
   .button.button-pink {
     background-color: #f55d5b; }
+  .button.button-white {
+    color: #3ab64b;
+    background-color: #fff; }
+    .button.button-white:hover:before, .button.button-white:hover:after {
+      background-color: #1e555a; }
 
 .cms-home-main header {
   position: relative;
-  margin-bottom: 210px; }
+  margin-bottom: 240px; }
 
 .cms-home-main #background_video_container {
   position: absolute;
   z-index: -1;
+  width: 100%;
   height: 600px;
   overflow: hidden; }
   .cms-home-main #background_video_container img.banner {
@@ -8098,8 +8132,19 @@ p {
     max-width: 200px; }
   .cms-home-main .intro-section h1 {
     color: #fff; }
-  .cms-home-main .intro-section .intro-subtitle {
-    color: #fff; }
+
+header .top-nav {
+  float: right;
+  list-style-type: none; }
+  header .top-nav li {
+    display: inline-block;
+    margin: 0 10px; }
+    header .top-nav li a {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.125rem; }
+      header .top-nav li a:hover {
+        text-decoration: none; }
 
 section > .container {
   background-color: #fff; }
@@ -8113,19 +8158,40 @@ section#quartiers > .container {
   padding-bottom: 90px; }
   section#quartiers > .container h2 {
     color: #3ab64b; }
+    section#quartiers > .container h2.soon {
+      color: #999999; }
 
 section#quartiers .bouton-quartier {
+  position: relative;
   text-align: center;
   margin: 20px auto; }
   section#quartiers .bouton-quartier:hover h3 {
     color: #f55d5b; }
   section#quartiers .bouton-quartier:hover a {
     text-decoration: none; }
+  section#quartiers .bouton-quartier:hover span.button {
+    opacity: 1; }
+  section#quartiers .bouton-quartier:hover img {
+    filter: brightness(30%); }
   section#quartiers .bouton-quartier h3 {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 1.125rem;
     color: #000; }
+  section#quartiers .bouton-quartier span.button {
+    opacity: 0;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 145px;
+    transition: all 200ms ease-in; }
+  section#quartiers .bouton-quartier img {
+    transition: all 200ms ease-in; }
+
+section#quartiers .button {
+  margin-top: 0; }
 
 section#concept {
   background-color: #3ab64b;
@@ -8175,7 +8241,7 @@ section.packages .item {
   margin-bottom: 20px; }
   section.packages .item img {
     display: block;
-    width: 100%;
+    margin: 10px auto 0;
     height: auto; }
   section.packages .item p {
     color: #fff;
@@ -8200,8 +8266,7 @@ section#missions .item-mission {
     color: #fff; }
   section#missions .item-mission p {
     color: #fff;
-    font-size: 0.875rem;
-    line-height: 1.5em; }
+    font-size: 0.875rem; }
 
 section#missions .mission-1 {
   background: url(../images/mission-1.jpg) no-repeat;
@@ -8216,7 +8281,10 @@ section#missions .mission-3 {
   background-size: cover; }
 
 section#cards {
-  padding: 100px 0; }
+  padding: 100px 0;
+  background: url(../images/bg-cards.png);
+  background-repeat: no-repeat;
+  background-position: center bottom; }
   section#cards h3 {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
@@ -8225,17 +8293,78 @@ section#cards {
   section#cards .clients {
     background-color: #fff;
     border-top: 5px solid #f55d5b;
-    padding: 0 40px; }
+    padding: 0; }
     section#cards .clients h3 {
-      color: #f55d5b; }
+      color: #f55d5b;
+      padding: 0 40px;
+      margin-top: 40px; }
+    section#cards .clients p {
+      padding: 0 40px; }
+    section#cards .clients img {
+      display: block;
+      width: 100%;
+      margin-top: 30px; }
   section#cards .partners {
     background-color: #fff;
     border-top: 5px solid #3a94d5;
-    padding: 0 40px; }
+    padding: 0; }
     section#cards .partners h3 {
-      color: #3a94d5; }
+      color: #3a94d5;
+      padding: 0 40px;
+      margin-top: 40px; }
+    section#cards .partners p {
+      padding: 0 40px; }
+    section#cards .partners img {
+      display: block;
+      width: 100%;
+      margin-top: 30px; }
+
+section#advantages {
+  border-top: 1px solid #eee;
+  padding: 40px 0; }
+  section#advantages .container {
+    background: none; }
+  section#advantages .item {
+    text-align: center;
+    width: 20%; }
+    section#advantages .item p {
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-top: 20px; }
 
 section .section-description {
   text-align: center;
   font-size: 1.125rem;
   color: #999999; }
+
+footer {
+  background-color: #3ab64b;
+  padding: 20px 0; }
+  footer .copyright {
+    font-size: 0.75rem;
+    color: #fff;
+    margin-bottom: 0; }
+  footer .nav li {
+    display: inline-block;
+    vertical-align: top; }
+    footer .nav li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 10px; }
+      footer .nav li a:hover {
+        background: none; }
+  footer .social-icons {
+    padding: 0;
+    list-style-type: none;
+    text-align: right;
+    margin-top: 10px; }
+    footer .social-icons li {
+      display: inline-block;
+      margin: 0 5px; }
+      footer .social-icons li a {
+        color: #fff;
+        font-size: 1.125rem; }
+  footer .button {
+    margin: 0; }
