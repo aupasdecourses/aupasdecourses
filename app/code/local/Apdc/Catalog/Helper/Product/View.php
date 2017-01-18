@@ -66,6 +66,9 @@ class Apdc_Catalog_Helper_Product_View extends Mage_Catalog_Helper_Product_View
         if ($params->hasConfigureMode()) {
             $product->setConfigureMode($params->getConfigureMode());
         }
+        if ($params->hasCartItemId()) {
+            $product->setCartItemId($params->getCartItemId());
+        }
 
         Mage::dispatchEvent('catalog_controller_product_view', array('product' => $product));
 

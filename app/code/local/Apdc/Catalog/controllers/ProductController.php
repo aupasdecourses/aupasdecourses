@@ -52,6 +52,7 @@ class Apdc_Catalog_ProductController extends Mage_Catalog_ProductController
                         Mage::throwException($this->__('Quote item is not found.'));
                     }
                     $params->setConfigureMode(true);
+                    $params->setCartItemId($itemId);
                     $params->setBuyRequest($quoteItem->getBuyRequest());
                     $productId = $quoteItem->getProduct()->getId();
                 } else if ($productId > 0) {

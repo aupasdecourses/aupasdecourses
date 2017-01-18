@@ -48,7 +48,10 @@ class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Templ
      */
     public function getProductAvailability(Mage_Catalog_Model_Product $product)
     {
-        return Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_attribut_commercant',$product->getCommercant())->getFirstItem()->getDeliveryDays();
+        if ($product->getCommercant()) {
+            return Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_attribut_commercant',$product->getCommercant())->getFirstItem()->getDeliveryDays();
+        }
+        return [];
     }
 
     /**

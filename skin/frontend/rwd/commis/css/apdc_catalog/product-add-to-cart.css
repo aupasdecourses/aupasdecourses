@@ -57,3 +57,11 @@
 .apdc-add-to-cart-form .actions .action-group .qty-buttons {
   display:none;
 }
+
+.action.update-product-options {
+  opacity:1;
+  transition: opacity 0.5s ease;
+}
+.action.update-product-options.disabled {
+  opacity: 0.6;
+}
