@@ -227,6 +227,10 @@ Minicart.prototype = {
         } else if (typeof result.message != 'undefined') {
             this.showSuccess(result.message);
         }
+      var self = this;
+        window.setTimeout(function() {
+          self.hideMessage();
+        }, 3000);
     },
 
     hideMessage: function() {
