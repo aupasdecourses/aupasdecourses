@@ -37,7 +37,8 @@ class Apdc_Attributesqtoi_Model_Observer extends Varien_Object
                 }
             }
         }catch(Exception $e){
-            Mage::log('Error deliverycheck observer',null,'deliverycheck.log');
+            Mage::log('Error deliverycheck observer, see below',null,'deliverycheck.log');
+            Mage::log($e,null,'deliverycheck.log');
         }
     }
 }
