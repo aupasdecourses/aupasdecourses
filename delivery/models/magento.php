@@ -825,9 +825,7 @@ function stats_clients()
     ->columns('MAX(updated_at) AS last_order')
     ->group('customer_id');
 
-
     foreach ($orders as $order) {
-        
         $customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
 
         $dataadd = Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
@@ -839,9 +837,10 @@ function stats_clients()
             'Total' => round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
             'Dernière commande' => $order->getLastOrder(),
             'Mail client' => $order->getCustomerEmail(),
-            'Adresse client' => $address,
+            'Rue' => $dataadd->getStreet()[0],
+            'Code Postal' => $dataadd->getPostcode(),
             'Date Inscription' => $customer->getCreatedAt(),
-            'Quartier' => $customer->getCreatedIn(),
+            'Créé dans' => $customer->getCreatedIn(),
         ]);
     }
 
@@ -854,17 +853,17 @@ function stats_clients()
         $key = array_search($customer->getEmail(), array_columns($data, 'Mail client'));
 
         if ($key == false) {
-
             array_push($data, [
-                                            'Nom Client' => $customer->getFirstname().' '.$customer->getLastname(),
-                                            'Nb Commande' => 0,
-                                            'Total' => 0,
-                                            'Dernière commande' => "NA",
-                                            'Mail client' => $customer->getEmail(),
-                                            'Adresse client' => 'NA',
-                                            'Date Inscription' => $customer->getCreatedAt(),
-                                            'Quartier' => $customer->getCreatedIn(),
-                                        ]);
+                'Nom Client' => $customer->getFirstname().' '.$customer->getLastname(),
+                'Nb Commande' => 0,
+                'Total' => 0,
+                'Dernière commande' => 'NA',
+                'Mail client' => $customer->getEmail(),
+                'Rue' => "NA",
+                'Code Postal' => "NA",
+                'Date Inscription' => $customer->getCreatedAt(),
+                'Créé dans' => $customer->getCreatedIn(),
+            ]);
         }
     }
 
