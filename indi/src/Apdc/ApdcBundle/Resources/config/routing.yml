@@ -83,9 +83,8 @@ refundDigest:
   requirements: { id:"[0-9]+" }
 
 refundAdyenIndex:
-  path: /refund/adyenIndex/{from}
-  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex, from: null}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
+  path: /refund/adyenIndex/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
 
 refundAdyenForm:
   path: /refund/{id}/adyenForm/

@@ -306,7 +306,7 @@ class RefundController extends Controller
 		]);
 	}
 
-	public function refundAdyenIndexAction(Request $request, $from)
+	public function refundAdyenIndexAction(Request $request)
 	{
 		if(!$this->isGranted('ROLE_ADMIN'))
 		{
@@ -314,24 +314,10 @@ class RefundController extends Controller
 		}
 
 		$mage = $this->container->get('apdc_apdc.magento');
-
-		$entity_from = new\Apdc\ApdcBundle\Entity\From();
-		$form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
-
-		$form_from->handleRequest($request);
-
-		if ($form_from->isValid())
-			return $this->redirectToRoute('refundAdyenIndex', [ 'from' => $entity_from->from ]);
-		if (!isset($from))
-			return $this->redirectToRoute('refundAdyenIndex', [ 'from' => date('Y-m-d', strtotime('-1 day')) ]);
-
-		$form_from->get('from')->setData($from);
-
-		$orders = $mage->getOrders($from);
+		$orders = $mage->getAdyenOrderPaymentTable();
 
 		return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
-			'forms' => [ $form_from->createView() ],
-				'orders' => $orders
+			'orders' => $orders,
 			]);
 
 	}
@@ -341,9 +327,6 @@ class RefundController extends Controller
 		$adyen = $this->container->get('apdc_apdc.adyen');
 		$logs = $this->container->get('apdc_apdc.adyenlogs');
 		
-		$mage = $this->container->get('apdc_apdc.magento');
-		$merchantRef = $mage->getPspRefByMerchantRef();
-
 		$refund = new Refund();
 		$form = $this->createForm(RefundType::class, $refund);
 
@@ -361,8 +344,6 @@ class RefundController extends Controller
 		}
 		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
 			'form' => $form->createView(),
-			'id' => $id,
-			'merchantRef' => $merchantRef,
 		]);	
 	}
 }

@@ -1,21 +1,34 @@
 {% extends 'ApdcApdcBundle::base.html.twig' %}
-
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-<div class ="container">
-	<h1> Adyen Index </h1>
-{% include 'ApdcApdcBundle::forms/default.html.twig' %}
-</div>
 
-	<table class='table'>
-		{% for order in orders %}
-			<tr>
-				<td><a href="{{ path('refundAdyenForm', {id: order.id}) }}" target="_blank">{{ order.id }}</a></td>
-				</td>
-			</tr>
+<div class="container">
+	<h1> Contenu de la table "Adyen/Order_Payment" </h1>
+
+	<table class="table">
+		<tr>
+			<th>N° de commande</th>
+			<th>Reference PSP</th>
+			<th>Montant payé</th>
+			<th>Montant remboursé</th>
+			<th>Formulaire de remboursement</th>
+		</tr>
+
+		{% for order_id, fields in orders %}
+			{% for id, order in fields %}
+				<tr>
+					<td>{{order.merchant_reference }}</td>
+					<td>{{order.pspreference }}</td>
+					<td>{{order.amount }}</td>
+					<td>{{order.total_refunded }}</td>
+					<td>{% if order.total_refunded < order.amount %}
+						<a href="{{ path('refundAdyenForm', {id: order.merchant_reference}) }}" target="_blank">Lien</a>
+						{% endif %}</td>
+				</tr>
+			{% endfor %}
 		{% endfor %}
-	</table>	
-
+	</table>
+</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

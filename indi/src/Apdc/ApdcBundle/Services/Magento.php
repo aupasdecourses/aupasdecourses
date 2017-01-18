@@ -404,51 +404,22 @@ class Magento
 		return ($rsl);
 	}
 
-	/* Merchant Ref = OrderId. Example : 201600723 */
-	public function getPspRefByMerchantRef()
+	public function getAdyenOrderPaymentTable()
 	{	
-		$adyenCollection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
 		$ref = [];
-
-		$cpt =1;
-		foreach($adyenCollection as $adyen)
+		$cpt = 1;
+		foreach($collection as $fields)
 		{
-			/*
-			$ref[$adyen->getData('merchant_reference')]['pspreference']		= $adyen->getData('pspreference');
-			$ref[$adyen->getData('merchant_reference')]['amount']			= $adyen->getAmount();
-			*/
-			/*
-			$ref[] = array(
-				'merchant_ref'	=> $adyen->getData('merchant_reference'),
-				'pspref'		=> $adyen->getData('pspreference'),
-				'amount'		=> $adyen->getData('amount'),
-			);
-			*/
-			/*
-			$ref[$adyen->getData('entity_id')] = [
-				'merchant_reference'	=> $adyen->getData('merchant_reference'),
-				'pspreference'			=> $adyen->getData('pspreference'),
-				'amount'				=> $adyen->getData('amount'),
-			];
-			 */
-			/*
-			$ref[$adyen->getData('merchant_reference')][$cpt]['pspreference']	= $adyen->getData('pspreference');
-			$ref[$adyen->getData('merchant_reference')][$cpt]['amount']			= $adyen->getAmount();
-			*/
 	
-			$ref[$adyen->getData('merchant_reference')][$cpt]['merchant_reference']	= $adyen->getData('merchant_reference');
-			$ref[$adyen->getData('merchant_reference')][$cpt]['pspreference']			= $adyen->getData('pspreference');
-			$ref[$adyen->getData('merchant_reference')][$cpt]['amount']				= $adyen->getAmount();
-			$ref[$adyen->getData('merchant_reference')][$cpt]['total_refunded']		= $adyen->getData('total_refunded');
+			$ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference']	= $fields->getData('merchant_reference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['pspreference']			= $fields->getData('pspreference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['amount']				= $fields->getAmount();
+			$ref[$fields->getData('merchant_reference')][$cpt]['total_refunded']		= $fields->getData('total_refunded');
 	
 			$cpt++;
 			
 		}
-	/*	
-		echo'<pre>';
-		print_R($ref);
-		echo'<pre>';
-	 */	 
-		return($ref);
+		return($ref);	
 	}
 }
