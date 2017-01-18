@@ -1,0 +1,22 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class ="container">
+	<h1> Adyen Form </h1>
+
+	<ul>
+		<li>'Original reference' correspond à la PSP reference</li>
+	</ul>
+
+
+
+	{{ form_start(form)}}
+	{{form_errors(form)}}
+	{{form_end(form)}}
+
+</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

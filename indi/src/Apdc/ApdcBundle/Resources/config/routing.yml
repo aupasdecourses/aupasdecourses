@@ -82,6 +82,15 @@ refundDigest:
   defaults: { _controller: ApdcApdcBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
 
+refundAdyenIndex:
+  path: /refund/adyenIndex/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
+
+refundAdyenForm:
+  path: /refund/{id}/adyenForm/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
+  requirements: { id:"[0-9]+" }
+
 toolProduct:
   path: /tool/product/
   defaults: { _controller: ApdcApdcBundle:Tool:product}

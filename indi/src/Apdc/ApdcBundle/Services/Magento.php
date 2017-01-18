@@ -33,11 +33,19 @@ class Magento
 		$shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
         $shops->addFilterToMap('path', 'catalog_category_entity.path');
 
+		$S = [];
+		$app = \Mage::app();
+		$stores = $app->getStores();
+		foreach ($stores as $id => $idc){
+			$S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
+			$S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
+		}
+
 		foreach ($shops as $shop) {
 			$commercants[$shop->getData('id_attribut_commercant')] = [
 					'active'	=> $shop->getData('enabled'),
 					'id'		=> $shop->getData('id_attribut_commercant'),
-					'store'		=> explode('/', $shop->getPath())[1],
+					'store'		=> $S[explode('/', $shop->getPath())[1]]['name'],
 					'name'		=> $shop->getName(),
 					'addr'		=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
 					'phone'		=> $shop->getPhone(),
@@ -394,5 +402,24 @@ class Magento
 			}
 		}
 		return ($rsl);
+	}
+
+	public function getAdyenOrderPaymentTable()
+	{	
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$ref = [];
+		$cpt = 1;
+		foreach($collection as $fields)
+		{
+	
+			$ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference']	= $fields->getData('merchant_reference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['pspreference']			= $fields->getData('pspreference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['amount']				= $fields->getAmount();
+			$ref[$fields->getData('merchant_reference')][$cpt]['total_refunded']		= $fields->getData('total_refunded');
+	
+			$cpt++;
+			
+		}
+		return($ref);	
 	}
 }

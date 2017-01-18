@@ -30,8 +30,12 @@
 					</li>
 				
 					{% if is_granted('ROLE_ADMIN') %}			
-					<li>
-						<a href="{{ path ('refundIndex')}}">Remboursement</a>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Remboursement<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('refundIndex')}}">Benoit</a></li>
+							<li><a href="{{ path ('refundAdyenIndex')}}">Adyen Simon</a></li>
+						</ul>
 					</li>
 					<li>
 						<a href="">Facturation</a>

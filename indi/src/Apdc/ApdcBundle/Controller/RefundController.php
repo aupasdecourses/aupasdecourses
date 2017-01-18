@@ -5,13 +5,14 @@ namespace Apdc\ApdcBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-//include_once 'Adyen.php';
+use Apdc\ApdcBundle\Entity\Refund;
+use Apdc\ApdcBundle\Form\RefundType;
 
 class RefundController extends Controller
 {
@@ -303,5 +304,46 @@ class RefundController extends Controller
 			'order_id' => $id,
 			'forms' => [ $form_submit->createView() ],
 		]);
+	}
+
+	public function refundAdyenIndexAction(Request $request)
+	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+		$orders = $mage->getAdyenOrderPaymentTable();
+
+		return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
+			'orders' => $orders,
+			]);
+
+	}
+
+	public function refundAdyenFormAction(Request $request, $id)
+	{
+		$adyen = $this->container->get('apdc_apdc.adyen');
+		$logs = $this->container->get('apdc_apdc.adyenlogs');
+		
+		$refund = new Refund();
+		$form = $this->createForm(RefundType::class, $refund);
+
+		if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+		{
+			try{
+			$value					= $form["value"]->getData();
+			$originalReference		= $form["originalReference"]->getData();
+
+			$adyen->refund($value, $originalReference);
+			} catch (Exception $e){
+				echo $e->getMessage();	
+			}
+			return $this->redirectToRoute('refundAdyenIndex');
+		}
+		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
+			'form' => $form->createView(),
+		]);	
 	}
 }
