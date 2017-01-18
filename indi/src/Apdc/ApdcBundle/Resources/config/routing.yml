@@ -87,9 +87,9 @@ refundAdyenIndex:
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
 
 refundAdyenForm:
-  path: /refund/{id}/adyenForm/
+  path: /refund/{psp}/adyenForm/
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
-  requirements: { id:"[0-9]+" }
+  requirements: { psp:"[0-9]+" }
 
 toolProduct:
   path: /tool/product/

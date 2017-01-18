@@ -22,8 +22,8 @@
 					<td>{{order.pspreference }}</td>
 					<td>{{order.amount }}</td>
 					<td>{{order.total_refunded }}</td>
-					<td>{% if order.total_refunded < order.amount %}
-						<a href="{{ path('refundAdyenForm', {id: order.merchant_reference}) }}" target="_blank">Lien</a>
+					<td>{% if order.total_refunded < order.amount and order.total_refunded >= 0 %}
+						<a href="{{ path('refundAdyenForm', {psp: order.pspreference}) }}" target="_blank">Lien</a>
 						{% endif %}</td>
 				</tr>
 			{% endfor %}

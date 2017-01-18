@@ -416,10 +416,24 @@ class Magento
 			$ref[$fields->getData('merchant_reference')][$cpt]['pspreference']			= $fields->getData('pspreference');
 			$ref[$fields->getData('merchant_reference')][$cpt]['amount']				= $fields->getAmount();
 			$ref[$fields->getData('merchant_reference')][$cpt]['total_refunded']		= $fields->getData('total_refunded');
-	
 			$cpt++;
-			
 		}
+		return($ref);	
+	}
+
+	public function getAdyenPaymentByPsp()
+	{
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection->addFieldToFilter('pspreference' , ['neq'	=> NULL ]);
+		$ref = [];
+		$cpt = 1;
+		foreach($collection as $col)
+		{
+		$ref[$cpt]['amount']			= $col->getAmount();
+		$ref[$cpt]['pspreference']	= $col->getData('pspreference');
+		$cpt++;
+		}
+		
 		return($ref);	
 	}
 }
