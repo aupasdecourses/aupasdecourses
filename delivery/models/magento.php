@@ -825,24 +825,24 @@ function stats_clients()
     ->columns('MAX(updated_at) AS last_order')
     ->group('customer_id');
 
+
     foreach ($orders as $order) {
-        $nom_client = $order->getCustomerName();
-        $nb_order = $order->getNbOrder();
-        $amount_total = round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-        $last_order = $order->getLastOrder();
-        $mail = $order->getCustomerEmail();
+        
+        $customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
 
         $dataadd = Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
         $address = $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 
         array_push($data, [
-                                        'Nom Client' => $nom_client,
-                                        'Nb Commande' => $nb_order,
-                                        'Total' => $amount_total,
-                                        'Dernière commande' => $last_order,
-                                        'Mail client' => $mail,
-                                        'Adresse client' => $address,
-                                    ]);
+            'Nom Client' => $order->getCustomerName(),
+            'Nb Commande' => $order->getNbOrder(),
+            'Total' => round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+            'Dernière commande' => $order->getLastOrder(),
+            'Mail client' => $order->getCustomerEmail(),
+            'Adresse client' => $address,
+            'Date Inscription' => $customer->getCreatedAt(),
+            'Quartier' => $customer->getCreatedIn(),
+        ]);
     }
 
     //Add customer who never ordered
@@ -854,19 +854,16 @@ function stats_clients()
         $key = array_search($customer->getEmail(), array_columns($data, 'Mail client'));
 
         if ($key == false) {
-            $nom_client = $customer->getFirstname().' '.$customer->getLastname();
-            $nb_order = 0;
-            $amount_total = 0;
-            $last_order = 0;
-            $mail = $customer->getEmail();
 
             array_push($data, [
-                                            'Nom Client' => $nom_client,
-                                            'Nb Commande' => $nb_order,
-                                            'Total' => $amount_total,
-                                            'Dernière commande' => $last_order,
-                                            'Mail client' => $mail,
-                                            'Adresse client' => '',
+                                            'Nom Client' => $customer->getFirstname().' '.$customer->getLastname(),
+                                            'Nb Commande' => 0,
+                                            'Total' => 0,
+                                            'Dernière commande' => "NA",
+                                            'Mail client' => $customer->getEmail(),
+                                            'Adresse client' => 'NA',
+                                            'Date Inscription' => $customer->getCreatedAt(),
+                                            'Quartier' => $customer->getCreatedIn(),
                                         ]);
         }
     }
