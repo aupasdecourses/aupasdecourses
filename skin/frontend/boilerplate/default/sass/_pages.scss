@@ -4,7 +4,6 @@ section{
     }
     &#quartiers{
         & > .container{
-            border-top: 18px dotted $color-second-green;
             background: url(../images/bottom-pictos.png), #fff;
             background-repeat: no-repeat;
             background-position: left bottom;
@@ -16,6 +15,12 @@ section{
                     color: $color-main-grey;
                 }
             }
+        }
+        .border-container{
+            margin-left: -15px;
+            width: calc( 100% + 30px );
+            height: 18px;
+            background: url(../images/border-pattern.png) repeat-x;
         }
         .bouton-quartier{
             position: relative;

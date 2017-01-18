@@ -8166,7 +8166,6 @@ section > .container {
   background-color: #fff; }
 
 section#quartiers > .container {
-  border-top: 18px dotted #1e555a;
   background: url(../images/bottom-pictos.png), #fff;
   background-repeat: no-repeat;
   background-position: left bottom;
@@ -8176,6 +8175,12 @@ section#quartiers > .container {
     color: #3ab64b; }
     section#quartiers > .container h2.soon {
       color: #999999; }
+
+section#quartiers .border-container {
+  margin-left: -15px;
+  width: calc( 100% + 30px);
+  height: 18px;
+  background: url(../images/border-pattern.png) repeat-x; }
 
 section#quartiers .bouton-quartier {
   position: relative;
