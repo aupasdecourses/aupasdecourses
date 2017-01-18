@@ -350,6 +350,10 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             $data['conditions_serialized']=serialize($modelcondition);
             $data['stores'] = $newstoreid;
             $data['name'] = $namenewrule;
+            $data['is_active'] = true;
+            $data['message'] = 'Désolé, mais votre code postal n\'est pas dans la zone livrée.';
+            $data['days'] = ',7,1,2,3,4,5,6,';
+            $data['cust_groups']=',1,';
 
             $newrule = Mage::getModel('amshiprestriction/rule')->setData($data);
             $newrule->save();
@@ -605,11 +609,12 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
                     $category->setMenuTemplate('template2');
                     $category->setMetaDescription($meta_description);
                     $category->save();
+                    $parentCatUrlKey=$parentCategory->getUrlKey();
 
                     //Create Content Block
                     $check=null;
                     if($check == null){
-                        $contentblock='<ul class="main-cats"><li class="item-main-block"><a class="level2" href="{{store url=""}}mon-primeur/';
+                        $contentblock='<ul class="main-cats"><li class="item-main-block"><a class="level2" href="{{store url=""}}'.$parentCatUrlKey.'/';
                         $contentblock.=$category->getUrlKey();
                         $contentblock.='/tous-les-produits.html"><div class="cat-thumbnail"><img src="{{config path="web/secure/base_url"}}media/catalog/category/tous.jpg"></div><span class="cat-name">Tous les produits</span></a></li></ul>';
                         $contentblock.='<ul><li class="item-main-block info-commercant fa fa-info-circle" aria-hidden="true"> <a href="{{store url=""}}';

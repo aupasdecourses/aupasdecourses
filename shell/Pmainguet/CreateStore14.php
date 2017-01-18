@@ -11,7 +11,7 @@ class Pmainguet_CreateStore14 extends Pmainguet_CreateStore
     protected $_namewebsite = 'Au Pas De Courses 14e';
     protected $_namestoregroup = 'apdc_14e';
     protected $_codeboutique = 'paris14e';
-    protected $_nameboutique = '14e';
+    protected $_nameboutique = 'Paris 14e';
     protected $_city='Paris';
     protected $_zipcode=array('75014');
     protected $_country='FR';
