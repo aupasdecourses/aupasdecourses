@@ -8111,7 +8111,7 @@ p {
 
 .cms-home-main header {
   position: relative;
-  margin-bottom: 240px; }
+  margin-bottom: 200px; }
 
 .cms-home-main #background_video_container {
   position: absolute;
@@ -8119,7 +8119,7 @@ p {
   width: 100%;
   height: 600px;
   overflow: hidden; }
-  .cms-home-main #background_video_container img.banner {
+  .cms-home-main #background_video_container img.banner, .cms-home-main #background_video_container video {
     display: block;
     width: 100vw;
     height: 100vh;
@@ -8129,7 +8129,7 @@ p {
   text-align: center;
   margin-top: 190px; }
   .cms-home-main .intro-section #logo {
-    max-width: 200px; }
+    max-width: 280px; }
   .cms-home-main .intro-section h1 {
     color: #fff; }
 
@@ -8140,11 +8140,27 @@ header .top-nav {
     display: inline-block;
     margin: 0 10px; }
     header .top-nav li a {
+      position: relative;
       color: #fff;
       font-weight: 700;
-      font-size: 1.125rem; }
+      font-size: 1.125rem;
+      transition: all 100ms ease-in; }
       header .top-nav li a:hover {
-        text-decoration: none; }
+        text-decoration: none;
+        color: #1e555a; }
+        header .top-nav li a:hover:after {
+          background: #1e555a;
+          bottom: -5px; }
+      header .top-nav li a:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: transparent;
+        transition: all 100ms ease-in; }
 
 section > .container {
   background-color: #fff; }
@@ -8199,7 +8215,7 @@ section#concept {
   section#concept h2 {
     color: #fff; }
   section#concept .section-header {
-    margin-bottom: 50px; }
+    margin-bottom: 65px; }
   section#concept .section-description {
     color: #fff; }
 
@@ -8281,7 +8297,8 @@ section#missions .mission-3 {
   background-size: cover; }
 
 section#cards {
-  padding: 100px 0;
+  padding-top: 100px;
+  padding-bottom: 100px;
   background: url(../images/bg-cards.png);
   background-repeat: no-repeat;
   background-position: center bottom; }
@@ -8365,6 +8382,9 @@ footer {
       margin: 0 5px; }
       footer .social-icons li a {
         color: #fff;
-        font-size: 1.125rem; }
+        font-size: 1.125rem;
+        transition: all 100ms ease-in; }
+        footer .social-icons li a:hover {
+          color: #1e555a; }
   footer .button {
     margin: 0; }
