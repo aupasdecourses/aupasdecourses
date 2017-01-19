@@ -295,7 +295,9 @@ class RefundController extends Controller
 		$msg = '';
 		if ($form_submit->isSubmitted()) {
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
-
+			return $this->redirectToRoute('refundFinal', [
+				'id'			=> $id,   
+			]);	
 			try {
 		//		$mage->processcreditAction($id, $order);
 		//		$adyen = new \Adyen();
@@ -319,6 +321,46 @@ class RefundController extends Controller
 		]);
 	}
 
+	public function refundFinalAction(Request $request, $id)
+	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+		
+		$adyen	= $this->container->get('apdc_apdc.adyen');
+		$logs	= $this->container->get('apdc_apdc.adyenlogs');
+		
+		$mage	= $this->container->get('apdc_apdc.magento');
+		$order	= $mage->getRefunds($id);
+		$orders = $mage->getAdyenPaymentByPsp();
+	
+		$refund_diff = $order[-1]['merchant']['refund_diff'];
+
+		$refund = new Refund();
+		$form = $this->createForm(RefundType::class, $refund);
+
+		if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+		{
+			try{
+			$value					= $form["value"]->getData();
+			$originalReference		= $form["originalReference"]->getData();
+
+			$adyen->refund($value, $originalReference);
+			} catch (Exception $e){
+				echo $e->getMessage();
+			}
+			return $this->redirectToRoute('refundIndex');
+		}
+		return $this->render('ApdcApdcBundle::refund/formuFinal.html.twig', [
+			'form'			=> $form->createView(),
+			'refund_diff'	=> $refund_diff,
+			'id'			=> $id,
+			'orders'		=> $orders,
+			]);
+	}
+	
+
 	public function refundAdyenIndexAction(Request $request)
 	{
 		if(!$this->isGranted('ROLE_ADMIN'))
@@ -337,8 +379,6 @@ class RefundController extends Controller
 
 	public function refundAdyenFormAction(Request $request, $psp)
 	{
-
-
 
 		$adyen = $this->container->get('apdc_apdc.adyen');
 		$logs = $this->container->get('apdc_apdc.adyenlogs');

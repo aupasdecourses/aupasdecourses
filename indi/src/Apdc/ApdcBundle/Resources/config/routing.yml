@@ -82,6 +82,11 @@ refundDigest:
   defaults: { _controller: ApdcApdcBundle:Refund:refundDigest}
   requirements: { id:"[0-9]+" }
 
+refundFinal:
+  path: /refund/{id}/final/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundFinal}
+  requirements: { id:"[0-9]+" }
+
 refundAdyenIndex:
   path: /refund/adyenIndex/
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}

@@ -4,20 +4,20 @@
 
 {% block body %}
 <div class ="container">
-	<h1> Adyen Form </h1>
+	<h1> Soumission à Adyen </h1>
 
 	<hr>
 	{{ form_start(form)}}
 	{% for order_id, fields in orders %}
-		{% if fields.pspreference == psp %}
+		{% if fields.merchant_reference == id %}
 			<h4><b> Reference PSP <b></h4>
 				{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
-			<h4><b> Montant à rembourser (valeur maximum) <b></h4>
-				{{ form_widget(form.value, {'attr': {'placeholder': fields.amount-fields.total_refunded } }) }}
+			<h4><b> Montant à rembourser (valeur max)<b></h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
 			<br>
-		{% endif %} 
+		{% endif %}
 	{% endfor %}
-	
+
 	{{form_errors(form)}}
 	{{form_end(form)}}
 
