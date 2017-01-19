@@ -16,6 +16,7 @@
           <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
           <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
           <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+          <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
         </reference>
     </default>
     <checkout_cart_index>

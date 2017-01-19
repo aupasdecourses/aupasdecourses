@@ -22,6 +22,23 @@
  */
 class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Template
 {
+
+    protected $_availability;
+
+    /**
+     * getAvailability 
+     *
+     * @return array
+     */
+    public function getAvailability()
+    {
+        if(!isset($this->_availability)){
+            $comcatid = explode('/', Mage::registry('current_category')->getPath())[3];
+            $this->_availability= Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_category',$comcatid)->getFirstItem()->getDeliveryDays();
+        }
+        return  $this->_availability;
+    }
+
     /**
      * getAvailability 
      * 
@@ -29,9 +46,9 @@ class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Templ
      * 
      * @return array
      */
-    public function getAvailability(Mage_Catalog_Model_Product $product)
+    public function getProductAvailability(Mage_Catalog_Model_Product $product)
     {
-        return array(2,3,4,5);
+        return Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_attribut_commercant',$product->getCommercant())->getFirstItem()->getDeliveryDays();
     }
 
     /**

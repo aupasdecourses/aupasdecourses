@@ -71,5 +71,14 @@
             </args>
           </catalog>
         </routers>
+        <translate>
+            <modules>
+                <Apdc_Catalog>
+                    <files>
+                        <default>Apdc_Catalog.csv</default>
+                    </files>
+                </Apdc_Catalog>
+            </modules>
+        </translate>
     </frontend>
 </config>

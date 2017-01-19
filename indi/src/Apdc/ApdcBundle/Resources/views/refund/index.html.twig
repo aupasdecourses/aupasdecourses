@@ -6,8 +6,6 @@
 <div class="container">
 	<h1> Remboursement </h1>
 {% include 'ApdcApdcBundle::forms/default.html.twig' %}
-</div>
-
 	<table class='table'>
 		{% for order in orders %}
 			<tr>
@@ -46,5 +44,6 @@
 			</tr>
 		{% endfor %}
 	<table>
+</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

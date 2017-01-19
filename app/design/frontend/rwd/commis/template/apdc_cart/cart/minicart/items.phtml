@@ -115,17 +115,18 @@ var apdcProductAddedToCart = {};
 jQuery(document).ready(function() {
     <?php if ($productId) : ?>
         jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change');
+        jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
     <?php else : ?>
         jQuery('.apdc-add-to-cart-form').trigger('change');
+        jQuery(document).trigger('minicartLoaded');
     <?php endif; ?>
-    jQuery(document).trigger('minicartLoaded');
 });
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
 
 
 truncateOptions();
 decorateList('cart-sidebar', 'none-recursive');
-var Mini = null;
+//var Mini = null;
 $j('document').ready(function() {
     var minicartOptions  = {
         formKey:           "<?php echo $this->getFormKey();?>"

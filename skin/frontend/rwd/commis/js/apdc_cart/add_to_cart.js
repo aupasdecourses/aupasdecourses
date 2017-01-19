@@ -19,14 +19,14 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           $qty = $(this).parent('.qty-buttons').find('.added-qty');
           qty = parseInt($qty.html(), 10);
           $qty.html(++qty);
-          $(document).trigger('minicartAddQty', [itemId, productId]);
+          $(document).trigger('minicartAddQty', [itemId, productId, qty]);
         } else if (this.value == 'btn-cart-qty-minus') {
           itemId = parseInt($(this).data('item-id'));
           $qty = $(this).parent('.qty-buttons').find('.added-qty');
           qty = parseInt($qty.html(), 10);
           if (qty > 1) {
             $qty.html(--qty);
-            $(document).trigger('minicartRemoveQty', [itemId, productId]);
+            $(document).trigger('minicartRemoveQty', [itemId, productId, qty]);
           } else {
             $('#btn-minicart-remove-' + itemId).click();
           }
@@ -63,7 +63,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
               console.log('failed');
             })
             .always(function() {
-              finishLoading();
+              finishLoading(productId);
             });
           }
         }
@@ -150,9 +150,14 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     var actions = $('.product_addtocart_form_' + productId).find('.actions');
     actions.find('.action-loading').show();
   }
-  function finishLoading()
+  function finishLoading(productId)
   {
-    var actions = $('.apdc-add-to-cart-form').find('.actions');
+    var actions = null;
+    if (typeof(productId) !== 'undefined') {
+      actions = $('.product_addtocart_form_' + productId).find('.actions');
+    } else {
+      actions = $('.apdc-add-to-cart-form').find('.actions');
+    }
     actions.find('.action-loading').hide();
     counterBlink();
   }
@@ -160,32 +165,33 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
   $(document).on('updateCartStartLoading', function(event, itemId, productId) {
     startLoading(productId);
   });
-  $(document).on('minicartLoaded', function(event) {
-    finishLoading();
+  $(document).on('minicartLoaded', function(event, productId) {
+    finishLoading(productId);
   });
 
   // used to change the add to cart button. 
   // If the product already added to cart, we must display + and - buttons with the qty already added.
   $(document).on('apdcProductFormChanged', function(event, fromProductId) {
+    var actions = $('.product_addtocart_form_' + fromProductId).find('.actions');
 
     // init display of add to cart button
-    $('.actions .simple-add-to-cart-button').show();
-    $('.actions .qty-buttons').hide();
-    $('.actions .btn.show-product-popup').hide();
-    $('.actions .btn-cart.show-product-popup').show();
+    actions.find('.simple-add-to-cart-button').show();
+    actions.find('.qty-buttons').hide();
+    actions.find('.btn.show-product-popup').hide();
+    actions.find('.btn-cart.show-product-popup').show();
 
     if (Object.keys(apdcProductAddedToCart).length > 0) {
-      $('.apdc-add-to-cart-form').each(function() {
-        var productId = $(this).data('product-id');
-        if (typeof(apdcProductAddedToCart[productId]) !== 'undefined') {
-          var productAdded = apdcProductAddedToCart[productId];
+      //$('.apdc-add-to-cart-form').each(function() {
+        //var productId = $(this).data('product-id');
+        if (typeof(apdcProductAddedToCart[fromProductId]) !== 'undefined') {
+          var productAdded = apdcProductAddedToCart[fromProductId];
           var qty = null;
           var itemId = null;
           if (productAdded.product.type_id === 'bundle') {
-              apdcUpdateBundleButtons(productId);
+              apdcUpdateBundleButtons(fromProductId);
           }
           if (!(productAdded.options instanceof Array) && Object.keys(productAdded.options).length > 0) {
-            var optionKey = $('.selected-optionKey-' + productId).val();
+            var optionKey = $('.selected-optionKey-' + fromProductId).val();
             if (typeof(productAdded.options[optionKey]) !== 'undefined') {
                 itemId = productAdded.options[optionKey].itemId;
                 qty = productAdded.options[optionKey].qty;
@@ -195,10 +201,10 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             itemId = productAdded.itemId;
           }
           if (qty !== null && itemId !== null) {
-            apdcUpdateQtyButtons(productId, itemId, qty);
+            apdcUpdateQtyButtons(fromProductId, itemId, qty);
           }
         }
-      });
+      //});
     }
     $(document).trigger('apdcUpdateAddToCartButtons_end', [fromProductId]);
   });

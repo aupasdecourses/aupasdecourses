@@ -156,18 +156,20 @@ header .color-overlay {
   height: 65px;
 }
 
-.faq-button {
+.faq-button, .faq-button:visited, .faq-button:focus {
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 16px;
     border: 1px solid rgba(255,255,255,0.8);
     cursor:pointer;
     font-weight: bold;
+    color:white;
 }
 
 .faq-button:hover {
     border: 1px solid rgba(255,255,255,0.8);
     background-color: rgba(255,255,255,1);
+    color:#333;
 }
 
 #logo{

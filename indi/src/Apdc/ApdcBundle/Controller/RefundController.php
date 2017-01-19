@@ -138,8 +138,8 @@ class RefundController extends Controller
 		}
 
 		$form_upload->add('Upload', SubmitType::class);
+		$form_upload->setAction($this->generateUrl('refundUpload',array('id'=>$id)));
 		$form_upload = $form_upload->getForm();
-
 		if (isset($_FILES['form'])) {
 			foreach ($attrNames as $merchant_id => $name) {
 				if (!$_FILES['form']['error'][$name] && $_FILES['form']['size'][$name] > 0) {
@@ -147,16 +147,28 @@ class RefundController extends Controller
 					preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extentions);
 					$tmp_file = $_FILES['form']['tmp_name'][$name];
 					$folder = $mage->mediaPath().'/attachments/'.$id;
-					if (!file_exists($folder))
-						mkdir($folder);
+					if (!file_exists($folder)){
+						try{
+							$oldmask = umask(0);
+							mkdir($folder, 0777, true);
+    						umask($oldmask);
+						}catch(Exception $e){
+							dump($e);
+						}
+					}
 					if (file_exists($folder)) {
 						$file = "{$folder}/{$id}";
 						if ($name <> 'All')
 							$file .= "-{$merchant_id}";
 						$file .= $extentions[1];
-						copy($tmp_file, $file);
+						try{
+							copy($tmp_file, $file);
+						}catch(Exception $e){
+							dump($e);
+						}
 					}
 				}
+				$i++;
 			}
 			$err = self::check_upload_status($id, $order);
 			if ($err <> self::ERROR) {
@@ -197,7 +209,7 @@ class RefundController extends Controller
 				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
 		}
 		ksort($order);
-
+		dump($order);
 		$total = $order[-1]['merchant']['total'];
 		$order_mid = $order[-1]['order']['mid'];
 		$input_status = $order[-1]['order']['input'];
@@ -205,11 +217,11 @@ class RefundController extends Controller
 
 		$entity_input = new \Apdc\ApdcBundle\Entity\Input();
 		$form_input = $this->createFormBuilder($entity_input);
-
+		$form_input->setAction($this->generateUrl('refundInput',array('id'=>$id)));
 		$form_input = $form_input->getForm();
 		//$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
-
-		if (isset($_POST['submit']) /*&& ($form_input_token == $_POST['form']['_token'])*/ && $input_status == 'none') {
+		/** Voir ce qu'est input_status*/
+		if (isset($_POST['submit']) /*&& ($form_input_token == $_POST['form']['_token'])*/ /*&& $input_status == 'none'*/) {
 			$rsl_table = [];
 			foreach ($order as $merchant_id => $o_data) {
 				foreach ($o_data['products'] as $product_id => $p_data) {
@@ -229,8 +241,9 @@ class RefundController extends Controller
 					}
 				}
 			}
-			
+			dump($rsl_table);
 			foreach ($rsl_table as $product_id => $data) {
+				dump($data);
 				$mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
 			}
 

@@ -345,16 +345,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.6",
+            "version": "v2.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "a526d0df58daa8ab6802244bf3227f532e0deb45"
+                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a526d0df58daa8ab6802244bf3227f532e0deb45",
-                "reference": "a526d0df58daa8ab6802244bf3227f532e0deb45",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/6314d55f60f85f0295c90688397b75c13faf9f0e",
+                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e",
                 "shasum": ""
             },
             "require": {
@@ -412,7 +412,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-12-04 05:53:43"
+            "time": "2017-01-17 17:48:38"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -897,12 +897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "58757f064ebfe2e346f63dd58d1921b6e14faf01"
+                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/58757f064ebfe2e346f63dd58d1921b6e14faf01",
-                "reference": "58757f064ebfe2e346f63dd58d1921b6e14faf01",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/90628acfec2dcd105f47ab6eddcf14d28f60962b",
+                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b",
                 "shasum": ""
             },
             "require": {
@@ -965,7 +965,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-12 10:28:28"
+            "time": "2017-01-16 09:31:32"
         },
         {
             "name": "incenteev/composer-parameter-handler",

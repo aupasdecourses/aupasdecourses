@@ -17,7 +17,7 @@ class Magento
 	}
 
 	public function mediaPath() {
-		return realpath(__DIR__.'/../../media');
+		return realpath(__DIR__.'/../../../../../media');
 	}
 
 	public function mediaUrl() {
@@ -374,7 +374,7 @@ class Magento
 //			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
 			$products =  \Mage::getModel('sales/order_item')->getCollection();
 			$products->addFieldToFilter('main_table.order_id', ['eq' => $rsl[-1]['order']['mid']]);
-			$products->getSelect()->join(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
+			$products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
 				'refund_prix'	=> 'refund.prix_final',
 				'refund_diff'	=> 'refund.diffprixfinal',
 				'refund_com'	=> 'refund.comment'

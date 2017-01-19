@@ -126,6 +126,9 @@
     <PRODUCT_TYPE_simple>
       <remove name="product.info.simple.extra" />
       <remove name="product.info.availability" />
+      <reference name="product.info">
+          <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml"/>
+      </reference>
     </PRODUCT_TYPE_simple>
 
     <PRODUCT_TYPE_configurable>
@@ -203,6 +206,7 @@
             </action>
         </reference>
         <reference name="content">
+            <remove name="category.products"/>
             <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
                 <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml" />
                 <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
