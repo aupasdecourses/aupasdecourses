@@ -32,7 +32,7 @@
 			    		<th class="float">Nb Commande</th>
                         <th class="float">Total</th>
                         <th>Dernière commande</th>
-<!-- 			    		<th>Email</th> -->
+<!-- 			    	<th>Email</th> -->
 			    		<th>Rue</th>
                         <th class="sort">Code Postal</th>
                         <th>Date inscription</th>
@@ -43,7 +43,9 @@
 		    		<?php foreach($data as $row){?>
 		    		<tr>
 		    			<?php foreach($row as $key=>$value){
-		    				echo '<td>'.$value.'</td>';
+                            if($key <> 'Mail client'){
+		    				  echo '<td>'.$value.'</td>';
+                            }
 		    			}?>
 		    		</tr>
 		    		<?php } ?>
