@@ -54,6 +54,11 @@
 }
 
 .apdc-add-to-cart-form .actions button:disabled {opacity: 0.2;}
+#carrousel-selection-home .apdc-add-to-cart-form .actions .button:hover,
+.apdc-add-to-cart-form .actions .button:hover {
+  color: #fff;
+  background: none repeat scroll 0% 0% #e94e19;
+}
 .apdc-add-to-cart-form .actions .action-group .qty-buttons {
   display:none;
 }

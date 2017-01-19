@@ -1,12 +1,13 @@
+var alignProductGridActions = function() {};
 (function($) {
   $(document).ready(function() {
     if ($('.apdc-products-grid').length > 0) {
-        var alignProductGridActions = function () {
+        alignProductGridActions = function () {
             // Loop through each product grid on the page
             $j('.apdc-products-grid').each(function(){
                 var gridRows = []; // This will store an array per row
                 var tempRow = [];
-                productGridElements = $j(this).children('li');
+                productGridElements = $j(this).find('li.item');
                 productGridElements.each(function (index) {
                     // The JS ought to be agnostic of the specific CSS breakpoints, so we are dynamically checking to find
                     // each row by grouping all cells (eg, li elements) up until we find an element that is cleared.
