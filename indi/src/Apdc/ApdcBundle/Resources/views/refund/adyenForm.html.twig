@@ -6,13 +6,18 @@
 <div class ="container">
 	<h1> Adyen Form </h1>
 
-	<ul>
-		<li>'Original reference' correspond à la reference PSP</li>
-	</ul>
-
-	{{ dump() }}
-
+	<hr>
 	{{ form_start(form)}}
+	{% for order_id, fields in orders %}
+		{% if fields.pspreference == psp %}
+			<h4> Reference PSP </h4>
+				{{ form_widget(form.originalReference, {'attr': {'placeholder': fields.pspreference} }) }}
+			<h4> Montant à rembourser </h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': fields.amount ~ ' € maximum '} }) }}
+			<br>
+		{% endif %} 
+	{% endfor %}
+	
 	{{form_errors(form)}}
 	{{form_end(form)}}
 

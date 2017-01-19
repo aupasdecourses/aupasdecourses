@@ -403,7 +403,8 @@ class Magento
 		}
 		return ($rsl);
 	}
-
+	
+	/* Pour l'AFFICHAGE du tableau de remboursement */
 	public function getAdyenOrderPaymentTable()
 	{	
 		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -421,6 +422,7 @@ class Magento
 		return($ref);	
 	}
 
+	/* Pour le FORMULAIRE de soumission de remboursement à Adyen */
 	public function getAdyenPaymentByPsp()
 	{
 		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -430,10 +432,9 @@ class Magento
 		foreach($collection as $col)
 		{
 		$ref[$cpt]['amount']			= $col->getAmount();
-		$ref[$cpt]['pspreference']	= $col->getData('pspreference');
+		$ref[$cpt]['pspreference']		= $col->getData('pspreference');
 		$cpt++;
-		}
-		
+		}		
 		return($ref);	
 	}
 }
