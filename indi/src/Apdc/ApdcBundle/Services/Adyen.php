@@ -58,7 +58,7 @@ class Adyen {
 		if (!in_array("[refund-received]", $refundDecoded))
 			throw new Exception('Adyen Error, Remboursement non valide');
 
-		return($refundDecoded["pspReference"]); 
+		return($refundDecoded['response']); 
 	}
 
 	public function payout($value, $iban, $ownerName, $merchantAccount, $reference, $shopperEmail, $shopperReference)  
