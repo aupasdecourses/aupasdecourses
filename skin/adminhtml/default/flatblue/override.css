@@ -11,16 +11,16 @@ h1, h2, h3, h4, h5, h6, label {
 
 a {
     display: inline;
-    color: white;
+    color: #3ab64b;
     text-decoration: none;
 }
 
 a:visited {
-    color: white;
+    color: #3ab64b;
 }
 
 a:focus, a:hover, a:active {
-    color: #136bb8;
+    color: #1e555a;
     text-decoration: none;
 }
 
