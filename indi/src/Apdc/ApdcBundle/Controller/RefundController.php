@@ -296,7 +296,7 @@ class RefundController extends Controller
 		$msg = '';
 		if ($form_submit->isSubmitted()) {
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
-			return $this->redirectToRoute('refundFinal', [
+			return $this->redirectToRoute('refundIndex', [
 				'id'			=> $id,   
 			]);	
 			try {

@@ -24,7 +24,8 @@ class RefundType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Apdc\ApdcBundle\Entity\Refund'
+			'data_class'		=> 'Apdc\ApdcBundle\Entity\Refund',
+			'csrf_protection'	=> true
         ));
     }
 }
