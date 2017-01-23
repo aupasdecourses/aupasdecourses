@@ -4,7 +4,7 @@
 {% block body %}
 
 <div class="container">
-	<h1> Contenu de la table "Adyen/Order_Payment" </h1>
+	<h1> Liste des commandes remboursables </h1>
 
 	<table class="table">
 		<tr>
@@ -23,7 +23,7 @@
 					<td>{{order.amount }}</td>
 					<td>{{order.total_refunded }}</td>
 					<td>{% if order.total_refunded < order.amount and order.total_refunded >= 0 %}
-						<a href="{{ path('refundAdyenForm', {psp: order.pspreference}) }}" target="_blank">Lien</a>
+						<a href="{{ path('refundAdyenForm', {psp: order.pspreference}) }}">Lien</a>
 						{% endif %}</td>
 				</tr>
 			{% endfor %}

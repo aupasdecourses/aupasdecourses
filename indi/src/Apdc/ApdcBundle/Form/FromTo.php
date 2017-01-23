@@ -21,7 +21,7 @@ class FromTo extends AbstractType
 			]
 		]);
 		$builder->add('to', TextType::class, [
-			'required' => false,
+			'required' => true,
 			'label' => 'Date fin:',
 			'attr' => [
 				'class' => 'form-control datepicker'

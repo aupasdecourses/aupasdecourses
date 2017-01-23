@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -295,7 +296,7 @@ class RefundController extends Controller
 		$msg = '';
 		if ($form_submit->isSubmitted()) {
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
-			return $this->redirectToRoute('refundFinal', [
+			return $this->redirectToRoute('refundIndex', [
 				'id'			=> $id,   
 			]);	
 			try {
@@ -350,6 +351,8 @@ class RefundController extends Controller
 			} catch (Exception $e){
 				echo $e->getMessage();
 			}
+
+			
 			return $this->redirectToRoute('refundIndex');
 		}
 		return $this->render('ApdcApdcBundle::refund/formuFinal.html.twig', [
@@ -379,7 +382,7 @@ class RefundController extends Controller
 
 	public function refundAdyenFormAction(Request $request, $psp)
 	{
-
+		
 		$adyen = $this->container->get('apdc_apdc.adyen');
 		$logs = $this->container->get('apdc_apdc.adyenlogs');
 		
@@ -399,6 +402,8 @@ class RefundController extends Controller
 			} catch (Exception $e){
 				echo $e->getMessage();	
 			}
+			$this->get('session')->getFlashBag()->add('notice' , 'Remboursement effectué !');
+			
 			return $this->redirectToRoute('refundAdyenIndex');
 		}
 		return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [

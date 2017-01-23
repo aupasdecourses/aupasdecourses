@@ -31,7 +31,7 @@ security:
             security: false
 
         apdc_login_firewall:
-            pattern: ^/users/login$
+            pattern: ^/login$
             anonymous: true
 
         apdc_firewall:
@@ -39,9 +39,9 @@ security:
             anonymous: false
             provider: apdc_provider
             form_login:
-                login_path: userLogin
-                check_path: userLoginCheck
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
             logout:
-                path: userLogout
-                target: /users/login
+                path: fos_user_security_logout
+                target: /login
      
