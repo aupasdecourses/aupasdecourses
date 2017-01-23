@@ -29,18 +29,23 @@
 		    	<thead>
 		    		<tr>
 			    		<th class="sort">Nom client</th>
-			    		<th class="float sort">Nb Commande</th>
+			    		<th class="float">Nb Commande</th>
                         <th class="float">Total</th>
                         <th>Dernière commande</th>
-			    		<th>Email</th>
-			    		<th>Adresse</th>
+<!-- 			    	<th>Email</th> -->
+			    		<th>Rue</th>
+                        <th class="sort">Code Postal</th>
+                        <th>Date inscription</th>
+                        <th class="sort">Créé dans</th>
 			    	</tr>
 		    	</thead>
 		    	<tbody>
 		    		<?php foreach($data as $row){?>
 		    		<tr>
 		    			<?php foreach($row as $key=>$value){
-		    				echo '<td>'.$value.'</td>';
+                            if($key <> 'Mail client'){
+		    				  echo '<td>'.$value.'</td>';
+                            }
 		    			}?>
 		    		</tr>
 		    		<?php } ?>
@@ -50,6 +55,9 @@
 		    			<th>Total</th>
 			    		<th></th>
 			    		<th></th>
+                        <th></th>
+                        <th></th>
+<!--                         <th></th> -->
                         <th></th>
                         <th></th>
                         <th></th>

@@ -321,4 +321,11 @@
         </reference>
     </hipay_mapi_payment>
 
+    <monkey_customer_account_index>
+        <reference name="magemonkey_additionallists">
+            <action method="setTemplate"><template>apdc_customer/account/newsletter/list.phtml</template></action>
+        </reference>
+        <remove name="customer.account.link.back"/>
+    </monkey_customer_account_index>
+
 </layout>

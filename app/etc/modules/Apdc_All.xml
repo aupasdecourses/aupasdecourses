@@ -56,7 +56,7 @@
     	</Apdc_Checkout>
         <Apdc_Coupon>
             <codePool>local</codePool>
-            <active>false</active>
+            <active>true</active>
         </Apdc_Coupon>
         <Apdc_Home>
             <codePool>local</codePool>

@@ -139,7 +139,7 @@ New customer registration
         </reference>
         <reference name="content">
             <!--<block type="core/template" name="forgotPassword" template="customer/form/forgotpassword.phtml"/>-->
-            <block type="customer/account_forgotpassword" name="forgotPassword" template="customer/form/forgotpassword.phtml" />
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
         </reference>
     </customer_account_forgotpassword>
 
