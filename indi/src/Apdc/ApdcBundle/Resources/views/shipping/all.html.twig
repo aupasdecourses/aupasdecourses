@@ -24,8 +24,12 @@
 									<th>Nom Clients</th>
 									<th>Adresse</th>
 									<th>Tel</th>
-									<th>Autre Contact</th>
+									<th>Code Porte 1</th>
+									<th>Code Porte 2</th>
+									<th>Batiment</th>
+									<th>Etage</th>
 									<th>Infos</th>
+									<th>Autre Contact</th>
 								</tr>
 								{% for order_id, order in orders %}
 									<tr>
@@ -35,8 +39,12 @@
 										<td>{{ order.first_name ~" "~ order.last_name }}</td>
 										<td><a href="https://www.google.com/maps?q={{ order.address }}" target="_blanc">{{ order.address }}</a></td>
 										<td>{{ order.phone }}</td>
-										<td>{{ order.contact ~" / "~ order.contact_phone}}</td>
+										<td>{{ order.codeporte1 }}</td>
+										<td>{{ order.codeporte2 }}</td>
+										<td>{{ order.batiment }}</td>
+										<td>{{ order.etage }}</td>
 										<td>{{ order.info }}</td>
+										<td>{{ order.contact ~" / "~ order.contact_phone}}</td>
 									</tr>
 								{% endfor %}
 							</table>

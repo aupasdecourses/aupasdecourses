@@ -32,11 +32,12 @@
 <?php if ($_total->getBlockName()): ?>
     <?php echo $this->getChildHtml($_total->getBlockName(), false); ?>
 <?php else:?>
-<tr class="<?php echo $_code?>">
+<tr class="<?php echo $_code?>" style="-webkit-margin-before:10px;">
+    <?php if ($_total->getStrong()):?>
     <td <?php echo $this->getLabelProperties()?>>
-        <?php if ($_total->getStrong()):?>
         <strong><?php echo $this->escapeHtml($_total->getLabel());?></strong>
-        <?php else:?>
+    <?php else:?>
+        <td <?php echo $this->getLabelProperties()?> style="font-size:0.95em;">
             <?php if ($_total->getCode()=='shipping'){
                 echo $this->escapeHtml('Frais de livraison');
             }elseif ($_total->getCode()=='subtotal'){
@@ -46,10 +47,11 @@
             }?>
         <?php endif?>
     </td>
-    <td <?php echo $this->getValueProperties()?>>
-        <?php if ($_total->getStrong()):?>
-        <strong><?php echo $this->formatValue($_total) ?></strong>
-        <?php else:?>
+    <?php if ($_total->getStrong()):?>
+    <td <?php echo $this->getValueProperties()?> style="text-align:center;">
+        <strong><?php echo $this->formatValue($_total) ?></strong>        
+    <?php else:?>
+    <td <?php echo $this->getValueProperties()?> style="text-align:center;font-size:0.95em;">
         <?php echo $this->formatValue($_total) ?>
         <?php endif?>
     </td>

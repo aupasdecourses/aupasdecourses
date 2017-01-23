@@ -178,8 +178,7 @@ function getShops($id = -1, $filter = 'none')
         }
         arsort($return);
     } else {
-        $data = $shops->load($id, 'id_attribut_commercant')->getData();
-
+        $data = $shops->addFieldToFilter('id_attribut_commercant',$id)->getFirstItem()->getData();
         $return['name'] = $data['name'];
         $return['adresse'] = $data['street'].' '.$data['postcode'].' '.$data['city'];
         $return['url_adresse'] = 'https://www.google.fr/maps/place/'.str_replace(' ', '+', $return['adresse']);
@@ -188,11 +187,10 @@ function getShops($id = -1, $filter = 'none')
         $return['timetable'] = implode(',', $data['timetable']);
         $return['closing_periods'] = $data['closing_periods'];
         $return['delivery_days'] = 'Du Mardi au Vendredi';
-        $return['mail_contact'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail();
-        $return['mail_pro'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail();
-        $return['mail_3'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail();
+        $return['mail_contact'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $data['id_contact_manager'])->getFirstItem()->getEmail();
+        $return['mail_pro'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $data['id_contact_employee'])->getFirstItem()->getEmail();
+        $return['mail_3'] = Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $data['id_contact_employee_bis'])->getFirstItem()->getEmail();
     }
-
     return $return;
 }
 
@@ -359,7 +357,7 @@ function getOrderComments($order)
 function getRelevantComments($order)
 {
     $orderAttachment = getOrderAttachments($order);
-    $order_comments = getOrderComments($order);
+    //$order_comments = getOrderComments($order);
 
     return $orderAttachment.$order_comments;
 }
@@ -778,11 +776,10 @@ function data_coupon($debut, $fin)
   //   $orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
     foreach ($orders as $order) {
-        $incrementid = $order->getIncrementId();
-        $coupon = $order->getCouponCode();
         array_push($data, [
-            'increment_id' => $incrementid,
-            'Coupon Code' => $coupon,
+            'increment_id' => $order->getIncrementId(),
+            'quartier' => $order->getStoreName(),
+            'Coupon Code' => $order->getCouponCode(),
         ]);
 
         arsort($data);
@@ -791,7 +788,7 @@ function data_coupon($debut, $fin)
     $data_conso = [];
     foreach ($data as $row) {
         if ($row['Coupon Code']) {
-            $data_conso[$row['Coupon Code']][] = $row['increment_id'];
+            $data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
         }
     }
 
@@ -826,23 +823,24 @@ function stats_clients()
     ->group('customer_id');
 
     foreach ($orders as $order) {
-        $nom_client = $order->getCustomerName();
-        $nb_order = $order->getNbOrder();
-        $amount_total = round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-        $last_order = $order->getLastOrder();
-        $mail = $order->getCustomerEmail();
+        $customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
 
         $dataadd = Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
         $address = $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 
+        $datelo=new DateTime($order->getLastOrder());
+
         array_push($data, [
-                                        'Nom Client' => $nom_client,
-                                        'Nb Commande' => $nb_order,
-                                        'Total' => $amount_total,
-                                        'Dernière commande' => $last_order,
-                                        'Mail client' => $mail,
-                                        'Adresse client' => $address,
-                                    ]);
+            'Nom Client' => $order->getCustomerName(),
+            'Nb Commande' => $order->getNbOrder(),
+            'Total' => round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+            'Dernière commande' => $datelo->format('d/m/Y'),
+             'Mail client' => $order->getCustomerEmail(),
+            'Rue' => $dataadd->getStreet()[0],
+            'Code Postal' => $dataadd->getPostcode(),
+            'Date Inscription' => Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+            'Créé dans' => $customer->getCreatedIn(),
+        ]);
     }
 
     //Add customer who never ordered
@@ -854,20 +852,17 @@ function stats_clients()
         $key = array_search($customer->getEmail(), array_columns($data, 'Mail client'));
 
         if ($key == false) {
-            $nom_client = $customer->getFirstname().' '.$customer->getLastname();
-            $nb_order = 0;
-            $amount_total = 0;
-            $last_order = 0;
-            $mail = $customer->getEmail();
-
             array_push($data, [
-                                            'Nom Client' => $nom_client,
-                                            'Nb Commande' => $nb_order,
-                                            'Total' => $amount_total,
-                                            'Dernière commande' => $last_order,
-                                            'Mail client' => $mail,
-                                            'Adresse client' => '',
-                                        ]);
+                'Nom Client' => $customer->getFirstname().' '.$customer->getLastname(),
+                'Nb Commande' => 0,
+                'Total' => 0,
+                'Dernière commande' => 'NA',
+                'Mail client' => $customer->getEmail(),
+                'Rue' => "NA",
+                'Code Postal' => "NA",
+                'Date Inscription' => Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+                'Créé dans' => $customer->getCreatedIn(),
+            ]);
         }
     }
 
