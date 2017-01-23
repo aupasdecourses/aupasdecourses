@@ -65,14 +65,14 @@
                         <?php echo $this->getChild('product_labels')->setData('product', $_product)->toHtml(); ?>
                     </a>
                     <div class="product-info row">
+                        <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                         <div class="product-info-left product-info-column">
-                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                             <p class="product-commercant-name"><?php echo $_product->getData('short_description'); ?></p>
                             <p class="product-commercant-name">
                                 <?php echo Mage::getResourceSingleton('catalog/product')
-                                        ->getAttribute('commercant')
-                                        ->getSource()
-                                        ->getOptionText($_product->getData('commercant')); ?>
+                                    ->getAttribute('commercant')
+                                    ->getSource()
+                                    ->getOptionText($_product->getData('commercant')); ?>
                             </p>
                         </div>
                         <div class="product-info-right product-info-column">

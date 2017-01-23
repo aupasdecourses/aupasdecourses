@@ -33,8 +33,14 @@ class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Templ
     public function getAvailability()
     {
         if(!isset($this->_availability)){
-            $comcatid = explode('/', Mage::registry('current_category')->getPath())[3];
-            $this->_availability= Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_category',$comcatid)->getFirstItem()->getDeliveryDays();
+            $this->_availability = [];
+            if (Mage::registry('current_category')) {
+                $path = explode('/', Mage::registry('current_category')->getPath());
+                if (isset($path[3])) {
+                    $comcatid = $path[3];
+                    $this->_availability= Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_category',$comcatid)->getFirstItem()->getDeliveryDays();
+                }
+            }
         }
         return  $this->_availability;
     }
@@ -48,7 +54,10 @@ class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Templ
      */
     public function getProductAvailability(Mage_Catalog_Model_Product $product)
     {
-        return Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_attribut_commercant',$product->getCommercant())->getFirstItem()->getDeliveryDays();
+        if ($product->getCommercant()) {
+            return Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_attribut_commercant',$product->getCommercant())->getFirstItem()->getDeliveryDays();
+        }
+        return [];
     }
 
     /**

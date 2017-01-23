@@ -114,10 +114,10 @@ var apdcProductAddedToCart = {};
 <?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
 jQuery(document).ready(function() {
     <?php if ($productId) : ?>
-        jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change');
+        jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
         jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
     <?php else : ?>
-        jQuery('.apdc-add-to-cart-form').trigger('change');
+        jQuery('.apdc-add-to-cart-form').trigger('change', [true]);
         jQuery(document).trigger('minicartLoaded');
     <?php endif; ?>
 });

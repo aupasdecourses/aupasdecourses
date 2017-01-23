@@ -56,8 +56,8 @@ class Cybage_Swatches_Helper_Product extends Mage_Catalog_Helper_Product
     public function getProductInfo($id) {
         $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($id);
         
-        $parentProductInfo = Mage::getModel("catalog/product")->load($parentIds[0]);
         if(!empty($parentIds)){
+            $parentProductInfo = Mage::getModel("catalog/product")->load($parentIds[0]);
             return $parentProductInfo->getTypeId();
         }else{
             return "";
