@@ -2175,10 +2175,11 @@ p.product-name a:hover,
 /*Name of commercant*/
 
 .product-view .product-shop .product-name .nom-commercant {
-    font-family: "Courgette", "Raleway", Verdana, Arial;
+    font-family: "Open Sans", "Raleway", Verdana, Arial;
     margin-top: 5px;
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(67, 41, 24);
+    font-weight: 600;
 }
 
 .product-view .product-shop .price-box .full-product-price .price {
@@ -2897,8 +2898,9 @@ p.product-name a:hover,
 }
 
 .commercant-item .product-name {
-    font-size: 20px;
-    font-family: "Courgette";
+    font-size: 18px;
+    font-family: "Open Sans";
+    font-weight:600;
     text-transform: none;
 }
 
@@ -3169,8 +3171,9 @@ a.btn:hover {
  * ============================================ */
 
 .commercant_name {
-    font-family: "Courgette", Raleway, Verdana, Arial, sans-serif;
-    font-size: 40px;
+    font-family: "Open Sans", Raleway, Verdana, Arial, sans-serif;
+    font-size: 30px;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 770px) {
