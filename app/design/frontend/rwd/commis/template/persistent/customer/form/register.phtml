@@ -46,8 +46,6 @@
                     <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
                     <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
                     <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-                    <p class="form-instructions"><?php echo $this->__('Please enter the following information to create your account.') ?></p>
-                    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
                     <ul class="form-list">
                         <li class="fields">
                             <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
@@ -174,8 +172,8 @@
                     <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
                 </div>
                 <div class="buttons-set">
-                    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
-                    <button type="submit" title="<?php echo $this->__('Register') ?>" class="button"><span><span><?php echo $this->__('Register') ?></span></span></button>
+                    <button type="submit" title="<?php echo $this->__('Register') ?>" class="button" style="width:100%"><span><span><?php echo $this->__('Register') ?></span></span></button>
+                    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
                 </div>
                 <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
                     <input name="context" type="hidden" value="checkout" />

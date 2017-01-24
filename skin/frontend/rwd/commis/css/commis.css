@@ -4205,7 +4205,17 @@ p.required,
 
 
 /* ============================================ *
- * Customer Account - Frontend
+ * #Customer login
+ * ============================================ */
+
+
+.customer-account-create .scaffold-form label:first-child {
+    width: 100%;
+}
+
+
+/* ============================================ *
+ * #Customer Account - Frontend
  * ============================================ */
 
 
