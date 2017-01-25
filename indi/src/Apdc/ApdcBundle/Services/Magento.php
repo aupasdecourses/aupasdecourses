@@ -176,7 +176,7 @@ class Magento
 	}
 
 	private function addEntryToModel($model, $data) {
-		foreach ($datas as $k => $v) {
+		foreach ($data as $k => $v) {
 			$model->setData($k, $v);
 		}
 		$model->save();

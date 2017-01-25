@@ -38,7 +38,7 @@ class RefundController extends Controller
 		if ($form_from->isValid())
 			return $this->redirectToRoute('refundIndex', [ 'from' => $entity_from->from ]);
 		if (!isset($from))
-			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime('-1 day')) ]);
+			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime()) ]);
 
 		$form_from->get('from')->setData($from);
 
@@ -242,9 +242,7 @@ class RefundController extends Controller
 					}
 				}
 			}
-			dump($rsl_table);
 			foreach ($rsl_table as $product_id => $data) {
-				dump($data);
 				$mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
 			}
 
