@@ -382,7 +382,11 @@ class RefundController extends Controller
 
 	public function refundAdyenFormAction(Request $request, $psp)
 	{
-		
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
 		$adyen = $this->container->get('apdc_apdc.adyen');
 		$logs = $this->container->get('apdc_apdc.adyenlogs');
 		
