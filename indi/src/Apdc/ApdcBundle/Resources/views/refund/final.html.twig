@@ -1,0 +1,29 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class ="container">
+	<h1> Soumission à Adyen </h1>
+
+	<hr>
+	{{ form_start(form)}}
+	{% for order_id, fields in orders %}
+		{% if fields.merchant_reference == id %}
+			<h4><b> Reference PSP <b></h4>
+				{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
+			<hr>
+			<h4><b> Montant à rembourser <b></h4>
+			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ refund_diff ~ " € " }}</h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
+			<hr>
+		{% endif %}
+	{% endfor %}
+
+	{{form_errors(form)}}
+	{{form_end(form)}}
+
+</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
