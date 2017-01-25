@@ -45,11 +45,11 @@ if (typeof(apdcProductQuickViewPopup) === 'undefined') {
       var productId = $(this).data('product-id');
       $(document).trigger('minicartRemoveItem', [itemId, productId]);
     });
-    $('.page-header-container').on('mouseleave', '.header-minicart .details', function() {
+    $('.page-header-container').on('mouseleave', '.header-minicart .details, .header-minicart .item-details', function() {
       $(this).removeClass('display');
       $(this).parents('.item').find('.item-details').stop().slideUp('fast');
     });
-    $('.page-header-container').on('mouseover', '.header-minicart .details', function() {
+    $('.page-header-container').on('mouseenter', '.header-minicart .details, .header-minicart .item-details', function() {
       $(this).addClass('display');
       $(this).parents('.item').find('.item-details').stop().slideDown('fast');
     });

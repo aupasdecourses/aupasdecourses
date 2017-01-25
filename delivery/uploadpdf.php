@@ -36,12 +36,14 @@ if(!empty($_POST['pdf'])){
     //For test purpose only
    //$recipients=array('mainguetpierre@gmail.com','pierre@aupasdecourses.com');
 
+    $shop=getShops($_POST['id_commercant']);
+
     //For production only
      $recipients=array();
      $mail_array=array('mail_contact','mail_pro','mail_3');
      foreach($mail_array as $m){
-         if(!in_array(getShop($_POST['id_commercant'])[$m],array('',' ',null))){
-             array_push($recipients, getShop($_POST['id_commercant'])[$m]);
+         if(!in_array($shop[$m],array('',' ',null))){
+             array_push($recipients, $shop[$m]);
          }
      }
 
@@ -72,7 +74,7 @@ if(!empty($_POST['pdf'])){
     $mail->addAttachment($attachment);                  
     try {
         $fin=$mail->send($transport);
-        echo "<br/>Mail envoyé à ".getShop($_POST['id_commercant'])['name'].": OK!";
+        echo "<br/>Mail envoyé à ".$shop['name'].": OK!";
     } catch (Exception $e) {
     	echo "Erreur lors de l'envoi";
         Mage::log($e,null,'email.log');

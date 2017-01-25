@@ -1,4 +1,4 @@
-<div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
+<div class="account-login<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>" style="margin:40px 0;">
     <div class="page-title">
         <h1><?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
                 <?php echo $this->__('Login or Create an Account') ?>
@@ -11,18 +11,21 @@
         <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="col2-set">
            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
-            <div class="col-sm-6 new-users">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4 new-users">
                 <div class="content">
                     <h2>Nouveau client ?</h2>
                     <p class="form-instructions"><?php echo $this->__('Registration is free and easy!') ?></p>
                     <p>Attention, nous ne pourrons vous livrer que si vous êtes dans la zone couverte par notre service. <a href="<?php echo Mage::getBaseUrl();?>zone-et-horaire" target="_blank">Cliquez ici pour en savoir plus.</a>
                 </div>
-                <div class="buttons-set">
+                <div class="buttons-set" style='margin-bottom:20px;'>
                     <a title="<?php echo $this->__('Create an Account') ?>" class="button" href="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>"><span><span>Créer un compte</span></span></a>
                 </div>
             </div>
+            <?php else:?>
+                <div class="col-sm-4"></div>
             <?php endif; ?>
-            <div class="col-sm-6 registered-users">
+            <div class="col-sm-4 registered-users">
                 <div class="content fieldset">
                     <h2>Déjà enregistré ?</h2>
                     <p class="form-instructions"><?php echo $this->__('If you have an account with us, please log in.') ?></p>
@@ -52,6 +55,11 @@
                     <button type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
                 </div>
             </div>
+            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
+                <div class="col-sm-2"></div>
+            <?php else:?>
+                <div class="col-sm-4"></div>
+            <?php endif; ?>
         </div>
         <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
             <input name="context" type="hidden" value="checkout" />

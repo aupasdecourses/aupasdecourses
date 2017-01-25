@@ -1,11 +1,7 @@
 function set_diff_color(elem, diff) {
 	elem.removeClass('success warning error');
-	if (!diff)
-		elem.addClass('success');
-	else if (diff > 0)
-		elem.addClass('warning');
-	else if (diff < 0 || isNaN(diff))
-		elem.addClass('error');
+	if (diff!=0)
+		elem.addClass('bold');
 }
 
 function update_diff(merchant_id, somme_ticket, somme_diff) {

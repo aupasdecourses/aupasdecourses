@@ -33,12 +33,12 @@ class Magento
 		$shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
         $shops->addFilterToMap('path', 'catalog_category_entity.path');
 
-		$S = [];
-		$app = \Mage::app();
-		$stores = $app->getStores();
+        $S = [];
+        $app = \Mage::app();
+        $stores = $app->getStores();
 		foreach ($stores as $id => $idc){
-			$S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
-			$S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
+			$S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
+			$S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
 		}
 
 		foreach ($shops as $shop) {
@@ -122,7 +122,6 @@ class Magento
 
 	private function OrderHeaderParsing($order) {
 		$orderHeader = [];
-
 		$shipping = $order->getShippingAddress();
 		$orderHeader['mid']				=	$order->getData('entity_id');
 		$orderHeader['id']				=	$order->getData('increment_id');
@@ -137,7 +136,11 @@ class Magento
 		$orderHeader['address']			=	$shipping->getStreet()[0] . ' ' . $shipping->getPostcode() . ' ' . $shipping->getCity();
 		$orderHeader['phone']			=	$shipping->getTelephone();
 		$orderHeader['mail']			=	$order->getData('customer_email');
-		$orderHeader['info']			=	$order->getData('codeporte1') . ' | ' . $order->getData('codeprote2') . ' | ' . $order->getData('info');
+		$orderHeader['codeporte1']		= 	$order->getData('codeporte1');
+		$orderHeader['codeporte2']		= 	$order->getData('codeporte2');
+		$orderHeader['batiment']		= 	$order->getData('batiment');
+		$orderHeader['etage']			= 	$order->getData('etage');
+		$orderHeader['info']			=	$order->getData('info');
 		$orderHeader['contact']			=	$order->getData('contactvoisin');
 		$orderHeader['contact_phone']	=	$order->getData('telcontact');
 		$orderHeader['order_date']		=	$order->getData('created_at');

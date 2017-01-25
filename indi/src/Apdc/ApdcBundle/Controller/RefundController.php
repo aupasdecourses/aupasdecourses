@@ -296,7 +296,7 @@ class RefundController extends Controller
 		$msg = '';
 		if ($form_submit->isSubmitted()) {
 			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
-			return $this->redirectToRoute('refundIndex', [
+			return $this->redirectToRoute('refundFinal', [
 				'id'			=> $id,   
 			]);	
 			try {
@@ -355,7 +355,7 @@ class RefundController extends Controller
 			
 			return $this->redirectToRoute('refundIndex');
 		}
-		return $this->render('ApdcApdcBundle::refund/formuFinal.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/final.html.twig', [
 			'form'			=> $form->createView(),
 			'refund_diff'	=> $refund_diff,
 			'id'			=> $id,
