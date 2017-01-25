@@ -38,7 +38,7 @@ class RefundController extends Controller
 		if ($form_from->isValid())
 			return $this->redirectToRoute('refundIndex', [ 'from' => $entity_from->from ]);
 		if (!isset($from))
-			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime()) ]);
+			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime("now")) ]);
 
 		$form_from->get('from')->setData($from);
 
@@ -210,7 +210,6 @@ class RefundController extends Controller
 				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
 		}
 		ksort($order);
-		dump($order);
 		$total = $order[-1]['merchant']['total'];
 		$order_mid = $order[-1]['order']['mid'];
 		$input_status = $order[-1]['order']['input'];
