@@ -33,7 +33,7 @@
             <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href> </action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
-            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Courgette</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Open+Sans</href></action>
             <action method="addLinkRel"><rel>alternate</rel><href>https://www.aupasdecourses.com</href><hreflang>fr</hreflang></action>
             <block type="core/text" name="cdn">
                 <action method="setText">

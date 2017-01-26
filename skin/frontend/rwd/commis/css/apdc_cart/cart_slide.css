@@ -115,8 +115,9 @@
     text-decoration: underline
 }
 .header-minicart #header-cart .mini-commercant-name .title {
-  font-family: Courgette;
-  font-size: 16px;
+  font-family: "Open Sans";
+  font-weight:600;
+  font-size: 14px;
   display:inline-block;
 }
 .header-minicart #header-cart .mini-commercant-name .count {display:inline-block; float:right;}
