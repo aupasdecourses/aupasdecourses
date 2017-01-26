@@ -4,19 +4,23 @@
 
 {% block body %}
 <div class="container">
-	<div class="col-sm-2">
-		<a href="{{ path('refundIndex') }}" type="submit" name="submit" value='previous' class="btn btn-default"><< Retour</a>
-	</div>
-	<div class="progress col-sm-8">
-		<div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-	    	<span>Upload</span>
+	<div class="row">
+		<div class="col-xs-2">
+			<a href="{{ path('refundIndex') }}" type="submit" name="submit" value='previous' class="btn btn-default"><< Retour</a>
+		</div>
+		<div class="progress col-xs-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+		    	<span>Upload</span>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<a href="{{ path('refundInput', {id:id}) }}" type="submit" name="submit" value='next' class="btn btn-default right">Suivant >></a>
 		</div>
 	</div>
-	<div class="col-sm-2">
-		<a href="{{ path('refundInput', {id:id}) }}" type="submit" name="submit" value='next' class="btn btn-default right">Suivant >></a>
+	<div class="row">
+		<h1>#{{id}}<small> Upload des tickets</small></h1>
+		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	</div>
-	<h1> Remboursement : Upload des fichiers </h1>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

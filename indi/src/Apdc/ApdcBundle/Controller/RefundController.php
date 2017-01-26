@@ -117,13 +117,12 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+        $session = $request->getSession();
 
         $order = $mage->getOrderByMerchants($id);
 
         $entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
-        $form_upload = $this->createFormBuilder($entity_upload);
-
-        $session = $request->getSession();
+        $form_upload = $this->createFormBuilder($entity_upload);      
 
         $rsl;
         self::check_upload_status($id, $order, $rsl);
@@ -183,12 +182,12 @@ class RefundController extends Controller
                 } else {
                     $status = 'joker';
                 }
-                $mage->addEntryToOrderField(['order_id' => $order[-1]['order']['mid']], ['upload' => $status]);
+                $mage->updateEntryToOrderField(['order_id' => $order[-1]['order']['mid']], ['upload' => $status]);
                 $session->getFlashBag()->add('success', 'Image uploadée avec succès');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             } else {
-                $session->getFlashBag()->add('error', 'L\image n\a pas été uploadée :-(');
+                $session->getFlashBag()->add('error', 'L\'image n\'a pas été uploadée :-(');
 
                 return $this->redirectToRoute('refundUpload', ['id' => $id]);
             }
@@ -208,9 +207,10 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
-        $order = $mage->getRefunds($id);
         $session = $request->getSession();
 
+        $order = $mage->getRefunds($id);
+        
         $files = $this->getUploadedFiles($id);
 
         foreach ($order as $merchant_id => $merchant_part) {
@@ -252,11 +252,16 @@ class RefundController extends Controller
                     }
                 }
             }
-            foreach ($rsl_table as $product_id => $data) {
-                $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
-            }
-            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['input' => 'done']);
-            $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
+            
+            try{
+	            foreach ($rsl_table as $product_id => $data) {
+	                $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
+	            }
+	            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['input' => 'done']);
+	            $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
+	        } catch (Exception $e){
+	        	$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
+	        }
 
             if ($_POST['submit'] == 'next') {
                 return $this->redirectToRoute('refundDigest', ['id' => $id]);
@@ -306,12 +311,7 @@ class RefundController extends Controller
         $form_submit->setAction($this->generateUrl('refundDigest', array('id' => $id)));
         $form_submit = $form_submit->getForm();
 
-        
-        if($mage->checkcreditmemo($id)){
-        	$show_button=false;
-        } else{
-        	$show_button=true;
-        }
+        $show_button=!$mage->checkcreditmemo($id);
 
         if ($request->isMethod('POST')) {
             $form_submit->handleRequest($request);
@@ -366,12 +366,11 @@ class RefundController extends Controller
 
         $adyen = $this->container->get('apdc_apdc.adyen');
         $logs = $this->container->get('apdc_apdc.adyenlogs');
-
         $mage = $this->container->get('apdc_apdc.magento');
+        
         $order = $mage->getRefunds($id);
         $orders = $mage->getAdyenPaymentByPsp();
         $queue = $mage->getAdyenQueueFields();
-        print_R($queue);
 
         $refund_diff = $order[-1]['merchant']['refund_diff'];
         $order_mid = $order[-1]['order']['mid'];
