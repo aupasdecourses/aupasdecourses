@@ -305,9 +305,14 @@ class RefundController extends Controller
 			$form_submit->handleRequest($request);
 
 			try {
-				$mage->processcreditAction($id, $order);
-
-				// send mail
+				$comment=$mage->processcreditAction($id, $order);
+				/*dump($comment);
+				$mail_creditmemo=$mage->sendCreditMemoMail($id,$comment);
+				dump($mail_creditmemo);
+				$close=$mage->setCloseStatus($id);
+				dump($close);
+				if ($close && !$mail_creditmemo)
+					$mail_cloture=$mage->sendCloseMail($id,$comment);*/
 
 				$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'digest' => 'done' ]);
 				if($refund_diff > 0){
@@ -347,6 +352,7 @@ class RefundController extends Controller
 		$orders = $mage->getAdyenPaymentByPsp();
 	
 		$refund_diff = $order[-1]['merchant']['refund_diff'];
+		$order_mid = $order[-1]['order']['mid'];
 
 		$refund = new Refund();
 		$form = $this->createForm(RefundType::class, $refund);
@@ -362,7 +368,7 @@ class RefundController extends Controller
 				echo $e->getMessage();
 			}
 
-			
+			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'refund' => 'done' ]);
 			return $this->redirectToRoute('refundIndex');
 		}
 		return $this->render('ApdcApdcBundle::refund/final.html.twig', [

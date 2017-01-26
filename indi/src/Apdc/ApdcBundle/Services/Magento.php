@@ -97,6 +97,7 @@ class Magento
 		 		'upload'				=>	'attachment.upload',
 		 		'input'					=>	'attachment.input',
 		 		'digest'				=>	'attachment.digest',
+		 		'refund'				=>	'attachment.refund',
 		 	));
 		$orders->addFilterToMap('ddate', 'mwddate.ddate');
 		$orders->addFilterToMap('dtime', 'mwdtime.interval')
@@ -129,6 +130,7 @@ class Magento
 		$orderHeader['upload']			=	$order->getData('upload');
 		$orderHeader['input']			=	$order->getData('input');
 		$orderHeader['digest']			=	$order->getData('digest');
+		$orderHeader['refund']			=	$order->getData('refund');
 		$orderHeader['customer_id']		=	$order->getData('customer_id');
 		$orderHeader['first_name']		=	$shipping->getData('firstname');
 		$orderHeader['last_name']		=	$shipping->getData('lastname');
