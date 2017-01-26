@@ -440,4 +440,21 @@ class Magento
 		}		
 		return($ref);	
 	}
+	/* Pour les formulaires de soumissions à Adyen */
+	public function getAdyenQueueFields()
+	{
+		$collection = \Mage::getModel('adyen/event_queue')->getCollection();
+		$collection->addFieldToFilter('increment_id' , ['neq' => NULL ]);
+		$ref = [];
+		$cpt = 1;
+		foreach($collection as $col)
+		{
+			$ref[$cpt]['increment_id']		= $col->getData('increment_id');
+			$ref[$cpt]['pspreference']		= $col->getData('pspreference');
+			$ref[$cpt]['adyen_event_code']	= $col->getData('adyen_event_code');
+			$ref[$cpt]['created_at']		= $col->getData('created');
+			$cpt++;
+		}
+		return($ref);
+	}
 }

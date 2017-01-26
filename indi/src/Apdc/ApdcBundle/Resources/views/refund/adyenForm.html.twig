@@ -18,6 +18,9 @@
 			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ (fields.amount-fields.total_refunded) ~ "€" }}</h4>
 				{{ form_widget(form.value, {'attr': {'placeholder': (fields.amount-fields.total_refunded) } }) }}
 			<hr>
+			<h4> Montant déja remboursé </h4>
+				{{ fields.total_refunded ~ " € "}}
+			<hr>
 		{% endif %} 
 	{% endfor %}
 	{{form_errors(form)}}

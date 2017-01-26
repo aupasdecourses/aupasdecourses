@@ -48,7 +48,7 @@
 									<span id='{{product_id}}-total'>{{product.prix_total }}</span>
 								</td>
 								<td>
-									<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix | round(2,'common')}}' />
+									<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.prix_total | round(2,'common')}}' />
 								</td>
 								<td>
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>

@@ -4,9 +4,22 @@
 {% block body %}
 <div class="container">
 	<h1> Facturation </h1><br>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<table class='table'>
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+	</table>
+
+
+
+
+
 </div>
-
-
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
