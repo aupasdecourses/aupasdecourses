@@ -7,39 +7,48 @@
 	<h1> Remboursement </h1>
 {% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	<table class='table'>
+		<thead>
+			<tr>
+				<th># Commande</th>
+				<th>Upload tickets</th>
+				<th>Saisie ticket</th>
+				<th>Validation Credit Memo</th>
+				<th>Remboursement Adyen</th>
+			</tr>
+		</thead>
 		{% for order in orders %}
 			<tr>
-				<td><a href="{{path('refundUpload', {id: order.id}) }}" target="_blanc">{{ order.id }}</a></td>
+				<td>{{ order.id }}</td>
 				<td>
-					{% if order.upload == 'none' %}
-						<a href='{{ path('refundUpload', {id: order.id}) }}' class='error'>upload</a>
+					{% if order.upload == '' %}
+						<a href='{{ path('refundUpload', {id: order.id}) }}' class='error' target="_blank">A faire</a>
 					{% elseif order.upload == 'joker' %}
-						<a href='{{ path('refundUpload', {id: order.id}) }}' class='warning'>upload</a>
-					{% elseif order.upload == 'done' %}
-						<a href='{{ path('refundUpload', {id: order.id}) }}' class='success'>upload</a>
+						<a href='{{ path('refundUpload', {id: order.id}) }}' class='success' target="_blank">OK</a>
 					{% endif %}
 				</td>
 				<td>
-					{% if order.upload != 'none' %}
-						{% if order.input == 'none' %}
-							<a href='{{ path('refundInput', {id: order.id}) }}' class='error'>input</a>
+					{% if order.upload != '' %}
+						{% if order.input == '' %}
+							<a href='{{ path('refundInput', {id: order.id}) }}' class='error' target="_blank">A faire</a>
 						{% elseif order.input == 'done' %}
-							<a href='{{ path('refundInput', {id: order.id}) }}' class='success'>input</a>
+							<a href='{{ path('refundInput', {id: order.id}) }}' class='success' target="_blank">OK</a>
 						{% endif %}
 					{% else %}
-						input
+						A faire
 					{% endif %}
 				</td>
 				<td>
-					{% if order.input != 'none' %}
-						{% if order.digest == 'none' %}
-							<a href='{{ path('refundDigest', {id: order.id}) }}' class='error'>digest</a>
+					{% if order.input != '' %}
+						{% if order.digest == '' %}
+							<a href='{{ path('refundDigest', {id: order.id}) }}' class='error' target="_blank">A faire</a>
 						{% elseif order.digest == 'done'%}
-							<a href='{{ path('refundDigest', {id: order.id}) }}' class='success'>digest</a>
+							<a href='{{ path('refundDigest', {id: order.id}) }}' class='success' target="_blank">OK</a>
 						{% endif %}
 					{% else %}
-						digest
+						A faire
 					{% endif %}
+				</td>
+				<td>
 				</td>
 			</tr>
 		{% endfor %}

@@ -8,7 +8,7 @@ include '../../app/Mage.php';
 
 class Magento
 {
-//	use credimemo;
+	use Credimemo;
 
 	const AUTHORIZED_GROUP = ['Administrators'];
 
@@ -92,13 +92,12 @@ class Magento
 				'telcontact'			=>	'order_attribute.telcontact',
 				'info'					=>	'order_attribute.infoscomplementaires'
 			));
-		//Probleme de join left qui élimine les commandes n'ayant pas encore d'attachments
-		// $orders->getSelect()->join(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
-		// 	array (
-		// 		'upload'				=>	'attachment.upload',
-		// 		'input'					=>	'attachment.input',
-		// 		'digest'				=>	'attachment.digest',
-		// 	));
+		$orders->getSelect()->joinLeft(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
+		 	array (
+		 		'upload'				=>	'attachment.upload',
+		 		'input'					=>	'attachment.input',
+		 		'digest'				=>	'attachment.digest',
+		 	));
 		$orders->addFilterToMap('ddate', 'mwddate.ddate');
 		$orders->addFilterToMap('dtime', 'mwdtime.interval')
 			->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
@@ -395,7 +394,6 @@ class Magento
 					$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
 				}
 				$rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
-				// <=====================
 				$rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
 				$rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
 				$rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];

@@ -4,25 +4,35 @@
 
 {% block body %}
 <div class ="container">
-	<h1> Soumission à Adyen </h1>
+	<div class="row">
+		<div class="col-sm-2">
+			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default"><< Retour</a>
+		</div>
+		<div class="progress col-sm-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+		    	<span>Adyen</span>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
+		</div>
+	</div>
+	<div class="row">
+		<h1> Soumission à Adyen </h1>
+		{{ form_start(form)}}
+		{% for order_id, fields in orders %}
+			{% if fields.merchant_reference == id %}
+				<h4>Reference PSP</h4>
+					{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
+				<h4>Montant à rembourser</h4>
+				<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ refund_diff ~ " € " }}</h4>
+					{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
+			{% endif %}
+		{% endfor %}
 
-	<hr>
-	{{ form_start(form)}}
-	{% for order_id, fields in orders %}
-		{% if fields.merchant_reference == id %}
-			<h4><b> Reference PSP <b></h4>
-				{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
-			<hr>
-			<h4><b> Montant à rembourser <b></h4>
-			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ refund_diff ~ " € " }}</h4>
-				{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
-			<hr>
-		{% endif %}
-	{% endfor %}
-
-	{{form_errors(form)}}
-	{{form_end(form)}}
-
+		{{form_errors(form)}}
+		{{form_end(form)}}
+	</div>
 </div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
