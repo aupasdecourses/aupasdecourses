@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-trait credimemo {
+trait Credimemo {
 	private function canCreditmemo(\Mage_Sales_Model_Order $order)
 	{
 		if (!$order->getId())
@@ -36,42 +36,42 @@ trait credimemo {
 		return false;
 	}
 
+	/* Return an array of 'invoice_created' (boolean), 'msg' (string) based on invoice creation*/
+
 	private function createinvoice($orderId)
 	{
-		/*
-		** @author Pierre Mainguet
-		*/
 
 		$order = \Mage::getModel('sales/order')->loadbyIncrementid($orderId);
-
 		$invoice = \Mage::getModel('sales/service_order', $order)->prepareInvoice();
-
+		$check=['invoice_created' => false, 'msg'=>''];
 
 		if (!$order->canInvoice()) {
-			throw new \Exception('Cannot create an invoice.');
+			$check['msg']='Cannot create an invoice.';
+		} else {
+			if (!$invoice->getTotalQty()) {
+				$check['msg']='Cannot create an invoice without products.';
+			} else {
+				$invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+				$invoice->register();
+				$invoice->getOrder()->setCustomerNoteNotify(false);
+				$invoice->getOrder()->setIsInProcess(true);
+				$order->addStatusHistoryComment('Automatically INVOICED.', false);
+				$transactionSave = \Mage::getModel('core/resource_transaction')
+					->addObject($invoice)
+					->addObject($invoice->getOrder());
+				$transactionSave->save();
+				$check['msg']='Invoice successfully created';
+				$check['invoice_created']=true;
+			}
 		}
 
-		if (!$invoice->getTotalQty()) {
-			throw new \Exception('Cannot create an invoice without products.');
-		}
-
-		$invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-		$invoice->register();
-		$invoice->getOrder()->setCustomerNoteNotify(false);
-		$invoice->getOrder()->setIsInProcess(true);
-		$order->addStatusHistoryComment('Automatically INVOICED.', false);
-		$transactionSave = \Mage::getModel('core/resource_transaction')
-			->addObject($invoice)
-			->addObject($invoice->getOrder());
-		$transactionSave->save();
+		return $check;
+	
 	}
 
-	//Register Credit Memo Info in custom table for Facturation
+	//Register Credit Memo Info in custom table for Facturation (intérêt par rapport à table credit memo ?)
 	private function registerRefundorder($orderId, $commercant, $value, $creditmemo)
 	{
-		/*
-		** @author Pierre Mainguet
-		*/
 
 		$creditmemo_id = $creditmemo->getEntityId();
 
@@ -98,9 +98,6 @@ trait credimemo {
 
 	private function prepareCreditmemo($order, $data = array())
 	{
-		/*
-		** @author Pierre Mainguet
-		*/
 
 		$totalQty = 0;
 		$totalToRefund = 0;
@@ -133,18 +130,15 @@ trait credimemo {
 		$creditmemo->setAdjustmentPositive($data['adjustment_positive']);
 		$creditmemo->setAdjustmentNegative($data['adjustment_negative']);
 
-//		$creditmemo->collectTotals();
+		$creditmemo->collectTotals();
 
 		return $creditmemo;
 	}
 
 	private function createcreditmemo($orderId, $data)
 	{
-		/*
-		** @author Pierre Mainguet
-		*/
 
-		$order = \Mage::getModel('sales/order')->loadbyIncrementid($orderId);
+		$order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
 
 		$invoice = $this->checkinvoices($order);
 
@@ -184,7 +178,11 @@ trait credimemo {
 
 	public function processcreditAction($orderId, $order)
 	{
-		$this->createinvoice($orderId);
+		$invoice=$this->createinvoice($orderId);
+		
+		if(!$invoice['invoice_created']){
+			// add $invoice['msg'] to Flashmsg
+		}
 
 		$order_concat = [];
 		foreach ($order as $merchant_id => $data) {
@@ -194,8 +192,9 @@ trait credimemo {
 					$merchant_concat[] = $product['refund_com'];
 				}
 				$merchant_concat = implode(' - ', $merchant_concat);
-				$order_concat[$merchant_id] = "{$data['merchant']['name']}: {$data['merchant']['refund_diff']}€ -> {$merchant_concat}";
+				$order_concat[$merchant_id] = "Ecart de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}. {$merchant_concat}";
 				$creditmemo_data = [
+					'merchant' => "{$data['merchant']['name']}",
 					'comment' => $order_concat[$merchant_id],
 					'items' => [],
 					'shipping_amount' => 0,
@@ -205,7 +204,7 @@ trait credimemo {
 				if ($data['merchant']['refund_diff'] > 0) {
 					$creditmemo_data['adjustment_positive'] = $data['merchant']['refund_diff'];
 				} else {
-					$creditmemo_data['adjustment_negative'] = $data['merchant']['refund_diff'];
+					$creditmemo_data['adjustment_negative'] = -$data['merchant']['refund_diff'];
 				}
 				$creditmemo = $this->createcreditmemo($orderId, $creditmemo_data);
 				if ($credimemo <> null)

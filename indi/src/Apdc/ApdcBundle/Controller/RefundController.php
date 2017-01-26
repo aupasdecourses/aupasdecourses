@@ -38,7 +38,7 @@ class RefundController extends Controller
 		if ($form_from->isValid())
 			return $this->redirectToRoute('refundIndex', [ 'from' => $entity_from->from ]);
 		if (!isset($from))
-			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime()) ]);
+			return $this->redirectToRoute('refundIndex', [ 'from' => date('Y-m-d', strtotime('now')) ]);
 
 		$form_from->get('from')->setData($from);
 
@@ -121,6 +121,8 @@ class RefundController extends Controller
 		$entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
 		$form_upload = $this->createFormBuilder($entity_upload);
 
+		$session = $request->getSession();
+
 		$rsl;
 		self::check_upload_status($id, $order, $rsl);
 
@@ -178,15 +180,18 @@ class RefundController extends Controller
 				else
 					$status = 'joker';
 				$mage->updateEntryToOrderField([ 'order_id' => $order[-1]['order']['mid']], [ 'upload' => $status]);
+  			    $session->getFlashBag()->add('success', 'Image uploadée avec succès');
 				return $this->redirectToRoute('refundInput', [ 'id' => $id ]);
 			} else {
+				$session->getFlashBag()->add('error', 'L\image n\a pas été uploadée :-(');
 				return $this->redirectToRoute('refundUpload', [ 'id' => $id ]);
 			}
 		}
 
 		return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
 			'forms' => [ $form_upload->createView() ],
-			'order' => $order
+			'order' => $order,
+			'id' => $id
 		]);		
 	}
 
@@ -198,8 +203,8 @@ class RefundController extends Controller
 		}
 
 		$mage = $this->container->get('apdc_apdc.magento');
-
 		$order = $mage->getRefunds($id);
+		$session=$request->getSession();
 
 		$files = $this->getUploadedFiles($id);
 
@@ -210,7 +215,6 @@ class RefundController extends Controller
 				$order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
 		}
 		ksort($order);
-		dump($order);
 		$total = $order[-1]['merchant']['total'];
 		$order_mid = $order[-1]['order']['mid'];
 		$input_status = $order[-1]['order']['input'];
@@ -245,6 +249,8 @@ class RefundController extends Controller
 			foreach ($rsl_table as $product_id => $data) {
 				$mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
 			}
+			$mage->updateEntryToOrderField([ 'order_id' => $order_mid], [ 'input' => 'done']);
+  			$session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 
 			if ($_POST['submit'] == 'next') {
 				return $this->redirectToRoute('refundDigest', [ 'id' => $id ]);
@@ -257,7 +263,7 @@ class RefundController extends Controller
 			'form' => $form_input->createView(),
 			'order' => $order,
 			'total' => $total,
-			'order_id' => $id,
+			'id' => $id,
 		]);
 	}
 	
@@ -269,12 +275,14 @@ class RefundController extends Controller
 		}
 
 		$mage = $this->container->get('apdc_apdc.magento');
+		$session=$request->getSession();
 
 		$order = $mage->getRefunds($id);
 
 		$total = $order[-1]['merchant']['total'];
 		$refund_total = $order[-1]['merchant']['refund_total'];
 		$refund_diff = $order[-1]['merchant']['refund_diff'];
+		$order_mid = $order[-1]['order']['mid'];
 		$order_header = $order[-1]['order'];
 		unset ($order[-1]);
 
@@ -288,34 +296,38 @@ class RefundController extends Controller
 		ksort($order);
 
 		$entity_submit = new \Apdc\ApdcBundle\Entity\Model();
-		$form_submit = $this->createForm(\Apdc\ApdcBundle\Form\Submit::class, $entity_submit);
+		$form_submit = $this->createFormBuilder($entity_submit);
+		$form_submit->setAction($this->generateUrl('refundDigest',array('id'=>$id)));
+		$form_submit=$form_submit->getForm();
 
-		$form_submit->handleRequest($request);
 		$msg = '';
-		if ($form_submit->isSubmitted()) {
-			$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'input' => 'none' ]); // to be changed to done
-			return $this->redirectToRoute('refundFinal', [
-				'id'			=> $id,   
-			]);	
-			try {
-		//		$mage->processcreditAction($id, $order);
-		//		$adyen = new \Adyen();
-		//		$adyen->refund('AuPasDeCoursesFR', $refund_diff, $order_header['pspreference'], "{id-R}");
+		if($request->isMethod('POST')){
+			$form_submit->handleRequest($request);
 
-		//		send mail
+			try {
+				$mage->processcreditAction($id, $order);
+
+				// send mail
+
+				$mage->updateEntryToOrderField([ 'order_id' => $order_mid ], [ 'digest' => 'done' ]);
+				if($refund_diff > 0){
+					return $this->redirectToRoute('refundFinal', ['id'=> $id]);
+				} else {
+					return $this->redirectToRoute('refundDigest', ['id'=> $id]);
+				}	
 			} catch (\Exception $e) {
-				$msg = $e->getMessage();
+				$session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
 			}
 		}
 
 		return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
 			'total' => $total,
-			'msg' => $msg,
 			'refund_total' => $refund_total,
 			'refund_diff' => $refund_diff,
 			'order_header' => $order_header,
 			'order' => $order,
-			'order_id' => $id,
+			'id' => $id,
+			'msg'=>'',
 			'forms' => [ $form_submit->createView() ],
 		]);
 	}

@@ -19,10 +19,19 @@
 	<body>
 		{% block menu %}
 		{% endblock %}
+		{% for message in app.session.flashbag.get('success') %}
+			<div class="alert alert-success" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('error') %}
+			<div class="alert alert-danger" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('warning') %}
+			<div class="alert alert-warning" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('info') %}
+			<div class="alert alert-info" role="alert">{{message}}</div>
+		{% endfor %}
 		{% block body %}
-			{% for msg in app.session.flashbag.get('notice') %}
-			<div class="flash-notice">{{ msg }}</div>
-			{% endfor %}
 		{% endblock %}
 		{% block javascripts %}
 			<script type="text/javascript" src="{{ path('root') }}js/jquery-3.1.1.min.js"></script>
