@@ -183,7 +183,7 @@ class RefundController extends Controller
                 } else {
                     $status = 'joker';
                 }
-                $mage->updateEntryToOrderField(['order_id' => $order[-1]['order']['mid']], ['upload' => $status]);
+                $mage->addEntryToOrderField(['order_id' => $order[-1]['order']['mid']], ['upload' => $status]);
                 $session->getFlashBag()->add('success', 'Image uploadée avec succès');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
