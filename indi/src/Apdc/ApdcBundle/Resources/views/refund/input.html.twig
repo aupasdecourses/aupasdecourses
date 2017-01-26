@@ -54,7 +54,7 @@
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
 								</td>
 								<td>
-									<textarea name="comment" rows="1" cols="18" name='form[{{product_id}}][comment]'> {{product.refund_com}}</textarea>
+									<textarea class="noEnterSubmit" rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_com}}</textarea>
 								</td>
 							</tr>
 						{% endfor %}
@@ -79,4 +79,15 @@
 			{{ form_end(form) }}
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+
+$('text').keypress(function(event) {
+	    if (event.keyCode == 13) {
+			        event.preventDefault();
+					    }
+});
+
+</script>
 {% endblock %}

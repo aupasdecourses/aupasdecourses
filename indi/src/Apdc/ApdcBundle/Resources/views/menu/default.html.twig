@@ -37,8 +37,11 @@
 							<li><a href="{{ path ('refundAdyenIndex')}}">Formulaire Adyen</a></li>
 						</ul>
 					</li>
-					<li>
-						<a href="">Facturation</a>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Facturation<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('billingIndex') }}">Facturation</a></li>
+						</ul>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Stats<span class="caret"></span></a>
