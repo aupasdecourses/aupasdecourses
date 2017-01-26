@@ -51,26 +51,19 @@ trait Credimemo
     }
 
     /**
-     * Create invoice
-     * Return an array of 'invoice_created' (boolean), 'msg' (string) based on invoice creation.
-     **/
-    private function createinvoice($orderId)
+     * Initialize requested invoice instance. 
+     *
+     * @return bool
+     */
+    public function checkcreditmemo($id)
     {
-        if (!$order->canInvoice()) {
-            throw new \Exception('Cannot create an invoice.');
+        $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
+
+        if ($order->hasCreditmemos()) {
+            return true;
+        } else {
+            return false;
         }
-        if (!$invoice->getTotalQty()) {
-            throw new \Exception('Cannot create an invoice without products.');
-        }
-        $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-        $invoice->register();
-        $invoice->getOrder()->setCustomerNoteNotify(false);
-        $invoice->getOrder()->setIsInProcess(true);
-        $order->addStatusHistoryComment('Automatically INVOICED.', false);
-        $transactionSave = \Mage::getModel('core/resource_transaction')
-            ->addObject($invoice)
-            ->addObject($invoice->getOrder());
-        $transactionSave->save();
     }
 
     /**
@@ -158,8 +151,6 @@ trait Credimemo
     {
         $order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
 
-        $invoice = $this->checkinvoices($order);
-
         if (!$this->canCreditmemo($order)) {
             return;
         }
@@ -198,18 +189,38 @@ trait Credimemo
     }
 
     /**
+     * Create invoice.
+     *
+     * @return bool
+     **/
+    public function createinvoice($orderId)
+    {
+        $order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
+        $invoice = $this->checkinvoices($order);
+
+        if (!$order->canInvoice() || !$invoice->getTotalQty()) {
+            return false;
+        }
+
+        $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+        $invoice->register();
+        $invoice->getOrder()->setCustomerNoteNotify(false);
+        $invoice->getOrder()->setIsInProcess(true);
+        $order->addStatusHistoryComment('Automatically INVOICED.', false);
+        $transactionSave = \Mage::getModel('core/resource_transaction')
+            ->addObject($invoice)
+            ->addObject($invoice->getOrder());
+        $transactionSave->save();
+
+        return true;
+    }
+
+    /**
      * Prepare order creditmemo based on order items and requested params (if there is no invoice).
      * Return list of comment for each creditmemo.
      **/
     public function processcreditAction($orderId, $order)
     {
-        try {
-            $this->createinvoice($orderId);
-            $msg['invoice'] = 'Facture créée.';
-        } catch (Exception $e) {
-            $msg['invoice'] = 'Facture non créée/déjà existante.';
-        }
-
         $order_concat = [];
         foreach ($order as $merchant_id => $data) {
             if ($data['merchant']['refund_diff'] != 0.0) {
@@ -252,20 +263,20 @@ trait Credimemo
      *
      * @return bool
      **/
-    public function sendCreditMemoMail($id, $comment)
+    public function sendCreditMemoMail($orderId, $comment)
     {
-        $order = \Mage::getSingleton('sales/order')->load($id);
+        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $prenom_client = $order->getCustomerFirstname();
         $mail_client = $order->getCustomerEmail();
         $order_id = $order->getIncrementId();
-        $emailTemplate = Mage::getModel('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
+        $emailTemplate = \Mage::getSingleton('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
         $emailTemplateVariables = array(
-        'customer_firstname' => $prenom_client,
-        'order_id' => $order_id,
-        'comment' => $comment,
+            'customer_firstname' => $prenom_client,
+            'order_id' => $order_id,
+            'comment' => $comment,
         );
         try {
-            $emailTemplate->send($mail_client, $prenom_client, $emailTemplateVariables);
+            $emailTemplate->send('test@test.com', 'prenom_client', $emailTemplateVariables);
 
             return true;
         } catch (Exception $e) {
@@ -280,13 +291,13 @@ trait Credimemo
      *
      * @return bool
      **/
-    public function sendCloseMail($id)
+    public function sendCloseMail($orderId)
     {
-        $order = \Mage::getSingleton('sales/order')->load($id);
+        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $prenom_client = $order->getCustomerFirstname();
         $mail_client = $order->getCustomerEmail();
         $order_id = $order->getIncrementId();
-        $emailTemplate = Mage::getModel('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
+        $emailTemplate = \Mage::getSingleton('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
         $emailTemplateVariables = array(
         'customer_firstname' => $prenom_client,
         'order_id' => $order_id,
@@ -307,14 +318,14 @@ trait Credimemo
      *
      * @return bool
      **/
-    public function setCloseStatus($id)
+    public function setCloseStatus($orderId)
     {
-        $order = \Mage::getSingleton('sales/order')->load($id);
+        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $shipment = $order->prepareShipment();
         $shipment->register();
         $order->setIsInProcess(true);
         $order->addStatusHistoryComment('Automatically Shipped by APDC Delivery.', false);
-        $transactionSave = Mage::getModel('core/resource_transaction')
+        $transactionSave = \Mage::getModel('core/resource_transaction')
             ->addObject($shipment)
             ->addObject($shipment->getOrder())
             ->save();
