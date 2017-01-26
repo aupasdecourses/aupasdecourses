@@ -22,11 +22,16 @@
 		{{ form_start(form)}}
 		{% for order_id, fields in orders %}
 			{% if fields.merchant_reference == id %}
-				<h4>Reference PSP</h4>
+				<h4>Reference PSP : </h4>
 					{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
-				<h4>Montant à rembourser</h4>
+				<hr>
+				<h4>Montant à rembourser :</h4>
 				<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ refund_diff ~ " € " }}</h4>
 					{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
+				<hr>
+				<h4> Montant déjà remboursé :</h4>
+					{{ fields.total_refunded ~ " € "}}
+				<hr>
 			{% endif %}
 		{% endfor %}
 

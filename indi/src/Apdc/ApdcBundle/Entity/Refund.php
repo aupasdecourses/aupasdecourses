@@ -37,6 +37,6 @@ class Refund
     public function getValue()
     {
         return $this->value;
-    }
+	}
 }
 
