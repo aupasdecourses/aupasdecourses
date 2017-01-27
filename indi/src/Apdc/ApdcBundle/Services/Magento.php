@@ -200,9 +200,12 @@ class Magento
         }
     }
 
-    private function addEntryToModel($model, $data)
+    private function addEntryToModel($model, $data, $updatedFields)
     {
         foreach ($data as $k => $v) {
+            $model->setData($k, $v);
+        }
+        foreach ($updatedFields as $k => $v) {
             $model->setData($k, $v);
         }
         $model->save();

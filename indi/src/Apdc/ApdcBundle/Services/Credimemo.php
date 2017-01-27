@@ -70,15 +70,15 @@ trait Credimemo
      * Register Credit Memo Info in custom table for Facturation
      * Fusionner peut etre cette table custom avec table sales_creditmemo ?
      **/
-    private function registerRefundorder($orderId, $commercant, $value, $creditmemo)
+    private function registerRefundorder($orderId, $commercant, $comment, $creditmemo)
     {
         $creditmemo_id = $creditmemo->getEntityId();
 
         $data = array(
             'order_id' => $orderId,
-            'commercant' => $commercant,
-            'del_amount_refunded' => $value['value'],
-            'comment' => $value['comment'],
+            'commercant' => $commercant['name'],
+            'del_amount_refunded' => $commercant['refund_diff'],
+            'comment' => $comment,
             'creditmemo_id' => $creditmemo_id,
         );
 
@@ -88,8 +88,8 @@ trait Credimemo
         $check = $refund_order->getCollection()->addFieldToFilter(
             'creditmemo_id', [
                 'in' => $creditmemo_id,
-            ])->addFieldToSelect('id')->getColumnValues('id');
-        if (!is_null($check)) {
+            ])->getFirstItem()->getId();
+        if (is_null($check)) {
             $refund_order->setData($data);
             $refund_order->save();
         }
@@ -244,8 +244,9 @@ trait Credimemo
                     $creditmemo_data['adjustment_negative'] = -$data['merchant']['refund_diff'];
                 }
                 $creditmemo = $this->createcreditmemo($orderId, $creditmemo_data);
-                if ($credimemo != null) {
-                    $this->registerRefundorder($orderId, $data['merchant']['name'], $data['merchant']['refund_diff'], $creditmemo);
+
+                if ($creditmemo->getId() != null) {
+                    $this->registerRefundorder($orderId, $data['merchant'], $order_concat[$merchant_id], $creditmemo);
                 }
             }
         }
