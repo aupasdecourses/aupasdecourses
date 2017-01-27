@@ -42,7 +42,7 @@
 						{% for product_id, product in merchant_part.products %}
 							<tr>
 								<td>{{product.nom}}</td>
-								<td>{{product.description}}</td>
+								<td>{{product.description}}</br>{{product.comment}}</td>
 								<td>{{product.quantite}}</td>
 								<td>{{product.prix_kilo}}</td>
 								<td>
@@ -55,7 +55,7 @@
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
 								</td>
 								<td>
-									<textarea class="noEnterSubmit" rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_com}}</textarea>
+									<textarea class="noEnterSubmit" rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
 								</td>
 							</tr>
 						{% endfor %}

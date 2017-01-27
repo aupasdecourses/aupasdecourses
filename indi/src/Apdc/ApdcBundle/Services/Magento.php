@@ -176,6 +176,7 @@ class Magento
                 'prix_unitaire' => round($product->getPriceInclTax(), 2),
                 'prix_total' => round($product->getRowTotalInclTax(), 2),
                 'commercant_id' => $product->getCommercant(),
+                'refund_comment' => $product->getRefundComment(),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
@@ -459,14 +460,13 @@ class Magento
             $products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
                 'refund_prix' => 'refund.prix_final',
                 'refund_diff' => 'refund.diffprixfinal',
-                'refund_com' => 'refund.comment',
+                'refund_comment' => 'refund.comment',
             ]);
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 $prod_data['refund_prix'] = $product->getData('refund_prix');
                 $prod_data['refund_diff'] = $product->getData('refund_diff');
-                $prod_data['refund_com'] = $product->getData('refund_com');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
@@ -482,7 +482,6 @@ class Magento
                 $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
             }
         }
-
         return $rsl;
     }
 

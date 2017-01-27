@@ -265,14 +265,9 @@ class RefundController extends Controller
                 }
                 $mage->updateEntryToOrderField(['order_id' => $order_mid], ['input' => 'done']);
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
+                return $this->redirectToRoute('refundInput', ['id' => $id]);
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
-            }
-
-            if ($_POST['submit'] == 'next') {
-                return $this->redirectToRoute('refundDigest', ['id' => $id]);
-            } else {
-                return $this->redirectToRoute('refundInput', ['id' => $id]);
             }
         }
 
@@ -317,38 +312,36 @@ class RefundController extends Controller
         $form_submit->setAction($this->generateUrl('refundDigest', array('id' => $id)));
         $form_submit = $form_submit->getForm();
 
-        $show_button = !$mage->checkcreditmemo($id);
-
         if ($request->isMethod('POST')) {
             $form_submit->handleRequest($request);
+            if (!is_null($_POST['creditmemo'])) {
+                try {
+                    //create invoice
+                    $invoice = $mage->createinvoice($id);
+                    if ($invoice) {
+                        $session->getFlashBag()->add('success', 'Facture créée.');
+                    } else {
+                        $session->getFlashBag()->add('warning', 'Facture non créée/déjà existante.');
+                    }
 
-            try {
-                //create invoice
-                $invoice = $mage->createinvoice($id);
-                if ($invoice) {
-                    $session->getFlashBag()->add('success', 'Facture créée.');
-                } else {
-                    $session->getFlashBag()->add('warning', 'Facture non créée/déjà existante.');
+                    //process credit
+                    $comment = $mage->processcreditAction($id, $order);
+                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment);
+
+                    $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
+                } catch (\Exception $e) {
+                    $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
-
-                //process credit
-                $comment = $mage->processcreditAction($id, $order);
-                $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment);
-
-                //Close order
-                $close = $mage->setCloseStatus($id);
-                if ($close && !$mail_creditmemo) {
-                    $mail_cloture = $mage->sendCloseMail($id, $comment);
+            } elseif(!is_null($_POST['close'])) {
+                try{
+                    //Close order
+                    $close = $mage->setCloseStatus($id);
+                    if ($close && !$mail_creditmemo) {
+                        $mail_cloture = $mage->sendCloseMail($id, $comment);
+                    }
+                }catch(Exception $e){
+                    $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
-
-                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
-                if ($refund_diff > 0) {
-                    return $this->redirectToRoute('refundFinal', ['id' => $id]);
-                } else {
-                    return $this->redirectToRoute('refundDigest', ['id' => $id]);
-                }
-            } catch (\Exception $e) {
-                $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
             }
         }
 
@@ -359,7 +352,8 @@ class RefundController extends Controller
             'order_header' => $order_header,
             'order' => $order,
             'id' => $id,
-            'show_button' => $show_button,
+            'show_creditmemo' => $mage->checkdisplaybutton($id,'creditmemo'),
+            'show_close' => $mage->checkdisplaybutton($id, 'close'),
             'forms' => [$form_submit->createView()],
         ]);
     }

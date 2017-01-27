@@ -32,7 +32,7 @@ trait Credimemo
     }
 
     /**
-     * Initialize requested invoice instance. 
+     * Initialize requested invoice instance or return false. 
      *
      * @return bool
      */
@@ -51,18 +51,17 @@ trait Credimemo
     }
 
     /**
-     * Initialize requested invoice instance. 
-     *
+     * Check if order has credit memo or is complete, and return boolean to show or not buttons. 
+     * @param string $id, string $type ('creditmemo' or 'close')
      * @return bool
      */
-    public function checkcreditmemo($id)
+    public function checkdisplaybutton($id,$type)
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
-
-        if ($order->hasCreditmemos()) {
-            return true;
-        } else {
-            return false;
+        if($type=='creditmemo'){
+            return !$order->hasCreditmemos();
+        }elseif($type=='close'){
+            return !($order->getStatus()=="complete");
         }
     }
 
@@ -321,7 +320,7 @@ trait Credimemo
      **/
     public function setCloseStatus($orderId)
     {
-        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
+        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($orderId);
         $shipment = $order->prepareShipment();
         $shipment->register();
         $order->setIsInProcess(true);
