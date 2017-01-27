@@ -371,8 +371,6 @@ class RefundController extends Controller
 
         $order = $mage->getRefunds($id);
         $orders = $mage->getAdyenPaymentByPsp();
-        $queue = $mage->getAdyenQueueFields();
-
         $event_data = $mage->getAdyenEventData();
 
         $refund_diff = $order[-1]['merchant']['refund_diff'];

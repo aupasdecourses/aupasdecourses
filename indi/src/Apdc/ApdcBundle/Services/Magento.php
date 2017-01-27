@@ -521,20 +521,19 @@ class Magento
     }
 
     /* Pour les formulaires de soumissions à Adyen */
-    public function getAdyenQueueFields()
+    public function getAdyenEventData()
     {
-        $collection = \Mage::getModel('adyen/event_queue')->getCollection();
-        $collection->addFieldToFilter('increment_id', ['neq' => null]);
+        $collection = \Mage::getModel('adyen/event')->getCollection();
+        $collection->addFieldToFilter('increment_id' , ['neq' => NULL ]);
         $ref = [];
         $cpt = 1;
-        foreach ($collection as $col) {
-            $ref[$cpt]['increment_id'] = $col->getData('increment_id');
-            $ref[$cpt]['pspreference'] = $col->getData('pspreference');
-            $ref[$cpt]['adyen_event_code'] = $col->getData('adyen_event_code');
-            $ref[$cpt]['created_at'] = $col->getData('created');
-            ++$cpt;
+        foreach($collection as $col)
+        {
+            $ref[$cpt]['increment_id']          = $col->getData('increment_id');
+            $ref[$cpt]['psp_reference']         = $col->getData('psp_reference');
+            $ref[$cpt]['adyen_event_result']    = $col->getData('adyen_event_result');
+            $cpt++;
         }
-
-        return $ref;
+        return($ref);
     }
 }
