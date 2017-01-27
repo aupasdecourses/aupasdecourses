@@ -30,6 +30,10 @@ span#logo {
 	font-weight:bold;
 }
 
+.disabled {
+	color:	#d0d0d0;
+}
+
 .right{
 	float:right;
 }
@@ -184,6 +188,15 @@ a:hover, a:focus {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* --------------------- */
+/**	#UPLOAD TICKET		 */
+/* --------------------- */
+
+.progress{
+	padding-left:0px;
+	padding-right:0px;
 }
 
 /* --------------------- */

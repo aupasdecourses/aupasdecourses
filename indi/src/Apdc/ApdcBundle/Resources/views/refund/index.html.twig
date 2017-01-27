@@ -34,7 +34,7 @@
 							<a href='{{ path('refundInput', {id: order.id}) }}' class='success' target="_blank">OK</a>
 						{% endif %}
 					{% else %}
-						A faire
+						<span class="disabled">A faire</span>
 					{% endif %}
 				</td>
 				<td>
@@ -45,10 +45,19 @@
 							<a href='{{ path('refundDigest', {id: order.id}) }}' class='success' target="_blank">OK</a>
 						{% endif %}
 					{% else %}
-						A faire
+						<span class="disabled">A faire</span>
 					{% endif %}
 				</td>
 				<td>
+					{% if order.digest != '' %}
+						{% if order.refund == '' %}
+							<a href='{{ path('refundFinal', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+						{% elseif order.refund == 'done'%}
+							<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK</a>
+						{% endif %}
+					{% else %}
+						<span class="disabled">A faire</span>
+					{% endif %}
 				</td>
 			</tr>
 		{% endfor %}

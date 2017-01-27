@@ -19,13 +19,13 @@ if($field->getCustomerVisibility()=="view"):
             $val = explode(';', $content);
         }
         ?>
-        <ul>
+        <ul>Voir les tickets commerçants:
             <?php foreach ($val as $img): ?>
-                    <li>Voir les tickets commerçants:
+                    <li>
                         <?php if($img<>""):
-                            $url_src=$this->getUrl('attaches/order/download', array('file' => $img, 'customer_id' => Mage::getSingleton('customer/session')->getCustomerId()));
+                            $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
                             ?>
-                            <a href="<?= $url_src?>"><img class="ticket_commercant" src="<?= $url_src?>"/></a>
+                            <img class="ticket_commercant" src="<?= $url_src?>"/>
                         <?php else:?>
                             <span>Pas de tickets (pour l'instant)</span>
                         <?php endif;?>

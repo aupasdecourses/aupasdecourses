@@ -26,7 +26,11 @@
 		<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
 	</div>	
 	{% endif %}
-	<h1>Remboursement <small>Validation avant remboursement</small></h1>
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>#{{id}}<small> Validation avant remboursement</small></h1>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-12">
 			<table class='table'>
@@ -56,6 +60,21 @@
 			</table>
 		</div>
 	</div>
+	{% for form in forms %}
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+			<div class="row">
+				<div class="btn-group right" role="group" aria-label="...">
+					{% if show_creditmemo %}
+						<input type="submit" name="creditmemo" value='Créer Credit Memo' class="btn btn-success btn-lg right"/>
+					{% endif %}
+					{% if show_close %}
+						<input type="submit" name="close" value='Cloturer' class="btn btn-success btn-lg right"/>
+					{% endif %}
+				</div>
+			</div>
+		{{ form_end(form) }}
+	{% endfor %}
 	{% for merchant_id, merchant_part in order %}
 		<h2>{{merchant_part.merchant.name}}</h2>
 		<div class='row'>
@@ -90,7 +109,7 @@
 								<p>{{product.refund_diff | round(2,'floor')}}</p>
 							</td>
 							<td>
-								<span>{{product.refund_com}}</span>
+								<span>{{product.refund_comment}}</span>
 							</td>
 						</tr>
 					{% endfor %}
@@ -106,14 +125,6 @@
 				</table>
 			</div>
 		</div>
-	{% endfor %}
-	{% for form in forms %}
-		{{ form_start(form) }}
-		{{ form_widget(form) }}
-		<div class="row">
-			<input type="submit" name="submit" value='Créer Credit Memo' class="btn btn-success btn-lg right"/>
-		</div>
-		{{ form_end(form) }}
 	{% endfor %}
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
