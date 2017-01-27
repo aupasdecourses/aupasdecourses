@@ -216,7 +216,7 @@ class RefundController extends Controller
         $session = $request->getSession();
 
         $order = $mage->getRefunds($id);
-
+		
         $files = $this->getUploadedFiles($id);
 
         foreach ($order as $merchant_id => $merchant_part) {
@@ -226,7 +226,13 @@ class RefundController extends Controller
                 $order[$merchant_id]['merchant']['ticket'] = $files[-1]['url'];
             }
         }
-        ksort($order);
+		ksort($order);
+	
+		/* GOT A DOUBT WITH THAT*/
+		$commentaires_fraislivraison		= $order[-1]['merchant']['commentaires_fraislivraison'];
+		$commentaires_ticket				= $order[-1]['merchant']['commentaires_ticket'];
+
+
         $total = $order[-1]['merchant']['total'];
         $order_mid = $order[-1]['order']['mid'];
         $input_status = $order[-1]['order']['input'];
@@ -275,7 +281,9 @@ class RefundController extends Controller
             'form' => $form_input->createView(),
             'order' => $order,
             'total' => $total,
-            'id' => $id,
+			'id' => $id,
+			'commentaires_fraislivraison'	=> $commentaires_fraislivraison,
+			'commentaires_ticket'			=> $commentaires_ticket,
         ]);
     }
 
@@ -370,7 +378,8 @@ class RefundController extends Controller
 
         $order = $mage->getRefunds($id);
         $orders = $mage->getAdyenPaymentByPsp();
-        $queue = $mage->getAdyenQueueFields();
+
+		$event_data = $mage->getAdyenEventData();
 
         $refund_diff = $order[-1]['merchant']['refund_diff'];
         $order_mid = $order[-1]['order']['mid'];
@@ -397,7 +406,8 @@ class RefundController extends Controller
             'form' => $form->createView(),
             'refund_diff' => $refund_diff,
             'id' => $id,
-            'orders' => $orders,
+			'orders' => $orders,
+			'event_data' => $event_data,
             ]);
     }
 
@@ -427,6 +437,8 @@ class RefundController extends Controller
         $mage = $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenPaymentByPsp();
 
+		$event_data = $mage->getAdyenEventData();
+
         $refund = new Refund();
         $form = $this->createForm(RefundType::class, $refund);
 
@@ -447,7 +459,8 @@ class RefundController extends Controller
         return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
             'form' => $form->createView(),
             'psp' => $psp,
-            'orders' => $orders,
+			'orders' => $orders,
+			'event_data' => $event_data,
         ]);
     }
 }

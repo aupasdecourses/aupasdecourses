@@ -22,6 +22,21 @@
 	</div>
 	<hr>
 	<div>
+		<h4> Commentaires frais_livraison + ticket sont corrects en AFFICHAGE sur les anciennes commandes; Exemple 2016000391
+			<br><br>
+			pour l'instant l'affichage est permis grace à une modif de :
+			<br>	<br>-> la fonction 'ORDERS QUERY' et la fonction 'GET REFUND' dans Magento.php <br>
+			<br>-> le RefundController, inputAction <br><br>
+			-> la vue twig<br>
+
+			
+			</br> </br>Voir si bonne jointure ? Bonne mise a jour table amasty ?
+		</h4></br>
+		{{ commentaires_fraislivraison }}</br>
+		{{ commentaires_ticket }}
+	</div>
+	<hr>
+	<div>
 		<h4>Rembourser les frais de livraison ? </h4>
 		<label><input type="checkbox" value="">Oui</label>
 	</div>
@@ -61,7 +76,7 @@
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
 								</td>
 								<td>
-									<textarea class="noEnterSubmit" rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
+									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
 								</td>
 							</tr>
 						{% endfor %}
@@ -79,7 +94,18 @@
 	<!--	<input type="hidden" name="_csrf_token"
 					   value="{#{ csrf_token('authenticate') }#}">
 	-->
+	{{ dump() }}
 	</div>
+	<div class="row">
+		<div class="col-md-6">
+			Commentaires Client :		<textarea rows="1" cols="18" name="commentaire_fraislivraison"></textarea>
+		</div>
+		<div class="col-md-6">
+			Commentaires Commercant :	<textarea rows="1" cols="18" name="commentaire_ticket"></textarea>
+		</div>
+	</div>
+
+
 	<div class="row">
 		<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Enregistrer</button>
 	</div>
