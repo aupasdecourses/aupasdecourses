@@ -1,9 +1,8 @@
 <!--@subject Au Pas De Courses vient de finaliser votre commande ! @-->
 <!--@vars
 {"store url=\"\"":"Store Url",
-"htmlescape var=$order.getCustomerFirstname()":"Customer First Name",
-"var order.increment_id":"Order Id"
-"var comment":"Comments",
+"var customer_firstname":"Customer First Name",
+"var order_id":"Order Id"
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -19,11 +18,8 @@
                         </tr>
                         <tr>
                             <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
-                                <h1>Bonjour {{htmlescape var=$order.getCustomerFirstname()}},</h1>
-                                <p>Nous venons de vérifier votre commande <strong>n°{{var order.increment_id}}</strong> et avons noté les ajustements suivants, réalisés par les commerçants:</p>
-                                {{if comment}}
-                                    <p><strong>{{var comment}}</strong></p>
-                                {{/if}}
+                                <h1>Bonjour {{var customer_firstname}},</h1>
+                                <p>Nous venons de vérifier votre commande <strong>n°{{var order_id}}</strong> et avons noté les ajustements suivants, réalisés par les commerçants:</p>
                                 <p>Dans le cas où la somme de ces ajustements est positif (produits manquants, remplacés ou écart de quantité), nous avons recrédité votre carte bancaire de cette somme. Dans le cas contraire, ces ajustements sont en votre faveur et nous vous offrons ces produits "en plus"!</p>
                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #E94E1B;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
                                 <p>N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #E94E1B;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a> ou à consulter notre <a style="color: #E94E1B;font-weight: normal;text-decoration: none;" href="https://www.aupasdecourses.com/faq/">FAQ</a> si vous avez besoin d'information ou pour partager vos envies de nouveaux produits et nouveaux commer&#231;ants!</p>

@@ -1,8 +1,8 @@
 <!--@subject Au Pas De Courses vient de traiter votre commande ! @-->
 <!--@vars
 {"store url=\"\"":"Store Url",
-"htmlescape var=$order.getCustomerFirstname()":"Customer First Name",
-"var order.increment_id":"Order Id"
+"var customer_firstname":"Customer First Name",
+"var order_id":"Order Id"
 "var comment":"Comments",
 @-->
 
@@ -19,8 +19,8 @@
                         </tr>
                         <tr>
                             <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
-                                <h1>Bonjour {{htmlescape var=$order.getCustomerFirstname()}},</h1>
-                                <p>Nous venons de vérifier votre commande <strong>n°{{var order.increment_id}}</strong> et avons noté les ajustements suivants, réalisés par les commerçants:</p>
+                                <h1>Bonjour {{var customer_firstname}},</h1>
+                                <p>Nous venons de vérifier votre commande <strong>n°{{var order_id}}</strong> et avons noté les ajustements suivants, réalisés par les commerçants:</p>
                                 {{if comment}}
                                     <p><strong>{{var comment}}</strong></p>
                                 {{/if}}

@@ -234,7 +234,7 @@ trait Credimemo
                     $merchant_concat[] = $product['refund_com'];
                 }
                 $merchant_concat = implode(' - ', $merchant_concat);
-                $order_concat[$merchant_id] = "Ecart de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}. {$merchant_concat}";
+                $order_concat[$merchant_id] = "Ecart de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
                 $creditmemo_data = [
                     'merchant' => "{$data['merchant']['name']}",
                     'comment' => $order_concat[$merchant_id],
@@ -283,7 +283,7 @@ trait Credimemo
         $order_id = $order->getIncrementId();
         $vars = array(
             'customer_firstname' => $prenom_client,
-            'order_id' => $order_id,
+            'order_id' => $orderId,
             'comment' => $comment,
         );
 
@@ -311,10 +311,9 @@ trait Credimemo
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $nameTo = $order->getCustomerFirstname();
         $emailTo = $order->getCustomerEmail();
-        $order_id = $order->getIncrementId();
         $vars = array(
         'customer_firstname' => $prenom_client,
-        'order_id' => $order_id,
+        'order_id' => $orderId,
         );
 
         $emailTemplate = \Mage::getSingleton('core/email_template');
