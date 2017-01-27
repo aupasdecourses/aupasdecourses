@@ -65,5 +65,19 @@
                 <class>Apdc_Delivery_Helper</class>
             </pmainguet_delivery>
         </helpers>
+        <template>
+            <email>
+                <delivery_emailcreditmemo_template translate="label" module="pmainguet_delivery">
+                    <label>Mail remboursement et notation</label>
+                    <file>delivery/creditmemo_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditmemo_template>
+                <delivery_emailclose_template translate="label" module="pmainguet_delivery">
+                    <label>Mail de cloture</label>
+                    <file>delivery/close_template.html</file>
+                    <type>html</type>
+                </delivery_emailclose_template>
+            </email>
+        </template>
 	</global>
 </config>

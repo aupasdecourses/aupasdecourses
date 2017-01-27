@@ -52,19 +52,21 @@ trait Credimemo
 
     /**
      * Check if order has credit memo or is complete, and return boolean to show or not buttons. 
+     *
      * @param string $id, string $type ('creditmemo' or 'close')
+     *
      * @return bool
      */
-    public function checkdisplaybutton($id,$type)
+    public function checkdisplaybutton($id, $type)
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
-        if($type=='creditmemo'){
+        if ($type == 'creditmemo') {
             return !$order->hasCreditmemos();
-        }elseif($type=='close'){
-            if(!$order->hasCreditmemos()){
+        } elseif ($type == 'close') {
+            if (!$order->hasCreditmemos()) {
                 return false;
             } else {
-                return !($order->getStatus()=="complete");
+                return !($order->getStatus() == 'complete');
             }
         }
     }
@@ -269,23 +271,26 @@ trait Credimemo
      **/
     public function sendCreditMemoMail($orderId, $comment)
     {
+        $templateId = 'delivery_emailcreditmemo_template';
+        $sender = array(
+            'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
+            'email' => \Mage::getStoreConfig('trans_email/ident_general/email'),
+        );
+
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
-        $prenom_client = $order->getCustomerFirstname();
-        $mail_client = $order->getCustomerEmail();
+        $nameTo = $order->getCustomerFirstname();
+        $emailTo = $order->getCustomerEmail();
         $order_id = $order->getIncrementId();
-        $emailTemplate = \Mage::getSingleton('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
-        $emailTemplateVariables = array(
+        $vars = array(
             'customer_firstname' => $prenom_client,
             'order_id' => $order_id,
             'comment' => $comment,
         );
-        try {
-            $emailTemplate->send($mail_client, $prenom_client, $emailTemplateVariables);
 
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        $emailTemplate = \Mage::getSingleton('core/email_template');
+        $emailTemplate->sendTransactional($templateId, $sender, $emailTo, $nameTo, $vars);
+
+        return $emailTemplate->getSentSuccess();
     }
 
     /** 
@@ -297,22 +302,25 @@ trait Credimemo
      **/
     public function sendCloseMail($orderId)
     {
+        $templateId = 'delivery_emailclose_template';
+        $sender = array(
+            'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
+            'email' => Mage::getStoreConfig('trans_email/ident_general/email'),
+        );
+
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
-        $prenom_client = $order->getCustomerFirstname();
-        $mail_client = $order->getCustomerEmail();
+        $nameTo = $order->getCustomerFirstname();
+        $emailTo = $order->getCustomerEmail();
         $order_id = $order->getIncrementId();
-        $emailTemplate = \Mage::getSingleton('core/email_template')->loadByCode('apdc::Mail remboursement + notation');
-        $emailTemplateVariables = array(
+        $vars = array(
         'customer_firstname' => $prenom_client,
         'order_id' => $order_id,
         );
-        try {
-            $emailTemplate->send($mail_client, $prenom_client, $emailTemplateVariables);
 
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        $emailTemplate = \Mage::getSingleton('core/email_template');
+        $emailTemplate->sendTransactional($templateId, $sender, $emailTo, $nameTo, $vars);
+
+        return $emailTemplate->getSentSuccess();
     }
 
     /**
