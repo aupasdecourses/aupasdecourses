@@ -61,7 +61,11 @@ trait Credimemo
         if($type=='creditmemo'){
             return !$order->hasCreditmemos();
         }elseif($type=='close'){
-            return !($order->getStatus()=="complete");
+            if(!$order->hasCreditmemos()){
+                return false;
+            } else {
+                return !($order->getStatus()=="complete");
+            }
         }
     }
 
@@ -276,7 +280,7 @@ trait Credimemo
             'comment' => $comment,
         );
         try {
-            $emailTemplate->send('test@test.com', 'prenom_client', $emailTemplateVariables);
+            $emailTemplate->send($mail_client, $prenom_client, $emailTemplateVariables);
 
             return true;
         } catch (Exception $e) {
