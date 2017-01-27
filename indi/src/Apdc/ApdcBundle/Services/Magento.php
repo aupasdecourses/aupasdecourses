@@ -519,6 +519,7 @@ class Magento
 
         return $ref;
     }
+
     /* Pour les formulaires de soumissions à Adyen */
     public function getAdyenQueueFields()
     {

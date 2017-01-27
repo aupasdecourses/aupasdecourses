@@ -12,6 +12,7 @@ use Apdc\ApdcBundle\Form\RefundType;
 
 class RefundController extends Controller
 {
+
     const    ERROR = 0;
     const    SUCCESS = 1;
     const    WARNING = 2;
@@ -372,6 +373,8 @@ class RefundController extends Controller
         $orders = $mage->getAdyenPaymentByPsp();
         $queue = $mage->getAdyenQueueFields();
 
+        $event_data = $mage->getAdyenEventData();
+
         $refund_diff = $order[-1]['merchant']['refund_diff'];
         $order_mid = $order[-1]['order']['mid'];
 
@@ -398,6 +401,7 @@ class RefundController extends Controller
             'refund_diff' => $refund_diff,
             'id' => $id,
             'orders' => $orders,
+            'event_data'    => $event_data,
             ]);
     }
 
@@ -427,6 +431,8 @@ class RefundController extends Controller
         $mage = $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenPaymentByPsp();
 
+        $event_data = $mage->getAdyenEventData();
+
         $refund = new Refund();
         $form = $this->createForm(RefundType::class, $refund);
 
@@ -448,6 +454,7 @@ class RefundController extends Controller
             'form' => $form->createView(),
             'psp' => $psp,
             'orders' => $orders,
+            'event_data' => $event_data,
         ]);
     }
 }

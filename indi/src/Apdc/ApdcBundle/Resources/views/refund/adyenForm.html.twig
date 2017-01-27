@@ -27,6 +27,47 @@
 	{{ form_rest(form) }}	
 	{{form_end(form)}}
 
+
+
+		<hr>	
+		<h1> Historique de la commande </h1>
+		<br>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Increment_id (N° Commande)</th>
+					<th>Psp Ref de CHAQUE remboursement de cette commande</th>	
+					<th> Resultat </th>
+				</tr>
+			</thead>
+				{% for order_id, fields in orders %}
+					{% if fields.pspreference == psp %}
+						{% for key, value in event_data %}
+							{% if value.psp_reference == psp %}
+								<tr>
+									<td>{{ value.increment_id }}</td>
+									<td>{{ value.psp_reference }}</td>
+									<td>{{ value.adyen_event_result }}</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+			{% endfor %}		
+		</table>
+
+
+
+
+
+	{% for order_id, fields in orders %}
+			{% if fields.pspreference == psp %}
+				Pas assez d'infos sur la commande ? Clique ici :
+					<a href="https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference={{fields.pspreference}}&accountKey=MerchantAccount.AuPasDeCoursesFR" target="_blank">
+						<input type="button" class="btn btn-success" value="Go to Adyen"/>
+					</a>
+			{% endif %}
+	{% endfor %}
+
 </div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
