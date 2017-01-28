@@ -359,7 +359,7 @@ class RefundController extends Controller
             'refund_total' => $refund_total,
             'refund_diff' => $refund_diff,
             'refund_shipping' => $refund_shipping,
-            'refund_full' => $mage->getRefundfull(),
+            'refund_full' => $mage->getRefundfull($refund_diff,$refund_shipping),
             'order_header' => $order_header,
             'order' => $order,
             'id' => $id,

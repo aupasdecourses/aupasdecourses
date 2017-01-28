@@ -321,7 +321,7 @@ trait Credimemo
             $templateId = $templatenull;
         }
 
-        $refund_full=$this->getRefundfull();
+        $refund_full=$this->getRefundfull($refund_diff,$refund_shipping);
 
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
