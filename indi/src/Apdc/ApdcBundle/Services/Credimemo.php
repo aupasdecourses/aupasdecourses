@@ -290,6 +290,16 @@ trait Credimemo
         }
     }
 
+    public function getRefundfull($refund_diff,$refund_shipping){
+        if($refund_diff+$refund_shipping>=0){
+            $refund_full= $refund_diff + $refund_shipping;
+        }else {
+            $refund_full= 0;
+        }
+
+        return $refund_full;
+    }
+
     /**
      * Send email if credit memo.
      *
@@ -311,12 +321,8 @@ trait Credimemo
             $templateId = $templatenull;
         }
 
-        if($refund_diff+$refund_shipping>=0){
-            $refund_full= $refund_diff + $refund_shipping;
-        }else {
-            $refund_full= 0;
-        }
-        
+        $refund_full=$this->getRefundfull();
+
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
             'email' => \Mage::getStoreConfig('trans_email/ident_general/email'),
