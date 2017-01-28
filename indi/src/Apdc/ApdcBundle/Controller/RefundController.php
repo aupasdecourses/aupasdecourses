@@ -330,9 +330,15 @@ class RefundController extends Controller
                     //process credit
                     $comment = $mage->processcreditAction($id, $order);
                     if($refund_shipping<>0){
-                        $mage->processcreditshipping($id, $refund_shipping);
+                         $mage->processcreditshipping($id, $refund_shipping);
                     }
                     $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment,$refund_diff,$refund_shipping);
+
+                    if($mail_creditmemo){
+                        $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
+                    } else {
+                        $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
+                    }
 
                     $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
                 } catch (\Exception $e) {
@@ -342,6 +348,7 @@ class RefundController extends Controller
                 try{
                     //Close order
                     $close = $mage->setCloseStatus($id);
+                    $session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
                 }catch(Exception $e){
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
