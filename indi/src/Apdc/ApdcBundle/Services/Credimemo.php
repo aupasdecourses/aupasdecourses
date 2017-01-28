@@ -60,12 +60,12 @@ trait Credimemo
     public function checkdisplaybutton($id, $type)
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
-        $digest_status=\Mage::helper('pmainguet_delivery')->check_amorderattach($order_id)->getDigest();
+        $digest_status = \Mage::getModel('amorderattach/order_field')->getCollection()->addFieldtoFilter('order_id', $order->getId())->getFirstItem()->getDigest();
 
         if ($type == 'creditmemo') {
-            if(is_null($digest_status)){
+            if (is_null($digest_status)) {
                 return !$order->hasCreditmemos();
-            } else{
+            } else {
                 return false;
             }
         } elseif ($type == 'close') {
@@ -311,6 +311,12 @@ trait Credimemo
             $templateId = $templatenull;
         }
 
+        if($refund_diff+$refund_shipping>=0){
+            $refund_full= $refund_diff + $refund_shipping;
+        }else {
+            $refund_full= 0;
+        }
+
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
             'email' => \Mage::getStoreConfig('trans_email/ident_general/email'),
@@ -325,7 +331,7 @@ trait Credimemo
             'comment' => $comment,
             'refund_diff' => $refund_diff,
             'refund_shipping' => $refund_shipping,
-            'refund_full' => $refund_diff + $refund_shipping,
+            'refund_full' => $refund_full,
         );
 
         $emailTemplate = \Mage::getSingleton('core/email_template');

@@ -32,6 +32,8 @@
 
                                 {{if refund_shipping}}
                                 <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande</p>
+                                {{/if}}
+                                {{if refund_full}}
                                 <p>Nous recréditons ainsi votre carte bancaire d'un montant de <strong>{{var refund_full}}€</strong>.</p>
                                 {{else}}
                                 <p>Les commerçants et Au Pas De Courses, vous offre avec plaisir ces produits "en plus", pour plus de gourmandise !</p>

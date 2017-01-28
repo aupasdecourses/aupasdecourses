@@ -39,19 +39,19 @@
 					<td>{{total}}</td>
 				</tr>
 				<tr>
-					<th>TOTAL FINAL</th>
-					<td>{{refund_total}}</td>
+					<th>REMBOURSEMENT PRODUITS</th>
+					<td>{{refund_diff}}</td>
 				</tr>
 				<tr>
-					<th>DIFFERENCE</th>
-					<td>{{refund_diff}}</td>
+					<th>REMBOURSEMENT LVIRAISON</th>
+					<td>{{refund_shipping}}</td>
 				</tr>
 			</table>
 			<table class='table'>
 				<tr>
 					<th>MONTANT A REMBOURSER</th>
-					<td>{% if refund_diff > 0 %}
-							{{refund_diff}}
+					<td>{% if refund_full > 0 %}
+							{{refund_full}}
 						{% else %}
 							0
 						{% endif %}
