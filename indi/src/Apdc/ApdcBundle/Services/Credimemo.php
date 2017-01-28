@@ -297,11 +297,11 @@ trait Credimemo
         $templatemoins = 'delivery_emailcreditmoins_template';
         $templatenull = 'delivery_emailcreditnull_template';
 
-        if (doubleval($refund_diff) > 0) {
+        if ($refund_diff > 0) {
             $templateId = $templateplus;
-        } elseif (doubleval($refund_diff) < 0) {
+        } elseif ($refund_diff < 0) {
             $templateId = $templatemoins;
-        } elseif (doubleval($refund_diff) == 0) {
+        } elseif ($refund_diff == 0) {
             $templateId = $templatenull;
         }
 
