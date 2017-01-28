@@ -339,7 +339,6 @@ class RefundController extends Controller
                     } else {
                         $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
                     }
-
                     $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
                 } catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());

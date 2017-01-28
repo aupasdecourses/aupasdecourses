@@ -60,10 +60,16 @@ trait Credimemo
     public function checkdisplaybutton($id, $type)
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
+        $digest_status=\Mage::helper('pmainguet_delivery')->check_amorderattach($order_id)->getDigest();
+
         if ($type == 'creditmemo') {
-            return !$order->hasCreditmemos();
+            if(is_null($digest_status)){
+                return !$order->hasCreditmemos();
+            } else{
+                return false;
+            }
         } elseif ($type == 'close') {
-            if (!$order->hasCreditmemos()) {
+            if (!$order->hasCreditmemos() && is_null($digest_status)) {
                 return false;
             } else {
                 return !($order->getStatus() == 'complete');
