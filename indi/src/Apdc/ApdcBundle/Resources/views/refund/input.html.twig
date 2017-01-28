@@ -22,7 +22,7 @@
 	</div>
 	<div class="row">
 		<hr>
-		<label><input type="checkbox" name="form['refund_shipping']" {{if refund_shipping}} checked="yes"{{/if}} value=""> Rembourser les frais de livraison ?</label>
+		<label><input type="checkbox" name="form[refund_shipping]" {% if refund_shipping %} checked="checked"{% endif %} value="true"> Rembourser les frais de livraison ?</label>
 		<hr>
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>

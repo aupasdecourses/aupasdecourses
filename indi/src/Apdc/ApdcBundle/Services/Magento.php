@@ -141,6 +141,7 @@ class Magento
         $orderHeader['input'] = $order->getData('input');
         $orderHeader['digest'] = $order->getData('digest');
         $orderHeader['refund'] = $order->getData('refund');
+        $orderHeader['refund_shipping'] = $order->getData('refund_shipping');
         $orderHeader['customer_id'] = $order->getData('customer_id');
         $orderHeader['first_name'] = $shipping->getData('firstname');
         $orderHeader['last_name'] = $shipping->getData('lastname');
@@ -163,9 +164,9 @@ class Magento
         $orderHeader['products'] = [];
 
         if($order->getData('refund_shipping')){
-            $orderHeader['refund_shipping'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
+            $orderHeader['refund_shipping_amount'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
         } else {
-            $orderHeader['refund_shipping'] = 0;
+            $orderHeader['refund_shipping_amount'] = 0;
         }
 
         return $orderHeader;

@@ -12,7 +12,6 @@ use Apdc\ApdcBundle\Form\RefundType;
 
 class RefundController extends Controller
 {
-
     const    ERROR = 0;
     const    SUCCESS = 1;
     const    WARNING = 2;
@@ -189,13 +188,14 @@ class RefundController extends Controller
                 $mage->updateEntryToOrderField(
                     ['order_id' => $order[-1]['order']['mid']],
                     ['upload' => $status,
-                    'ticket_commercant' => substr($filename,1) ]
+                    'ticket_commercant' => substr($filename, 1), ]
                 );
                 $session->getFlashBag()->add('success', 'Image uploadée avec succès');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             } else {
                 $session->getFlashBag()->add('error', 'L\'image n\'a pas été uploadée :-(');
+
                 return $this->redirectToRoute('refundUpload', ['id' => $id]);
             }
         }
@@ -264,9 +264,9 @@ class RefundController extends Controller
                 foreach ($rsl_table as $product_id => $data) {
                     $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
                 }
-
-                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund_shipping' => $form['refund_shipping'], 'input' => 'done']);
+                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund_shipping' => $_POST['form']['refund_shipping'], 'input' => 'done']);
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
+
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
@@ -278,6 +278,7 @@ class RefundController extends Controller
             'order' => $order,
             'total' => $total,
             'id' => $id,
+            'refund_shipping' => $mage->checkRefundShipping($order_mid),
         ]);
     }
 
@@ -291,11 +292,10 @@ class RefundController extends Controller
         $session = $request->getSession();
 
         $order = $mage->getRefunds($id);
-
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
         $refund_diff = $order[-1]['merchant']['refund_diff'];
-        $refund_shipping = $order[-1]['order']['refund_shipping'];
+        $refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
         $order_mid = $order[-1]['order']['mid'];
         $order_header = $order[-1]['order'];
         unset($order[-1]);
@@ -329,12 +329,12 @@ class RefundController extends Controller
 
                     //process credit
                     $comment = $mage->processcreditAction($id, $order);
-                    if($refund_shipping<>0){
-                         $mage->processcreditshipping($id, $refund_shipping);
+                    if ($refund_shipping_amount != 0) {
+                        $mage->processcreditshipping($id, $refund_shipping_amount);
                     }
-                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment,$refund_diff,$refund_shipping);
+                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment, $refund_diff, $refund_shipping_amount);
 
-                    if($mail_creditmemo){
+                    if ($mail_creditmemo) {
                         $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
                     } else {
                         $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
@@ -343,12 +343,12 @@ class RefundController extends Controller
                 } catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
-            } elseif(!is_null($_POST['close'])) {
-                try{
+            } elseif (!is_null($_POST['close'])) {
+                try {
                     //Close order
                     $close = $mage->setCloseStatus($id);
                     $session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
-                }catch(Exception $e){
+                } catch (Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
             }
@@ -358,12 +358,12 @@ class RefundController extends Controller
             'total' => $total,
             'refund_total' => $refund_total,
             'refund_diff' => $refund_diff,
-            'refund_shipping' => $refund_shipping,
-            'refund_full' => $mage->getRefundfull($refund_diff,$refund_shipping),
+            'refund_shipping' => $refund_shipping_amount,
+            'refund_full' => $mage->getRefundfull($refund_diff, $refund_shipping_amount),
             'order_header' => $order_header,
             'order' => $order,
             'id' => $id,
-            'show_creditmemo' => $mage->checkdisplaybutton($id,'creditmemo'),
+            'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
             'show_close' => $mage->checkdisplaybutton($id, 'close'),
             'forms' => [$form_submit->createView()],
         ]);
@@ -409,7 +409,7 @@ class RefundController extends Controller
             'refund_diff' => $refund_diff,
             'id' => $id,
             'orders' => $orders,
-            'event_data'    => $event_data,
+            'event_data' => $event_data,
             ]);
     }
 

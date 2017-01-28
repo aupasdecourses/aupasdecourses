@@ -50,6 +50,16 @@ trait Credimemo
         return false;
     }
 
+    public function checkDigest($order_id)
+    {
+        return \Mage::getModel('amorderattach/order_field')->getCollection()->addFieldtoFilter('order_id', $order_id)->getFirstItem()->getDigest();
+    }
+
+    public function checkRefundShipping($order_id)
+    {
+        return \Mage::getModel('amorderattach/order_field')->getCollection()->addFieldtoFilter('order_id', $order_id)->getFirstItem()->getRefundShipping();
+    }
+
     /**
      * Check if order has credit memo or is complete, and return boolean to show or not buttons. 
      *
@@ -60,7 +70,7 @@ trait Credimemo
     public function checkdisplaybutton($id, $type)
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
-        $digest_status = \Mage::getModel('amorderattach/order_field')->getCollection()->addFieldtoFilter('order_id', $order->getId())->getFirstItem()->getDigest();
+        $digest_status = $this->checkDigest($order->getId());
 
         if ($type == 'creditmemo') {
             if (is_null($digest_status)) {
@@ -141,7 +151,6 @@ trait Credimemo
         }
 
         $creditmemo->setData('amount_refunded', $totalToRefund);
-
         $creditmemo->setBaseShippingAmount((float) $data['shipping_amount']);
         $creditmemo->setAdjustmentPositive($data['adjustment_positive']);
         $creditmemo->setAdjustmentNegative($data['adjustment_negative']);
@@ -272,29 +281,35 @@ trait Credimemo
      * Prepare order creditmemo based on order items and requested params (if there is no invoice).
      * Return list of comment for each creditmemo.
      **/
-    public function processcreditshipping($orderId, $refund_shipping)
+    public function processcreditshipping($orderId, $refund_shipping_amount)
     {
         $data = [
             'merchant' => 'Frais de livraison',
             'comment' => 'Remboursement des frais de livraison',
             'items' => [],
-            'shipping_amount' => 0,
-            'adjustment_positive' => $refund_shipping,
+            'shipping_amount' => $refund_shipping_amount,
+            'adjustment_positive' => 0,
             'adjustment_negative' => 0,
+        ];
+
+        $commercant=[
+            'name'=>$data['merchant'],
+            'refund_diff' => $data['shipping_amount'],
         ];
 
         $creditmemo = $this->createcreditmemo($orderId, $data);
 
         if ($creditmemo->getId() != null) {
-            $this->registerRefundorder($orderId, $data['merchant'], $data['comment'], $creditmemo);
+            $this->registerRefundorder($orderId, $commercant, $data['comment'], $creditmemo);
         }
     }
 
-    public function getRefundfull($refund_diff,$refund_shipping){
-        if($refund_diff+$refund_shipping>=0){
-            $refund_full= $refund_diff + $refund_shipping;
-        }else {
-            $refund_full= 0;
+    public function getRefundfull($refund_diff, $refund_shipping_amount)
+    {
+        if ($refund_diff + $refund_shipping_amount >= 0) {
+            $refund_full = $refund_diff + $refund_shipping_amount;
+        } else {
+            $refund_full = 0;
         }
 
         return $refund_full;
@@ -307,7 +322,7 @@ trait Credimemo
      *
      * @return bool
      **/
-    public function sendCreditMemoMail($orderId, $comment, $refund_diff, $refund_shipping)
+    public function sendCreditMemoMail($orderId, $comment, $refund_diff, $refund_shipping_amount)
     {
         $templateplus = 'delivery_emailcreditplus_template';
         $templatemoins = 'delivery_emailcreditmoins_template';
@@ -321,7 +336,7 @@ trait Credimemo
             $templateId = $templatenull;
         }
 
-        $refund_full=$this->getRefundfull($refund_diff,$refund_shipping);
+        $refund_full = $this->getRefundfull($refund_diff, $refund_shipping_amount);
 
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
@@ -336,7 +351,7 @@ trait Credimemo
             'order_id' => $orderId,
             'comment' => $comment,
             'refund_diff' => $refund_diff,
-            'refund_shipping' => $refund_shipping,
+            'refund_shipping' => $refund_shipping_amount,
             'refund_full' => $refund_full,
         );
 

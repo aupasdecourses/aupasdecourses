@@ -26,7 +26,7 @@
                                 <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
                                 <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et tous vos produits vous ont été livrés comme prévu.</p>
                                 {{if refund_shipping}}
-                                <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande</p>
+                                <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande, d'un montant de {{var refund_shipping}}€.</p>
                                 <p>Nous recréditons ainsi votre carte bancaire d'un montant de <strong>{{var refund_full}}€</strong>.</p>
                                 {{/if}}
                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
