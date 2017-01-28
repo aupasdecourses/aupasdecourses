@@ -316,7 +316,7 @@ trait Credimemo
         }else {
             $refund_full= 0;
         }
-
+        
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
             'email' => \Mage::getStoreConfig('trans_email/ident_general/email'),

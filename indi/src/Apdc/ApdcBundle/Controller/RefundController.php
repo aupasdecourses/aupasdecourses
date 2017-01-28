@@ -358,6 +358,7 @@ class RefundController extends Controller
             'total' => $total,
             'refund_total' => $refund_total,
             'refund_diff' => $refund_diff,
+            'refund_shipping' => $refund_shipping,
             'order_header' => $order_header,
             'order' => $order,
             'id' => $id,
