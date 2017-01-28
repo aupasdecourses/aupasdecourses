@@ -105,6 +105,7 @@ class Magento
                 'input' => 'attachment.input',
                 'digest' => 'attachment.digest',
                 'refund' => 'attachment.refund',
+                'refund_shipping' => 'attachment.refund_shipping',
             ));
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
         $orders->addFilterToMap('dtime', 'mwdtime.interval')
@@ -160,6 +161,12 @@ class Magento
         $orderHeader['total_quantite'] = 0;
         $orderHeader['total_prix'] = 0.0;
         $orderHeader['products'] = [];
+
+        if($order->getData('refund_shipping')){
+            $orderHeader['refund_shipping'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
+        } else {
+            $orderHeader['refund_shipping'] = 0;
+        }
 
         return $orderHeader;
     }

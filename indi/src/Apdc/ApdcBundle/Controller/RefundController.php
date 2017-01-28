@@ -264,7 +264,8 @@ class RefundController extends Controller
                 foreach ($rsl_table as $product_id => $data) {
                     $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
                 }
-                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['input' => 'done']);
+
+                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund_shipping' => $form['refund_shipping'], 'input' => 'done']);
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             } catch (Exception $e) {
@@ -294,6 +295,7 @@ class RefundController extends Controller
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
         $refund_diff = $order[-1]['merchant']['refund_diff'];
+        $refund_shipping = $order[-1]['order']['refund_shipping'];
         $order_mid = $order[-1]['order']['mid'];
         $order_header = $order[-1]['order'];
         unset($order[-1]);
@@ -327,7 +329,10 @@ class RefundController extends Controller
 
                     //process credit
                     $comment = $mage->processcreditAction($id, $order);
-                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment);
+                    if($refund_shipping<>0){
+                        $mage->processcreditshipping($id, $refund_shipping);
+                    }
+                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment,$refund_diff,$refund_shipping);
 
                     $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
                 } catch (\Exception $e) {
@@ -337,9 +342,6 @@ class RefundController extends Controller
                 try{
                     //Close order
                     $close = $mage->setCloseStatus($id);
-                    if ($close && !$mail_creditmemo) {
-                        $mail_cloture = $mage->sendCloseMail($id, $comment);
-                    }
                 }catch(Exception $e){
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.0.5</version>
+            <version>0.0.6</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
@@ -67,16 +67,21 @@
         </helpers>
         <template>
             <email>
-                <delivery_emailcreditmemo_template translate="label" module="pmainguet_delivery">
+                <delivery_emailcreditplus_template translate="label" module="pmainguet_delivery">
                     <label>Mail remboursement et notation</label>
-                    <file>delivery/creditmemo_template.html</file>
+                    <file>delivery/creditplus_template.html</file>
                     <type>html</type>
-                </delivery_emailcreditmemo_template>
-                <delivery_emailclose_template translate="label" module="pmainguet_delivery">
+                </delivery_emailcreditplus_template>
+                <delivery_emailcreditmoins_template translate="label" module="pmainguet_delivery">
                     <label>Mail de cloture</label>
-                    <file>delivery/close_template.html</file>
+                    <file>delivery/creditmoins_template.html</file>
                     <type>html</type>
-                </delivery_emailclose_template>
+                </delivery_emailcreditmoins_template>
+                <delivery_emailcreditnull_template translate="label" module="pmainguet_delivery">
+                    <label>Mail de cloture</label>
+                    <file>delivery/creditnull_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditnull_template>
             </email>
         </template>
 	</global>

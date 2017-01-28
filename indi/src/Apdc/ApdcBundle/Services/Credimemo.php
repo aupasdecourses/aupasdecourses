@@ -263,15 +263,48 @@ trait Credimemo
     }
 
     /**
+     * Prepare order creditmemo based on order items and requested params (if there is no invoice).
+     * Return list of comment for each creditmemo.
+     **/
+    public function processcreditshipping($orderId, $refund_shipping)
+    {
+        $data = [
+            'merchant' => 'Frais de livraison',
+            'comment' => 'Remboursement des frais de livraison',
+            'items' => [],
+            'shipping_amount' => 0,
+            'adjustment_positive' => $refund_shipping,
+            'adjustment_negative' => 0,
+        ];
+
+        $creditmemo = $this->createcreditmemo($orderId, $data);
+
+        if ($creditmemo->getId() != null) {
+            $this->registerRefundorder($orderId, $data['merchant'], $data['comment'], $creditmemo);
+        }
+    }
+
+    /**
      * Send email if credit memo.
      *
      * @param string $id, string $comment
      *
      * @return bool
      **/
-    public function sendCreditMemoMail($orderId, $comment)
+    public function sendCreditMemoMail($orderId, $comment, $refund_diff, $refund_shipping)
     {
-        $templateId = 'delivery_emailcreditmemo_template';
+        $templateplus = 'delivery_emailcreditplus_template';
+        $templatemoins = 'delivery_emailcreditmoins_template';
+        $templatenull = 'delivery_emailcreditnull_template';
+
+        if ($templateplus > 0) {
+            $templateId = $templateplus;
+        } elseif ($templateplus < 0) {
+            $templateId = $templatemoins;
+        } elseif ($templateplus = 0) {
+            $templateId = $templatenull;
+        }
+
         $sender = array(
             'name' => \Mage::getStoreConfig('trans_email/ident_general/name'),
             'email' => \Mage::getStoreConfig('trans_email/ident_general/email'),
@@ -280,40 +313,13 @@ trait Credimemo
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $nameTo = $order->getCustomerFirstname();
         $emailTo = $order->getCustomerEmail();
-        $order_id = $order->getIncrementId();
         $vars = array(
-            'customer_firstname' => $prenom_client,
+            'customer_firstname' => $nameTo,
             'order_id' => $orderId,
             'comment' => $comment,
-        );
-
-        $emailTemplate = \Mage::getSingleton('core/email_template');
-        $emailTemplate->sendTransactional($templateId, $sender, $emailTo, $nameTo, $vars);
-
-        return $emailTemplate->getSentSuccess();
-    }
-
-    /** 
-     * Send email if credit memo A METTRE A JOUR.
-     *
-     * @param string $id, string $comment
-     *
-     * @return bool
-     **/
-    public function sendCloseMail($orderId)
-    {
-        $templateId = 'delivery_emailclose_template';
-        $sender = array(
-            'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
-            'email' => Mage::getStoreConfig('trans_email/ident_general/email'),
-        );
-
-        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
-        $nameTo = $order->getCustomerFirstname();
-        $emailTo = $order->getCustomerEmail();
-        $vars = array(
-        'customer_firstname' => $prenom_client,
-        'order_id' => $orderId,
+            'refund_diff' => $refund_diff,
+            'refund_shipping' => $refund_shipping,
+            'refund_full' => $refund_diff + $refund_shipping,
         );
 
         $emailTemplate = \Mage::getSingleton('core/email_template');

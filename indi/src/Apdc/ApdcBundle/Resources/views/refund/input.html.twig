@@ -22,10 +22,7 @@
 	</div>
 	<div class="row">
 		<hr>
-		<div>
-			<h4>Rembourser les frais de livraison ? </h4>
-			<label><input type="checkbox" value="">Oui</label>
-		</div>
+		<label><input type="checkbox" name="form['refund_shipping']" value="">Rembourser les frais de livraison ?</label>
 		<hr>
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>

@@ -4,6 +4,9 @@
 "var customer_firstname":"Customer First Name",
 "var order_id":"Order Id"
 "var comment":"Comments",
+"var refund_diff":"Refund products",
+"var refund_shipping":"Refund shipping",
+"var refund_full":"Full refund",
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -20,21 +23,31 @@
                         <tr>
                             <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
                                 <h1>Bonjour {{var customer_firstname}},</h1>
-                                <p>Nous venons de vérifier votre commande <strong>n°{{var order_id}}</strong> et avons noté les ajustements suivants, réalisés par les commerçants:</p>
+                                <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
+                                <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et avons constaté un écart sur vos produits de {{var refund_diff}}€.</p>
                                 {{if comment}}
-                                    <p><strong>{{var comment}}</strong></p>
+                                    <p>{{var comment}}</p>
                                 {{/if}}
-                                <p>Dans le cas où la somme de ces ajustements est positif (produits manquants, remplacés ou écart de quantité), nous avons recrédité votre carte bancaire de cette somme. Dans le cas contraire, ces ajustements sont en votre faveur et nous vous offrons ces produits "en plus"!</p>
-                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #E94E1B;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
-                                <p>N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #E94E1B;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a> ou à consulter notre <a style="color: #E94E1B;font-weight: normal;text-decoration: none;" href="https://www.aupasdecourses.com/faq/">FAQ</a> si vous avez besoin d'information ou pour partager vos envies de nouveaux produits et nouveaux commer&#231;ants!</p>
-                                <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses
-                                </p>
+                                {{if refund_shipping}}
+                                <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande</p>
+                                {{/if}}
+                                <p>Nous recréditons ainsi votre carte bancaire d'un montant de <strong>{{var refund_total}}€</strong>.</p>
+                                <p>Vos commerçants font leur maximum pour vous fournir le poids exact des produits commandés, des écarts peuvent néanmoins apparaître, notamment pour les produits à la découpe ou à peser.</p>
+                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table cellspacing="0" cellpadding="0" border="0" style="padding-top:20px;padding-bottom:10px;width: 600px;background-color:white;line-height:1.2em;" summary="">
+                        <tr>
+                            <td>
+                                <p style="font-size:12px;font-style:italic;text-align:center;">N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a> <br/>si vous avez des questions ou pour partager vos bonnes recettes ou bonnes adresses!</p>
                             </td>
                         </tr>
                     </table>
                     <table cellspacing="0" cellpadding="0" border="0" style="width: 600px;background-color: #3ab64b;" summary="">
                         <tr>
-                            <td align="center" valign="top" style="padding-top: 20px;">
+                            <td align="center" valign="top" style="padding-top: 10px;">
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" summary="">
                                     <tbody>
                                         <tr>
@@ -42,7 +55,7 @@
                                                 <table align="left" border="0" cellpadding="0" cellspacing="0" style="padding-right: 10px;" summary="">
                                                     <tbody>
                                                         <tr>
-                                                            <td valign="top" style="padding-bottom: 9px;">
+                                                            <td valign="top">
                                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
                                                                     <tbody>
                                                                         <tr>
@@ -67,7 +80,7 @@
                                                 <table align="left" border="0" cellpadding="0" cellspacing="0" summary="">
                                                     <tbody>
                                                         <tr>
-                                                            <td valign="top" style="padding-bottom: 9px;">
+                                                            <td valign="top">
                                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
                                                                     <tbody>
                                                                         <tr>
@@ -92,7 +105,7 @@
                                                 <table align="left" border="0" cellpadding="0" cellspacing="0" style="padding-left: 10px;" summary="">
                                                     <tbody>
                                                         <tr>
-                                                            <td valign="top" style="padding-bottom: 9px;">
+                                                            <td valign="top">
                                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
                                                                     <tbody>
                                                                         <tr>
@@ -121,9 +134,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="center" valign="top" style="padding-top: 9px;padding-right: 9px;padding-left: 9px;padding-bottom: 20px;">
-                                <p style="color:white;font-size: 0.75rem;">&#169;2017 Au Pas De Courses, tous droits r&#233;serv&#233;s.</p>
-                                <p style="font-size:0.75rem;color: #fff;"><a style="color: #fff;font-weight: 600;text-decoration: none;" href="mailto:contact@aupasdecourses.com">Nous contacter</a> - <a style="color:#fff;font-weight: 600;text-decoration: none;" href="https://www.aupasdecourses.com/faq/">FAQ</a></p>
+                            <td align="center" valign="top" style="padding-right: 9px;padding-left: 9px;padding-bottom: 10px;">
+                                <p style="color:white;font-size: 0.75rem;"><a style="color:#fff;font-weight: 600;text-decoration: none;" href="https://www.aupasdecourses.com">Au Pas De Courses.</a></p>
                             </td>
                         </tr>
                     </table>
