@@ -73,6 +73,7 @@ class Magento
         return $commercants;
     }
 
+    //Mettre dans trait Order
     private function OrdersQuery($dfrom, $dto, $commercantId = -1, $orderId = -1)
     {
         $orders = \Mage::getModel('sales/order')->getCollection();
@@ -129,6 +130,7 @@ class Magento
         return $orders;
     }
 
+    //Mettre dans trait Order
     private function OrderHeaderParsing($order)
     {
         $orderHeader = [];
@@ -172,6 +174,7 @@ class Magento
         return $orderHeader;
     }
 
+    //Mettre dans trait Order
     private function ProductParsing($product, $order_id)
     {
         $prod_data = [
@@ -196,6 +199,7 @@ class Magento
         return $prod_data;
     }
 
+    //Mettre dans trait Model
     private function checkEntryToModel($model, array $filters)
     {
         $entry = $model->getCollection();
@@ -209,6 +213,7 @@ class Magento
         }
     }
 
+    //Mettre dans trait Model
     private function addEntryToModel($model, $data, $updatedFields)
     {
         foreach ($data as $k => $v) {
@@ -220,6 +225,7 @@ class Magento
         $model->save();
     }
 
+    //Mettre dans trait Model
     private function updateEntryToModel($model, array $filters, array $updatedFields)
     {
         $entry = $model->getCollection();
@@ -237,6 +243,7 @@ class Magento
         }
     }
 
+    //Mettre dans trait Model
     public function addEntryToOrderField(array $data)
     {
         $this->addEntryToModel(
@@ -245,6 +252,7 @@ class Magento
         );
     }
 
+    //Mettre dans trait Model
     public function updateEntryToOrderField(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('amorderattach/order_field');
@@ -265,6 +273,7 @@ class Magento
         }
     }
 
+    //Mettre dans trait Model
     public function addEntryToRefundItem(array $data)
     {
         $this->addEntryToModel(
@@ -273,6 +282,7 @@ class Magento
         );
     }
 
+    //Mettre dans trait Model
     public function updateEntryToRefundItem(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/refund_items');
@@ -293,6 +303,7 @@ class Magento
         }
     }
 
+    //Mettre dans trait Order
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -320,6 +331,7 @@ class Magento
         return $rsl;
     }
 
+    //Mettre dans trait Order
     public function getOrderByMerchants($orderId)
     {
         $merchants = $this->getMerchants();
@@ -344,6 +356,7 @@ class Magento
         return $rsl;
     }
 
+    //Mettre dans trait Order
     public function getOrdersByStore($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -371,6 +384,7 @@ class Magento
         return $rsl;
     }
 
+    //Mettre dans trait Order
     public function getMerchantsOrders($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -404,6 +418,7 @@ class Magento
         return $commercants;
     }
 
+    //Mettre dans trait Order
     public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {

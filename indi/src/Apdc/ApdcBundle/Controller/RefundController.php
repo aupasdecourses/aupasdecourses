@@ -46,6 +46,7 @@ class RefundController extends Controller
         ]);
     }
 
+    //A déplacer dans Service Magento ou trait associé
     private function check_upload_status($id, $order, &$rsl = [])
     {
         $mage = $this->container->get('apdc_apdc.magento');
@@ -82,6 +83,7 @@ class RefundController extends Controller
         return $err;
     }
 
+    //A déplacer dans Service Magento ou trait associé
     private function getUploadedFiles($id)
     {
         $dir_files = [];
