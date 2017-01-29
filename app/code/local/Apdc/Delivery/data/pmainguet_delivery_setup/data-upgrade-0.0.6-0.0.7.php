@@ -34,7 +34,11 @@ foreach ($entries as $entry) {
     if ($old == '') {
         $new = $merge;
     } else {
-        $new = $old.' / '.$merge;
+        if($merge ==''){
+            $new = $old;
+        } else {
+            $new = $old.' / '.$merge;
+        }
     }
 
     $entry->setCommentairesTicket($new);
