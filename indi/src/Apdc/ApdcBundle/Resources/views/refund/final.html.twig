@@ -52,6 +52,8 @@
 					<th>Increment_id (N° Commande)</th>
 					<th>Psp Ref de CHAQUE remboursement de cette commande</th>	
 					<th> Resultat </th>
+					<th> Crée le </th>
+					<th> Success ? </th>
 				</tr>
 			</thead>
 				{% for order_id, fields in orders %}
@@ -62,6 +64,8 @@
 									<td>{{ value.increment_id }}</td>
 									<td>{{ value.psp_reference }}</td>
 									<td>{{ value.adyen_event_result }}</td>
+									<td>{{ value.created_at }}</td>
+									<td>{{ value.success }}</td>
 								</tr>
 							{% endif %}
 						{% endfor %}

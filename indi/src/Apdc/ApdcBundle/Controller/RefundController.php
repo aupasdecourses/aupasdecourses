@@ -230,6 +230,10 @@ class RefundController extends Controller
             }
         }
         ksort($order);
+
+        $commentaire_client = $order[-1]['order']['commentaire_client'];
+        $commentaire_commercant = $order[-1]['order']['commentaire_commercant'];
+
         $total = $order[-1]['merchant']['total'];
         $order_mid = $order[-1]['order']['mid'];
         $input_status = $order[-1]['order']['input'];
@@ -261,12 +265,19 @@ class RefundController extends Controller
                     }
                 }
             }
+            
 
             try {
                 foreach ($rsl_table as $product_id => $data) {
                     $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
                 }
-                $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund_shipping' => $_POST['form']['refund_shipping'], 'input' => 'done']);
+                $mage->updateEntryToOrderField(
+                    ['order_id' => $order_mid],
+                    ['refund_shipping' => $_POST['form']['refund_shipping'],
+                    'input' => 'done',
+                    'commentaires_fraislivraison' => $_POST['form']['commentaire_client'],
+                    'commentaires_ticket' => $_POST['form']['commentaire_commercant']]
+                );
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
@@ -281,6 +292,8 @@ class RefundController extends Controller
             'total' => $total,
             'id' => $id,
             'refund_shipping' => $mage->checkRefundShipping($order_mid),
+            'commentaire_client' => $commentaire_client,
+            'commentaire_commercant' => $commentaire_commercant,
         ]);
     }
 
@@ -294,6 +307,7 @@ class RefundController extends Controller
         $session = $request->getSession();
 
         $order = $mage->getRefunds($id);
+
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
         $refund_diff = $order[-1]['merchant']['refund_diff'];

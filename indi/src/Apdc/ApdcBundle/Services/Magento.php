@@ -107,6 +107,8 @@ class Magento
                 'digest' => 'attachment.digest',
                 'refund' => 'attachment.refund',
                 'refund_shipping' => 'attachment.refund_shipping',
+                'commentaire_commercant' => 'attachment.commentaires_ticket',
+                'commentaire_client' => 'attachment.commentaires_fraislivraison',
             ));
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
         $orders->addFilterToMap('dtime', 'mwdtime.interval')
@@ -144,6 +146,8 @@ class Magento
         $orderHeader['digest'] = $order->getData('digest');
         $orderHeader['refund'] = $order->getData('refund');
         $orderHeader['refund_shipping'] = $order->getData('refund_shipping');
+        $orderHeader['commentaire_commercant'] = $order->getData('commentaire_commercant');
+        $orderHeader['commentaire_client'] = $order->getData('commentaire_client');
         $orderHeader['customer_id'] = $order->getData('customer_id');
         $orderHeader['first_name'] = $shipping->getData('firstname');
         $orderHeader['last_name'] = $shipping->getData('lastname');
@@ -165,7 +169,7 @@ class Magento
         $orderHeader['total_prix'] = 0.0;
         $orderHeader['products'] = [];
 
-        if($order->getData('refund_shipping')){
+        if ($order->getData('refund_shipping')) {
             $orderHeader['refund_shipping_amount'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
         } else {
             $orderHeader['refund_shipping_amount'] = 0;
@@ -206,7 +210,7 @@ class Magento
         foreach ($filters as $k => $v) {
             $entry->addFieldToFilter($k, $v);
         }
-        if ($entry->getFirstItem()->getId() <> null) {
+        if ($entry->getFirstItem()->getId() != null) {
             return true;
         } else {
             return false;
@@ -505,27 +509,27 @@ class Magento
                 $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
             }
         }
+
         return $rsl;
     }
 
-    /* Pour l'AFFICHAGE du tableau de remboursement, partie Simon Back UP */
-    public function getAdyenOrderPaymentTable()
-    {
-        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-        $ref = [];
-        $cpt = 1;
-        foreach ($collection as $fields) {
-            $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
-            $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
-            $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
-            $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
-            ++$cpt;
-        }
+    /* Affichage du tableau de remboursement de BACK-UP */ public function getAdyenOrderPaymentTable()
+ {
+     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+     $ref = [];
+     $cpt = 1;
+     foreach ($collection as $fields) {
+         $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
+         $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
+         $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
+         $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
+         ++$cpt;
+     }
 
-        return $ref;
-    }
+     return $ref;
+ }
 
-    /* Pour le FORMULAIRE de soumission de remboursement à Adyen , partie Simon Back UP + partie Benoit, FORMU FINAL*/
+    /* Formulaires de soumission de remboursement à Adyen*/
     public function getAdyenPaymentByPsp()
     {
         $collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -542,21 +546,22 @@ class Magento
 
         return $ref;
     }
-
     /* Pour les formulaires de soumissions à Adyen */
-    public function getAdyenEventData()
+    public function getAdyenQueueFields()
     {
-        $collection = \Mage::getModel('adyen/event')->getCollection();
-        $collection->addFieldToFilter('increment_id' , ['neq' => NULL ]);
+        $collection = \Mage::getModel('adyen/event_queue')->getCollection();
+        $collection->addFieldToFilter('increment_id', ['neq' => null]);
         $ref = [];
         $cpt = 1;
-        foreach($collection as $col)
-        {
-            $ref[$cpt]['increment_id']          = $col->getData('increment_id');
-            $ref[$cpt]['psp_reference']         = $col->getData('psp_reference');
-            $ref[$cpt]['adyen_event_result']    = $col->getData('adyen_event_result');
-            $cpt++;
+        foreach ($collection as $col) {
+            $ref[$cpt]['increment_id'] = $col->getData('increment_id');
+            $ref[$cpt]['psp_reference'] = $col->getData('psp_reference');
+            $ref[$cpt]['adyen_event_result'] = $col->getData('adyen_event_result');
+            $ref[$cpt]['success'] = $col->getData('success');
+            $ref[$cpt]['created_at'] = $col->getData('created_at');
+            ++$cpt;
         }
-        return($ref);
+
+        return $ref;
     }
 }
