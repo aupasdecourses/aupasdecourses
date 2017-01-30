@@ -12,9 +12,9 @@
 		margin-bottom: 10px;
 	}
 </style>
-<div class="row">
+<div class="container">
 	<h1>Upload et traitement des images catalogue</h1>
-	<hr>
+<div class="row">
 	<div class="col-sm-12 paragraph">
 		<p>1. Selectionnez les images, dont vous aurez préalablement retouché la luminosité et les couleurs si nécessaire, via GIMP, en cliquant sur le bouton "Selectionner les fichiers". Les photos seront téléchargées automatiquement
 		</p>
@@ -52,70 +52,68 @@
 			<span class="ajax-msg" style="font-weight:bold;"></span>
 		</div><hr>
 	</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/bootstrap.3.2.0.min.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
+<script type="text/javascript">
+	function init_msg(action){
+		//diplay loading and erase message
+		$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
+		$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'none'});
+		$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'none'});
+		$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'none','color':'auto'});
+		$('#button_'+action).prop('disabled', true);
+	}
 
-	{% endblock %}
-
-	{% block javascripts %}
-
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/bootstrap.3.2.0.min.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.ui.widget.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
-	<script type="text/javascript">
-function init_msg(action){
-	//diplay loading and erase message
-	$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
-	$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'none'});
-	$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'none'});
-	$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'none','color':'auto'});
-	$('#button_'+action).prop('disabled', true);
-}
-
-function process(action){
-	// display loading and erase msg
-	init_msg(action);
-	$.ajax({
-		url: '/indi/web/shell_uploads/script.php',
-		type: 'POST',
-		data: {action: action},
-		success: function(msg) {
-			if(msg!="error"){
-				$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
-				$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'inline'});
-				$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'green'}).html(msg);
-				$('#button_'+action).prop('disabled', false);
-			} else {
-				$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
-				$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'inline'});
-				$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
-				$('#button_'+action).prop('disabled', false);
+	function process(action){
+		// display loading and erase msg
+		init_msg(action);
+		$.ajax({
+			url: '/indi/web/shell_uploads/script.php',
+			type: 'POST',
+			data: {action: action},
+			success: function(msg) {
+				if(msg!="error"){
+					$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+					$('#ajax-wait-'+action).find('span.ajax-success').css({'display':'inline'});
+					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'green'}).html(msg);
+					$('#button_'+action).prop('disabled', false);
+				} else {
+					$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'none'});
+					$('#ajax-wait-'+action).find('span.ajax-error').css({'display':'inline'});
+					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
+					$('#button_'+action).prop('disabled', false);
+				}
+			},
+			error: function(msg) {
+				alert(msg);
 			}
-		},
-		error: function(msg) {
-			alert(msg);
-		}
-	});
-};
+		});
+	};
 
-$(function () {
-	$('#fileupload').fileupload({
-		url: '/indi/web/uploads/index.php',
-		dataType: 'json',
-		done: function (e,data) {
-			$.each(data.result.files, function(index, file){
-				$('<p/>').text(file.name).appendTo($('#file_uploaded'));
-			});
-		},
-		progressall: function (e, data) {
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$('#progress .bar').css(
-					'width',
-					progress + '%'
-					);
-		}	
+	$(function () {
+		$('#fileupload').fileupload({
+			url: '/indi/web/uploads/index.php',
+			dataType: 'json',
+			done: function (e,data) {
+				$.each(data.result.files, function(index, file){
+					$('<p/>').text(file.name).appendTo($('#file_uploaded'));
+				});
+			},
+			progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				$('#progress .bar').css(
+						'width',
+						progress + '%'
+						);
+			}	
+		});
 	});
-});
-	</script>
+</script>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
-	{% endblock %}
+{% endblock %}

@@ -397,7 +397,7 @@ class RefundController extends Controller
 
         $order = $mage->getRefunds($id);
         $orders = $mage->getAdyenPaymentByPsp();
-        $event_data = $mage->getAdyenEventData();
+        $event_data = $mage->getAdyenQueueFields();
 
         $refund_diff = $order[-1]['merchant']['refund_diff'];
         $order_mid = $order[-1]['order']['mid'];
@@ -455,7 +455,7 @@ class RefundController extends Controller
         $mage = $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenPaymentByPsp();
 
-        $event_data = $mage->getAdyenEventData();
+        $event_data = $mage->getAdyenQueueFields();
 
         $refund = new Refund();
         $form = $this->createForm(RefundType::class, $refund);

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+umask(0)
 if [ $# -ne 1 ]; then
     echo $0: usage: photo_categories nom_fichier
     exit 1

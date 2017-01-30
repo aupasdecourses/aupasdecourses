@@ -72,20 +72,14 @@
 					{% endif %}
 			{% endfor %}		
 		</table>
-
-
-
-
-
-	{% for order_id, fields in orders %}
-			{% if fields.merchant_reference == id %}
-				Pas assez d'infos sur la commande ? Clique ici :
-					<a href="https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference={{fields.pspreference}}&accountKey=MerchantAccount.AuPasDeCoursesFR" target="_blank">
-						<input type="button" class="btn btn-success" value="Go to Adyen"/>
-					</a>
-			{% endif %}
-	{% endfor %}
-
+		{% for order_id, fields in orders %}
+				{% if fields.merchant_reference == id %}
+					Pas assez d'infos sur la commande ? Clique ici :
+						<a href="https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference={{fields.pspreference}}&accountKey=MerchantAccount.AuPasDeCoursesFR" target="_blank">
+							<input type="button" class="btn btn-success" value="Go to Adyen"/>
+						</a>
+				{% endif %}
+		{% endfor %}
 	</div>
 </div>
 

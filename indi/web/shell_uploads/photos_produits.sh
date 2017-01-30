@@ -1,4 +1,5 @@
 #!/bin/bash
+umask(0)
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
 cd ../uploads/gallery
@@ -43,7 +44,7 @@ echo "Done!"
 #move to media/import folder
 pwd
 for f in "$dir"/*.jpg; do
-mv "$f" /home/sturquier/www/media/import
+mv "$f" ../../../../media/import
 done
 echo "Done!"
 
