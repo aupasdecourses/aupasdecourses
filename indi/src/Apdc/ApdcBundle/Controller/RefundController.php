@@ -51,7 +51,7 @@ class RefundController extends Controller
     {
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $ticket_folder = $mage->mediaPath().'/attachments/'.$id;
+        $ticket_folder = $mage->mediaPath().'/attachments';
         if (!($dir = opendir($ticket_folder))) {
             return self::ERROR;
         }
@@ -90,8 +90,8 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $ticket_folder = $mage->mediaPath().'/attachments/'.$id;
-        $ticket_url = $mage->mediaUrl().'attachments/'.$id;
+        $ticket_folder = $mage->mediaPath().'/attachments';
+        $ticket_url = $mage->mediaUrl().'attachments';
         if (($dir = opendir($ticket_folder))) {
             while (($dir_entry = readdir($dir)) != false) {
                 if ($dir_entry == '.' || $dir_entry == '..') {
@@ -152,7 +152,7 @@ class RefundController extends Controller
                     $extentions;
                     preg_match("/.*(\..*)$/", $_FILES['form']['name'][$name], $extentions);
                     $tmp_file = $_FILES['form']['tmp_name'][$name];
-                    $folder = $mage->mediaPath().'/attachments/'.$id;
+                    $folder = $mage->mediaPath().'/attachments';
                     if (!file_exists($folder)) {
                         try {
                             $oldmask = umask(0);
