@@ -222,7 +222,7 @@ trait Credimemo
             return false;
         }
 
-        $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+        $invoice->setRequestedCaptureCase('online');
         $invoice->register();
         $invoice->getOrder()->setCustomerNoteNotify(false);
         $invoice->getOrder()->setIsInProcess(true);

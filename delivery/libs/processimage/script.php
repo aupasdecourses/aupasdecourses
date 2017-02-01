@@ -7,7 +7,7 @@ if($_POST['action']=='optimiser'){
 	echo "Reindex OK!";
 }
 elseif($_POST['action']=='commercants'){
-	shell_exec (" bash photos_commercants.sh ".$_POST['image']);
+	shell_exec ("bash photos_commercants.sh ".$_POST['image']);
 	echo "Optimisation and thumbnail creation done!";
 }elseif($_POST['action']=='categories'){
 	shell_exec ("bash photos_categories.sh ".$_POST['image']);
