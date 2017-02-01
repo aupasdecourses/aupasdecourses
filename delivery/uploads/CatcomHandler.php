@@ -12,24 +12,40 @@
 
 class CatcomHandler extends UploadHandler
 {
+
+    //Return same name for all type of extensions
     protected function get_unique_filename($file_path, $name, $size, $type, $error,
             $index, $content_range)
     {
-        $oldname = 'original.jpg';
-
-        while (is_dir($this->get_upload_path($name))) {
-            $name = $this->upcount_name($name);
+        if (strpos($name, '.') === false &&
+                preg_match('/^image\/(gif|jpe?g|png)/', $type, $matches)) {
+            $name .= '.'.$matches[1];
         }
-        // Keep an existing filename if this is part of a chunked upload:
-        $uploaded_bytes = $this->fix_integer_overflow((int) $content_range[1]);
-        while (is_file($this->get_upload_path($name))) {
-            if ($uploaded_bytes === $this->get_file_size(
-                    $this->get_upload_path($name))) {
-                break;
+        if ($this->options['correct_image_extensions'] &&
+                function_exists('exif_imagetype')) {
+            switch (@exif_imagetype($file_path)){
+                case IMAGETYPE_JPEG:
+                    $extensions = array('jpg', 'jpeg');
+                    break;
+                case IMAGETYPE_PNG:
+                    $extensions = array('png');
+                    break;
+                case IMAGETYPE_GIF:
+                    $extensions = array('gif');
+                    break;
             }
-            $name = $this->upcount_name($name);
+            // Adjust incorrect image file extensions:
+            if (!empty($extensions)) {
+                $parts = explode('.', $name);
+                $extIndex = count($parts) - 1;
+                $ext = strtolower(@$parts[$extIndex]);
+                if (!in_array($ext, $extensions)) {
+                    $parts[$extIndex] = $extensions[0];
+                    $name = 'original.'.$parts[$extIndex];
+                }
+            }
         }
 
-        return $oldname;
+        return $name;
     }
 }

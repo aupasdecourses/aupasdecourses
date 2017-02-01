@@ -1,5 +1,5 @@
 #!/bin/bash
-umask(0)
+
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
 cd ../uploads/gallery

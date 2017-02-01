@@ -44,7 +44,6 @@ $(function () {
 		dataType: 'json',
 		done: function (e,data) {
 			$.each(data.result.files, function(index, file){
-				
 				$.ajax({
 					url: '/indi/web/shell_uploads/script.php',
 					type: 'POST',
