@@ -8248,7 +8248,7 @@ section.packages ul {
   section.packages ul li {
     display: inline-block;
     max-width: 30%;
-    margin: 0 5%;
+    margin: 0 4%;
     font-size: 0.75rem; }
     section.packages ul li.price-9 {
       color: #fdb172; }
@@ -8317,22 +8317,20 @@ section#cards {
     text-align: left; }
   section#cards .clients {
     background-color: #fff;
-    padding: 0; }
+    padding: 0 0 30px; }
     section#cards .clients p {
       padding: 0 40px;
-      font-size: 1.125rem;
-      margin-bottom: 30px; }
+      font-size: 1.125rem; }
     section#cards .clients img {
       display: block;
       width: 100%;
       margin-bottom: 30px; }
   section#cards .partners {
     background-color: #fff;
-    padding: 0; }
+    padding: 0 0 30px; }
     section#cards .partners p {
       padding: 0 40px;
-      font-size: 1.125rem;
-      margin-bottom: 30px; }
+      font-size: 1.125rem; }
     section#cards .partners img {
       display: block;
       width: 100%;

@@ -118,7 +118,7 @@ section{
             li{
                 display: inline-block;
                 max-width: 30%;
-                margin: 0 5%;
+                margin: 0 4%;
                 font-size: 0.75rem;
                 &.price-9{
                     color: #fdb172;
@@ -200,11 +200,10 @@ section{
         }
         .clients{
             background-color: #fff;
-            padding: 0;
+            padding: 0 0 30px;
             p{
                 padding: 0 40px;
                 font-size: 1.125rem;
-                margin-bottom: 30px;
             }
             img{
                 display: block;
@@ -214,11 +213,10 @@ section{
         }
         .partners{
             background-color: #fff;
-            padding: 0;
+            padding: 0 0 30px;
             p{
                 padding: 0 40px;
                 font-size: 1.125rem;
-                margin-bottom: 30px;
             }
             img{
                 display: block;
