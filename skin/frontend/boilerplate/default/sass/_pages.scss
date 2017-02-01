@@ -12,6 +12,8 @@ section{
             h2{
                 color: $color-main-green;
                 &.soon{
+                    font-family: $font-text;
+                    font-size: 1.5rem;
                     color: $color-main-grey;
                 }
             }
@@ -77,12 +79,14 @@ section{
         padding: 1px 60px 30px;
         h2{
             color: #fff;
+            opacity: 0.87;
         }
         .section-header{
             margin-bottom: 65px;
         }
         .section-description{
             color: #fff;
+            opacity: 0.54;
         }
     }
     &#nos-tarifs{
@@ -105,7 +109,7 @@ section{
             font-size: 2.25rem;
         }
         .section-description{
-            font-size: 0.875rem;
+            font-size: 1.125rem;
         }
         ul{
             list-style-type: none;
@@ -140,6 +144,7 @@ section{
             p{
                 color: #fff;
                 font-size: 1.125rem;
+                opacity: 0.54;
             }
         }
     }
@@ -159,12 +164,13 @@ section{
             h3{
                 font-family: $font-text;
                 font-weight: 700;
-                font-size: 1.125rem;
+                font-size: 1.5rem;
                 color: #fff;
             }
             p{
                 color: #fff;
-                font-size: 0.875rem;
+                font-size: 1.125rem;
+                opacity: 0.7;
             }
         }
         .mission-1{
@@ -194,38 +200,30 @@ section{
         }
         .clients{
             background-color: #fff;
-            border-top: 5px solid $color-main-pink;
             padding: 0;
-            h3{
-                color: $color-main-pink;
-                padding: 0 40px;
-                margin-top: 40px;
-            }
             p{
                 padding: 0 40px;
+                font-size: 1.125rem;
+                margin-bottom: 30px;
             }
             img{
                 display: block;
                 width: 100%;
-                margin-top: 30px;
+                margin-bottom: 30px;
             }
         }
         .partners{
             background-color: #fff;
-            border-top: 5px solid $color-blue;
             padding: 0;
-            h3{
-                color: $color-blue;
-                padding: 0 40px;
-                margin-top: 40px;
-            }
             p{
                 padding: 0 40px;
+                font-size: 1.125rem;
+                margin-bottom: 30px;
             }
             img{
                 display: block;
                 width: 100%;
-                margin-top: 30px;
+                margin-bottom: 30px;
             }
         }
     }
@@ -240,7 +238,7 @@ section{
             height: 193px;
             p{
                 font-size: 0.875rem;
-                font-weight: 700;
+                font-weight: 500;
                 margin-top: 20px;
             }
         }

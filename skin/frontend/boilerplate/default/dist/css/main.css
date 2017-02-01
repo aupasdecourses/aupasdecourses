@@ -5,8 +5,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import url("https://fonts.googleapis.com/css?family=Courgette");
-@import url("https://fonts.googleapis.com/css?family=Raleway");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -8044,10 +8042,11 @@ html, body {
   font-size: 16px; }
 
 body {
-  background-color: #f6f6f6; }
+  background-color: #f6f6f6;
+  font-family: "Raleway", sans-serif; }
 
 h1, h2, h3, h4, h5 {
-  font-family: "Courgette", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: normal;
   text-align: center; }
 
@@ -8127,9 +8126,7 @@ p {
 
 .cms-home-main .intro-section {
   text-align: center;
-  margin-top: 190px; }
-  .cms-home-main .intro-section #logo {
-    max-width: 280px; }
+  margin-top: 160px; }
   .cms-home-main .intro-section h1 {
     color: #fff; }
 
@@ -8174,6 +8171,8 @@ section#quartiers > .container {
   section#quartiers > .container h2 {
     color: #3ab64b; }
     section#quartiers > .container h2.soon {
+      font-family: "Raleway", sans-serif;
+      font-size: 1.5rem;
       color: #999999; }
 
 section#quartiers .border-container {
@@ -8218,11 +8217,13 @@ section#concept {
   background-color: #3ab64b;
   padding: 1px 60px 30px; }
   section#concept h2 {
-    color: #fff; }
+    color: #fff;
+    opacity: 0.87; }
   section#concept .section-header {
     margin-bottom: 65px; }
   section#concept .section-description {
-    color: #fff; }
+    color: #fff;
+    opacity: 0.54; }
 
 section#nos-tarifs {
   background-color: #f6f6f6;
@@ -8238,7 +8239,7 @@ section.packages h2 {
   font-size: 2.25rem; }
 
 section.packages .section-description {
-  font-size: 0.875rem; }
+  font-size: 1.125rem; }
 
 section.packages ul {
   list-style-type: none;
@@ -8266,7 +8267,8 @@ section.packages .item {
     height: auto; }
   section.packages .item p {
     color: #fff;
-    font-size: 1.125rem; }
+    font-size: 1.125rem;
+    opacity: 0.54; }
 
 section#missions h2 {
   color: #1c50a5;
@@ -8283,11 +8285,12 @@ section#missions .item-mission {
   section#missions .item-mission h3 {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     color: #fff; }
   section#missions .item-mission p {
     color: #fff;
-    font-size: 0.875rem; }
+    font-size: 1.125rem;
+    opacity: 0.7; }
 
 section#missions .mission-1 {
   background: url(../images/mission-1.jpg) no-repeat;
@@ -8314,32 +8317,26 @@ section#cards {
     text-align: left; }
   section#cards .clients {
     background-color: #fff;
-    border-top: 5px solid #f55d5b;
     padding: 0; }
-    section#cards .clients h3 {
-      color: #f55d5b;
-      padding: 0 40px;
-      margin-top: 40px; }
     section#cards .clients p {
-      padding: 0 40px; }
+      padding: 0 40px;
+      font-size: 1.125rem;
+      margin-bottom: 30px; }
     section#cards .clients img {
       display: block;
       width: 100%;
-      margin-top: 30px; }
+      margin-bottom: 30px; }
   section#cards .partners {
     background-color: #fff;
-    border-top: 5px solid #3a94d5;
     padding: 0; }
-    section#cards .partners h3 {
-      color: #3a94d5;
-      padding: 0 40px;
-      margin-top: 40px; }
     section#cards .partners p {
-      padding: 0 40px; }
+      padding: 0 40px;
+      font-size: 1.125rem;
+      margin-bottom: 30px; }
     section#cards .partners img {
       display: block;
       width: 100%;
-      margin-top: 30px; }
+      margin-bottom: 30px; }
 
 section#advantages {
   border-top: 1px solid #eee;
@@ -8351,7 +8348,7 @@ section#advantages {
     height: 193px; }
     section#advantages .item p {
       font-size: 0.875rem;
-      font-weight: 700;
+      font-weight: 500;
       margin-top: 20px; }
 
 section .section-description {
@@ -8380,8 +8377,7 @@ footer {
   footer .social-icons {
     padding: 0;
     list-style-type: none;
-    text-align: right;
-    margin-top: 10px; }
+    text-align: center; }
     footer .social-icons li {
       display: inline-block;
       margin: 0 5px; }

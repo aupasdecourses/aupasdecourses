@@ -86,7 +86,7 @@
 		</div>
 		<div class="row text-center">
 		    <h2 class="soon">Bientôt chez vous</h2>
-			<a class="button button-green" href="#" title="Restez informés">Restez informés <i class="fa fa-send"></i></a>
+			<a class="button button-green" href="#" title="Restez informés">Restez informés</a>
 		</div>
 	</div>
 </section>
@@ -169,13 +169,13 @@
 <section id="missions" class="container-fluid">
     <h2>Nos missions et nos valeurs</h2>
     <div class="row">
-        <div class="col-md-6 item-mission mission-1">
+        <div class="col-md-3 item-mission mission-1">
             <div>
                 <h3>Une éthique</h3>
                 <p>Un fonctionnement raisonné grâce à des livreurs salariés, formés et professionnels.</p>
             </div>
         </div>
-        <div class="col-md-3 item-mission mission-2">
+        <div class="col-md-6 item-mission mission-2">
             <div>
                 <h3>Local avant tout !</h3>
                 <p>Le soutien des artisans locaux et indépendants, garants d'un savoir-faire et de produits de qualité.</p>
@@ -193,14 +193,12 @@
 <section id="cards" class="container">
     <div class="row">
         <div class="col-md-5 clients">
-            <h3>Nos clients</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet impedit facilis quo blanditiis doloremque illum reprehenderit vero praesentium beatae corporis rerum, numquam, labore, temporibus. Eligendi quis placeat voluptates vel voluptatum.</p>
             <img src="<?php echo $this->getSkinUrl('dist/images/img-clients.jpg')?>" alt="Nos clients">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet impedit facilis quo blanditiis doloremque illum reprehenderit vero praesentium beatae corporis rerum, numquam, labore, temporibus. Eligendi quis placeat voluptates vel voluptatum.</p>
         </div>
         <div class="col-md-5 col-md-offset-2 partners">
-            <h3>Nos commerçants partenaires</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat possimus est deserunt, praesentium alias minus cupiditate, reiciendis quia distinctio cum quidem suscipit at et adipisci, molestiae mollitia incidunt maiores hic.</p>
             <img src="<?php echo $this->getSkinUrl('dist/images/img-commercants.jpg')?>" alt="Nos commerçants partenaires">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat possimus est deserunt, praesentium alias minus cupiditate, reiciendis quia distinctio cum quidem suscipit at et adipisci, molestiae mollitia incidunt maiores hic.</p>
         </div>
     </div>
 </section>
@@ -208,25 +206,21 @@
 <section id="advantages">
     <div class="container">
         <div class="row text-center">
-            <div class="item col-md-2 col-md-offset-1 col-sm-4 col-xs-6">
+            <div class="item col-md-3 col-sm-6 col-xs-6">
                 <img src="<?php echo $this->getSkinUrl('dist/images/picto-choix.png')?>" alt="Large choix au même prix que votre supermarché">
                 <p>Large choix au même prix que votre supermarché</p>
             </div>
-            <div class="item col-md-2 col-sm-4 col-xs-6">
+            <div class="item col-md-3 col-sm-6 col-xs-6">
                 <img src="<?php echo $this->getSkinUrl('dist/images/picto-livraison.png')?>" alt="Livraison le lendemain de 7h à 22h30">
                 <p>Livraison le lendemain de 7h à 22h30</p>
             </div>
-            <div class="item col-md-2 col-sm-4 col-xs-6">
+            <div class="item col-md-3 col-sm-6 col-xs-6">
                 <img src="<?php echo $this->getSkinUrl('dist/images/picto-fraicheur.png')?>" alt="Qualité et fraîcheur de la commande à la livraison">
                 <p>Qualité et fraîcheur de la commande à la livraison</p>
             </div>
-            <div class="item col-md-2 col-sm-6 col-xs-6">
+            <div class="item col-md-3 col-sm-6 col-xs-6">
                 <img src="<?php echo $this->getSkinUrl('dist/images/picto-temps.png')?>" alt="Gagnez du temps et maîtrisez votre budget">
                 <p>Gagnez du temps et maîtrisez votre budget</p>
-            </div>
-            <div class="item col-md-2 col-sm-6 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto-satisfait.png')?>" alt="Des clients satisfaits">
-                <p>Des clients satisfaits <em>(Source : Fianet)</em></p>
             </div>
         </div>
     </div>
@@ -235,8 +229,12 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 button-newsletter">
-                <a href="#" class="button button-white">Newsletter <i class="fa fa-send"></i></a>
+            <div class="col-md-3">
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
             </div>
             <div class="col-md-6">
                 <p class="copyright text-center">
@@ -248,14 +246,6 @@
                     <li><a href="#" title="Tarifs">Tarifs</a></li>
                     <li><a href="#" title="Blog">Blog</a></li>
                     <li><a href="#" title="Contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul class="social-icons">
-                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="https://plus.google.com/114890137995721785465" title="Google+" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </div>
