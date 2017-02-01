@@ -215,14 +215,14 @@ trait Credimemo
      **/
     public function createinvoice($orderId)
     {
-        $order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
+        $order = \Mage::getSingleton('sales/order')->loadByIncrementId($orderId);
         $invoice = $this->checkinvoices($order);
 
         if (!$order->canInvoice() || !$invoice->getTotalQty()) {
             return false;
         }
 
-        $invoice->setRequestedCaptureCase('online');
+        $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
         $invoice->register();
         $invoice->getOrder()->setCustomerNoteNotify(false);
         $invoice->getOrder()->setIsInProcess(true);
