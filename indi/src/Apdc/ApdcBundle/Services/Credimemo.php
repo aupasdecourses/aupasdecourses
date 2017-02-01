@@ -216,23 +216,24 @@ trait Credimemo
     public function createinvoice($orderId)
     {
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($orderId);
-        $invoice = $this->checkinvoices($order);
+        $invoice_check = $this->checkinvoices($order);
 
-        if (!$order->canInvoice() || !$invoice->getTotalQty()) {
+        $invoice = \Mage::getModel('sales/service_order', $order)->prepareInvoice();
+
+        if (!$order->canInvoice() || $invoice_check) {
             return false;
+        } else {
+            $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+            $invoice->register();
+            $invoice->getOrder()->setCustomerNoteNotify(false);
+            $invoice->getOrder()->setIsInProcess(true);
+            $order->addStatusHistoryComment('Automatically INVOICED.', false);
+            $transactionSave = \Mage::getModel('core/resource_transaction')
+                ->addObject($invoice)
+                ->addObject($invoice->getOrder());
+            $transactionSave->save();
+            return true;
         }
-
-        $invoice->setRequestedCaptureCase(\Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-        $invoice->register();
-        $invoice->getOrder()->setCustomerNoteNotify(false);
-        $invoice->getOrder()->setIsInProcess(true);
-        $order->addStatusHistoryComment('Automatically INVOICED.', false);
-        $transactionSave = \Mage::getModel('core/resource_transaction')
-            ->addObject($invoice)
-            ->addObject($invoice->getOrder());
-        $transactionSave->save();
-
-        return true;
     }
 
     /**
@@ -292,8 +293,8 @@ trait Credimemo
             'adjustment_negative' => 0,
         ];
 
-        $commercant=[
-            'name'=>$data['merchant'],
+        $commercant = [
+            'name' => $data['merchant'],
             'refund_diff' => $data['shipping_amount'],
         ];
 
