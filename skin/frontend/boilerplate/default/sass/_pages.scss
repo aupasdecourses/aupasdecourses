@@ -14,15 +14,16 @@ section{
                 &.soon{
                     font-family: $font-text;
                     font-size: 1.5rem;
-                    color: $color-main-grey;
+                    font-weight: 400;
+                    color: rgba(0,0,0,0.54);
                 }
             }
         }
         .border-container{
             margin-left: -15px;
             width: calc( 100% + 30px );
-            height: 18px;
-            background: url(../images/border-pattern.png) repeat-x;
+            height: 36px;
+            background: url(../images/border-pattern-height.png) repeat-x;
         }
         .bouton-quartier{
             position: relative;
@@ -86,7 +87,7 @@ section{
         }
         .section-description{
             color: #fff;
-            opacity: 0.54;
+            opacity: 0.7;
         }
     }
     &#nos-tarifs{
@@ -108,27 +109,17 @@ section{
         h2{
             font-size: 2.25rem;
         }
-        .section-description{
-            font-size: 1.125rem;
-        }
         ul{
             list-style-type: none;
             text-align: center;
             padding: 0;
+            margin: 20px 0 46px;
             li{
                 display: inline-block;
                 max-width: 30%;
-                margin: 0 4%;
-                font-size: 0.75rem;
-                &.price-9{
-                    color: #fdb172;
-                }
-                &.price-6{
-                    color: #f7b00c;
-                }
-                &.price-3{
-                    color: #f77818;
-                }
+                margin: 0 3%;
+                font-size: 0.875rem;
+                color: #f7b00c;
                 span{
                     font-size: 2.125rem;
                 }
@@ -144,7 +135,6 @@ section{
             p{
                 color: #fff;
                 font-size: 1.125rem;
-                opacity: 0.54;
             }
         }
     }
@@ -233,7 +223,9 @@ section{
         }
         .item{
             text-align: center;
-            height: 193px;
+            img{
+                max-width: 60px;
+            }
             p{
                 font-size: 0.875rem;
                 font-weight: 500;
@@ -244,7 +236,7 @@ section{
     
     .section-description{
         text-align: center;
-        font-size: 1.125rem;
-        color: $color-main-grey;
+        font-size: 1.5rem;
+        color: rgba(0,0,0,0.54);
     }
 }

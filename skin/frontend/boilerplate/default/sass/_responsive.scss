@@ -12,6 +12,15 @@
                 margin-bottom: 30px;
             }
         }
+        &#advantages{
+            .item{
+                margin-bottom: 20px;
+                height: 190px;
+                img{
+                    max-width: none;
+                }
+            }
+        }
     }
     footer{
         .button-newsletter{

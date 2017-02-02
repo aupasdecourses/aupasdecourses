@@ -8048,10 +8048,16 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  text-align: center; }
+  text-align: center;
+  font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased; }
 
 h1, h2 {
-  font-size: 2.25rem; }
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 1.125px; }
 
 h2 {
   margin: 50px auto 10px; }
@@ -8061,7 +8067,11 @@ p {
   font-weight: normal;
   font-size: 0.875rem;
   line-height: 1.5em;
-  color: #000; }
+  color: #000;
+  font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased; }
 
 .button {
   position: relative;
@@ -8173,13 +8183,14 @@ section#quartiers > .container {
     section#quartiers > .container h2.soon {
       font-family: "Raleway", sans-serif;
       font-size: 1.5rem;
-      color: #999999; }
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.54); }
 
 section#quartiers .border-container {
   margin-left: -15px;
   width: calc( 100% + 30px);
-  height: 18px;
-  background: url(../images/border-pattern.png) repeat-x; }
+  height: 36px;
+  background: url(../images/border-pattern-height.png) repeat-x; }
 
 section#quartiers .bouton-quartier {
   position: relative;
@@ -8223,7 +8234,7 @@ section#concept {
     margin-bottom: 65px; }
   section#concept .section-description {
     color: #fff;
-    opacity: 0.54; }
+    opacity: 0.7; }
 
 section#nos-tarifs {
   background-color: #f6f6f6;
@@ -8238,24 +8249,17 @@ section#nos-tarifs {
 section.packages h2 {
   font-size: 2.25rem; }
 
-section.packages .section-description {
-  font-size: 1.125rem; }
-
 section.packages ul {
   list-style-type: none;
   text-align: center;
-  padding: 0; }
+  padding: 0;
+  margin: 20px 0 46px; }
   section.packages ul li {
     display: inline-block;
     max-width: 30%;
-    margin: 0 4%;
-    font-size: 0.75rem; }
-    section.packages ul li.price-9 {
-      color: #fdb172; }
-    section.packages ul li.price-6 {
-      color: #f7b00c; }
-    section.packages ul li.price-3 {
-      color: #f77818; }
+    margin: 0 3%;
+    font-size: 0.875rem;
+    color: #f7b00c; }
     section.packages ul li span {
       font-size: 2.125rem; }
 
@@ -8267,8 +8271,7 @@ section.packages .item {
     height: auto; }
   section.packages .item p {
     color: #fff;
-    font-size: 1.125rem;
-    opacity: 0.54; }
+    font-size: 1.125rem; }
 
 section#missions h2 {
   color: #1c50a5;
@@ -8342,8 +8345,9 @@ section#advantages {
   section#advantages .container {
     background: none; }
   section#advantages .item {
-    text-align: center;
-    height: 193px; }
+    text-align: center; }
+    section#advantages .item img {
+      max-width: 60px; }
     section#advantages .item p {
       font-size: 0.875rem;
       font-weight: 500;
@@ -8351,8 +8355,8 @@ section#advantages {
 
 section .section-description {
   text-align: center;
-  font-size: 1.125rem;
-  color: #999999; }
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.54); }
 
 footer {
   background-color: #3ab64b;
@@ -8393,6 +8397,11 @@ footer {
     text-align: center; }
   section#cards .clients {
     margin-bottom: 30px; }
+  section#advantages .item {
+    margin-bottom: 20px;
+    height: 190px; }
+    section#advantages .item img {
+      max-width: none; }
   footer .button-newsletter {
     text-align: center;
     margin-bottom: 20px; }
