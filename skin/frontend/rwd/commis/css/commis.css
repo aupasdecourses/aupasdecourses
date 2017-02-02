@@ -79,7 +79,8 @@ h2,
 .h2 {
     margin: 0;
     margin-bottom: 0.5em;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 24px;
     font-weight: 400;
@@ -93,7 +94,8 @@ h3,
 .h3 {
     margin: 0;
     margin-bottom: 10px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 18px;
     font-weight: 400;
@@ -121,7 +123,8 @@ h5,
 .h5 {
     margin: 0;
     margin-bottom: 10px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 13px;
     font-weight: bold;
@@ -135,7 +138,8 @@ h6,
 .h6 {
     margin: 0;
     margin-bottom: 5px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 12px;
     font-weight: bold;
@@ -1542,10 +1546,14 @@ label {
         text-transform: none;
         width: 320px;
     }
+
+    #header-account.skip-active, #header-help {
+        right: 0px;
+        top:60px;
+        left: auto;
+    }
+
     .skip-links .skip-content.skip-active {
-        right: 3px!important;
-        top: 67px!important;
-        left: auto!important;
         margin: 0;
         background-color: #ffffff;
     }
@@ -1741,6 +1749,11 @@ label {
     font-size: 14px;
 }
 
+.message-coupon{
+    font-family:Raleway;
+    width:100%;
+    display:none;
+}
 
 /* -------------------------------------------- *
  * Skip Cart Notifier
@@ -4032,6 +4045,10 @@ input[type=text] {
 
 /**Hipay**/
 
+#dt_method_hipay{
+    height:0px;
+}
+
 .hipay_infobox_bottom {
     width: 100% !important;
 }
@@ -4094,6 +4111,11 @@ input[type=text] {
 .data-table tfoot td {
     padding: 3px 10px;
     vertical-align: top;
+}
+
+#checkout-review-table-wrapper{
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 20px;
 }
 
 

@@ -47,6 +47,7 @@
             <action method="addCss">
                 <stylesheet>ddate/css/ddate.css</stylesheet>
             </action>
+            <action method="addJs"><script>apdc/coupon.js</script></action>
         </reference>
 		
         <reference name="checkout.progress">

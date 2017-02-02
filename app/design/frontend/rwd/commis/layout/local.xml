@@ -124,7 +124,6 @@
         <label>Homepage</label>
     </page_homepage>
 
-    <!-- Product listings by commerçants 'Fruits'-->
     <checkout_onepage_index>
         <remove name="left"/>
         <remove name="left_first"/>

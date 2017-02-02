@@ -35,7 +35,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
     private $_codemodel = 'batignolles';
     private $_shippingruletoduplicate = 'Restriction 17e';
     private $_shippinglivraisonpro = 'Livraison pour pro';
-    private $_couponnames = array('Première livraison gratuite',"10EUROSPARRAINAGE");
+    private $_couponnames = array('Première livraison gratuite',"10EUROSPARRAINAGE","Coupon de 10€ après 50€ de commande");
 
     //identifiers éléments à updater/modifier
     private $_amasty = [

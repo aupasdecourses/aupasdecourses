@@ -38,26 +38,26 @@ class Apdc_Coupon_IndexController extends Mage_Checkout_CartController
                     //$this->_getSession()->addSuccess(
                     //      $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode))
                     //);
-                    $response['msg'] = $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode));
+                    $response['msg'] = $this->__('Le code a été appliqué.', Mage::helper('core')->htmlEscape($couponCode));
                     $response['status'] = 'SUCCESS';
                 } else {
                     //$this->_getSession()->addError(
                     //      $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->htmlEscape($couponCode))
                     //);
-                    $response['msg'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->htmlEscape($couponCode));
+                    $response['msg'] = $this->__('Le code n\'est pas valide.', Mage::helper('core')->htmlEscape($couponCode));
                     $response['status'] = 'ERROR';
                 }
             } else {
                 $response['status'] = 'SUCCESS';
                 //$this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
-                $response['msg'] = $this->__('Coupon code was canceled.');
+                $response['msg'] = $this->__('Le code a été annulé.');
             }
         } catch (Mage_Core_Exception $e) {
             //$this->_getSession()->addError($e->getMessage());
         } catch (Exception $e) {
             //$this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
             //Mage::logException($e);
-            $response['msg'] = $this->__('Cannot apply the coupon code.');
+            $response['msg'] = $this->__('Le code ne peut être appliqué.');
         }
         $this->loadLayout(false);
         $review = $this->getLayout()->getBlock('ajaxcoupon')->toHtml();

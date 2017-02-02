@@ -1,6 +1,5 @@
 <layout version="0.1.0">
     <checkout_onepage_index>
-        <!-- Remove unnecessary JS from MW_Ddate -->
         <reference name="head">
             <action method="removeItem">
                 <type>js</type>
@@ -10,6 +9,7 @@
                 <type>js</type>
                 <file>mw_ddate/jquery-noconflict.js</file>
             </action>
+            <action method="addJs"><script>apdc/coupon.js</script></action>
         </reference>
         <!-- Merge Billing & Shipping -->
         <reference name="checkout.onepage.billing"> Change the template of billing block

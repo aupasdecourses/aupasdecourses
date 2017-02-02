@@ -109,11 +109,13 @@
     cursor: pointer;
     width: 100%;
 }
+
 .header-minicart #header-cart a:hover {
-    background-color:#ffffff;
-    color: #033;
-    text-decoration: underline
+    background-color: #1e555a;
+    color: #ffffff;
+    text-decoration: underline;
 }
+
 .header-minicart #header-cart .mini-commercant-name .title {
   font-family: "Open Sans";
   font-weight:600;

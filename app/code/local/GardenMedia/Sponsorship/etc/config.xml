@@ -258,7 +258,7 @@
       <general>
         <active>0</active>
         <register_sponsor_message><![CDATA[Plus qu'un pas pour valider le parrainage de <strong>%s</strong> et bénéficier d'un coupon de réduction.]]></register_sponsor_message>
-        <register_success_message><![CDATA[Bravo ! Vous avez été parrainé par <strong>%s</strong>. Dès 50€ d'achat sur AuPasDeCourses.fr vous bénéficirez d'un coupon de réduction de 10€]]></register_success_message>
+        <register_success_message><![CDATA[Bravo ! Vous avez été parrainé par <strong>%s</strong>. Vous avez reçu dans votre boite mail un coupon de réduction de 10€, à utiliser sur votre prochaine commande!]]></register_success_message>
         <register_instruction>Entrez ici le code de votre parrain et bénéficiez d'un coupon de réduction de 10€ dès 50€ d'achat.</register_instruction>
       </general>
       <twitter>
