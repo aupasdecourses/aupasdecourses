@@ -3793,6 +3793,10 @@ a.btn:hover {
     font-size: 20px;
 }
 
+.form-group {
+    margin-bottom: 10px;
+}
+
 
 /* Sections styling */
 
@@ -3877,6 +3881,20 @@ a.btn:hover {
     height: 20px;
 }
 
+/* -- Ddate -- */
+
+.remliv-icon {
+    margin-top: 4px !important;
+}
+
+.select_one ul li,.select_one ul li.disablerow {
+    height: 60px !important;
+}
+
+.deli_time p {
+    height: 60px !important;
+}
+
 .disablerow {
     background-color: #EEEEEE !important;
     color: #BDBDBD !important;
@@ -3934,7 +3952,6 @@ a.btn:hover {
     max-width: 1000px;
 }
 
-.form-list .field,
 .form-list .wide,
 .form-list .control {
     margin-bottom: 0px;
@@ -4273,8 +4290,8 @@ p.form-instructions,
 .opc #opc-login p:not(.required) {
     font-family: Raleway, Georgia, Times, "Times New Roman", serif;
     font-size: 15px;
-    color: #989898;
-    font-weight: 600;
+    color: rgba(0,0,0,0.54);
+    font-weight: normal;
 }
 
 .my-account .addresses-list,

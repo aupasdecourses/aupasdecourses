@@ -14,11 +14,6 @@
                 </rewrite>
             </customer>
         </blocks>
-        <models>
-            <apdccustomer>
-                <class>Apdc_Customer_Model</class>
-            </apdccustomer>
-        </models>
     </global>
     <frontend>
         <events>

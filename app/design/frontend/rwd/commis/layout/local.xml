@@ -258,7 +258,7 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="customer/form/resetforgottenpassword.phtml" />
+            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="apdc_customer/form/resetforgottenpassword.phtml" />
         </reference>
     </customer_account_changeforgotten>
 
