@@ -1,7 +1,6 @@
 <?php
-	$i = rand(1, 17); // generate random number size of the array
-	$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
-	$angledown= $this->getSkinUrl("images/angle-down.png");
+	$i = mt_rand(1, 17); // generate random number size of the array
+	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -45,40 +44,40 @@
             </div>
         </div>
 	</header>
-<section id="quartiers">
+<section id="districts">
 	<div class="container">
 	    <div class="border-container"></div>
 		<div class="section-header">
 			<h2>Sélectionnez votre quartier</h2>
-			<div class="section-description" style="margin-bottom:20px;">
+			<div class="section-description">
 				 Au Pas De Courses vous livre dans les arrondissements suivants à Paris.
 			</div>
 		</div>
 		<div class="row">
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('dist/images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
+					<img src="<?php echo $this->getSkinUrl('dist/images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle"/>
 					<span class="button button-pink">Entrez</span>
 					<h3 class="package-heading main-color">Paris 3<sup>e</sup>, Paris 10<sup>e</sup>, Paris 11<sup>e</sup></h3>
 				</a>
 			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('dist/images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>">
+					<img src="<?php echo $this->getSkinUrl('dist/images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle"/>
 					<span class="button button-pink">Entrez</span>
 					<h3 class="package-heading main-color">Paris 15<sup>e</sup></h3>
 				</a>
 			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>" style="display:block;width:100%">
-				    <img src="<?php echo $this->getSkinUrl('dist/images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
+				    <img src="<?php echo $this->getSkinUrl('dist/images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle"/>
 				    <span class="button button-pink">Entrez</span>
 					<h3 class="package-heading main-color">Paris 13<sup>e</sup></h3>
 				</a>
 			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>" style="display:block;width:100%">
-				    <img src="<?php echo $this->getSkinUrl('dist/images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>">
+				    <img src="<?php echo $this->getSkinUrl('dist/images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle"/>
 				    <span class="button button-pink">Entrez</span>
 					<h3 class="package-heading main-color">Paris 17<sup>e</sup>, Paris 18<sup>e</sup>, Paris 9<sup>e</sup></h3>
 				</a>
@@ -124,7 +123,7 @@
                 </div>
             </div>
         </section>
-        <section class="packages col-md-6" id="nos-tarifs">
+        <section class="packages col-md-6" id="prices">
             <div class="section-header">
                 <h2>Combien cela coûte ?</h2>
                 <div class="section-description">

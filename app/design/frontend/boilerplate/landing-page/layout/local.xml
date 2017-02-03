@@ -49,7 +49,7 @@
 			<!-- =========================
 				 SCRIPTS   
 			============================== -->
-			<action method="addJs"><script>script.js</script></action>
+			<!--<action method="addJs"><script>script.js</script></action>-->
 			
 			
 			

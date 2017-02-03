@@ -8172,44 +8172,50 @@ header .top-nav {
 section > .container {
   background-color: #fff; }
 
-section#quartiers > .container {
+section#districts > .container {
   background: url(../images/bottom-pictos.png), #fff;
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: 100%;
   padding-bottom: 90px; }
-  section#quartiers > .container h2 {
+  section#districts > .container h2 {
     color: #3ab64b; }
-    section#quartiers > .container h2.soon {
+    section#districts > .container h2.soon {
       font-family: "Raleway", sans-serif;
       font-size: 1.5rem;
       font-weight: 400;
       color: rgba(0, 0, 0, 0.54); }
 
-section#quartiers .border-container {
+section#districts .section-description {
+  margin-bottom: 20px; }
+
+section#districts .border-container {
   margin-left: -15px;
   width: calc( 100% + 30px);
   height: 36px;
   background: url(../images/border-pattern-height.png) repeat-x; }
 
-section#quartiers .bouton-quartier {
+section#districts .button-district {
   position: relative;
   text-align: center;
   margin: 20px auto; }
-  section#quartiers .bouton-quartier:hover h3 {
+  section#districts .button-district:hover h3 {
     color: #f55d5b; }
-  section#quartiers .bouton-quartier:hover a {
+  section#districts .button-district:hover a {
     text-decoration: none; }
-  section#quartiers .bouton-quartier:hover span.button {
+  section#districts .button-district:hover span.button {
     opacity: 1; }
-  section#quartiers .bouton-quartier:hover img {
+  section#districts .button-district:hover img {
     filter: brightness(30%); }
-  section#quartiers .bouton-quartier h3 {
+  section#districts .button-district > a {
+    display: block;
+    width: 100%; }
+  section#districts .button-district h3 {
     font-family: "Raleway", sans-serif;
     font-weight: 700;
     font-size: 1.125rem;
     color: #000; }
-  section#quartiers .bouton-quartier span.button {
+  section#districts .button-district span.button {
     opacity: 0;
     position: absolute;
     top: 80px;
@@ -8218,10 +8224,12 @@ section#quartiers .bouton-quartier {
     margin: auto;
     width: 145px;
     transition: all 200ms ease-in; }
-  section#quartiers .bouton-quartier img {
+  section#districts .button-district img {
+    width: 100%;
+    max-width: 200px;
     transition: all 200ms ease-in; }
 
-section#quartiers .button {
+section#districts .button {
   margin-top: 0; }
 
 section#concept {
@@ -8236,14 +8244,14 @@ section#concept {
     color: #fff;
     opacity: 0.7; }
 
-section#nos-tarifs {
+section#prices {
   background-color: #f6f6f6;
   padding: 0 60px 30px; }
-  section#nos-tarifs h2 {
+  section#prices h2 {
     color: #f55d5b; }
-  section#nos-tarifs .section-header {
+  section#prices .section-header {
     margin-bottom: 20px; }
-  section#nos-tarifs .item p {
+  section#prices .item p {
     color: #000; }
 
 section.packages h2 {

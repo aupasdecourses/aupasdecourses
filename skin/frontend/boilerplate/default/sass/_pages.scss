@@ -2,7 +2,7 @@ section{
     & > .container{
         background-color: #fff;
     }
-    &#quartiers{
+    &#districts{
         & > .container{
             background: url(../images/bottom-pictos.png), #fff;
             background-repeat: no-repeat;
@@ -19,13 +19,16 @@ section{
                 }
             }
         }
+        .section-description{
+            margin-bottom: 20px;
+        }
         .border-container{
             margin-left: -15px;
             width: calc( 100% + 30px );
             height: 36px;
             background: url(../images/border-pattern-height.png) repeat-x;
         }
-        .bouton-quartier{
+        .button-district{
             position: relative;
             text-align: center;
             margin: 20px auto;
@@ -42,6 +45,10 @@ section{
                 img{
                     filter: brightness(30%);
                 }
+            }
+            & > a{
+                display: block;
+                width: 100%;
             }
             h3{
                 font-family: $font-text;
@@ -64,6 +71,8 @@ section{
                 transition: all 200ms ease-in;
             }
             img{
+                width: 100%;
+                max-width: 200px;
                 -webkit-transition: all 200ms ease-in;
                 -moz-transition: all 200ms ease-in;
                 -ms-transition: all 200ms ease-in;
@@ -90,7 +99,7 @@ section{
             opacity: 0.7;
         }
     }
-    &#nos-tarifs{
+    &#prices{
         background-color: #f6f6f6;
         padding: 0 60px 30px;
         h2{
