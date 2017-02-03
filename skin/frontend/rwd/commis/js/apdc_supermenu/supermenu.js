@@ -100,12 +100,15 @@
   function checkStickyHeader() {
     var stickyOffset = 60;
     if (screenWidth > mobileWidth) {
-      stickyOffset = 1;
+       stickyOffset = 1;
+       $('body').removeClass('sticky-header');
     }
-    if ($(window).scrollTop() > stickyOffset){  
-      $('body').addClass('sticky-header');
-    } else{
-      $('body').removeClass('sticky-header');
+    if (screenWidth < mobileWidth) {
+      if ($(window).scrollTop() > stickyOffset){  
+        $('body').addClass('sticky-header');
+      } else{
+        $('body').removeClass('sticky-header');
+      }
     }
   }
 

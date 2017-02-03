@@ -1785,7 +1785,9 @@ label {
 @media screen and (max-width: 770px) {
     .skip-cart .count {
         top: -45px;
-        right: -30px;
+        left: 30px;
+        right: 0px;
+        margin:0;
     }
 }
 
@@ -1795,12 +1797,6 @@ label {
 
 .skip-cart.no-count .count {
     display: none;
-}
-
-@media only screen and (max-width: 499px) {
-    .skip-cart .count {
-        margin-left: -12px;
-    }
 }
 
 @media only screen and (min-width: 771px) {

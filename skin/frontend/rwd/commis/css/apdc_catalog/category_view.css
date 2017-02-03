@@ -17,6 +17,7 @@
 .apdc-products-grid .product-image {
     margin-bottom: 5px;
     width:100%;
+    border:none;
 }
 .apdc-products-grid .product-image img {
   margin:0 auto;
@@ -32,7 +33,6 @@
   margin: 10px 5px;
 }
 .apdc-products-grid .product-image .product-labels li span {
-  border: 2px solid #d3d3d3;
   padding: 4px;
   display:block;
   background-color:#ffffff;
@@ -110,6 +110,11 @@
 .product-item-info .display-hover .product-availability .available {
   font-weight: bold;
 }
+
+.product-item-info .display-hover .product-availability .unavailable {
+  color:rgba(0,0,0,0.54);
+}
+
 .product-item-info .display-hover .product-availability .fa-check {
   color:#3ab64b;
 }

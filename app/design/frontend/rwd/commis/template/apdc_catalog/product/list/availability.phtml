@@ -19,8 +19,8 @@ if($this->getRequest()->getControllerName()=='category'){
             <?php $body .= '<td><i class="fa fa-check"></i></td>'; ?>
             <?php $classHeader = 'available'; ?>
         <?php else : ?>
-            <?php $body .= '<td>-</td>'; ?>
-            <?php $classHeader = ''; ?>
+            <?php $body .= '<td class="unavailable">-</td>'; ?>
+            <?php $classHeader = 'unavailable'; ?>
         <?php endif; ?>
         <?php $header .= '<th class="' . $classHeader . '">' . $weekDay['label'] . '</th>'; ?> 
     <?php endforeach; ?>

@@ -64,6 +64,11 @@ Mage_Checkout::Register and Checkout,S'enregistrer et régler ses achats,,
 Mage_Checkout::Ship to this address,Livraison à cette adresse,,
 Mage_Checkout::Ship to different address,Livraison à une autre adresse,,
 Mage_Catalog::Shop By,Filtrer par,,
+"Mage_Catalog::Please specify the product\'s required option(s)","Veuillez choisir une option pour pouvoir ajouter ce produit au panier"
+"Mage_Catalog::Please specify the product required option(s)","Veuillez choisir une option pour pouvoir ajouter ce produit au panier"
+"Mage_Catalog::Please specify the product\'s required option(s).","Veuillez choisir une option pour pouvoir ajouter ce produit au panier"
+"Mage_Catalog::Please specify the product required option(s).","Veuillez choisir une option pour pouvoir ajouter ce produit au panier"
+Please specify the product\'s required option(s).,fdsfds,,
 Amasty_Orderattr::This is a required field.,Ceci est un champ obligatoire,,
 Amasty_Deliverydate::Delivery Time Interval,Heure de livraison,,
 Amasty_Deliverydate::Delivery Date,Jour de livraison,,
