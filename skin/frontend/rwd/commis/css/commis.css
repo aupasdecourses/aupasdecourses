@@ -3662,7 +3662,7 @@ a.btn:hover {
 /*Qty & Comments column*/
 
 .cart-table .product-cart-actions .button {
-    margin: 10px 0 5px 5px;
+    margin: 0;
 }
 
 .product-cart-actions .qty {
@@ -3680,11 +3680,11 @@ a.btn:hover {
 }
 
 .product-cart-actions .loader {
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .product-cart-actions .ajax_loader_success i {
-    margin-top: 14px;
+    margin-top: 4px;
     margin-left: 0px;
 }
 

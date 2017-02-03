@@ -27,6 +27,7 @@
         <remove name="checkout.cart.methods.paypal_express.bottom"/>
         <remove name="checkout.cart.methods.paypaluk_express.bottom"/>
         <remove name="checkout.cart.crosssell"/>
+        <remove name="checkout.cart.coupon"/>
     	<reference name="head">
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
         </reference>
@@ -36,9 +37,6 @@
             <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
             <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
             <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/item/default.phtml</template></action>
-        </reference>
-        <reference name="checkout.cart.coupon">
-        	<action method="setTemplate"><template>apdc_cart/cart/coupon.phtml</template></action>
         </reference>
     	<reference name="checkout.cart.totals">
     		<action method="setTemplate"><template>apdc_cart/cart/totals.phtml</template></action>
