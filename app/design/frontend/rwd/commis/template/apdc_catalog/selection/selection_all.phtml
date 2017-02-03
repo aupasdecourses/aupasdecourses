@@ -36,7 +36,7 @@
                                             <h2 class="product-name"><?= $selection->getName()?></h2>
                                         </a>
                                         <div class="product-info-left product-info-column">
-
+                                        <p class="product-commercant-name"><?php echo $selection->getData('short_description'); ?></p>
                                             <p class="product-commercant-name">
                                                 <?php echo Mage::getResourceSingleton('catalog/product')
                                                         ->getAttribute('commercant')

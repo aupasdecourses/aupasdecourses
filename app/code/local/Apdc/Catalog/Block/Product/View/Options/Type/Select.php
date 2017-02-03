@@ -44,7 +44,7 @@ class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_B
                 ));
             if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN) {
                 $select->setName('options['.$_option->getid().']')
-                    ->addOption('', $this->__('-- Please Select --'));
+                    ->addOption('', $this->__('-- Choisissez une option --'));
             } else {
                 $select->setName('options['.$_option->getid().'][]');
                 $select->setClass('multiselect'.$require.' product-custom-option form-control');

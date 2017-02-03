@@ -93,7 +93,7 @@
   border: 1px solid #bbb;
   border-top: none;
   left: 0;
-  margin: 9px 0 0 -1px;
+  margin: 0px 0 0 -1px;
   padding: 0 9px 9px;
   position: absolute;
   right: -1px;
@@ -102,8 +102,8 @@
 }
 .product-item-info .display-hover .hover-title {
   font-weight:bold;
-  border-bottom:1px solid lightgrey;
-  margin-bottom:10px;
+  border-bottom:0;
+  margin-bottom:0px;
 
 
 }

@@ -641,7 +641,8 @@ h6,
 
 .product-options {
     border: none;
-    padding: 10px 0px 15px;
+    padding: 0;
+    margin:0;
 }
 
 .product-options .subtitle {
@@ -2135,6 +2136,10 @@ p.product-name a:hover,
 .products-grid .product-name a,
 .products-list .product-name a {
     font-weight: 500;
+}
+
+.product-commercant-name{
+    margin:0;
 }
 
 

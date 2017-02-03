@@ -1,7 +1,7 @@
 
 .apdc-add-to-cart-form .actions {
   position: absolute;
-  bottom: 0px;
+  bottom: 15px;
   width: 100%;
 }
 .apdc-add-to-cart-form .add-to-cart-wrapper .actions,
@@ -69,4 +69,13 @@
 }
 .action.update-product-options.disabled {
   opacity: 0.6;
+}
+
+.apdc-product-custom-options, .apdc-product-custom-options > dt{
+  margin:0;
+  padding:0;
+}
+
+.product-availability > table{
+  margin-bottom:5px;
 }
