@@ -15,15 +15,15 @@
       </h2>
     </div>
     <?php
-	    $com_id=liste_commercant_id("store");
+	    $com_id=getShops(-1,"store");
 		$orders=array();
 	    foreach($com_id as $store => $com_array){
 			foreach($com_array as $id => $array) {
 				$orders[$store][$id]=orders_fortheday($_GET['date'],$id);
 			}
 	    }
-	    $date=datetime_filter('date');
-	   	$stores=list_rootcatid("name");
+	    // $date=datetime_filter('date');
+	   	// $stores=list_rootcatid("name");
 	?>
 
 		<div class="row button_accueil">

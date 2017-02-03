@@ -1,85 +1,9 @@
-app:
-  resource: "@AppBundle/Controller/"
-  type:     annotation
+apdc_apdc:
+    resource: "@ApdcApdcBundle/Resources/config/routing.yml"
+    prefix:   /
 
-root:
-  path: '/'
-  defaults: { _controller:AppBundle:Default:index}
+oneup_uploader:
+    resource: . 
+    type: uploader
 
-user:
-  path:    /users
-  defaults:   { _controller: AppBundle:User:index}
 
-userLogin:
-  path:    /users/login
-  defaults:   { _controller: AppBundle:User:login}
-
-userLogout:
-  path:    /users/logout
-  defaults:   { _controller: AppBundle:User:logout}
-
-ordersIndex:
-  path:    /orders/
-  defaults:   { _controller: AppBundle:Orders:index}
-
-ordersOne:
-  path:    /orders/{id}
-  defaults:   { _controller: AppBundle:Orders:ordersOne}
-  requirements: { id:"[0-9]+" }
-
-ordersAll:
-  path:    /orders/{from}/{to}
-  defaults:  { _controller: AppBundle:Orders:ordersAll, to: null}
-  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
-merchantsIndex:
-  path:    /merchants/
-  defaults:   { _controller: AppBundle:Merchants:index}
-
-merchantsOne:
-  path:    /merchants/{id}/{from}/{to}
-  defaults:   { _controller: AppBundle:Merchants:merchantsOne, to: null, from: null}
-  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
-merchantsAll:
-  path:    /merchants/{from}/{to}
-  defaults:   { _controller: AppBundle:Merchants:merchantsAll, to: null}
-  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
-pickingIndex:
-  path:    /picking/
-  defaults:   { _controller: AppBundle:Picking:index}
-
-pickingAll:
-  path:    /picking/{from}
-  defaults:   { _controller: AppBundle:Picking:pickingAll}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
-
-shippingIndex:
-  path:    /shipping/
-  defaults:   { _controller: AppBundle:Shipping:index}
-
-shippingAll:
-  path:    /shipping/{from}
-  defaults:   { _controller: AppBundle:Shipping:shippingAll}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
-
-refundIndex:
-  path:   /refund/{from}
-  defaults:   { _controller: AppBundle:Refund:index, from: null}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
-
-refundUpload:
-  path: /refund/{id}/upload/
-  defaults: { _controller: AppBundle:Refund:refundUpload}
-  requirements: { id:"[0-9]+" }
-
-refundInput:
-  path: /refund/{id}/input/
-  defaults: { _controller: AppBundle:Refund:refundInput}
-  requirements: { id:"[0-9]+" }
-
-refundDigest:
-  path: /refund/{id}/digest/
-  defaults: { _controller: AppBundle:Refund:refundDigest}
-  requirements: { id:"[0-9]+" }

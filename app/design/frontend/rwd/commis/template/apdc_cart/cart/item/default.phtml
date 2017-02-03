@@ -49,11 +49,6 @@ $helper = Mage::helper('apdc_checkout');
                 </li>
             <?php endif ?>
 
-            <?php if ($this->helper('wishlist')->isAllowInCart() && $isVisibleProduct) : ?>
-                <li>
-                    <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move to wishlist'); ?></a>
-                </li>
-            <?php endif ?>
         </ul>
     </td>
 
@@ -70,7 +65,7 @@ $helper = Mage::helper('apdc_checkout');
         </h2>
 
         <div class="product-cart-sku">
-            <a href="<?php echo $helper->getCommercantname($this)[1]; ?>" alt="commerçant"><?php echo $helper->getCommercantname($this)[0]; ?></a>
+            <?php echo $helper->getCommercantname($this); ?>
         </div>
 
         <?php if ($_options = $this->getOptionList()):?>

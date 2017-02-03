@@ -8,7 +8,7 @@
       </div>  
       <div class="liste_commercant">
         <?php
-          $cat=liste_commercant_id("store");
+          $cat=getShops(-1,"store");
           $stores=list_rootcatid("name");
           foreach($cat as $store => $com):?>
               <h3><?php echo "Boutique ".$stores[$store];?></h3>

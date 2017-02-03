@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 		OpenSeadragon({
 			id: did,
-			prefixUrl: '/media/osd/',
+			prefixUrl: '/indi/web/img/osd/',
 			tileSources: {
 				type: 'image',
 				url: value

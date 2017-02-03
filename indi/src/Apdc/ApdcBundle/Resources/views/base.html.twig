@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			{% block title %}
+				Au Pas De Courses - Indi
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ path ('root')}}css/bootstrap.min.css" type="text/css" />
+			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+			<link rel="stylesheet" href="{{ path ('root')}}css/style.css" />
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+		{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	</head>
+	<body>
+		{% block menu %}
+		{% endblock %}
+		{% for message in app.session.flashbag.get('success') %}
+			<div class="alert alert-success" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('error') %}
+			<div class="alert alert-danger" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('warning') %}
+			<div class="alert alert-warning" role="alert">{{message}}</div>
+		{% endfor %}
+		{% for message in app.session.flashbag.get('info') %}
+			<div class="alert alert-info" role="alert">{{message}}</div>
+		{% endfor %}
+		{% block body %}
+		{% endblock %}
+		{% block javascripts %}
+			<script type="text/javascript" src="{{ path('root') }}js/jquery-3.1.1.min.js"></script>
+			<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/datepicker.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/input-compute.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/openseadragon.min.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
+		{% endblock %}
+	</body>
+</html>

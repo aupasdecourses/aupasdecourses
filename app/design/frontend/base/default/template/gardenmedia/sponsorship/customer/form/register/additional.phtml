@@ -37,7 +37,25 @@
         <label for="sponsor_code"><?php echo $this->__('Sponsor Code') ?></label>
         <p class="form-instructions"><?php echo $this->getInstruction(); ?></p>
         <div class="input-box">
-        <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text" value="<?php echo $this->getSponsorCodeValue(); ?>" />
+        <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text validate-sponsor-code" placeholder="<?= $this->__("Rentrez le code de votre parrain ici")?>" value="<?php echo $this->getSponsorCodeValue(); ?>" />
         </div>
     </div>
+    <script type="text/javascript">
+        Validation.add('validate-sponsor-code',"<?php echo $this->__('Sponsor Code is not valid'); ?>",function(v){
+            var value = v.trim();
+            document.getElementById('sponsor_code').value = value;
+            if (value !== '') {
+                var length = parseInt("<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_length'); ?>");
+                var start = "<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>";
+                var startReg = new RegExp("^<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>", "i");
+                console.log(value.replace(start, '').replace(/-/g, '').length === length);
+                if (value.replace(start, '').replace(/-/g, '').length === length && startReg.test(value)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        });
+    </script>
 </li>

@@ -47,15 +47,15 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shop_info=array();
         $current_cat=Mage::registry('current_category');
         $data = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', $current_cat->getId())->getFirstItem()->getData();
-     
+
         $shop_info["name"]=$data["name"];
         $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
         $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
         $shop_info["phone"]=$data["phone"];
-        $shop_info["website"]=$data["website"];;
+        $shop_info["website"]=$data["website"];
         $shop_info["closing_periods"]=$data["closing_periods"];;
         $shop_info["description"]=$current_cat->getDescription();
-        $shop_info["delivery_days"]="Du Mardi au Vendredi";
+        $shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
         $shop_info["image"]=$current_cat->getImageURL();
 
         $html="";

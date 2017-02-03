@@ -1,0 +1,74 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class ="container">
+
+	<h1> Adyen Form </h1>
+
+	<hr>
+	{{ form_start(form)}}
+	{% for order_id, fields in orders %}
+		{% if fields.pspreference == psp %}
+			<h4><b> Reference PSP <b></h4>
+				{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
+			<hr>
+			<h4><b> Montant à rembourser <b></h4>
+			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ (fields.amount-fields.total_refunded) ~ "€" }}</h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': (fields.amount-fields.total_refunded) } }) }}
+			<hr>
+			<h4> Montant déja remboursé </h4>
+				{{ fields.total_refunded ~ " € "}}
+			<hr>
+		{% endif %} 
+	{% endfor %}
+	{{form_errors(form)}}
+	{{ form_rest(form) }}	
+	{{form_end(form)}}
+
+
+
+		<hr>	
+		<h1> Historique de la commande </h1>
+		<br>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Increment_id (N° Commande)</th>
+					<th>Psp Ref de CHAQUE remboursement de cette commande</th>	
+					<th> Resultat </th>
+				</tr>
+			</thead>
+				{% for order_id, fields in orders %}
+					{% if fields.pspreference == psp %}
+						{% for key, value in event_data %}
+							{% if value.psp_reference == psp %}
+								<tr>
+									<td>{{ value.increment_id }}</td>
+									<td>{{ value.psp_reference }}</td>
+									<td>{{ value.adyen_event_result }}</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+			{% endfor %}		
+		</table>
+
+
+
+
+
+	{% for order_id, fields in orders %}
+			{% if fields.pspreference == psp %}
+				Pas assez d'infos sur la commande ? Clique ici :
+					<a href="https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference={{fields.pspreference}}&accountKey=MerchantAccount.AuPasDeCoursesFR" target="_blank">
+						<input type="button" class="btn btn-success" value="Go to Adyen"/>
+					</a>
+			{% endif %}
+	{% endfor %}
+
+</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

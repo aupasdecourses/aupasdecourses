@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+      <reference name="head">
+        <action method="addJs"><file>lib/jquery/jquery-1.10.2.min.js</file></action>
+        <action method="addJs"><file>lib/jquery/noconflict.js</file></action>
+        <action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
+        <action method="addItem"><type>skin_css</type><file>css/apdc_cart/item-comment.css</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/item-comment.js</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/sales-view-item-comment.js</file></action>
+      </reference>
+      <reference name="before_body_end">
+        <block type="apdc_popup/adminhtml_popup" name="apdc_popup_js" template="apdc/apdc_popup/popup_js.phtml" />
+      </reference>
+        <reference name="order_items">
+            <action method="setTemplate">
+              <template>apdc/apdc_cart/itemcomments/sales/order/view/items.phtml</template>
+        	</action>
+            <action method="addItemRender">
+            	<type>default</type>
+            	<block>adminhtml/sales_order_view_items_renderer_default</block>
+              <template>apdc/apdc_cart/itemcomments/sales/order/view/items/renderer/default.phtml</template>
+            </action>
+        </reference> 
+    </adminhtml_sales_order_view>
+
+    <adminhtml_apdcpopup_templateajax>
+      <reference name="content">
+        <block type="core/template" name="item_comment_popup_apdc_popup_child" template="apdc/apdc_cart/itemcomments/sales/order/create/items/comment/popup/content.phtml" />
+      </reference>
+    </adminhtml_apdcpopup_templateajax>
+
+    <apdc_order_create_with_item_comment>
+      <reference name="head">
+        <action method="addJs"><file>lib/jquery/jquery-1.10.2.min.js</file></action>
+        <action method="addJs"><file>lib/jquery/noconflict.js</file></action>
+        <action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
+        <action method="addItem"><type>skin_css</type><file>css/apdc_cart/item-comment.css</file></action>
+        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/item-comment.js</file></action>
+      </reference>
+      <reference name="before_body_end">
+        <block type="apdc_popup/adminhtml_popup" name="apdc_popup_js" template="apdc/apdc_popup/popup_js.phtml" />
+      </reference>
+      <reference name="items_grid">
+        <action method="setTemplate">
+          <file>apdc/apdc_cart/itemcomments/sales/order/create/items/grid.phtml</file>
+        </action>
+      </reference>
+    </apdc_order_create_with_item_comment>
+
+    <adminhtml_sales_order_create_load_block_items>
+      <update handle="apdc_order_create_with_item_comment" />
+    </adminhtml_sales_order_create_load_block_items>
+
+    <adminhtml_sales_order_create_index>
+      <update handle="apdc_order_create_with_item_comment" />
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_create_load_block_data>
+      <update handle="apdc_order_create_with_item_comment" />
+    </adminhtml_sales_order_create_load_block_data>
+</layout>

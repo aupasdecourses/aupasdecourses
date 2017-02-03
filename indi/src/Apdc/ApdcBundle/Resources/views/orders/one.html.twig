@@ -1,0 +1,96 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<h1> Commandes </h1><br/>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	{% for order_id, order in orders %}
+	<div id="{{ order_id }}" class="order">
+		<table class="table">
+			<tr>
+				<td style="width: 50%">
+					<table class="table">
+						<tr>
+							<td><b>Commande N°</b></td>
+							<td>{{ order_id }}</td>
+						</tr>
+						<tr>
+							<td><b>Client</b></td>
+							<td>{{ order.first_name ~" "~  order.last_name }}</td>
+						</tr>
+						<tr>
+							<td><b>Prise de Commande</b></td>
+							<td>{{ order.order_date }}</td>
+						</tr>
+						<tr>
+							<td><b>Date de Livraison</b></td>
+							<td>{{ order.delivery_date }}</td>
+						</tr>
+						<tr>
+							<td><b>Creneau de Livraison</b></td>
+							<td>{{ order.delivery_time }}</td>
+						</tr>
+						<tr>
+							<td><b>Remplacement équivalent</b></td>
+							<td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table class="table">
+						<tr>
+							<td><b>Adresse de Livraison</b></td>
+							<td><a href="https://www.google.com/maps?q={{order.address}}" target="_blanc">{{ order.address }}</a></td>
+						</tr>
+						<tr>
+							<td><b>Telephone</b></td>
+							<td>{{ order.phone }}</td>
+						</tr>
+						<tr>
+							<td><b>Batiment & Etage</b></td>
+							<td>Bat: {{ order.batiment }}, Etage: {{ order.etage }}</td>
+						</tr>
+						<tr>
+							<td><b>Codes porte</b></td>
+							<td>Code Porte 1: {{ order.codeporte1 }}, Code Porte 2: Code Porte 1: {{ order.codeporte2 }}</td>
+						</tr>
+						<tr>
+							<td><b>Infos Complémentaires</b></td>
+							<td>{{ order.info }}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-striped">
+			<tr>
+				<th>Produit</th>
+				<th>Quantite</th>
+				<th>Description</th>
+				<th>Prix</th>
+				<th>Total</th>
+				<th>Commentaire</th>
+			</tr>
+			{% for product in order.products %}
+			<tr>
+				<td>{{ product.nom }}</td>
+				<td>{{ product.quantite }}</td>
+				<td>{{ product.description }}</td>
+				<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
+				<td>{{ product.prix_total }}</td>
+				<td>{{ product.comment }}</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td><b>TOTAL</b></td>
+				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+				<td colspan="2"><b>{{ order.total_prix }}</b></td>
+			</tr>
+		</table>
+	</div>
+	{% endfor %}
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

@@ -1,0 +1,123 @@
+apdc_apdc_homepage:
+    path:     /
+    defaults: { _controller: ApdcApdcBundle:Default:index }
+    
+root:
+  path: '/'
+  defaults: { _controller: ApdcApdcBundle:Default:index}
+
+ordersIndex:
+  path:    /orders/
+  defaults:   { _controller: ApdcApdcBundle:Orders:index}
+
+ordersOne:
+  path:    /orders/{id}
+  defaults:   { _controller: ApdcApdcBundle:Orders:ordersOne}
+  requirements: { id:"[0-9-]+" }
+
+ordersAll:
+  path:    /orders/{from}/{to}
+  defaults:  { _controller: ApdcApdcBundle:Orders:ordersAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+merchantsIndex:
+  path:    /merchants/
+  defaults:   { _controller: ApdcApdcBundle:Merchants:index}
+
+merchantsOne:
+  path:    /merchants/{id}/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Merchants:merchantsOne, to: null, from: null}
+  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+merchantsAll:
+  path:    /merchants/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Merchants:merchantsAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+pickingIndex:
+  path:    /picking/
+  defaults:   { _controller: ApdcApdcBundle:Picking:index}
+
+pickingAll:
+  path:    /picking/{from}
+  defaults:   { _controller: ApdcApdcBundle:Picking:pickingAll}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+
+shippingIndex:
+  path:    /shipping/
+  defaults:   { _controller: ApdcApdcBundle:Shipping:index}
+
+shippingAll:
+  path:    /shipping/{from}
+  defaults:   { _controller: ApdcApdcBundle:Shipping:shippingAll}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+
+refundIndex:
+  path:   /refund/{from}
+  defaults:   { _controller: ApdcApdcBundle:Refund:index, from: null}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
+
+refundUpload:
+  path: /refund/{id}/upload/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundUpload}
+  requirements: { id:"[0-9]+" }
+
+refundInput:
+  path: /refund/{id}/input/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundInput}
+  requirements: { id:"[0-9]+" }
+
+refundDigest:
+  path: /refund/{id}/digest/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundDigest}
+  requirements: { id:"[0-9]+" }
+
+refundFinal:
+  path: /refund/{id}/final/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundFinal}
+  requirements: { id:"[0-9]+" }
+
+refundAdyenIndex:
+  path: /refund/adyenIndex/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
+
+refundAdyenForm:
+  path: /refund/{psp}/adyenForm/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
+  requirements: { psp:"[0-9]+" }
+
+billingIndex:
+  path: /billing/{from}/{to}
+  defaults: { _controller: ApdcApdcBundle:Billing:index, from: null, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
+toolProduct:
+  path: /tool/product/
+  defaults: { _controller: ApdcApdcBundle:Tool:product}
+
+toolMerchant:
+  path: /tool/merchant/
+  defaults: { _controller: ApdcApdcBundle:Tool:merchant}
+
+toolCategory:
+  path: /tool/category/
+  defaults: { _controller: ApdcApdcBundle:Tool:category}
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile

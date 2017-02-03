@@ -1,5 +1,5 @@
 .nav-bar {
-    background: #2494F2;
+    background: #3ab64b;
     padding: 0 30px;
 }
 
@@ -108,11 +108,11 @@
 
 #nav .level0.active > a {
     font-weight: 600;
-    background: #36a3ff;
+    background: #5fc16c;
 }
 
 #nav li.level0.over > a, #nav li.level0 > a:hover {
-    background: #36a3ff;
+    background: #5fc16c;
     color: #fff;
 }
 
@@ -163,7 +163,7 @@
 }
 
 #nav ul li a:hover {
-    background: #2391ed;
+    background: #5fc16c;
     color: #fff;
 }
 

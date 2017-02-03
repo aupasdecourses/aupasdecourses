@@ -9,6 +9,11 @@
 <layout version="0.1.0">
     <cms_index_index>
         <reference name="head">
+            <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
+            <action method="addItem"><rel>skin_css</rel><href>css/apdc_catalog/category_view.css</href></action>
+            <action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-add-to-cart.css</file></action>
+            <action method="addItem"><rel>skin_css</rel><href>css/apdc_home/selection_all.css</href></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
             <action method="addItem">
                 <rel>skin_css</rel>
                 <href>owl-carrousel/owl.carousel.css</href>
@@ -39,11 +44,22 @@
             <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-list"/>
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
-                <block type="apdc_catalog/selection" name="home-selection" template="apdc_catalog/selection/selection_all.phtml"></block>
+              <block type="apdc_catalog/selection" name="home-selection" template="apdc_catalog/selection/selection_all.phtml">
+                <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+              </block>
             </block>
             <!-- Reassurance -->
             <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
                 <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />
+            </block>
+            <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
+                <action method="setProductsCount"><count>10</count></action>
+                <action method="addPriceBlockType">
+                    <type>bundle</type>
+                    <block>bundle/catalog_product_price</block>
+                    <template>bundle/catalog/product/price.phtml</template>
+                </action>
+                <action method="setColumnCount"><count>6</count></action>
             </block>
         </reference>
     </cms_index_index>
