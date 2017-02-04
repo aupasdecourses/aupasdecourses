@@ -730,9 +730,32 @@ function data_clients($debut, $fin)
             $date_livraison = 'Non Dispo';
         }
 
+        //Coupon code info
+
+        $afs=array(
+            0=>'Non',
+            1=>'Pour les articles ...',
+            2=>'Pour la livraison ...',
+        );
+
+        if($order->getCouponCode()<>""){
+            $oCoupon = Mage::getSingleton('salesrule/coupon')->load($order->getCouponCode(), 'code');
+            $oRule = Mage::getSingleton('salesrule/rule')->load($oCoupon->getRuleId());
+            $coupondata="";
+            $coupondata.= "Règle n°".$oRule->getData('rule_id');
+            $coupondata.= ".\n Réduction de ".$oRule->getData('discount_amount');
+            $coupondata.=" de type ".$oRule->getData('simple_action');
+            $coupondata.=".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
+            $coupondata.=".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';            
+        } else {
+            $coupondata="";
+        }
+
+
         $incrementid = $order->getIncrementId();
         $nom_client = $order->getCustomerName().' '.$order->getCustomerId();
-        $coupon = $order->getCouponCode();
+        $couponcode = $order->getCouponCode();
+        $couponrule = $coupondata;
         $total_withship = $order->getGrandTotal();
         $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
         $total_withoutship = $total_withship - $frais_livraison;
@@ -747,7 +770,8 @@ function data_clients($debut, $fin)
             'Total Produit' => $total_withoutship,
             'Frais livraison' => $frais_livraison,
             'Total' => $total_withship,
-            'Coupon Code' => $coupon,
+            'Coupon Code' => $couponcode,
+            'Règle Coupon' => $couponrule,
             'Commentaires' => $comments,
         ]);
     }
