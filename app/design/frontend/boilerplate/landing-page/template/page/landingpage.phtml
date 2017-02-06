@@ -1,0 +1,242 @@
+<?php
+	$i = mt_rand(1, 17); // generate random number size of the array
+	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+	<?php echo $this->getChildHtml('head') ?>
+</head>
+<body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
+	<?php echo $this->getChildHtml('after_body_start') ?>
+	<header class="header" id="faites-vos-courses">
+        <div id="background_video_container">
+            <video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">
+                <source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
+                <!--<source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
+                <source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" />-->
+            </video>
+            <!--<img class="banner" src="<?php echo $this->getSkinUrl('dist/images/header/banner-home.jpg');?>" alt="Au pas de courses">-->
+        </div>
+        <div class="container">
+            <ul class="top-nav">
+                <li><a href="#" title="Aide">Aide</a></li>
+                <li><a href="#" class="button button-green" title="Connexion">Connexion</a></li>
+            </ul>
+            <div class="intro-section">
+                <img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
+                <h1 class="intro">Le bon, le goût, les produits.</h1>
+                <div class="col-md-5"></div>
+            </div>
+        </div>
+	</header>
+<section id="districts">
+	<div class="container">
+	    <div class="border-container"></div>
+		<div class="section-header">
+			<h2>Sélectionnez votre quartier</h2>
+			<div class="section-description">
+				 Au Pas De Courses vous livre dans les arrondissements suivants à Paris.
+			</div>
+		</div>
+		<div class="row">
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
+					<img src="<?php echo $this->getSkinUrl('dist/images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle"/>
+					<span class="button button-pink">Entrez</span>
+					<h3 class="package-heading main-color">Paris 3<sup>e</sup>, Paris 10<sup>e</sup>, Paris 11<sup>e</sup></h3>
+				</a>
+			</div>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>">
+					<img src="<?php echo $this->getSkinUrl('dist/images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle"/>
+					<span class="button button-pink">Entrez</span>
+					<h3 class="package-heading main-color">Paris 15<sup>e</sup></h3>
+				</a>
+			</div>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
+				    <img src="<?php echo $this->getSkinUrl('dist/images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle"/>
+				    <span class="button button-pink">Entrez</span>
+					<h3 class="package-heading main-color">Paris 13<sup>e</sup></h3>
+				</a>
+			</div>
+			<div class="button-district col-sm-12 col-md-3">
+				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>">
+				    <img src="<?php echo $this->getSkinUrl('dist/images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle"/>
+				    <span class="button button-pink">Entrez</span>
+					<h3 class="package-heading main-color">Paris 17<sup>e</sup>, Paris 18<sup>e</sup>, Paris 9<sup>e</sup></h3>
+				</a>
+			</div>
+		</div>
+		<div class="row text-center">
+		    <h2 class="soon">Bientôt chez vous</h2>
+			<a class="button button-green" href="#" title="Restez informés">Restez informés</a>
+		</div>
+	</div>
+</section>
+<div class="container">
+    <div class="row">
+        <section class="packages col-md-6" id="concept">
+            <div class="section-header">
+                <h2>Comment ça marche ?</h2>
+                <div class="section-description">
+                     Une plateforme pour commander et se faire livrer des produits frais et artisanaux de commerces de bouche locaux.
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Commandez en ligne chez les commerçants de votre quartier.</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/shops.png')?>" alt="Les commerçants préparent votre commande">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Les commerçants préparent votre commande</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/cargobike.png')?>" alt="On vous livre le tout chez vous, en une fois">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">On vous livre le tout chez vous, en une fois</p>
+                </div>
+            </div>
+        </section>
+        <section class="packages col-md-6" id="prices">
+            <div class="section-header">
+                <h2>Combien cela coûte ?</h2>
+                <div class="section-description">
+                     La livraison vous coûte
+                </div>
+                <div>
+                    <ul>
+                        <li class="price-9"><span>9 €</span><br> Commande &#60;45 €</li>
+                        <li class="price-6"><span>6 €</span><br> Commande &#60;90 €</li>
+                        <li class="price-3"><span>3 €</span><br> Commande &#62;90 €</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/price.png')?>" alt="Vous commandez au même prix qu'en magasin">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Vous commandez au même prix qu'en magasin</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/weight.png')?>" alt="Nous vous remboursons les écarts de poids">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Nous vous remboursons les écarts de poids</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/order.png')?>" alt="Vous payez une seule livraison quel que soit le nombre de commerçants">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Vous payez une seule livraison quel que soit le nombre de commerçants</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<section id="missions" class="container-fluid">
+    <h2>Nos missions et nos valeurs</h2>
+    <div class="row">
+        <div class="col-md-3 item-mission mission-1">
+            <div>
+                <h3>Une éthique</h3>
+                <p>Un fonctionnement raisonné grâce à des livreurs salariés, formés et professionnels.</p>
+            </div>
+        </div>
+        <div class="col-md-6 item-mission mission-2">
+            <div>
+                <h3>Local avant tout !</h3>
+                <p>Le soutien des artisans locaux et indépendants, garants d'un savoir-faire et de produits de qualité.</p>
+            </div>
+        </div>
+        <div class="col-md-3 item-mission mission-3">
+            <div>
+                <h3>Proche de vous</h3>
+                <p>Une livraison de proximité, organisée en tournée et limitée à votre quartier pour offrir une livraison verte et favoriser la proximité.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cards" class="container">
+    <div class="row">
+        <div class="col-md-5 clients">
+            <img src="<?php echo $this->getSkinUrl('dist/images/img-clients.jpg')?>" alt="Nos clients">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet impedit facilis quo blanditiis doloremque illum reprehenderit vero praesentium beatae corporis rerum, numquam, labore, temporibus. Eligendi quis placeat voluptates vel voluptatum.</p>
+        </div>
+        <div class="col-md-5 col-md-offset-2 partners">
+            <img src="<?php echo $this->getSkinUrl('dist/images/img-commercants.jpg')?>" alt="Nos commerçants partenaires">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat possimus est deserunt, praesentium alias minus cupiditate, reiciendis quia distinctio cum quidem suscipit at et adipisci, molestiae mollitia incidunt maiores hic.</p>
+        </div>
+    </div>
+</section>
+
+<section id="advantages">
+    <div class="container">
+        <div class="row text-center">
+            <div class="item col-md-3 col-sm-6 col-xs-6">
+                <img src="<?php echo $this->getSkinUrl('dist/images/picto-choix.png')?>" alt="Large choix au même prix que votre supermarché">
+                <p>Large choix au même prix que votre supermarché</p>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6">
+                <img src="<?php echo $this->getSkinUrl('dist/images/picto-livraison.png')?>" alt="Livraison le lendemain de 7h à 22h30">
+                <p>Livraison le lendemain de 7h à 22h30</p>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6">
+                <img src="<?php echo $this->getSkinUrl('dist/images/picto-fraicheur.png')?>" alt="Qualité et fraîcheur de la commande à la livraison">
+                <p>Qualité et fraîcheur de la commande à la livraison</p>
+            </div>
+            <div class="item col-md-3 col-sm-6 col-xs-6">
+                <img src="<?php echo $this->getSkinUrl('dist/images/picto-temps.png')?>" alt="Gagnez du temps et maîtrisez votre budget">
+                <p>Gagnez du temps et maîtrisez votre budget</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p class="copyright text-center">
+                    ©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.
+                </p>
+                <ul class="nav text-center" role="navigation">
+                    <li><a href="#" title="Mentions légales">Mentions légales</a></li>
+                    <li><a href="#" title="Conditions générales d'utilisation">Conditions générales d'utilisation</a></li>
+                    <li><a href="#" title="Tarifs">Tarifs</a></li>
+                    <li><a href="#" title="Blog">Blog</a></li>
+                    <li><a href="#" title="Contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+	<?php echo $this->getChildHtml('footer') ?>
+	<?php echo $this->getChildHtml('before_body_end') ?>
+</body>
+</html>
