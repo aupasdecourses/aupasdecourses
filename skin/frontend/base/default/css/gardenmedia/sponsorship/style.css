@@ -114,6 +114,7 @@ table#my-godchilds-table tr td {
 }
 #sponsorship-dashboard #sponsorship-share ul li .btn-social-icon.btn-twitter {
   background-color:#55acee;
+  padding-top: 8px;
 }
 #sponsorship-dashboard #sponsorship-share ul li .btn-social-icon.btn-twitter:hover {
   background-color:#2e8ab8;
