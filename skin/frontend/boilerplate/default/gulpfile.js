@@ -120,9 +120,6 @@ gulp.task('watch', function() {
   // Watch image files
   gulp.watch('images/**/*', ['images']);
 
-  // Watch fonts
-  gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
-
 });
 
 gulp.task('default', [ 'css', 'sass', 'js', 'images', 'fonts', 'watch' ] );
