@@ -2,8 +2,8 @@ function ApdcPopup(options) {
   this.id = options.id; // eg : product-quick-view
   this.ajaxUrl = apdcPopupAjaxUrl; // see apdc_popup/popup_js.phtml
 
-  if (!(/-popup$/.test(this.id))) {
-    this.id = this.id + '-popup';
+  if (!(/_popup$/.test(this.id))) {
+    this.id = this.id + '_popup';
   }
   if (typeof(options.ajaxUrl) !== 'undefined') {
     this.ajaxUrl = options.ajaxUrl;
@@ -26,6 +26,8 @@ ApdcPopup.prototype.getTemplate = function() {
       jQuery('body').append(response.html);
       window.setTimeout(function() {
         self.initActions();
+        console.log(self.id + '_apdc_popup_template_received');
+        jQuery(document).trigger(self.id + '_apdc_popup_template_received', [self, response]);
       }, 0);
     }
   })
