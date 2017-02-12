@@ -27,7 +27,7 @@
     font-size: 13px;
     font-weight: 500;
     text-transform: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: auto;
     bottom: auto;
@@ -61,7 +61,7 @@
 
 
 #header-cart .mini-cart-bottom {
-    position: fixed;
+    position: absolute;
     bottom:0;
     left: auto;
     right: 0px!important;
