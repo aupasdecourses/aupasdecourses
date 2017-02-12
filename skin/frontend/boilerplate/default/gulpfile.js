@@ -111,18 +111,20 @@ gulp.task('fonts', function() {
 // Watch
 gulp.task('watch', function() {
 
-  // Watch .scss files
-  gulp.watch('sass/**/*.scss', ['sass']);
+  // // Watch .scss files
+  // gulp.watch('sass/**/*.scss', ['sass']);
 
-  // Watch .js files
-  gulp.watch('js/**/*.js', ['js']);
+  // // Watch .js files
+  // gulp.watch('js/**/*.js', ['js']);
 
-  // Watch image files
-  gulp.watch('images/**/*', ['images']);
+  // // Watch image files
+  // gulp.watch('images/**/*', ['images']);
 
-  // Watch fonts
-  gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
+  // // Watch fonts
+  // gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
 });
+
+gulp.task('process', [ 'css', 'sass', 'js', 'images', 'fonts' ] );
 
 gulp.task('default', [ 'css', 'sass', 'js', 'images', 'fonts', 'watch' ] );

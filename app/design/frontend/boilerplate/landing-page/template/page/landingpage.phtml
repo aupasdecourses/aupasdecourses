@@ -1,6 +1,7 @@
 <?php
 	$i = mt_rand(1, 17); // generate random number size of the array
 	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+    $_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -12,16 +13,20 @@
 	<header class="header" id="faites-vos-courses">
         <div id="background_video_container">
             <video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">
-                <source src="<?php echo $this->getSkinUrl('media/demo.mp4');?>" type="video/mp4" />
-                <!--<source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
-                <source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" />-->
+                <source src="<?php echo $this->getSkinUrl('media/commercants.mp4');?>" type="video/mp4" />
+                <!--<source src="<?php echo $this->getSkinUrl('media/commercants.ogv');?>" type="video/ogg" />
+                <source src="<?php echo $this->getSkinUrl('media/commercants.webm');?>" type="video/webm" />-->
             </video>
             <!--<img class="banner" src="<?php echo $this->getSkinUrl('dist/images/header/banner-home.jpg');?>" alt="Au pas de courses">-->
         </div>
         <div class="container">
             <ul class="top-nav">
                 <li><a href="#" title="Aide">Aide</a></li>
-                <li><a href="#" class="button button-green" title="Connexion">Connexion</a></li>
+                <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                    <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
+                <?php else: ?>
+                    <li><a href="<?= $_helper->getCustomerWebsite()?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                <?php endif ?>
             </ul>
             <div class="intro-section">
                 <img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">

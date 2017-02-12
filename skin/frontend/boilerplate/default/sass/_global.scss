@@ -36,6 +36,15 @@ p{
     -webkit-font-smoothing: subpixel-antialiased;
 }
 
+a{
+    color:$color-main-green;
+
+    &:hover{
+        color:$color-second-green;
+        text-decoration:none;
+    }
+}
+
 .button{
     position: relative;
     display: inline-block;
