@@ -70,3 +70,8 @@ ApdcPopup.prototype.showLoading = function() {
 ApdcPopup.prototype.hideLoading = function() {
   jQuery('#' + this.id + ' .apdc-popup-loading').hide();
 };
+
+//Remove validation advice that prevents form to be submitted
+jQuery(document).on('click','input',function(e){
+    jQuery('.validation-advice').remove();
+});

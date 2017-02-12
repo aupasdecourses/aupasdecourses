@@ -38,7 +38,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
 
         $this->loadLayout();
 
-        $this->getLayout()->removeOutputBlock('root')->addOutputBlock('head_popup')->addOutputBlock('content');
+        $this->getLayout()->removeOutputBlock('root')->addOutputBlock('content');
         $this->_initLayoutMessages('core/session');
         $this->_initLayoutMessages('customer/session');
         $this->renderLayout();

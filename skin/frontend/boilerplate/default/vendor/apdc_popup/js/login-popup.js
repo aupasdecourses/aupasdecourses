@@ -1,28 +1,30 @@
 jQuery(document).ready(function() {
-    apdcLoginPopup = new ApdcPopup({
-        id: 'login-form'
-    });
+    if (typeof(apdcLoginPopup) === 'undefined') {
+      apdcLoginPopup = new ApdcPopup({
+          id: 'login-form'
+      });
+    }
 
-    jQuery('#account-login').on('click', function(e) {
+    jQuery(document).on('click', '#account-login',function(e) {
         e.preventDefault();
         e.stopPropagation();
         apdcLoginPopup.showLoading();
         showLoginForm(this,'apdc_login_view');
     });
 
-    jQuery('#login-form').on('submit', function(e) {
+    jQuery(document).on('submit','#login-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
         processLoginForm(this);
     });
 
-    jQuery('#forgot-password').on('click', function(e) {
+    jQuery(document).on('click','#forgot-password', function(e) {
         e.preventDefault();
         e.stopPropagation();
         showLoginForm(this, 'apdc_forgotpassword_view');
     });
 
-    jQuery('#password-form').on('submit', function(e) {
+    jQuery(document).on('submit','#password-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
         processLoginForm(this);
@@ -61,7 +63,8 @@ jQuery(document).ready(function() {
         var ajaxUrl = jQuery(elt).attr('action');
         var data = new FormData(jQuery(elt)[0]);
         data.append("isAjax", 1);
-
+        jQuery(elt).children("input").attr("disabled", true);
+        jQuery(elt).children("button").attr("disabled", true).removeClass("button-green");
         jQuery.ajax({
                 url: ajaxUrl,
                 data: data,

@@ -114,9 +114,6 @@
     </default>
 
     <apdc_login_view>
-      <block type="page/html_head" name="head_popup">
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
-      </block>
       <reference name="content">
             <block type="customer/form_login" name="customer_login" template="page/loginmodal.phtml">
                 <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
@@ -128,9 +125,6 @@
     </apdc_login_view>
 
     <apdc_forgotpassword_view>
-      <block type="page/html_head" name="head_popup">
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
-      </block>
       <reference name="content">
             <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
         </reference>

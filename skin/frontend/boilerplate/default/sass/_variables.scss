@@ -1,7 +1,7 @@
 // FONTS
 $font-title:    'Open Sans', sans-serif;
-$font-text:     'Raleway', sans-serif;
-
+$font-text:     'Open Sans', sans-serif;
+$f-size-body: 	16px;
 
 // COLORS
 $color-main-green:         #3ab64b;  // vert principal
@@ -11,3 +11,25 @@ $color-main-pink:          #f55d5b;  // rose
 $color-black:              #000;     // noir
 $color-dark-blue:          #1c50a5;  // bleu foncé
 $color-blue:               #3a94d5;  // bleu
+
+// MESSAGES - NOTIFICATION
+
+$c-danger: #DF280A;
+$c-danger-background: #FAEBE7;
+
+$c-success: #11B400;
+$c-success-background: #EFF5EA;
+
+$c-warn: #E26703;
+$c-warn-background: #F9EBE6;
+
+//SPACING
+
+$gap: 10px;
+
+// MODULE (GENERIC)
+
+$c-module-background: #F4F4F4;
+$c-module-background-hover: shade($c-module-background, 3%);
+$c-module-background-secondary: #EAF8FF;
+$c-module-background-dark: #AAAAAA;
