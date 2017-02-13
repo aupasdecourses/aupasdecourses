@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Apdc\ApdcBundle\Entity\Payout;
+use Apdc\ApdcBundle\Form\PayoutType;
+
 class BillingController extends Controller
 {
 	public function indexAction(Request $request, $from, $to)
@@ -44,6 +47,42 @@ class BillingController extends Controller
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
 			'forms'	=> [ $form_fromto->createView() ],
 			'orders' => $orders
+		]);
+	}
+
+	
+	public function payoutAction(Request $request)
+	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
+		$adyen = $this->container->get('apdc_apdc.adyen');
+
+		$payout = new Payout();
+		$form = $this->createForm(PayoutType::class, $payout);
+
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+		{
+			try {
+				$value				= $form['value']->getData();
+				$iban				= $form['iban']->getData();
+				$ownerName			= $form['ownerName']->getData();
+				$reference			= $form['reference']->getData();
+				$shopperEmail		= $form['shopperEmail']->getData();
+				$shopperReference	= $form['shopperReference']->getData();
+
+				$adyen->payout($value, $iban, $ownerName, $reference, $shopperEmail, $shopperReference);
+
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+				return $this->redirectToRoute('root');
+		}
+
+		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
+			'form' => $form->createView(),
 		]);
 	}
 }

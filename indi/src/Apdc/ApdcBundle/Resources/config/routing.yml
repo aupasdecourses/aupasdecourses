@@ -90,6 +90,10 @@ billingIndex:
   path: /billing/{from}/{to}
   defaults: { _controller: ApdcApdcBundle:Billing:index, from: null, to: null}
   requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+      
+billingPayoutIndex:
+  path: /billing/payout/
+  defaults: { _controller: ApdcApdcBundle:Billing:payout }
 
 toolProduct:
   path: /tool/product/

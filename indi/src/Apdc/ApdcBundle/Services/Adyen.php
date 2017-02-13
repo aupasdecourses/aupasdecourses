@@ -85,7 +85,7 @@ class Adyen {
 		return($refundDecoded['response']); 
 	}
 
-	public function payout($value, $iban, $ownerName, $merchantAccount, $reference, $shopperEmail, $shopperReference)  
+	public function payout($value, $iban, $ownerName, $reference, $shopperEmail, $shopperReference)  
 	{
 		$storeTable = array(
 			"amount" => array(
@@ -97,7 +97,7 @@ class Adyen {
 				"ownerName" => $ownerName,
 				"countryCode" => "FR"
 			),
-			"merchantAccount" => $merchantAccount,
+			"merchantAccount" => "AuPasDeCoursesFR",
 			"recurring" => array(
 				"contract" => "PAYOUT"
 			),
@@ -119,7 +119,7 @@ class Adyen {
 
 		/* CONFIRMATION DU PAYOUT */
 		$jsonDecoded = json_decode($storeResult, true);
-		$jsonDecoded["merchantAccount"] = $merchantAccount;
+		$jsonDecoded["merchantAccount"] = "AuPasDeCoursesFR";
 		$jsonDecoded["originalReference"] = $jsonDecoded["pspReference"];
 		unset($jsonDecoded["pspReference"]);
 		unset($jsonDecoded["resultCode"]);
