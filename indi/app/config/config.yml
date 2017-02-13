@@ -40,6 +40,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'bootstrap_3_layout.html.twig'
+    globals:
+        adyen_platform_first_part:  %adyen_platform_first_part%
+        adyen_platform_second_part: %adyen_platform_second_part%
 
 # Doctrine Configuration
 doctrine:

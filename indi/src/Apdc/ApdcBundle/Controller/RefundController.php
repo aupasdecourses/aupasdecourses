@@ -392,7 +392,6 @@ class RefundController extends Controller
         }
 
         $adyen = $this->container->get('apdc_apdc.adyen');
-        $logs = $this->container->get('apdc_apdc.adyenlogs');
         $mage = $this->container->get('apdc_apdc.magento');
 
         $order = $mage->getRefunds($id);
@@ -450,7 +449,6 @@ class RefundController extends Controller
         }
 
         $adyen = $this->container->get('apdc_apdc.adyen');
-        $logs = $this->container->get('apdc_apdc.adyenlogs');
 
         $mage = $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenPaymentByPsp();
