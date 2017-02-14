@@ -51,8 +51,24 @@ class BillingController extends Controller
 	}
 
 	
-	public function payoutAction(Request $request)
+	public function payoutIndexAction()
 	{
+		if(!$this->isGranted('ROLE_ADMIN'))
+		{
+			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+		$payout_list = $mage->getAdyenPayoutByIban();
+
+		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
+			'payout_list'	=> $payout_list,
+		]);
+	}
+
+	public function payoutSubmitAction(Request $request)
+	{
+
 		if(!$this->isGranted('ROLE_ADMIN'))
 		{
 			return $this->redirectToRoute('root');
@@ -78,11 +94,11 @@ class BillingController extends Controller
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
-				return $this->redirectToRoute('root');
+			return $this->redirectToRoute('billingPayoutIndex');
 		}
 
-		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
+		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',			[
 			'form' => $form->createView(),
-		]);
+			]);
 	}
 }

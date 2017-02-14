@@ -513,8 +513,9 @@ class Magento
         return $rsl;
     }
 
-    /* Affichage du tableau de remboursement de BACK-UP */ public function getAdyenOrderPaymentTable()
- {
+	/* Affichage du tableau de remboursement de BACK-UP */ 
+	public function getAdyenOrderPaymentTable()
+	{
      $collection = \Mage::getModel('adyen/order_payment')->getCollection();
      $ref = [];
      $cpt = 1;
@@ -527,7 +528,7 @@ class Magento
      }
 
      return $ref;
- }
+	}
 
     /* Formulaires de soumission de remboursement à Adyen*/
     public function getAdyenPaymentByPsp()
@@ -563,5 +564,19 @@ class Magento
         }
 
         return $ref;
-    }
+	}
+
+	public function getAdyenPayoutByIban()
+	{
+		$collection = \Mage::getModel('adyen/order_payout')->getCollection();
+		$ref = [];
+		$cpt = 1;
+		foreach($collection as $fields) {
+			$ref[$fields->getData('iban')][$cpt]['iban']	= $fields->getData('iban');
+			$ref[$fields->getData('iban')][$cpt]['value']	= $fields->getData('value');
+			$cpt++;
+		}
+
+		return $ref;
+	}
 }

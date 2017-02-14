@@ -93,7 +93,11 @@ billingIndex:
       
 billingPayoutIndex:
   path: /billing/payout/
-  defaults: { _controller: ApdcApdcBundle:Billing:payout }
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
+
+billingPayoutSubmit:
+  path: /billing/payout/submit/
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
 
 toolProduct:
   path: /tool/product/

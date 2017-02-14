@@ -4,12 +4,15 @@
 {% block body %}
 <div class="container">
 	<h1> Payout Index </h1><br>
-
-	{{ form_start(form) }}
-	{{ form_errors(form) }}
-	{{ form_rest(form) }}
-	{{ form_end(form) }}
-
-
-
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<div class="button_accueil">
+				<a href="{{ path ('billingPayoutSubmit') }}"><button type="button" class="btn btn-default btn-lg btn-block">Submit Payout</button></a>
+			</div>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
