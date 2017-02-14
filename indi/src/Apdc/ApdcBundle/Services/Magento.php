@@ -68,8 +68,9 @@ class Magento
             }
 
             return false;
-         });
-
+		});
+		/* Sort associative array in ascending order, according to the VALUE */
+		asort($commercants);
         return $commercants;
     }
 

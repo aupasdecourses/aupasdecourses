@@ -13,6 +13,23 @@
 		</div>
 		<div class="col-md-4"></div>
 	</div>
+
+	<h1>Historique des payouts</h1>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th>IBAN</th>
+				<th>Owner Name</th>
+				<th>Value</th>
+				<th>Reference</th>
+			</tr>
+		</thead>
+			{{ dump() }}
+			{% for payout_id, fields in payout_list %}
+
+			{% endfor %}
+	</table>
+
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
