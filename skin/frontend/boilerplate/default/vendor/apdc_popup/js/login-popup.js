@@ -1,3 +1,7 @@
+Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
+        return !Validation.get('IsEmpty').test(v);
+});
+
 jQuery(document).ready(function() {
     if (typeof(apdcLoginPopup) === 'undefined') {
       apdcLoginPopup = new ApdcPopup({

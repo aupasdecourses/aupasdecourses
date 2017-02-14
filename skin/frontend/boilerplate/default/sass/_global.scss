@@ -11,6 +11,7 @@ h1, h2, h3, h4, h5{
     font-weight: normal;
     text-align: center;
     font-smoothing: antialiased;
+    text-transform:uppercase;
     -moz-font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -18,7 +19,7 @@ h1, h2, h3, h4, h5{
 h1, h2{
     font-size: 2.25rem;
     font-weight: 700;
-    letter-spacing: 1.125px;
+    letter-spacing: 1px;
 }
 h2{
     margin: 50px auto 10px;
@@ -29,7 +30,8 @@ p{
     font-weight: normal;
     font-size: 0.875rem;
     line-height: 1.5em;
-    color: #000;
+    color: $color-black;
+    opacity: $opacity-main-black-oncolor;
     font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;

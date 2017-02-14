@@ -6,15 +6,12 @@
     background: white;
     opacity: 1;
     filter: alpha(opacity=100);
-    -webkit-visibility: visible;
     position: fixed;
     top: 50%;
     z-index: 10000;
     left: 50%;
     min-height: 100px;
     text-align: center;
-    transform: translateX(-50%) translateY(-50%) scale(0);
-    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
     border-radius: 10px;
     border: 1px solid lightgrey;
     width: 500px;

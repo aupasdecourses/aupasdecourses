@@ -31,7 +31,11 @@ var
   concat       = require('gulp-concat'),
   cache        = require('gulp-cache');
 
-const autoprefixer = require('gulp-autoprefixer');
+const
+  autoprefixer = require('gulp-autoprefixer'),
+  imagemin = require('gulp-imagemin'),
+  csscomb      = require('gulp-csscomb'),
+  cssbeautify  = require('gulp-cssbeautify');
 
 var config = {
 
@@ -60,6 +64,8 @@ gulp.task('css', function () {
 gulp.task('sass', function () {
   return gulp.src('./sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
+    .pipe(csscomb())
+    .pipe(cssbeautify({indent: '  '}))
     .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
@@ -94,7 +100,8 @@ gulp.task('js', function() {
 // Images
 gulp.task('images', function() {
   return gulp
-    .src('images/**/*')
+    .src('images/**/*.{png,jpg,jpeg,gif,svg}')
+    .pipe(imagemin())
     .pipe(gulp.dest('dist/images'));
 });
 
