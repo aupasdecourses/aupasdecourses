@@ -11335,7 +11335,7 @@ h2 {
 }
 
 h2 {
-  margin: 50px auto 10px;
+  margin: 0 auto 10px;
 }
 
 p {
@@ -11595,12 +11595,17 @@ section > .container {
   background-color: #fff;
 }
 
+section .section-header {
+  margin-bottom: 65px;
+  padding-top: 50px;
+}
+
 section#districts > .container {
   padding-bottom: 120px;
   background: url(../images/picto/bandeau.png), #fff;
   background-repeat: no-repeat;
-  background-position: left bottom;
-  background-size: 100%;
+  background-position: center bottom;
+  background-size: auto;
 }
 
 section#districts > .container h2 {
@@ -11611,6 +11616,7 @@ section#districts > .container h2.soon {
   font-family: 'Open Sans', sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
+  margin-top: 50px;
   color: rgba(0, 0, 0, .54);
 }
 
@@ -11690,10 +11696,6 @@ section#concept h2 {
   color: #fff;
 }
 
-section#concept .section-header {
-  margin-bottom: 65px;
-}
-
 section#concept .section-description {
   opacity: .7;
   color: #fff;
@@ -11709,13 +11711,21 @@ section#prices h2 {
   color: #000;
 }
 
-section#prices .section-header {
-  margin-bottom: 20px;
-}
-
 section#prices .item p {
   opacity: .87;
   color: #000;
+}
+
+section#prices .price-tag {
+  font-size: .875rem;
+  display: inline-block;
+  text-align: center;
+  opacity: .54;
+  color: #000;
+}
+
+section#prices .price-tag span {
+  font-size: 2.125rem;
 }
 
 section.packages h2 {
@@ -11727,19 +11737,6 @@ section.packages ul {
   padding: 0;
   list-style-type: none;
   text-align: center;
-}
-
-section.packages ul li {
-  font-size: .875rem;
-  display: inline-block;
-  max-width: 30%;
-  margin: 0 3%;
-  opacity: .54;
-  color: #000;
-}
-
-section.packages ul li span {
-  font-size: 2.125rem;
 }
 
 section.packages .item {
@@ -11773,6 +11770,7 @@ section#missions .item-mission {
 }
 
 section#missions .item-mission > div {
+  width: 100%;
   margin: auto;
   margin-top: 260px;
 }
@@ -11947,6 +11945,10 @@ footer .button {
   footer .social-icons {
     text-align: center;
   }
+
+  .item-mission > div {
+    margin-top: auto !important;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -11959,8 +11961,8 @@ footer .button {
   }
 
   .cms-home-main #background_video_container {
-    height: 440px;
-    background: url(../images/banner-home.jpg) no-repeat;
+    height: 600px;
+    background: url(../images/header/7.jpg) no-repeat;
     background-position: center;
     background-size: cover;
   }
@@ -11973,6 +11975,10 @@ footer .button {
 @media screen and (max-width: 620px) {
   footer .copyright {
     margin-bottom: 20px;
+  }
+
+  #login-form-popup-container {
+    width: 90% !important;
   }
 }
 
