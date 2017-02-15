@@ -14,55 +14,5 @@
                 </rewrite>
             </customer>
         </blocks>
-        <models>
-            <apdccustomer>
-                <class>Apdc_Customer_Model</class>
-            </apdccustomer>
-        </models>
-        <helpers>
-            <apdccustomer>
-                <class>Apdc_Customer_Helper</class>
-            </apdccustomer>
-        </helpers>
     </global>
-    <frontend>
-        <events>
-            <controller_action_postdispatch_customer_account_createPost>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>controllerActionPostdispatchCreatePostAction</method>
-                    </apdc_customer>
-                </observers>
-            </controller_action_postdispatch_customer_account_createPost>
-            <customer_register_success>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>customerRegisterSuccess</method>
-                    </apdc_customer>
-                </observers>
-            </customer_register_success>
-            <customer_registration_is_allowed>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>customerRegistrationAllowed</method>
-                    </apdc_customer>
-                </observers>
-            </customer_registration_is_allowed>
-            <customer_login>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>customerLoggedIn</method>
-                    </apdc_customer>
-                </observers>
-            </customer_login>
-        </events>
-    </frontend>
 </config>
