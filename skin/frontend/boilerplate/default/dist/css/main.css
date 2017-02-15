@@ -11718,7 +11718,6 @@ section#prices .item p {
 
 section#prices .price-tag {
   font-size: .875rem;
-  display: inline-block;
   text-align: center;
   opacity: .54;
   color: #000;
