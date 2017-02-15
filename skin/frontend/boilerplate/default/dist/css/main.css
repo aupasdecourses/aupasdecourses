@@ -11719,7 +11719,7 @@ section#prices .item p {
 section#prices .price-tag {
   font-size: .875rem;
   text-align: center;
-  opacity: .54;
+  opacity: .87;
   color: #000;
 }
 
@@ -11841,7 +11841,7 @@ section#cards .partners {
 }
 
 section#advantages {
-  padding: 40px 0;
+  padding: 20px 0;
   border-top: 1px solid #eee;
 }
 
