@@ -57,9 +57,9 @@ class BillingController extends Controller
 		{
 			return $this->redirectToRoute('root');
 		}
-
-		$mage = $this->container->get('apdc_apdc.magento');
-		$payout_list = $mage->getAdyenPayoutByIban();
+	
+		$repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
+		$payout_list = $repository->findAll();
 
 		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
 			'payout_list'	=> $payout_list,
@@ -81,6 +81,10 @@ class BillingController extends Controller
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
 		{
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($payout);
+			$em->flush();
+
 			try {
 				$value				= $form['value']->getData();
 				$iban				= $form['iban']->getData();

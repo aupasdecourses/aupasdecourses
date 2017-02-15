@@ -5,13 +5,12 @@
 <div class="container">
 	<h1> Payout Index </h1><br>
 	<div class="row">
-		<div class="col-md-4"></div>
 		<div class="col-md-4">
 			<div class="button_accueil">
 				<a href="{{ path ('billingPayoutSubmit') }}"><button type="button" class="btn btn-default btn-lg btn-block">Submit Payout</button></a>
 			</div>
 		</div>
-		<div class="col-md-4"></div>
+		<div class="col-md-8"></div>
 	</div>
 
 	<h1>Historique des payouts</h1>
@@ -22,12 +21,23 @@
 				<th>Owner Name</th>
 				<th>Value</th>
 				<th>Reference</th>
+				<th>Shopper Email</th>
+				<th>Shopper Reference</th>
+				<th>Date</th>
+
 			</tr>
 		</thead>
-			{{ dump() }}
-			{% for payout_id, fields in payout_list %}
-
-			{% endfor %}
+		{% for payout in payout_list %}
+			<tr>
+				<td>{{ payout.iban }}</td>
+				<td>{{ payout.ownerName }}</td>
+				<td>{{ payout.value/100 }}</td>
+				<td>{{ payout.reference }}</td>
+				<td>{{ payout.shopperEmail }}</td>
+				<td>{{ payout.shopperReference }}</td>
+				<td>{{ payout.date|date('Y-m-d H:i:s') }}</td>
+			</tr>
+		{% endfor %}
 	</table>
 
 </div>

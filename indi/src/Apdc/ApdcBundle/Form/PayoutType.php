@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class PayoutType extends AbstractType
 {
@@ -23,6 +24,10 @@ class PayoutType extends AbstractType
 				->add('reference',			TextType::class)
 				->add('shopperEmail',		EmailType::class)
 				->add('shopperReference',	TextType::class)
+				->add('date',				DateTimeType::class,
+					array('label' => false,
+					'attr'=>array('style' => 'visibility:hidden'	
+				)))
 				->add('submit',				SubmitType::class);
     }
     

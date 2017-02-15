@@ -11,7 +11,15 @@ class Payout
     private $ownerName;
     private $reference;
     private $shopperEmail;
-    private $shopperReference;
+	private $shopperReference;
+
+	private $date;
+
+	public function __construct()
+	{
+		$this->date	= new \Datetime();
+	}
+
 
     public function getId()
     {
@@ -88,6 +96,18 @@ class Payout
     public function getShopperReference()
     {
         return $this->shopperReference;
-    }
+	}
+
+	public function getDate()
+	{
+		return $this->date;
+	}
+
+	public function setDate($date)
+	{
+		$this->date = $date;
+
+		return $this;
+	}
 }
 
