@@ -3,6 +3,7 @@ Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
 });
 
 jQuery(document).ready(function() {
+
     if (typeof(apdcLoginPopup) === 'undefined') {
       apdcLoginPopup = new ApdcPopup({
           id: 'login-form'
@@ -20,6 +21,10 @@ jQuery(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
         processLoginForm(this);
+    });
+
+    jQuery(document).on('click', '#choose-district',function(e) {
+        apdcLoginPopup.close();
     });
 
     jQuery(document).on('click','#forgot-password', function(e) {
