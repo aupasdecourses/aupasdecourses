@@ -35,7 +35,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 
 	#Renvoie la liste des id commerçants (les ids de l'attribut produit "commerçant", par store, avec leur nom (utilisé uniquement dans MAGMI)
 
-	public function liste_commercant_id()
+	public function liste_commercant_id($type="attcomid")
 	{
 	    $return = [];
 
@@ -46,7 +46,11 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($shops as $shop) {
             $rootCategoryId = explode('/', $shop->getPath())[1];
             $rootCategoryName=Mage::getSingleton('catalog/category')->load($rootCategoryId)->getName();
-            $return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
+            if($type=="catid"){
+            	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
+            } else {
+            	$return[$rootCategoryName][$shop->getIdCategory()] = $shop->getName();
+            }
         }
 
 	    arsort($return);
@@ -55,15 +59,19 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - uniquement utilisé par getgooglecsv pour MAGMI
-	public function info_commercant($attcomid)
+	public function info_commercant($id,$type="attcomid")
 	{
-	    	$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $attcomid)->getFirstItem();   
+	    	if($type=="catid") {
+	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', $id)->getFirstItem();   
+	    	} else {
+	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();   
+	    	}
             return $shop;
 	}
 
 	public function getgooglecsv($comid){
 
-		$cat=$this->info_commercant($comid);
+		$cat=$this->info_commercant($comid,"catid");
 		return [
 			"name"=>$cat->getName(),
 			"key"=>$cat->getData('google_key'),
