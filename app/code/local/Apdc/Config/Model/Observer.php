@@ -39,7 +39,6 @@ class Apdc_Config_Model_Observer
 
                 //check if parent category is page commerçant
                 $parentiscom = $this->is_commercant($currentcat->getParentCategory()->getId());
-
             if ($estcom) {
                 $layout->getUpdate()->addHandle('PAGE_COMMERCANT');
             } elseif (!$estcom && $parentiscom && $haschildren) {

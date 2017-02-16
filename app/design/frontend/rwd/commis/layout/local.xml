@@ -33,7 +33,7 @@
             <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href> </action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
-            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Courgette</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Open+Sans</href></action>
             <action method="addLinkRel"><rel>alternate</rel><href>https://www.aupasdecourses.com</href><hreflang>fr</hreflang></action>
             <block type="core/text" name="cdn">
                 <action method="setText">
@@ -53,6 +53,7 @@
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
+            <remove name="checkout_cart_link"/>
         </reference>
         <reference name="right">
             <!--Remove whishlist -->
@@ -103,8 +104,15 @@
             <remove name="footer_links" />
             <remove name="footer_links2" />
         </reference>
+        <reference name="before_body_end">
+            <remove name="global_cookie_notice" />
+        </reference>
+        <reference name="global_notices">
+            <block type="page/html_cookieNotice" name="global_cookie_notice_head" as="global_cookie_notice_head" template="page/html/cookienotice.phtml" />
+        </reference>
+
         <reference name="left">
-            <remove name="catalog.leftnav" />
+          <remove name="catalog.leftnav" />
         </reference>
     </default>
 
@@ -115,98 +123,7 @@
         <remove name="left_first"/>
         <label>Homepage</label>
     </page_homepage>
-    
-    <catalog_category_view>
-        <remove name="right"/>
-        <remove name="left"/>
-        <remove name="left_first"/>
-    </catalog_category_view>
-    
-    <!-- Page Commerçant => 'Primeur Clémence' -->
-    <PAGE_COMMERCANT>
-        <remove name="right"/>
-        <remove name="left"/>
-        <remove name="left_first"/>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
-        </reference>
-        <reference name="head">
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.carousel.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.theme.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_js</rel>
-                <href>owl-carrousel/owl.carousel.min.js</href>
-            </action>
-        </reference>
-        <reference name="content">
-            <block type="commercants/fiche" template="commercants/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="catalog/blockselection/selection.phtml" />
-                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="commercants/commercantcat.phtml" />
-            </block>
-        </reference>
-    </PAGE_COMMERCANT>
 
-    <catalog_product_view>
-        <remove name="right"/>
-        <remove name="left"/>
-        <remove name="left_first"/>
-        <remove name="product.reviews" />
-        <remove name="product.attributes"/>
-        <remove name="alert.urls"/>
-        <remove name="product.info.additional"/>
-        <remove name="product.info.additional.recurring.schedule"/>
-        <remove name="product.info.options.recurring"/>
-        <reference name="product.info.upsell">
-            <action method="setColumnCount">
-                <columns>5</columns>
-            </action>
-            <action method="setItemLimit">
-                <type>upsell</type>
-                <limit>4</limit>
-            </action>
-        </reference>
-        <reference name="head">
-            <action method="removeItem"><type>skin_js</type><name>js/jqzoom/jquery-1.3.1.min.js</name></action>
-        </reference>
-    </catalog_product_view>
-
-    <PRODUCT_TYPE_bundle>
-        <remove name="bundle.tierprices" />
-        <remove name="product.info.sharing" />
-        <remove name="product.info.addtocart.paypaluk.wrapper" />
-        <reference name="product.info.options.wrapper.bottom">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/options/wrapper/bottom.phtml</template>
-            </action>
-        </reference>
-        <reference name="product.info">
-            <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>apdc_bundle/catalog/product/price.phtml</template></action>
-        </reference>
-        <reference name="bundle.prices">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/prices.phtml</template>
-            </action>
-        </reference>
-        <reference name="product.info.bundle.options">
-            <action method="setTemplate">
-                <template>apdc_bundle/catalog/product/view/type/bundle/options.phtml</template>
-            </action>
-            <action method="addRenderer"><type>select</type><block>bundle/catalog_product_view_type_bundle_option_select</block><template>apdc_bundle/catalog/product/view/type/bundle/option/select.phtml</template></action>
-            <action method="addRenderer"><type>multi</type><block>bundle/catalog_product_view_type_bundle_option_multi</block><template>apdc_bundle/catalog/product/view/type/bundle/option/multi.phtml</template></action>
-            <action method="addRenderer"><type>radio</type><block>bundle/catalog_product_view_type_bundle_option_radio</block><template>apdc_bundle/catalog/product/view/type/bundle/option/radio.phtml</template></action>
-            <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block><template>apdc_bundle/catalog/product/view/type/bundle/option/checkbox.phtml</template></action>
-        </reference>
-    </PRODUCT_TYPE_bundle>
-
-    <!-- Product listings by commerçants 'Fruits'-->
     <checkout_onepage_index>
         <remove name="left"/>
         <remove name="left_first"/>
@@ -273,19 +190,18 @@
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
-            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
-                <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
-                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
-                </block>
-                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
-            </block>
             <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
                 <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
                     <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
                 </block>
+                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
+                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
+                </block>
             </block>
-            <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" >
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
                 <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
             </block>
         </reference>
@@ -342,7 +258,7 @@
             </action>
         </reference>
         <reference name="content">
-            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="customer/form/resetforgottenpassword.phtml" />
+            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="apdc_customer/form/resetforgottenpassword.phtml" />
         </reference>
     </customer_account_changeforgotten>
 
@@ -404,114 +320,11 @@
         </reference>
     </hipay_mapi_payment>
 
-    <catalog_category_layered_nochildren>
-        <remove name="right"/>
-        <remove name="headercommercant"/>
-        <remove name="catalog.leftnav"/> 
-        <remove name="product_list"/> 
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>empty</layout>
-                        <count>6</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>one_column</layout>
-                        <count>5</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>two_columns_left</layout>
-                        <count>4</count>
-                    </action>
-                     <action method="addColumnCountLayoutDepend">
-                            <layout>two_columns_right</layout>
-                            <count>4</count>
-                    </action>
-                    <action method="addColumnCountLayoutDepend">
-                        <layout>three_columns</layout>
-                        <count>3</count>
-                    </action>
-                    <action method="setToolbarBlockName">
-                        <name>product_list_toolbar</name>
-                    </action>
-                    <action method="setColumnCount">
-                        <count>4</count>
-                    </action>
-            </block>
+    <monkey_customer_account_index>
+        <reference name="magemonkey_additionallists">
+            <action method="setTemplate"><template>apdc_customer/account/newsletter/list.phtml</template></action>
         </reference>
-        <reference name="jsfooter">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <reference name="left_first">
-            <block type="catalog/layer_view" name="catalog.leftnav.first" after="currency" template="catalog/layer/view.phtml">
-                <block type="core/text_list" name="catalog.leftnav.state.renderers" as="state_renderers" />
-            </block>
-            <!-- Recently purchased items -->
-            <block type="sales/reorder_sidebar" name="sale.reorder.sidebar.left" as="reorder" template="sales/reorder/sidebar.phtml" after="catalog.leftnav.first"/>
-            <!-- Recently viewed items -->
-            <block type="reports/product_viewed" name="reports.product.viewed.left" template="reports/product_viewed.phtml" after="catalog.leftnav.first"/>
-        </reference> 
-        <reference name="product_list3">
-            <action method="setColumnCount"><count>5</count></action>
-        </reference>
-    </catalog_category_layered_nochildren>
+        <remove name="customer.account.link.back"/>
+    </monkey_customer_account_index>
 
-    <GROUP_CATEGORY>
-        <reference name="content">
-            <remove name="product_list2"/>
-            <block type="catalog/product_list" name="product_list3" template="apdc_cart/catalog/product/addajax/list_commercants.phtml">
-                <block type="core/text_list" name="product_list.name.after" as="name.after"/>
-                <block type="core/text_list" name="product_list.after" as="after"/>
-                <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                    <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                </block>
-                <action method="setColumnCount">
-                    <count>5</count>
-                </action>
-            </block>
-        </reference>
-        <reference name="jsfooter">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <remove name="headercommercant"/>
-    </GROUP_CATEGORY>
-
-    <catalog_category_default>
-        <reference name="product_list3">
-            <action method="setColumnCount"><count>5</count></action>
-        </reference>
-        <remove name="product_list"/>
-    </catalog_category_default>
-
-    <catalog_category_layered>
-        <reference name="product_list3">
-            <action method="setColumnCount"><count>5</count></action>
-        </reference>
-        <remove name="product_list"/>
-    </catalog_category_layered>
-
-    <catalogsearch_result_index >
-        <remove name="right"/>
-        <reference name="root">
-            <action method="setTemplate"><template>page/1column.phtml</template></action>
-        </reference>
-         <reference name="jsfooter">
-             <action method="addItem"><rel>skin_css</rel><href>fancybox/jquery.fancybox.css</href></action>
-             <action method="addItem"><rel>skin_js</rel><href>fancybox/jquery.fancybox.pack.js</href></action>
-        </reference>
-        <reference name="search.result">
-            <action method="setTemplate"><template>apdc_catalog/catalogsearch/result.phtml</template></action>
-        </reference>
-        <reference name="search_result_list">
-            <action method="setColumnCount"><count>5</count></action>            
-        </reference>
-    </catalogsearch_result_index>
 </layout>

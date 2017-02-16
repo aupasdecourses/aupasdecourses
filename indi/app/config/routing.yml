@@ -1,0 +1,9 @@
+apdc_apdc:
+    resource: "@ApdcApdcBundle/Resources/config/routing.yml"
+    prefix:   /
+
+oneup_uploader:
+    resource: . 
+    type: uploader
+
+

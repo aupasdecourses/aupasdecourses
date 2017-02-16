@@ -22,6 +22,7 @@ class Apdc_Delivery_IndexController extends Mage_Core_Controller_Front_Action {
 		return $this->checkextension($extension);
 	}
 
+	/** Fonction similaire dans le trait Credimemo dans Indi **/
 	public function setCloseStatus($order){
         $shipment = $order->prepareShipment();
         $shipment->register();

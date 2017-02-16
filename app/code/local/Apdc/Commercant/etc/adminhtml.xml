@@ -4,27 +4,27 @@
         <catalog>
             <children>
                 <commercant>
-                    <title>Commercant</title>
+                    <title>Commerçants &amp; Magasins</title>
                     <sort_order>100</sort_order>
                     <children>
                         <commercant>
-                            <title>Commercant</title>
-                            <sort_order>20</sort_order>
+                            <title>Commercants (Entité Légale)</title>
+                            <sort_order>30</sort_order>
                             <action>adminhtml/commercant_commercant/index</action>
                         </commercant>
                         <shop>
-                            <title>Magasin</title>
-                            <sort_order>30</sort_order>
+                            <title>Magasins</title>
+                            <sort_order>40</sort_order>
                             <action>adminhtml/commercant_shop/index</action>
                         </shop>
                         <contact>
-                            <title>Contact</title>
+                            <title>Contacts</title>
                             <sort_order>10</sort_order>
                             <action>adminhtml/commercant_contact/index</action>
                         </contact>
                         <bank_information>
-                            <title>Infos bancaires</title>
-                            <sort_order>40</sort_order>
+                            <title>Infos bancaires &amp; légales</title>
+                            <sort_order>20</sort_order>
                             <action>adminhtml/commercant_bankinfo/index</action>
                         </bank_information>
                     </children>
@@ -39,8 +39,26 @@
                     <catalog>
                         <children>
                             <commercant>
-                                <title>Commercant</title>
+                                <title>Commerçants &amp; Magasins</title>
                                 <sort_order>100</sort_order>
+                                <children>
+                                    <commercant>
+                                        <title>Commercants (Entités Légales)</title>
+                                        <sort_order>30</sort_order>
+                                    </commercant>
+                                    <shop>
+                                        <title>Magasins</title>
+                                        <sort_order>40</sort_order>
+                                    </shop>
+                                    <contact>
+                                        <title>Contacts</title>
+                                        <sort_order>10</sort_order>
+                                    </contact>
+                                    <bank_information>
+                                        <title>Infos bancaires &amp; légales</title>
+                                        <sort_order>20</sort_order>
+                                    </bank_information>
+                                </children>
                             </commercant>
                         </children>
                     </catalog>

@@ -25,14 +25,13 @@
 }
 
 #supermenu #storename a {
-    font-family: "Courgette";
+    font-family: "Open Sans";
     text-transform: none;
     display: block;
     position: relative;
-    text-transform: normal;
     color:#4B777B;
-    font-weight:bold;
-    font-size:20px;
+    font-weight:600;
+    font-size:18px;
 }
 #supermenu #storename a:hover {
 	background-color:#ffffff!important;
@@ -127,6 +126,7 @@
   left: 80px; 
   top: 50%;
   transform: translate(0, -50%);
+  padding-right: 15px;
 }
 ul.nav a {
   outline: none;
@@ -167,8 +167,9 @@ ul.nav a {
 a.level1:link,
 a.level1:visited {
     margin-bottom: 0px;
-    font-family: "Courgette";
-    font-size: 20px;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 600;
     color: rgb(67, 41, 24);
 }
 
@@ -180,9 +181,9 @@ a.level1:hover {
 a.level2:link,
 a.level2:visited {
     color:#333;
-    font-size: 18px;
-    font-family: Courgette;
-    font-weight: 500;
+    font-size: 15px;
+    font-family: "Open Sans";
+    font-weight: 700;
     margin: 0 auto;
     text-align: center;
     display: block;
@@ -192,9 +193,9 @@ a.level2:visited {
 
 .item-main-block {
     color:#333;
-    font-size: 18px;
-    font-family: Courgette;
-    font-weight: 500;
+    font-size: 16px;
+    font-family: "Open Sans";
+    font-weight: 700;
     margin: 10px 0;
     text-align: left;
     display: block;
@@ -230,7 +231,7 @@ a.level3:hover {
     transform: translateY(300px);
   }
   #supermenu li a.column-commercant {
-    width: 320px;
+    width: 270px;
     display: block;
   }
   #supermenu div.level0,
@@ -248,7 +249,7 @@ a.level3:hover {
   }
   #supermenu div.level0>ul {
     float:left;
-    width:330px;
+    width:280px;
     overflow-x:hidden; 
     overflow-y: auto;
     height: 100%;
@@ -272,7 +273,7 @@ a.level3:hover {
   #supermenu .menu-template-content {
     display:block;
     float:right;
-    width:calc(100% - 330px);
+    width:calc(100% - 280px);
     height: 100%;
     overflow: auto;
     display: inline-block;
@@ -318,7 +319,7 @@ a.level3:hover {
     overflow-y:auto;
     max-height: initial;
     margin: 20px 0 5px 0px;
-    width: calc(100% - 320px);
+    width: calc(100% - 270px);
     height: 360px;
   }
   .dropdown-submenu.open>.dropdown-menu-template {
@@ -337,8 +338,9 @@ a.level3:hover {
   }
   #supermenu .template-column .cat-thumbnail img {
     position: relative;
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    width:100%;
+    max-height: 50px;
     overflow: hidden;
     border-radius: 50%;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

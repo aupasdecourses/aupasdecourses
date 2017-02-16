@@ -47,8 +47,7 @@ class Apdc_Bundle_Block_Catalog_Product_View_Type_Bundle_Option extends Mage_Bun
         $price = $this->getProduct()->getPriceModel()->getSelectionPreFinalPrice($this->getProduct(), $_selection);
         $this->setFormatProduct($_selection);
 
-        $selection_sku=$_selection->getSku();
-        $product=Mage::getSingleton('catalog/product')->loadByAttribute('sku',$selection_sku);
+        $product = Mage::getSingleton('catalog/product')->load($_selection->getId());
         $unit_price=$product->getUnitePrix();
         $weight=$product->getWeight();
 

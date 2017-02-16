@@ -1,0 +1,131 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="col-sm-2">
+		<a href="{{ path('refundInput', {id:id}) }}" class="btn btn-default"><< Retour</a>
+	</div>
+	{% if refund_full > 0 %}
+	<div class="progress col-sm-8">
+		<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+	    	<span>Validation</span>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default right">Suivant >></a>
+	</div>
+	{% else %}
+	<div class="progress col-sm-8">
+		<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+	    	<span>Validation</span>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
+	</div>	
+	{% endif %}
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>#{{id}}<small> Validation avant remboursement</small></h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class='table'>
+				<tr>
+					<th>Total de la commande:</th>
+					<td>{{total}}</td>
+				</tr>
+				<tr>
+					<th>Remboursement produits</th>
+					<td>{{refund_diff}}</td>
+				</tr>
+				<tr>
+					<th>Remboursement livraisons</th>
+					<td>{{refund_shipping}}</td>
+				</tr>
+			</table>
+			<table class='table'>
+				<tr>
+					<th>MONTANT A REMBOURSER</th>
+					<td>{% if refund_full > 0 %}
+							{{refund_full}}
+						{% else %}
+							0
+						{% endif %}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	{% for form in forms %}
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+			<div class="row">
+				<div class="btn-group right" role="group" aria-label="...">
+					{% if show_creditmemo %}
+						<input type="submit" name="creditmemo" value='Credit Memo / Envoi mail' class="btn btn-success btn-lg right"/>
+					{% endif %}
+					{% if show_close %}
+						<input type="submit" name="close" value='Clôturer' class="btn btn-success btn-lg right"/>
+					{% endif %}
+				</div>
+			</div>
+		{{ form_end(form) }}
+	{% endfor %}
+	{% for merchant_id, merchant_part in order %}
+		<h2>{{merchant_part.merchant.name}}</h2>
+		<div class='row'>
+			<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-sm-4' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
+			<div class="col-sm-8">
+				<table id='{{merchant_id}}' class='merchant table'>
+					<thead>
+						<tr>
+							<th>Produit</th>
+							<th>Description</th>
+							<th>Quantité</th>
+							<th>Prix Unitaire</th>
+							<th>Total Commande</th>
+							<th>Total Ticket</th>
+							<th>Différence</th>
+							<th>Commentaire</th>
+						</tr>
+					</thead>
+					{% for product_id, product in merchant_part.products %}
+						<tr>
+							<td>{{product.nom}}</td>
+							<td>{{product.description}}</td>
+							<td>{{product.quantite}}</td>
+							<td>{{product.prix_kilo}}</td>
+							<td>
+								<span>{{product.prix_total}}</span>
+							</td>
+							<td>
+								<span>{{product.refund_prix | round(2,'floor')}}</span>
+							</td>
+							<td>
+								<p>{{product.refund_diff | round(2,'floor')}}</p>
+							</td>
+							<td>
+								<span>{{product.refund_comment}}</span>
+							</td>
+						</tr>
+					{% endfor %}
+					<tfoot>
+						<tr>
+							<td colspan='4'>TOTAL</td>
+							<td><p>{{merchant_part.merchant.total}}</p></td>
+							<td><p>{{merchant_part.merchant.refund_total}}</p></td>
+							<td><p>{{merchant_part.merchant.refund_diff}}</p></td>
+							<td></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

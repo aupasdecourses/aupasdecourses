@@ -9,7 +9,7 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Grid extends Mage_Adminhtml_Block_
     {
         parent::__construct();
         $this->setId('contactGrid');
-        $this->setDefaultSort('name');
+        $this->setDefaultSort('lastname');
         $this->setDefaultDir('ASC');
     }
 
@@ -24,19 +24,35 @@ class Apdc_Commercant_Block_Adminhtml_Contact_Grid extends Mage_Adminhtml_Block_
     protected function _prepareColumns()
     {
         $this->addColumn('id', [
-            'header' => $this->__('ID'),
+            'header' => $this->__('Id'),
             'index' => 'id_contact',
         ]);
 
         $this->addColumn('lastname', [
-            'header' => $this->__('Last name'),
+            'header' => $this->__('Nom'),
             'index' => 'lastname',
         ]);
 
         $this->addColumn('firstname', [
-            'header' => $this->__('First name'),
+            'header' => $this->__('Prénom'),
             'index' => 'firstname',
         ]);
+
+        $this->addColumn('email', [
+            'header' => $this->__('Email'),
+            'index' => 'email',
+        ]);
+
+        $this->addColumn('phone', [
+            'header' => $this->__('Téléphone'),
+            'index' => 'phone',
+        ]);
+
+        //$this->addColumn('role_id', [
+        //    'header' => $this->__('Rôles'),
+        //    'index' => 'role_id',
+        //    'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Contact_Renderer_Role',
+        //]);
 
         parent::_prepareColumns();
     }

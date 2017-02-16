@@ -2,11 +2,11 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.0.2</version>
+            <version>0.0.7</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
-    <routers>
+        <routers>
             <delivery>
                 <use>standard</use>
                 <args>
@@ -65,5 +65,24 @@
                 <class>Apdc_Delivery_Helper</class>
             </pmainguet_delivery>
         </helpers>
+        <template>
+            <email>
+                <delivery_emailcreditplus_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditplus_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditplus_template>
+                <delivery_emailcreditmoins_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditmoins_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditmoins_template>
+                <delivery_emailcreditnull_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditnull_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditnull_template>
+            </email>
+        </template>
 	</global>
 </config>

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+	<h1> FORMULAIRE REFUND PAY IN </h1>
+<body>
+<h2> Entrez les infos : </h2>
+
+<form action ="payinRefundTrait.php" method= "POST">
+<h2> Montant </h2>
+
+Valeur :
+<input type ="text" name ="value" placeholder ="999">
+
+
+Compte march : (pour les test c'est AuPasDeCoursesFR)
+Ca correspond à  la colonne "account" dans la section Payments de Adyen
+<input type ="text" name ="merchantAccount" placeholder ="">
+<br><br>
+
+Reference (l'ancienne):
+<input type="text" name="originalReference" placeholder ="ref">
+<br><br>
+
+Reference, la nouvelle , ce que vous souhaitez
+<input type="text" name="reference" placeholder ="nouvelle ref">
+<br><br>
+
+
+
+<h2> Soumettre rembours </h2>
+<input type="submit" value ="Rembourser">
+</form>
+</body>
+
+</html>

@@ -148,7 +148,7 @@ button.add,
 button.ok_button,
 .form-button.ok_button {
     background-image: none;
-    background-color: #2494f2;
+    background-color: #44a551;
     padding: 0 13px;
     color: #ffffff;
     border: 0;
@@ -180,7 +180,7 @@ button.save:hover,
 button.add:hover,
 button.ok_button:hover,
 .form-button.ok_button:hover  {
-    background-color: #36a3ff;
+    background-color: #5fc16c;
 }
 
 button.save.disabled, button.save[disabled], fieldset[disabled] button.save,

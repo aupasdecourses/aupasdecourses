@@ -1,0 +1,69 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<h1> Remboursement </h1>
+	<div class="row">
+		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+		<table class='table'>
+			<thead>
+				<tr>
+					<th># Commande</th>
+					<th>Upload tickets</th>
+					<th>Saisie ticket</th>
+					<th>Validation Credit Memo</th>
+					<th>Remboursement Adyen</th>
+				</tr>
+			</thead>
+			{% for order in orders %}
+				<tr>
+					<td>{{ order.id }}</td>
+					<td>
+						{% if order.upload == '' %}
+							<a href='{{ path('refundUpload', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+						{% elseif order.upload == 'joker' %}
+							<a href='{{ path('refundUpload', {id: order.id}) }}' class='success' target="_blank">OK</a>
+						{% endif %}
+					</td>
+					<td>
+						{% if order.upload != '' %}
+							{% if order.input == '' %}
+								<a href='{{ path('refundInput', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+							{% elseif order.input == 'done' %}
+								<a href='{{ path('refundInput', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% endif %}
+						{% else %}
+							<span class="disabled">A faire</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if order.input != '' %}
+							{% if order.digest == '' %}
+								<a href='{{ path('refundDigest', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+							{% elseif order.digest == 'done'%}
+								<a href='{{ path('refundDigest', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% endif %}
+						{% else %}
+							<span class="disabled">A faire</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if order.digest != '' %}
+							{% if order.refund == '' %}
+								<a href='{{ path('refundFinal', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+							{% elseif order.refund == 'done'%}
+								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% endif %}
+						{% else %}
+							<span class="disabled">A faire</span>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

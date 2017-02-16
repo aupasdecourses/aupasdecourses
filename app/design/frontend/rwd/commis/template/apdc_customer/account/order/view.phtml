@@ -1,9 +1,8 @@
 <div>
     <?php $_order = $this->getOrder() ?>
-    <h2><?php echo $this->__('Détails par produits') ?>
-        <?php if ($_order->getTracksCollection()->count()) : ?>
-            <span class="separator">|</span> <a href="#" onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackorder','top=0,left=0,width=800,height=600,resizable=yes,scrollbars=yes'); return false;" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Track your order')) ?>"><?php echo $this->__('Track your order') ?></a>
-        <?php endif; ?>
-    </h2>
+    <h2><?php echo $this->__('Détails de votre commande') ?></h2>
+    <h3><?php echo $this->__('Produits commandés') ?></h3>
     <?php echo $this->getChildHtml('order_items') ?>
+    <h3><?php echo $this->__('Total de votre commande') ?></h3>
+    <?php echo $this->getChildHtml('order_totals') ?>
 </div>

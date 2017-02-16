@@ -1,0 +1,75 @@
+{% block menu %}
+	
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="{{path ('root') }}"><img src="{{ path('root') }}img/logo.png" style="height:100%"></i></a>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class ="nav navbar-nav">
+					<li class="dropdown">	
+						<a class="dropdown-toggle" data-toggle="dropdown"href="">Liste Commandes<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('ordersIndex')}}">Globale</a></li>
+							<li><a href="{{ path ('merchantsIndex')}}">Par magasin</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Dispatching<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('pickingIndex')}}">Enlevement</a></li>
+							<li><a href="{{ path ('shippingIndex')}}">Livraisons</a></li>
+						</ul>
+					</li>
+				
+					{% if is_granted('ROLE_ADMIN') %}			
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Remboursement<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('refundIndex')}}">Saisie Ticket</a></li>
+							<li><a href="{{ path ('refundAdyenIndex')}}">Formulaire Adyen</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Facturation<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('billingIndex') }}">Facturation</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Stats<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="">Fidelites Clients ???</a></li>
+							<li><a href="">Stats Clients ??? </a></li>
+							<li><a href="">Stats Coupons </a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Outils<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path ('toolProduct') }}">Photos Produits</a></li>
+							<li><a href="{{ path ('toolMerchant') }}">Photos Magasins</a></li>
+							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
+						</ul>
+					</li>
+					{% endif %}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">{{ app.user.username }}<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+		    </div>
+		</div>
+	</nav>
+{% endblock %}

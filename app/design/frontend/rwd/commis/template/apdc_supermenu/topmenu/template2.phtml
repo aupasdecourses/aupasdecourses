@@ -21,7 +21,7 @@ foreach ($children as $child) {
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
         if ($child->getThumbnail()) {
-            $thumbnail = $this->getResizedImage($child->getThumbnail(), 200);
+            $thumbnail = $this->getResizedImage($child->getThumbnail(), 50,50);
             $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
         }
         $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';

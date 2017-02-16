@@ -4,11 +4,10 @@
 */
 class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
 {
-    //     public function indexAction(){}
 
     /**
      * Retrieve order credit memo (refund) availability.
-     *
+     * A fusionner avec le trait Credimemo dans Indi
      * @return bool
      */
     public function canCreditmemo()
@@ -43,7 +42,7 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
 
     /**
      * Check if creditmeno can be created for order.
-     *
+     * A fusionner avec précédent et fonction similaire dans trait Credimemo de Indi
      * @param Mage_Sales_Model_Order $order
      *
      * @return bool
@@ -69,7 +68,7 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
 
     /**
      * Initialize requested invoice instance.
-     *
+     * A fusionner avec précédent et fonction similaire dans trait Credimemo de Indi
      * @param unknown_type $order
      */
     protected function checkinvoices($order)
@@ -88,6 +87,7 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
 
     /**
      * Prepare order creditmemo based on order items and requested params (if there is no invoice).
+     * Fonction similaire dans Credimemo trait in Indi
      *
      * @param array $data
      *
@@ -139,6 +139,12 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
         return $creditmemo;
     }
 
+
+    /**
+     * Prepare order creditmemo based on order items and requested params (if there is no invoice).
+     * A fusionner avec fonction similaire dans trait Credimemo d'Indi
+     * Ici sert pour de l'ajax, d'où les getRequest
+     **/
     public function processcreditAction()
     {
         $orderId = $this->getRequest()->getParam('order_id');
@@ -237,7 +243,10 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
         }
     }
 
-    //save comment to Amasty Order Attach
+    /**
+    * save comment to Amasty Order Attach
+    * A fusionner avec fonction similaire dans trait Credimemo d'Indi
+    **/
     public function registerorderattach($orderId, $totalrefund)
     {
         if (count($totalrefund) > 0) {
@@ -255,7 +264,10 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
         }
     }
 
-    //Register Credit Memo Info in custom table for Facturation
+    /**
+    * Register Credit Memo Info in custom table for Facturation
+    * A fusionner avec fonction similaire dans trait Credimemo de Indi
+    **/
     public function registerRefundorder($orderId, $commercant, $value, $creditmemo)
     {
         $creditmemo_id = $creditmemo->getEntityId();
@@ -264,10 +276,7 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
             $data = array(
                 'order_id' => $orderId,
                 'commercant' => $commercant,
-                'commercant_id' => '',
-                'final_row_total' => '',
                 'del_amount_refunded' => $value['value'],
-                'del_tax_refunded' => '',
                 'comment' => $value['comment'],
                 'creditmemo_id' => $creditmemo_id,
             );
@@ -286,6 +295,10 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
         }
     }
 
+    /**
+    * Create invoice
+    * Fonction similaire dans trait Credimemo de Indi
+    **/
     public function createinvoice($orderId)
     {
         $order = Mage::getModel('sales/order')->loadbyIncrementid($orderId);
@@ -312,6 +325,10 @@ class Apdc_Delivery_CreditController extends Mage_Core_Controller_Front_Action
         $transactionSave->save();
     }
 
+    /**
+    * Create credit memo
+    * Fonction similaire dans trait Credimemo de Indi
+    **/
     public function createcreditmemo($orderId, $data, $notifyCustomer = false, $comment_array = array())
     {
         $order = Mage::getModel('sales/order')->loadbyIncrementid($orderId);

@@ -297,7 +297,7 @@
 </div>
 </div>
 <div class="row">
-    <h3><?php echo $this->__('Informations complémentaires')?></h3><?php Mage::helper('apdc_checkout');?>
+    <h3><?php echo $this->__('Informations complémentaires')?></h3>
     <div id="amorderattr">
         <div class="col-sm-6">
             <div class="row">
@@ -368,14 +368,12 @@
             </div>                    
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <span class="field-row">
-                <label for="infoscomplementaires">Autres informations importantes</label>
-                <input id="infoscomplementaires" name="amorderattr[infoscomplementaires]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('infoscomplementaires');?>" class=" input-text" type="text"/>
-                <div type="anchor" id="anchor_infoscomplementaires"></div><div style="padding: 4px;"></div>
-            </span>
-        </div>
+    <div class="col-sm-12">
+        <span class="field-row">
+            <label for="infoscomplementaires">Autres informations importantes</label>
+            <input id="infoscomplementaires" name="amorderattr[infoscomplementaires]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('infoscomplementaires');?>" class=" input-text" type="text"/>
+            <div type="anchor" id="anchor_infoscomplementaires"></div><div style="padding: 4px;"></div>
+        </span>
     </div>
 </div>
     <p class="required"><?php echo $this->__('* Required Fields') ?></p>

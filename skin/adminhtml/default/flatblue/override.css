@@ -11,16 +11,16 @@ h1, h2, h3, h4, h5, h6, label {
 
 a {
     display: inline;
-    color: #43a0f2;
+    color: #3ab64b;
     text-decoration: none;
 }
 
 a:visited {
-    color: #43a0f2;
+    color: #3ab64b;
 }
 
 a:focus, a:hover, a:active {
-    color: #136bb8;
+    color: #1e555a;
     text-decoration: none;
 }
 
@@ -158,15 +158,15 @@ dl.accordion dt, .entry-edit .entry-edit-head {
 }
 
 .grid tr.headings {
-    background: #43a0f2;
-    border: 1px solid #43a0f2;
+    background: #5fc16c;
+    border: 1px solid #5fc16c;
 }
 
 .grid tr.headings th {
     padding: 4px;
     font-size: 12px;
     vertical-align: middle;
-    border: 1px solid #43a0f2;
+    border: 1px solid #5fc16c;
 }
 
 .grid tr.headings th, .grid tr.headings th a {
@@ -189,7 +189,7 @@ dl.accordion dt, .entry-edit .entry-edit-head {
 
 .grid tr.headings th a.sort-arrow-desc,
 .grid tr.headings th a.sort-arrow-asc {
-    background: #3498f0;
+    background: #539e5d;
     border: 0;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
@@ -230,7 +230,7 @@ dl.accordion dt, .entry-edit .entry-edit-head {
 }
 
 .grid tbody.odd tr td {
-    background: #43a0f2 !important;
+    background: #5fc16c !important;
 }
 
 .grid td input.input-text {
@@ -242,7 +242,7 @@ dl.accordion dt, .entry-edit .entry-edit-head {
 }
 
 .header {
-    background: #272930;
+    background: #1e555a;
 }
 
 .header-top {
@@ -263,8 +263,8 @@ dl.accordion dt, .entry-edit .entry-edit-head {
 }
 
 .footer {
-    background: #eee;
-    padding: 2.8em 0;
+    background: #5fc16c;
+    padding: 20px 0;
     margin-top: 30px;
     border-top: 1px solid #ccc;
     font-size: 12px;
@@ -292,7 +292,7 @@ ul.tabs-horiz li a {
 
 ul.tabs-horiz li a.active {
     border: 0;
-    background: #36a3ff;
+    background: #5fc16c;
     color: #fff !important;
 }
 
@@ -318,10 +318,10 @@ ul.tabs-horiz li a.active {
     content: "";
     display: inline-block;
     vertical-align: middle;
-    width: 109px;
+    width: 35px;
     height: 35px;
-    background-image: url('images/logo.svg');
-    background-size: 109px 70px;
+    background-image: url(images/logo-white.png);
+    background-size: 35px;
     background-repeat: no-repeat;
 }
 
@@ -329,9 +329,9 @@ ul.tabs-horiz li a.active {
     display: inline-block;
     vertical-align: middle;
     margin-left: 10px;
-    content: attr(data-edition);
+    content: "Au Pas De Courses - Magento";
     font: 400 16px/1.33 'Open Sans', sans-serif;
-    color: #ef672f;
+    color: white;
     margin-top: -2px;
 }
 
@@ -378,7 +378,7 @@ ul.tabs li {
 }
 
 ul.tabs dl {
-    background: #43a0f2;
+    background: #5fc16c;
 }
 
 ul.tabs a {
@@ -395,7 +395,7 @@ ul.tabs a.active, ul.tabs a:hover {
 }
 
 ul.tabs a.active {
-    border-left: 3px solid #2391ed;
+    border-left: 3px solid #5fc16c;
     padding: 8px 18px;
     background: #eee;
     box-shadow: 0 1px 2px #ccc inset;
@@ -418,7 +418,7 @@ ul.tabs span, ul.tabs a.active span, ul.tabs a.active span, ul.tabs a:hover.acti
 
 ul.config-tabs dt {
     border-top: 0;
-    background: #36a3ff;
+    background: #5fc16c;
     color: #fff;
 }
 
@@ -704,7 +704,7 @@ table.actions td {
 }
 
 .login-form {
-    padding: 30px 25px;
+    padding: 5px 25px 30px 25px;
     background: #eee;
 }
 
@@ -740,10 +740,10 @@ table.actions td {
 .login-form .logo {
     float: none;
     display: block;
-    width: 262px;
-    height: 64px;
+    width: 100%;
+    height: 100px;
     text-indent: -999em;
-    background: url(images/logo-magento.png) no-repeat;
+    background: url(images/logo-green.png) no-repeat center;
     margin: 0 0 20px 0;
 }
 
