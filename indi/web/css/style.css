@@ -206,3 +206,43 @@ a:hover, a:focus {
 .ticket-input{
 	width: 80px;
 }
+
+/* payout */
+.borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+	border: none;
+}
+
+
+
+/* JQUERY PLUGIN TABLESORTER */
+
+/* color header (grey pale) + size of the header */
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #e6EEEE;
+	padding: 4px;
+	border: 1px solid #FFF;
+}
+
+/* arrow which enables to sort =>  Url, position ... */
+table.tablesorter thead tr .header {
+	background-image: url(../img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: right;
+	cursor: pointer;
+}
+
+/* color content (white) + padding between header and content */
+table.tablesorter tbody td {
+	padding: 4px;
+	background-color: #FFF;
+}
+
+/* color onClick (blue) */
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+	background-color: #8dbdd8;
+}

@@ -75,7 +75,6 @@ class BillingController extends Controller
 		}
 
 		$adyen = $this->container->get('apdc_apdc.adyen');
-
 		$payout = new Payout();
 		$form = $this->createForm(PayoutType::class, $payout);
 
@@ -101,7 +100,8 @@ class BillingController extends Controller
 			return $this->redirectToRoute('billingPayoutIndex');
 		}
 
-		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',			[
+		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
+			[
 			'form' => $form->createView(),
 			]);
 	}

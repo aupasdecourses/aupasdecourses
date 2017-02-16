@@ -42,6 +42,16 @@
 			<script type="text/javascript" src="{{ path('root') }}js/openseadragon.min.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
+
+			<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
+			<script type="text/javascript">
+				$(document).ready(function()
+					{
+						$(".tablesorter").tablesorter();
+					}
+				);
+			</script>
 		{% endblock %}
 	</body>
 </html>

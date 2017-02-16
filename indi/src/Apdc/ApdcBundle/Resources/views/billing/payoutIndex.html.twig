@@ -14,32 +14,33 @@
 	</div>
 
 	<h1>Historique des payouts</h1>
-	<table class='table'>
+	<table id="payoutTable" class="table tablesorter">
 		<thead>
 			<tr>
+				<th>Reference&nbsp;</th>
+				<th>Value&nbsp;&nbsp;</th>
+				<th>Date</th>
 				<th>IBAN</th>
-				<th>Owner Name</th>
-				<th>Value</th>
-				<th>Reference</th>
+				<th>Owner Name&nbsp;</th>
 				<th>Shopper Email</th>
 				<th>Shopper Reference</th>
-				<th>Date</th>
 
 			</tr>
 		</thead>
+		<tbody>
 		{% for payout in payout_list %}
 			<tr>
+				<td>{{ payout.reference }}</td>
+				<td>{{ payout.value/100 }}</td>
+				<td>{{ payout.date|date('Y-m-d H:i:s') }}</td>
 				<td>{{ payout.iban }}</td>
 				<td>{{ payout.ownerName }}</td>
-				<td>{{ payout.value/100 }}</td>
-				<td>{{ payout.reference }}</td>
 				<td>{{ payout.shopperEmail }}</td>
 				<td>{{ payout.shopperReference }}</td>
-				<td>{{ payout.date|date('Y-m-d H:i:s') }}</td>
 			</tr>
 		{% endfor %}
+		</tbody>
 	</table>
-
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
