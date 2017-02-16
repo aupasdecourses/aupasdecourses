@@ -14,12 +14,13 @@
 	</div>
 
 	<h1>Historique des payouts</h1>
-
+	
+	<p><h4>Nombre d'entrées : </h4></p>
 	<div id ="pager">
 		<form>
 			<select class="pagesize">
-				<option selected="selected" value="1">1</option>
-				<option value="10">10</option>
+				<option value="1">1</option>
+				<option selected="selected" value="10">10</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="9999">All</option>
@@ -55,6 +56,7 @@
 		{% endfor %}
 		</tbody>
 	</table>
+	Total Value : <span class="total"></span>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

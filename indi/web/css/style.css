@@ -246,3 +246,9 @@ table.tablesorter tbody td {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 	background-color: #8dbdd8;
 }
+
+div#pager{
+	position:absolute !important;
+	top: 297px !important;
+	left: 550px !important;
+}
