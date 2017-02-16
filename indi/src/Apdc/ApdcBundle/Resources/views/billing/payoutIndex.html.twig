@@ -14,7 +14,21 @@
 	</div>
 
 	<h1>Historique des payouts</h1>
-	<table id="payoutTable" class="table tablesorter">
+
+	<div id ="pager">
+		<form>
+			<select class="pagesize">
+				<option selected="selected" value="1">1</option>
+				<option value="10">10</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="9999">All</option>
+			</select>
+		</form>
+	</div>
+
+
+	<table class="table tablesorter">
 		<thead>
 			<tr>
 				<th>Reference&nbsp;</th>

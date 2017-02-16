@@ -49,10 +49,10 @@
 		<table class='table'>
 			<thead>
 				<tr>
-					<th>Increment_id (N° Commande)</th>
-					<th>Psp Ref de CHAQUE remboursement de cette commande</th>	
-					<th> Resultat </th>
+					<th>N° Commande</th>
+					<th>Reference PSP de CHAQUE remboursement</th>	
 					<th> Crée le </th>
+					<th> Resultat </th>
 					<th> Success ? </th>
 				</tr>
 			</thead>
@@ -63,8 +63,8 @@
 								<tr>
 									<td>{{ value.increment_id }}</td>
 									<td>{{ value.psp_reference }}</td>
-									<td>{{ value.adyen_event_result }}</td>
 									<td>{{ value.created_at }}</td>
+									<td>{{ value.adyen_event_result }}</td>
 									<td>{{ value.success }}</td>
 								</tr>
 							{% endif %}

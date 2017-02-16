@@ -45,10 +45,17 @@
 
 			<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
+			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 			<script type="text/javascript">
 				$(document).ready(function()
 					{
-						$(".tablesorter").tablesorter();
+						$(".tablesorter").tablesorter({ 
+							widgets: ['zebra'] 
+						})
+						.tablesorterPager({
+							container: $("#pager"),
+							size: 1
+						});
 					}
 				);
 			</script>
