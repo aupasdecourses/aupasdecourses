@@ -47,9 +47,9 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
             $rootCategoryId = explode('/', $shop->getPath())[1];
             $rootCategoryName=Mage::getSingleton('catalog/category')->load($rootCategoryId)->getName();
             if($type=="catid"){
-            	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
-            } else {
             	$return[$rootCategoryName][$shop->getIdCategory()] = $shop->getName();
+            } else {
+            	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
             }
         }
 
