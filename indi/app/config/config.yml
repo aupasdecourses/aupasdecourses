@@ -90,3 +90,12 @@ fos_user:
     db_driver: orm
     firewall_name: apdc_firewall
     user_class: Apdc\ApdcBundle\Entity\User
+    from_email:
+        address: pierre@aupasdecourses.com
+        sender_name: pierre-apdc
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~

@@ -60,3 +60,22 @@
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
+
+{% block javascript_payout %}
+	<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
+	<!-- Sortable table for list payouts :  billing/payoutIndex.twig -->
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+		$(".tablesorter")
+			.tablesorter()
+			.tablesorterPager({
+				container: $("#pager"),
+					size: 5
+				});
+		});
+	</script>
+{% endblock %}
