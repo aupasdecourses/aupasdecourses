@@ -261,3 +261,10 @@ div#pager{
 	width:350px;
 	height:400px;
 }
+
+.fa {
+	position:relative;
+	top:400px;
+	right:25px;
+	cursor:pointer;
+}
