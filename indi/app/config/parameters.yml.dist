@@ -2,18 +2,32 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
+	database_host: vps303917.ovh.net
+	database_port: 3306
+    database_name: db_sturquier
+    database_user: ms_sturquier
+    database_password: g\2gAQUT
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: DamnTokenSecret
+    
+    refund_url:                     'https://pal-test.adyen.com/pal/servlet/Payment/v18/refund'
+    refund_webservice:              'ws_224975@Company.AuPasDeCourses'
+    refund_password:                'J?nBNkZQtJp3zW-7>1{1nm?1/'
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    store_submit_3party_url:        'https://pal-test.adyen.com/pal/servlet/Payout/v12/storeDetailAndSubmitThirdParty'
+    store_payout_webservice:        'storePayout_104791@Company.AuPasDeCourses'
+    store_payout_password:          '9GsnR!sm3]*w7>rh%^bHSd!@2'
+    confirm_3party_url:             'https://pal-test.adyen.com/pal/servlet/Payout/v12/confirmThirdParty'
+    decline_3party_url:             'https://pal-test.adyen.com/pal/servlet/Payout/v12/declineThirdParty'
+    review_payout_webservice:       'reviewPayout_092607@Company.AuPasDeCourses'
+    review_payout_password:         'BZYi/(p3h<BTA<v13At3@Dcj*'
 
-    # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    list_recurr_details_url:        'https://pal-test.adyen.com/pal/servlet/Recurring/v18/listRecurringDetails'
+    list_recurr_details_webservice: 'ws_224975@Company.AuPasDeCourses'
+    list_recurr_details_password:   'J?nBNkZQtJp3zW-7>1{1nm?1/'
+
+    adyen_platform_first_part:      'https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference='
+    adyen_platform_second_part:     '&accountKey=MerchantAccount.AuPasDeCoursesFR'
