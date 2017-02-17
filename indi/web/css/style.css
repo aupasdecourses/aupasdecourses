@@ -220,12 +220,9 @@ a:hover, a:focus {
 
 
 /* JQUERY PLUGIN TABLESORTER */
-
-/* color header (grey pale) + size of the header */
+/* color header (grey pale) */
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
-	padding: 4px;
-	border: 1px solid #FFF;
 }
 
 /* arrow which enables to sort =>  Url, position ... */
@@ -234,12 +231,6 @@ table.tablesorter thead tr .header {
 	background-repeat: no-repeat;
 	background-position: right;
 	cursor: pointer;
-}
-
-/* color content (white) + padding between header and content */
-table.tablesorter tbody td {
-	padding: 4px;
-	background-color: #FFF;
 }
 
 /* color onClick (blue) */
@@ -255,8 +246,14 @@ div#pager{
 
 
 /* REFUND INPUT */
-/* img des refunds*/
+/* Image tickets absolute + content margin-left 350 ==> avoid bugs when scrolling up */
 .merchant-ticket {
 	width:350px;
 	height:400px;
+	position:relative;
+	margin-right:2px;
+}
+.merchant-content {
+	position:relative;
+	margin-left:2px;
 }

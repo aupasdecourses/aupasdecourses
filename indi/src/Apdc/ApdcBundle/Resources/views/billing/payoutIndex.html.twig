@@ -29,16 +29,16 @@
 	</div>
 
 
-	<table class="table tablesorter">
+	<table class="table tablesorter table-striped">
 		<thead>
 			<tr>
-				<th>Reference&nbsp;</th>
+				<th>Reference&nbsp;&nbsp;</th>
 				<th>Value&nbsp;&nbsp;</th>
 				<th>Date</th>
 				<th>IBAN</th>
-				<th>Owner Name&nbsp;</th>
+				<th>Owner Name</th>
 				<th>Shopper Email</th>
-				<th>Shopper Reference</th>
+				<th>Shopper Reference&nbsp;</th>
 
 			</tr>
 		</thead>
@@ -63,15 +63,21 @@
 
 {% block javascript_payout %}
 	<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/widget-math.js"></script>
 	<!-- Sortable table for list payouts :  billing/payoutIndex.twig -->
 	<script type="text/javascript">
 		$(document).ready(function()
 		{
 		$(".tablesorter")
-			.tablesorter()
+			.tablesorter({
+				widgets: ['math'],
+				widgetOptions: {
+					math_data	: 'math'
+				}
+			})
 			.tablesorterPager({
 				container: $("#pager"),
 					size: 5
