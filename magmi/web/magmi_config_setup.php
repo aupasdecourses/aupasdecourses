@@ -47,7 +47,7 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 					umask(0);
 					Mage::app();
 					//
-					$commercants=Mage::helper('pmainguet_delivery')->liste_commercant_id();
+					$commercants=Mage::helper('pmainguet_delivery')->liste_commercant_id("catid");
 					?>
 					<?php foreach($commercants as $rootCatName => $data):?>			
 						<table width="49%;" style="display:inline;">
