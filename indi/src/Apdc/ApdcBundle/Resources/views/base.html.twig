@@ -9,9 +9,9 @@
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ path ('root')}}css/bootstrap.min.css" type="text/css" />
+			<link rel="stylesheet" href="{{ path ('root') }}css/bootstrap.min.css" type="text/css" />
 			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-			<link rel="stylesheet" href="{{ path ('root')}}css/style.css" />
+			<link rel="stylesheet" href="{{ path ('root') }}css/style.css" />
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 		{% endblock %}
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -47,27 +47,29 @@
 			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
+
+			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
+			<!-- Sortable table for list payouts :  billing/payoutIndex.twig -->
 			<script type="text/javascript">
 				$(document).ready(function()
 					{
-						$(".tablesorter").tablesorter({ 
-							widgets: ['zebra' , 'filter'], 
+						$(".tablesorter").tablesorter({
 						})
 						.tablesorterPager({
 							container: $("#pager"),
-							size: 10
-						})
-						.on('initialized filterEnd', function(){
-							var total = 0;
-							$(this).find('tbody tr:visible').each(function(){
-								// 2nd column
-								total += parseFloat( $(this).find('td:eq(1)').text() );
-							});
-							$('.total').text(total);
+							size: 5
 						})
 						;
 					}
 				);
+			</script>
+			<!-- Draggable image for input tickets : refund/input.twig -->
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#draggable").draggable({
+							axis:"y"
+							});
+				} );
 			</script>
 		{% endblock %}
 	</body>

@@ -2591,9 +2591,10 @@
 		resizableNoSelect  : 'tablesorter-disableSelection',
 		resizableStorage   : 'tablesorter-resizable'
 	});
-/*
+
+	/* IMPA */
 	// Add extra scroller css
-	$(function(){
+/*	$(function(){
 		var s = '<style>' +
 			'body.' + ts.css.resizableNoSelect + ' { -ms-user-select: none; -moz-user-select: -moz-none;' +
 				'-khtml-user-select: none; -webkit-user-select: none; user-select: none; }' +

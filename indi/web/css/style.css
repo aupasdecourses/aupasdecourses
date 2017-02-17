@@ -252,3 +252,12 @@ div#pager{
 	top: 297px !important;
 	left: 550px !important;
 }
+
+
+/* REFUND INPUT */
+
+/* img des refunds*/
+.merchant-ticket {
+	width:350px;
+	height:400px;
+}
