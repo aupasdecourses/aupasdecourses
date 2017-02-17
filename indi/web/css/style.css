@@ -255,16 +255,8 @@ div#pager{
 
 
 /* REFUND INPUT */
-
 /* img des refunds*/
 .merchant-ticket {
 	width:350px;
 	height:400px;
-}
-
-.fa {
-	position:relative;
-	top:400px;
-	right:25px;
-	cursor:pointer;
 }
