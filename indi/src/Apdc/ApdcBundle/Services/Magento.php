@@ -25,6 +25,24 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
+    public function getStoresArray($type="rootcatid"){
+        $S = [];
+        $app = \Mage::app();
+        $stores = $app->getStores();
+        foreach ($stores as $id => $idc) {
+            if($type=="storeid"){
+                $S[$id]['store_id'] = $id;
+                $S[$id]['id'] = $app->getStore($id)->getRootCategoryId();
+                $S[$id]['name'] = $app->getStore($id)->getName();
+            } else {
+                $S[$app->getStore($id)->getRootCategoryId()]['store_id'] = $id;
+                $S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
+                $S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
+            }
+        }
+        return $S;
+    }
+
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -36,19 +54,15 @@ class Magento
         $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
         $shops->addFilterToMap('path', 'catalog_category_entity.path');
 
-        $S = [];
-        $app = \Mage::app();
-        $stores = $app->getStores();
-        foreach ($stores as $id => $idc) {
-            $S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
-            $S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
-        }
+        $S = $this->getStoresArray();
 
         foreach ($shops as $shop) {
-            $commercants[$shop->getData('id_attribut_commercant')] = [
+            $storeinfo=$S[explode('/', $shop->getPath())[1]];
+            $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                     'active' => $shop->getData('enabled'),
                     'id' => $shop->getData('id_attribut_commercant'),
-                    'store' => $S[explode('/', $shop->getPath())[1]]['name'],
+                    'store' => $storeinfo['name'],
+                    'store_id' => $storeinfo['store_id'],
                     'name' => $shop->getName(),
                     'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
                     'phone' => $shop->getPhone(),
@@ -141,6 +155,7 @@ class Magento
         $orderHeader['mid'] = $order->getData('entity_id');
         $orderHeader['id'] = $order->getData('increment_id');
         $orderHeader['store'] = \Mage::app()->getStore($order->getData('store_id'))->getName();
+        $orderHeader['store_id'] = \Mage::app()->getStore($order->getData('store_id'))->getId();
         $orderHeader['status'] = $order->getStatusLabel();
         $orderHeader['upload'] = $order->getData('upload');
         $orderHeader['input'] = $order->getData('input');
@@ -175,7 +190,6 @@ class Magento
         } else {
             $orderHeader['refund_shipping_amount'] = 0;
         }
-
         return $orderHeader;
     }
 
@@ -349,7 +363,7 @@ class Magento
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
-                    $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
+                    $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$rsl[-1]['order']['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][] = $prod_data;
@@ -390,7 +404,7 @@ class Magento
     }
 
     //Mettre dans trait Order
-    public function getMerchantsOrders($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
+    public function getMerchantsOrders($commercantId, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
             $dfrom = date('Y-m-d');
@@ -405,22 +419,29 @@ class Magento
         foreach ($orders as $order) {
             $orderHeader = $this->OrderHeaderParsing($order);
             $products = \Mage::getModel('sales/order_item')->getCollection();
-            $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
-            if ($commercantId != -1) {
-                $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
-            }
+            $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')])
+                     ->addFieldToFilter('commercant', ['eq' => $commercantId]);
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
-                if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
-                    $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
+                if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
+                    $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
             }
         }
 
-        return $commercants;
+        $rsl=[];
+        $S = $this->getStoresArray("storeid");
+
+        foreach($commercants as $storeid => $commercant){
+            foreach($commercant as $com_id => $com){
+                $rsl[$S[$storeid]['name']][$com_id]=$com;
+            }
+        }
+        return $rsl;
+
     }
 
     //Mettre dans trait Order
@@ -446,19 +467,21 @@ class Magento
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
-                if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
-                    $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
+                if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
+                    $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
-                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+                $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
             }
         }
-        $rsl = [];
-        foreach ($commercants as $cid => $commercant) {
-            $rsl[$commercant['store']][$cid] = $commercant;
-        }
 
+        $rsl=[];
+        $S = $this->getStoresArray("storeid");
+
+        foreach($commercants as $storeid => $commercant){
+            $rsl[$S[$storeid]['name']]=$commercant;
+        }
         return $rsl;
     }
 
@@ -481,10 +504,11 @@ class Magento
             ],
         ];
         foreach ($orders as $order) {
-            $rsl[-1]['order'] = $this->OrderHeaderParsing($order);
+            $orderHeader = $this->OrderHeaderParsing($order);
+            $rsl[-1]['order'] = $orderHeader;
 //			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
             $products = \Mage::getModel('sales/order_item')->getCollection();
-            $products->addFieldToFilter('main_table.order_id', ['eq' => $rsl[-1]['order']['mid']]);
+            $products->addFieldToFilter('main_table.order_id', ['eq' => $orderHeader['mid']]);
             $products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
                 'refund_prix' => 'refund.prix_final',
                 'refund_diff' => 'refund.diffprixfinal',
@@ -496,7 +520,7 @@ class Magento
                 $prod_data['refund_prix'] = $product->getData('refund_prix');
                 $prod_data['refund_diff'] = $product->getData('refund_diff');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
-                    $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$prod_data['commercant_id']];
+                    $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;

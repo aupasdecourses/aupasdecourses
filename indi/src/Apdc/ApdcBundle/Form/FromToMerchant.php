@@ -33,8 +33,10 @@ class FromToMerchant extends AbstractType
 			]
 		]);
 		$choices = ['All' => -1];
-		foreach($merchants->getMerchants() as $com_id => $merchant) {
-			$choices[$merchant['name']] = $com_id;
+		foreach($merchants->getMerchants() as $storeid => $merchant) {
+			foreach($merchant as $com_id => $merch){
+				$choices[$merch['name']] = $com_id;
+			}
 		}
 		$builder->add('merchant', ChoiceType::class, [
 			'label' => 'Magasin:',

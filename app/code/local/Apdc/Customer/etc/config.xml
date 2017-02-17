@@ -15,26 +15,4 @@
             </customer>
         </blocks>
     </global>
-    <frontend>
-        <events>
-            <controller_action_postdispatch_customer_account_createPost>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>controllerActionPostdispatchCreatePostAction</method>
-                    </apdc_customer>
-                </observers>
-            </controller_action_postdispatch_customer_account_createPost>
-            <customer_register_success>
-                <observers>
-                    <apdc_customer>
-                        <type>singleton</type>
-                        <class>apdccustomer/observer_frontend</class>
-                        <method>customerRegisterSuccess</method>
-                    </apdc_customer>
-                </observers>
-            </customer_register_success>
-        </events>
-    </frontend>
 </config>
