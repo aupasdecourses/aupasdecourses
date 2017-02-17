@@ -1469,12 +1469,7 @@ label {
  * Skip Link - Account
  */
 
-.skip-account i,
-.skip-cart i,
-.skip-help i,
-.skip-search i,
-.skip-nav i,
-.skip-referral i {
+.skip-links i{
     display: block;
     margin: auto;
     line-height: 20px;
