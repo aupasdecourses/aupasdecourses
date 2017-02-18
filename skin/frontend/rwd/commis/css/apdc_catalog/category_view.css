@@ -100,6 +100,15 @@
   z-index: 2;
   text-align: left;
 }
+.product-item-info .display-hover .advice-must-select-options {
+  font-style:italic;
+  text-transform: none;
+  color: #f00;
+  font-size: 12px;
+  text-align: left;
+  margin-bottom: 4px;
+  display: none;
+}
 .product-item-info .display-hover .hover-title {
   font-weight:bold;
   border-bottom:0;

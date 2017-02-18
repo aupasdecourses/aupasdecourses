@@ -108,3 +108,13 @@ if ($popup_block != '') : ?>
 	</script>
 <?php endif ?>
 <!-- END MAIN POPUP -->
+<script>
+	jQuery(document).on('click', "#account-login",function(){
+    	jQuery("#account-login-block").show();
+    	jQuery(".popup-outer-bg").show();
+	});
+	jQuery(document).on('click', ".popup-outer-bg",function(){
+		jQuery("#account-login-block").fadeOut('fast');
+		jQuery(".popup-outer-bg").fadeOut('fast');
+	});
+</script>

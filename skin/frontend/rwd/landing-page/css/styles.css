@@ -805,3 +805,235 @@ footer .copyright {
     padding-top: 10px;
     margin-bottom: 50px;
 }
+.main-container {
+    max-width: 1200px;
+    margin: auto;
+}
+.page-header {
+    margin: 0;
+}
+.remember-me-popup {
+    display: none;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    position: relative;
+}
+.remember-me-popup.show {
+    display: block;
+}
+.remember-me-popup p {
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+}
+.remember-me-popup .remember-me-popup-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 12px;
+}
+.remember-me-popup .remember-me-popup-close-button {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-weight: 600;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    text-align: left;
+    font-size: 14px;
+}
+form .form-instructions,
+p.form-instructions,
+.opc #opc-login p:not(.required) {
+    font-family: Raleway, Georgia, Times, "Times New Roman", serif;
+    font-size: 15px;
+    color: #989898;
+    font-weight: 600;
+}
+.form-list .control div.input-box {
+    display: inline;
+    float: left;
+}
+
+.form-list .control label,
+.sp-methods dt label,
+#checkout-shipping-method-load .sp-methods dd label,
+#co-shipping-method-form .sp-methods dd label,
+.product-options ul.options-list label {
+    background-color: white;
+}
+
+.form-list .control label:hover,
+.sp-methods dt label:hover,
+#checkout-shipping-method-load .sp-methods dd label:hover,
+#co-shipping-method-form .sp-methods dd label:hover,
+.product-options ul.options-list label:hover {
+    background-color: white;
+}
+
+.form-list .fields {
+    margin-bottom: 10px;
+}
+
+.form-list .field {
+    margin-bottom: 10px;
+}
+.form-list li {
+    text-align: left;
+}
+.form-list li.wide .input-box {
+    width: auto;
+}
+
+.form-list li.wide select {
+    width: 100%;
+    height: 33px;
+    max-width: 1000px;
+}
+
+.form-list .field,
+.form-list .wide,
+.form-list .control {
+    margin-bottom: 0px;
+}
+
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text] {
+    width: 100%;
+    max-width: 100%;
+    height: 33px;
+}
+
+
+@media only screen and (min-width: 771px) {
+    #logo_smalldisplay {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .logo {
+        max-width: 100%;
+        width: 100%;
+        position: relative;
+        display: block;
+        margin-bottom: 5px;
+        padding-top: 3px;
+        float: none;
+    }
+    .logo .small {
+        max-height: 47px;
+    }
+    .logo-link img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .page-header {
+        margin: 0px;
+    }
+    .sticky-header .page-header {
+        position: fixed;
+        max-height: 40px;
+    }
+    .sticky-header {
+        margin-top: 100px;
+    }
+}
+
+.logo-link {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+.logo-link img {
+    height: 100%;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+#logo_smalldisplay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    text-align: center;
+    height: 60px;
+}
+
+@media only screen and (min-width: 771px) {
+    .logo {
+        padding: 0;
+        min-width: initial;
+        min-height: initial;
+        width: 130px;
+    }
+    .logo .small {
+        display: none;
+    }
+    .logo .large {
+        display: block;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .sticky-header .logo-link {
+        padding: 4px 10px;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .sticky-header #logo_smalldisplay {
+        margin: 0;
+        width: 100px;
+        padding-bottom: 0;
+        padding-top: 0;
+        padding-left: 10px;
+        height: 40px;
+        background-color: white;
+        right: initial;
+    }
+    .sticky-header #logo_smalldisplay .logo-link {
+        position: static;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+    }
+    .sticky-header #logo_smalldisplay .logo-link img {
+        max-height: 35px
+    }
+}
+
+
+.button,
+.cart-table .product-cart-actions .button,
+#co-shipping-method-form .buttons-set .button,
+.footer .button {
+    background: none repeat scroll 0% 0% rgb(243, 146, 0);
+    display: inline-block;
+    padding: 7px 12px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: normal;
+    font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}

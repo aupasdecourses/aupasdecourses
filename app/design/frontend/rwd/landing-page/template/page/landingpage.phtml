@@ -2,6 +2,7 @@
 	$i = rand(1, 17); // generate random number size of the array
 	$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
 	$angledown= $this->getSkinUrl("images/angle-down.png");
+	$_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -19,7 +20,12 @@
 				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
 			</video>
 			<div class="top-nav">
-				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button" target="_blank">Des questions ?</a>
+				<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+				<a class="btn standard-button faq-button" style="float:right;" id="account-login" role="button">Se connecter</a>
+				<?php else: ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?= $_helper->getCustomerWebsite()?>" role="button">Mon quartier</button>
+				<?php endif ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
 			</div>
 			<div class="intro-section">
 				<img id="logo" src="<?php echo $this->getSkinUrl('images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
@@ -96,8 +102,9 @@
 			</div>
 			<div class="hidden-sm col-md-4"></div>
 		</div>
+		<div class="hidden-sm col-md-1"></div>
 		<div class="row">
-			<a class="popup-gmaps" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401" style="display:block;width:100%">Voir nos zones de livraison</a>
+			<a class="popup-gmaps col-sm-12" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401">Voir nos zones de livraison</a>
 		</div>
 	</div>
 </section>

@@ -1474,7 +1474,7 @@ label {
 .skip-help i,
 .skip-search i,
 .skip-nav i,
-.skip-referral i {
+.skip-referral i{
     display: block;
     margin: auto;
     line-height: 20px;
