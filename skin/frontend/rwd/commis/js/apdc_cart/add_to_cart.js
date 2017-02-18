@@ -5,6 +5,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
   $(document).ready(function() {
     $(document).on('click', ':submit', function(e) {
       var form = $(this).parents('form');
+      $('.advice-must-select-options').hide();
       if (form.hasClass('apdc-add-to-cart-form')) {
         e.preventDefault();
         e.stopPropagation();
@@ -49,6 +50,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           }
         } else {
           var varienForm = new VarienForm(form.attr('id'));
+          varienForm.validator.options.focusOnError = false;
           if (varienForm.validator.validate()) {
             var ajaxUrl = form.data('ajax-action');
             var data = new FormData(form[0]);
@@ -85,6 +87,8 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             .always(function() {
               finishLoading(productId);
             });
+          } else {
+            form.find('.advice-must-select-options').show();
           }
         }
         return false;
@@ -92,6 +96,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
     });
 
     $(document).on('change', '.apdc-add-to-cart-form', function(event, init) {
+      $('.advice-must-select-options').hide();
       var updateProductOptions = $(this).find('input[name="update_product_options"]');
       var optionKeyTab = [];
       var optionKey = '';

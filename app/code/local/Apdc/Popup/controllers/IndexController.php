@@ -9,7 +9,7 @@ class Apdc_Popup_IndexController extends Mage_Core_Controller_Front_Action
      */
     public function templateAjaxAction()
     {
-        $params = $this->getRequest()->getPost();
+        $params = $this->getRequest()->getParams();
         if ($params['isAjax'] == 1) {
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $id = (isset($params['id']) ? $params['id'] : null);
@@ -17,6 +17,7 @@ class Apdc_Popup_IndexController extends Mage_Core_Controller_Front_Action
             $response = array();
             try {
 
+                $this->loadLayout();
                 $response['status'] = 'SUCCESS';
                 $block = Mage::app()->getLayout()->createBlock(
                     'apdc_popup/popup',
@@ -24,6 +25,12 @@ class Apdc_Popup_IndexController extends Mage_Core_Controller_Front_Action
                     array('template' => 'apdc_popup/popup.phtml')
                 );
                 $block->setData('id', $id);
+
+                $popupContent = $this->getLayout()->getBlock($name . '_child');
+                if ($popupContent) {
+                    $block->setChild($name . '_child', $popupContent);
+                }
+
                 $response['html'] = $block->toHtml();
             } catch (Mage_Core_Exception $e) {
                 $msg = "";
