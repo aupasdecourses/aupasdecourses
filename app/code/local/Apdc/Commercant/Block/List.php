@@ -9,34 +9,25 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $filter = array();
         $data = array();
 
-        $categories = Mage::getModel('catalog/category')
-                         ->getCollection()
-                         ->addAttributeToSelect(array('image', 'url_path'))
-                         ->addIsActiveFilter()
-                         ->addFieldToFilter('path', array('like' => "1/$rootId/%"))
-                         ->addAttributeToFilter('level', array('eq' => 3))
-                         //70 est la value_id de l'option du select, correspondant à 'Oui'                        
-                         ->addAttributeToFilter('estcom_commercant', 70)
-                         ->load();
+        $filter=Mage::helper('apdc_commercant')->getCategoriesInfos($rootId);
 
-        foreach ($categories as $cat) {
-            $filter[$cat->getId()] = [
-                'url_path' => $cat->getUrlPath(),
-                'src' => $cat->getImage(),
-            ];
-        }
-
-        $shops = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('in' => array_keys($filter)));
+        $shops = Mage::getModel('apdc_commercant/shop')->getCollection()
+            ->addFieldToFilter('stores', array('finset' =>$storeid))
+            ->addFieldtoFilter('enabled',1);
 
         foreach ($shops as $shop) {
             $shop = $shop->getData();
-            $sub = [
-                'name' => (isset($shop['name'])) ? $shop['name'] : '',
-                'src' => (isset($filter[$shop['id_category']]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$shop['id_category']]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
-                'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
-                'url' => (isset($filter[$shop['id_category']]['url_path'])) ? Mage::getUrl($filter[$shop['id_category']]['url_path']) : '',
-            ];
-            $data[] = $sub;
+            foreach($shop['id_category'] as $id){
+                if(array_key_exists($id,$filter)){
+                    $sub = [
+                        'name' => (isset($shop['name'])) ? $shop['name'] : '',
+                        'src' => (isset($filter[$id]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$id]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+                        'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
+                        'url' => (isset($filter[$id]['url_path'])) ? Mage::getUrl($filter[$id]['url_path']) : '',
+                    ];
+                    $data[] = $sub;
+                }
+            }
         }
 
         return $data;

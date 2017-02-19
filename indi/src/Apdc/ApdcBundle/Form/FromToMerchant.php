@@ -32,18 +32,20 @@ class FromToMerchant extends AbstractType
 				'class' => 'form-control datepicker'
 			]
 		]);
-		$choices = ['All' => -1];
+		$choices =[];
 		foreach($merchants->getMerchants() as $storeid => $merchant) {
 			foreach($merchant as $com_id => $merch){
-				$choices[$merch['name']] = $com_id;
+				$choices[$merch['name'].' - '.$merch['store']] = $com_id;
 			}
 		}
+		ksort($choices);
+		$choices_final=array_merge(['All' => -1],$choices);
 		$builder->add('merchant', ChoiceType::class, [
 			'label' => 'Magasin:',
 			'attr' => [
 				'class' => 'form-control'
 			],
-			'choices' => $choices,
+			'choices' => $choices_final,
 			'data' => -1
 		]);
 		$builder->add('Search', SubmitType::class);

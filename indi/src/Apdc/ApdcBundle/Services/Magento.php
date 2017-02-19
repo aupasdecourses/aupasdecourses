@@ -25,24 +25,6 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-    public function getStoresArray($type="rootcatid"){
-        $S = [];
-        $app = \Mage::app();
-        $stores = $app->getStores();
-        foreach ($stores as $id => $idc) {
-            if($type=="storeid"){
-                $S[$id]['store_id'] = $id;
-                $S[$id]['id'] = $app->getStore($id)->getRootCategoryId();
-                $S[$id]['name'] = $app->getStore($id)->getName();
-            } else {
-                $S[$app->getStore($id)->getRootCategoryId()]['store_id'] = $id;
-                $S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
-                $S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
-            }
-        }
-        return $S;
-    }
-
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -51,30 +33,32 @@ class Magento
         if ($commercantId != -1) {
             $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
         }
-        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
-        $shops->addFilterToMap('path', 'catalog_category_entity.path');
 
-        $S = $this->getStoresArray();
+        $cat_array = \Mage::helper('apdc_commercant')->getCategoriesArray();
+        $S = \Mage::helper('apdc_commercant')->getStoresArray();
 
         foreach ($shops as $shop) {
-            $storeinfo=$S[explode('/', $shop->getPath())[1]];
-            $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
-                    'active' => $shop->getData('enabled'),
-                    'id' => $shop->getData('id_attribut_commercant'),
-                    'store' => $storeinfo['name'],
-                    'store_id' => $storeinfo['store_id'],
-                    'name' => $shop->getName(),
-                    'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
-                    'phone' => $shop->getPhone(),
-                    'mobile' => '',
-                    'mail3' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
-                    'mailc' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
-                    'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
-                    'orders' => [],
-                    'timetable' => implode(',', $shop->getTimetable()),
-                    'closing_periods' => $shop->getClosingPeriods(),
-                    'delivery_days' => 'Du Mardi au Vendredi',
-                ];
+            $cats=$shop->getIdCategory();
+            foreach($cats as $cat){
+                $storeinfo=$S[explode('/', $cat_array[$cat])[1]];
+                $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
+                        'active' => $shop->getData('enabled'),
+                        'id' => $shop->getData('id_attribut_commercant'),
+                        'store' => $storeinfo['name'],
+                        'store_id' => $storeinfo['store_id'],
+                        'name' => $shop->getName(),
+                        'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+                        'phone' => $shop->getPhone(),
+                        'mobile' => '',
+                        'mail3' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+                        'mailc' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+                        'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                        'orders' => [],
+                        'timetable' => implode(',', $shop->getTimetable()),
+                        'closing_periods' => $shop->getClosingPeriods(),
+                        'delivery_days' => 'Du Mardi au Vendredi',
+                    ];
+                }
         }
         uasort($commercants, function ($lhs, $rhs) {
             if ($lhs['active'] < $rhs['active']) {
@@ -433,7 +417,7 @@ class Magento
         }
 
         $rsl=[];
-        $S = $this->getStoresArray("storeid");
+        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
 
         foreach($commercants as $storeid => $commercant){
             foreach($commercant as $com_id => $com){
@@ -477,11 +461,14 @@ class Magento
         }
 
         $rsl=[];
-        $S = $this->getStoresArray("storeid");
+        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
 
         foreach($commercants as $storeid => $commercant){
             $rsl[$S[$storeid]['name']]=$commercant;
         }
+
+
+
         return $rsl;
     }
 
