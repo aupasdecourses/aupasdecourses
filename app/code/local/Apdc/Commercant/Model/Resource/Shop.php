@@ -30,7 +30,7 @@ class Apdc_Commercant_Model_Resource_Shop extends Mage_Core_Model_Resource_Db_Ab
         }
         $shop->setData('delivery_days', $deliveryDays);
 
-        $categories = @unserialize($shop->getData('id_category'));
+        $categories = explode(",",$shop->getData('id_category'));
         if ($categories === false) {
             $categories = [];
         }
@@ -46,7 +46,7 @@ class Apdc_Commercant_Model_Resource_Shop extends Mage_Core_Model_Resource_Db_Ab
         }
 
         if (null !== $categories = $shop->getData('id_category')) {
-            $shop->setData('id_category', serialize($categories));
+            $shop->setData('id_category', implode(",",$categories));
         }
 
         if (null !== $stores = $shop->getData('stores')) {
