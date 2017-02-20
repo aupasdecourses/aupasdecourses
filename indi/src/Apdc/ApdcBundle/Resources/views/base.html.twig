@@ -13,6 +13,7 @@
 			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
 			<link rel="stylesheet" href="{{ path ('root') }}css/style.css" />
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+			<link rel="stylesheet" href="{{ path ('root') }}css/theme.blue.css" type="text/css" />
 		{% endblock %}
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 	</head>
@@ -39,9 +40,7 @@
 			<script type="text/javascript" src="{{ path('root') }}js/bootstrap.min.js"></script>
 			<script type="text/javascript" src="{{ path('root') }}js/datepicker.js"></script>
 		{% endblock %}
-		{% block javascript_refund %}
-		{% endblock %}
-		{% block javascript_payout %}
-		{% endblock %}
+		{% block javascript_refund %}{% endblock %}
+		{% block javascript_payout %}{% endblock %}
 	</body>
 </html>

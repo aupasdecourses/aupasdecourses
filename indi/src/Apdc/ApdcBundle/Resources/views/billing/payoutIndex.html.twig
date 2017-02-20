@@ -28,26 +28,24 @@
 		</form>
 	</div>
 
-
-	<table class="table tablesorter table-striped">
+	<table class="table table-striped tablesorter">
 		<thead>
 			<tr>
-				<th>Reference&nbsp;&nbsp;</th>
-				<th>Value&nbsp;&nbsp;</th>
-				<th>Date</th>
+				<th>Reference</th>
+				<th>Value</th>
+				<th data-sorter="false">Date</th>
 				<th>IBAN</th>
 				<th>Owner Name</th>
 				<th>Shopper Email</th>
-				<th>Shopper Reference&nbsp;</th>
-
+				<th>Shopper Reference</th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for payout in payout_list %}
+			{% for payout in payout_list %}
 			<tr>
 				<td>{{ payout.reference }}</td>
 				<td>{{ payout.value/100 }}</td>
-				<td>{{ payout.date|date('Y-m-d H:i:s') }}</td>
+				<td>{{ payout.date|date('d-m-Y H:i:s') }}</td>
 				<td>{{ payout.iban }}</td>
 				<td>{{ payout.ownerName }}</td>
 				<td>{{ payout.shopperEmail }}</td>
@@ -55,33 +53,65 @@
 			</tr>
 		{% endfor %}
 		</tbody>
-	</table>
-	Total Value : <span class="total"></span>
-</div>
-{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
-{% endblock %}
+	<tr>
+				<th colspan="1">Total values</th>
+				<th data-math="col-sum"></th>
+			</tr>
 
+</div>
+{% endblock %}
 {% block javascript_payout %}
-	<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/widget-math.js"></script>
-	<!-- Sortable table for list payouts :  billing/payoutIndex.twig -->
+	<!-- SORT function and MATH function for total column 'value'  -->
 	<script type="text/javascript">
-		$(document).ready(function()
-		{
-		$(".tablesorter")
-			.tablesorter({
-				widgets: ['math'],
-				widgetOptions: {
-					math_data	: 'math'
-				}
-			})
-			.tablesorterPager({
-				container: $("#pager"),
-					size: 5
-				});
-		});
+
+	$(".tablesorter")
+	.tablesorter({
+		// try 'blackice', 'blue', 'dark', 'default'
+		theme: 'blue',
+		// fix column width
+		widthFixed: true,
+		// fix mathematic count
+		delayInit: true,
+		// widgets for sort + count
+		widgets: ['zebra' , 'math' , 'filter'],
+		ignoreCase: false,
+		widgetOptions: {
+			filter_columnFilters: true, // column filter at top of each column
+
+			// filter widget: Set this option to true to hide the filter row
+			// initially. The rows is revealed by hovering over the filter
+			// row or giving any filter input/select focus.
+			filter_hideFilters: false,
+
+			// filter widget: Set this option to false to keep the searches
+			// case sensitive
+			filter_ignoreCase: true,
+
+			// filter widget: If true, ALL filter searches will only use parsed
+			// data. To only use parsed data in specific columns, set this option
+			// to false and add class name "filter-parsed" to the header
+			filter_useParsedData: false,
+
+			// data-math attribute
+			math_data	: 'math',
+			math_ignore : [0,1],
+			math_none	: 'N/A',
+			math_complete: function($cell, wo, result, value, arry){
+				var txt ='<span class="align-decimal">' + result + '</span>';
+				return txt;
+			},
+			math_mask	: '### ### ###,00 €',
+			// event triggered on the table => math widget updates all data-math cells
+			math_event	: 'recalculate'
+		}
+	})
+	.tablesorterPager({
+		container: $("#pager"),
+		size: 5
+	});
 	</script>
 {% endblock %}

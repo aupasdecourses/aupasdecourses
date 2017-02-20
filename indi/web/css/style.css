@@ -220,24 +220,6 @@ a:hover, a:focus {
 
 
 /* JQUERY PLUGIN TABLESORTER */
-/* color header (grey pale) */
-table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background-color: #e6EEEE;
-}
-
-/* arrow which enables to sort =>  Url, position ... */
-table.tablesorter thead tr .header {
-	background-image: url(../img/bg.gif);
-	background-repeat: no-repeat;
-	background-position: right;
-	cursor: pointer;
-}
-
-/* color onClick (blue) */
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-	background-color: #8dbdd8;
-}
-
 div#pager{
 	position:absolute !important;
 	top: 297px !important;
