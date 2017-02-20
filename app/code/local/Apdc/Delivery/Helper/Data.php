@@ -71,7 +71,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function getgooglecsv($comid){
 
-		$cat=$this->info_commercant($comid,"catid");
+		$cat=$this->info_commercant($comid);
 		return [
 			"name"=>$cat->getName(),
 			"key"=>$cat->getData('google_key'),
