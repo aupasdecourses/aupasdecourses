@@ -1,0 +1,10 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		BILLING ALL
+			{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

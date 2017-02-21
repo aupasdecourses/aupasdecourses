@@ -12,7 +12,7 @@ use Apdc\ApdcBundle\Form\PayoutType;
 
 class BillingController extends Controller
 {
-	public function indexAction(Request $request, $from, $to)
+	public function indexAction(Request $request)
 	{
 		if(!$this->isGranted('ROLE_ADMIN'))
 		{
@@ -21,32 +21,58 @@ class BillingController extends Controller
 
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
 
-		$form_fromto->handleRequest($request);
+		$form_fromtoMerchant->handleRequest($request);
 
-		if($form_fromto->isValid())
-			return $this->redirectToRoute('billingIndex', [
-				'from'	=> $entity_fromto->from,
-				'to'	=> $entity_fromto->to
-			]);
+		if($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()){
+			if($entity_fromtoMerchant->merchant <> -1) {
+				return $this->redirectToRoute('billingOne', [
+					'id' => $entity_fromtoMerchant->merchant,
+					'from' => $entity_fromtoMerchant->from,
+					'to' => $entity_fromtoMerchant->to
+				]);
+			} else {
+				return $this->redirectToRoute('billingAll', [
+					'from'	=> $entity_fromtoMerchant->from,
+					'to'	=> $entity_fromtoMerchant->to
+				]);
+			}
+		}
+
+		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			]
+		]);
+	}
+
+
+	public function billingAllAction(Request $request, $from, $to)
+	{
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant,			[
+			'action' => $this->generateUrl('billingIndex')
+		]);
 
 		/* STRTOTIME = EPIC PHP FUNCTION */
-		if(!isset($from)&& !isset($to))
+/*		if(!isset($from)&& !isset($to))
 			return $this->redirectToRoute('billingIndex', [
 				'from'	=> date('Y-m-d', strtotime('first day of this month')), 
 				'to'	=> date('Y-m-d', strtotime('last day of this month'))
 			]);
+ */
+		$form_fromtoMerchant->get('from')->setData($from);
+		$form_fromtoMerchant->get('to')->setData($to);
 
-		$form_fromto->get('from')->setData($from);
-		$form_fromto->get('to')->setData($to);
-
-		$orders = $mage->getOrders($from, $to);	
-
-		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
-			'forms'	=> [ $form_fromto->createView() ],
-			'orders' => $orders
+		return $this->render('ApdcApdcBundle::billing/all.html.twig', [
+			'forms'	=> [ 
+				$form_fromtoMerchant->createView(), 
+			],
+			'stores' => $mage->getMerchantsOrdersByStore(-1, $from, $to)
 		]);
 	}
 

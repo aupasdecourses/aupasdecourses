@@ -5,21 +5,107 @@
 <div class="container">
 	<h1> Facturation </h1><br>
 {% include 'ApdcApdcBundle::forms/default.html.twig' %}
-	<table class='table'>
+	<table id="billTable" class="table table-striped">
 		<thead>
 			<tr>
+				<th colspan="2">Date</th>
+				<th>#Commande</th>
+				<th>Nom client</th>
+				<th>Commercant</th>
+				<th colspan="2">Commande Client</th>
+				<th colspan="2">Avoir</th>
+				<th>Detail Avoir</th>
+				<th colspan="2">Valeur Ticket</th>
+				<th colspan="2">Commission APDC</th>
+				<th colspan="2">Versement Commercant</th>
+			</tr>
+			<tr>
+				<th>Création</th>
+				<th>Livraison</th>
+				<th></th>
+				<th></th>
+				<th class="sort"></th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th></th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="5">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
 			</tr>
-		</thead>
+		</tfoot>
 	</table>
-
 
 
 
 
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_billing %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_billing %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function() {
+	$('#billTable').DataTable( {
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+
+			// Total over all pages
+			total = api
+				.column( 1 )
+				.data()
+				.reduce( function (a, b) {
+					return intVal(a) + intVal(b);
+				}, 0 );
+
+			// Total over this page
+			pageTotal = api
+				.column( 1, { page: 'current'} )
+				.data()
+				.reduce( function (a, b) {
+					return intVal(a) + intVal(b);
+				}, 0 );
+
+			// Update footer
+			$( api.column( 1 ).footer() ).html(
+					'$'+pageTotal +' ( $'+ total +' total)'
+					);
+		}
+	} );
+} );
+	</script>
+
 {% endblock %}
