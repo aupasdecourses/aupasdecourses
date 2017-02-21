@@ -206,25 +206,20 @@ a:hover, a:focus {
 .ticket-input{
 	width: 80px;
 }
-
-/* payout */
-.borderless tbody tr td,
-.table-borderless tbody tr th,
-.table-borderless thead tr th,
-.table-borderless thead tr td,
-.table-borderless tfoot tr th,
-.table-borderless tfoot tr td {
-	border: none;
-}
-
-
-
+/* PAYOUT */
 /* JQUERY PLUGIN TABLESORTER */
-div#pager{
-	position:absolute !important;
-	top: 297px !important;
-	left: 550px !important;
+div#entryNumber{
+	position:absolute;
+	left: 175px;
+	bottom: 34px;
 }
+
+div#pageNumero{
+	position:absolute;
+	left: 165px;
+	bottom: 4px;
+}
+
 
 
 /* REFUND INPUT */

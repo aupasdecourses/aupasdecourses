@@ -14,20 +14,33 @@
 	</div>
 
 	<h1>Historique des payouts</h1>
-	
-	<p><h4>Nombre d'entrées : </h4></p>
-	<div id ="pager">
-		<form>
-			<select class="pagesize">
-				<option value="1">1</option>
-				<option selected="selected" value="5">5</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-				<option value="9999">All</option>
-			</select>
-		</form>
-	</div>
 
+	<div class="row">
+		<div class="col-md-3">
+			<h4>Nombre d'entrées : </h4>
+				<div id ="entryNumber" class="ts-pager">
+						<select class="pagesize">
+							<option value="1">1</option>
+							<option selected="selected" value="10">10</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="999999">All</option>
+						</select>
+				</div>
+			<h4>Numero de page : </h4>
+				<div id ="pageNumero" class="ts-pager">
+						<select class="pagenum"></select>
+				</div>
+		</div>
+		<div class="col-md-6">
+			Recherche sur toutes les colonnes <input class="search" type="search" data-column="all"></br>
+			<button type="button" class="reset">Reset la recherche</button>
+		</div>
+		<div class="col-md-3">
+			<button type="button" id="reset-filter">Reset les filtres colonne</button>
+		</div>
+	</div>
+	</br>
 	<table class="table table-striped tablesorter">
 		<thead>
 			<tr>
@@ -53,52 +66,85 @@
 			</tr>
 		{% endfor %}
 		</tbody>
-	<tr>
-				<th colspan="1">Total values</th>
-				<th data-math="col-sum"></th>
+		<tfoot>
+			<tr>
+				<th colspan="7" class="ts-pager form-horizontal">
+					<div class="btn-group">
+						<button type="button" class="btn first"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+						<button type="button" class="btn prev"><i class="fa fa-backward" aria-hidden="true"></i></button>
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn next"><i class="fa fa-forward" aria-hidden="true"></i></button>
+						<button type="button" class="btn last"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+					</div>
+				</th>
 			</tr>
+		</tfoot>
+		<tr>
+				<th colspan="1">Total ALL values</th>
+				<th data-math="col-sum"></th>
+		</tr>
+	</table>
 
 </div>
 {% endblock %}
+{% block css_payout %}
+	<link rel="stylesheet" href="{{ path ('root') }}css/bootstrap-v3.min.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/theme.bootstrap_2.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/jquery.tablesorter.pager.css" type="text/css" />
+{% endblock %}
 {% block javascript_payout %}
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/widget-math.js"></script>
 	<!-- SORT function and MATH function for total column 'value'  -->
 	<script type="text/javascript">
+	$.tablesorter.themes.bootstrap = {
+		iconSortNone : 'bootstrap-icon-unsorted', // class name added to icon when column is not sorted
+		iconSortAsc  : 'icon-chevron-up', // class name added to icon when column has ascending sort
+		iconSortDesc : 'icon-chevron-down', // class name added to icon when column has descending sort
+	};
+
+	/* RESET FILTER */
+	$(function() {
+		var $table = $(".tablesorter");
+		$("#reset-filter").click(function(e) {
+			$table.trigger('filterReset').trigger('sortReset');
+			return false;
+		});
+	});
+	
+	
+
 
 	$(".tablesorter")
 	.tablesorter({
-		// try 'blackice', 'blue', 'dark', 'default'
-		theme: 'blue',
+		theme: 'bootstrap',
 		// fix column width
 		widthFixed: true,
+
+		headerTemplate : '{content} {icon}',
+
 		// fix mathematic count
 		delayInit: true,
-		// widgets for sort + count
-		widgets: ['zebra' , 'math' , 'filter'],
-		ignoreCase: false,
+		// widgets for  bootstrap theme , columns , count , sort
+		widgets: ['uitheme' , 'columns' , 'math' , 'filter'],
 		widgetOptions: {
-			filter_columnFilters: true, // column filter at top of each column
+			filter_external : '.search', // search filter
+			filter_reset	: '.reset',
 
-			// filter widget: Set this option to true to hide the filter row
-			// initially. The rows is revealed by hovering over the filter
-			// row or giving any filter input/select focus.
-			filter_hideFilters: false,
-
-			// filter widget: Set this option to false to keep the searches
-			// case sensitive
-			filter_ignoreCase: true,
+			filter_columnFilters: true, // true = column filter at top of each column
+			filter_hideFilters: false, // true = search filter on hover
+			filter_ignoreCase: true, // true = NO case trouble
 
 			// filter widget: If true, ALL filter searches will only use parsed
 			// data. To only use parsed data in specific columns, set this option
 			// to false and add class name "filter-parsed" to the header
-			filter_useParsedData: false,
+			filter_useParsedData: true,
 
 			// data-math attribute
 			math_data	: 'math',
-			math_ignore : [0,1],
 			math_none	: 'N/A',
 			math_complete: function($cell, wo, result, value, arry){
 				var txt ='<span class="align-decimal">' + result + '</span>';
@@ -110,8 +156,18 @@
 		}
 	})
 	.tablesorterPager({
-		container: $("#pager"),
-		size: 5
+		container: $(".ts-pager"),
+		size: 10,
+		cssGoto: ".pagenum",
+		output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+	});
+
+	// make search buttons work
+	$('button[data-column]').on('click', function() {
+		var $this = $(this),
+			totalColumns = $table[0].config.columns,
+			col = $this.data('column'),
+			filter = [];
 	});
 	</script>
 {% endblock %}
