@@ -39,6 +39,30 @@
 			</tr>
 		</thead>
 		<tbody>
+		{% for store_name, mercs in merchants %}
+			{% for merchant_id, merchant in mercs %}
+				{% for order_id, order in merchant.orders %}
+					<tr>
+						<td>{{ order.order_date }}</td>
+						<td>{{ order.delivery_date }}</td>
+						<td>{{ order_id }}</td>
+						<td>{{ order.first_name ~ " " ~ order.last_name }}</td>
+						<td>{{ merchant.name }}</td>
+						<td>{{ order.total_prix }}</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+						<td>#</td>
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		{% endfor %}
 		</tbody>
 		<tfoot>
 			<tr>
@@ -82,7 +106,7 @@ $(document).ready(function() {
 
 			// Total over all pages
 			total = api
-				.column( 1 )
+				.column( 5 )
 				.data()
 				.reduce( function (a, b) {
 					return intVal(a) + intVal(b);
@@ -90,14 +114,14 @@ $(document).ready(function() {
 
 			// Total over this page
 			pageTotal = api
-				.column( 1, { page: 'current'} )
+				.column( 5, { page: 'current'} )
 				.data()
 				.reduce( function (a, b) {
 					return intVal(a) + intVal(b);
 				}, 0 );
 
 			// Update footer
-			$( api.column( 1 ).footer() ).html(
+			$( api.column( 5 ).footer() ).html(
 					'$'+pageTotal +' ( $'+ total +' total)'
 					);
 		}

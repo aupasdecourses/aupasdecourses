@@ -25,6 +25,54 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
+	
+	public function getShops($commercantId = -1)
+	{
+		$commercants = [];
+		
+		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        if ($commercantId != -1) {
+            $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
+        }
+		$shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+		$shops->addFilterToMap('path' , 'catalog_category_entity.path');
+
+		$S = [];
+		$app = \Mage::app();
+		$stores = $app->getStores();
+		foreach ($stores as $id => $idc) {
+			$S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
+			$S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
+		}
+
+		foreach ($shops as $shop) {
+			$commercants[$shop->getData('id_attribut_commercant')] = [
+				'active'			=> $shop->getData('enabled'),
+				'id'				=> $shop->getData('id_attribut_commercant'),
+				'store'				=> $S[explode('/', $shop->getPath())[1]]['name'],
+				'name'				=> $shop->getName(),
+				'addr'				=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+				'phone'				=> $shop->getPhone(),
+				'mail3'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+                'mailc'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+	            'mailp'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                'orders'			=> [],
+                'timetable' => implode(',', $shop->getTimetable()),
+                'closing_periods'	=> $shop->getClosingPeriods(),
+                'delivery_days'		=> 'Du Mardi au Vendredi',
+                ];
+        }
+        uasort($commercants, function ($lhs, $rhs) {
+            if ($lhs['active'] < $rhs['active']) {
+                return true;
+            }
+
+            return false;
+		});
+		asort($commercants);
+        return $commercants;
+	}
+
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
