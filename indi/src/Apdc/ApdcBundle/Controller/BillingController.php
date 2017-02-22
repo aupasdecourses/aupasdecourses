@@ -48,6 +48,27 @@ class BillingController extends Controller
 		]);
 	}
 
+	public function billingOneAction(Request $request, $id, $from, $to)
+	{
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant,
+		[
+			'action' => $this->generateUrl('billingIndex')
+		]);
+
+		$form_fromtoMerchant->get('from')->setData($from);
+		$form_fromtoMerchant->get('to')->setData($to);
+		$form_fromtoMerchant->get('merchant')->setData($id);
+
+		return $this->render('ApdcApdcBundle::billing/one.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			],
+			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
+		]);
+	}
 
 	public function billingAllAction(Request $request, $from, $to)
 	{

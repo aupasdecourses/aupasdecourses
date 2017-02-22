@@ -2,10 +2,10 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-<div class="container">
-	<h1> Facturation </h1><br>
+	<div class="container">
+		<h1> Facturation ONE </h1><br>
 {% include 'ApdcApdcBundle::forms/default.html.twig' %}
-	<table id="billIndexTable" class="table table-striped">
+<table id="billOneTable" class="table table-striped">
 		<thead>
 			<tr>
 				<th colspan="2">Date</th>
@@ -58,10 +58,7 @@
 		</tfoot>
 	</table>
 
-
-
-
-</div>
+	</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
 {% block css_billing %}
@@ -71,7 +68,7 @@
 	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
 $(document).ready(function() {
-	$('#billIndexTable').DataTable( {
+	$('#billOneTable').DataTable( {
 		"footerCallback": function ( row, data, start, end, display ) {
 			var api = this.api(), data;
 
