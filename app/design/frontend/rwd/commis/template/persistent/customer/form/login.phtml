@@ -6,29 +6,13 @@
                 <?php echo $this->__('Login'); ?>
             <?php endif; ?></h1>
     </div>
-    <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" class="scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
-        <div class="col2-set">
-           <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
-            <div class="col-sm-2"></div>
-            <div class="col-sm-4 new-users">
-                <div class="content">
-                    <h2>Nouveau client ?</h2>
-                    <p class="form-instructions"><?php echo $this->__('Registration is free and easy!') ?></p>
-                    <p>Attention, nous ne pourrons vous livrer que si vous êtes dans la zone couverte par notre service. <a href="<?php echo Mage::getBaseUrl();?>zone-et-horaire" target="_blank">Cliquez ici pour en savoir plus.</a>
-                </div>
-                <div class="buttons-set" style='margin-bottom:20px;'>
-                    <a title="<?php echo $this->__('Create an Account') ?>" class="button" href="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>"><span><span>Créer un compte</span></span></a>
-                </div>
-            </div>
-            <?php else:?>
-                <div class="col-sm-4"></div>
-            <?php endif; ?>
-            <div class="col-sm-4 registered-users">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 registered-users">
+                <?php echo $this->getMessagesBlock()->toHtml() ?>
                 <div class="content fieldset">
-                    <h2>Déjà enregistré ?</h2>
-                    <p class="form-instructions"><?php echo $this->__('If you have an account with us, please log in.') ?></p>
                     <p class="required"><?php echo $this->__('* Required Fields') ?></p>
                     <ul class="form-list">
                         <li>
@@ -44,22 +28,24 @@
                             </div>
                         </li>
                         <?php echo $this->getChildHtml('form.additional.info'); ?>
-                        <li>
-                            <a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left"><?php echo $this->__('Forgot Your Password?') ?></a>
-                        </li>
-                        <?php echo $this->getChildHtml('persistent.remember.me'); ?>
-                    </ul>
-                    <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
-                </div>
-                <div class="buttons-set">
-                    <button type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
+                         <?php echo $this->getChildHtml('persistent.remember.me'); ?>
+                         <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+                        <div class="col-sm-12" style="text-align:center;">
+                            <button type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><?php echo $this->__('Login') ?></span></button>
+                            <a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left" style="margin-left:20px;"><?php echo $this->__('Forgot Your Password?') ?></a>
+                        </div>
+                    </ul>  
                 </div>
             </div>
-            <?php if ($this->helper('customer')->isRegistrationAllowed()): ?>
-                <div class="col-sm-2"></div>
-            <?php else:?>
-                <div class="col-sm-4"></div>
-            <?php endif; ?>
+             <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" style="text-align:center;">
+                <p class="required">&nbsp;</p>
+                <span>Pas encore de compte ? </span><a title="<?php echo $this->__('Register') ?>" class="button" href="<?php echo Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl()) ?>"><span><?php echo $this->__('Register') ?></span></a>
+            </div>
+            <div class="col-sm-3"></div>
         </div>
         <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
             <input name="context" type="hidden" value="checkout" />
