@@ -5,7 +5,7 @@
 <div class="container">
 	<h1> Facturation </h1><br>
 {% include 'ApdcApdcBundle::forms/default.html.twig' %}
-	<table id="billIndexTable" class="table table-striped">
+	<table id="billIndex" class="table table-striped">
 		<thead>
 			<tr>
 				<th colspan="2">Date</th>
@@ -71,7 +71,7 @@
 	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
 $(document).ready(function() {
-	$('#billIndexTable').DataTable( {
+	$('#billIndex').DataTable( {
 		"footerCallback": function ( row, data, start, end, display ) {
 			var api = this.api(), data;
 

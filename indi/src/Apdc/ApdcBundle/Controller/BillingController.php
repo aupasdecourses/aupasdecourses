@@ -21,6 +21,9 @@ class BillingController extends Controller
 
 		$mage = $this->container->get('apdc_apdc.magento');
 
+
+		$bill = $mage->data_facturation_products();
+
 		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
 
@@ -61,6 +64,7 @@ class BillingController extends Controller
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
 		$form_fromtoMerchant->get('merchant')->setData($id);
+
 
 		return $this->render('ApdcApdcBundle::billing/one.html.twig', [
 			'forms' => [
