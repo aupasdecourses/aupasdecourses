@@ -460,8 +460,6 @@ class Magento
             }
         }
 
-        dump($commercants);
-
         $rsl=[];
         $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
 
