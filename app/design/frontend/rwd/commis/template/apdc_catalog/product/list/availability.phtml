@@ -14,7 +14,7 @@ if($this->getRequest()->getControllerName()=='category'){
 <div class="product-availability">
     <div class="hover-title product-availability-title"><?php echo $this->__('Livraison possible le:'); ?></div>
     <?php foreach($this->getWeekDays() as $weekDay): ?>
-        <?php if (!is_null($weekDay['value']) || !in_array($weekDay['value'], $availability)) : ?>
+        <?php if (is_null($weekDay['value']) || !in_array($weekDay['value'], $availability)) : ?>
             <?php $body .= '<td class="unavailable">-</td>'; ?>
             <?php $classHeader = 'unavailable'; ?>
         <?php else : ?>

@@ -7,6 +7,9 @@
                 }
             }
         }
+        &#prices, &#concept{
+            min-height:800px;
+        }
         &#cards{
             .clients{
                 margin-bottom: 30px;
@@ -22,6 +25,7 @@
             }
         }
     }
+
     footer{
         .button-newsletter{
             text-align: center;
@@ -57,9 +61,21 @@
         }
     }
 
+    section{
+        &#prices, &#concept{
+            min-height:0;
+        }
+    }
+
 }
 
 @media screen and (max-width: 620px){
+    section{
+        &#prices, &#concept{
+            min-height:0;
+        }
+    }
+
     footer{
         .copyright{
             margin-bottom: 20px;
@@ -75,6 +91,12 @@
     .cms-home-main{
         header{
             margin-bottom: 70px;
+        }
+    }
+
+    section{
+        &#prices, &#concept{
+            min-height:0;
         }
     }
 }

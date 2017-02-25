@@ -38,6 +38,7 @@ class Apdc_Catalog_Block_Product_List_Availability extends Mage_Core_Block_Templ
                 $path = explode('/', Mage::registry('current_category')->getPath());
                 if (isset($path[3])) {
                     $comcatid = $path[3];
+
                     $this->_availability= Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_category',array("finset"=>$comcatid))->getFirstItem()->getDeliveryDays();
                 }
             }
