@@ -12010,7 +12010,8 @@ footer .button {
 }
 
 /* LOGIN FORM */
-#login-form-popup-container {
+#login-form-popup-container,
+#newsletter-form-popup-container {
   position: absolute;
   position: fixed;
   z-index: 10000;
