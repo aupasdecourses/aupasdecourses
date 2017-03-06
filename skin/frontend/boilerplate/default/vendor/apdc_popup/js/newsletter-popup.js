@@ -54,7 +54,8 @@ jQuery(document).ready(function() {
         var ajaxUrl = jQuery(elt).attr('action');
         var data = new FormData(jQuery(elt)[0]);
         data.append("isAjax", 1);
-        jQuery(elt).children("input").attr("disabled", true);
+        jQuery(elt).children(".form-group").children("input").attr("disabled", true);
+        jQuery(elt).children(".form-group").children("select").attr("disabled", true);
         jQuery(elt).children("button").attr("disabled", true).removeClass("button-green");
         jQuery.ajax({
                 url: ajaxUrl,
@@ -66,8 +67,6 @@ jQuery(document).ready(function() {
             })
             .done(function(response) {
                 response = JSON.parse(response);
-                console.log(response);
-                console.log(response.html);
                 apdcNewsletterPopup.updateContent(response.html);
             })
             .fail(function() {
