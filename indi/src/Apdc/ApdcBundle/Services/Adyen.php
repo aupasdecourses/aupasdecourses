@@ -2,8 +2,8 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-class Adyen {
-
+class Adyen
+{
 	private $_ch;
 
 	/* Refund Pay-in */
@@ -26,8 +26,8 @@ class Adyen {
 	private $list_recurr_details_webservice;
 	private $list_recurr_details_password;
 
-	public function __construct($refund_url, $refund_webservice, $refund_password, $store_submit_3party_url, $store_payout_webservice, $store_payout_password, $confirm_3party_url, $decline_3party_url, $review_payout_webservice, $review_payout_password, $list_recurr_details_url, $list_recurr_details_webservice, $list_recurr_details_password){
-
+	public function __construct($refund_url, $refund_webservice, $refund_password, $store_submit_3party_url, $store_payout_webservice, $store_payout_password, $confirm_3party_url, $decline_3party_url, $review_payout_webservice, $review_payout_password, $list_recurr_details_url, $list_recurr_details_webservice, $list_recurr_details_password)
+	{
 		$this->_ch = curl_init();
 
 		$this->refund_url						= $refund_url;
@@ -44,7 +44,7 @@ class Adyen {
 		$this->list_recurr_details_webservice	= $list_recurr_details_webservice;
 		$this->list_recurr_details_password		= $list_recurr_details_password;
 
-		if($this->_ch === FALSE){
+		if ($this->_ch === false) {
 			throw new Exception('Adyen: curl_init() error:'.curl_error($this->_ch));
 		}
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, true);
@@ -53,20 +53,20 @@ class Adyen {
 		curl_setopt($this->_ch, CURLOPT_POST, true);
 	}
 
-	public function __destruct(){
-
+	public function __destruct()
+	{
 		curl_close($this->_ch);
 	}
 
 	public function refund($value, $originalReference)
 	{
 		$refundTable = array(
-			"merchantAccount" => "AuPasDeCoursesFR",
-			"modificationAmount" => array(
-				"value" => $value,
-				"currency" => "EUR"
+			"merchantAccount"		=> "AuPasDeCoursesFR",
+			"modificationAmount"	=> array(
+				"value"					=> $value,
+				"currency"				=> "EUR"
 			),
-			"originalReference" => $originalReference
+			"originalReference"		=> $originalReference
 		);
 		$jsonRefundTable = json_encode($refundTable);
 
@@ -75,35 +75,35 @@ class Adyen {
 		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $jsonRefundTable);
 		$refundResult = curl_exec($this->_ch);
 
-		if(curl_errno($this->_ch))
-			throw new Exception('Refund Curl Error'.curl_error($this->_ch)); 
+		if (curl_errno($this->_ch))
+			throw new Exception('Refund Curl Error'.curl_error($this->_ch));
 
 		$refundDecoded = json_decode($refundResult, true);
 		if (!in_array("[refund-received]", $refundDecoded))
 			throw new Exception('Adyen Error, Remboursement non valide');
 
-		return($refundDecoded['response']); 
+		return($refundDecoded['response']);
 	}
 
-	public function payout($value, $iban, $ownerName, $reference, $shopperEmail, $shopperReference)  
+	public function payout($value, $iban, $ownerName, $reference, $shopperEmail, $shopperReference)
 	{
 		$storeTable = array(
 			"amount" => array(
-				"currency" =>"EUR",
-				"value" => $value
+				"currency"			=> "EUR",
+				"value"				=> $value
 			),
 			"bank" => array(
-				"iban" => $iban,
-				"ownerName" => $ownerName,
-				"countryCode" => "FR"
+				"iban"				=> $iban,
+				"ownerName"			=> $ownerName,
+				"countryCode"		=> "FR"
 			),
-			"merchantAccount" => "AuPasDeCoursesFR",
-			"recurring" => array(
-				"contract" => "PAYOUT"
+			"merchantAccount"	=> "AuPasDeCoursesFR",
+			"recurring"			=> array(
+				"contract"			=> "PAYOUT"
 			),
-			"reference" => $reference,
-			"shopperEmail" => $shopperEmail,
-			"shopperReference" => $shopperReference
+			"reference"			=> $reference,
+			"shopperEmail"		=> $shopperEmail,
+			"shopperReference"	=> $shopperReference
 		);
 		$jsonStoreTable = json_encode($storeTable);
 
@@ -119,8 +119,8 @@ class Adyen {
 
 		/* CONFIRMATION DU PAYOUT */
 		$jsonDecoded = json_decode($storeResult, true);
-		$jsonDecoded["merchantAccount"] = "AuPasDeCoursesFR";
-		$jsonDecoded["originalReference"] = $jsonDecoded["pspReference"];
+		$jsonDecoded["merchantAccount"]		= "AuPasDeCoursesFR";
+		$jsonDecoded["originalReference"]	= $jsonDecoded["pspReference"];
 		unset($jsonDecoded["pspReference"]);
 		unset($jsonDecoded["resultCode"]);
 
@@ -136,7 +136,6 @@ class Adyen {
 		if (!in_array("[payout-confirm-received]", $storeDecoded))
 			throw new Exception('Adyen Error, Confirm non valide');
 
-		return($storeDecoded["pspReference"]); 
-
+		return($storeDecoded["pspReference"]);
 	}
 }

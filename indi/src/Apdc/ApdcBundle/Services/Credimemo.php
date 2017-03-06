@@ -5,7 +5,7 @@ namespace Apdc\ApdcBundle\Services;
 trait Credimemo
 {
     /**
-     * Retrieve order credit memo (refund) availability. 
+     * Retrieve order credit memo (refund) availability.
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ trait Credimemo
     }
 
     /**
-     * Initialize requested invoice instance or return false. 
+     * Initialize requested invoice instance or return false.
      *
      * @return bool
      */
@@ -61,7 +61,7 @@ trait Credimemo
     }
 
     /**
-     * Check if order has credit memo or is complete, and return boolean to show or not buttons. 
+     * Check if order has credit memo or is complete, and return boolean to show or not buttons.
      *
      * @param string $id, string $type ('creditmemo' or 'close')
      *
@@ -107,9 +107,10 @@ trait Credimemo
 
         //check if $creditmemo_id exist
         $check = $refund_order->getCollection()->addFieldToFilter(
-            'creditmemo_id', [
+			'creditmemo_id',
+			[
                 'in' => $creditmemo_id,
-            ])->getFirstItem()->getId();
+			])->getFirstItem()->getId();
         if (is_null($check)) {
             $refund_order->setData($data);
             $refund_order->save();
@@ -232,6 +233,7 @@ trait Credimemo
                 ->addObject($invoice)
                 ->addObject($invoice->getOrder());
             $transactionSave->save();
+
             return true;
         }
     }

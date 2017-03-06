@@ -1077,9 +1077,4 @@ class Magento
 		echo'<pre>';
 	//	return $data;
 	}
-
-
-
-
-
 }
