@@ -14,8 +14,7 @@ class BillingController extends Controller
 {
 	public function indexAction(Request $request)
 	{
-		if(!$this->isGranted('ROLE_ADMIN'))
-		{
+        if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -29,17 +28,17 @@ class BillingController extends Controller
 
 		$form_fromtoMerchant->handleRequest($request);
 
-		if($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()){
-			if($entity_fromtoMerchant->merchant <> -1) {
+		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
+			if ($entity_fromtoMerchant->merchant <> -1) {
 				return $this->redirectToRoute('billingOne', [
 					'id' => $entity_fromtoMerchant->merchant,
 					'from' => $entity_fromtoMerchant->from,
-					'to' => $entity_fromtoMerchant->to
+					'to' => $entity_fromtoMerchant->to,
 				]);
 			} else {
 				return $this->redirectToRoute('billingAll', [
 					'from'	=> $entity_fromtoMerchant->from,
-					'to'	=> $entity_fromtoMerchant->to
+					'to'	=> $entity_fromtoMerchant->to,
 				]);
 			}
 		}
@@ -83,13 +82,6 @@ class BillingController extends Controller
 			'action' => $this->generateUrl('billingIndex')
 		]);
 
-		/* STRTOTIME = EPIC PHP FUNCTION */
-/*		if(!isset($from)&& !isset($to))
-			return $this->redirectToRoute('billingIndex', [
-				'from'	=> date('Y-m-d', strtotime('first day of this month')), 
-				'to'	=> date('Y-m-d', strtotime('last day of this month'))
-			]);
- */
 		$form_fromtoMerchant->get('from')->setData($from);
 		$form_fromtoMerchant->get('to')->setData($to);
 
