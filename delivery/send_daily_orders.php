@@ -408,6 +408,7 @@ class generatePdf
                 $tmp[] = $m;
             }
         }
+        //test $tmp="pierre@aupasdecourses.com";
         $mail->addTo($tmp);
         $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
@@ -435,7 +436,7 @@ $commercants = getCommercant();
 $orders_date = date('Y-m-d');
 $current_hour=date('H');
 
-//test $orders_date=date('Y-m-d', mktime(0, 0, 0, 1, 6, 2017));
+//test $orders_date=date('Y-m-d', mktime(0, 0, 0, 2, 23, 2017));
 
 getOrders($commercants, $orders_date);
 

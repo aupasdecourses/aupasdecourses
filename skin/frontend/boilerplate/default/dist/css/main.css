@@ -11687,6 +11687,7 @@ section#districts .button {
 }
 
 section#concept {
+  min-height: 520px;
   padding: 1px 60px 30px;
   background-color: #3ab64b;
 }
@@ -11702,6 +11703,7 @@ section#concept .section-description {
 }
 
 section#prices {
+  min-height: 520px;
   padding: 0 60px 30px;
   background-color: #faae37;
 }
@@ -11923,6 +11925,11 @@ footer .button {
     text-align: center;
   }
 
+  section#prices,
+    section#concept {
+    min-height: 800px;
+  }
+
   section#cards .clients {
     margin-bottom: 30px;
   }
@@ -11969,9 +11976,19 @@ footer .button {
   .cms-home-main #background_video_container video {
     display: none;
   }
+
+  section#prices,
+    section#concept {
+    min-height: 0;
+  }
 }
 
 @media screen and (max-width: 620px) {
+  section#prices,
+    section#concept {
+    min-height: 0;
+  }
+
   footer .copyright {
     margin-bottom: 20px;
   }
@@ -11984,6 +12001,11 @@ footer .button {
 @media screen and (max-width: 420px) {
   .cms-home-main header {
     margin-bottom: 70px;
+  }
+
+  section#prices,
+    section#concept {
+    min-height: 0;
   }
 }
 
