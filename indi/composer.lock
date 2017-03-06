@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3986e04af47714194509cb34ab8e2d81",
-    "content-hash": "17d896813270c2364374599197885b0d",
+    "hash": "8eb62558032b1e58dfe1dd55a8cacd22",
+    "content-hash": "f087c88ec9d310c60b389d4bd73a10a7",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2448,6 +2448,53 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "escapestudios/symfony2-coding-standard",
+            "version": "2.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djoos/Symfony2-coding-standard.git",
+                "reference": "938ef2bd7f45877458db7764686332829d86f449"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djoos/Symfony2-coding-standard/zipball/938ef2bd7f45877458db7764686332829d86f449",
+                "reference": "938ef2bd7f45877458db7764686332829d86f449",
+                "shasum": ""
+            },
+            "require": {
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "coding-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Joos",
+                    "email": "david.joos@escapestudios.com"
+                },
+                {
+                    "name": "Community contributors",
+                    "homepage": "https://github.com/djoos/Symfony2-coding-standard/graphs/contributors"
+                }
+            ],
+            "description": "CodeSniffer ruleset for the Symfony 2+ coding standard",
+            "homepage": "https://github.com/djoos/Symfony2-coding-standard",
+            "keywords": [
+                "Coding Standard",
+                "Symfony2",
+                "phpcs",
+                "symfony"
+            ],
+            "time": "2017-03-02 11:23:49"
+        },
         {
             "name": "sensio/generator-bundle",
             "version": "v3.1.3",
