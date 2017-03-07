@@ -221,16 +221,16 @@ div#pageNumero{
 }
 
 
-
-/* REFUND INPUT */
-/* Image tickets absolute + content margin-left 350 ==> avoid bugs when scrolling up */
+/* --------------------- */
+/*		REFUND INPUT	 */
+/* --------------------- */
 .merchant-ticket {
-	width:350px;
+	width:350px !important;
 	height:400px;
-	position:relative;
-	margin-right:2px;
 }
-.merchant-content {
-	position:relative;
-	margin-left:2px;
+
+/* flex row avoid bugs when scrolling up */
+#flex-input {
+	display: flex;
+	justify-content: space-around;
 }
