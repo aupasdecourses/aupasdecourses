@@ -25,11 +25,11 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-	/* OLD VERSION OF GETMERCHANTS. */	
-	/*
+	/** OLD VERSION OF GETMERCHANTS. **/
 	public function getShops($commercantId = -1)
 	{
-		$commercants = [];
+	/*
+	 	$commercants = [];
 		
 		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
         if ($commercantId != -1) {
@@ -71,16 +71,17 @@ class Magento
             return false;
 		});
 		asort($commercants);
-        return $commercants;
+		return $commercants;
+	 */
 	}
-	*/
 
 
 
 
 
-	/* Delivery version of getShops => facturation */
-	function getShops($id = -1, $filter = 'none')
+
+	/** Delivery version of getShops => facturation **/
+	public function getShops($id = -1, $filter = 'none')
 	{
 		$return = [];
 		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
@@ -103,7 +104,7 @@ class Magento
 			}
 			arsort($return);
 		} else {
-			$data = $shops->addFieldToFilter('id_attribut_commercant',$id)->getFirstItem()->getData();
+			$data = $shops->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem()->getData();
 			$return['name']				= $data['name'];
 			$return['adresse']			= $data['street'].' '.$data['postcode'].' '.$data['city'];
 			$return['url_adresse']		= 'https://www.google.fr/maps/place/'.str_replace(' ', '+', $return['adresse']);
@@ -116,6 +117,7 @@ class Magento
 			$return['mail_pro']			= \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $data['id_contact_employee'])->getFirstItem()->getEmail();
 			$return['mail_3']			= \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $data['id_contact_employee_bis'])->getFirstItem()->getEmail();
 		}
+
 		return $return;
 	}
 
@@ -145,7 +147,7 @@ class Magento
 
 
 
-
+	/** PAS FACTU MAIS ALL INDI **/
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -159,9 +161,9 @@ class Magento
         $S = \Mage::helper('apdc_commercant')->getStoresArray();
 
         foreach ($shops as $shop) {
-            $cats=$shop->getIdCategory();
-            foreach($cats as $cat){
-                $storeinfo=$S[explode('/', $cat_array[$cat])[1]];
+            $cats = $shop->getIdCategory();
+            foreach ($cats as $cat) {
+                $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
                 $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
@@ -179,37 +181,52 @@ class Magento
                         'closing_periods' => $shop->getClosingPeriods(),
                         'delivery_days' => 'Du Mardi au Vendredi',
                     ];
-                }
+            }
         }
         uasort($commercants, function ($lhs, $rhs) {
             if ($lhs['active'] < $rhs['active']) {
                 return true;
-            }
+			}
 
             return false;
 		});
 		/* Sort associative array in ascending order, according to the VALUE */
 		asort($commercants);
+
         return $commercants;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     private function OrdersQuery($dfrom, $dto, $commercantId = -1, $orderId = -1)
     {
         $orders = \Mage::getModel('sales/order')->getCollection();
-        $orders->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id',
+		$orders->getSelect()->join(
+			'mwddate_store',
+		   	'main_table.entity_id=mwddate_store.sales_order_id',
             array(
                 'mwddate_store.ddate_id',
-            ));
-        $orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id',
+			)
+		);
+		$orders->getSelect()->join(
+			'mwddate',
+		   	'mwddate_store.ddate_id=mwddate.ddate_id',
             array(
                 'ddate' => 'mwddate.ddate',
-                'dtime' => 'mwddate.dtime', ));
-        $orders->getSelect()->join('mwdtime', 'mwddate.dtime=mwdtime.dtime_id',
+				'dtime' => 'mwddate.dtime',
+			)
+		);
+		$orders->getSelect()->join(
+			'mwdtime',
+			'mwddate.dtime = mwdtime.dtime_id',
             array(
                 'dtime' => 'mwdtime.interval',
-        ));
-        $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id',
+			)
+		);
+		$orders->getSelect()->join(
+			array(
+				'order_attribute' => 'amasty_amorderattr_order_attribute',
+			),
+		   	'order_attribute.order_id = main_table.entity_id',
             array(
                 'produit_equivalent' => 'order_attribute.produit_equivalent',
                 'contactvoisin' => 'order_attribute.contactvoisin',
@@ -219,8 +236,13 @@ class Magento
                 'etage' => 'order_attribute.etage',
                 'telcontact' => 'order_attribute.telcontact',
                 'info' => 'order_attribute.infoscomplementaires',
-            ));
-        $orders->getSelect()->joinLeft(array('attachment' => 'amasty_amorderattach_order_field'), 'attachment.order_id=main_table.entity_id',
+			)
+		);
+		$orders->getSelect()->joinLeft(
+			array(
+				'attachment' => 'amasty_amorderattach_order_field',
+			),
+			'attachment.order_id = main_table.entity_id',
             array(
                 'upload' => 'attachment.upload',
                 'input' => 'attachment.input',
@@ -229,7 +251,8 @@ class Magento
                 'refund_shipping' => 'attachment.refund_shipping',
                 'commentaire_commercant' => 'attachment.commentaires_ticket',
                 'commentaire_client' => 'attachment.commentaires_fraislivraison',
-            ));
+			)
+		);
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
         $orders->addFilterToMap('dtime', 'mwdtime.interval')
             ->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
@@ -243,7 +266,9 @@ class Magento
             ));
             if ($commercantId != -1) {
                 $orders->getSelect()->join(
-                    array('order_item' => \Mage::getSingleton('core/resource')->getTableName('sales/order_item')),
+					array(
+						'order_item' => \Mage::getSingleton('core/resource')->getTableName('sales/order_item'),
+					),
                     'order_item.order_id = main_table.entity_id'
                 )->where("order_item.commercant={$commercantId}")->group('order_item.order_id');
             }
@@ -252,7 +277,7 @@ class Magento
         return $orders;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     private function OrderHeaderParsing($order)
     {
         $orderHeader = [];
@@ -294,11 +319,12 @@ class Magento
             $orderHeader['refund_shipping_amount'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
         } else {
             $orderHeader['refund_shipping_amount'] = 0;
-        }
+		}
+
         return $orderHeader;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     private function ProductParsing($product, $order_id)
     {
         $prod_data = [
@@ -323,7 +349,7 @@ class Magento
         return $prod_data;
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     private function checkEntryToModel($model, array $filters)
     {
         $entry = $model->getCollection();
@@ -337,7 +363,7 @@ class Magento
         }
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     private function addEntryToModel($model, $data, $updatedFields)
     {
         foreach ($data as $k => $v) {
@@ -349,7 +375,7 @@ class Magento
         $model->save();
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     private function updateEntryToModel($model, array $filters, array $updatedFields)
     {
         $entry = $model->getCollection();
@@ -367,7 +393,7 @@ class Magento
         }
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     public function addEntryToOrderField(array $data)
     {
         $this->addEntryToModel(
@@ -376,7 +402,7 @@ class Magento
         );
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     public function updateEntryToOrderField(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('amorderattach/order_field');
@@ -397,7 +423,7 @@ class Magento
         }
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     public function addEntryToRefundItem(array $data)
     {
         $this->addEntryToModel(
@@ -406,7 +432,7 @@ class Magento
         );
     }
 
-    //Mettre dans trait Model
+	/** Mettre dans trait Model **/
     public function updateEntryToRefundItem(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/refund_items');
@@ -427,7 +453,7 @@ class Magento
         }
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -455,7 +481,7 @@ class Magento
         return $rsl;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     public function getOrderByMerchants($orderId)
     {
         $merchants = $this->getMerchants();
@@ -480,7 +506,7 @@ class Magento
         return $rsl;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     public function getOrdersByStore($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -508,7 +534,7 @@ class Magento
         return $rsl;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     public function getMerchantsOrders($commercantId, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -537,19 +563,19 @@ class Magento
             }
         }
 
-        $rsl=[];
+        $rsl = [];
         $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
 
-        foreach($commercants as $storeid => $commercant){
-            foreach($commercant as $com_id => $com){
-                $rsl[$S[$storeid]['name']][$com_id]=$com;
+        foreach ($commercants as $storeid => $commercant) {
+            foreach ($commercant as $com_id => $com) {
+                $rsl[$S[$storeid]['name']][$com_id] = $com;
             }
 		}
-        return $rsl;
 
+        return $rsl;
     }
 
-    //Mettre dans trait Order
+	/** Mettre dans trait Order **/
     public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -581,11 +607,11 @@ class Magento
             }
         }
 
-        $rsl=[];
+        $rsl = [];
         $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
 
-        foreach($commercants as $storeid => $commercant){
-            $rsl[$S[$storeid]['name']]=$commercant;
+        foreach ($commercants as $storeid => $commercant) {
+            $rsl[$S[$storeid]['name']] = $commercant;
         }
 
 
@@ -646,24 +672,24 @@ class Magento
         return $rsl;
     }
 
-	/* Affichage du tableau de remboursement de BACK-UP */ 
+	/** Affichage du tableau de remboursement de BACK-UP **/
 	public function getAdyenOrderPaymentTable()
 	{
-     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-     $ref = [];
-     $cpt = 1;
-     foreach ($collection as $fields) {
-         $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
-         $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
-         $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
-         $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
-         ++$cpt;
-     }
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$ref = [];
+		$cpt = 1;
+		foreach ($collection as $fields) {
+			$ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
+			$ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
+			$ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
+			++$cpt;
+		}
 
-     return $ref;
+		return $ref;
 	}
 
-    /* Formulaires de soumission de remboursement à Adyen*/
+    /** Formulaires de soumission de remboursement à Adyen **/
     public function getAdyenPaymentByPsp()
     {
         $collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -679,8 +705,9 @@ class Magento
         }
 
         return $ref;
-    }
-    /* Pour les formulaires de soumissions à Adyen */
+	}
+
+    /** Pour les formulaires de soumissions à Adyen **/
     public function getAdyenQueueFields()
     {
         $collection = \Mage::getModel('adyen/event_queue')->getCollection();
@@ -702,12 +729,14 @@ class Magento
 
 
 
-/***************/
-/*FACTURATION */
-/*************/
+/**
+ *
+ * -------------------- ICI COMMENCE LA FACTURATION -------------
+ *
+ **/
 
 
-	function getOrderAttachments($order)
+	public function getOrderAttachments($order)
 	{
 		$attachments = \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
 		//$remboursement_client = '|*REMBOURSEMENTS*|</br>'.$attachments->getData('remboursements').'</br>';
@@ -720,9 +749,10 @@ class Magento
 
 
 
-	function startsWith($haystack, $needle)
+	public function startsWith($haystack, $needle)
 	{
 		$length = strlen($needle);
+
 		return substr($haystack, 0, $length) === $needle;
 	}
 
@@ -730,99 +760,92 @@ class Magento
 
 
 
-	function getOrderComments($order)
+	public function getOrderComments($order)
 	{
 		$order_comments = '';
-		foreach ($order->getAllStatusHistory() as $status) 
-		{
+		foreach ($order->getAllStatusHistory() as $status) {
 			$comment_status = $status->getData('status');
 			$comment = $status->getData('comment');
-			if ($comment_status == 'processing' && $comment != null && $comment != '' && !startsWith($comment, 'Notification paiement Hipay') && !startsWith($comment, 'Le client a payé par Hipay avec succès')) 
-			{
+			if ($comment_status == 'processing' && $comment != null && $comment != '' && !startsWith($comment, 'Notification paiement Hipay') && !startsWith($comment, 'Le client a payé par Hipay avec succès')) {
 				$order_comments .= '=> '.$comment.'<br/>';
 			}
 		}
+
 		return '|*ORDER HISTORY*|</br>'.$order_comments;
 	}
 
 
-	//Récupère l'information commercant dans la table order
-	/*Used in function data_facturation_products() */
+	/** Récupère l'information commercant dans la table order
+	 *  Used in function data_facturation_products() **/
 	public function comid_item($item, $order)
 	{
 		$pid = $item->getProductId();
 		$items = $order->getAllItems();
 		$commercant = null;
-		foreach ($items as $itemId => $item) 
-		{
-			if ($item->getProductId() == $pid) 
-			{
+		foreach ($items as $itemId => $item) {
+			if ($item->getProductId() == $pid) {
 				$commercant = $item->getCommercant();
 			}
 		}
+
 		return $commercant;
 	}
 
-	//Récupère l'information marge dans la table order
-	/*Used in function data_facturation_products() */
+	/** Récupère l'information marge dans la table order
+	 * Used in function data_facturation_products() **/
 	public function marge_item($item, $order)
 	{
 		$pid = $item->getProductId();
 		$items = $order->getAllItems();
 		$commercant = null;
-		foreach ($items as $itemId => $item) 
-		{
-			if ($item->getProductId() == $pid) 
-			{
+		foreach ($items as $itemId => $item) {
+			if ($item->getProductId() == $pid) {
 				$commercant = $item->getMargeArriere();
 			}
 		}
+
 		return $commercant;
 	}
 
 
-	//Used in data_facturation_products()
+	/** Used in data_facturation_products() **/
 	public function getRefundorderdata($order, $output)
 	{
 		$refund_order = \Mage::getModel('pmainguet_delivery/refund_order');
 		$orders = $refund_order->getCollection()->addFieldToFilter('order_id', array('in' => $order->getIncrementId()));
 		$response = array();
-		if ($output == 'comment') 
-		{
+		if ($output == 'comment') {
 			$orderAttachment = $this->getOrderAttachments($order);
 			$order_comments = $this->getOrderComments($order);
-			if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'])
-		   	{
-				foreach ($orders as $o)
-			   	{
+			if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
+				foreach ($orders as $o) {
 					//$response[$o->getData('commercant')]= $o->getData($output);
 					$response[$o->getData('commercant')] .= $orderAttachment;
 					//$response[$o->getData('commercant')].=$order_comments;
 				}
-			} else 
-			{
+			} else {
 				$response = $orderAttachment;
 				//$response.=$order_comments;
 			}
-		} else 
-		{
-			foreach ($orders as $o) 
-			{
+		} else {
+			foreach ($orders as $o) {
 				$response[$o->getData('commercant')] = $o->getData($output);
 			}
 		}
+
 		return $response;
 	}
 
 
 
 
-	//Used in data_facturation_products()
+	/** Used in data_facturation_products() **/
 	public function getRefunditemdata($item, $output)
 	{
 		$refund_items = \Mage::getModel('pmainguet_delivery/refund_items');
 		$item = $refund_items->load($item->getOrderItemId(), 'order_item_id');
 		$response = $item->getData($output);
+
 		return $response;
 	}
 
@@ -832,7 +855,7 @@ class Magento
 
 
 
-	/* Tableau de Facturation */
+	/** Tableau de Facturation **/
 	public function data_facturation_products($debut, $fin)
 	{
 		$data = [];
@@ -845,24 +868,24 @@ class Magento
 		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
-		foreach ($orders as $order)
-	   	{
-
+		foreach ($orders as $order) {
 			$parentid = $order->getData('relation_parent_real_id');
-			if ($parentid != NULL)
-			{
-				$firstparent=false;
-				while(!$firstparent)
-			   	{
-					$temp=\Mage::getModel("sales/order")->loadByIncrementId($parentid);
-					$temp_parentid=$temp->getData('relation_parent_real_id');
-					if ($temp_parentid==NULL) {$firstparent=true;}else{$parentid=$temp_parentid;}
+			if ($parentid != null) {
+				$firstparent = false;
+				while (!$firstparent) {
+					$temp = \Mage::getModel("sales/order")->loadByIncrementId($parentid);
+					$temp_parentid = $temp->getData('relation_parent_real_id');
+					if ($temp_parentid == null) {
+						$firstparent = true;
+					} else {
+						$parentid = $temp_parentid;
+					}
 				}
 			}
 			//Ordered Items
 /*			if ($parentid!=NULL)
 		   	{
- */			$ordered_items= \Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
+ */			$ordered_items = \Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
 		/*	}else
 			{
 			$ordered_items = $order->getAllVisibleItems();
@@ -873,39 +896,31 @@ class Magento
 			{
 				$invoices = $order->getInvoiceCollection();
 			}*/
-			foreach ($invoices as $invoice)
-		   	{
+			foreach ($invoices as $invoice) {
 				$invoiced_items = $invoice->getAllItems();
 			}
-			foreach ($list_commercant as $id => $com)
-		   	{
+			foreach ($list_commercant as $id => $com) {
 				$nb_products = 0;
 				$sum_items = 0;
 				$sum_items_HT = 0;
-				foreach ($ordered_items as $item) 
-				{
-					if ($item->getCommercant() !== null)
-				   	{
-						if ($item->getData('commercant') == $id)
-					   	{
+				foreach ($ordered_items as $item) {
+					if ($item->getCommercant() !== null) {
+						if ($item->getData('commercant') == $id) {
 							$nb_products += floatval($item->getQtyOrdered());
 							$sum_items += floatval($item->getRowTotalInclTax());
 							$sum_items_HT += floatval($item->getRowTotal());
 						}
-					} else 
-					{
+					} else {
 						$product = \Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-						if ($product->getCategoryIds()[2] == $id)
-					   	{
+						if ($product->getCategoryIds()[2] == $id) {
 							$nb_products += floatval($item->getQtyOrdered());
 							$sum_items += floatval($item->getRowTotalInclTax());
 							$sum_items_HT += floatval($item->getRowTotal());
 						}
 					}
 				}
-			 	if ($order->hasInvoices())
-			   	{
-				/*	if ($order->hasCreditmemos()) 
+			 	if ($order->hasInvoices()) {
+				/*	if ($order->hasCreditmemos())
 					{
 						if ($order->hasCreditmemos())
 					   	{
@@ -921,24 +936,18 @@ class Magento
 					$sum_items_credit = 0;
 					$sum_items_credit_HT = 0;
 					$sum_commission_HT = 0;
-					foreach ($invoiced_items as $item)
-				   	{
+					foreach ($invoiced_items as $item) {
 						$com_done = false;
 						$commercant_id = $this->comid_item($item, $order);
-						if ($commercant_id !== null)
-					   	{
-							if ($commercant_id == $id)
-						   	{
+						if ($commercant_id !== null) {
+							if ($commercant_id == $id) {
 								$sum_items_invoice += floatval($item->getRowTotalInclTax());
 								$sum_items_invoice_HT += floatval($item->getRowTotal());
 								$TVApercent = ($sum_items_invoice - $sum_items_invoice_HT) / $sum_items_invoice_HT;
 								$marge_arriere = $this->marge_item($item, $order);
-								if ($order->hasCreditmemos())
-							   	{
-									foreach ($credit_items as $citem)
-								   	{
-										if ($item->getProductID() == $citem->getProductID())
-									   	{
+								if ($order->hasCreditmemos()) {
+									foreach ($credit_items as $citem) {
+										if ($item->getProductID() == $citem->getProductID()) {
 											$sum_items_credit += floatval($citem->getRowTotalInclTax());
 											$sum_items_credit_HT += floatval($citem->getRowTotal());
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $marge_arriere));
@@ -952,24 +961,18 @@ class Magento
 									$sum_items_credit_TVA = $sum_items_credit_HT * $TVApercent;
 									$com_done = true;
 								}
-								if (!$com_done)
-							   	{
+								if (!$com_done) {
 									$sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $marge_arriere));
 								}
 							}
-						} else
-					   	{
+						} else {
 							$product = \Mage::getModel('catalog/product')->load($item->getProductID());
-							if ($product->getCategoryIds()[2] == $id)
-						   	{
+							if ($product->getCategoryIds()[2] == $id) {
 								$sum_items_invoice += floatval($item->getRowTotalInclTax());
 								$sum_items_invoice_HT += floatval($item->getRowTotal());
-								if ($order->hasCreditmemos()) 
-								{
-									foreach ($credit_items as $citem)
-								   	{
-										if ($item->getProductID() == $citem->getProductID())
-									   	{
+								if ($order->hasCreditmemos()) {
+									foreach ($credit_items as $citem) {
+										if ($item->getProductID() == $citem->getProductID()) {
 											$cproduct = \Mage::getModel('catalog/product')->load($citem->getProductID());
 											$sum_items_credit += floatval($citem->getRowTotalInclTax());
 											$sum_items_credit_HT += floatval($citem->getRowTotal());
@@ -978,26 +981,21 @@ class Magento
 										}
 									}
 								}
-								if (!$com_done)
-							   	{
+								if (!$com_done) {
 									$sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
 								}
 							}
 						}
 					}
-				
-					if ($sum_items != 0 || ($sum_items_invoice != 0 && $order->hasInvoices()))
-				   	{
+
+					if ($sum_items != 0 || ($sum_items_invoice != 0 && $order->hasInvoices())) {
 						$date_creation = date('d/m/Y', strtotime($order->getCreatedAt()));
-						if (!is_null($order->getDdate()))
-					   	{
+						if (!is_null($order->getDdate())) {
 							$date_livraison = date('d/m/Y', strtotime($order->getDdate()));
-						} else
-					   	{
+						} else {
 							$date_livraison = 'Non Dispo';
 						}
-						if ($parentid == null)
-					   	{
+						if ($parentid == null) {
 							$parentid = $order->getIncrementId();
 						}
 						$incrementid = $order->getIncrementId();
@@ -1006,47 +1004,37 @@ class Magento
 						$sum_items = round($sum_items, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 						$sum_items_HT = round($sum_items_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 						$sum_items_TVA = round($sum_items - $sum_items_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-						if ($order->hasInvoices())
-					   	{
+						if ($order->hasInvoices()) {
 							$sum_items_invoice = round($sum_items_invoice, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_items_invoice_HT = round($sum_items_invoice_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_items_invoice_TVA = round($sum_items_invoice - $sum_items_invoice_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-						} else 
-						{
+						} else {
 							$sum_items_invoice = $sum_items_invoice_HT = $sum_items_invoice_TVA = 0;
 						}
-						if ($order->hasCreditMemos()) 
-						{
+						if ($order->hasCreditMemos()) {
 							$sum_items_credit = round($sum_items_credit, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_items_credit_TVA = round($sum_items_credit - $sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-						} else 
-						{
+						} else {
 							$sum_items_credit = $sum_items_credit_HT = $sum_items_credit_TVA = 0;
 						}
-						if ($order->hasInvoices())
-					   	{
+						if ($order->hasInvoices()) {
 							$sum_commission = round($sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_commission_HT = round($sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_commission_TVA = round($sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-						} else 
-						{
+						} else {
 							$sum_commission = $sum_commission_HT = $sum_commission_TVA = 0;
 						}
-						if ($order->hasInvoices())
-					   	{
+						if ($order->hasInvoices()) {
 							$sum_versement = round($sum_items_invoice - $sum_items_credit - $sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_versement_HT = round($sum_items_invoice_HT - $sum_items_credit_HT - $sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 							$sum_versement_TVA = round($sum_items_invoice - $sum_items_invoice_HT - ($sum_items_credit - $sum_items_credit_HT) - $sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-						} else 
-						{
+						} else {
 							$sum_versement = $sum_versement_HT = $sum_versement_TVA = 0;
 						}
-						if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) 
-						{
+						if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
 							$creditcom = $credit_comments[$com];
-						} else 
-						{
+						} else {
 							$creditcom = $credit_comments;
 						}
 						array_push($data, [
