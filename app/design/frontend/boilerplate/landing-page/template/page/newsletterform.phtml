@@ -1,7 +1,7 @@
 <div id="mc_embed_signup">
     <?php $quartiers=$this->getNewsletterlist();?>
     <h1><?php echo $this->__('Inscrivez vous!'); ?></h1>
-    <p>Pour rester informer de nos ouvertures de quartier et des actualités de vos commerçants, veuillez sélectionner votre quartier et indiquer votre adresse mail ci-dessous.</p>
+    <p>Pour rester informé de nos ouvertures de quartier et des actualités de vos commerçants, veuillez sélectionner votre arrondissement et indiquer votre adresse mail ci-dessous.</p>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getUrl('apdc-front/newsletter/ajaxNewsletterProcess');?>" method="post" id="newsletter-form" class="form-validate scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
@@ -9,10 +9,9 @@
             <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="EMAIL" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email form-control" title="<?php echo $this->__('Votre email') ?>" placeholder="<?php echo $this->__('Votre email') ?>"/>
         </div>
         <div class="form-group">
-            <label for="id">Sélectionnez votre quartier</label>
             <select class="form-control" id="select-quartier" name="id">
-                <?php foreach($quartiers as $quartier):?>
-                <option value="<?= $quartier['id'];?>"><?= $quartier['name'];?></option>
+                <?php foreach($quartiers as $name => $id):?>
+                <option value="<?= $id;?>"><?= $name;?></option>
                 <?php endforeach;?>
             </select>
         </div>
