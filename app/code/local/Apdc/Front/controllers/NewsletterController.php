@@ -89,9 +89,9 @@ class Apdc_Front_NewsletterController extends Mage_Core_Controller_Front_Action
 
              if($return['status']=='subscribed'){
                 $return['email_address']=$response->{'email_address'};
-                Mage::getSingleton('core/session')->addSuccess('Vous avez été enregistré!');
+                Mage::getSingleton('core/session')->addSuccess('Votre mail a bien été enregistré!');
             } else {
-                Mage::getSingleton('core/session')->addError('Vous n\'avez pas été enregistré ...');
+                Mage::getSingleton('core/session')->addError('Votre mail n\'a pas pu être enregistré ...');
             }
 
             $return['html']=$this->_getLayout('apdc_newsletter_view');
