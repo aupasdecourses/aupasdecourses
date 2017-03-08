@@ -90,18 +90,6 @@ billingIndex:
   path: /billing/
   defaults: { _controller: ApdcApdcBundle:Billing:index}
 
-billingOne:
-  path: /billing/{id}/{from}/{to}
-  defaults:   { _controller: ApdcApdcBundle:Billing:billingOne, to: null, from: null}
-  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
-
-
-billingAll:
-  path: /billing/{from}/{to}
-  defaults: { _controller: ApdcApdcBundle:Billing:billingAll, to: null}
-  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
 billingPayoutIndex:
   path: /billing/payout/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }

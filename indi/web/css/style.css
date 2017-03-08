@@ -234,3 +234,14 @@ div#pageNumero{
 	display: flex;
 	justify-content: space-around;
 }
+
+
+/*
+ * ------- FACTURATION ------
+ */
+
+input#datepickerBill {
+	width:100px;
+	display:inline;
+	vertical-align:top;
+}

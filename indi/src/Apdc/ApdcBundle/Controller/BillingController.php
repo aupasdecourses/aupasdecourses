@@ -20,84 +20,20 @@ class BillingController extends Controller
 
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$bill = $mage->data_facturation_products();
-
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
-
-		$form_fromtoMerchant->handleRequest($request);
-
-		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
-			if ($entity_fromtoMerchant->merchant <> -1) {
-				return $this->redirectToRoute('billingOne', [
-					'id'	=> $entity_fromtoMerchant->merchant,
-					'from'	=> $entity_fromtoMerchant->from,
-					'to'	=> $entity_fromtoMerchant->to,
-				]);
-			} else {
-				return $this->redirectToRoute('billingAll', [
-					'from'	=> $entity_fromtoMerchant->from,
-					'to'	=> $entity_fromtoMerchant->to,
-				]);
-			}
+		if(isset($_GET['date_debut'])) {
+			$list = $mage->get_list_orderid();
+			$date_debut = $_GET['date_debut'];
+			$date_fin = $mage->end_month($date_debut);
+			$bill = $mage->data_facturation_products($date_debut, $date_fin, "creation");
 		}
 
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
-			'forms' => [
-				$form_fromtoMerchant->createView(),
-			]
+			'bill' => $bill,
+			'date_debut' => $date_debut,
+			'date_fin' => $date_fin,
 		]);
 	}
 
-	public function billingOneAction(Request $request, $id, $from, $to)
-	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
-			return $this->redirectToRoute('root');
-		}
-
-		$mage = $this->container->get('apdc_apdc.magento');
-
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant,
-			['action' => $this->generateUrl('billingIndex')]
-		);
-
-		$form_fromtoMerchant->get('from')->setData($from);
-		$form_fromtoMerchant->get('to')->setData($to);
-		$form_fromtoMerchant->get('merchant')->setData($id);
-
-
-		return $this->render('ApdcApdcBundle::billing/one.html.twig', [
-			'forms' => [
-				$form_fromtoMerchant->createView(),
-			],
-			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
-		]);
-	}
-
-	public function billingAllAction(Request $request, $from, $to)
-	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
-			return $this->redirectToRoute('root');
-		}
-
-		$mage = $this->container->get('apdc_apdc.magento');
-
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
-			'action' => $this->generateUrl('billingIndex')
-		]);
-
-		$form_fromtoMerchant->get('from')->setData($from);
-		$form_fromtoMerchant->get('to')->setData($to);
-
-		return $this->render('ApdcApdcBundle::billing/all.html.twig', [
-			'forms'	=> [
-				$form_fromtoMerchant->createView(),
-			],
-			'stores' => $mage->getMerchantsOrdersByStore(-1, $from, $to)
-		]);
-	}
 
 	public function payoutIndexAction()
 	{

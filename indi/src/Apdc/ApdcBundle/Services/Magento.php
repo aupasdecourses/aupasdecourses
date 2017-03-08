@@ -25,10 +25,12 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-	/** OLD VERSION OF GETMERCHANTS. **/
-	public function getShops($commercantId = -1)
+	/** OLD VERSION OF GETMERCHANTS.
+	 *
+	 */
+	/*public function getShops($commercantId = -1)
 	{
-	/*
+	
 	 	$commercants = [];
 		
 		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
@@ -72,9 +74,9 @@ class Magento
 		});
 		asort($commercants);
 		return $commercants;
-	 */
+	 
 	}
-
+	 */
 
 
 
@@ -736,6 +738,46 @@ class Magento
  **/
 
 
+
+
+
+	public function end_month($date)
+	{
+		$date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
+		$date = strtotime('-1 second', $date);
+		$date = date('Y-m-d H:i:s', $date);
+
+		return $date;
+	}
+
+
+
+
+
+
+
+	public function get_list_orderid()
+	{
+		$orders = \Mage::getResourceModel('sales/order_collection')
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToSelect('increment_id')
+			->addAttributeToSelect('created_at')
+			->setOrder('increment_id', 'asc');
+		$array_orderid = array();
+		foreach ($orders as $order) {
+			$id = $order->getIncrementId();
+			$date = date('d/m/Y', strtotime($order->getCreatedAt()));
+			$array_orderid[$id] = $date;
+		}
+		return $array_orderid;
+	}
+
+
+
+
+
+
+
 	public function getOrderAttachments($order)
 	{
 		$attachments = \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
@@ -865,8 +907,9 @@ class Magento
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
 			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
-		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
-		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+
+		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
+		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
 		foreach ($orders as $order) {
 			$parentid = $order->getData('relation_parent_real_id');
@@ -882,20 +925,22 @@ class Magento
 					}
 				}
 			}
-			//Ordered Items
-/*			if ($parentid!=NULL)
-		   	{
- */			$ordered_items = \Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
-		/*	}else
-			{
-			$ordered_items = $order->getAllVisibleItems();
-			$credit_comments = $this->getRefundorderdata($order, 'comment');
-			}
+	
 
-			if ($order->hasInvoices()) 
-			{
-				$invoices = $order->getInvoiceCollection();
-			}*/
+
+			//Ordered Items
+
+	//		if ($parentid != null) {
+				$ordered_items = \Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
+	//		} else {
+	//			$ordered_items = $order->getAllItems();
+	//			$credit_comments = $this->getRefundorderdata($order, 'comment');
+	//		}
+
+	//		if ($order->hasInvoices()) {
+	//			$invoices = $order->getInvoiceCollection();
+	//		}
+		
 			foreach ($invoices as $invoice) {
 				$invoiced_items = $invoice->getAllItems();
 			}
@@ -920,17 +965,16 @@ class Magento
 					}
 				}
 			 	if ($order->hasInvoices()) {
-				/*	if ($order->hasCreditmemos())
-					{
-						if ($order->hasCreditmemos())
-					   	{
+					if ($order->hasCreditmemos()) {
+						if ($order->hasCreditmemos()) {
 							$creditmemos = \Mage::getResourceModel('sales/order_creditmemo_collection')->addAttributeToFilter('order_id', $order->getId());
-							foreach ($creditmemos as $creditmemo)
-						   	{
-								$credit_items = $creditmemo->getAllItems();
-							}
+
+				//			foreach ($creditmemos as $creditmemo)
+				//			{
+				//				$credit_items = $creditmemo->getAllItems();
+				//			}
 						}
-					}*/
+					}
 					$sum_items_invoice = 0;
 					$sum_items_invoice_HT = 0;
 					$sum_items_credit = 0;
@@ -979,7 +1023,7 @@ class Magento
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
 											$com_done = true;
 										}
-									}
+								}
 								}
 								if (!$com_done) {
 									$sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
@@ -1060,9 +1104,9 @@ class Magento
 			}
 		}
 
-		echo'<pre>';
-		var_dump($data);
-		echo'<pre>';
-	//	return $data;
+//		echo'<pre>';
+//		print_R($data);	
+//		echo'<pre>';
+		return $data;
 	}
 }
