@@ -782,9 +782,9 @@ class Magento
 	{
 		$attachments = \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
 		//$remboursement_client = '|*REMBOURSEMENTS*|</br>'.$attachments->getData('remboursements').'</br>';
-		$commentaires_ticket = '|*COM. TICKET*|</br>'.$attachments->getData('commentaires_ticket').'</br>';
-		$commentaires_interne = '|*COM. INTERNE*|</br>'.$attachments->getData('commentaires_commande').'</br>';
-		$commentaires_fraislivraison = '|*COM. FRAISLIV*|</br>'.$attachments->getData('commentaires_fraislivraison');
+		$commentaires_ticket = '|*COM. TICKET*|'."\n".$attachments->getData('commentaires_ticket')."\n";
+		$commentaires_interne = '|*COM. INTERNE*|'."\n".$attachments->getData('commentaires_commande')."\n";
+		$commentaires_fraislivraison = '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
 		$comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
 		return $comments;
 	}
@@ -809,11 +809,11 @@ class Magento
 			$comment_status = $status->getData('status');
 			$comment = $status->getData('comment');
 			if ($comment_status == 'processing' && $comment != null && $comment != '' && !startsWith($comment, 'Notification paiement Hipay') && !startsWith($comment, 'Le client a payé par Hipay avec succès')) {
-				$order_comments .= '=> '.$comment.'<br/>';
+				$order_comments .= '=> '.$comment."\n";
 			}
 		}
 
-		return '|*ORDER HISTORY*|</br>'.$order_comments;
+		return '|*ORDER HISTORY*|'."\n".$order_comments;
 	}
 
 
@@ -858,7 +858,7 @@ class Magento
 		$response = array();
 		if ($output == 'comment') {
 			$orderAttachment = $this->getOrderAttachments($order);
-			$order_comments = $this->getOrderComments($order);
+	//		$order_comments = $this->getOrderComments($order);
 			if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
 				foreach ($orders as $o) {
 					//$response[$o->getData('commercant')]= $o->getData($output);
@@ -876,7 +876,7 @@ class Magento
 		}
 
 		return $response;
-	}
+	 }
 
 
 
@@ -912,34 +912,13 @@ class Magento
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
 		foreach ($orders as $order) {
-			$parentid = $order->getData('relation_parent_real_id');
-			if ($parentid != null) {
-				$firstparent = false;
-				while (!$firstparent) {
-					$temp = \Mage::getModel("sales/order")->loadByIncrementId($parentid);
-					$temp_parentid = $temp->getData('relation_parent_real_id');
-					if ($temp_parentid == null) {
-						$firstparent = true;
-					} else {
-						$parentid = $temp_parentid;
-					}
-				}
+
+				$ordered_items = $order->getAllItems();
+				$credit_comments = $this->getRefundorderdata($order, 'comment');
+
+			if ($order->hasInvoices()) {
+				$invoices = $order->getInvoiceCollection();
 			}
-	
-
-
-			//Ordered Items
-
-	//		if ($parentid != null) {
-				$ordered_items = \Mage::getModel("sales/order")->loadByIncrementId($parentid)->getAllVisibleItems();
-	//		} else {
-	//			$ordered_items = $order->getAllItems();
-	//			$credit_comments = $this->getRefundorderdata($order, 'comment');
-	//		}
-
-	//		if ($order->hasInvoices()) {
-	//			$invoices = $order->getInvoiceCollection();
-	//		}
 		
 			foreach ($invoices as $invoice) {
 				$invoiced_items = $invoice->getAllItems();
@@ -969,10 +948,10 @@ class Magento
 						if ($order->hasCreditmemos()) {
 							$creditmemos = \Mage::getResourceModel('sales/order_creditmemo_collection')->addAttributeToFilter('order_id', $order->getId());
 
-				//			foreach ($creditmemos as $creditmemo)
-				//			{
-				//				$credit_items = $creditmemo->getAllItems();
-				//			}
+							foreach ($creditmemos as $creditmemo)
+							{
+								$credit_items = $creditmemo->getAllItems();
+							}
 						}
 					}
 					$sum_items_invoice = 0;
@@ -1104,9 +1083,6 @@ class Magento
 			}
 		}
 
-//		echo'<pre>';
-//		print_R($data);	
-//		echo'<pre>';
 		return $data;
 	}
 }
