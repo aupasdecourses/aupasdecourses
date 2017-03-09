@@ -6,9 +6,9 @@
 	<h1> Facturation INDI </h1>
 	
 		<div class="page-header">
-			<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}">au {{ date_fin }}</h2>
+			<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
-		<div id="filter"><label>Selectionnez le commercant</label></div>
+		<div id="filter"><label>Selectionnez le commercant : &nbsp; </label></div>
 
 
 
@@ -122,7 +122,6 @@
 		});
 
 
-
 		$(document).ready(function() {
 			var table=$('#billIndex').DataTable({
 				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
@@ -150,7 +149,6 @@
 				"footerCallback": function ( row, data, start, end, display ) {
 					var api = this.api(), data;
 
-					// Remove the formatting to get integer data for summation
 					var intVal = function ( i ) {
 						return typeof i === 'string' ?
 							i.replace(/[\$,]/g, '')*1 :
@@ -159,16 +157,6 @@
 					};
 					this.api().columns(['.float']).every(function (){
 						var index = this.index();
-						// Total over all pages
-						// total = api
-						//     .column( index )
-						//     .data()
-						//     .reduce( function (a, b) {
-						//         return intVal(a) + intVal(b);
-						//     } );
-						// total=total.toFixed(2);
-
-						// Total over this page
 						pageTotal = api
 							.column( index, { page: 'current'} )
 							.data()
@@ -176,15 +164,10 @@
 								return intVal(a) + intVal(b);
 							}, 0 );
 						pageTotal=pageTotal.toFixed(2);
-						// Update footer
 						$( api.column( index ).footer() ).html(pageTotal);
 					});
 				}
 			} );
 		});
 	</script>
-
-
-
-
 {% endblock %}

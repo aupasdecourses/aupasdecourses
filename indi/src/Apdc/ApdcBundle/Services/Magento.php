@@ -4,6 +4,9 @@ namespace Apdc\ApdcBundle\Services;
 
 include '../../app/Mage.php';
 
+define('TAX_SERVICE', .2);
+define('FLOAT_NUMBER', 2);
+
 class Magento
 {
     use Credimemo;
@@ -25,7 +28,7 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-	/** OLD VERSION OF GETMERCHANTS.
+	/** Ancienne version de getMerchants. Ne prend pas en compte un marchand dans plusieurs shops
 	 *
 	 */
 	/*public function getShops($commercantId = -1)
@@ -79,10 +82,9 @@ class Magento
 	 */
 
 
-
-
-
-	/** Delivery version of getShops => facturation **/
+	/** Version Delivery de getShops. 
+	 *	Utilisé pour la facturation
+	 */
 	public function getShops($id = -1, $filter = 'none')
 	{
 		$return = [];
@@ -125,31 +127,10 @@ class Magento
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/** PAS FACTU MAIS ALL INDI **/
+	/**	Le nouveau getShops
+	 *	Prend en compte un marchand dans différents shops
+	 *	N'est PAS utilisé pour la facturation.
+	 */
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -674,7 +655,12 @@ class Magento
         return $rsl;
     }
 
-	/** Affichage du tableau de remboursement de BACK-UP **/
+	/**	Retourne le contenu de la table adyen/order_payment 
+	 *	Trié par reference marchante ( ex : 2016000723 )
+	 *
+	 *	Utilisé dans RefundController, refundAdyenIndexAction
+	 *	pour la liste des commandes remboursables. (Remboursement Back-up )
+	 */
 	public function getAdyenOrderPaymentTable()
 	{
 		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -691,7 +677,11 @@ class Magento
 		return $ref;
 	}
 
-    /** Formulaires de soumission de remboursement à Adyen **/
+	/**	Retourne le contenu de la table adyen/order_payment	 
+	 *	
+	 *	Utilisé dans les deux formulaires de soumission de remboursement Adyen
+	 *	refundFinalAction & refundAdyenFormAction
+	 */ 
     public function getAdyenPaymentByPsp()
     {
         $collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -709,7 +699,10 @@ class Magento
         return $ref;
 	}
 
-    /** Pour les formulaires de soumissions à Adyen **/
+	/**	Retourne le contenu de la table adyen/event_queue
+	 *	
+	 *	Utilisé dans les 2 formulaires de soumission de remboursement
+	 */ 
     public function getAdyenQueueFields()
     {
         $collection = \Mage::getModel('adyen/event_queue')->getCollection();
@@ -769,6 +762,7 @@ class Magento
 			$date = date('d/m/Y', strtotime($order->getCreatedAt()));
 			$array_orderid[$id] = $date;
 		}
+
 		return $array_orderid;
 	}
 
@@ -786,6 +780,7 @@ class Magento
 		$commentaires_interne = '|*COM. INTERNE*|'."\n".$attachments->getData('commentaires_commande')."\n";
 		$commentaires_fraislivraison = '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
 		$comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
+
 		return $comments;
 	}
 
@@ -858,16 +853,14 @@ class Magento
 		$response = array();
 		if ($output == 'comment') {
 			$orderAttachment = $this->getOrderAttachments($order);
+			// DOESNT WORK THERE
 	//		$order_comments = $this->getOrderComments($order);
 			if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
 				foreach ($orders as $o) {
-					//$response[$o->getData('commercant')]= $o->getData($output);
 					$response[$o->getData('commercant')] .= $orderAttachment;
-					//$response[$o->getData('commercant')].=$order_comments;
 				}
 			} else {
 				$response = $orderAttachment;
-				//$response.=$order_comments;
 			}
 		} else {
 			foreach ($orders as $o) {
@@ -876,7 +869,7 @@ class Magento
 		}
 
 		return $response;
-	 }
+	}
 
 
 
@@ -893,8 +886,7 @@ class Magento
 
 
 
-
-
+	
 
 
 	/** Tableau de Facturation **/
@@ -912,14 +904,13 @@ class Magento
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
 		foreach ($orders as $order) {
-
 				$ordered_items = $order->getAllItems();
 				$credit_comments = $this->getRefundorderdata($order, 'comment');
 
 			if ($order->hasInvoices()) {
 				$invoices = $order->getInvoiceCollection();
 			}
-		
+
 			foreach ($invoices as $invoice) {
 				$invoiced_items = $invoice->getAllItems();
 			}
@@ -948,8 +939,7 @@ class Magento
 						if ($order->hasCreditmemos()) {
 							$creditmemos = \Mage::getResourceModel('sales/order_creditmemo_collection')->addAttributeToFilter('order_id', $order->getId());
 
-							foreach ($creditmemos as $creditmemo)
-							{
+							foreach ($creditmemos as $creditmemo) {
 								$credit_items = $creditmemo->getAllItems();
 							}
 						}
@@ -1002,7 +992,7 @@ class Magento
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
 											$com_done = true;
 										}
-								}
+									}
 								}
 								if (!$com_done) {
 									$sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));

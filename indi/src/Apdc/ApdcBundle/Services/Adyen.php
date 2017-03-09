@@ -58,6 +58,10 @@ class Adyen
 		curl_close($this->_ch);
 	}
 
+	/**	Soumet & effectue un remboursement client Adyen en CURL
+	 *	Prend comme paramètre : un compte marchand (AuPasDeCoursesFR), un montant, une reference unique PSP
+	 *	Un FlashBag Symfony est retourné en cas de succès
+	 */ 
 	public function refund($value, $originalReference)
 	{
 		$refundTable = array(
@@ -85,6 +89,10 @@ class Adyen
 		return($refundDecoded['response']);
 	}
 
+	/**	Soumet & effectue un payout commercant Adyen en CURL
+	 *	Prend comme paramètre : un compte marchand (AuPasDeCoursesFR), un montant, 
+	 *	des infos commercants (son IBAN, nom, ...), une reference (style 201702-22), des infos shoppers
+	 */ 
 	public function payout($value, $iban, $ownerName, $reference, $shopperEmail, $shopperReference)
 	{
 		$storeTable = array(
