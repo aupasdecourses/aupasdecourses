@@ -18,19 +18,19 @@ class BillingController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
-		$mage = $this->container->get('apdc_apdc.magento');
+		$factu = $this->container->get('apdc_apdc.billing');
 
 		if(isset($_GET['date_debut'])) {
-			$list = $mage->get_list_orderid();
+			$list		= $factu->get_list_orderid();
 			$date_debut = $_GET['date_debut'];
-			$date_fin = $mage->end_month($date_debut);
-			$bill = $mage->data_facturation_products($date_debut, $date_fin, "creation");
+			$date_fin	= $factu->end_month($date_debut);
+			$bill		= $factu->data_facturation_products($date_debut, $date_fin, "creation");
 		}
 
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
-			'bill' => $bill,
-			'date_debut' => $date_debut,
-			'date_fin' => $date_fin,
+			'bill'			=> $bill,
+			'date_debut'	=> $date_debut,
+			'date_fin'		=> $date_fin,
 		]);
 	}
 
