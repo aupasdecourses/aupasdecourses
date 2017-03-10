@@ -53,8 +53,9 @@
 								<th>Quantité</th>
 								<th>Prix Unitaire</th>
 								<th>Total Commande</th>
-								<th>Total Ticket</th>
-								<th>Différence</th>
+								<th>Total Client</th>
+								<th>Différence Client</th>
+								<th>Total Commercant</th>
 								<th>Commentaire</th>
 							</tr>
 						</thead>
@@ -76,6 +77,9 @@
 								</td>
 								<td>
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
+								</td>
+								<td>
+									{{ "Total commercant" }}
 								</td>
 								<td>
 									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
