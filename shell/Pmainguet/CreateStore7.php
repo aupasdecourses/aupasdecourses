@@ -65,7 +65,7 @@ class Pmainguet_CreateStore7 extends Pmainguet_CreateStore
             'Primeur' => "Harry Cover",
             'Fromager' => "Fromagerie 7e",
             'Poissonnier' => "Poissonnerie 7e",
-            'Epicerie Fine' => '',
+            'Epicerie' => '',
             'Traiteur' => '',
             ];
 

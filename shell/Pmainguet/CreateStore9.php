@@ -65,7 +65,7 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
             'Primeur' => "Au Verger Fleuri",
             'Fromager' => "Artisans du lait",
             'Poissonnier' => "Poissonnerie 9",
-            'Epicerie Fine' => '',
+            'Epicerie' => '',
             'Traiteur' => '',
             ];
 
