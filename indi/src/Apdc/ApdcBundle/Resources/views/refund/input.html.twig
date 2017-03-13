@@ -42,7 +42,7 @@
 		</div>
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>
-			<div class="row" id="flex-input">
+			<div class="row flex-input">
 				<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
 				<div class="col-md-8">
 					<table id='{{merchant_id}}' class='merchant table'>

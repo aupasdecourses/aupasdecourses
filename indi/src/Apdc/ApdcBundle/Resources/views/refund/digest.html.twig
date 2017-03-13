@@ -77,8 +77,8 @@
 	{% endfor %}
 	{% for merchant_id, merchant_part in order %}
 		<h2>{{merchant_part.merchant.name}}</h2>
-		<div class='row'>
-			<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-sm-4' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
+		<div class="row flex-input">
+			<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-sm-4' value='{{merchant_part.merchant.ticket}}'></div>
 			<div class="col-sm-8">
 				<table id='{{merchant_id}}' class='merchant table'>
 					<thead>

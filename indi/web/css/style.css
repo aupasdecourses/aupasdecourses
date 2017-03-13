@@ -230,7 +230,7 @@ div#pageNumero{
 }
 
 /* flex row avoid bugs when scrolling up */
-#flex-input {
+.flex-input {
 	display: flex;
 	justify-content: space-around;
 }
