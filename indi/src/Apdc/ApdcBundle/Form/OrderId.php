@@ -14,10 +14,10 @@ class OrderId extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$builder->add('id', TextType::class, [
-			'required' => true,
-			'label' => '# Commande:',
-			'attr' => [
-				'class'	=>	'form-control'
+			'required'	=> true,
+			'label'		=> '# Commande:',
+			'attr'		=> [
+				'class'		=>	'form-control'
 			]
 		]);
         $builder->add('Search', SubmitType::class);

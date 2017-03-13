@@ -1,36 +1,34 @@
-<?php 
+<?php
 
 namespace Apdc\ApdcBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class MerchantsController extends Controller
 {
-
     public function indexAction(Request $request)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
 
 		$form_fromtoMerchant->handleRequest($request);
 
 		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
 			if ($entity_fromtoMerchant->merchant <> -1) {
 				return $this->redirectToRoute('merchantsOne', [
-					'id' => $entity_fromtoMerchant->merchant,
-					'from' => $entity_fromtoMerchant->from,
-					'to' => $entity_fromtoMerchant->to
+					'id'	=> $entity_fromtoMerchant->merchant,
+					'from'	=> $entity_fromtoMerchant->from,
+					'to'	=> $entity_fromtoMerchant->to
 				]);
 			} else {
 				return $this->redirectToRoute('merchantsAll', [
-					'from' => $entity_fromtoMerchant->from,
-					'to' => $entity_fromtoMerchant->to
+					'from'	=> $entity_fromtoMerchant->from,
+					'to'	=> $entity_fromtoMerchant->to
 				]);
 			}
 		}
@@ -46,8 +44,8 @@ class MerchantsController extends Controller
     {
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
@@ -62,13 +60,13 @@ class MerchantsController extends Controller
 			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
 		]);
     }
-    
+
     public function merchantsAllAction(Request $request, $from, $to)
     {
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromtoMerchant = new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant = $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
@@ -83,4 +81,3 @@ class MerchantsController extends Controller
 		]);
     }
 }
-

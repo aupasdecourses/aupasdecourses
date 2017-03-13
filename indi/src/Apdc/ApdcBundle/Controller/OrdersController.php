@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Apdc\ApdcBundle\Controller;
 
@@ -12,11 +12,11 @@ class OrdersController extends Controller
 	public function indexAction(Request $request)
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
-	
-		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
-		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
-		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id);
+
+		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
+		$entity_id		= new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id		= $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id);
 
 		$form_fromto->handleRequest($request);
 		$form_id->handleRequest($request);
@@ -25,10 +25,10 @@ class OrdersController extends Controller
 			return $this->redirectToRoute('ordersOne', [
 				'id' => $entity_id->id
 			]);
-		} else if ($form_fromto->isValid()) {
+		} elseif ($form_fromto->isValid()) {
 			return $this->redirectToRoute('ordersAll', [
-				'from' => $entity_fromto->from,
-				'to' => $entity_fromto->to
+				'from'	=> $entity_fromto->from,
+				'to'	=> $entity_fromto->to
 			]);
 		}
 
@@ -44,12 +44,12 @@ class OrdersController extends Controller
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
+		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
-		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
-		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
+		$entity_id	= new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id	= $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 		$form_id->get('id')->setData($id);
@@ -59,7 +59,7 @@ class OrdersController extends Controller
 				$form_fromto->createView(),
 				$form_id->createView()
 			],
-			'orders' => $mage->getOrders(NULL, NULL, -1, $id)
+			'orders' => $mage->getOrders(null, null, -1, $id)
 		]);
 	}
 
@@ -67,8 +67,8 @@ class OrdersController extends Controller
 	{
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
-		$form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
+		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('ordersIndex'),
 		]);
 		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();

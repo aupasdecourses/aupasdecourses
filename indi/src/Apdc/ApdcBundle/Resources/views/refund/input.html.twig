@@ -42,10 +42,10 @@
 		</div>
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>
-			<div class='row'>
-				<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-sm-4' value='{{merchant_part.merchant.ticket}}'></div>
-				<div class="col-sm-8">
-					<table id='{{merchant_id}}' class='merchant table merchant-content'>
+			<div class="row" id="flex-input">
+				<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
+				<div class="col-md-8">
+					<table id='{{merchant_id}}' class='merchant table'>
 						<thead>
 							<tr>
 								<th>Produit</th>
@@ -53,8 +53,9 @@
 								<th>Quantité</th>
 								<th>Prix Unitaire</th>
 								<th>Total Commande</th>
-								<th>Total Ticket</th>
-								<th>Différence</th>
+								<th>Total Client</th>
+								<th>Différence Client</th>
+								<th>Total Commercant</th>
 								<th>Commentaire</th>
 							</tr>
 						</thead>
@@ -68,10 +69,17 @@
 									<span id='{{product_id}}-total'>{{product.prix_total }}</span>
 								</td>
 								<td>
-									<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix | round(2,'common')}}' />
+									{% if product.refund_prix is null %}
+										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{ product.prix_total }}' />
+									{% else %}
+										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix | round(2,'common')}}' />
+								{% endif %}
 								</td>
 								<td>
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
+								</td>
+								<td>
+									{{ "Total commercant" }}
 								</td>
 								<td>
 									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
@@ -120,7 +128,7 @@
 					limit: function() {
 						var limit = 0;
 						if (next) {
-							limit = $(next).offset().top - $(this).outerHeight(true) - 40;
+							limit = $(next).offset().top - $(this).outerHeight(true) - 100;
 						}
 						return limit;
 						},

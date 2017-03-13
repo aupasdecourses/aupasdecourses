@@ -14,40 +14,24 @@
 	</div>
 
 	<h1>Historique des payouts</h1>
-	
-	<p><h4>Nombre d'entrées : </h4></p>
-	<div id ="pager">
-		<form>
-			<select class="pagesize">
-				<option value="1">1</option>
-				<option selected="selected" value="5">5</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-				<option value="9999">All</option>
-			</select>
-		</form>
-	</div>
-
-
-	<table class="table tablesorter table-striped">
+	<table id="payoutTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Reference&nbsp;&nbsp;</th>
-				<th>Value&nbsp;&nbsp;</th>
+				<th>Reference</th>
+				<th>Value</th>
 				<th>Date</th>
 				<th>IBAN</th>
 				<th>Owner Name</th>
 				<th>Shopper Email</th>
-				<th>Shopper Reference&nbsp;</th>
-
+				<th>Shopper Reference</th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for payout in payout_list %}
+			{% for payout in payout_list %}
 			<tr>
 				<td>{{ payout.reference }}</td>
 				<td>{{ payout.value/100 }}</td>
-				<td>{{ payout.date|date('Y-m-d H:i:s') }}</td>
+				<td>{{ payout.date|date('d-m-Y H:i:s') }}</td>
 				<td>{{ payout.iban }}</td>
 				<td>{{ payout.ownerName }}</td>
 				<td>{{ payout.shopperEmail }}</td>
@@ -56,32 +40,50 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	Total Value : <span class="total"></span>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
-
+{% block css_payout %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
 {% block javascript_payout %}
-	<script type="text/javascript" src="{{ path('root') }}js/jquery-latest.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.pager.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/jquery.tablesorter.widgets.js"></script>
-	<script type="text/javascript" src="{{ path('root') }}js/widget-math.js"></script>
-	<!-- Sortable table for list payouts :  billing/payoutIndex.twig -->
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function()
-		{
-		$(".tablesorter")
-			.tablesorter({
-				widgets: ['math'],
-				widgetOptions: {
-					math_data	: 'math'
-				}
-			})
-			.tablesorterPager({
-				container: $("#pager"),
-					size: 5
-				});
-		});
+$(document).ready(function() {
+	$('#payoutTable').DataTable( {
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+
+			// Total over all pages
+			total = api
+				.column( 1 )
+				.data()
+				.reduce( function (a, b) {
+					return intVal(a) + intVal(b);
+				}, 0 );
+
+			// Total over this page
+			pageTotal = api
+				.column( 1, { page: 'current'} )
+				.data()
+				.reduce( function (a, b) {
+					return intVal(a) + intVal(b);
+				}, 0 );
+
+			// Update footer
+			$( api.column( 1 ).footer() ).html(
+					'$'+pageTotal +' ( $'+ total +' total)'
+					);
+		}
+	} );
+} );
 	</script>
 {% endblock %}
