@@ -224,8 +224,16 @@ div#pageNumero{
 /* --------------------- */
 /*		REFUND INPUT	 */
 /* --------------------- */
+
+/* on définit un contenant et un contenu de meme dimension */
+/* le contenant (ticket-container) traitera le JS pour le scroll */
+/* le contenu (merchant-ticket) rend l'image integre et propre */
+.ticket-container {
+	width: 350px !important;
+	height:400px;
+}
 .merchant-ticket {
-	width:350px !important;
+	width:350px;
 	height:400px;
 }
 

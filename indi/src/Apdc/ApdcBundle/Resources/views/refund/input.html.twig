@@ -43,7 +43,9 @@
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>
 			<div class="row flex-input">
-				<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
+				<div class="ticket-container">
+					<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
+				</div>
 				<div class="col-md-8">
 					<table id='{{merchant_id}}' class='merchant table'>
 						<thead>
@@ -120,7 +122,7 @@
 	<!-- ScrollToFixed for refund input tickets : refund/input.twig -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var summaries = $('.merchant-ticket');
+			var summaries = $('.ticket-container');
 			summaries.each(function(i) {
 				var summary = $(summaries[i]);
 				var next = summaries[i + 1];
