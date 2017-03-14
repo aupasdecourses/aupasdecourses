@@ -5,7 +5,50 @@
 <div class="container">
 	<h1> Payout Submit </h1><br>
 
+
+
+	{% for key, content in merchants %}
+
+		{{ dump(content) }}
+
+	{% endfor %}
+
+
 	{{ form_start(form) }}
+
+	{#{{ dump(form) }}
+
+	{% for key, choice in form.children.ownerName.vars.choices %}
+
+		{{ dump(choice.data) }}
+
+	{% endfor %}
+	
+
+	{% for key , content in merchants %}
+		{{ dump(content.ownerName) }}
+	{% endfor %}
+	#}
+
+
+	{% for key, choice in form.children.ownerName.vars.choices %}
+		{% for key, content in merchants %}
+
+			{% if choice.data == content.ownerName %}
+	
+				{{ form_widget(form.iban, {'attr': {'value': content.iban} }) }}
+
+			{% endif %}
+
+		{% endfor %}
+	{% endfor %}
+
+
+
+
+
+
+
 	{{ form_errors(form) }}
 	{{ form_rest(form) }}
 	{{ form_end(form) }}

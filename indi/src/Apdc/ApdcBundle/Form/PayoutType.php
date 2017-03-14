@@ -22,27 +22,9 @@ class PayoutType extends AbstractType
 
 		$merchantChoices = [];
 		foreach ($merchants->getApdcBankFields() as $key => $content) {
-
-			$merchantChoices[$content['name']] = $content;
+			$merchantChoices[$content['name']] = $content['name'];
 		}
-		ksort($merchantChoices);
-
-		echo'<pre>';
-		print_R($merchantChoices);
-		echo'<pre>';
-
-
-
-
-
-
-
-
-
-
-
-
-
+		//ksort($merchantChoices);
 
 		$builder->add('ownerName', ChoiceType::class, [
 			'label'		=> 'Magasin',
@@ -51,32 +33,29 @@ class PayoutType extends AbstractType
 			]
 		);
 
+		$builder->add('iban', TextType::class);
 
-
-
-
+		$builder->add('reference', TextType::class)
+				->add('shopperEmail', EmailType::class)
+				->add('shopperReference', TextType::class);
+			
 
 
 		$builder->add('value', MoneyType::class, [
 			'divisor' => 100, 
 			]
 		);
-
-		$builder->add('iban', TextType::class, [
-			]
-		);
-
-
-		$builder->add('reference', TextType::class)
-				->add('shopperEmail', EmailType::class)
-				->add('shopperReference', TextType::class)
-				->add('date', DateTimeType::class, [
+	
+		$builder->add('date', DateTimeType::class, [
 					'label' => false,
 					'attr'	=> [
 						'style' => 'visibility:hidden'
 					]
-				])
-				->add('submit', SubmitType::class);
+				]);
+		
+
+		$builder->add('submit', SubmitType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

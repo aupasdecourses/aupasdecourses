@@ -56,6 +56,10 @@ class BillingController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
+		$mage = $this->container->get('apdc_apdc.magento');
+		$merchants = $mage->getApdcBankFields();
+
+
 		$adyen	= $this->container->get('apdc_apdc.adyen');
 		$payout = new Payout();
 		$form	= $this->createForm(PayoutType::class, $payout);
@@ -83,7 +87,8 @@ class BillingController extends Controller
 
 		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
 			[
-			'form' => $form->createView(),
+				'form'		=> $form->createView(),
+				'merchants'	=> $merchants,
 			]
 		);
 	}
