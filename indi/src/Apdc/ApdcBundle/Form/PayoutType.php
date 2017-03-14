@@ -10,23 +10,72 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use Apdc\ApdcBundle\Services\Magento;
 
 class PayoutType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-		$builder->add('value', MoneyType::class, array(
-		'divisor' => 100, ))
-				->add('iban', TextType::class)
-				->add('ownerName', TextType::class)
-				->add('reference', TextType::class)
+{	
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$merchants = new Magento();
+
+		$merchantChoices = [];
+		foreach ($merchants->getApdcBankFields() as $key => $content) {
+
+			$merchantChoices[$content['name']] = $content;
+		}
+		ksort($merchantChoices);
+
+		echo'<pre>';
+		print_R($merchantChoices);
+		echo'<pre>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		$builder->add('ownerName', ChoiceType::class, [
+			'label'		=> 'Magasin',
+			'choices'	=> $merchantChoices,
+			'required'	=> true,
+			]
+		);
+
+
+
+
+
+
+
+		$builder->add('value', MoneyType::class, [
+			'divisor' => 100, 
+			]
+		);
+
+		$builder->add('iban', TextType::class, [
+			]
+		);
+
+
+		$builder->add('reference', TextType::class)
 				->add('shopperEmail', EmailType::class)
 				->add('shopperReference', TextType::class)
-				->add('date', DateTimeType::class, array(
+				->add('date', DateTimeType::class, [
 					'label' => false,
-					'attr'	=> array(
+					'attr'	=> [
 						'style' => 'visibility:hidden'
-				)))
+					]
+				])
 				->add('submit', SubmitType::class);
     }
 
