@@ -18,25 +18,60 @@ class PayoutType extends AbstractType
 {	
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$builder->add('reference', TextType::class);
+
+
 		$merchants = new Magento();
 
+//		$displayedChoices = [];
 		$merchantChoices = [];
+		$ibanChoices = [];
 		foreach ($merchants->getApdcBankFields() as $key => $content) {
-			$merchantChoices[$content['name']] = $content['name'];
+//			$displayedChoices[$content['name'].' - '.$content['iban']]	= $content['name'].' / '.$content['iban'];
+			$merchantChoices[$content['name'].' - '.$content['iban']]	= $content['name'];
+			$ibanChoices[$content['name'].' - '.$content['iban']] = $content['iban'];
+
 		}
-		//ksort($merchantChoices);
+		ksort($displayedChoices);
+		ksort($merchantChoices);
+		ksort($ibanChoices);
+
+
+/*
+		echo'<pre>';
+		print_R($displayedChoices);
+		echo'<pre>';
+
+
+		echo'<pre>';
+		print_R($merchantChoices);
+		echo'<pre>';
+
+
+
+		echo'<pre>';
+		print_R($ibanChoices);
+		echo'<pre>';
+ */
+
+
 
 		$builder->add('ownerName', ChoiceType::class, [
-			'label'		=> 'Magasin',
-			'choices'	=> $merchantChoices,
+			'label'		=> 'Commercant',
+			'choices'	=> 	$merchantChoices,
 			'required'	=> true,
 			]
 		);
 
-		$builder->add('iban', TextType::class);
+		$builder->add('iban', ChoiceType::class, [
+			'label'		=> 'Iban',
+			'choices'	=> $ibanChoices,
+			'required'	=> true,
+			]
 
-		$builder->add('reference', TextType::class)
-				->add('shopperEmail', EmailType::class)
+		);
+
+		$builder->add('shopperEmail', EmailType::class)
 				->add('shopperReference', TextType::class);
 			
 
