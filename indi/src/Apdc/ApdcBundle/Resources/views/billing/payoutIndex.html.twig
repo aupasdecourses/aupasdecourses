@@ -4,13 +4,16 @@
 {% block body %}
 <div class="container">
 	<h1> Payout Index </h1><br>
+	
 	<div class="row">
 		<div class="col-md-4">
-			<div class="button_accueil">
-				<a href="{{ path ('billingPayoutSubmit') }}"><button type="button" class="btn btn-default btn-lg btn-block">Submit Payout</button></a>
-			</div>
+			{{ form_start(form_prepayout, {'attr': {'id': 'confirm_button'} }) }}
+
+
+	{{ form_end(form_prepayout) }}
 		</div>
-		<div class="col-md-8"></div>
+		<div class="col-md-8">
+	</div>
 	</div>
 
 	<h1>Historique des payouts</h1>
@@ -85,5 +88,25 @@ $(document).ready(function() {
 		}
 	} );
 } );
+	</script>
+	<script type="text/javascript">
+
+$(document).on('submit', function(e) {
+		
+	if(!confirm($(this).data('confirm'))){
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		confirmSubmit();
+	}
+});
+
+function confirmSubmit() {
+	var result = confirm('Confirmer le payout ?');
+
+	if (result === true) {
+		$('#confirm_button').submit();
+	}
+}
+
 	</script>
 {% endblock %}

@@ -35,21 +35,36 @@ class BillingController extends Controller
 	}
 
 
-	public function payoutIndexAction()
+	public function payoutIndexAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_prepayout = new \Apdc\ApdcBundle\Entity\PayoutChoice();
+		$form_prepayout	= $this->createForm(\Apdc\ApdcBundle\Form\PayoutChoiceType::class, $entity_prepayout);
+		$form_prepayout->handleRequest($request);
+
+		$choice = $form_prepayout['choice']->getData();
+
+		if ($form_prepayout->isSubmitted() && $form_prepayout->isValid()) {
+			return $this->redirectToRoute('billingPayoutSubmit', [
+				'choice'	=> $choice,
+			]);
 		}
 
 		$repository		= $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
 		$payout_list	= $repository->findAll();
 
 		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
-			'payout_list'	=> $payout_list,
+			'payout_list'		=> $payout_list,
+			'form_prepayout'	=> $form_prepayout->createView(),
 		]);
 	}
 
-	public function payoutSubmitAction(Request $request)
+	public function payoutSubmitAction(Request $request, $choice)
 	{
 
 		if (!$this->isGranted('ROLE_ADMIN')) {
@@ -63,13 +78,13 @@ class BillingController extends Controller
 		$adyen	= $this->container->get('apdc_apdc.adyen');
 		$payout = new Payout();
 		$form	= $this->createForm(PayoutType::class, $payout);
-/*
+
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($payout);
 			$em->flush();
- */
-/*		
+ 
+		
 			try {
 				$value				= $form['value']->getData();
 				$iban				= $form['iban']->getData();
@@ -82,14 +97,15 @@ class BillingController extends Controller
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
- */
-//			return $this->redirectToRoute('billingPayoutIndex');
-//		}
+ 
+			return $this->redirectToRoute('billingPayoutIndex');
+		}
 
 		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
 			[
 				'form'		=> $form->createView(),
 				'merchants'	=> $merchants,
+				'choice'	=> $choice,
 			]
 		);
 	}

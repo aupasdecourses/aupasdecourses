@@ -10,9 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-use Apdc\ApdcBundle\Services\Magento;
 
 class PayoutType extends AbstractType
 {	
@@ -20,75 +17,12 @@ class PayoutType extends AbstractType
 	{
 		$builder->add('reference', TextType::class);
 
+		$builder->add('ownerName', TextType::class);
 
-		$merchants = new Magento();
-
-
-		$temp = [];
-//		$displayedChoices = [];
-		$merchantChoices = [];
-		$ibanChoices = [];
-		foreach ($merchants->getApdcBankFields() as $key => $content) {
-//			$displayedChoices[$content['name'].' - '.$content['iban']]	= $content['name'].' / '.$content['iban'];
-			$merchantChoices[$content['name'].' - '.$content['iban']]	= $content['name'];
-			$ibanChoices[$content['name'].' - '.$content['iban']] = $content['iban'];
-
-		}
-		ksort($displayedChoices);
-		ksort($merchantChoices);
-		ksort($ibanChoices);
-
-
-
-		foreach ($merchants->getApdcBankFields() as $k => $v) {
-
-			$temp[$v['name']] = $v;			
-
-		}
-
-
-		echo'<pre>';
-		print_R($temp);
-		echo'<pre>';
-
-
-/*
-		echo'<pre>';
-		print_R($displayedChoices);
-		echo'<pre>';
- */
-/*
-		echo'<pre>';
-		print_R($merchantChoices);
-		echo'<pre>';
-
-
-
-		echo'<pre>';
-		print_R($ibanChoices);
-		echo'<pre>';
-*/
-
-
-		$builder->add('ownerName', ChoiceType::class, [
-			'label'		=> 'Commercant',
-			'choices'	=> 	$temp,
-			'required'	=> true,
-			]
-		);
-
-		$builder->add('iban', ChoiceType::class, [
-			'label'		=> 'Iban',
-			'choices'	=> $ibanChoices,
-			'required'	=> true,
-			]
-
-		);
+		$builder->add('iban', TextType::class);
 
 		$builder->add('shopperEmail', EmailType::class)
 				->add('shopperReference', TextType::class);
-			
-
 
 		$builder->add('value', MoneyType::class, [
 			'divisor' => 100, 
