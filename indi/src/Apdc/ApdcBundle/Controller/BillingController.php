@@ -63,12 +63,13 @@ class BillingController extends Controller
 		$adyen	= $this->container->get('apdc_apdc.adyen');
 		$payout = new Payout();
 		$form	= $this->createForm(PayoutType::class, $payout);
-
+/*
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($payout);
 			$em->flush();
-
+ */
+/*		
 			try {
 				$value				= $form['value']->getData();
 				$iban				= $form['iban']->getData();
@@ -81,9 +82,9 @@ class BillingController extends Controller
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
-
-			return $this->redirectToRoute('billingPayoutIndex');
-		}
+ */
+//			return $this->redirectToRoute('billingPayoutIndex');
+//		}
 
 		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
 			[

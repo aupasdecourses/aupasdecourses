@@ -681,10 +681,10 @@ class Magento
 
 		$merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
 
-		$merchants->getSelect()->join('apdc_bank_information', 'main_table.id_commercant = apdc_bank_information.id_bank_information');
+		$merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
 
 		foreach ($merchants as $merchant) {
-			$tab[$merchant->getData('id_commercant')] = [
+			$tab[$merchant->getData('name')] = [
 				'id'		=> $merchant->getData('id_commercant'),
 				'name'		=> $merchant->getData('name'),
 				'ownerName' => $merchant->getData('owner_name'),

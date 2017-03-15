@@ -23,6 +23,8 @@ class PayoutType extends AbstractType
 
 		$merchants = new Magento();
 
+
+		$temp = [];
 //		$displayedChoices = [];
 		$merchantChoices = [];
 		$ibanChoices = [];
@@ -37,12 +39,25 @@ class PayoutType extends AbstractType
 		ksort($ibanChoices);
 
 
+
+		foreach ($merchants->getApdcBankFields() as $k => $v) {
+
+			$temp[$v['name']] = $v;			
+
+		}
+
+
+		echo'<pre>';
+		print_R($temp);
+		echo'<pre>';
+
+
 /*
 		echo'<pre>';
 		print_R($displayedChoices);
 		echo'<pre>';
-
-
+ */
+/*
 		echo'<pre>';
 		print_R($merchantChoices);
 		echo'<pre>';
@@ -52,13 +67,12 @@ class PayoutType extends AbstractType
 		echo'<pre>';
 		print_R($ibanChoices);
 		echo'<pre>';
- */
-
+*/
 
 
 		$builder->add('ownerName', ChoiceType::class, [
 			'label'		=> 'Commercant',
-			'choices'	=> 	$merchantChoices,
+			'choices'	=> 	$temp,
 			'required'	=> true,
 			]
 		);
