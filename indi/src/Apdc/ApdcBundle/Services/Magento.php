@@ -570,6 +570,7 @@ class Magento
                     'total' => 0.0,
                     'refund_total' => 0.0,
 					'refund_prix' => 0.0,
+					'refund_total_commercant' => 0.0,
 					'refund_prix_commercant' => 0.0,
                 ],
             ],
@@ -597,14 +598,17 @@ class Magento
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] = 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
                 $rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
-                $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
             }
         }
 

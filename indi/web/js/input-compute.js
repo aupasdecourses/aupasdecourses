@@ -4,13 +4,14 @@ function set_diff_color(elem, diff) {
 		elem.addClass('bold');
 }
 
-function update_diff(merchant_id, somme_ticket, somme_diff) {
+function update_diff(merchant_id, somme_ticket, somme_diff, somme_ticket_commercant) {
 	$('#' + merchant_id + ' .diff').each(function() {
 		var r_diff = /([0-9]*)-diff/;
 
 		var item_id = r_diff.exec($(this).attr('id'))[1];
 
 		somme_ticket += parseFloat($('#' + item_id + '-ticket-input').val());
+		somme_ticket_commercant += parseFloat($('#' + item_id + '-ticket-input-commercant').val());
 
 		var this_diff = parseFloat($(this).html());
 		somme_diff += this_diff;
@@ -18,6 +19,8 @@ function update_diff(merchant_id, somme_ticket, somme_diff) {
 		set_diff_color($(this), this_diff);
 
 		$('#' + merchant_id + '-ticket-total').html(somme_ticket.toFixed(2));
+		$('#' + merchant_id + '-ticket-total-commercant').html(somme_ticket_commercant.toFixed(2));
+
 		$('#' + merchant_id + '-diff-total').html(somme_diff.toFixed(2));
 		set_diff_color($('#' + merchant_id + '-diff-total'), somme_diff);
 	});

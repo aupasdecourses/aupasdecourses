@@ -259,7 +259,7 @@ class RefundController extends Controller
                             'prix_initial'		=> $p_data['prix_total'],
                             'prix_final'		=> doubleval($_POST['form'][$product_id]['ticket']),
                             'diffprixfinal'		=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
-							'prix_commercant'	=> doubleval($_POST['form'][$product_id]['ticket_commercant']),
+							'prix_commercant'	=> doubleval($_POST['form'][$product_id]['ticket-commercant']),
                             'comment'			=> $_POST['form'][$product_id]['comment'],
                         ];
                         unset($_POST['form'][$product_id]);

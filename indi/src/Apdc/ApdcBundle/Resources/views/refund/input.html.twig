@@ -71,17 +71,21 @@
 									<span id='{{product_id}}-total'>{{product.prix_total }}</span>
 								</td>
 								<td>
-									{% if product.refund_prix is null %}
+								{% if product.refund_prix is null %}
 										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{ product.prix_total }}' />
-									{% else %}
-										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{product.refund_prix | round(2,'common')}}' />
+								{% else %}
+										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{ product.refund_prix | round(2,'common')}}' />
 								{% endif %}
 								</td>
 								<td>
 									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
 								</td>
 								<td>
-									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type="text" name='form[{{product_id}}][ticket-commercant]' value='{{product.refund_prix_commercant | round(2, 'common')}}' />
+								{% if product.refund_prix_commercant is null %}
+									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type="text" name='form[{{product_id}}][ticket-commercant]' value='{{ product.prix_total }}' />
+								{% else %}
+									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type="text" name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix_commercant | round(2, 'common')}}' />
+									{% endif %}	
 								</td>
 								<td>
 									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
@@ -93,6 +97,8 @@
 							<td><p id='{{merchant_id}}-total'>{{merchant_part.merchant.total}}</p></td>
 							<td><p id='{{merchant_id}}-ticket-total'></p></td>
 							<td><p id='{{merchant_id}}-diff-total'></p></td>
+							<td><p id='{{merchant_id}}-ticket-total-commercant'></p></td>
+
 							<td></td>
 						</tr>
 					</table>
