@@ -97,7 +97,6 @@ billingPayoutIndex:
 billingPayoutSubmit:
   path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
-  requirements: { choice:"[a-zA-Z0-9 ]*$" }
 
 toolProduct:
   path: /tool/product/

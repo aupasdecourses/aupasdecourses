@@ -17,6 +17,8 @@
 			<h4><b> Iban :</b></h4>
 			{{ form_widget(form.iban, {'attr': {'value': fields.iban} }) }}
 
+			{{ form_widget(form) }}
+			<input type="submit" value="Submit" class="btn btn-default" onClick="return confirm('Confirmer le payout ?');" />
 		{% endif %}
 	{% endfor %}
 

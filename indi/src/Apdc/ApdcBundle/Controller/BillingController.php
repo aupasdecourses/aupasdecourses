@@ -74,6 +74,7 @@ class BillingController extends Controller
 		$mage = $this->container->get('apdc_apdc.magento');
 		$merchants = $mage->getApdcBankFields();
 
+		$session = $request->getSession();
 
 		$adyen	= $this->container->get('apdc_apdc.adyen');
 		$payout = new Payout();
@@ -97,7 +98,8 @@ class BillingController extends Controller
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
- 
+			
+			$session->getFlashBag()->add('success', 'Payout effectué avec succès');	
 			return $this->redirectToRoute('billingPayoutIndex');
 		}
 

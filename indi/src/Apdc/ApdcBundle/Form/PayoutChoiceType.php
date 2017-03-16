@@ -36,7 +36,8 @@ class PayoutChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Apdc\ApdcBundle\Entity\PayoutChoice'
+			'attr' => [ 'class' => 'inline' ],
+			'data_class' => 'Apdc\ApdcBundle\Entity\PayoutChoice'
         ));
     }
 }

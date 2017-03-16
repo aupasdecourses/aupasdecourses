@@ -3,20 +3,15 @@
 
 {% block body %}
 <div class="container">
-	<h1> Payout Index </h1><br>
-	
-	<div class="row">
-		<div class="col-md-4">
-			{{ form_start(form_prepayout, {'attr': {'id': 'confirm_button'} }) }}
+		
+	<h2>Soumettre un payout :</h2>
 
+		{{ form_start(form_prepayout) }}
+		{{ form_widget(form_prepayout) }}
+		{{ form_end(form_prepayout) }}
 
-	{{ form_end(form_prepayout) }}
-		</div>
-		<div class="col-md-8">
-	</div>
-	</div>
-
-	<h1>Historique des payouts</h1>
+	<hr>
+	<h2>Historique des payouts :</h2>
 	<table id="payoutTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -64,49 +59,8 @@ $(document).ready(function() {
 					typeof i === 'number' ?
 					i : 0;
 			};
-
-			// Total over all pages
-			total = api
-				.column( 1 )
-				.data()
-				.reduce( function (a, b) {
-					return intVal(a) + intVal(b);
-				}, 0 );
-
-			// Total over this page
-			pageTotal = api
-				.column( 1, { page: 'current'} )
-				.data()
-				.reduce( function (a, b) {
-					return intVal(a) + intVal(b);
-				}, 0 );
-
-			// Update footer
-			$( api.column( 1 ).footer() ).html(
-					'$'+pageTotal +' ( $'+ total +' total)'
-					);
 		}
 	} );
 } );
-	</script>
-	<script type="text/javascript">
-
-$(document).on('submit', function(e) {
-		
-	if(!confirm($(this).data('confirm'))){
-		e.stopImmediatePropagation();
-		e.preventDefault();
-		confirmSubmit();
-	}
-});
-
-function confirmSubmit() {
-	var result = confirm('Confirmer le payout ?');
-
-	if (result === true) {
-		$('#confirm_button').submit();
-	}
-}
-
 	</script>
 {% endblock %}
