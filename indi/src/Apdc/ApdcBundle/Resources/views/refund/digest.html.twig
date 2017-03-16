@@ -90,8 +90,9 @@
 							<th>Quantité</th>
 							<th>Prix Unitaire</th>
 							<th>Total Commande</th>
-							<th>Total Ticket</th>
-							<th>Différence</th>
+							<th>Total Client</th>
+							<th>Différence Client</th>
+							<th>Total Commercant</th>
 							<th>Commentaire</th>
 						</tr>
 					</thead>
@@ -109,6 +110,9 @@
 							</td>
 							<td>
 								<p>{{product.refund_diff | round(2,'floor')}}</p>
+							</td>
+							<td>
+								<span>{{product.refund_prix_commercant | round(2, 'floor')}}</span>
 							</td>
 							<td>
 								<span>{{product.refund_comment}}</span>

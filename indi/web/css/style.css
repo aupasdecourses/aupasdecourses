@@ -203,7 +203,7 @@ a:hover, a:focus {
 /**	#TICKET INPUT 		 */
 /* --------------------- */
 
-.ticket-input{
+.ticket-input,.ticket-input-commercant{
 	width: 80px;
 }
 /* PAYOUT */
