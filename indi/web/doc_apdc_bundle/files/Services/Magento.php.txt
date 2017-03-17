@@ -705,3 +705,4 @@ class Magento
 		return $tab;
 	}
 }
+
