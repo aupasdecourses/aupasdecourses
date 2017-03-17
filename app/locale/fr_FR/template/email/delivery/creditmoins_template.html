@@ -2,11 +2,13 @@
 <!--@vars
 {"store url=\"\"":"Store Url",
 "var customer_firstname":"Customer First Name",
-"var order_id":"Order Id"
+"var order_id":"Order Increment Id"
 "var comment":"Comments",
 "var refund_diff":"Refund products",
 "var refund_shipping":"Refund shipping",
 "var refund_full":"Full refund",
+"var store_code":"Store Code",
+"var id":"Order Id",
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -39,7 +41,7 @@
                                 <p>Les commerçants et Au Pas De Courses, vous offrent avec plaisir ces suppléments de produits, pour toujours plus de gourmandise !</p>
                                 {{/if}}
 
-                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
                                 <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
                             </td>
                         </tr>

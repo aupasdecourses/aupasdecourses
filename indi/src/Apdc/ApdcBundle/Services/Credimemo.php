@@ -347,11 +347,15 @@ trait Credimemo
         );
 
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
+        $storecode = \Mage::getBaseUrl(\Mage_Core_Model_Store::URL_TYPE_WEB).\Mage::app()->getStore($order->getStoreId())->getCode();
+        $id=$order->getId();
         $nameTo = $order->getCustomerFirstname();
         $emailTo = $order->getCustomerEmail();
         $vars = array(
+            'store_code' => $storecode,
             'customer_firstname' => $nameTo,
             'order_id' => $orderId,
+            'id' => $id,
             'comment' => $comment,
             'refund_diff' => $refund_diff,
             'refund_shipping' => $refund_shipping_amount,

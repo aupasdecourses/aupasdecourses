@@ -15,7 +15,7 @@ class Pmainguet_CreateStore7 extends Pmainguet_CreateStore
     protected $_city = 'Paris';
     protected $_zipcode = array('75007');
     protected $_country = 'FR';
-    protected $_listmailchimp = 'News & Infos 7e';
+    protected $_listmailchimp = 'Paris 7e';
 
     protected $_contacts = array(
             'Les Viandes du Champ de Mars' => [
@@ -92,7 +92,7 @@ class Pmainguet_CreateStore7 extends Pmainguet_CreateStore
             ),
             'Fromagerie Cantin' => array(
                 'google_id' => '2030347927',
-                'google_key' => '1uCsvSg8x9a7DhF-9VTMw35lJ4oEryK-e2Kw6yc7x2jo',
+                'google_key' => '1h295NHsIj8n19IOmcVLlq7oQAxvLsIjkDuiSQ9roMkQ',
             ),
             ];
 }

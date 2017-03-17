@@ -175,6 +175,12 @@
             <action method="removeLinkByName">
                 <name>autoresponderlists</name>
             </action>
+            <action method="removeLinkByName">
+                <name>mailchimp</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>newsletter</name>
+            </action>
             <remove name="sale.reorder.sidebar.left" />
             <remove name="reports.product.viewed.left" />
         </reference>
