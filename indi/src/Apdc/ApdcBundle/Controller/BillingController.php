@@ -20,7 +20,7 @@ class BillingController extends Controller
 
 		$factu = $this->container->get('apdc_apdc.billing');
 
-		if(isset($_GET['date_debut'])) {
+		if (isset($_GET['date_debut'])) {
 			$list		= $factu->get_list_orderid();
 			$date_debut = $_GET['date_debut'];
 			$date_fin	= $factu->end_month($date_debut);
@@ -84,8 +84,7 @@ class BillingController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($payout);
 			$em->flush();
- 
-		
+
 			try {
 				$value				= $form['value']->getData();
 				$iban				= $form['iban']->getData();
@@ -98,17 +97,16 @@ class BillingController extends Controller
 			} catch (Exception $e) {
 				echo $e->getMessage();
 			}
-			
-			$session->getFlashBag()->add('success', 'Payout effectué avec succès');	
+
+			$session->getFlashBag()->add('success', 'Payout effectué avec succès');
+
 			return $this->redirectToRoute('billingPayoutIndex');
 		}
 
-		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
-			[
-				'form'		=> $form->createView(),
-				'merchants'	=> $merchants,
-				'choice'	=> $choice,
-			]
-		);
+		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig', [
+			'form'		=> $form->createView(),
+			'merchants'	=> $merchants,
+			'choice'	=> $choice,
+		]);
 	}
 }

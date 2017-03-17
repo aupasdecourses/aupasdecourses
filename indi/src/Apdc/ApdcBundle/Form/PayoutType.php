@@ -11,7 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class PayoutType extends AbstractType
-{	
+{
+
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('reference', TextType::class);
@@ -24,16 +25,15 @@ class PayoutType extends AbstractType
 				->add('shopperReference', TextType::class);
 
 		$builder->add('value', MoneyType::class, [
-			'divisor' => 100, 
-			]
-		);
-	
+					'divisor' => 100,
+		]);
+
 		$builder->add('date', DateTimeType::class, [
 					'label' => false,
 					'attr'	=> [
 						'style' => 'visibility:hidden'
 					]
-				]);
+		]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

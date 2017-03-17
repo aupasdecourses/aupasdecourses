@@ -25,4 +25,3 @@ class PayoutChoice
         return $this->choice;
     }
 }
-
