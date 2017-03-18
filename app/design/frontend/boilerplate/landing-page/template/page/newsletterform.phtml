@@ -1,7 +1,7 @@
 <div id="mc_embed_signup">
     <?php $quartiers=$this->getNewsletterlist();?>
-    <h1><?php echo $this->__('Bientôt chez vous !'); ?></h1>
-    <p>Inscrivez-vous pour recevoir les nouvelles fraîches de votre quartier :</p>
+    <h1><?php echo $this->__('Restez informé(e)s'); ?></h1>
+    <p>Inscrivez-vous pour recevoir les nouvelles fraîches de votre quartier et de vos commercants :</p>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getUrl('apdc-front/newsletter/ajaxNewsletterProcess');?>" method="post" id="newsletter-form" class="form-validate scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
