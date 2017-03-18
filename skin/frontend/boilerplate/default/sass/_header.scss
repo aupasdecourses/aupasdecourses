@@ -1,13 +1,15 @@
-.cms-home-main{
+#html-body{
     header{
         position: relative;
-        margin-bottom: 200px;
+                margin-bottom: 200px;
+
     }
     #background_video_container{
         position: absolute;
         z-index: -1;
+                height: 600px;
+
         width: 100%;
-        height: 600px;
         overflow: hidden;
         img.banner, video{
             display: block;
@@ -18,9 +20,42 @@
     }
     .intro-section{
         text-align: center;
-        margin-top: 160px;
+                margin-top: 160px;
+
         h1{
             color: #fff;
+        }
+    }
+}
+
+.apdc-notation-index-index{
+    height:100%;
+    margin: 0px;
+    padding: 0px;
+    header{
+        height:100%;
+    }
+    #background_video_container{
+        height: 100% !important;
+    }
+    .full{
+        height: 100%;
+    }
+    .intro-section{
+        background:white;
+        margin-top: 100px !important;
+        padding:0;
+        padding-bottom:40px;
+        .border-container{
+            width: 100%;
+            height: 56px;
+            background: url(../images/border-pattern-height.png) repeat-x;
+        }
+        #logo{
+            padding: 40px 40px;
+        }
+        .icon{
+            margin-bottom:10px;
         }
     }
 }
