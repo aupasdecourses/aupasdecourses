@@ -47,11 +47,6 @@
                     </notation>
                 </entities>
             </apdc_notation_resource>
-            <!-- <ebizmarts_autoresponder>
-                <rewrite>
-                    <eventObserver>Apdc_Notation_Model_Autoresponder_Observer</eventObserver>
-                </rewrite>
-            </ebizmarts_autoresponder> -->
         </models>
         <resources>
             <apdc_notation_setup>
@@ -61,16 +56,4 @@
             </apdc_notation_setup>
         </resources>
 	</global>
-    <!-- <crontab>
-        <jobs>
-            <ebizmarts_autoresponder>
-                <schedule>
-                    <cron_expr>6 * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>ebizmarts_autoresponder/cron::autoresponder</model>
-                </run>
-            </ebizmarts_autoresponder>
-        </jobs>
-    </crontab> -->
 </config>
