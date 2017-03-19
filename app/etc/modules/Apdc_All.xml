@@ -112,5 +112,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Commercant>
+        <Apdc_Notation>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Notation>
     </modules>
 </config>

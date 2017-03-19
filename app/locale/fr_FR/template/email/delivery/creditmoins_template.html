@@ -9,6 +9,7 @@
 "var refund_full":"Full refund",
 "var store_code":"Store Code",
 "var id":"Order Id",
+"var base_url":"Base Url",
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -28,20 +29,31 @@
                                 <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
                                 <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et avons constaté les écarts suivants :</p>
                                 {{if comment}}
-                                    <p>{{var comment}}</p>
+                                <p>{{var comment}}</p>
                                 {{/if}}
                                 <p>Soit un écart total en votre faveur de <strong>{{var refund_diff}}€</strong>.</p>
-
                                 {{if refund_shipping}}
                                 <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande, d'un montant de {{var refund_shipping}}€.</p>
-                                {{/if}}
-                                {{if refund_full}}
+                                {{/if}} {{if refund_full}}
                                 <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de rembourser directement sur votre carte bancaire.</p>
                                 {{else}}
                                 <p>Les commerçants et Au Pas De Courses, vous offrent avec plaisir ces suppléments de produits, pour toujours plus de gourmandise !</p>
                                 {{/if}}
-
                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                <p style="font-weight:bold;">Une dernière chose, pourriez vous nous dire comment s'est passée votre commande, en donnant une note ci-dessous ?</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: table-cell; width: 200px; padding: 5px 20px;text-align:center;">
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=1" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=2" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=3" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=4" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=5" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
                                 <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
                             </td>
                         </tr>
@@ -49,7 +61,8 @@
                     <table cellspacing="0" cellpadding="0" border="0" style="padding-top:20px;padding-bottom:10px;width: 600px;background-color:white;line-height:1.2em;" summary="">
                         <tr>
                             <td>
-                                <p style="font-size:12px;font-style:italic;text-align:center;">N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a> <br/>si vous avez des questions ou pour partager vos bonnes recettes!</p>
+                                <p style="font-size:12px;font-style:italic;text-align:center;">N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a>
+                                    <br/>si vous avez des questions ou pour partager vos bonnes recettes!</p>
                             </td>
                         </tr>
                     </table>

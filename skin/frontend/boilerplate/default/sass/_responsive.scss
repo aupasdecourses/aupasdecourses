@@ -43,7 +43,7 @@
 }
 
 @media screen and (max-width: 767px){
-    .cms-home-main{
+    #html-body{
         header{
             margin-bottom: 100px;
         }
@@ -58,6 +58,18 @@
             video{
                 display: none;
             }
+        }
+    }
+
+    .apdc-notation-index-index{
+        .intro-section{
+            margin-top: 80px !important;
+            #logo {
+                width: 60%;
+            }
+        }
+        footer{
+            position:relative;
         }
     }
 
@@ -88,7 +100,7 @@
 }
 
 @media screen and (max-width: 420px){
-    .cms-home-main{
+    #html-body{
         header{
             margin-bottom: 70px;
         }
