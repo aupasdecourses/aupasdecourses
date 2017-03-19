@@ -31,7 +31,6 @@ class Stat
                 'note' => $n->getNote(),
             );
         }
-        dump($result);
         return $result;
     }
 
