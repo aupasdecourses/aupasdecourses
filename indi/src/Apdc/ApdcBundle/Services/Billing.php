@@ -363,4 +363,77 @@ class Billing
 
 		return $data;
 	}
+
+
+
+/**
+ *  STATS 
+ *
+ */
+
+
+
+	private function array_columns($array, $column_name)
+	{
+		return array_map(
+			function ($element) use ($column_name) {
+				return $element[$column_name];
+			},
+				$array
+			);
+	}
+
+	public function stats_clients()
+	{
+		$data = [];
+		$orders = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
+		$orders->getSelect()->columns('COUNT(*) AS nb_order')
+			->columns('SUM(base_grand_total) AS amount_total')
+			->columns('MAX(updated_at) AS last_order')
+			->group('customer_id');
+		foreach ($orders as $order) {
+			$customer	= \Mage::getModel('customer/customer')->load($order->getCustomerId());
+			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
+			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
+		//	$datelo		= new DateTime($order->getLastOrder());
+			array_push($data, [
+					'Nom Client'		=> $order->getCustomerName(),
+					'Nb Commande'		=> $order->getNbOrder(),
+					'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+		//			'Dernière commande' => $datelo->format('d/m/Y'),
+					'Dernière commande'	=> $order->getLastOrder(),
+					'Mail client'		=> $order->getCustomerEmail(),
+					'Rue'				=> $dataadd->getStreet()[0],
+					'Code Postal'		=> $dataadd->getPostcode(),
+					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'Créé dans'			=> $customer->getCreatedIn(),
+				]);
+		}
+		//Add customer who never ordered
+		$customers = \Mage::getModel('customer/customer')
+			->getCollection()
+			->addAttributeToSelect('*');
+		foreach ($customers as $customer) {
+			$key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
+			if ($key == false) {
+				array_push($data, [
+						'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+						'Nb Commande'		=> 0,
+						'Total'				=> 0,
+						'Dernière commande' => 'NA',
+						'Mail client'		=> $customer->getEmail(),
+						'Rue'				=> "NA",
+						'Code Postal'		=> "NA",
+						'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+						'Créé dans'			=> $customer->getCreatedIn(),
+					]);
+			}
+		}
+		return $data;
+	}
+
+
+
 }

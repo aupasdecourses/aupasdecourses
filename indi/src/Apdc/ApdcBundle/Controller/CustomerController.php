@@ -15,7 +15,16 @@ class CustomerController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
-		return $this->render('ApdcApdcBundle::customer/statCustomer.html.twig'); 
+		//$stats	= $this->container->get('apdc_apdc.stats');
+		$factu	= $this->container->get('apdc_apdc.billing');
+
+		$list = $factu->get_list_orderid();
+		$data = $factu->stats_clients();
+
+		return $this->render('ApdcApdcBundle::customer/statCustomer.html.twig', [
+			'orderid_array' => $list,
+			'data'			=> $data,	
+		]); 
 	
 	}
 
