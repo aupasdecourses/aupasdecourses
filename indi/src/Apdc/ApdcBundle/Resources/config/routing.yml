@@ -110,6 +110,18 @@ toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
 
+statCustomer:
+  path: /customer/stat/
+  defaults: { _controller: ApdcApdcBundle:Customer:statCustomer}
+
+loyaltyCustomer:
+  path: /customer/loyalty/
+  defaults: { _controller: ApdcApdcBundle:Customer:loyaltyCustomer}
+
+statTicket:
+  path: /customer/ticket/
+  defaults: { _controller: ApdcApdcBundle:Customer:statTicket}
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
