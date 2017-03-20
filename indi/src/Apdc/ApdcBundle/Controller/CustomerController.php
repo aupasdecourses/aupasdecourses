@@ -18,12 +18,10 @@ class CustomerController extends Controller
 		//$stats	= $this->container->get('apdc_apdc.stats');
 		$factu	= $this->container->get('apdc_apdc.billing');
 
-		$list = $factu->get_list_orderid();
-		$data = $factu->stats_clients();
+		$stat = $factu->stats_clients();
 
 		return $this->render('ApdcApdcBundle::customer/statCustomer.html.twig', [
-			'orderid_array' => $list,
-			'data'			=> $data,	
+			'stat'			=> $stat,	
 		]); 
 	
 	}
@@ -34,7 +32,19 @@ class CustomerController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
-		return $this->render('ApdcApdcBundle::customer/loyaltyCustomer.html.twig'); 
+		$factu = $this->container->get('apdc_apdc.billing');
+
+		if (isset($_GET['date_debut'])) {
+			$list				= $factu->get_list_orderid();
+			$date_debut			= $_GET['date_debut'];
+			$date_fin			= $_GET['date_fin'];
+			$data_clients		= $factu->data_clients($date_debut, $date_fin);
+		}
+			return $this->render('ApdcApdcBundle::customer/loyaltyCustomer.html.twig', [
+				'date_debut'			=> $date_debut,
+				'date_fin'				=> $date_fin,	
+				'data_clients'			=> $data_clients,
+			]); 
 	
 	}
 

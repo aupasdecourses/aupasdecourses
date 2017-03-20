@@ -253,3 +253,14 @@ input#datepickerBill {
 	display:inline;
 	vertical-align:top;
 }
+
+/* 
+ *	------ FIDELITE CLIENT -----
+ */
+
+input#datepickerLoyalty,input#datepickerEndLoyalty {
+	width:100px;
+	display:inline;
+	vertical-align:top;
+}
+ 
