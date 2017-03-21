@@ -251,16 +251,17 @@ class RefundController extends Controller
                 foreach ($o_data['products'] as $product_id => $p_data) {
                     if (isset($_POST['form'][$product_id])) {
                         $rsl_table[$product_id] = [
-                            'order_item_id'		=> $product_id,
-                            'item_name'			=> $p_data['nom'],
-                            'commercant'		=> $o_data['name'],
-                            'commercant_id'		=> $o_data['merchant']['id'],
-                            'order_id'			=> $p_data['order_id'],
-                            'prix_initial'		=> $p_data['prix_total'],
-                            'prix_final'		=> doubleval($_POST['form'][$product_id]['ticket']),
-                            'diffprixfinal'		=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
-							'prix_commercant'	=> doubleval($_POST['form'][$product_id]['ticket-commercant']),
-                            'comment'			=> $_POST['form'][$product_id]['comment'],
+                            'order_item_id'			=> $product_id,
+                            'item_name'				=> $p_data['nom'],
+                            'commercant'			=> $o_data['name'],
+                            'commercant_id'			=> $o_data['merchant']['id'],
+                            'order_id'				=> $p_data['order_id'],
+                            'prix_initial'			=> $p_data['prix_total'],
+                            'prix_final'			=> doubleval($_POST['form'][$product_id]['ticket']),
+                            'diffprixfinal'			=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
+							'prix_commercant'		=> doubleval($_POST['form'][$product_id]['ticket-commercant']),
+							'diffprixcommercant'	=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket-commercant']),
+                            'comment'				=> $_POST['form'][$product_id]['comment'],
                         ];
                         unset($_POST['form'][$product_id]);
                     }

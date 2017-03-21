@@ -58,6 +58,7 @@
 								<th>Total Client</th>
 								<th>Différence Client</th>
 								<th>Total Commercant</th>
+								<th>Différence Commercant</th>
 								<th>Commentaire</th>
 							</tr>
 						</thead>
@@ -88,6 +89,9 @@
 									{% endif %}	
 								</td>
 								<td>
+									<p id='{{product_id}}-diff-commercant' class='diff-commercant'>{{product.refund_diff_commercant | round(2, 'common')}}</p>
+								</td>
+								<td>
 									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
 								</td>
 							</tr>
@@ -98,6 +102,7 @@
 							<td><p id='{{merchant_id}}-ticket-total'></p></td>
 							<td><p id='{{merchant_id}}-diff-total'></p></td>
 							<td><p id='{{merchant_id}}-ticket-total-commercant'></p></td>
+							<td><p id='{{merchant_id}}-diff-total-commercant'></p></td>
 							<td></td>
 						</tr>
 					</table>
