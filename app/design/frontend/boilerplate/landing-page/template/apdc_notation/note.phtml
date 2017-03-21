@@ -1,0 +1,75 @@
+<?php
+	$i = mt_rand(1, 14); // generate random number size of the array
+	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+    $_helper=Mage::helper('apdccustomer');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html style="height: 100%; margin: 0px; padding: 0px;" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+	<?php echo $this->getChildHtml('head') ?>
+</head>
+<body id="html-body" <?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
+	<?php echo $this->getChildHtml('after_body_start') ?>
+	<div class="full">
+	<header class="header" id="faites-vos-courses">
+        <div id="background_video_container">
+            <img class="banner" src="<?php echo $this->getSkinUrl($url);?>" alt="Au pas de courses">
+        </div>
+        <div class="container">
+            <div class="intro-section">
+                <div class="section-header" >
+                	<div class="border-container"></div>
+                	<img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
+					<h2>Vous avez attribué <?php echo $this->getNote();?> étoile(s) à votre commande.</h2>
+					<div class="col-xs-12">
+						<div class="icon">
+							<?php echo $this->getStars();?>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<?php echo $this->getAdditional();?>
+					</div>
+			    </div>
+            </div>
+        </div>
+	</header>
+	<footer>
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-3">
+	                <ul class="social-icons">
+	                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+	                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+	                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+	                </ul>
+	            </div>
+	            <div class="col-md-6">
+	                <p class="copyright text-center">
+	                    ©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.
+	                </p>
+	                <ul class="nav text-center" role="navigation">
+	                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Mentions légales">Mentions légales</a></li>
+	                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Conditions générales d'utilisation">Conditions générales d'utilisation</a></li>
+	                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Tarifs">Tarifs</a></li>
+	                    <li><a href="<?php echo Mage::getBaseUrl().'../blog';?>" title="Blog">Blog</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
+	</footer>
+	<?php echo $this->getChildHtml('footer') ?>
+	<?php echo $this->getChildHtml('before_body_end') ?>
+    <!-- Credits
+    Coin icon by Madebyoliver - http://www.flaticon.com/free-icon/coin_134652
+    Scale icon by Madebyoliver - http://www.flaticon.com/free-icon/scale_135529
+    Grocery icon by Madebyoliver - http://www.flaticon.com/free-icon/groceries_135532
+    Calendar icon by Madebyoliver - http://www.flaticon.com/free-icon/calendar_137866
+    Kitchen icon by Madebyolivder - http://www.flaticon.com/free-icon/kitchen_135441
+    Snowflake icon by Madebyolivder - http://www.flaticon.com/free-icon/snowflake_136613
+    Sausage icon by Madebyolivder - http://www.flaticon.com/free-icon/sausage_135419
+    -->
+    </div>
+</body>
+</html>

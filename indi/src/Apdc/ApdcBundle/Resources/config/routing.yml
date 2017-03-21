@@ -98,6 +98,10 @@ billingPayoutSubmit:
   path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
 
+statNote:
+  path: /stat/note/
+  defaults: { _controller: ApdcApdcBundle:Stat:note}
+
 toolProduct:
   path: /tool/product/
   defaults: { _controller: ApdcApdcBundle:Tool:product}

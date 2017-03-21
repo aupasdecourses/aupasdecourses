@@ -14,7 +14,7 @@ class From extends AbstractType
 	{
 		$builder->add('from', TextType::class, [
 			'required'	=> true,
-			'label'		=> 'Date:',
+			'label'		=> 'Date livraison:',
 			'attr'		=> [
 				'class'		=> 'form-control datepicker'
 			]

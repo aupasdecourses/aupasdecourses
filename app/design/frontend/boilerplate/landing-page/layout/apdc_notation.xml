@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/*
+ *
+ * @description  Layout modifications
+ * @author       Pierre Mainguet
+ * @package      apdc_notation
+ *
+ */
+-->
+<layout version="0.1.0">
+    <apdc_notation_index_index>
+        <remove name="header"/>
+        <remove name="breadcrumbs"/>
+        <remove name="left_first"/>
+        <remove name="left"/>
+        <remove name="right"/>
+        <remove name="emailcatcher"/>
+        <remove name="footer"/>
+        <remove name="global_cookie_notice"/>
+        <reference name="content">
+        	<block type="apdc_notation/note" name="notation_content" template="apdc_notation/note.phtml"/>
+        </reference>
+    </apdc_notation_index_index>
+    <apdc_notation_index_survey>
+        <remove name="header"/>
+        <remove name="breadcrumbs"/>
+        <remove name="left_first"/>
+        <remove name="left"/>
+        <remove name="right"/>
+        <remove name="emailcatcher"/>
+        <remove name="footer"/>
+        <remove name="global_cookie_notice"/>
+        <reference name="content">
+            <block type="apdc_notation/note" name="notation_content" template="apdc_notation/survey.phtml"/>
+        </reference>
+    </apdc_notation_index_survey>
+</layout>

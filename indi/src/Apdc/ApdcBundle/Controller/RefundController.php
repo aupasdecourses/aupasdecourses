@@ -133,16 +133,18 @@ class RefundController extends Controller
         $attrNames = [];
         foreach ($order as $merchant_id => $data) {
             $name = preg_replace('/[^-a-zA-Z0-9:]| /', '_', $data['merchant']['name']);
-            $attrNames[$merchant_id] = $name;
-            $class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
-            $form_upload->add($name, FileType::class, [
-                'required'	=> false,
-                'label'		=> $data['merchant']['name'],
-				'attr'		=>
-				[
-					'class' => "form-control{$class}",
-                ],
-            ]);
+            if($name<>""){
+                $attrNames[$merchant_id] = $name;
+                $class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
+                $form_upload->add($name, FileType::class, [
+                    'required'	=> false,
+                    'label'		=> $data['merchant']['name'],
+    				'attr'		=>
+    				[
+    					'class' => "form-control{$class}",
+                    ],
+                ]);
+            }
         }
 
 		$form_upload->add('Upload', SubmitType::class);

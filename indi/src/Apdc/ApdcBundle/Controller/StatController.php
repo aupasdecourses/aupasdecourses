@@ -43,7 +43,6 @@ class StatController extends Controller
 				'date_fin'				=> $date_fin,	
 				'data_clients'			=> $data_clients,
 			]); 
-	
 	}
 
 	public function statVoucherAction(Request $request)

@@ -18,6 +18,11 @@
             <apdccustomer>
                 <class>Apdc_Customer_Model</class>
             </apdccustomer>
+            <customer>
+                <rewrite>
+                    <customer>Apdc_Customer_Model_Customer</customer>
+                </rewrite>
+            </customer>
         </models>
         <helpers>
             <apdccustomer>
