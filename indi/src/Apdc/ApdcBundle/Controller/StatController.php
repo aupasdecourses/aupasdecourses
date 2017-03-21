@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class CustomerController extends Controller
+class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
 	{
@@ -18,7 +18,7 @@ class CustomerController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats');
 		$stat	= $stats->stats_clients();
 
-		return $this->render('ApdcApdcBundle::customer/statCustomer.html.twig', [
+		return $this->render('ApdcApdcBundle::stat/statCustomer.html.twig', [
 			'stat'			=> $stat,	
 		]); 
 	
@@ -38,7 +38,7 @@ class CustomerController extends Controller
 			$date_fin			= $_GET['date_fin'];
 			$data_clients		= $stats->data_clients($date_debut, $date_fin);
 		}
-			return $this->render('ApdcApdcBundle::customer/loyaltyCustomer.html.twig', [
+			return $this->render('ApdcApdcBundle::stat/loyaltyCustomer.html.twig', [
 				'date_debut'			=> $date_debut,
 				'date_fin'				=> $date_fin,	
 				'data_clients'			=> $data_clients,
@@ -46,7 +46,7 @@ class CustomerController extends Controller
 	
 	}
 
-	public function statTicketAction(Request $request)
+	public function statVoucherAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
@@ -61,11 +61,23 @@ class CustomerController extends Controller
 			$data_coupon	= $stats->data_coupon($date_debut, $date_fin);
 		}
 
-		return $this->render('ApdcApdcBundle::customer/statTicket.html.twig', [
+		return $this->render('ApdcApdcBundle::stat/statVoucher.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'data_coupon'	=> $data_coupon,
 		]); 
 	
+	}
+
+
+	public function rateOrderAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		return $this->render('ApdcApdcBundle::stat/rateOrder.html.twig', [
+
+		]);
 	}
 }

@@ -38,6 +38,7 @@
 	</table>
 
 </div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
 {% block css_ticketCustomer %}
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
@@ -78,7 +79,7 @@ $(function() {
 });
 $(function(){
 	$("#datepickerEndTicket").change(function(){
-		window.location='{{ path('statTicket') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerTicket").val()+'&date_fin='+this.value;
+		window.location='{{ path('statVoucher') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerTicket").val()+'&date_fin='+this.value;
 	});
 });
 $(document).ready(function() {
