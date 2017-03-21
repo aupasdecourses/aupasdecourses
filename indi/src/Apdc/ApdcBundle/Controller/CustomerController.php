@@ -52,7 +52,20 @@ class CustomerController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
-		return $this->render('ApdcApdcBundle::customer/statTicket.html.twig'); 
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		if (isset($_GET['date_debut']) && isset($_GET['date_fin'])) {
+			$list			= $stats->get_list_orderid();
+			$date_debut		= $_GET['date_debut'];
+			$date_fin		= $_GET['date_fin'];
+			$data_coupon	= $stats->data_coupon($date_debut, $date_fin);
+		}
+
+		return $this->render('ApdcApdcBundle::customer/statTicket.html.twig', [
+			'date_debut'	=> $date_debut,
+			'date_fin'		=> $date_fin,
+			'data_coupon'	=> $data_coupon,
+		]); 
 	
 	}
 }

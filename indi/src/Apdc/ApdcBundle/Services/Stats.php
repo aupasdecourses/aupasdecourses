@@ -189,7 +189,39 @@ class Stats
 	}
 
 
+	/***************** COUPON CLIENT ************/
+	/*******************************************/
 
+
+	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml
+	public function data_coupon($debut, $fin)
+	{
+		$data = [];
+		/* Format dates */
+		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		$orders = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
+			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
+			->addAttributeToSort('increment_id', 'DESC');
+		foreach ($orders as $order) {
+			array_push($data, [
+				'increment_id'	=> $order->getIncrementId(),
+				'quartier'		=> $order->getStoreName(),
+				'Coupon Code'	=> $order->getCouponCode(),
+				]);
+			arsort($data);
+		}
+		$data_conso = [];
+		foreach ($data as $row) {
+			if ($row['Coupon Code']) {
+				$data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
+			}
+		}
+
+		return $data_conso;
+	}
 
 
 

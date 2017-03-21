@@ -245,22 +245,12 @@ div#pageNumero{
 
 
 /*
- * ------- FACTURATION ------
+ * ------- FACTURATION + FIDELITE CLIENT + COUPON CLIENT ------
+ * ------- DATEPICKERS IDENTIQUES
  */
 
-input#datepickerBill {
+input#datepickerBill,input#datepickerLoyalty,input#datepickerEndLoyalty,input#datepickerTicket,input#datepickerEndTicket {
 	width:100px;
 	display:inline;
 	vertical-align:top;
 }
-
-/* 
- *	------ FIDELITE CLIENT -----
- */
-
-input#datepickerLoyalty,input#datepickerEndLoyalty {
-	width:100px;
-	display:inline;
-	vertical-align:top;
-}
- 

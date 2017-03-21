@@ -2,7 +2,121 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+<div class="container">
+	<p class="bg-warning hidden">Attention : Seules les commandes à l'état Processing & "Complete" - de moins de 3 mois - sont affichées </p>
+	<div class="page-header">
+		<h2>Liste des commandes (filtrable par clients) du <input type="text" class="form-control" id="datepickerTicket" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndTicket" placeholder="Cliquez ici pour sélectionner la date" value="{{ date_fin }}"></h2>
+	</div>
+	<table class="table table-striped" id="ticketTable">
+		<thead>
+			<tr>
+				<th>Coupon</th>
+				<th class="float">Nombre</th>
+				<th># Commande</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for coupon , value in data_coupon %}
+				<tr>
+					<td>{{ coupon }}</td>
+					<td>{{ value|length }}</td>
+					<td>	
+						{% for content in value %}
+							{{ content|nl2br }}
+						{% endfor %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Total</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
 
-<h1> Stat Coupon </h1>
+</div>
+{% endblock %}
+{% block css_ticketCustomer %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_ticketCustomer %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script>
+$(function() {
+	$( "#datepickerTicket" ).datepicker({
+		altField: "#datepickerTicket",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+	$( "#datepickerEndTicket" ).datepicker({
+		altField: "#datepickerEndTicket",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+$(function(){
+	$("#datepickerEndTicket").change(function(){
+		window.location='{{ path('statTicket') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerTicket").val()+'&date_fin='+this.value;
+	});
+});
+$(document).ready(function() {
+	var table=$('#data_facturation').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				// Total over this page
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+	</script>
+
+
+
 
 {% endblock %}
