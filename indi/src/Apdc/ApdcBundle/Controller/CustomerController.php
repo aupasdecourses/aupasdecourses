@@ -19,9 +19,8 @@ class CustomerController extends Controller
 		$stat	= $stats->stats_clients();
 
 		return $this->render('ApdcApdcBundle::customer/statCustomer.html.twig', [
-			'stat'			=> $stat,	
-		]); 
-	
+			'stat'			=> $stat,
+		]);
 	}
 
 	public function loyaltyCustomerAction(Request $request)
@@ -38,12 +37,12 @@ class CustomerController extends Controller
 			$date_fin			= $_GET['date_fin'];
 			$data_clients		= $stats->data_clients($date_debut, $date_fin);
 		}
+
 			return $this->render('ApdcApdcBundle::customer/loyaltyCustomer.html.twig', [
 				'date_debut'			=> $date_debut,
-				'date_fin'				=> $date_fin,	
+				'date_fin'				=> $date_fin,
 				'data_clients'			=> $data_clients,
-			]); 
-	
+			]);
 	}
 
 	public function statTicketAction(Request $request)
@@ -65,7 +64,6 @@ class CustomerController extends Controller
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'data_coupon'	=> $data_coupon,
-		]); 
-	
+		]);
 	}
 }

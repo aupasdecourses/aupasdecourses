@@ -13,7 +13,7 @@ class Stats
 	{
 		\Mage::app();
 	}
- 
+
 
 	private function array_columns($array, $column_name)
 	{
@@ -21,8 +21,8 @@ class Stats
 			function ($element) use ($column_name) {
 				return $element[$column_name];
 			},
-				$array
-			);
+			$array
+		);
 	}
 
 	public function stats_clients()
@@ -41,17 +41,17 @@ class Stats
 			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 		//	$datelo		= new DateTime($order->getLastOrder());
 			array_push($data, [
-					'Nom Client'		=> $order->getCustomerName(),
-					'Nb Commande'		=> $order->getNbOrder(),
-					'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-		//			'Dernière commande' => $datelo->format('d/m/Y'),
-					'Dernière commande'	=> $order->getLastOrder(),
-					'Mail client'		=> $order->getCustomerEmail(),
-					'Rue'				=> $dataadd->getStreet()[0],
-					'Code Postal'		=> $dataadd->getPostcode(),
-					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-					'Créé dans'			=> $customer->getCreatedIn(),
-				]);
+				'Nom Client'		=> $order->getCustomerName(),
+				'Nb Commande'		=> $order->getNbOrder(),
+				'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+				//'Dernière commande' => $datelo->format('d/m/Y'),
+				'Dernière commande'	=> $order->getLastOrder(),
+				'Mail client'		=> $order->getCustomerEmail(),
+				'Rue'				=> $dataadd->getStreet()[0],
+				'Code Postal'		=> $dataadd->getPostcode(),
+				'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+				'Créé dans'			=> $customer->getCreatedIn(),
+			]);
 		}
 		//Add customer who never ordered
 		$customers = \Mage::getModel('customer/customer')
@@ -61,16 +61,16 @@ class Stats
 			$key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
 			if ($key == false) {
 				array_push($data, [
-						'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-						'Nb Commande'		=> 0,
-						'Total'				=> 0,
-						'Dernière commande' => 'NA',
-						'Mail client'		=> $customer->getEmail(),
-						'Rue'				=> "NA",
-						'Code Postal'		=> "NA",
-						'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-						'Créé dans'			=> $customer->getCreatedIn(),
-					]);
+					'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+					'Nb Commande'		=> 0,
+					'Total'				=> 0,
+					'Dernière commande' => 'NA',
+					'Mail client'		=> $customer->getEmail(),
+					'Rue'				=> "NA",
+					'Code Postal'		=> "NA",
+					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'Créé dans'			=> $customer->getCreatedIn(),
+				]);
 			}
 		}
 		return $data;
@@ -122,7 +122,7 @@ class Stats
 
 
 
-	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml
+	/** Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml */
 	public function data_clients($debut, $fin)
 	{
 		$data = [];
@@ -150,15 +150,15 @@ class Stats
 					1 => 'Pour les articles ...',
 					2 => 'Pour la livraison ...',
 			);
-			if ($order->getCouponCode()<>"") {
+			if ($order->getCouponCode() <> "") {
 				$oCoupon	= \Mage::getSingleton('salesrule/coupon')->load($order->getCouponCode(), 'code');
 				$oRule		= \Mage::getSingleton('salesrule/rule')->load($oCoupon->getRuleId());
 				$coupondata	= "";
 				$coupondata	.= "Règle n°".$oRule->getData('rule_id');
 				$coupondata	.= ".\n Réduction de ".$oRule->getData('discount_amount');
-				$coupondata	.=" de type ".$oRule->getData('simple_action');
-				$coupondata	.=".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
-				$coupondata	.=".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';            
+				$coupondata	.= "de type ".$oRule->getData('simple_action');
+				$coupondata	.= ".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
+				$coupondata	.= ".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';
 			} else {
 				$coupondata	= "";
 			}
@@ -193,7 +193,7 @@ class Stats
 	/*******************************************/
 
 
-	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml
+	/** Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml */
 	public function data_coupon($debut, $fin)
 	{
 		$data = [];
@@ -210,7 +210,7 @@ class Stats
 				'increment_id'	=> $order->getIncrementId(),
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
-				]);
+			]);
 			arsort($data);
 		}
 		$data_conso = [];
@@ -222,14 +222,4 @@ class Stats
 
 		return $data_conso;
 	}
-
-
-
-
-
-
-
-
-
-
 }

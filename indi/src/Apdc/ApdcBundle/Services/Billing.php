@@ -235,7 +235,7 @@ class Billing
 					$sum_items_invoice = 0;
 					$sum_items_invoice_HT = 0;
 					$sum_items_credit = 0;
-					$sum_items_credit_HT = 0;
+					$sum_items_credit_HT = 0; ///////////////////////////////////////////////////////////////
 					$sum_commission_HT = 0;
 					foreach ($invoiced_items as $item) {
 						$com_done = false;
@@ -250,14 +250,14 @@ class Billing
 									foreach ($credit_items as $citem) {
 										if ($item->getProductID() == $citem->getProductID()) {
 											$sum_items_credit += floatval($citem->getRowTotalInclTax());
-											$sum_items_credit_HT += floatval($citem->getRowTotal());
+											$sum_items_credit_HT += floatval($citem->getRowTotal()); /////////////////////////////
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $marge_arriere));
 											$com_done = true;
 										}
 									}
 									$creditdata = $this->getRefunditemdata($item, 'diffprixfinal');
 									$sum_items_credit += floatval($creditdata);
-									$sum_items_credit_HT += floatval($creditdata) / (1 + $TVApercent);
+									$sum_items_credit_HT += floatval($creditdata) / (1 + $TVApercent); //////////////////////////////////////
 									$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditdata) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
 									$sum_items_credit_TVA = $sum_items_credit_HT * $TVApercent;
 									$com_done = true;
@@ -276,7 +276,7 @@ class Billing
 										if ($item->getProductID() == $citem->getProductID()) {
 											$cproduct = \Mage::getModel('catalog/product')->load($citem->getProductID());
 											$sum_items_credit += floatval($citem->getRowTotalInclTax());
-											$sum_items_credit_HT += floatval($citem->getRowTotal());
+											$sum_items_credit_HT += floatval($citem->getRowTotal()); ////////////////////////////////////////
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
 											$com_done = true;
 										}
@@ -314,7 +314,7 @@ class Billing
 						}
 						if ($order->hasCreditMemos()) {
 							$sum_items_credit = round($sum_items_credit, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-							$sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+							$sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP); /////////////////////
 							$sum_items_credit_TVA = round($sum_items_credit - $sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 						} else {
 							$sum_items_credit = $sum_items_credit_HT = $sum_items_credit_TVA = 0;
@@ -347,7 +347,7 @@ class Billing
 							'sum_items' => $sum_items,
 							'sum_items_HT' => $sum_items_HT,
 							'sum_items_credit' => $sum_items_credit,
-							'sum_items_credit_HT' => $sum_items_credit_HT,
+							'sum_items_credit_HT' => $sum_items_credit_HT, /////////////////////////
 							'remboursements' => $creditcom,
 							'sum_ticket' => $sum_items - $sum_items_credit,
 							'sum_ticket_HT' => $sum_items_HT - $sum_items_credit_HT,
