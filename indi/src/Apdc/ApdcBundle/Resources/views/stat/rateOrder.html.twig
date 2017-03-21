@@ -2,12 +2,45 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-
 <div class="container">
+	<h2>Notes Commande par Clients</h2>
 
-	<h2>Notes Commande</h2>
+		<div class="page-header">
+			<h2>Commandes du <input type="text" class="form-control" id="datepickerRate" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		</div>
 
+		<table id="rateIndex" class="table table-striped">
+			<thead>
+				<tr>
+					<th colspan="2">Date</th>
+					<th># Commande</th>
+					<th>Nom Client</th>
+					<th>Note</th>
+				</tr>
+				<tr>
+					<th>Création</th>
+					<th>Livraison</th>
+					<th class="sort"></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{# for order in notes #}
+					<tr>
+						<td></td>
+						<td></td>
+						<td>{# order.order_id #}</td>
+						<td></td>
+						<td>{# order.note #}</td>
+					</tr>
+				{# endfor #}
+			</tbody>
+		</table>
 </div>
-
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_rateOrder %}
+{% endblock %}
+{% block javascript_rateOrder %}
 {% endblock %}
