@@ -13,20 +13,20 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
     protected $_codeboutique = 'paris9e';
     protected $_nameboutique = 'Paris 9e';
     protected $_city='Paris';
-    protected $_zipcode=array('75009');
+    protected $_zipcode=array('75009','75018','75002');
     protected $_country='FR';
-    protected $_listmailchimp='News & Infos 9e';
+    protected $_listmailchimp='Paris 9e';
 
     protected $_contacts = array(
             "Boucherie 9e" => [
-                'firstname'=>'Boucherie 9e',
+                'firstname'=>'Contact commande',
                 'lastname'=>'Boucherie 9e',
-                'email'=>'Boucherie 9e',
+                'email'=>'contact@aupasdecourses.com',
             ],
             "Boulangerie Lendemaine"=>[
-                'firstname'=>'Boulangerie Lendemaine 9',
+                'firstname'=>'Contact commande',
                 'lastname'=>'Boulangerie Lendemaine 9',
-                'email'=>'Boulangerie Lendemaine 9',
+                'email'=>'contact@aupasdecourses.com',
             ],
             "Cavavin"=>[
                 'firstname'=>'Pascale',
@@ -34,19 +34,24 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
                 'email'=>'paris9@cavavin.fr',
             ],
             "Au Verger Fleuri"=>[
-                'firstname'=>'Au Verger Fleuri 9e',
+                'firstname'=>'Abdel',
                 'lastname'=>'Au Verger Fleuri 9e',
-                'email'=>'Au Verger Fleuri 9e',
+                'email'=>'abdelmajidkarouia@yahoo.fr',
             ],
-            "Poissonnerie 9"=>[
-                'firstname'=>'Poissonnerie 9',
-                'lastname'=>'Poissonnerie 9',
-                'email'=>'Poissonnerie 9',
+            "Au Bon Port Montmartre"=>[
+                'firstname'=>'Hakim',
+                'lastname'=>'Au Bon Port Montmartre',
+                'email'=>'contact@aupasdecourses.com',
+            ],
+            "Les Bonnes Crèmes"=>[
+                'firstname'=>'Contact',
+                'lastname'=>'Les Bonnes Crèmes 9e',
+                'email'=>'contact@aupasdecourses.com',
             ],
             "Artisans du lait"=>[
-                'firstname'=>'Artisans du lait 9',
+                'firstname'=>'Ruben',
                 'lastname'=>'Artisans du lait 9',
-                'email'=>'Artisans du lait9',
+                'email'=>'ruben@artisandulait.fr',
             ]);
 
     protected $_commercant = [
@@ -54,8 +59,9 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
             "Boulangerie Lendemaine"=>array('name'=>'BOULANGERIE LENDEMAINE'),
             "Cavavin"=>array('name'=>"CAVAVIN"),
             "Au Verger Fleuri"=>array('name'=>'AU VERGER FLEURI'),
-            "Poissonnerie 9"=>array('name'=>"POISSONNERIE 9"),
+            "Au Bon Port Montmartre"=>array('name'=>"AU BON PORT JEANNE D'ARC"),
             "Artisans du lait"=>array('name'=>"ARTISANS DU LAIT"),
+            "Les Bonnes Crèmes"=>array('name'=>"LES BONNES CREMES"),
             ];
 
     protected $_magasin = [
@@ -64,8 +70,8 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
             'Caviste' => "Cavavin",
             'Primeur' => "Au Verger Fleuri",
             'Fromager' => "Artisans du lait",
-            'Poissonnier' => "Poissonnerie 9",
-            'Epicerie' => '',
+            'Poissonnier' => "Au Bon Port Montmartre",
+            'Epicerie' => 'Les Bonnes Crèmes',
             'Traiteur' => '',
             ];
 
@@ -84,15 +90,19 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
             ),
             "Au Verger Fleuri"=>array(
                 'google_id'=>'2030347927',
-                'google_key'=>'1GEQhLoAhR95Wl16pmNZinxxzQ4alEAAN6oQwY7bdGyU',
+                'google_key'=>'1003mGaSpIRfH1JykpOtUjsnZPeKSsWvwZ68BhrHn4nM',
             ),
-            "Poissonnerie 9"=>array(
-                'google_id'=>'',
-                'google_key'=>'',
+            "Au Bon Port Montmartre"=>array(
+                'google_id'=>'2131873323',
+                'google_key'=>'1-nVGZYkYPFPIlDYZ7geUarfSV1jL5Qeq5hkRA58ngwI',
             ),
             "Artisans du lait"=>array(
                 'google_id'=>'2030347927',
                 'google_key'=>'1KsfuFdJeZAePokE8MVcAPl1V6UMKHQjtkyAH4xVkxG8',
+            ),
+            "Les Bonnes Crèmes"=>array(
+                'google_id'=>'',
+                'google_key'=>'',
             ),
             ];
 
