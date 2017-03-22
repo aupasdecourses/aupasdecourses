@@ -5,9 +5,9 @@
 <div class="container">
 	<p class="bg-warning hidden">Attention : Seules les commandes à l'état Processing & "Complete" - de moins de 3 mois - sont affichées </p>
 	<div class="page-header">
-		<h2>Liste des commandes (filtrable par clients) du <input type="text" class="form-control" id="datepickerTicket" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndTicket" placeholder="Cliquez ici pour sélectionner la date" value="{{ date_fin }}"></h2>
+		<h2>Liste des commandes (filtrable par clients) du <input type="text" class="form-control" id="datepickerVoucher" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndVoucher" placeholder="Cliquez ici pour sélectionner la date" value="{{ date_fin }}"></h2>
 	</div>
-	<table class="table table-striped" id="ticketTable">
+	<table class="table table-striped" id="voucherTable">
 		<thead>
 			<tr>
 				<th>Coupon</th>
@@ -83,7 +83,7 @@ $(function(){
 	});
 });
 $(document).ready(function() {
-	var table=$('#data_facturation').DataTable({
+	var table=$('#voucherTable').DataTable({
 		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
 		"pageLength": -1,
 		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],

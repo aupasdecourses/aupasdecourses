@@ -11,7 +11,7 @@
 
 
 
-	<table class="table table-striped" id="statCustomer">
+	<table class="table table-striped" id="statCustomerTable">
 		<thead>
 			<tr>
 				<th class="sort">Nom Client</th>
@@ -64,7 +64,7 @@
 
 	<script>
 $(document).ready(function() {
-	var table=$('#statCustomer').DataTable({
+	var table=$('#statCustomerTable').DataTable({
 		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
 		"pageLength": -1,
 		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],

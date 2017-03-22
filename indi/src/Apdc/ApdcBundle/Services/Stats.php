@@ -241,7 +241,7 @@ class Stats
 	 *	que l'inverse ?
 	 *
 	 *	La correlation entre les deux tables est le numero de commande
-	 *	increment_id en majeur et order_id en mineur
+	 *	"increment_id" en majeur et "order_id" en mineur
 	 *
 	 */
 	public function getNotes($date_debut, $date_fin)
@@ -249,7 +249,7 @@ class Stats
 		$date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
 		$notationClient = \Mage::getModel('sales/order')->getCollection()
 			->addAttributeToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
-		$notationClient->getSelect()->join('apdc_notation', 'main_table.increment_id = apdc_notation.order_id');
+		$notationClient->getSelect()->joinLeft('apdc_notation', 'main_table.increment_id = apdc_notation.order_id');
 		
 		$result = array();
 		foreach ($notationClient as $n) {

@@ -6,12 +6,12 @@
 	<h2>Notes Commande par Clients</h2>
 
 		<div class="page-header">
-			<h2>Commandes du <input type="text" class="form-control" id="datepickerRate" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
 
+		{{ dump() }}
 
-
-		<table id="rateIndex" class="table table-striped">
+		<table id="noteTable" class="table table-striped">
 			<thead>
 				<tr>
 					<th colspan="2">Date</th>
@@ -26,17 +26,29 @@
 					<th class="sort"></th>
 					<th></th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for order in notes %}
 					<tr>
-						<td>{{ order.date_creation }}</td>
-						<td>{{ order.date_livraison }}</td>
-						<td>{{ order.increment_id }}</td>
-						<td>{{ order.nom_client }}</td>
-						<td>{{ order.order_id }}</td>
-						<td>{{ order.note }}</td>
+							<td>{{ order.date_creation }}</td>
+							<td>{{ order.date_livraison }}</td>
+							<td>{{ order.increment_id }}</td>
+							<td>{{ order.nom_client }}</td>
+						{% if order.order_id is null %}
+							<td>{{ "#" }}</td>
+						{% else %}
+							<td>{{ order.order_id }}</td>
+						{% endif %}
+
+						{% if order.note is null %}
+							<td>{{ "Valeur null : Lien form" }}</td>
+						{% elseif order.note == 0 %}
+						<td>{{ "Valeur =  " ~ order.note ~ " Modifier ?" }}</td>
+						{% else %}
+							<td>{{ order.note }}</td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -44,16 +56,16 @@
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
-{% block css_rateOrder %}
+{% block css_noteOrder %}
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
 {% endblock %}
-{% block javascript_rateOrder %}
+{% block javascript_noteOrder %}
 
 <script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
 $(function() {
-	$( "#datepickerRate" ).datepicker({
-		altField: "#datepickerRate",
+	$( "#datepickerNote" ).datepicker({
+		altField: "#datepickerNote",
 		closeText: 'Fermer',
 		prevText: 'Précédent',
 		nextText: 'Suivant',
@@ -69,12 +81,12 @@ $(function() {
 });
 
 $(function(){
-	$("#datepickerRate").change(function(){
-		window.location='{{ path('rateOrder') }}?module=clients&action=view&option=note&date_debut='+this.value;
+	$("#datepickerNote").change(function(){
+		window.location='{{ path('noteOrder') }}?module=clients&action=view&option=note&date_debut='+this.value;
 	});
 });
 $(document).ready(function() {
-	var table=$('#rateIndex').DataTable({
+	var table=$('#noteTable').DataTable({
 		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
 		"pageLength": -1,
 		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],

@@ -126,9 +126,9 @@ statVoucher:
   path: /stat/voucher/
   defaults: { _controller: ApdcApdcBundle:Stat:statVoucher}
 
-rateOrder:
-  path: /stat/rate/
-  defaults: { _controller: ApdcApdcBundle:Stat:rateOrder}
+noteOrder:
+  path: /stat/noteOrder/
+  defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

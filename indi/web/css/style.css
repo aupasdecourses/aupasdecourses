@@ -249,7 +249,7 @@ div#pageNumero{
  * ------- DATEPICKERS IDENTIQUES
  */
 
-input#datepickerBill,input#datepickerLoyalty,input#datepickerEndLoyalty,input#datepickerTicket,input#datepickerEndTicket,input#datepickerRate {
+input#datepickerBill,input#datepickerLoyalty,input#datepickerEndLoyalty,input#datepickerVoucher,input#datepickerEndVoucher,input#datepickerNote {
 	width:100px;
 	display:inline;
 	vertical-align:top;

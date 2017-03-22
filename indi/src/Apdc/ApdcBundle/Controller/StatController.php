@@ -67,7 +67,7 @@ class StatController extends Controller
 	}
 
 
-	public function rateOrderAction(Request $request)
+	public function noteOrderAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
@@ -80,7 +80,7 @@ class StatController extends Controller
 			$date_fin	= $stats->end_month($date_debut);
 			$notes = $stats->getNotes($date_debut, $date_fin);
 		}
-		return $this->render('ApdcApdcBundle::stat/rateOrder.html.twig', [
+		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
