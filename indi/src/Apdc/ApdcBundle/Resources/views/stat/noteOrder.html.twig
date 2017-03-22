@@ -9,7 +9,6 @@
 			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
 
-		{{ dump() }}
 
 		<table id="noteTable" class="table table-striped">
 			<thead>
@@ -43,7 +42,9 @@
 						{% endif %}
 
 						{% if order.note is null %}
-							<td>{{ "Valeur null : Lien form" }}</td>
+							<td>
+								<a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">Lien pour value null</a>
+							</td>
 						{% elseif order.note == 0 %}
 						<td>{{ "Valeur =  " ~ order.note ~ " Modifier ?" }}</td>
 						{% else %}

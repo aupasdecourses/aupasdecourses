@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Apdc\ApdcBundle\Entity\NoteOrder;
+use Apdc\ApdcBundle\Form\NoteOrderType;
+
 class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
@@ -84,6 +87,21 @@ class StatController extends Controller
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
+		]);
+	}
+
+	public function noteOrderSubmitAction(Request $request, $orderId)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$noteOrder				= new NoteOrder();
+		$form_note_order		= $this->createForm(NoteOrderType::class, $noteOrder);
+
+		return $this->render('ApdcApdcBundle::stat/noteOrderSubmit.html.twig', [
+			'order_id'			=> $orderId,
+			'form_note_order'	=> $form_note_order->createView(),
 		]);
 	}
 }
