@@ -21,7 +21,6 @@ class BillingController extends Controller
 		$factu = $this->container->get('apdc_apdc.billing');
 
 		if (isset($_GET['date_debut'])) {
-			$list		= $factu->get_list_orderid();
 			$date_debut = $_GET['date_debut'];
 			$date_fin	= $factu->end_month($date_debut);
 			$bill		= $factu->data_facturation_products($date_debut, $date_fin, "creation");

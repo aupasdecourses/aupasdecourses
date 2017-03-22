@@ -33,7 +33,6 @@ class StatController extends Controller
 		$stats = $this->container->get('apdc_apdc.stats');
 
 		if (isset($_GET['date_debut'])) {
-			$list				= $stats->get_list_orderid();
 			$date_debut			= $_GET['date_debut'];
 			$date_fin			= $_GET['date_fin'];
 			$data_clients		= $stats->data_clients($date_debut, $date_fin);
@@ -54,7 +53,6 @@ class StatController extends Controller
 		$stats = $this->container->get('apdc_apdc.stats');
 
 		if (isset($_GET['date_debut']) && isset($_GET['date_fin'])) {
-			$list			= $stats->get_list_orderid();
 			$date_debut		= $_GET['date_debut'];
 			$date_fin		= $_GET['date_fin'];
 			$data_coupon	= $stats->data_coupon($date_debut, $date_fin);
@@ -80,14 +78,12 @@ class StatController extends Controller
 		if (isset($_GET['date_debut'])) {
 			$date_debut	= $_GET['date_debut'];
 			$date_fin	= $stats->end_month($date_debut);
+			$notes = $stats->getNotes($date_debut, $date_fin);
 		}
-
-//		$notes = $stats->getNotes($date_debut, $date_fin);
-		
 		return $this->render('ApdcApdcBundle::stat/rateOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
-//			'notes'			=> $notes,
+			'notes'			=> $notes,
 		]);
 	}
 }

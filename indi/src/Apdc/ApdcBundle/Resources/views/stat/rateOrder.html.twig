@@ -9,12 +9,15 @@
 			<h2>Commandes du <input type="text" class="form-control" id="datepickerRate" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
 
+
+
 		<table id="rateIndex" class="table table-striped">
 			<thead>
 				<tr>
 					<th colspan="2">Date</th>
-					<th># Commande</th>
+					<th># Commande (sales/order)</th>
 					<th>Nom Client</th>
+					<th>#Commande (apdc_note)</th>
 					<th>Note</th>
 				</tr>
 				<tr>
@@ -26,21 +29,64 @@
 				</tr>
 			</thead>
 			<tbody>
-				{# for order in notes #}
+				{% for order in notes %}
 					<tr>
-						<td></td>
-						<td></td>
-						<td>{# order.order_id #}</td>
-						<td></td>
-						<td>{# order.note #}</td>
+						<td>{{ order.date_creation }}</td>
+						<td>{{ order.date_livraison }}</td>
+						<td>{{ order.increment_id }}</td>
+						<td>{{ order.nom_client }}</td>
+						<td>{{ order.order_id }}</td>
+						<td>{{ order.note }}</td>
 					</tr>
-				{# endfor #}
+				{% endfor %}
 			</tbody>
 		</table>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
 {% block css_rateOrder %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
 {% endblock %}
 {% block javascript_rateOrder %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(function() {
+	$( "#datepickerRate" ).datepicker({
+		altField: "#datepickerRate",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+
+$(function(){
+	$("#datepickerRate").change(function(){
+		window.location='{{ path('rateOrder') }}?module=clients&action=view&option=note&date_debut='+this.value;
+	});
+});
+$(document).ready(function() {
+	var table=$('#rateIndex').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+	} );
+});
+</script>
 {% endblock %}

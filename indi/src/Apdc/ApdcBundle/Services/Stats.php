@@ -39,13 +39,11 @@ class Stats
 			$customer	= \Mage::getModel('customer/customer')->load($order->getCustomerId());
 			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
 			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
-		//	$datelo		= new DateTime($order->getLastOrder());
 			array_push($data, [
 					'Nom Client'		=> $order->getCustomerName(),
 					'Nb Commande'		=> $order->getNbOrder(),
 					'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-		//			'Dernière commande' => $datelo->format('d/m/Y'),
-					'Dernière commande'	=> $order->getLastOrder(),
+					'Dernière commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
 					'Mail client'		=> $order->getCustomerEmail(),
 					'Rue'				=> $dataadd->getStreet()[0],
 					'Code Postal'		=> $dataadd->getPostcode(),
@@ -102,7 +100,7 @@ class Stats
 	    return $orderAttachment.$order_comments;
 	}
 
-
+/*
 	public function get_list_orderid()
 	{
 		$orders = \Mage::getResourceModel('sales/order_collection')
@@ -119,7 +117,7 @@ class Stats
 
 		return $array_orderid;
 	}
-
+ */
 
 
 	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml
@@ -130,12 +128,13 @@ class Stats
 		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
 		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
 		$orders = \Mage::getModel('sales/order')->getCollection()
-			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			//->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addFieldToFilter('status', array('nin' => array('canceled', 'holded')))
 			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
 			->addAttributeToSort('increment_id', 'DESC');
 		//Get info on delivery date
-		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
-		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
+		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 		foreach ($orders as $order) {
 			$status			= $order->getStatusLabel();
 			$date_commande	= date('d/m/Y', strtotime($order->getCreatedAt()));
@@ -226,7 +225,7 @@ class Stats
 
 
 	/****************************
-	 * STATS CLIENTS *****************/
+	 * NOTES CLIENTS *****************/
 
 
 	public function end_month($date) 
@@ -238,16 +237,30 @@ class Stats
 		return $date;
 	}
 
-
+	/**	Plus interessant de lier sales_flat_order (table majeure) avec apdc_notation (table mineure)
+	 *	que l'inverse ?
+	 *
+	 *	La correlation entre les deux tables est le numero de commande
+	 *	increment_id en majeur et order_id en mineur
+	 *
+	 */
 	public function getNotes($date_debut, $date_fin)
 	{
-		$notationClient = \Mage::getModel('apdc_notation/notation')->getCollection();
+		$date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
+		$notationClient = \Mage::getModel('sales/order')->getCollection()
+			->addAttributeToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
+		$notationClient->getSelect()->join('apdc_notation', 'main_table.increment_id = apdc_notation.order_id');
+		
 		$result = array();
 		foreach ($notationClient as $n) {
-			$result[] = array(
-				'order_id'	=> $n->getOrderId(),
-				'note'		=> $n->getNote(),
-			);
+			$result[] = [
+				'date_creation'		=> date('d/m/Y', strtotime($n->getCreatedAt())),
+				'date_livraison'	=> $n->getDdate(), 
+				'increment_id'		=> $n->getData('increment_id'), 
+				'nom_client'		=> $n->getCustomerName(),
+				'order_id'			=> $n->getData('order_id'),
+				'note'				=> $n->getNote(),
+			];
 		}
 
 		return $result;
