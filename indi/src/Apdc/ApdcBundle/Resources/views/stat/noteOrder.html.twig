@@ -14,16 +14,14 @@
 			<thead>
 				<tr>
 					<th colspan="2">Date</th>
-					<th># Commande (sales/order)</th>
+					<th># Commande</th>
 					<th>Nom Client</th>
-					<th>#Commande (apdc_note)</th>
 					<th>Note</th>
 				</tr>
 				<tr>
 					<th>Création</th>
 					<th>Livraison</th>
 					<th class="sort"></th>
-					<th></th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -35,20 +33,15 @@
 							<td>{{ order.date_livraison }}</td>
 							<td>{{ order.increment_id }}</td>
 							<td>{{ order.nom_client }}</td>
-						{% if order.order_id is null %}
-							<td>{{ "#" }}</td>
-						{% else %}
-							<td>{{ order.order_id }}</td>
-						{% endif %}
 
 						{% if order.note is null %}
 							<td>
-								<a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">Lien pour value null</a>
+								<a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">NULL</a>
 							</td>
-						{% elseif order.note == 0 %}
-						<td>{{ "Valeur =  " ~ order.note ~ " Modifier ?" }}</td>
 						{% else %}
-							<td>{{ order.note }}</td>
+							<td>
+								<a href="{{ path('noteOrderSubmit', {orderId: order.increment_id}) }}">{{ order.note }}</a>
+							</td>
 						{% endif %}
 					</tr>
 				{% endfor %}

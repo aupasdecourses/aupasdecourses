@@ -228,6 +228,85 @@ class Stats
 	 * NOTES CLIENTS *****************/
 
 
+	/****************************************************************
+	 *
+	 * ************************************************************/
+
+    private function checkEntryToModel($model, array $filters)
+    {
+        $entry = $model->getCollection();
+        foreach ($filters as $k => $v) {
+            $entry->addFieldToFilter($k, $v);
+        }
+        if ($entry->getFirstItem()->getId() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function addEntryToModel($model, $data, $updatedFields)
+    {
+        foreach ($data as $k => $v) {
+            $model->setData($k, $v);
+        }
+        foreach ($updatedFields as $k => $v) {
+            $model->setData($k, $v);
+        }
+        $model->save();
+    }
+
+    private function updateEntryToModel($model, array $filters, array $updatedFields)
+    {
+        $entry = $model->getCollection();
+        foreach ($filters as $k => $v) {
+            $entry->addFieldToFilter($k, $v);
+        }
+        if (($id = $entry->getFirstItem()->getId()) != null) {
+            $model->load($id);
+            foreach ($updatedFields as $k => $v) {
+                $model->setData($k, $v);
+            }
+            $model->save();
+        } else {
+            $this->addEntryToModel($model, $updatedFields);
+        }
+    }
+
+    public function addEntryToApdcNotation(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel('apdc_notation/notation'),
+            $data
+        );
+    }
+
+    public function updateEntryToApdcNotation(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('apdc_notation/notation');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+/************************************************************************************
+ *	
+ *********************************************************************************/
+
+
+
 	public function end_month($date) 
 	{
 		$date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
@@ -250,15 +329,18 @@ class Stats
 		$notationClient = \Mage::getModel('sales/order')->getCollection()
 			->addAttributeToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
 		$notationClient->getSelect()->joinLeft('apdc_notation', 'main_table.increment_id = apdc_notation.order_id');
-		
+		$notationClient->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
+		$notationClient->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+
+
+
 		$result = array();
 		foreach ($notationClient as $n) {
 			$result[] = [
 				'date_creation'		=> date('d/m/Y', strtotime($n->getCreatedAt())),
-				'date_livraison'	=> $n->getDdate(), 
+				'date_livraison'	=> date('d/m/Y', strtotime($n->getDdate())), 
 				'increment_id'		=> $n->getData('increment_id'), 
 				'nom_client'		=> $n->getCustomerName(),
-				'order_id'			=> $n->getData('order_id'),
 				'note'				=> $n->getNote(),
 			];
 		}

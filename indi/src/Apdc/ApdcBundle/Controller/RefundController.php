@@ -467,8 +467,8 @@ class RefundController extends Controller
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-            $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
 
+            $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
             return $this->redirectToRoute('refundAdyenIndex');
         }
 

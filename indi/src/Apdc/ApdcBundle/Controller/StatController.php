@@ -95,9 +95,28 @@ class StatController extends Controller
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
+		
+		$stats		= $this->container->get('apdc_apdc.stats');			
+		$session	= $request->getSession();
 
 		$noteOrder				= new NoteOrder();
 		$form_note_order		= $this->createForm(NoteOrderType::class, $noteOrder);
+		
+		if ($request->isMethod('POST') && $form_note_order->handleRequest($request)->isValid()) {
+			try {
+				$stats->updateEntrytoApdcNotation(
+					['order_id'	=> $form_note_order['orderId']->getData()],
+					['note'		=> $form_note_order['note']->getData()]
+				);
+
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+
+			$session->getFlashBag()->add('success', 'Note Commande ajoutée !');
+			return $this->redirectToRoute('noteOrder');
+		}
+		
 
 		return $this->render('ApdcApdcBundle::stat/noteOrderSubmit.html.twig', [
 			'order_id'			=> $orderId,
