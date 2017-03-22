@@ -38,7 +38,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
     {
         $shop_info=array();
         $current_cat=Mage::registry('current_category');
-        $data = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', $current_cat->getId())->getFirstItem()->getData();
+        $data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$current_cat->getId()))->getFirstItem()->getData();
 
         $shop_info["name"]=$data["name"];
         $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];

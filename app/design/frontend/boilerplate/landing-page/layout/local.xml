@@ -2,6 +2,7 @@
 <layout version="0.1.0">
     <default>
         <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
             <block type="page/html_head" name="head" as="head"/>
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
         </reference>
@@ -55,6 +56,7 @@
             <action method="addJs"><script>varien/js.js</script></action>
             <action method="addJs"><script>varien/form.js</script></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/apdc_quickview.js</file></action>
             <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
@@ -129,5 +131,12 @@
             <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
         </reference>
     </apdc_forgotpassword_view>
+
+    <apdc_newsletter_view>
+      <reference name="content">
+            <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml">
+            </block>
+        </reference>
+    </apdc_newsletter_view>
 
 </layout>

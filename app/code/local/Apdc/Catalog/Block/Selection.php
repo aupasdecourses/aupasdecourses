@@ -73,6 +73,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
     {
         $collection = Mage::getModel('catalog/product')->getCollection()
                 ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
+                ->distinct(true)
                 ->addAttributeToFilter('category_id', $categoryId);
         $collection = $this->prepareProductCollection($collection);
         $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));

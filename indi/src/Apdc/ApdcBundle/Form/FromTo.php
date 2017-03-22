@@ -14,14 +14,14 @@ class FromTo extends AbstractType
 	{
 		$builder->add('from', TextType::class, [
 			'required'	=> true,
-			'label'		=> 'Date début:',
+			'label'		=> 'Date livraison début:',
 			'attr'		=> [
 				'class'		=> 'form-control datepicker'
 			]
 		]);
 		$builder->add('to', TextType::class, [
 			'required'	=> true,
-			'label'		=> 'Date fin:',
+			'label'		=> 'Date livraison fin:',
 			'attr'		=> [
 				'class'		=> 'form-control datepicker'
 			]

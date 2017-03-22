@@ -10,6 +10,7 @@
  */
 require_once '../abstract.php';
 
+
 class Pmainguet_CreateStore extends Mage_Shell_Abstract
 {
 
@@ -79,7 +80,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
         'Primeur' => '#3ab64b',
         'Fromager' => '#faae37',
         'Poissonnier' => "#5496d7",
-        'Epicerie Fine' => '#2f4da8',
+        'Epicerie' => '#2f4da8',
         'Traiteur' => '#272b32',
     ];
 
@@ -515,7 +516,6 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
     //Create commercants catégories and product attributes
     public function createcommercantcat()
     {
-
         echo "//// Création des catégories et attributs commerçants sous Magento ////\n\n";
 
         $catnames = $this->_magasin;
@@ -646,12 +646,15 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
                     $id_contact=Mage::getSingleton('apdc_commercant/contact')->getCollection()->addFieldToFilter('email', $mail)->getFirstItem()->getId();
                     $id_attribut_commercant = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('commercant')->getFirstItem()->getSource()->getOptionId($childcat);
 
+                    $S = Mage::helper('apdc_commercant')->getStoresArray();
+
                     $data=[
                         'enabled'=>true,
                         'name'=>$childcat,
                         'id_commercant'=>Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $namecommercant)->getFirstItem()->getId(),
                         'id_contact_manager'=>$id_contact,
-                        'id_category'=>$category->getId(),
+                        'id_category'=>array($category->getId()),
+                        'stores'=>array($S[explode('/', $category->getPath())[1]]['store_id']),
                         'id_attribut_commercant'=>$id_attribut_commercant,
                         'delivery_days'=>array(2,3,4,5),
                         'city'=>'Paris',
