@@ -276,7 +276,7 @@ class Stats
     public function addEntryToApdcNotation(array $data)
     {
         $this->addEntryToModel(
-            \Mage::getModel('apdc_notation/notation'),
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('apdc_notation/notation')),
             $data
         );
     }
@@ -334,7 +334,7 @@ class Stats
 
 
 
-		$result = array();
+		$result = [];
 		foreach ($notationClient as $n) {
 			$result[] = [
 				'date_creation'		=> date('d/m/Y', strtotime($n->getCreatedAt())),

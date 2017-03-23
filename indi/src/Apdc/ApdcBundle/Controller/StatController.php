@@ -104,7 +104,7 @@ class StatController extends Controller
 		
 		if ($request->isMethod('POST') && $form_note_order->handleRequest($request)->isValid()) {
 			try {
-				$stats->updateEntrytoApdcNotation(
+				$stats->updateEntryToApdcNotation(
 					['order_id'	=> $form_note_order['orderId']->getData()],
 					['note'		=> $form_note_order['note']->getData()]
 				);
