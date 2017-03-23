@@ -48,8 +48,8 @@
 
 	<script>
 $(function() {
-	$( "#datepickerTicket" ).datepicker({
-		altField: "#datepickerTicket",
+	$( "#datepickerVoucher" ).datepicker({
+		altField: "#datepickerVoucher",
 		closeText: 'Fermer',
 		prevText: 'Précédent',
 		nextText: 'Suivant',
@@ -62,8 +62,8 @@ $(function() {
 		weekHeader: 'Sem.',
 		dateFormat: 'dd/mm/yy',
 	});
-	$( "#datepickerEndTicket" ).datepicker({
-		altField: "#datepickerEndTicket",
+	$( "#datepickerEndVoucher" ).datepicker({
+		altField: "#datepickerEndVoucher",
 		closeText: 'Fermer',
 		prevText: 'Précédent',
 		nextText: 'Suivant',
@@ -78,8 +78,8 @@ $(function() {
 	});
 });
 $(function(){
-	$("#datepickerEndTicket").change(function(){
-		window.location='{{ path('statVoucher') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerTicket").val()+'&date_fin='+this.value;
+	$("#datepickerEndVoucher").change(function(){
+		window.location='{{ path('statVoucher') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerVoucher").val()+'&date_fin='+this.value;
 	});
 });
 $(document).ready(function() {
