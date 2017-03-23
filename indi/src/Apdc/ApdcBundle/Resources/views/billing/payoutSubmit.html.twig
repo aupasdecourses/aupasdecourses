@@ -9,8 +9,9 @@
 	{{ form_start(form) }}
 
 
+
 	{% for key , fields in merchants %}
-		{% if fields.name == choice %}
+		{% if fields.id == choice %}
 				
 			<h4><b>Owner Name :</b></h4>
 			{{ form_widget(form.ownerName, {'attr': {'value': fields.ownerName} }) }}
