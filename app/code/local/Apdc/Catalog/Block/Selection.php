@@ -58,6 +58,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
                 'e.entity_id = _gallery_table.entity_id',
                 array()
             )
+            ->distinct(true)
             ->where('_gallery_table.value IS NOT NULL');
         return $collection;
     }
