@@ -44,9 +44,9 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
                 'email'=>'contact@aupasdecourses.com',
             ],
             "Les Bonnes Crèmes"=>[
-                'firstname'=>'Contact',
-                'lastname'=>'Les Bonnes Crèmes 9e',
-                'email'=>'contact@aupasdecourses.com',
+                'firstname'=>'Franz',
+                'lastname'=>'Potisek',
+                'email'=>'potisek@wanadoo.fr ',
             ],
             "Artisans du lait"=>[
                 'firstname'=>'Ruben',
@@ -101,8 +101,8 @@ class Pmainguet_CreateStore9 extends Pmainguet_CreateStore
                 'google_key'=>'1KsfuFdJeZAePokE8MVcAPl1V6UMKHQjtkyAH4xVkxG8',
             ),
             "Les Bonnes Crèmes"=>array(
-                'google_id'=>'',
-                'google_key'=>'',
+                'google_id'=>'2030347927',
+                'google_key'=>'1qBlL08jjAq5WpgedWTWdRLK-o-KKA1JAOkNTFzqdedg',
             ),
             ];
 
