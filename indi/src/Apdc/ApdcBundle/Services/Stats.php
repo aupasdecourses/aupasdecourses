@@ -348,18 +348,19 @@ class Stats
 		return $result;
 	}
 
-	public function histogramme()
+	public function histogramme($date_debut, $date_fin)
 	{
-		$notes = $this->getNotes();
-		$result = array();
-		foreach ($notes as $id => $n) {
-			if (!array_key_exists($n, $result)) {
-				$result[$n] = 1;
-			} else {
-				$result[$n] += 1;
-			}
+		$notes = $this->getNotes($date_debut, $date_fin);
+		$result = [];
+		$cpt = 1;
+		foreach ($notes as $n) {
+			$result[$n['date_creation']][$cpt] = [
+				'notation'	=> intval($n['note']),
+			];
+			++$cpt;
 		}
 
 		return json_encode($result);
+		
 	}
 }
