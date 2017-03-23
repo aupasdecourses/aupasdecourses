@@ -7,6 +7,9 @@
 "var refund_diff":"Refund products",
 "var refund_shipping":"Refund shipping",
 "var refund_full":"Full refund",
+"var store_code":"Store Code",
+"var id":"Order Id",
+"var base_url":"Base Url",
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -14,14 +17,14 @@
         <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%" summary="">
             <tr>
                 <td align="center" valign="top" style="padding:20px 0 20px 0">
-                    <table bgcolor="#FFFFFF" cellspacing="0" cellpadding="10" border="0" style="width: 600px; line-height: 1.4;" summary="">
+                    <table bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0" style="width: 600px; line-height: 1.4;" summary="">
                         <tr>
                             <td valign="top">
-                                <img alt="Au Pas De Courses" align="center" src="https://gallery.mailchimp.com/813feff892b5d2dac949b8ad4/images/7db5808e-d7fd-42a5-b6a3-2503a85b118e.png" width="100%" style="padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" />
+                                <img alt="Au Pas De Courses" align="center" src="https://gallery.mailchimp.com/813feff892b5d2dac949b8ad4/images/a5f74b52-3f60-4c3c-b45d-5614b3e599ed.jpg" width="100%" style="padding-bottom: 20;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" />
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
+                            <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:5px;">
                                 <h1>Bonjour {{var customer_firstname}},</h1>
                                 <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
                                 <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et tous vos produits vous ont été livrés comme prévu.</p>
@@ -29,7 +32,21 @@
                                 <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande, d'un montant de {{var refund_shipping}}€.</p>
                                 <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de rembourser directement sur votre carte bancaire.</p>
                                 {{/if}}
-                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{store url="customer/account/"}}" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                <p style="font-weight:bold;">Une dernière chose, pourriez vous nous dire comment s'est passée votre commande, en donnant une note ci-dessous ?</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: table-cell; width: 200px; padding: 5px 20px;text-align:center;">
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=1" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=2" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=3" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=4" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=5" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
                                 <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
                             </td>
                         </tr>

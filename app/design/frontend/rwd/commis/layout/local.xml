@@ -46,10 +46,14 @@
                 <rel>skin_js</rel>
                 <href>js/custom.js</href>
             </action>
+            <action method="addCss">
+                <stylesheet>ddate/css/ddate.css</stylesheet>
+            </action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
         </reference>
         <reference name="header">
             <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
+            <block type="checkout/onepage_ddate" name="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
@@ -170,6 +174,12 @@
             </action>
             <action method="removeLinkByName">
                 <name>autoresponderlists</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>mailchimp</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>newsletter</name>
             </action>
             <remove name="sale.reorder.sidebar.left" />
             <remove name="reports.product.viewed.left" />

@@ -1,0 +1,107 @@
+#html-body{
+    header{
+        position: relative;
+                margin-bottom: 200px;
+
+    }
+    #background_video_container{
+        position: absolute;
+        z-index: -1;
+                height: 600px;
+
+        width: 100%;
+        overflow: hidden;
+        img.banner, video{
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    }
+    .intro-section{
+        text-align: center;
+                margin-top: 160px;
+
+        h1{
+            color: #fff;
+        }
+    }
+}
+
+.apdc-notation-index-index{
+    height:100%;
+    margin: 0px;
+    padding: 0px;
+    header{
+        height:100%;
+        margin-bottom:0px !important;
+    }
+    #background_video_container{
+        height: 100% !important;
+    }
+    .full{
+        height: 100%;
+    }
+    .intro-section{
+        background:white;
+        margin-top: 100px !important;
+        padding:0;
+        padding-bottom:40px;
+        .border-container{
+            width: 100%;
+            height: 56px;
+            background: url(../images/border-pattern-height.png) repeat-x;
+        }
+        #logo{
+            padding: 40px 40px;
+        }
+        .icon{
+            margin-bottom:10px;
+        }
+    }
+}
+
+header{
+    .top-nav{
+        float: right;
+        list-style-type: none;
+        li{
+            display: inline-block;
+            margin: 0 10px;
+            a{
+                position: relative;
+                color: #fff;
+                font-weight: 700;
+                font-size: 1.125rem;
+                -webkit-transition: all 100ms ease-in;
+                -moz-transition: all 100ms ease-in;
+                -ms-transition: all 100ms ease-in;
+                -o-transition: all 100ms ease-in;
+                transition: all 100ms ease-in;
+                &:hover{
+                    text-decoration: none;
+                    color: $color-second-green;
+                    &:after{
+                        background: $color-second-green;
+                        bottom: -5px;
+                    }
+                }
+                &:after{
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    bottom: -15px;
+                    left: 0;
+                    width: 100%;
+                    height: 5px;
+                    background: transparent;
+                    -webkit-transition: all 100ms ease-in;
+                    -moz-transition: all 100ms ease-in;
+                    -ms-transition: all 100ms ease-in;
+                    -o-transition: all 100ms ease-in;
+                    transition: all 100ms ease-in;
+                }
+            }
+        }
+    }
+}

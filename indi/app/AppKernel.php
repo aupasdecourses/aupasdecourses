@@ -18,6 +18,7 @@ class AppKernel extends Kernel
 		    new Oneup\UploaderBundle\OneupUploaderBundle(),
 			new Apdc\ApdcBundle\ApdcApdcBundle(),
 			new FOS\UserBundle\FOSUserBundle(),
+			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

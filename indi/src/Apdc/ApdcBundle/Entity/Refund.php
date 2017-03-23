@@ -39,4 +39,3 @@ class Refund
         return $this->value;
 	}
 }
-

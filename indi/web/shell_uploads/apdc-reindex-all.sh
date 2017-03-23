@@ -1,7 +1,7 @@
 #!/bin/bash
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
-cd "/home/sturquier/www/shell"
+cd ../../../shell
 php indexer.php --reindex catalog_product_attribute
 echo "Reindex catalog_product_attribute OK!"
 php indexer.php --reindex catalog_url

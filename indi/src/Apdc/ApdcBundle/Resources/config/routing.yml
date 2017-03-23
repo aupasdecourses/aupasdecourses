@@ -87,9 +87,20 @@ refundAdyenForm:
   requirements: { psp:"[0-9]+" }
 
 billingIndex:
-  path: /billing/{from}/{to}
-  defaults: { _controller: ApdcApdcBundle:Billing:index, from: null, to: null}
-  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+  path: /billing/
+  defaults: { _controller: ApdcApdcBundle:Billing:index}
+
+billingPayoutIndex:
+  path: /billing/payout/
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
+
+billingPayoutSubmit:
+  path: /billing/payout/submit/
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
+
+statNote:
+  path: /stat/note/
+  defaults: { _controller: ApdcApdcBundle:Stat:note}
 
 toolProduct:
   path: /tool/product/

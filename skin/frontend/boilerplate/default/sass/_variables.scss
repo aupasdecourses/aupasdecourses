@@ -1,0 +1,47 @@
+// FONTS
+$font-title:    'Open Sans', sans-serif;
+$font-text:     'Open Sans', sans-serif;
+$f-size-body: 	16px;
+
+// COLORS
+$color-main-green:         #3ab64b;  // vert principal
+$color-second-green:       #1e555a;  // vert foncé
+$color-main-grey:          #999999;  // gris clair
+$color-main-pink:          #f3606f;  // rose
+$color-white:              #fff;     // noir
+$color-black:              #000;     // noir
+$color-dark-blue:          #2f4da8;  // bleu foncé
+$color-blue:               #3a94d5;  // bleu
+$color-light-blue:			#5496d7;
+$color-light-orange:	   #faae37;
+$color-dark-orange:			#f57320;
+$color-dark-pink:			#c62753;
+$color-dark-grey:			#272b32;
+
+//OPACITY
+$opacity-main-white-oncolor:	1;
+$opacity-white-oncolor:			0.7;
+$opacity-main-black-oncolor:	0.87;
+$opacity-black-oncolor:			0.54;
+
+// MESSAGES - NOTIFICATION
+
+$c-danger: #DF280A;
+$c-danger-background: #FAEBE7;
+
+$c-success: #11B400;
+$c-success-background: #EFF5EA;
+
+$c-warn: #E26703;
+$c-warn-background: #F9EBE6;
+
+//SPACING
+
+$gap: 10px;
+
+// MODULE (GENERIC)
+
+$c-module-background: #F4F4F4;
+$c-module-background-hover: shade($c-module-background, 3%);
+$c-module-background-secondary: #EAF8FF;
+$c-module-background-dark: #AAAAAA;

@@ -20,7 +20,7 @@ class RefundType extends AbstractType
 				))
 				->add('submit', SubmitType::class);
     }
-    
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

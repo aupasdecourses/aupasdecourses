@@ -49,10 +49,10 @@
 		<table class='table'>
 			<thead>
 				<tr>
-					<th>Increment_id (N° Commande)</th>
-					<th>Psp Ref de CHAQUE remboursement de cette commande</th>	
-					<th> Resultat </th>
+					<th>N° Commande</th>
+					<th>Reference PSP de CHAQUE remboursement</th>	
 					<th> Crée le </th>
+					<th> Resultat </th>
 					<th> Success ? </th>
 				</tr>
 			</thead>
@@ -63,8 +63,8 @@
 								<tr>
 									<td>{{ value.increment_id }}</td>
 									<td>{{ value.psp_reference }}</td>
-									<td>{{ value.adyen_event_result }}</td>
 									<td>{{ value.created_at }}</td>
+									<td>{{ value.adyen_event_result }}</td>
 									<td>{{ value.success }}</td>
 								</tr>
 							{% endif %}
@@ -75,7 +75,7 @@
 		{% for order_id, fields in orders %}
 				{% if fields.merchant_reference == id %}
 					Pas assez d'infos sur la commande ? Clique ici :
-						<a href="https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference={{fields.pspreference}}&accountKey=MerchantAccount.AuPasDeCoursesFR" target="_blank">
+						<a href={{ adyen_platform_first_part ~ fields.pspreference ~ adyen_platform_second_part }} target="_blank">
 							<input type="button" class="btn btn-success" value="Go to Adyen"/>
 						</a>
 				{% endif %}

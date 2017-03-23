@@ -1,0 +1,114 @@
+@media screen and (max-width: 991px){
+    section{
+        &.packages{
+            .item{
+                p{
+                    text-align: center;
+                }
+            }
+        }
+        &#prices, &#concept{
+            min-height:800px;
+        }
+        &#cards{
+            .clients{
+                margin-bottom: 30px;
+            }
+        }
+        &#advantages{
+            .item{
+                margin-bottom: 20px;
+                height: 190px;
+                img{
+                    max-width: none;
+                }
+            }
+        }
+    }
+
+    footer{
+        .button-newsletter{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .social-icons{
+            text-align: center;
+        }
+    }
+
+    .item-mission > div {
+        margin-top: auto !important;
+    }
+
+}
+
+@media screen and (max-width: 767px){
+    #html-body{
+        header{
+            margin-bottom: 100px;
+        }
+        .intro-section{
+            margin-top: 120px;
+        }
+        #background_video_container{
+            background: url(../images/header/7.jpg) no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            video{
+                display: none;
+            }
+        }
+    }
+
+    .apdc-notation-index-index{
+        .intro-section{
+            margin-top: 80px !important;
+            #logo {
+                width: 60%;
+            }
+        }
+        footer{
+            position:relative;
+        }
+    }
+
+    section{
+        &#prices, &#concept{
+            min-height:0;
+        }
+    }
+
+}
+
+@media screen and (max-width: 620px){
+    section{
+        &#prices, &#concept{
+            min-height:0;
+        }
+    }
+
+    footer{
+        .copyright{
+            margin-bottom: 20px;
+        }
+    }
+
+    #login-form-popup-container{
+        width:90% !important;
+    }
+}
+
+@media screen and (max-width: 420px){
+    #html-body{
+        header{
+            margin-bottom: 70px;
+        }
+    }
+
+    section{
+        &#prices, &#concept{
+            min-height:0;
+        }
+    }
+}

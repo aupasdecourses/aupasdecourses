@@ -7,14 +7,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 use Apdc\ApdcBundle\Entity\Refund;
 use Apdc\ApdcBundle\Form\RefundType;
 
 class RefundController extends Controller
 {
-    const    ERROR = 0;
-    const    SUCCESS = 1;
-    const    WARNING = 2;
+    const    ERROR		= 0;
+    const    SUCCESS	= 1;
+    const    WARNING	= 2;
 
     public function indexAction(Request $request, $from)
     {
@@ -24,8 +25,8 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $entity_from = new\Apdc\ApdcBundle\Entity\From();
-        $form_from = $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
+        $entity_from	= new\Apdc\ApdcBundle\Entity\From();
+        $form_from		= $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
 
         $form_from->handleRequest($request);
 
@@ -41,8 +42,8 @@ class RefundController extends Controller
         $orders = $mage->getOrders($from);
 
         return $this->render('ApdcApdcBundle::refund/index.html.twig', [
-            'forms' => [$form_from->createView()],
-            'orders' => $orders,
+            'forms'		=> [$form_from->createView()],
+            'orders'	=> $orders,
         ]);
     }
 
@@ -99,11 +100,11 @@ class RefundController extends Controller
                 }
                 preg_match("/{$id}-?([0-9]*)\.(.*)/", $dir_entry, $sp);
                 if ($sp[1] == '') {
-                    $dir_files[-1]['path'] = $ticket_folder.'/'.$dir_entry;
-                    $dir_files[-1]['url'] = $ticket_url.'/'.$dir_entry;
+                    $dir_files[-1]['path']	= $ticket_folder.'/'.$dir_entry;
+                    $dir_files[-1]['url']	= $ticket_url.'/'.$dir_entry;
                 } else {
-                    $dir_files[$sp[1]]['path'] = $ticket_folder.'/'.$dir_entry;
-                    $dir_files[$sp[1]]['url'] = $ticket_url.'/'.$dir_entry;
+                    $dir_files[$sp[1]]['path']	= $ticket_folder.'/'.$dir_entry;
+                    $dir_files[$sp[1]]['url']	= $ticket_url.'/'.$dir_entry;
                 }
             }
             closedir($dir);
@@ -118,13 +119,13 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $session = $request->getSession();
+        $mage		= $this->container->get('apdc_apdc.magento');
+        $session	= $request->getSession();
 
-        $order = $mage->getOrderByMerchants($id);
+        $order		= $mage->getOrderByMerchants($id);
 
-        $entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
-        $form_upload = $this->createFormBuilder($entity_upload);
+        $entity_upload	= new \Apdc\ApdcBundle\Entity\Upload();
+        $form_upload	= $this->createFormBuilder($entity_upload);
 
         $rsl;
         self::check_upload_status($id, $order, $rsl);
@@ -132,18 +133,21 @@ class RefundController extends Controller
         $attrNames = [];
         foreach ($order as $merchant_id => $data) {
             $name = preg_replace('/[^-a-zA-Z0-9:]| /', '_', $data['merchant']['name']);
-            $attrNames[$merchant_id] = $name;
-            $class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
-            $form_upload->add($name, FileType::class, [
-                'required' => false,
-                'label' => $data['merchant']['name'],
-                'attr' => [
-                    'class' => "form-control{$class}",
+            if($name<>""){
+                $attrNames[$merchant_id] = $name;
+                $class = ' '.((in_array($merchant_id, $rsl)) ? 'success' : 'error');
+                $form_upload->add($name, FileType::class, [
+                    'required'	=> false,
+                    'label'		=> $data['merchant']['name'],
+    				'attr'		=>
+    				[
+    					'class' => "form-control{$class}",
                     ],
-            ]);
+                ]);
+            }
         }
 
-        $form_upload->add('Upload', SubmitType::class);
+		$form_upload->add('Upload', SubmitType::class);
         $form_upload->setAction($this->generateUrl('refundUpload', array('id' => $id)));
         $form_upload = $form_upload->getForm();
         if (isset($_FILES['form'])) {
@@ -205,7 +209,7 @@ class RefundController extends Controller
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
             'forms' => [$form_upload->createView()],
             'order' => $order,
-            'id' => $id,
+            'id'	=> $id,
         ]);
     }
 
@@ -215,11 +219,10 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $session = $request->getSession();
+        $mage		= $this->container->get('apdc_apdc.magento');
+        $session	= $request->getSession();
 
         $order = $mage->getRefunds($id);
-
         $files = $this->getUploadedFiles($id);
 
         foreach ($order as $merchant_id => $merchant_part) {
@@ -231,18 +234,17 @@ class RefundController extends Controller
         }
         ksort($order);
 
-        $commentaire_client = $order[-1]['order']['commentaire_client'];
+        $commentaire_client		= $order[-1]['order']['commentaire_client'];
         $commentaire_commercant = $order[-1]['order']['commentaire_commercant'];
-
-        $total = $order[-1]['merchant']['total'];
-        $order_mid = $order[-1]['order']['mid'];
-        $input_status = $order[-1]['order']['input'];
+        $total					= $order[-1]['merchant']['total'];
+        $order_mid				= $order[-1]['order']['mid'];
+        $input_status			= $order[-1]['order']['input'];
         unset($order[-1]);
 
-        $entity_input = new \Apdc\ApdcBundle\Entity\Input();
-        $form_input = $this->createFormBuilder($entity_input);
+        $entity_input	= new \Apdc\ApdcBundle\Entity\Input();
+        $form_input		= $this->createFormBuilder($entity_input);
         $form_input->setAction($this->generateUrl('refundInput', array('id' => $id)));
-        $form_input = $form_input->getForm();
+        $form_input		= $form_input->getForm();
         //$form_input_token = $this->get('security.csrf.token_manager')->getToken($form_input->getName())->getValue();
         /* Voir ce qu'est input_status*/
         if (isset($_POST['submit']) /*&& ($form_input_token == $_POST['form']['_token'])*/ /*&& $input_status == 'none'*/) {
@@ -252,31 +254,30 @@ class RefundController extends Controller
                     if (isset($_POST['form'][$product_id])) {
                         $rsl_table[$product_id] = [
                             'order_item_id' => $product_id,
-                            'item_name' => $p_data['nom'],
-                            'commercant' => $o_data['name'],
+                            'item_name'		=> $p_data['nom'],
+                            'commercant'	=> $o_data['name'],
                             'commercant_id' => $o_data['merchant']['id'],
-                            'order_id' => $p_data['order_id'],
-                            'prix_initial' => $p_data['prix_total'],
-                            'prix_final' => doubleval($_POST['form'][$product_id]['ticket']),
+                            'order_id'		=> $p_data['order_id'],
+                            'prix_initial'	=> $p_data['prix_total'],
+                            'prix_final'	=> doubleval($_POST['form'][$product_id]['ticket']),
                             'diffprixfinal' => $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
-                            'comment' => $_POST['form'][$product_id]['comment'],
+                            'comment'		=> $_POST['form'][$product_id]['comment'],
                         ];
                         unset($_POST['form'][$product_id]);
                     }
                 }
             }
-            
 
             try {
                 foreach ($rsl_table as $product_id => $data) {
                     $mage->updateEntryToRefundItem(['order_item_id' => $product_id], $data);
                 }
                 $mage->updateEntryToOrderField(
-                    ['order_id' => $order_mid],
-                    ['refund_shipping' => $_POST['form']['refund_shipping'],
-                    'input' => 'done',
-                    'commentaires_fraislivraison' => $_POST['form']['commentaire_client'],
-                    'commentaires_ticket' => $_POST['form']['commentaire_commercant']]
+                    ['order_id'						=> $order_mid],
+                    ['refund_shipping'				=> $_POST['form']['refund_shipping'],
+                    'input'							=> 'done',
+                    'commentaires_fraislivraison'	=> $_POST['form']['commentaire_client'],
+                    'commentaires_ticket'			=> $_POST['form']['commentaire_commercant']]
                 );
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 
@@ -287,13 +288,13 @@ class RefundController extends Controller
         }
 
         return $this->render('ApdcApdcBundle::refund/input.html.twig', [
-            'form' => $form_input->createView(),
-            'order' => $order,
-            'total' => $total,
-            'id' => $id,
-            'refund_shipping' => $mage->checkRefundShipping($order_mid),
-            'commentaire_client' => $commentaire_client,
-            'commentaire_commercant' => $commentaire_commercant,
+            'form'						=> $form_input->createView(),
+            'order'						=> $order,
+            'total'						=> $total,
+            'id'						=> $id,
+            'refund_shipping'			=> $mage->checkRefundShipping($order_mid),
+            'commentaire_client'		=> $commentaire_client,
+            'commentaire_commercant'	=> $commentaire_commercant,
         ]);
     }
 
@@ -303,17 +304,16 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $session = $request->getSession();
+        $mage		= $this->container->get('apdc_apdc.magento');
+        $session	= $request->getSession();
+        $order		= $mage->getRefunds($id);
 
-        $order = $mage->getRefunds($id);
-
-        $total = $order[-1]['merchant']['total'];
-        $refund_total = $order[-1]['merchant']['refund_total'];
-        $refund_diff = $order[-1]['merchant']['refund_diff'];
+        $total					= $order[-1]['merchant']['total'];
+        $refund_total			= $order[-1]['merchant']['refund_total'];
+        $refund_diff			= $order[-1]['merchant']['refund_diff'];
         $refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
-        $order_mid = $order[-1]['order']['mid'];
-        $order_header = $order[-1]['order'];
+        $order_mid				= $order[-1]['order']['mid'];
+        $order_header			= $order[-1]['order'];
         unset($order[-1]);
 
         $files = $this->getUploadedFiles($id);
@@ -326,10 +326,10 @@ class RefundController extends Controller
         }
         ksort($order);
 
-        $entity_submit = new \Apdc\ApdcBundle\Entity\Model();
-        $form_submit = $this->createFormBuilder($entity_submit);
+        $entity_submit	= new \Apdc\ApdcBundle\Entity\Model();
+        $form_submit	= $this->createFormBuilder($entity_submit);
         $form_submit->setAction($this->generateUrl('refundDigest', array('id' => $id)));
-        $form_submit = $form_submit->getForm();
+        $form_submit	= $form_submit->getForm();
 
         if ($request->isMethod('POST')) {
             $form_submit->handleRequest($request);
@@ -371,17 +371,17 @@ class RefundController extends Controller
         }
 
         return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
-            'total' => $total,
-            'refund_total' => $refund_total,
-            'refund_diff' => $refund_diff,
-            'refund_shipping' => $refund_shipping_amount,
-            'refund_full' => $mage->getRefundfull($refund_diff, $refund_shipping_amount),
-            'order_header' => $order_header,
-            'order' => $order,
-            'id' => $id,
-            'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
-            'show_close' => $mage->checkdisplaybutton($id, 'close'),
-            'forms' => [$form_submit->createView()],
+            'total'				=> $total,
+            'refund_total'		=> $refund_total,
+            'refund_diff'		=> $refund_diff,
+            'refund_shipping'	=> $refund_shipping_amount,
+            'refund_full'		=> $mage->getRefundfull($refund_diff, $refund_shipping_amount),
+            'order_header'		=> $order_header,
+            'order'				=> $order,
+            'id'				=> $id,
+            'show_creditmemo'	=> $mage->checkdisplaybutton($id, 'creditmemo'),
+            'show_close'		=> $mage->checkdisplaybutton($id, 'close'),
+            'forms'				=> [$form_submit->createView()],
         ]);
     }
 
@@ -391,19 +391,18 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $adyen = $this->container->get('apdc_apdc.adyen');
-        $logs = $this->container->get('apdc_apdc.adyenlogs');
-        $mage = $this->container->get('apdc_apdc.magento');
+        $adyen	= $this->container->get('apdc_apdc.adyen');
+        $mage	= $this->container->get('apdc_apdc.magento');
 
-        $order = $mage->getRefunds($id);
-        $orders = $mage->getAdyenPaymentByPsp();
+        $order		= $mage->getRefunds($id);
+        $orders		= $mage->getAdyenPaymentByPsp();
         $event_data = $mage->getAdyenQueueFields();
 
-        $refund_diff = $order[-1]['merchant']['refund_diff'];
-        $order_mid = $order[-1]['order']['mid'];
+        $refund_diff	= $order[-1]['merchant']['refund_diff'];
+        $order_mid		= $order[-1]['order']['mid'];
 
         $refund = new Refund();
-        $form = $this->createForm(RefundType::class, $refund);
+        $form	= $this->createForm(RefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
@@ -421,12 +420,12 @@ class RefundController extends Controller
         }
 
         return $this->render('ApdcApdcBundle::refund/final.html.twig', [
-            'form' => $form->createView(),
-            'refund_diff' => $refund_diff,
-            'id' => $id,
-            'orders' => $orders,
-            'event_data' => $event_data,
-            ]);
+            'form'			=> $form->createView(),
+            'refund_diff'	=> $refund_diff,
+            'id'			=> $id,
+            'orders'		=> $orders,
+            'event_data'	=> $event_data,
+        ]);
     }
 
     public function refundAdyenIndexAction(Request $request)
@@ -435,12 +434,12 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
+        $mage	= $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenOrderPaymentTable();
 
         return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
             'orders' => $orders,
-            ]);
+        ]);
     }
 
     public function refundAdyenFormAction(Request $request, $psp)
@@ -449,16 +448,14 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $adyen = $this->container->get('apdc_apdc.adyen');
-        $logs = $this->container->get('apdc_apdc.adyenlogs');
+        $adyen	= $this->container->get('apdc_apdc.adyen');
+        $mage	= $this->container->get('apdc_apdc.magento');
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $orders = $mage->getAdyenPaymentByPsp();
-
+		$orders		= $mage->getAdyenPaymentByPsp();
         $event_data = $mage->getAdyenQueueFields();
 
         $refund = new Refund();
-        $form = $this->createForm(RefundType::class, $refund);
+        $form	= $this->createForm(RefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
@@ -475,10 +472,10 @@ class RefundController extends Controller
         }
 
         return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
-            'form' => $form->createView(),
-            'psp' => $psp,
-            'orders' => $orders,
-            'event_data' => $event_data,
+            'form'			=> $form->createView(),
+            'psp'			=> $psp,
+            'orders'		=> $orders,
+            'event_data'	=> $event_data,
         ]);
     }
 }

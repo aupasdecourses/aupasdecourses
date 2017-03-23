@@ -40,6 +40,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'bootstrap_3_layout.html.twig'
+    globals:
+        adyen_platform_first_part:  %adyen_platform_first_part%
+        adyen_platform_second_part: %adyen_platform_second_part%
 
 # Doctrine Configuration
 doctrine:
@@ -87,3 +90,12 @@ fos_user:
     db_driver: orm
     firewall_name: apdc_firewall
     user_class: Apdc\ApdcBundle\Entity\User
+    from_email:
+        address: pierre@aupasdecourses.com
+        sender_name: pierre-apdc
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~

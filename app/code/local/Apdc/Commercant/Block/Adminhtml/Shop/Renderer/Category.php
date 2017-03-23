@@ -6,21 +6,29 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminh
 	public function render(Varien_Object $row)
 	{
 		$input =  $row->getData($this->getColumn()->getIndex());
-		//get all options except empty
+
 		$commercantCategories = Mage::getModel('catalog/category')
             ->getCollection()
             ->setOrder('name')
             ->addAttributeToSelect('name')
             ->addAttributeToFilter('estcom_commercant', 70);
+        $S = Mage::helper('apdc_commercant')->getStoresArray();
         foreach ($commercantCategories as $category) {
-            $values[$category->getId()] = $category->getName();
+        	$storename=$S[explode('/', $category->getPath())[1]]['name'];
+            $values[$category->getId()] = $category->getName().' - '.$storename;
         }
 
-		if(!is_null($input) && !empty($input)){
-			return $values[$input];
-		} else {
-			return $input;
+        $suppstr="";
+        if(count($input)>0)
+        {
+            $suppstr="<ul>";
+			foreach($input as $id){
+				 $suppstr.= "<li>".$values[$id]."</li>";
+			}
+			$suppstr   .= "</ul>";
 		}
+
+		return $suppstr;
 	 
 	}
  

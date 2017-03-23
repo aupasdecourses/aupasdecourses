@@ -206,3 +206,42 @@ a:hover, a:focus {
 .ticket-input{
 	width: 80px;
 }
+/* PAYOUT */
+/* JQUERY PLUGIN TABLESORTER */
+div#entryNumber{
+	position:absolute;
+	left: 175px;
+	bottom: 34px;
+}
+
+div#pageNumero{
+	position:absolute;
+	left: 165px;
+	bottom: 4px;
+}
+
+
+/* --------------------- */
+/*		REFUND INPUT	 */
+/* --------------------- */
+.merchant-ticket {
+	width:350px !important;
+	height:400px;
+}
+
+/* flex row avoid bugs when scrolling up */
+#flex-input {
+	display: flex;
+	justify-content: space-around;
+}
+
+
+/*
+ * ------- FACTURATION ------
+ */
+
+input#datepickerBill {
+	width:100px;
+	display:inline;
+	vertical-align:top;
+}
