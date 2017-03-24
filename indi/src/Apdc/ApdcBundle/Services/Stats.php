@@ -352,15 +352,55 @@ class Stats
 	{
 		$notes = $this->getNotes($date_debut, $date_fin);
 		$result = [];
-		$cpt = 1;
-		foreach ($notes as $n) {
-			$result[$n['date_creation']][$cpt] = [
-				'notation'	=> intval($n['note']),
+		foreach ($notes as $key => $n) {
+			$result[$key] = [
+				'dates'		=> $n['date_creation'],
+				'notations'	=> intval($n['note']),
 			];
-			++$cpt;
 		}
 
-		return json_encode($result);
-		
+		$json_data = json_encode($result);
+
+
+
+
+
+
+/*
+		echo'<pre>';
+		print_R($result);
+		echo'<pre>';
+ */
+/*		echo'<pre>';
+		print_R($result);
+		echo'<pre>';
+ */	
+
+/*	
+		$tab = [];
+		$data = [];
+		foreach ($notes as $key => $value) {
+			
+			$tab[$value['date_creation']] += intval($value['note']);
+			
+			$data[$key] = [
+				'date_crea' => $value['date_creation'],
+				'note'		=> intval($value['note']),
+			];
+
+			
+
+		}
+
+
+		echo'<pre>';
+		print_R($tab);
+		echo'<pre>';	
+
+		echo'<pre>';
+		print_R($data);
+		echo'<pre>';
+ */
+
 	}
 }
