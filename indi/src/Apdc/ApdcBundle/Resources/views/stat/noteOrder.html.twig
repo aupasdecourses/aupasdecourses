@@ -9,22 +9,9 @@
 			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
 
-
+		<h2>Moyenne des notes des commandes (sur la période)</h2>	
 		<div id ="graph" ></div>
-
-
-
-		
-
-
-
-
-
-	
-
-
-
-
+		<hr>
 
 		<table id="noteTable" class="table table-striped">
 			<thead>
@@ -123,7 +110,7 @@ $(document).ready(function() {
 <script>
 // set the dimensions of the canvas
 var margin = {top: 10, right: 0, bottom: 100, left: 40},
-	width = 300 - margin.left - margin.right,
+	width = 600 - margin.left - margin.right,
 	height = 400 - margin.top - margin.bottom;
 
 
@@ -157,13 +144,13 @@ var y = d3.scale.linear().range([height, 4]);
 d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
 
 	data.forEach(function(d) {
-		d.dates = d.dates;
-		d.notations = +d.notations;
+		d.notes = d.notes;
+		d.nombres = +d.nombres;
 	});
 
 	// scale the range of the data
-	x.domain(data.map(function(d) { return d.dates; }));
-	y.domain([0, d3.max(data, function(d) { return d.notations; })]);
+	x.domain(data.map(function(d) { return d.notes; }));
+	y.domain([0, d3.max(data, function(d) { return d.nombres; })]);
 
 	// add axis
 	svg.append("g")
@@ -184,7 +171,7 @@ d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
 		.attr("y", 5)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Notations");
+		.text("Nb commandes");
 
 
 	// Add bar chart
@@ -192,10 +179,10 @@ d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
 		.data(data)
 		.enter().append("rect")
 		.attr("class", "bar")
-		.attr("x", function(d) { return x(d.dates); })
+		.attr("x", function(d) { return x(d.notes); })
 		.attr("width", x.rangeBand())
-		.attr("y", function(d) { return y(d.notations); })
-		.attr("height", function(d) { return height - y(d.notations); });
+		.attr("y", function(d) { return y(d.nombres); })
+		.attr("height", function(d) { return height - y(d.nombres); });
 
 });
 

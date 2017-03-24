@@ -352,55 +352,50 @@ class Stats
 	{
 		$notes = $this->getNotes($date_debut, $date_fin);
 		$result = [];
-		foreach ($notes as $key => $n) {
-			$result[$key] = [
-				'dates'		=> $n['date_creation'],
-				'notations'	=> intval($n['note']),
-			];
-		}
-
-		$json_data = json_encode($result);
-
-
-
-
-
-
-/*
-		echo'<pre>';
-		print_R($result);
-		echo'<pre>';
- */
-/*		echo'<pre>';
-		print_R($result);
-		echo'<pre>';
- */	
-
-/*	
-		$tab = [];
-		$data = [];
 		foreach ($notes as $key => $value) {
-			
-			$tab[$value['date_creation']] += intval($value['note']);
-			
-			$data[$key] = [
-				'date_crea' => $value['date_creation'],
-				'note'		=> intval($value['note']),
-			];
+			$result[$key] = [
+				'notes'			=> intval($value['note']),
+				'occurence'		=> "Val",
+				];
 
-			
+			$occ = array_count_values(array_column($result, 'notes'));
 
+			foreach ($occ as $k => $content) {
+				if($result[$k]['notes'] == $k) {
+					$result[$k]['occurence'] = $content;
+				}
+				else { $result[$k]['occurence'] = $content; }
+			}
 		}
+			
+
+
+
 
 
 		echo'<pre>';
-		print_R($tab);
-		echo'<pre>';	
-
+		print_R($occ);
+		print_R($result);
 		echo'<pre>';
-		print_R($data);
+
+
+
+
+
+
+
+		/*Abcisse note */
+		/* Ordonné nb */
+/*		echo'<pre>';
+		print_R(json_encode($result));	
 		echo'<pre>';
  */
+
+		/*
+		$json_data = json_encode($result);
+		return $json_data;
+		*/
+
 
 	}
 }
