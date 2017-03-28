@@ -98,7 +98,7 @@
                     <action method="setElementClass"><value>top-container</value></action>
                 </block>
                 <block type="page/html_welcome" name="welcome" as="welcome"/>
-				<block type="customer/form_login" name="customer_form_login" template="customer/form/login.phtml" />
+				<block type="customer/form_login" name="customer_form_login" template="apdc_customer/form/mini.login.phtml" />
             </block>
 
             <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
