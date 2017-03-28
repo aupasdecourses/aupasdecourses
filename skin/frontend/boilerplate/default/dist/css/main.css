@@ -11539,6 +11539,18 @@ header .top-nav li a:after {
   background: transparent;
 }
 
+.logo {
+  float: left;
+}
+
+.block-login {
+  display: none;
+}
+
+.notice-cookie-block {
+  display: none;
+}
+
 /* -------------------------------------------- *
  * Messages
  */

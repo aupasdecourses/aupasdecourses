@@ -26,7 +26,7 @@
             </action>
         </reference>
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>css/commis.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+            
             <!-- MAGNIFIC POPUP -->
             <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css</href><integrity>sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7</integrity><crossorigin>anonymous</crossorigin></action>

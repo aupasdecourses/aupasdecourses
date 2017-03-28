@@ -55,7 +55,7 @@ gulp.task('css', function () {
         'node_modules/font-awesome/font-awesome.scss',
 		'vendor/apdc_supermenu/css/supermenu.css',
 		'vendor/apdc_popup/css/popup.css',
-		'css/main.css'
+		//'css/main.css'
     ];
     
     return gulp
@@ -73,6 +73,7 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions'],
             cascade: false
         }))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest('dist/css'));
 });
 
@@ -126,17 +127,17 @@ gulp.task('fonts', function() {
 // Watch
 gulp.task('watch', function() {
 
-  // // Watch .scss files
-  // gulp.watch('sass/**/*.scss', ['sass']);
+  // Watch .scss files
+  gulp.watch('sass/**/*.scss', ['sass'], ['css']);
 
-  // // Watch .js files
-  // gulp.watch('js/**/*.js', ['js']);
+  // Watch .js files
+  gulp.watch('js/**/*.js', ['js']);
 
-  // // Watch image files
-  // gulp.watch('images/**/*', ['images']);
+  // Watch image files
+  gulp.watch('images/**/*', ['images']);
 
-  // // Watch fonts
-  // gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
+  // Watch fonts
+  gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
 });
 

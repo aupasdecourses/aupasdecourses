@@ -245,3 +245,20 @@ section {
         color: rgba(0, 0, 0, 0.54);
     }
 }
+
+.page-title{
+    background: url('../images/bg-3.jpg') no-repeat;
+    background-size: cover;
+    height: 300px;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    h1{
+        color: #fff;
+        max-width: 800px;
+    }
+}
