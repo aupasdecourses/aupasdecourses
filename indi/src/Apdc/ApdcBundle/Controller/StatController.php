@@ -88,14 +88,14 @@ class StatController extends Controller
 			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
 
-		/*
+		
 		$fs = new Filesystem();
-		*/
+		
 		/* dossier & fichier seront a renommer */
-		/*if ($fs->exists('../web/json/histogramme.json')){
+		if ($fs->exists('../web/json/histogramme.json')){
 			$fs->dumpFile('../web/json/histogramme.json', $json_data);
 		}
-		 */
+		 
 
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,

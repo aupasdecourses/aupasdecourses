@@ -355,46 +355,21 @@ class Stats
 		foreach ($notes as $key => $value) {
 			$result[$key] = [
 				'notes'			=> intval($value['note']),
-				'occurence'		=> "Val",
+				'occurences'		=> 0,
 				];
 
 			$occ = array_count_values(array_column($result, 'notes'));
 
-			foreach ($occ as $k => $content) {
-				if($result[$k]['notes'] == $k) {
-					$result[$k]['occurence'] = $content;
+			foreach ($occ as $k => $v) {
+				if($result[$key]['notes'] === $k ) { 
+					$result[$key]['occurences'] += $v;
 				}
-				else { $result[$k]['occurence'] = $content; }
 			}
+
 		}
-			
-
-
-
-
-
-		echo'<pre>';
-		print_R($occ);
-		print_R($result);
-		echo'<pre>';
-
-
-
-
-
-
-
-		/*Abcisse note */
-		/* Ordonné nb */
-/*		echo'<pre>';
-		print_R(json_encode($result));	
-		echo'<pre>';
- */
-
-		/*
+		sort($result);
 		$json_data = json_encode($result);
 		return $json_data;
-		*/
 
 
 	}
