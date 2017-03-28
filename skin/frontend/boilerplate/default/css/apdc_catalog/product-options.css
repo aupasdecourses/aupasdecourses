@@ -1,0 +1,29 @@
+.product-options dd {
+  clear:both;
+}
+.product-options .settings-swatch-container {
+  text-align:center;
+}
+.product-options .settings-swatch-container + select {
+  display:none;
+}
+.product-options .attr-image-container {
+  display:inline-block;
+  margin-right: 3px;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.product-options .attr-image-container:hover,
+.product-options .attr-image-container.option-selected {
+  opacity:1;
+}
+
+.product-options .attr-image-container img {border-radius: 50%;}
+.product-options .attr-image-container .attr-text {
+  border:1px solid lightgrey;
+  padding: 0px 5px;
+  border-radius: 2px;
+}

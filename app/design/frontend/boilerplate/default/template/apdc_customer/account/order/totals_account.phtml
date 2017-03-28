@@ -1,0 +1,16 @@
+<?php $_totals=$this->getTotals();?>
+<table class="table data-table" id="my-orders-table">
+     <tr>
+        <td><strong>Total des produits commandés</strong></td>
+        <td><?php echo $this->formatValue($_totals['subtotal']) ?></strong></td>
+     </tr>
+     <tr>
+        <td><strong>Frais de livraison</strong></td>
+        <td><?php echo $this->formatValue($_totals['shipping']) ?></strong></td>
+     </tr>
+     <tr>
+        <td><strong>TOTAL COMMANDE TTC</strong></td>
+        <td><?php echo $this->formatValue($_totals['grand_total_incl']) ?></strong></td>
+     </tr>
+    <?php echo $this->getChildHtml('tax');?>
+</table>

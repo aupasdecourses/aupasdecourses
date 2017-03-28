@@ -1,0 +1,73 @@
+<div class="row homepage-reassurance">
+	<div class="col-xs-12">
+	<div class="title-block">Comment ça marche</div>
+		<div class="colored-line"></div>
+	    <div id="carrousel-reassurance" class="owl-carousel">
+			<div>
+				<div class="reassurance-outer first-item">
+					<div class="reassurance-inner">
+						<div class="reassurance-title">COMMANDEZ EN LIGNE</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>Les mêmes prix qu'en magasin</li>
+								<li>Une livraison unique quel que soit le nombre de commerçants</li>
+								<li>Livraison le jour même pour une commande avant 15h</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="reassurance-outer second-item">
+					<div class="reassurance-inner">
+						<div class="reassurance-title">NOS CRENEAUX DE LIVRAISON</div>
+						<div class="reassurance-text">
+							<p style="margin-bottom: 0px;text-align:center;">Du Lundi au Vendredi</p>
+							<?php echo $this->getChildHtml('deliverytime-home')?>
+						</div>						
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="reassurance-outer third-item">
+					<div class="reassurance-inner">
+						<div class="reassurance-title">TARIFS DE LIVRAISON</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>9€ pour une commande jusqu'à 45€</li>
+								<li>6€ pour une commande entre 45 et 90€</li>
+								<li>3€ pour une commande supérieure à 90€</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php 
+				$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
+				if ($payment_activated == true) : ?>
+			    <div>
+					<div class="reassurance-outer fourth-item">
+							<div class="reassurance-inner">
+								<div class="reassurance-title">COMMANDEZ JUSQU'A 4 JOURS EN AVANCE</div>
+								<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
+									<div id="countdown"></div>
+								</div>
+							</div>
+							<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
+			   				<script type='text/javascript 'src='/js/countdown/js/script.js'></script>
+					</div>
+				</div>
+			<?php endif ?>
+		</div>
+	</div>
+</div>
+<script>
+    $j(document).ready(function() {
+      $j("#carrousel-reassurance").owlCarousel({
+            items:4,
+            pagination:false,
+            autoPlay : false,
+            navigation : true
+      });
+    });
+</script>

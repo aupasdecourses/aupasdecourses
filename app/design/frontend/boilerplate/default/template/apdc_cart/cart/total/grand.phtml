@@ -1,0 +1,10 @@
+<tr>
+    <td class="a-left cart-grand-total">
+        <?php echo $this->escapeHtml($this->getTotal()->getTitle()); ?>
+    </td>
+    <td class="a-right cart-grand-total">
+            <?php 
+            $totals=$this->getTotal();
+            echo $this->helper('checkout')->formatPrice($totals->getValue()*(1+$this->getVAT()/100)) ?>
+    </td>
+</tr>

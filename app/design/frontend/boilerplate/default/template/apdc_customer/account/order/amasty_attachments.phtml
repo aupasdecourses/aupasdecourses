@@ -1,0 +1,37 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Orderattach
+ */
+?>
+<?php
+$order = Mage::registry('current_order');
+$field = Mage::getModel('amorderattach/field')->load('ticket_commercant', 'code');
+$content= Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id')->getTicketCommercant();
+
+if($field->getCustomerVisibility()=="view"):
+?>
+<div class="row">
+    <div class="col-sm-12">
+        <?php
+        if (!is_array($content)) {
+            $val = explode(';', $content);
+        }
+        ?>
+        <ul>Voir les tickets commerçants:
+            <?php foreach ($val as $img): ?>
+                    <li>
+                        <?php if($img<>""):
+                            $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
+                            ?>
+                            <img class="ticket_commercant" src="<?= $url_src?>"/>
+                        <?php else:?>
+                            <span>Pas de tickets (pour l'instant)</span>
+                        <?php endif;?>
+                    </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif;?>
+</div>
