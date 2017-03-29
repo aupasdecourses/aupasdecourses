@@ -31,7 +31,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
         $collection = Mage::getModel('catalog/product')->getCollection();
         $collection = $this->prepareProductCollection($collection);
         $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
-        $collection->setPageSize(10);
+        //$collection->setPageSize(20);
 
         return $collection;
 
