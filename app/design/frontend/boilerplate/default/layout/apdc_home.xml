@@ -51,6 +51,9 @@
             <!-- Reassurance -->
             <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
                 <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />
+				<block type="cms/block" name="block_sponsor" as="block_sponsor">
+					<action method="setBlockId"><block_id>block_sponsor</block_id></action>
+				</block>
             </block>
             <block type="catalog/product_new" name="home.catalog.product.new" template="catalog/product/new.phtml" after="cms_page">
                 <action method="setProductsCount"><count>10</count></action>
@@ -61,6 +64,7 @@
                 </action>
                 <action method="setColumnCount"><count>6</count></action>
             </block>
+			
         </reference>
     </cms_index_index>
 </layout>

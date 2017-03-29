@@ -1,7 +1,8 @@
 <?php 
 	$collection = $this->getAllSelections();
+	$nbSelection = $collection->count();
 ?>
-<?php if($collection->count() > 0) :?>
+<?php if($nbSelection > 0) :?>
 <div class="row apdc_home_selection">
 	<div class="col-xs-12">
 	    <div class="block-promos text-center container">
@@ -10,56 +11,70 @@
                 <h2 class="title-block"><?php echo $this->__('En ce moment chez vos commerçants'); ?></h2>
 			    <div class="colored-line"></div>
 			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid">
-				    	<?php foreach($collection as $selection):?>
-                            <?php $productUrl = $selection->getProductUrl(); ?>
-                            <?php $strippedName = $this->stripTags($selection->getName(), null, true); ?>
-                            <?php $imageLabel = $this->stripTags($this->getImageLabel($selection, 'small_image'), null, true); ?>
-                            <li class="product-info item">
-                                <form action="<?php echo $productUrl; ?>" 
-                                      method="post" 
-                                      class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $selection['product_id']; ?>" 
-                                      id="product_addtocart_form_<?php echo $selection->getId(); ?>" 
-                                      data-product-id="<?php echo $selection->getId(); ?>">
+						<?php $i = 0; ?>
+				    	<?php
+							foreach($collection as $selection):
+								$productUrl = $selection->getProductUrl();
+								$strippedName = $this->stripTags($selection->getName(), null, true);
+								$imageLabel = $this->stripTags($this->getImageLabel($selection, 'small_image'), null, true);
+								if($i == 0 || $i%10 == 0) {
+									$class = '';
+									if($i > 0) {
+										$class = ' no-first';
+									}
+									echo '<li class="product-info item'.$class.'">' ;
+								}
+								?>
+									<form action="<?php echo $productUrl; ?>" 
+										  method="post" 
+										  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $selection['product_id']; ?>" 
+										  id="product_addtocart_form_<?php echo $selection->getId(); ?>" 
+										  data-product-id="<?php echo $selection->getId(); ?>">
 
-                                    <a href="<?php echo $productUrl; ?>" 
-                                       title="<?php echo $strippedName; ?>" 
-                                       class="show-product-popup product-image" 
-                                       data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+										<a href="<?php echo $productUrl; ?>" 
+										   title="<?php echo $strippedName; ?>" 
+										   class="show-product-popup product-image" 
+										   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
 
-                                        <img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(250, 250)?>" width="250" height="250" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
-                                        <?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
-                                    </a>
-                                    <div class="product-info row">
-                                        <a href="<?php echo $productUrl; ?>" 
-                                           title="<?php echo $strippedName; ?>" 
-                                           class="show-product-popup" 
-                                           data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
-                                            <h3 class="product-name"><?= $selection->getName()?></h3>
-                                        </a>
-                                        <p class="product-portion"><?php echo $selection->getData('short_description'); ?></p>
-                                        <!--<p class="product-commercant-name">
-                                            <?php echo Mage::getResourceSingleton('catalog/product')
-                                                    ->getAttribute('commercant')
-                                                    ->getSource()
-                                                    ->getOptionText($selection->getData('commercant')); ?>
-                                        </p>-->
-                                        <?php echo $this->getPriceHtml($selection, true) ?>
-                                        <?php if($selection->getData('prix_kilo_site')) :?>
-                                            <div class="product-short_desc">		            
-                                                <?php echo $selection->getData('prix_kilo_site'); ?>
-                                            </div>
-                                        <?php endif; ?>
-                                        <div class="actions">
-                                            <div class="action-group">
-                                                <div>
-                                                    <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-				    	<?php endforeach;?>
+											<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(250, 250)?>" width="250" height="250" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
+											<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
+										</a>
+										<div class="product-info row">
+											<a href="<?php echo $productUrl; ?>" 
+											   title="<?php echo $strippedName; ?>" 
+											   class="show-product-popup" 
+											   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+												<h3 class="product-name"><?= $selection->getName()?></h3>
+											</a>
+											<p class="product-portion"><?php echo $selection->getData('short_description'); ?></p>
+											<!--<p class="product-commercant-name">
+												<?php echo Mage::getResourceSingleton('catalog/product')
+														->getAttribute('commercant')
+														->getSource()
+														->getOptionText($selection->getData('commercant')); ?>
+											</p>-->
+											<?php echo $this->getPriceHtml($selection, true) ?>
+											<?php if($selection->getData('prix_kilo_site')) :?>
+												<div class="product-short_desc">		            
+													<?php echo $selection->getData('prix_kilo_site'); ?>
+												</div>
+											<?php endif; ?>
+											<div class="actions">
+												<div class="action-group">
+													<div>
+														<a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								<?php
+								if((($i+1)%10 == 0 && $i != 0) || $i == $nbSelection) {
+									echo '</li>' ;
+								}
+								$i ++;
+							endforeach;
+						?>
 				    </ul>
 		    </div>
 	    </div>
@@ -68,7 +83,7 @@
 <script>
     $j(document).ready(function() {
       $j("#carrousel-selection-home").owlCarousel({
-            items:5,
+            items:1,
             itemsScaleUp : true,
             pagination:false,
             autoPlay : false,
