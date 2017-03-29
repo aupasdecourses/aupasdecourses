@@ -11,8 +11,8 @@
                 <h2 class="title-block"><?php echo $this->__('En ce moment chez vos commerçants'); ?></h2>
 			    <div class="colored-line"></div>
 			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid">
-						<?php $i = 0; ?>
 				    	<?php
+							$i = 0;
 							foreach($collection as $selection):
 								$productUrl = $selection->getProductUrl();
 								$strippedName = $this->stripTags($selection->getName(), null, true);
