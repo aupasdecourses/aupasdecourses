@@ -12109,7 +12109,7 @@ section .section-description {
   margin-right: -50px;
 }
 
-.commercants-block h2 {
+.commercants-block .title-block {
   font-size: 2.25rem;
   font-weight: 700;
   margin: 50px auto;
@@ -12270,17 +12270,43 @@ section .section-description {
 }
 
 .block-blog h2 {
+  margin: 0 0 50px;
   text-align: center;
   text-transform: uppercase;
   color: #fff;
 }
 
+.block-blog article {
+  margin-bottom: 20px;
+}
+
 .block-blog article h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 0;
+  text-align: left;
+  text-transform: none;
   color: #fff;
 }
 
 .block-blog article p {
+  font-size: .75rem;
+  text-align: left;
   color: #fff;
+}
+
+.block-blog article .crop-img {
+  display: block;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.block-blog article .crop-img img {
+  display: block;
+  margin: 0 auto;
 }
 
 footer {

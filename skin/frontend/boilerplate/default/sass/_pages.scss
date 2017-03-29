@@ -356,7 +356,7 @@ section {
 }
 
 .commercants-block{
-    h2{
+    .title-block{
         font-size: 2.25rem;
         font-weight: 700;
         color: $color-dark-blue;
@@ -516,13 +516,34 @@ section {
         color: #fff;
         text-transform: uppercase;
         text-align: center;
+        margin: 0 0 50px;
     }
     article{
+        margin-bottom: 20px;
         h3{
             color: #fff;
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-top: 0;
+            text-align: left;
+            text-transform: none;
         }
         p{
             color: #fff;
+            font-size: 0.75rem;
+            text-align: left;
+        }
+        .crop-img{
+            display: block;
+            margin: 0 auto;
+            width: 75px;
+            height: 75px;
+            overflow: hidden;
+            border-radius: 50%;
+            img{
+                display: block;
+                margin: 0 auto;
+            }
         }
     }
 }
