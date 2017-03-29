@@ -11420,7 +11420,7 @@ a:hover {
 }
 
 .button.button-pink {
-  background-color: #f3606f;
+  background-color: #ff7d73;
 }
 
 .button.button-white {
@@ -12037,6 +12037,17 @@ section .section-description {
   list-style-type: none;
 }
 
+.block-promos .apdc-products-grid .product-info form {
+  float: left;
+  width: 16%;
+  margin: 0 2% 20px;
+}
+
+.block-promos .apdc-products-grid .product-image img {
+  width: 100%;
+  height: auto;
+}
+
 .block-promos .apdc-products-grid .product-name {
   font-family: 'Open Sans', sans-serif;
   font-size: 1.125rem;
@@ -12073,7 +12084,7 @@ section .section-description {
 
 .block-promos .apdc-products-grid .owl-controls .owl-buttons {
   position: absolute;
-  top: 45%;
+  top: 41%;
   width: 100%;
 }
 
@@ -12213,6 +12224,63 @@ section .section-description {
 .commercants-block .products-grid .owl-controls .owl-buttons .owl-next {
   float: right;
   margin-right: 10px;
+}
+
+.block-sponsor {
+  display: inline-block;
+  max-width: 550px;
+  margin: 30px 20px;
+  padding: 50px;
+  vertical-align: top;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.block-sponsor h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: left;
+  text-transform: uppercase;
+  color: #ff7d73;
+}
+
+.block-sponsor p {
+  font-size: 1.5rem;
+  font-weight: 200;
+  line-height: 1.4em;
+  text-align: left;
+  color: #999;
+}
+
+.block-sponsor img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.block-blog {
+  display: inline-block;
+  max-width: 550px;
+  margin: 30px 20px;
+  padding: 50px 70px;
+  vertical-align: top;
+  background-color: #3ab64b;
+}
+
+.block-blog h2 {
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.block-blog article h3 {
+  color: #fff;
+}
+
+.block-blog article p {
+  color: #fff;
 }
 
 footer {

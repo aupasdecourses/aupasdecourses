@@ -22,7 +22,7 @@
 									if($i > 0) {
 										$class = ' no-first';
 									}
-									echo '<li class="product-info item'.$class.'">' ;
+									echo '<li class="product-info row item'.$class.'">' ;
 								}
 								?>
 									<form action="<?php echo $productUrl; ?>" 
@@ -36,7 +36,7 @@
 										   class="show-product-popup product-image" 
 										   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
 
-											<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(250, 250)?>" width="250" height="250" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
+											<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(200, 125)?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
 											<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
 										</a>
 										<div class="product-info row">
@@ -87,6 +87,7 @@
             itemsScaleUp : true,
             pagination:false,
             autoPlay : false,
+            slideSpeed : 800,
             navigation : true,
             navigationText : ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
             afterInit:function() {
