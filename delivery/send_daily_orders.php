@@ -17,6 +17,9 @@ $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
 
+//important car Magento set par défaut la timezone à UTC quand on initialise Mage::app() !!!
+date_default_timezone_set ("Europe/Paris");
+
 //Sera a refactoriser avec la fonction liste_commercant_id() de magento.php
 function getCommercant()
 {
