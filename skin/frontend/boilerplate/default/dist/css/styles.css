@@ -12268,6 +12268,16 @@ footer .button {
   margin: 0;
 }
 
+footer .social-list li {
+  padding: 0;
+}
+
+footer .social-list .btn-social-icon {
+  font-size: .625rem;
+  width: 24px;
+  color: #fff;
+}
+
 .apdc-notation-index-index footer {
   position: absolute;
   bottom: 0;
