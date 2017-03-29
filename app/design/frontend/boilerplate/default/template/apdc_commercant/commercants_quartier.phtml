@@ -1,20 +1,27 @@
 <?php
 	$shops=$this->getListShops();
 ?>
-<div id="commercants-block" class="row hp-section commercants-block">
+<div id="commercants-block" class="row hp-section commercants-block container-fluid">
 	<div class="commercants-list col-md-12">
-		<div class="title-block">Vos Commer&ccedil;ants</div>
+		<h2 class="title-block">Vos Commer&ccedil;ants</h2>
 		<div class="colored-line"></div>
 		<div class="row">
 			<div class="commercants-main products-grid col-md-12">
 				<div id="carrousel-commercants" class="owl-carousel">
 					<?php foreach ($shops as $shop):?>
 							<div class="commercant-item">
-					            <a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
-					                <img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
-					            </a>
-					            <h3 class="product-name"><?= $shop['name'];?></h3>
-					            <span><?= $shop['adresse'];?></span>
+                                <div class="commercant-img">
+                                    <a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
+                                        <!--<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />-->
+                                        <img src="<?php echo Mage::getBaseUrl().'../skin/frontend/boilerplate/default/dist/images/img-commercants.jpg'?>" width="100%" alt="" title="" />
+                                    </a>
+                                </div>
+					            <div class="commercant-info">
+                                    <div>
+                                        <h3 class="product-name"><?= $shop['name'];?></h3>
+    					                <span><?= $shop['adresse'];?></span>
+                                    </div>
+					            </div>
 					        </div>    	
 					<?php endforeach; ?>
 						<div class="commercant-item">
@@ -34,7 +41,8 @@
             items:3,
             pagination:false,
             autoPlay : false,
-            navigation : true
+            navigation : true,
+            navigationText : ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>']
       });
     });
 </script>

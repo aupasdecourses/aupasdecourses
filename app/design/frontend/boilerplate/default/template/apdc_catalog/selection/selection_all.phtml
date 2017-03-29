@@ -4,9 +4,10 @@
 <?php if($collection->count() > 0) :?>
 <div class="row apdc_home_selection">
 	<div class="col-xs-12">
-	    <div class="block-promos text-center">
+	    <div class="block-promos text-center container">
+	        <div class="border-container"></div>
 	    	<div class="inner-box">
-                <div class="title-block"><?php echo $this->__('En ce moment chez vos commerçants'); ?></div>
+                <h2 class="title-block"><?php echo $this->__('En ce moment chez vos commerçants'); ?></h2>
 			    <div class="colored-line"></div>
 			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid">
 				    	<?php foreach($collection as $selection):?>
@@ -33,30 +34,25 @@
                                            title="<?php echo $strippedName; ?>" 
                                            class="show-product-popup" 
                                            data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
-                                            <h2 class="product-name"><?= $selection->getName()?></h2>
+                                            <h3 class="product-name"><?= $selection->getName()?></h3>
                                         </a>
-                                        <div class="product-info-left product-info-column">
-                                        <p class="product-commercant-name"><?php echo $selection->getData('short_description'); ?></p>
-                                            <p class="product-commercant-name">
-                                                <?php echo Mage::getResourceSingleton('catalog/product')
-                                                        ->getAttribute('commercant')
-                                                        ->getSource()
-                                                        ->getOptionText($selection->getData('commercant')); ?>
-                                            </p>
-
-                                        </div>
-                                        <div class="product-info-right product-info-column">
-                                            <?php echo $this->getPriceHtml($selection, true) ?>
-                                            <?php if($selection->getData('prix_kilo_site')) :?>
-                                                <div class="product-short_desc">		            
-                                                    <?php echo $selection->getData('prix_kilo_site'); ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
+                                        <p class="product-portion"><?php echo $selection->getData('short_description'); ?></p>
+                                        <!--<p class="product-commercant-name">
+                                            <?php echo Mage::getResourceSingleton('catalog/product')
+                                                    ->getAttribute('commercant')
+                                                    ->getSource()
+                                                    ->getOptionText($selection->getData('commercant')); ?>
+                                        </p>-->
+                                        <?php echo $this->getPriceHtml($selection, true) ?>
+                                        <?php if($selection->getData('prix_kilo_site')) :?>
+                                            <div class="product-short_desc">		            
+                                                <?php echo $selection->getData('prix_kilo_site'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                         <div class="actions">
-                                            <div class="action-group pull-right">
+                                            <div class="action-group">
                                                 <div>
-                                                    <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
+                                                    <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,6 +73,7 @@
             pagination:false,
             autoPlay : false,
             navigation : true,
+            navigationText : ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
             afterInit:function() {
                 alignProductGridActions();
             }

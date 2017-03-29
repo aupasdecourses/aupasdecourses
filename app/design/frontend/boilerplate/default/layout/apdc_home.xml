@@ -40,14 +40,14 @@
             <remove name="cms.wrapper" />
             <!-- Inclusion du Carroussel et des liens droite-->
             <block type="core/template" name="headband" template="page/html/headband.phtml" />
-            <!-- Inclusion des commerçants du Commis -->
-            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-list"/>
             <!-- Inclusion du block promos & produits favoris-->
             <block type="core/template" name="home-promos-favoris" as="home-promos-favoris" template="apdc_home/promos-and-favoris.phtml">
               <block type="apdc_catalog/selection" name="home-selection" template="apdc_catalog/selection/selection_all.phtml">
                 <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
               </block>
             </block>
+            <!-- Inclusion des commerçants du Commis -->
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-list"/>
             <!-- Reassurance -->
             <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
                 <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />

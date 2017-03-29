@@ -54,16 +54,26 @@
         </div> 
     </div>
 </div>
-<div class="copyright-cards-container">
-	<div class="row">
-		<div class="col-md-6">
-			<p class="copyright"><?php echo $this->getCopyright() ?></p>
-	    </div>
-		<div class="col-md-6">
-			<?php echo $this->getChildHtml('footer.cards') ?>
-		</div>
-	</div>
-</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <?php echo $this->getChildHtml('footer.links.middle') ?>                
+                <p class="copyright text-center">
+                    ©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <!--<ul class="social-icons">
+                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>-->
+                <?php echo $this->getChildHtml('footer.social') ?>
+            </div>
+        </div>
+    </div>
+</footer>
 <!-- MAIN POPUP -->
 <script type="text/javascript" src='/js/jquery.magnific-popup.min.js'></script>
 <?php
