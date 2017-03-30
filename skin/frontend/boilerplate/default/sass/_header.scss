@@ -73,6 +73,7 @@ header{
                 color: #fff;
                 font-weight: 700;
                 font-size: 1.125rem;
+                text-decoration: none;
                 -webkit-transition: all 100ms ease-in;
                 -moz-transition: all 100ms ease-in;
                 -ms-transition: all 100ms ease-in;
@@ -101,6 +102,9 @@ header{
                     -o-transition: all 100ms ease-in;
                     transition: all 100ms ease-in;
                 }
+                &:focus{
+                    text-decoration: none;
+                }
             }
         }
     }
@@ -116,9 +120,7 @@ header{
         vertical-align: middle;
     }
 }
-.block-login{
-    display: none;
-}
+
 #notice-cookie-block{
     display: none;
 }
@@ -135,7 +137,7 @@ header{
             margin-top: 12px;
             display: inline-block;
             vertical-align: -10px;
-            margin: 0 10px;
+            margin: 0 9px;
         }
         .skip-container-header-search{
             margin-top: 8px;
@@ -156,9 +158,61 @@ header{
     }
 }
 .header-account-container{
+    position: relative;
     a{
+        span{
+            i{
+                color: #A5A59C;
+            }
+        }
         i{
             color: $color-main-green;
+        }
+    }
+    .block-login{
+        display: none;
+        position: absolute;
+        top: 40px;
+        background: #fff;
+        padding: 20px;
+        z-index: 10;
+        border-radius: 5px;
+        text-align: left;
+        -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+        &.open{
+            display: block;
+        }
+        form{
+            .input-wrap{
+                position: relative;
+                label{
+                    position: absolute;
+                    top: 9px;
+                    left: 5px;
+                    font-size: 0.875rem;
+                    font-weight: normal;
+                    color: #ccc;
+                    z-index: 10;
+                }
+                input[type=text],
+                input[type=password]{
+                    padding: 7px 5px;
+                    color: #ddd;
+                    border: 1px solid #eee;
+                    border-radius: 5px;
+                    background-color: #f6f6f6;
+                    margin-bottom: 10px;
+                }
+            }
+            .button{
+                border: none;
+                font-size: 0.875rem;
+                color: #fff;
+                font-weight: normal;
+                width: 100%;
+                margin-bottom: 0;
+            }
         }
     }
 }

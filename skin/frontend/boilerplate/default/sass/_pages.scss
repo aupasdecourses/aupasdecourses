@@ -365,11 +365,54 @@ section {
     }
     .products-grid{
         .commercant-item{
-            height: 250px;
             &:after{
                 content: "";
                 display: block;
                 clear: both;
+            }
+            & > div{
+                &:nth-of-type(1),
+                &:nth-of-type(7){
+                    .commercant-info{
+                        background: #FF7D73;
+                    }
+                }
+                &:nth-of-type(2),
+                &:nth-of-type(8){
+                    .commercant-info{
+                        background: #FFBA44;
+                    }
+                }
+                &:nth-of-type(3),
+                &:nth-of-type(9){
+                    .commercant-info{
+                        background: #33353B;
+                    }
+                }
+                &:nth-of-type(4),
+                &:nth-of-type(10){
+                    .commercant-info{
+                        background: $color-main-green;
+                    }
+                }
+                &:nth-of-type(5),
+                &:nth-of-type(11){
+                    .commercant-info{
+                        background: #C6304D;
+                    }
+                }
+                &:nth-of-type(6),
+                &:nth-of-type(12){
+                    .commercant-info{
+                        background: #4A97D3;
+                    }
+                }
+            }
+            .commercant-info-img,
+            .commercant-img-info{
+                float: left;
+                width: 33.333333%;
+                height: 250px;
             }
             .commercant-img{
                 float: left;
@@ -407,44 +450,6 @@ section {
                     font-size: 0.875rem;
                     color: #fff;
                     text-align: center;
-                }
-            }
-        }
-        .owl-item{
-            &:nth-of-type(1),
-            &:nth-of-type(7){
-                .commercant-info{
-                    background: #FF7D73;
-                }
-            }
-            &:nth-of-type(2),
-            &:nth-of-type(8){
-                .commercant-info{
-                    background: #FFBA44;
-                }
-            }
-            &:nth-of-type(3),
-            &:nth-of-type(9){
-                .commercant-info{
-                    background: #33353B;
-                }
-            }
-            &:nth-of-type(4),
-            &:nth-of-type(10){
-                .commercant-info{
-                    background: $color-main-green;
-                }
-            }
-            &:nth-of-type(5),
-            &:nth-of-type(11){
-                .commercant-info{
-                    background: #C6304D;
-                }
-            }
-            &:nth-of-type(6),
-            &:nth-of-type(12){
-                .commercant-info{
-                    background: #4A97D3;
                 }
             }
         }
@@ -486,7 +491,7 @@ section {
     margin: 30px 20px;
     h2{
         font-weight: 700;
-        font-size: 2.25rem;
+        font-size: 2rem;
         text-transform: uppercase;
         color: $color-main-pink;
         text-align: left;
@@ -545,5 +550,58 @@ section {
                 margin: 0 auto;
             }
         }
+    }
+}
+
+.block-subscribe{
+    padding-bottom: 100px;
+    background: url(../images/bg-cards.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    margin: 50px 0 70px;
+    border-bottom: 1px solid #eee;
+    h2{
+        font-size: 1.5rem;
+        color: #33353b;
+        text-transform: none;
+        margin-bottom: 30px;
+        max-width: 500px;
+    }
+    form{
+        max-width: 500px;
+        margin: 0 auto 50px;
+        input[type=text]{
+            padding: 24px 10px 25px;
+            background-color: #FAFAFA;
+            border-color: #eee;
+            border-radius: 5px;
+            box-shadow: none;
+            font-size: 0.875rem;
+        }
+        .button{
+            -webkit-appearance: none;
+            border: none;
+            margin: 0;
+            font-size: 0.875rem;
+            font-weight: normal;
+            margin-left: 20px;
+            padding: 15px 30px;
+            i{
+                margin-right: 4px;
+            }
+        }
+    }
+}
+
+.block-advantages{
+    margin-bottom: 50px;
+    img{
+        max-width: 75px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    p{
+        font-size: 0.75rem;
+        padding: 0 60px;
     }
 }

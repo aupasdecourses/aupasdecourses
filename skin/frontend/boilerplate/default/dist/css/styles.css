@@ -11518,6 +11518,7 @@ header .top-nav li a {
   font-weight: 700;
   position: relative;
   transition: all 100ms ease-in;
+  text-decoration: none;
   color: #fff;
 }
 
@@ -11543,6 +11544,10 @@ header .top-nav li a:after {
   background: transparent;
 }
 
+header .top-nav li a:focus {
+  text-decoration: none;
+}
+
 .logo {
   float: left;
   text-align: center;
@@ -11553,10 +11558,6 @@ header .top-nav li a:after {
   max-width: 100px;
   height: auto;
   vertical-align: middle;
-}
-
-.block-login {
-  display: none;
 }
 
 #notice-cookie-block {
@@ -11576,7 +11577,7 @@ header .top-nav li a:after {
 
 .page-header-container .skip-links .skip-container {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 9px;
   margin-top: 12px;
   vertical-align: -10px;
 }
@@ -11600,8 +11601,65 @@ header .top-nav li a:after {
   color: #3ab64b;
 }
 
+.header-account-container {
+  position: relative;
+}
+
+.header-account-container a span i {
+  color: #a5a59c;
+}
+
 .header-account-container a i {
   color: #3ab64b;
+}
+
+.header-account-container .block-login {
+  position: absolute;
+  z-index: 10;
+  top: 40px;
+  display: none;
+  padding: 20px;
+  text-align: left;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+}
+
+.header-account-container .block-login.open {
+  display: block;
+}
+
+.header-account-container .block-login form .input-wrap {
+  position: relative;
+}
+
+.header-account-container .block-login form .input-wrap label {
+  font-size: .875rem;
+  font-weight: normal;
+  position: absolute;
+  z-index: 10;
+  top: 9px;
+  left: 5px;
+  color: #ccc;
+}
+
+.header-account-container .block-login form .input-wrap input[type=text],
+.header-account-container .block-login form .input-wrap input[type=password] {
+  margin-bottom: 10px;
+  padding: 7px 5px;
+  color: #ddd;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #f6f6f6;
+}
+
+.header-account-container .block-login form .button {
+  font-size: .875rem;
+  font-weight: normal;
+  width: 100%;
+  margin-bottom: 0;
+  color: #fff;
+  border: none;
 }
 
 #supermenu #storename a {
@@ -12117,14 +12175,47 @@ section .section-description {
   color: #2f4da8;
 }
 
-.commercants-block .products-grid .commercant-item {
-  height: 250px;
-}
-
 .commercants-block .products-grid .commercant-item:after {
   display: block;
   clear: both;
   content: '';
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(1) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(7) .commercant-info {
+  background: #ff7d73;
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(2) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(8) .commercant-info {
+  background: #ffba44;
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(3) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(9) .commercant-info {
+  background: #33353b;
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(4) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(10) .commercant-info {
+  background: #3ab64b;
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(5) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(11) .commercant-info {
+  background: #c6304d;
+}
+
+.commercants-block .products-grid .commercant-item > div:nth-of-type(6) .commercant-info,
+.commercants-block .products-grid .commercant-item > div:nth-of-type(12) .commercant-info {
+  background: #4a97d3;
+}
+
+.commercants-block .products-grid .commercant-item .commercant-info-img,
+.commercants-block .products-grid .commercant-item .commercant-img-info {
+  float: left;
+  width: 33.333333%;
+  height: 250px;
 }
 
 .commercants-block .products-grid .commercant-item .commercant-img {
@@ -12169,36 +12260,6 @@ section .section-description {
   color: #fff;
 }
 
-.commercants-block .products-grid .owl-item:nth-of-type(1) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(7) .commercant-info {
-  background: #ff7d73;
-}
-
-.commercants-block .products-grid .owl-item:nth-of-type(2) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(8) .commercant-info {
-  background: #ffba44;
-}
-
-.commercants-block .products-grid .owl-item:nth-of-type(3) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(9) .commercant-info {
-  background: #33353b;
-}
-
-.commercants-block .products-grid .owl-item:nth-of-type(4) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(10) .commercant-info {
-  background: #3ab64b;
-}
-
-.commercants-block .products-grid .owl-item:nth-of-type(5) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(11) .commercant-info {
-  background: #c6304d;
-}
-
-.commercants-block .products-grid .owl-item:nth-of-type(6) .commercant-info,
-.commercants-block .products-grid .owl-item:nth-of-type(12) .commercant-info {
-  background: #4a97d3;
-}
-
 .commercants-block .products-grid .owl-controls .owl-buttons {
   position: absolute;
   top: 45%;
@@ -12238,7 +12299,7 @@ section .section-description {
 }
 
 .block-sponsor h2 {
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 30px;
   text-align: left;
@@ -12307,6 +12368,66 @@ section .section-description {
 .block-blog article .crop-img img {
   display: block;
   margin: 0 auto;
+}
+
+.block-subscribe {
+  margin: 50px 0 70px;
+  padding-bottom: 100px;
+  border-bottom: 1px solid #eee;
+  background: url(../images/bg-cards.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+
+.block-subscribe h2 {
+  font-size: 1.5rem;
+  max-width: 500px;
+  margin-bottom: 30px;
+  text-transform: none;
+  color: #33353b;
+}
+
+.block-subscribe form {
+  max-width: 500px;
+  margin: 0 auto 50px;
+}
+
+.block-subscribe form input[type=text] {
+  font-size: .875rem;
+  padding: 24px 10px 25px;
+  border-color: #eee;
+  border-radius: 5px;
+  background-color: #fafafa;
+  box-shadow: none;
+}
+
+.block-subscribe form .button {
+  font-size: .875rem;
+  font-weight: normal;
+  margin: 0;
+  margin-left: 20px;
+  padding: 15px 30px;
+  border: none;
+  -webkit-appearance: none;
+}
+
+.block-subscribe form .button i {
+  margin-right: 4px;
+}
+
+.block-advantages {
+  margin-bottom: 50px;
+}
+
+.block-advantages img {
+  max-width: 75px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.block-advantages p {
+  font-size: .75rem;
+  padding: 0 60px;
 }
 
 footer {

@@ -25,16 +25,32 @@
  */
 ?>
 <div class="block block-login">
-    <div class="block-title">
-        <strong><span><?php echo $this->__('Login') ?></span></strong>
-    </div>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
         <div class="block-content">
-            <label for="mini-login"><?php echo $this->__('Email:') ?></label><input type="text" name="login[username]" id="mini-login" class="input-text" />
-            <label for="mini-password"><?php echo $this->__('Password:') ?></label><input type="password" name="login[password]" id="mini-password" class="input-text" />
+            <div class="input-wrap">
+                <input type="text" name="login[username]" id="mini-login" class="input-text" />
+                <label for="mini-login"><?php echo $this->__('Email:') ?></label>
+            </div>
+            <div class="input-wrap">
+                <input type="password" name="login[password]" id="mini-password" class="input-text" />
+                <label for="mini-password"><?php echo $this->__('Password:') ?></label>
+            </div>
             <div class="actions">
-                <button type="submit" class="button"><span><span><?php echo $this->__('Login') ?></span></span></button>
+                <button type="submit" class="button button-green"><span><span><?php echo $this->__('Login') ?></span></span></button>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    $j(document).ready(function() {
+        $j('.header-account-container').click(function(){
+            if( $j('> .block-login', this).hasClass('open') ){
+                $j('> .block-login', this).removeClass('open');
+            }
+            else{
+                $j('> .block-login', this).addClass('open');
+            }
+        });
+    });
+</script>

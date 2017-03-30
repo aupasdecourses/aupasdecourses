@@ -71,7 +71,7 @@
                                 <span class="label"><?php echo $this->__('Account'); ?></span>
                                 <i class="fa fa-check account-connected"></i>
                             <?php else : ?>
-                                <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
+                                <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
                             <?php endif; ?>
                                 <!--<a href="#header-account" class="skip-link skip-account">
                                 <i class="fa fa-user"></i>
@@ -84,9 +84,9 @@
                                 <?php endif; ?>-->
                             <!--</a>-->
                             <!-- Account Menu-->
-                            <div id="header-account" class="dropdown-menu skip-content" id="right-links">
+                            <!-- <div id="header-account" class="dropdown-menu skip-content" id="right-links">
                                 <?php echo $this->getChildHtml('topLinks') ?>
-                            </div>
+                            </div> -->
 
 
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>

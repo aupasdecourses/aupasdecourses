@@ -25,17 +25,15 @@
  */
 ?>
 <div class="block block-subscribe">
-
+<h2>Chaque semaine, vos commerçants préférés dans votre boîte mail</h2>
 <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-validate-detail">
 
 <div class="input-group">
 
-<span class="input-group-addon"><?php echo $this->__('Newsletter') ?></span>
-
-<input type="text" class="form-control input-sm required-entry validate-email" title="<?php echo $this->__('Sign up for our newsletter') ?>" id="newsletter" name="email">
+<input type="text" class="form-control input-sm required-entry validate-email" title="<?php echo $this->__('Sign up for our newsletter') ?>" id="newsletter" name="email" placeholder="Mon adresse email">
 
 <span class="input-group-btn">
-<button class="btn btn-default btn-sm" title="<?php echo $this->__('Subscribe') ?>" type="submit"><?php echo $this->__('Subscribe') ?></button></span>
+<button class="button button-green" title="<?php echo $this->__('Subscribe') ?>" type="submit"><i class="fa fa-envelope-o"></i> <?php echo $this->__('Subscribe') ?></button></span>
 
 </div>
 </form>
