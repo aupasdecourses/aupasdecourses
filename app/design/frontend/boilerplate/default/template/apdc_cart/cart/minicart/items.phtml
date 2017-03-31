@@ -43,7 +43,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
 
     <p class="block-subtitle">
         <?php echo $this->__('Your Cart') ?>
-        <a class="btn close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i>&nbsp;<?php echo $this->quoteEscape($this->__('Close')); ?></a>
+        <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i></a>
     </p>
 
     <div id="minicart-error-message" class="minicart-message"></div>
@@ -57,7 +57,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
                 <?php foreach($commercants as $id => $commercant): ?>
                     <li>
                     <?php $closed = ((isset($apdcAccordion[$id]) && $apdcAccordion[$id] == 0) ? ' closed' : ''); ?>
-                    <div class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>"><span class="title"><?php echo $commercant['name']; ?></span> <span class="count">(<?php echo count($commercant['items']); ?>)</span><i class="fa fa-caret-up"></i></div>
+                    <div class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>"><span class="title"><?php echo $commercant['name']; ?></span> <span class="count"><?php echo count($commercant['items']); ?></span><i class="fa fa-angle-up"></i></div>
                         <ul class="commercant-product-list">
                         <?php foreach ($commercant['items'] as $item): ?>
                             <?php echo $this->getItemHtml($item) ?>

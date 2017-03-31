@@ -1,4 +1,59 @@
+@media screen and (max-width: 1260px){
+    .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-next{
+        margin-right: -10px;
+    }
+    .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-prev{
+        margin-left: -10px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .block-promos{
+        .apdc-products-grid{
+            .product-info{
+                form{
+                    float: none;
+                    width: auto;
+                }
+            }
+        }
+    }
+    .commercants-block{
+        .products-grid{
+            .commercant-item{
+                .commercant-info-img,
+                .commercant-img-info{
+                    float: none;
+                    width: auto;
+                }
+            }
+        }
+    }
+    .page-header-container .skip-links .skip-container{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 @media screen and (max-width: 991px){
+    .logo, .skip-links .text-right{
+        text-align: center;
+    }
+    .skip-links .text-right{
+        margin: 20px 0;
+    }
+    .page-header-container{
+        .skip-links{
+            .skip-container-header-search{
+                text-align: center;
+                input[type=text]{
+                    max-width: 500px;
+                    margin: 10px auto 0;
+                }
+            }
+        }
+    }
+
     section{
         &.packages{
             .item{
@@ -42,7 +97,10 @@
 
 }
 
-@media screen and (max-width: 767px){
+@media screen and (max-width: 768px){
+    .container{
+        width: auto;
+    }
     #html-body{
         header{
             margin-bottom: 100px;

@@ -54,7 +54,7 @@
 												<span><?= $shop['adresse'];?></span>
 											</div>
 										</div>
-									</div>	
+									</div>
 								<?php
 							}
 							if((($i+1)%6 == 0 && $i != 0) || $i == $nbShops) {
@@ -79,6 +79,9 @@
     $j(document).ready(function() {
       $j("#carrousel-commercants").owlCarousel({
             items:1,
+            itemsScaleUp : true,
+			itemsDesktop : [1199,3],
+			itemsTablet : [720,1],
             pagination:false,
             autoPlay : false,
             slideSpeed : 800,

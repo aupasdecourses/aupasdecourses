@@ -69,7 +69,7 @@ foreach ($children as $child) {
         $html .=     '<li class="level'. $nextChildLevel .'">';
         $html .=         '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
         // $html .=             $this->__('View All ') . $this->escapeHtml($this->__($child->getName()));
-        //$html .=             $this->__('View All '); 
+        //$html .=             $this->__('View All ');
         $html .=         '</a>';
         $html .=     '</li>';
         $html .=     $this->render($child, $childrenWrapClass);
