@@ -211,7 +211,7 @@
             </block>
             <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
                 <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
-                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" />
                 <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
             </block>
         </reference>

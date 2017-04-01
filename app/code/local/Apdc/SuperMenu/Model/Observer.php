@@ -30,6 +30,7 @@ class Apdc_SuperMenu_Model_Observer
     public function loadCustomCategoryAttributes(Varien_Event_Observer $observer)
     {
         $select = $observer->getEvent()->getSelect();
+        $select->columns('estcom_commercant');
         $select->columns('menu_bg_color');
         $select->columns('menu_text_color');
         $select->columns('menu_template');
@@ -37,6 +38,7 @@ class Apdc_SuperMenu_Model_Observer
         $select->columns('menu_static_block1');
         $select->columns('thumbnail');
         $select->columns('is_clickable');
+
     }
 
     /**
@@ -88,8 +90,10 @@ class Apdc_SuperMenu_Model_Observer
                 'menu_main_static_block' => $category->getMenuMainStaticBlock(),
                 'menu_static_block1' => $category->getMenuStaticBlock1(),
                 'thumbnail' => $category->getThumbnail(),
-                'is_clickable' => $category->getIsClickable()
+                'is_clickable' => $category->getIsClickable(),
+                'is_commercant' => $category->getData('estcom_commercant'),
             );
+
             $categoryNode = new Varien_Data_Tree_Node($categoryData, 'id', $tree, $parentCategoryNode);
             $parentCategoryNode->addChild($categoryNode);
 

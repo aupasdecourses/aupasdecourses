@@ -25,7 +25,7 @@ if($field->getCustomerVisibility()=="view"):
                         <?php if($img<>""):
                             $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
                             ?>
-                            <img class="ticket_commercant" src="<?= $url_src?>"/>
+                            <a href="<?= $url_src?>" target="_blank"><img class="ticket_commercant" src="<?= $url_src?>"/></a>
                         <?php else:?>
                             <span>Pas de tickets (pour l'instant)</span>
                         <?php endif;?>
