@@ -1,0 +1,17 @@
+Apdc\ApdcBundle\Entity\NoteOrder:
+    type: entity
+    table: null
+    repositoryClass: Apdc\ApdcBundle\Repository\NoteOrderRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        orderId:
+            type: float
+        note:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

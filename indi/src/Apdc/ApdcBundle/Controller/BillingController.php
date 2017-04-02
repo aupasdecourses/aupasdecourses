@@ -20,8 +20,7 @@ class BillingController extends Controller
 
 		$factu = $this->container->get('apdc_apdc.billing');
 
-		if(isset($_GET['date_debut'])) {
-			$list		= $factu->get_list_orderid();
+		if (isset($_GET['date_debut'])) {
 			$date_debut = $_GET['date_debut'];
 			$date_fin	= $factu->end_month($date_debut);
 			$bill		= $factu->data_facturation_products($date_debut, $date_fin, "creation");
@@ -35,26 +34,46 @@ class BillingController extends Controller
 	}
 
 
-	public function payoutIndexAction()
+	public function payoutIndexAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_prepayout = new \Apdc\ApdcBundle\Entity\PayoutChoice();
+		$form_prepayout	= $this->createForm(\Apdc\ApdcBundle\Form\PayoutChoiceType::class, $entity_prepayout);
+		$form_prepayout->handleRequest($request);
+
+		$choice = $form_prepayout['choice']->getData();
+
+		if ($form_prepayout->isSubmitted() && $form_prepayout->isValid()) {
+			return $this->redirectToRoute('billingPayoutSubmit', [
+				'choice'	=> $choice,
+			]);
 		}
 
 		$repository		= $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
 		$payout_list	= $repository->findAll();
 
 		return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
-			'payout_list'	=> $payout_list,
+			'payout_list'		=> $payout_list,
+			'form_prepayout'	=> $form_prepayout->createView(),
 		]);
 	}
 
-	public function payoutSubmitAction(Request $request)
+	public function payoutSubmitAction(Request $request, $choice)
 	{
 
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+		$merchants = $mage->getApdcBankFields();
+
+		$session = $request->getSession();
 
 		$adyen	= $this->container->get('apdc_apdc.adyen');
 		$payout = new Payout();
@@ -78,13 +97,15 @@ class BillingController extends Controller
 				echo $e->getMessage();
 			}
 
+			$session->getFlashBag()->add('success', 'Payout effectué avec succès');
+
 			return $this->redirectToRoute('billingPayoutIndex');
 		}
 
-		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig',
-			[
-			'form' => $form->createView(),
-			]
-		);
+		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig', [
+			'form'		=> $form->createView(),
+			'merchants'	=> $merchants,
+			'choice'	=> $choice,
+		]);
 	}
 }

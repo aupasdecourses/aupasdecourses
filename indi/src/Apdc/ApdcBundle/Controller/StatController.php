@@ -7,30 +7,125 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Apdc\ApdcBundle\Entity\NoteOrder;
+use Apdc\ApdcBundle\Form\NoteOrderType;
+
 class StatController extends Controller
 {
-
-	public function noteAction(Request $request)
+	public function statCustomerAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
 
-		$stats = $this->container->get('apdc_apdc.stat');
+		$stats	= $this->container->get('apdc_apdc.stats');
+		$stat	= $stats->stats_clients();
 
-		if(isset($_GET['date_debut'])) {
-			$date_debut = $_GET['date_debut'];
-			$date_fin = $stats->end_month($date_debut);
-		}
-
-		$notes	= $stats->getNotes($date_debut, $date_fin);
-
-		return $this->render('ApdcApdcBundle::stat/note.html.twig', [
-			'notes'			=> $notes,
-			'date_debut'	=> $date_debut,
-			'date_fin'		=> $date_fin,
-		]);
-
+		return $this->render('ApdcApdcBundle::stat/statCustomer.html.twig', [
+			'stat'			=> $stat,	
+		]); 
+	
 	}
 
+	public function loyaltyCustomerAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		if (isset($_GET['date_debut'])) {
+			$date_debut			= $_GET['date_debut'];
+			$date_fin			= $_GET['date_fin'];
+			$data_clients		= $stats->data_clients($date_debut, $date_fin);
+		}
+			return $this->render('ApdcApdcBundle::stat/loyaltyCustomer.html.twig', [
+				'date_debut'			=> $date_debut,
+				'date_fin'				=> $date_fin,	
+				'data_clients'			=> $data_clients,
+			]); 
+	}
+
+	public function statVoucherAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		if (isset($_GET['date_debut']) && isset($_GET['date_fin'])) {
+			$date_debut		= $_GET['date_debut'];
+			$date_fin		= $_GET['date_fin'];
+			$data_coupon	= $stats->data_coupon($date_debut, $date_fin);
+		}
+
+		return $this->render('ApdcApdcBundle::stat/statVoucher.html.twig', [
+			'date_debut'	=> $date_debut,
+			'date_fin'		=> $date_fin,
+			'data_coupon'	=> $data_coupon,
+		]); 
+	
+	}
+
+
+	public function noteOrderAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+		
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		if (isset($_GET['date_debut'])) {
+			$date_debut	= $_GET['date_debut'];
+			$date_fin	= $stats->end_month($date_debut);
+			$notes = $stats->getNotes($date_debut, $date_fin);
+		}
+
+		$histo = $stats->histogramme($date_debut, $date_fin);
+
+
+		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
+			'date_debut'	=> $date_debut,
+			'date_fin'		=> $date_fin,
+			'notes'			=> $notes,
+			'histo'			=> $histo,
+		]);
+	}
+
+	public function noteOrderSubmitAction(Request $request, $orderId)
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+		
+		$stats		= $this->container->get('apdc_apdc.stats');			
+		$session	= $request->getSession();
+
+		$noteOrder				= new NoteOrder();
+		$form_note_order		= $this->createForm(NoteOrderType::class, $noteOrder);
+		
+		if ($request->isMethod('POST') && $form_note_order->handleRequest($request)->isValid()) {
+			try {
+				$stats->updateEntryToApdcNotation(
+					['order_id'	=> $form_note_order['orderId']->getData()],
+					['note'		=> $form_note_order['note']->getData()]
+				);
+
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+
+			$session->getFlashBag()->add('success', 'Note Commande ajoutée !');
+			return $this->redirectToRoute('noteOrder');
+		}
+		
+
+		return $this->render('ApdcApdcBundle::stat/noteOrderSubmit.html.twig', [
+			'order_id'			=> $orderId,
+			'form_note_order'	=> $form_note_order->createView(),
+		]);
+	}
 }

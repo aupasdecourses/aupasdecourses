@@ -95,7 +95,7 @@ billingPayoutIndex:
   defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
 
 billingPayoutSubmit:
-  path: /billing/payout/submit/
+  path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
 
 statNote:
@@ -113,6 +113,27 @@ toolMerchant:
 toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
+
+statCustomer:
+  path: /stat/customer/
+  defaults: { _controller: ApdcApdcBundle:Stat:statCustomer}
+
+loyaltyCustomer:
+  path: /stat/loyalty/
+  defaults: { _controller: ApdcApdcBundle:Stat:loyaltyCustomer}
+
+statVoucher:
+  path: /stat/voucher/
+  defaults: { _controller: ApdcApdcBundle:Stat:statVoucher}
+
+noteOrder:
+  path: /stat/noteOrder/
+  defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
+
+noteOrderSubmit:
+  path: /stat/noteOrder/{orderId}/submit/
+  defaults: { _controller: ApdcApdcBundle:Stat:noteOrderSubmit}
+  requirements: { orderId:"[0-9]+" }
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

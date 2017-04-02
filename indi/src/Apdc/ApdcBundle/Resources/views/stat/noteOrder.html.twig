@@ -1,0 +1,172 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<h2>Notes Commande par Clients</h2>
+
+		<div class="page-header">
+			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		</div>
+
+
+
+
+
+
+	<!--	<div id ="graph" class="span12"></div>
+
+		<span id="histo">{# histo #}</span>
+	-->
+
+
+
+
+
+		<table id="noteTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th colspan="2">Date</th>
+					<th># Commande</th>
+					<th>Nom Client</th>
+					<th>Note</th>
+				</tr>
+				<tr>
+					<th>Création</th>
+					<th>Livraison</th>
+					<th class="sort"></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in notes %}
+					<tr>
+							<td>{{ order.date_creation }}</td>
+							<td>{{ order.date_livraison }}</td>
+							<td>{{ order.increment_id }}</td>
+							<td>{{ order.nom_client }}</td>
+
+						{% if order.note is null %}
+							<td>
+								<a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">NULL</a>
+							</td>
+						{% else %}
+							<td>
+								<a href="{{ path('noteOrderSubmit', {orderId: order.increment_id}) }}">{{ order.note }}</a>
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_noteOrder %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_noteOrder %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+$(function() {
+	$( "#datepickerNote" ).datepicker({
+		altField: "#datepickerNote",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+
+$(function(){
+	$("#datepickerNote").change(function(){
+		window.location='{{ path('noteOrder') }}?module=clients&action=view&option=note&date_debut='+this.value;
+	});
+});
+$(document).ready(function() {
+	var table=$('#noteTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+	} );
+});
+</script>
+
+<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var width = 900,
+	height = 300,
+	pad = 20, 
+	left_pad = 100;
+
+var x = d3.scale.ordinal().rangeRoundBands([left_pad, width-pad], 0.1);
+var y = d3.scale.linear().range([height-pad, pad]);
+
+var xAxis = d3.svg.axis().scale(x).orient("bottom");
+var yAxis = d3.svg.axis().scale(y).orient("left");
+
+var svg = d3.select("#graph")
+.append("svg")
+.attr("width", width)
+.attr("height", height);
+
+d3.json('{{ path('root') }}json/histogramme.json', function (data) {
+
+	data = d3.keys(data).map(function (key) {
+		return {bucket: Number(key),
+			N: data[key]};
+	});
+
+	x.domain(data.map(function (d) { return d.bucket; }));
+	y.domain([0, d3.max(data, function (d) { return d.N; })]);
+
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(0, "+(height-pad)+")")
+		.call(xAxis);
+
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate("+(left_pad-pad)+", 0)")
+		.call(yAxis);
+
+	svg.selectAll('rect')
+		.data(data)
+		.enter()
+		.append('rect')
+		.attr('class', 'bar')
+		.attr('x', function (d) { return x(d.bucket); })
+		.attr('width', x.rangeBand())
+		.attr('y', height-pad)
+		.transition()
+		.delay(function (d) { return d.bucket*20; })
+		.duration(800)
+		.attr('y', function (d) { return y(d.N); })
+		.attr('height', function (d) { return height-pad - y(d.N); });
+
+});
+
+</script>
+
+{% endblock %}

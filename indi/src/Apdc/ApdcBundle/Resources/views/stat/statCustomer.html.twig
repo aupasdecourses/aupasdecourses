@@ -1,0 +1,117 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<div class="page-header">
+		<h2>Stats Clients</h2>
+	</div>
+	<div id="filter"><label>Selectionnez le client</label></div>
+
+
+
+	<table class="table table-striped" id="statCustomerTable">
+		<thead>
+			<tr>
+				<th class="sort">Nom Client</th>
+				<th class=float">Nb Commande</th>
+				<th class="float">Total</th>
+				<th>Dernière commande</th>
+				<th>Rue</th>
+				<th class="sort">Code Postal</th>
+				<th>Date inscription</th>
+				<th class="sort">Créé dans</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for content in stat %}
+			{% if content != 'Mail Client' %}
+			<tr>
+				<td>{{ content['Nom Client'] }}</td>
+				<td>{{ content['Nb Commande'] }}</td>
+				<td>{{ content['Total'] }}</td>
+				<td>{{ content['Dernière commande'] }}</td>
+				<td>{{ content['Rue'] }}</td>
+				<td>{{ content['Code Postal'] }}</td>
+				<td>{{ content['Date Inscription'] }}</td>
+				<td>{{ content['Créé dans'] }}</td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_statCustomer %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_statCustomer %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script>
+$(document).ready(function() {
+	var table=$('#statCustomerTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+	</script>
+{% endblock %}

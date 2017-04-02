@@ -13,5 +13,5 @@ services:
     apdc_apdc.billing:
         class: Apdc\ApdcBundle\Services\Billing
 
-    apdc_apdc.stat:
-        class: Apdc\ApdcBundle\Services\Stat
+    apdc_apdc.stats:
+        class: Apdc\ApdcBundle\Services\Stats

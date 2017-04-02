@@ -160,7 +160,7 @@ class Billing
 
 		return $date;
 	}
-
+/*
 	public function get_list_orderid()
 	{
 		$orders = \Mage::getResourceModel('sales/order_collection')
@@ -177,7 +177,7 @@ class Billing
 
 		return $array_orderid;
 	}
-
+ */
 	public function data_facturation_products($debut, $fin)
 	{
 		$data = [];

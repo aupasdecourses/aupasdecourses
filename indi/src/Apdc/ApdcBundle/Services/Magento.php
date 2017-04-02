@@ -569,7 +569,9 @@ class Magento
                     'name' => 'All',
                     'total' => 0.0,
                     'refund_total' => 0.0,
-                    'refund_prix' => 0.0,
+					'refund_prix' => 0.0,
+					'refund_total_commercant' => 0.0,
+					'refund_prix_commercant' => 0.0,
                 ],
             ],
         ];
@@ -580,28 +582,33 @@ class Magento
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('main_table.order_id', ['eq' => $orderHeader['mid']]);
             $products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
-                'refund_prix' => 'refund.prix_final',
-                'refund_diff' => 'refund.diffprixfinal',
-                'refund_comment' => 'refund.comment',
+                'refund_prix'				=> 'refund.prix_final',
+                'refund_diff'				=> 'refund.diffprixfinal',
+				'refund_comment'			=> 'refund.comment',
+				'refund_prix_commercant'	=> 'refund.prix_commercant',
             ]);
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
-                $prod_data['refund_prix'] = $product->getData('refund_prix');
-                $prod_data['refund_diff'] = $product->getData('refund_diff');
+                $prod_data['refund_prix']				= $product->getData('refund_prix');
+				$prod_data['refund_diff']				= $product->getData('refund_diff');
+				$prod_data['refund_prix_commercant']	= $product->getData('refund_prix_commercant');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] = 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
                 $rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
-                $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+				$rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
             }
         }
 
@@ -672,5 +679,29 @@ class Magento
         }
 
         return $ref;
+	}
+
+	/** Pour les payouts */
+	public function getApdcBankFields()
+	{
+		$tab = [];
+
+		$merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
+
+		$merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
+
+		foreach ($merchants as $merchant) {
+			$tab[$merchant->getData('name')] = [
+				'id'		=> $merchant->getData('id_commercant'),
+				'name'		=> $merchant->getData('name'),
+				'ownerName' => $merchant->getData('owner_name'),
+				'iban'		=> $merchant->getData('account_iban'),
+				/*
+				 *	jointure avec apdc_commercant_contact + champs shopper email et shopper reference; 
+				 */
+			];
+		}
+
+		return $tab;
 	}
 }
