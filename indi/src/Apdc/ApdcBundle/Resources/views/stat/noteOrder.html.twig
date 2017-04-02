@@ -49,11 +49,14 @@
 
 						{% if order.note is null %}
 							<td>
-								<a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">NULL</a>
+								<!-- <a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">NULL</a> -->
+								NULL
 							</td>
 						{% else %}
 							<td>
-								<a href="{{ path('noteOrderSubmit', {orderId: order.increment_id}) }}">{{ order.note }}</a>
+								<!-- <a href="{{ path('noteOrderSubmit', {orderId: order.increment_id}) }}"> -->
+								{{ order.note }}
+								<!-- </a> -->
 							</td>
 						{% endif %}
 					</tr>
