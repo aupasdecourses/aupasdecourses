@@ -19,7 +19,7 @@ class PayoutChoiceType extends AbstractType
 
 		$merchantChoices = [];
 		foreach ($merchants->getApdcBankFields() as $key => $content) {
-			$merchantChoices[$content['name']] = $content['name'];
+			$merchantChoices[$content['name']] = $content['id'];
 		}
 		ksort($merchantChoices);
 

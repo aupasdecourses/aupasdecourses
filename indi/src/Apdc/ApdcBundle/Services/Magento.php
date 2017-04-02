@@ -586,6 +586,7 @@ class Magento
                 'refund_diff'				=> 'refund.diffprixfinal',
 				'refund_comment'			=> 'refund.comment',
 				'refund_prix_commercant'	=> 'refund.prix_commercant',
+				'refund_diff_commercant'	=> 'refund.diffprixcommercant',
             ]);
 
             foreach ($products as $product) {
@@ -593,22 +594,26 @@ class Magento
                 $prod_data['refund_prix']				= $product->getData('refund_prix');
 				$prod_data['refund_diff']				= $product->getData('refund_diff');
 				$prod_data['refund_prix_commercant']	= $product->getData('refund_prix_commercant');
+				$prod_data['refund_diff_commercant']	= $product->getData('refund_diff_commercant');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
 					$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant']	= 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
                 $rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
 				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+				$rsl[-1]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
             }
         }
 

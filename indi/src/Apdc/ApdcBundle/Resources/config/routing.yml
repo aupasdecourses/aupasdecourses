@@ -97,6 +97,7 @@ billingPayoutIndex:
 billingPayoutSubmit:
   path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
+  requirements: { choice:"[0-9]+" }
 
 statNote:
   path: /stat/note/
