@@ -40,7 +40,6 @@ class Stats
 			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
 			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 			array_push($data, [
-<<<<<<< HEAD
 					'Nom Client'		=> $order->getCustomerName(),
 					'Nb Commande'		=> $order->getNbOrder(),
 					'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
@@ -222,7 +221,6 @@ class Stats
 
 		return $data_conso;
 	}
-<<<<<<< HEAD
 
 
 
