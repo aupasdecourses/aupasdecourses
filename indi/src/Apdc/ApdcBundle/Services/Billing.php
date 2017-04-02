@@ -102,11 +102,11 @@ class Billing
 		return $response;
 	}
 
-	private function getRefunditemdata($item, $output)
+	private function getRefunditemdata($item)
 	{
 		$refund_items	= \Mage::getModel('pmainguet_delivery/refund_items');
 		$item			= $refund_items->load($item->getOrderItemId(), 'order_item_id');
-		$response		= $item->getData($output);
+		$response		= $item->getData();
 
 		return $response;
 	}
@@ -255,10 +255,17 @@ class Billing
 											$com_done = true;
 										}
 									}
-									$creditdata = $this->getRefunditemdata($item, 'diffprixfinal');
-									$sum_items_credit += floatval($creditdata);
-									$sum_items_credit_HT += floatval($creditdata) / (1 + $TVApercent);
-									$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditdata) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
+									$creditinfo = $this->getRefunditemdata($item);
+									$prixclient=$creditinfo['prix_final'];
+									$prixcommercant=$creditinfo['prix_commercant'];
+
+									$prix_final=($prixcommercant<>NULL?$prixcommercant:$prixclient);
+
+									$creditvalue=$creditinfo['prix_initial']-$prix_final;
+
+									$sum_items_credit += floatval($creditvalue);
+									$sum_items_credit_HT += floatval($creditvalue) / (1 + $TVApercent);
+									$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditvalue) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
 									$sum_items_credit_TVA = $sum_items_credit_HT * $TVApercent;
 									$com_done = true;
 								}
