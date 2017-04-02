@@ -352,15 +352,25 @@ class Stats
 	{
 		$notes = $this->getNotes($date_debut, $date_fin);
 		$result = [];
-		$cpt = 1;
-		foreach ($notes as $n) {
-			$result[$n['date_creation']][$cpt] = [
-				'notation'	=> intval($n['note']),
-			];
-			++$cpt;
-		}
+		foreach ($notes as $key => $value) {
+			$result[$key] = [
+				'notes'			=> intval($value['note']),
+				'occurences'		=> 0,
+				];
 
-		return json_encode($result);
-		
+			$occ = array_count_values(array_column($result, 'notes'));
+
+			foreach ($occ as $k => $v) {
+				if($result[$key]['notes'] === $k ) { 
+					$result[$key]['occurences'] += $v;
+				}
+			}
+
+		}
+		sort($result);
+		$json_data = json_encode($result);
+		return $json_data;
+
+
 	}
 }

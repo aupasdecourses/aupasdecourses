@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Apdc\ApdcBundle\Entity\NoteOrder;
 use Apdc\ApdcBundle\Form\NoteOrderType;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
@@ -82,16 +85,22 @@ class StatController extends Controller
 			$date_debut	= $_GET['date_debut'];
 			$date_fin	= $stats->end_month($date_debut);
 			$notes = $stats->getNotes($date_debut, $date_fin);
+			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
 
-		$histo = $stats->histogramme($date_debut, $date_fin);
-
+		
+		$fs = new Filesystem();
+		
+		/* dossier & fichier seront a renommer */
+		if ($fs->exists('../web/json/histogramme.json')){
+			$fs->dumpFile('../web/json/histogramme.json', $json_data);
+		}
+		 
 
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
-			'histo'			=> $histo,
 		]);
 	}
 
