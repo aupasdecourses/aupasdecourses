@@ -10,19 +10,6 @@
 		</div>
 
 
-
-
-
-
-	<!--	<div id ="graph" class="span12"></div>
-
-		<span id="histo">{# histo #}</span>
-	-->
-
-
-
-
-
 		<table id="noteTable" class="table table-striped">
 			<thead>
 				<tr>
@@ -63,6 +50,15 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+		
+	<hr>
+		<h2>Moyenne des notes des commandes (sur la période)</h2>	
+			<h4><i>Abscisse : Notes. Ordonnée : Nb commandes</i></h4>
+		<div id ="graph" ></div>
+	
+
+
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
@@ -116,60 +112,89 @@ $(document).ready(function() {
 
 <script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
 
+
 <script>
+// set the dimensions of the canvas
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+	width = 600 - margin.left - margin.right,
+	height = 400 - margin.top - margin.bottom;
 
-var width = 900,
-	height = 300,
-	pad = 20, 
-	left_pad = 100;
 
-var x = d3.scale.ordinal().rangeRoundBands([left_pad, width-pad], 0.1);
-var y = d3.scale.linear().range([height-pad, pad]);
+// set the ranges
+var x = d3.scale.ordinal().rangeRoundBands([10, width], .20);
 
-var xAxis = d3.svg.axis().scale(x).orient("bottom");
-var yAxis = d3.svg.axis().scale(y).orient("left");
+var y = d3.scale.linear().range([height, 0]);
 
-var svg = d3.select("#graph")
-.append("svg")
-.attr("width", width)
-.attr("height", height);
+// define the axis
+	var xAxis = d3.svg.axis()
+.scale(x)
+	.orient("bottom")
 
-d3.json('{{ path('root') }}json/histogramme.json', function (data) {
 
-	data = d3.keys(data).map(function (key) {
-		return {bucket: Number(key),
-			N: data[key]};
+	var yAxis = d3.svg.axis()
+.scale(y)
+	.orient("left")
+	.ticks(10)
+	.tickFormat(d3.format("d")); // Integer for number of orders
+
+
+	// add the SVG element
+	var svg = d3.select("#graph").append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	.attr("transform", 
+			"translate(" + margin.left + "," + margin.top + ")");
+
+
+// load the data
+d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
+
+	data.forEach(function(d) {
+		d.notes = d.notes;
+		d.occurences = +d.occurences;
 	});
 
-	x.domain(data.map(function (d) { return d.bucket; }));
-	y.domain([0, d3.max(data, function (d) { return d.N; })]);
+	// scale the range of the data
+	x.domain(data.map(function(d) { return d.notes; }));
+	y.domain([0, d3.max(data, function(d) { return d.occurences; })]);
+
+	// add axis
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis)
+		.selectAll("text")
+		.style("text-anchor", "end")
+		.attr("dx", "-.8em")
+		.attr("dy", "-.55em")
+		.attr("transform", "rotate(-90)" );
 
 	svg.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate(0, "+(height-pad)+")")
-		.call(xAxis);
+		.attr("class", "y axis")
+		.call(yAxis)
+		.append("text")
+		.attr("transform", "rotate(-90)")
+		.attr("y", 5)
+		.attr("dy", ".71em")
+		.style("text-anchor", "end")
+		.text("Nb commandes");
 
-	svg.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate("+(left_pad-pad)+", 0)")
-		.call(yAxis);
 
-	svg.selectAll('rect')
+	// Add bar chart
+	svg.selectAll("bar")
 		.data(data)
-		.enter()
-		.append('rect')
-		.attr('class', 'bar')
-		.attr('x', function (d) { return x(d.bucket); })
-		.attr('width', x.rangeBand())
-		.attr('y', height-pad)
-		.transition()
-		.delay(function (d) { return d.bucket*20; })
-		.duration(800)
-		.attr('y', function (d) { return y(d.N); })
-		.attr('height', function (d) { return height-pad - y(d.N); });
+		.enter().append("rect")
+		.attr("class", "bar")
+		.attr("x", function(d) { return x(d.notes); })
+		.attr("width", x.rangeBand())
+		.attr("y", function(d) { return y(d.occurences); })
+		.attr("height", function(d) { return height - y(d.occurences); });
 
 });
 
 </script>
+
+
 
 {% endblock %}
