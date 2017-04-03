@@ -39,7 +39,7 @@
 }
 
 #supermenu li.level0 {
-    font-family: "Montserrat", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-family: "Open Sans";
     height: 48px;
     margin: 0px 5px 5px 0px;
     font-size: 16px;
@@ -53,22 +53,6 @@
   border: none;
 }
 #supermenu li.level0.active>a span {border-bottom: 1px solid;padding-bottom: 2px;}
-
-#supermenu li.level0.open>a:after {
-  content:"";
-  position: absolute;
-  bottom: -9px;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 10px 0 10px;
-  border-color: transparent;
-  z-index: 99;
-  transform: translate(-50%, 0);
-  color: inherit;
-  border-top-color: inherit;
-}
 
 #supermenu .close-menu {
   display:none;
@@ -90,19 +74,23 @@
 }
 #supermenu li>a .deploy-menu-button i {
   position:absolute;
-  top:50%;
+  top:25%;
   left:50%;
-  transform: translate(-50%, -50%) rotate(270deg);
-  transition:transform 0.3s ease;
 }
 
 #supermenu li.level1> a {
-  background-color: #f5f5f5;
-  border-bottom: solid 1px #e4e4e4;
-  height: 60px;
-  white-space:normal;
-  position:relative;
   display: block;
+  background: none;
+}
+
+#supermenu li a.column-commercant .crop{
+    display: inline-block;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    vertical-align: middle;
+    border-radius: 50%;
 }
 
 
@@ -114,7 +102,9 @@
 }
 
 #supermenu li.level1> a img.thumbnail_commercant{
-    margin-left: 10px;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .template-column .cat-thumbnail{
@@ -122,11 +112,13 @@
 }
 
 #supermenu li.level1> a span {
-  position: absolute;
-  left: 80px; 
-  top: 50%;
-  transform: translate(0, -50%);
-  padding-right: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    width: 130px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1e555a;
 }
 ul.nav a {
   outline: none;
@@ -143,8 +135,11 @@ ul.nav a {
   display:table-row;
 }
 #supermenu ul.level2 a {
-  color: #333333;
+    font-size: 0.875rem;
+  color: #999 !important;
   display: table-row;
+  font-weight: normal;
+  line-height: 1.6em;
 }
 #supermenu ul.level2 a i {
   display:table-cell;
@@ -208,9 +203,9 @@ a.level2:visited {
   margin-left:10px;
 }
 .info-commercant, .info-commercant a{
-    font-family: Montserrat, Raleway, sans-serif;
-    font-size: 14px;
-    color: rgba(0,0,0,0.54) !important;
+    font-family: "Open Sans";
+    font-size: 0.875rem;
+    color: #999 !important;
     line-height: 20px;
 }
 
@@ -233,6 +228,7 @@ a.level3:hover {
   #supermenu li a.column-commercant {
     width: 270px;
     display: block;
+    position: relative;
   }
   #supermenu div.level0,
   #supermenu ul.level0 {
@@ -242,7 +238,7 @@ a.level3:hover {
     padding-top: 20px;
     border-radius: 0;
     border: 1px solid #dcdcdc;
-    box-shadow: 5px 6px 20px -4px rgba(0, 0, 0, 0.33);
+    box-shadow: 2px 2px 15px -4px rgba(0, 0, 0, 0.33);
     border-width: 1px 0px 0px 0px;
     width: 100%;
     padding-bottom: 0;
@@ -250,9 +246,19 @@ a.level3:hover {
   #supermenu div.level0>ul {
     float:left;
     width:280px;
-    overflow-x:hidden; 
+    overflow-x:hidden;
     overflow-y: auto;
     height: 100%;
+    list-style-type: none;
+    padding-left: 20px;
+    border-right: 1px solid #eee;
+  }
+  #supermenu div.level0>ul>li{
+      margin-bottom: 10px;
+  }
+  #supermenu div.level0{
+      border: 0;
+      top: 50px;
   }
   #supermenu .close-menu {
     display:block;
@@ -292,7 +298,9 @@ a.level3:hover {
     color:black;
   }
   #supermenu li.open>.column-commercant .deploy-menu-button i {
-    transform: translate(-50%, -50%) rotate(630deg);
+    margin-left: -30px;
+    color: #999;
+    font-size: 2rem;
   }
 
 
@@ -329,6 +337,11 @@ a.level3:hover {
     width: 50%;
     padding: 0 15px;
     float: left;
+    border-right: 1px solid #eee;
+    height: 90%;
+  }
+  #supermenu .template-column > ul{
+      padding-left: 0;
   }
   #supermenu .template-column:nth-child(odd) {
     clear:left;
@@ -341,11 +354,6 @@ a.level3:hover {
     max-width: 50px;
     width:100%;
     max-height: 50px;
-    overflow: hidden;
-    border-radius: 50%;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    background-origin: border-box;
-    background-position: 50% 50%;
   }
 
   #supermenu .template-column .cat-name {
@@ -355,10 +363,14 @@ a.level3:hover {
     padding-left: 20px;
     text-align: left;
     margin-top: 10px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #3ab64b;
   }
 
   .main-cats{
       margin-top: -10px;
+      padding-left: 0;
   }
 
 }
@@ -402,7 +414,7 @@ a.level3:hover {
         margin-bottom: 0px;
     }
     #header-account li a {
-        font-family: Montserrat, Raleway, Verdana, arial, sans-serif;
+        font-family: "Open Sans";
         background-color: #EDEDED;
         text-transform: uppercase;
         color: #333;
@@ -422,12 +434,6 @@ a.level3:hover {
     #supermenu li>a .deploy-menu-button {
       background-color: rgba(0,0,0, 0.03);
       width: 40px;
-    }
-    #supermenu li>a .deploy-menu-button i {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-    #supermenu li.open>a .deploy-menu-button i {
-      transform: translate(-50%, -50%) rotate(540deg);
     }
 
 
@@ -488,4 +494,3 @@ a.level3:hover {
     }
 
 }
-

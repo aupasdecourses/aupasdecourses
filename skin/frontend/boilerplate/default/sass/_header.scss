@@ -283,6 +283,10 @@ header{
             padding-left: 20px;
             height: 43px;
             width: 100%;
+            & + hr{
+                margin: 5px auto 20px;
+                width: 90%;
+            }
             .close {
                 float: right;
                 display: block;
@@ -290,6 +294,7 @@ header{
                 text-decoration: none;
                 font-weight: normal;
                 font-size: 2rem;
+                margin-top: -15px;
                 margin-right: 10px;
                 position: static;
                 width: auto;
@@ -301,24 +306,44 @@ header{
         }
         .mini-cart-bottom {
             position: fixed;
-            bottom:0;
+            bottom:60px;
             left: auto;
             right: 0px!important;
             transition: transform 0.3s ease;
             height:100px;
             background-color:#ffffff;
-            box-shadow: -2px -3px 13px -6px #8a8a8a;
             width: 100%;
             top: auto;
+            hr{
+                margin: 5px auto 20px;
+                width: 90%;
+            }
             .block-content {
                 margin:0;
+            }
+            .subtotal{
+                background-color: #F9F9F9;
+                padding: 10px 5px;
+                text-align: center;
+                .label{
+                    font-size: 1.125rem;
+                    text-transform: uppercase;
+                    color: $color-second-green;
+                }
+                .price{
+                    font-size: 2rem;
+                    color: $color-main-green;
+                }
+            }
+            .checkout-types{
+                list-style-type: none;
+                padding-left: 0;
             }
         }
         .minicart-wrapper {
             height: 100%;
             overflow: auto;
-            padding-bottom: 105px;
-            padding-top: 70px;
+            padding: 70px 10px 155px;
             width: 100%;
         }
         .mini-products-list {
@@ -327,7 +352,7 @@ header{
             & > li {
                 border:none;
                 padding:0;
-                margin: 0;
+                margin: 0 0 20px;
             }
         }
         .mini-commercant-name {
@@ -339,6 +364,9 @@ header{
             position: relative;
             cursor: pointer;
             width: 100%;
+            &:hover{
+                background-color: $color-second-green;
+            }
             &.closed i {
                 transform: translateY(-50%) rotateZ(180deg);
             }
@@ -357,11 +385,6 @@ header{
                 transform: translateY(-50%) rotateZ(0);
                 transition: transform 0.3s ease;
             }
-        }
-        a:hover {
-            background-color: #1e555a;
-            color: #ffffff;
-            text-decoration: underline;
         }
         .commercant-product-list {
             display: block;
@@ -383,22 +406,30 @@ header{
                 padding: 5px 4px;
                 width: 87px;
                 &.item-image {
+                    display: inline-block;
+                    vertical-align: top;
                     width: 60px;
                     height: 60px;
                     padding: 0px;
-                    margin-top: 10px;
-                    margin-left: 10px;
+                    margin: 5px;
                     border-radius: 50%;
                     overflow: hidden;
+                    img{
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                    }
                 }
                 &.item-name a {
-                    color: #333;
-                    font-size: 11px;
-                    line-height: 13px;
+                    color: $color-second-green;
+                    font-size: 0.75rem;
+                    font-weight: normal;
+                    line-height: 1.2em;
                     display: block;
                     &.details {
                         cursor: help;
                         margin-top: 5px;
+                        color: $color-main-green;
                     }
                 }
                 &.item-qty {
@@ -406,21 +437,18 @@ header{
                     .btn-icon-qty {
                         display: inline-block;
                         float: left;
-                        width: 20px;
-                        height: 20px;
                         text-align: center;
-                        background-color: #fff;
                         color: #3fa342;
-                        border-radius: 50%;
-                        border: 2px solid #3fa342;
-                        line-height: 17px;
-                        font-size: 10px;
+                        line-height: 23px;
+                        font-size: 0.75rem;
                         cursor: pointer;
                     }
                     .qty-text {
                         display:inline-block;
                         float: left;
-                        width: 20px;
+                        width: 22px;
+                        font-size: 1rem;
+                        color: $color-second-green;
                         text-align: center;
                     }
                     .quantity-button {
@@ -432,24 +460,74 @@ header{
                     text-align: right;
                     .row-total {
                         font-weight: bold;
+                        .price{
+                            color: $color-main-green;
+                        }
                     }
                     .unit-price {
                         font-style: italic;
                         font-size: 11px;
+                        .price{
+                            font-style: normal;
+                            color: $color-second-green;
+                        }
                     }
                 }
                 &.item-actions {
                     width: 32px;
                     text-align: center;
+                    .btn-edit, .remove{
+                        color: $color-second-green;
+                    }
+                    .remove{
+                        display: block;
+                        margin-top: 5px;
+                    }
                 }
             }
             .item-details {
                 display:none;
+                position: relative;
+                background: #F6F6F6;
+                padding: 10px;
+                border-radius: 5px;
+                width: 80%;
+                margin: 13px auto 0;
+                &:before{
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: -13px;
+                    left: 32px;
+                    width: 0;
+                	height: 0;
+                	border-left: 13px solid transparent;
+                	border-right: 13px solid transparent;
+                	border-bottom: 13px solid #F6F6F6;
+                }
                 .truncated {
                     cursor: default;
                     width: 100%;
                     &.truncated_full_value {
                         width: 100%;
+                    }
+                    .item-options{
+                        list-style-type: none;
+                        padding-left: 0;
+                        li{
+                            margin: 5px;
+                        }
+                        label{
+                            font-size: 0.75rem;
+                            font-weight: 700;
+                            color: $color-second-green;
+                            display: block;
+                            margin-bottom: 2px;
+                        }
+                        span{
+                            font-size: 0.75rem;
+                            color: #999;
+                        }
                     }
                 }
             }

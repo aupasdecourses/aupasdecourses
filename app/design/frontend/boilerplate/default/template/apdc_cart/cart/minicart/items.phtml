@@ -46,6 +46,8 @@ $apdcAccordion = $this->getApdcCartAccordion();
         <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i></a>
     </p>
 
+    <hr>
+
     <div id="minicart-error-message" class="minicart-message"></div>
     <div id="minicart-success-message" class="minicart-message"></div>
 
@@ -72,6 +74,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
             <?php echo $this->getChildHtml('cart_promotion') ?>
         </div>
         <div class="mini-cart-bottom">
+            <hr>
             <div class="block-content">
                 <p class="subtotal">
                     <?php if ($this->canApplyMsrp()): ?>
@@ -88,10 +91,10 @@ $apdcAccordion = $this->getApdcCartAccordion();
 
             <div class="minicart-actions">
                 <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
-                    <ul class="checkout-types minicart">
+                    <ul class="checkout-types minicart text-center">
                         <?php echo $this->getChildHtml('extra_actions') ?>
                         <li>
-                            <a title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>" class="button checkout-button" href="<?php echo $this->getCheckoutUrl() ?>">
+                            <a title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>" class="button button-green checkout-button" href="<?php echo $this->getCheckoutUrl() ?>">
                                 <?php echo $this->__('Checkout') ?>
                             </a>
                         </li>

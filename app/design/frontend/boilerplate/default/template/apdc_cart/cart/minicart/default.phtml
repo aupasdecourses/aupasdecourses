@@ -47,7 +47,7 @@
                 </a>
             <?php endif; ?>
             <?php if ($_options = $this->getOptionList() || !empty($_item->getItemComment())):?>
-                <a href="#" onclick="return false;" class="details"><?php echo $this->__('Details') ?> <i class="fa fa-caret-down"></i></a>
+                <a href="#" onclick="return false;" class="details"><i class="fa fa-info-circle"></i></a>
             <?php endif; ?>
         </div>
         <div class="item-cell item-qty">
@@ -98,7 +98,7 @@
             <?php if ($isVisibleProduct): ?>
                 <div>
                 <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
-                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-pencil"></i>
                 </a>
                 </div>
                 <?php if (!$this->isOnCheckoutPage()): ?>
