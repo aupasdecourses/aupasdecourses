@@ -181,15 +181,22 @@ class Billing
 	public function data_facturation_products($debut, $fin)
 	{
 		$data = [];
-		$debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		//$debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		$debut = date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+
 		$list_commercant = $this->getShops();
 		$orders = \Mage::getModel('sales/order')->getCollection()
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
-			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
+			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
+			//->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
 
 		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+        $orders->addFilterToMap('ddate', 'mwddate.ddate');
+        $orders->addAttributeToFilter('ddate', array(
+                'from' => $debut,
+                'to' => $fin,
+            ));
 
 		foreach ($orders as $order) {
 				$ordered_items = $order->getAllItems();
