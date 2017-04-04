@@ -14,7 +14,7 @@
             <action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-add-to-cart.css</file></action>
             <!--<action method="addItem"><rel>skin_css</rel><href>css/apdc_home/selection_all.css</href></action>-->
             <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
-            <action method="addItem">
+            <!--<action method="addItem">
                 <rel>skin_css</rel>
                 <href>css/owl.carousel.css</href>
             </action>
@@ -29,7 +29,7 @@
             <action method="addItem">
                 <rel>skin_css</rel>
                 <href>css/jquery.countdown.css</href>
-            </action>
+            </action>-->
         </reference>
         <reference name="root">
             <action method="setTemplate">
@@ -49,11 +49,11 @@
             <!-- Inclusion des commerçants du Commis -->
             <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-list"/>
             <!-- Reassurance -->
-            <block type="core/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
+            <block type="apdc_blog/template" name="home-reassurance" as="home-reassurance" template="apdc_home/reassurance.phtml" after="home-carroussel-links">
                 <block type="core/template" name="deliverytime-home" template="apdc_home/deliverytime.phtml" />
-        				<block type="cms/block" name="block_sponsor" as="block_sponsor">
-        					<action method="setBlockId"><block_id>block_sponsor</block_id></action>
-        				</block>
+				<block type="cms/block" name="block_sponsor" as="block_sponsor">
+					<action method="setBlockId"><block_id>block_sponsor</block_id></action>
+				</block>
             </block>
             <!-- Newsletter -->
             <block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>

@@ -26,7 +26,6 @@ ApdcPopup.prototype.getTemplate = function() {
       jQuery('body').append(response.html);
       window.setTimeout(function() {
         self.initActions();
-        console.log(self.id + '_apdc_popup_template_received');
         jQuery(document).trigger(self.id + '_apdc_popup_template_received', [self, response]);
       }, 0);
     }

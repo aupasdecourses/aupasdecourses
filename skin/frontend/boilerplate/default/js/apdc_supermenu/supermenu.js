@@ -2,17 +2,19 @@
 	
 	var screenWidth = 1000;
 	var mobileWidth = 771;
+	var resizing = null;
+	
 	updateScreenWidth();
 	
 	$(document).ready(function(){
 		checkStickyHeader();
 		// Close menu only when clicking on links or close menu
 		$(document).on('click', '#supermenu .dropdown-menu', function (e) {
-		  if (jQuery(e.target).hasClass('close-menu') || e.target.nodeName.toLowerCase() === 'a') {
-			return;
-		  } else {
-			e.stopPropagation();
-		  }
+			if (jQuery(e.target).hasClass('close-menu') || e.target.nodeName.toLowerCase() === 'a') {
+				return;
+			} else {
+				e.stopPropagation();
+			}
 		});
 
 		$('#supermenu [data-toggle=dropdown]').on('click', function(event) {
@@ -33,16 +35,16 @@
 			$(this).parents('li').first().siblings().removeClass('open');
 			$(this).parents('li').first().toggleClass('open');
 		});
-	});
-
-	var resizing = null;
-	$(window).resize(function() {
-		if (resizing) {
-			clearTimeout(resizing);
-		}
-		resizing = setTimeout(function() {
-			updateScreenWidth();
-		}, 50);
+		
+		$(window).resize(function() {
+			if (resizing) {
+				clearTimeout(resizing);
+			}
+			resizing = setTimeout(function() {
+				updateScreenWidth();
+			}, 50);
+		});
+		
 	});
 
 	function superMenuManageClick(self, event) {
@@ -65,8 +67,6 @@
 			if($(self).hasClass('level0') && $(self).parent('li').first().hasClass('open')) {
 				event.preventDefault(); 
 				event.stopPropagation();
-				console.log($(self).parent());
-				console.log($(self).parent().find('.close-menu'));
 				$(self).parent().find('.close-menu').click();
 			}
 			else {

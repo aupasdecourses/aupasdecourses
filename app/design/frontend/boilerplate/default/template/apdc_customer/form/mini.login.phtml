@@ -44,14 +44,14 @@
 
 <script>
     $j(document).ready(function() {
-        $j('.header-account-container').click(function(){
-            if( $j('> .block-login', this).hasClass('open') ){
-                $j('> .block-login', this).removeClass('open');
-                $j('.label i', this).removeClass('fa-angle-up').addClass('fa-angle-down');
+        $j('.header-account-container a').click(function(evt){
+			if($j(this).parent().find('.block-login').hasClass('open') ){
+                $j(this).parent().find('.block-login').removeClass('open');
+                $j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
             }
             else{
-                $j('> .block-login', this).addClass('open');
-                $j('.label i', this).removeClass('fa-angle-down').addClass('fa-angle-up');
+                $j(this).parent().find('.block-login').addClass('open');
+                $j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
             }
         });
     });

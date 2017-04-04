@@ -1,9 +1,26 @@
 <div class="text-center">
     <?php echo $this->getChildHtml('block_sponsor'); ?>
-    
+    <?php
+		$articles = $this->getArticlesBlog();
+	?>
     <div class="block-blog">
         <h2>Le blog - Avec ceci ?</h2>
-        <article class="row">
+        <?php foreach($articles as $article) { ?>
+			<article class="row">
+				<div class="col-md-3 text-center">
+					<div class="crop-img">
+						<img src="<?php echo $article['img']; ?>" alt="<?php echo $article['title']; ?>" title="<?php echo $article['title']; ?>" />
+					</div>
+				</div>
+				<div class="col-md-9 text-left">
+					<h3>
+						<a href="<?php echo $article['link']; ?>" title="<?php echo $article['title']; ?>" target="_blank"><?php echo $article['title']; ?></a>
+					</h3>
+					<p><?php echo $article['description']; ?></p>
+				</div>
+			</article>
+		<?php } ?> 
+		<!--<article class="row">
             <div class="col-md-3 text-center">
                 <div class="crop-img">
                     <img src="<?php echo Mage::getBaseUrl().'../skin/frontend/boilerplate/default/dist/images/img-commercants.jpg'?>" alt="" title="" />
@@ -24,17 +41,6 @@
                 <h3>Titre</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
             </div>
-        </article>
-        <article class="row">
-            <div class="col-md-3 text-center">
-                <div class="crop-img">
-                    <img src="<?php echo Mage::getBaseUrl().'../skin/frontend/boilerplate/default/dist/images/img-commercants.jpg'?>" alt="" title="" />
-                </div>
-            </div>
-            <div class="col-md-9 text-left">
-                <h3>Titre</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            </div>
-        </article>
+        </article>-->
     </div>
 </div>

@@ -5905,7 +5905,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 
 .breadcrumb > li + li:before {
   padding: 0 5px;
-  content: '/ ';
+  content: '/ ';
   color: #ccc;
 }
 

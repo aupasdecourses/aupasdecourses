@@ -94,7 +94,12 @@
                                 <a href="">My account</a>
                                 <a href="">Logout</a>
                             <?php else : ?>
-                                <?php echo $this->getChildHtml('customer_form_login') ?>
+                                <?php /*echo $this->getChildHtml('customer_form_login')*/ ?>
+								<div class="block block-login" id="login-form-header_popup">
+									<div class="apdc-popup-content">
+										<?php echo $this->getChildHtml('customer_login') ?>
+									</div>
+								</div>
                             <?php endif; ?>
 
 
@@ -118,3 +123,18 @@
 </header>
 <?php echo $this->getChildHtml('topContainer'); ?>
 <?php echo $this->getChildHtml('page_content_heading'); ?>
+<script>
+	$j(document).ready(function(){
+		console.log('ready');
+		$j('.header-account-container a').click(function(evt){
+			if($j(this).parent().find('.block-login').hasClass('open') ){
+				$j(this).parent().find('.block-login').removeClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
+			}
+			else{
+				$j(this).parent().find('.block-login').addClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
+			}
+		});
+	});
+</script>

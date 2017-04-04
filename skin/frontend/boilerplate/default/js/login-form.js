@@ -6,40 +6,35 @@ jQuery(document).ready(function() {
 
     if (typeof(apdcLoginPopup) === 'undefined') {
       apdcLoginPopup = new ApdcPopup({
-          id: 'login-form'
+          id: 'login-form-header'
       });
     }
-
-    jQuery(document).on('click', '#account-login',function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        apdcLoginPopup.showLoading();
-        showLoginForm(this,'apdc_login_view');
-    });
 
     jQuery(document).on('submit','#login-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        processLoginForm(this);
+        processLoginFormModal(this);
     });
 
-    jQuery(document).on('click', '#choose-district',function(e) {
-        apdcLoginPopup.close();
+	jQuery(document).on('click','#show-login-form', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showLoginFormModal(this, 'apdc_login_view');
     });
 
     jQuery(document).on('click','#forgot-password', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        showLoginForm(this, 'apdc_forgotpassword_view');
+        showLoginFormModal(this, 'apdc_forgotpassword_view');
     });
 
     jQuery(document).on('submit','#password-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        processLoginForm(this);
+        processLoginFormModal(this);
     });
 
-    function showLoginForm(elt,handle) {
+    function showLoginFormModal(elt,handle) {
         var ajaxUrl = jQuery(elt).data('login-view');
         var data = new FormData();
         data.append('isAjax', 1);
@@ -68,38 +63,40 @@ jQuery(document).ready(function() {
 
     }
 
-    function processLoginForm(elt) {
+    function processLoginFormModal(elt) {
+		console.log('processLoginFormModal');
         var ajaxUrl = jQuery(elt).attr('action');
         var data = new FormData(jQuery(elt)[0]);
         data.append("isAjax", 1);
         jQuery(elt).children("input").attr("disabled", true);
         jQuery(elt).children("button").attr("disabled", true).removeClass("button-green");
         jQuery.ajax({
-                url: ajaxUrl,
-                data: data,
-                processData: false,
-                contentType: false,
-                type: 'POST'
+			url: ajaxUrl,
+			data: data,
+			processData: false,
+			contentType: false,
+			type: 'POST'
 
-            })
-            .done(function(response) {
-                if (response.status === 'SUCCESS') {
-                    if(typeof response.redirect != 'undefined'){
-                      window.location.href = response.redirect;
-                    } else {
-                      loginContent = response.html;
-                      apdcLoginPopup.updateContent(response.html);
-                    }
-                } else if (response.status === 'ERROR') {
-                    loginContent = response.html;
-                    apdcLoginPopup.updateContent(response.html);
-                } else {
-                    console.log('failed');
-                }
-            })
-            .fail(function() {
-                console.log('failed');
-            });
+		})
+		.done(function(response) {
+			if (response.status === 'SUCCESS') {
+				if(typeof response.redirect != 'undefined'){
+				  window.location.href = response.redirect;
+				} else {
+				  loginContent = response.html;
+				  apdcLoginPopup.updateContent(response.html);
+				}
+			} else if (response.status === 'ERROR') {
+				console.log('processLoginFormModal : '+response.status);
+				loginContent = response.html;
+				apdcLoginPopup.updateContent(response.html);
+			} else {
+				console.log('failed');
+			}
+		})
+		.fail(function() {
+			console.log('failed');
+		});
     }
 
 });

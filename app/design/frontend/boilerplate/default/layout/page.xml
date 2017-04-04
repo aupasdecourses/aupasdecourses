@@ -65,17 +65,38 @@
                 <action method="addItem"><type>skin_js</type><name>js/slideshow.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
+				
+				<!--<action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>-->
+				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
+				
+				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/login-form.js</file></action>
+				
+				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+				<!-- IMPORTANT -->
+				
 				<action method="addItem"><type>skin_js</type><name>dist/js/script.js</name></action>
 
                 <!-- Add stylesheets with media queries for use by modern browsers -->
                 <action method="addItem"><type>skin_css</type><name>dist/css/styles.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+				<action method="addItem"><type>skin_css</type><name>dist/css/stylesgulp.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+				
  
                 <!-- Sets viewport meta tag using text block -->
                 <block type="core/text" name="head.viewport">
                     <action method="setText"><text><![CDATA[<meta name="viewport" content="initial-scale=1.0, width=device-width" />]]>&#10;</text></action>
                 </block>
                 <!-- MAGNIFIC POPUP -->
+				<action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
                 <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
+				
+				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+				<action method="addItem"><rel>skin_css</rel><href>css/owl.carousel.min.css</href></action>
+				<action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
+				<!-- IMPORTANT -->
+				
             </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">
@@ -98,7 +119,15 @@
                     <action method="setElementClass"><value>top-container</value></action>
                 </block>
                 <block type="page/html_welcome" name="welcome" as="welcome"/>
-				<block type="customer/form_login" name="customer_form_login" template="apdc_customer/form/mini.login.phtml" />
+				<!--<block type="customer/form_login" name="customer_form_login" template="apdc_customer/form/mini.login.phtml" />-->
+				<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
+					<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
+						<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+						<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+					</block>
+				</block>
+				
+				
             </block>
 
             <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>

@@ -1,6 +1,5 @@
 <div class="account-login-container<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
     <h1><?php echo $this->__('Connectez-vous!'); ?></h1>
-    <p>Vous n'avez pas encore de compte ?</br><a id="choose-district" href="#districts" >Choisissez un quartier</a> et enregistrez-vous !</p>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getUrl('apdc-customer/account/ajaxLoginProcess');?>" method="post" id="login-form" class="form-validate scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>

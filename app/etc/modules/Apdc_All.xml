@@ -23,6 +23,10 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Core>
+		<Apdc_Blog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Blog>
         <Apdc_Google>
             <active>true</active>
             <codePool>local</codePool>
