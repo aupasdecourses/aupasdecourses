@@ -87,7 +87,7 @@ gulp.task('js', function() {
     'node_modules/bootstrap/js/dropdown.js',
     'node_modules/bootstrap/js/modal.js',
 	'node_modules/owl.carousel/dist/owl.carousel.min.js',
-	'vendor/apdc_supermenu/js/supermenu.js',
+	//'vendor/apdc_supermenu/js/supermenu.js',
 	'vendor/apdc_popup/js/popup.js',
 	'vendor/apdc_popup/js/login-popup.js',
 	'vendor/apdc_popup/js/newsletter-popup.js',

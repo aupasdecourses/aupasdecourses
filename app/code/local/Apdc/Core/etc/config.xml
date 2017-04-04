@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Apdc_Core>
+            <version>0.1.0</version>
+        </Apdc_Core>
+    </modules>
+    <global>
+        <blocks>
+            <core>
+                <rewrite>
+                      <messages>Apdc_Core_Block_Messages</messages>
+                </rewrite>
+            </core>
+        </blocks>
+    </global>
+</config>

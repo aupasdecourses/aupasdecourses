@@ -31,7 +31,7 @@
  * @package    Mage_Core
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Mage_Core_Block_Messages extends Mage_Core_Block_Template
+class Apdc_Core_Block_Messages extends Mage_Core_Block_Template
 {
     /**
      * Messages collection
@@ -235,10 +235,9 @@ class Mage_Core_Block_Messages extends Mage_Core_Block_Template
             Mage_Core_Model_Message::SUCCESS
         );
         $html = '';
+		$messageNotEmpty = false;
         foreach ($types as $type) {
             if ( $messages = $this->getMessages($type) ) {
-			var_dump($messages);
-			die();
                 if ( !$html ) {
                     $html .= '<' . $this->_messagesFirstLevelTagName . ' class="messages">';
                 }
@@ -246,6 +245,9 @@ class Mage_Core_Block_Messages extends Mage_Core_Block_Template
                 $html .= '<' . $this->_messagesFirstLevelTagName . '>';
 
                 foreach ( $messages as $message ) {
+					if($messageNotEmpty == false && trim($message->getText()) != '') {
+						$messageNotEmpty = true;
+					}
                     $html.= '<' . $this->_messagesSecondLevelTagName . '>';
                     $html.= '<' . $this->_messagesContentWrapperTagName . '>';
                     $html.= ($this->_escapeMessageFlag) ? $this->escapeHtml($message->getText()) : $message->getText();
@@ -259,7 +261,12 @@ class Mage_Core_Block_Messages extends Mage_Core_Block_Template
         if ( $html) {
             $html .= '</' . $this->_messagesFirstLevelTagName . '>';
         }
-        return $html;
+		if($messageNotEmpty == true) {
+			return $html;
+		}
+		else {
+			return '';
+		}
     }
 
     protected function _toHtml()

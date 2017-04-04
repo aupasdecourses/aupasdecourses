@@ -19,6 +19,10 @@
                 <Mage_Catalog/>
             </depends>
         </Apdc_Config>
+		<Apdc_Core>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Core>
         <Apdc_Google>
             <active>true</active>
             <codePool>local</codePool>
