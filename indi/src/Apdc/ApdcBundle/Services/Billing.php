@@ -186,8 +186,8 @@ class Billing
 
 		$list_commercant = $this->getShops();
 		$orders = \Mage::getModel('sales/order')->getCollection()
-			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
+			//->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE,\Mage_Sales_Model_Order::STATE_CLOSED)));
 			//->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
 
 		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
