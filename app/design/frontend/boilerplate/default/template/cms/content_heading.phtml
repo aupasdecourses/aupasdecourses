@@ -25,7 +25,7 @@
  */
 ?>
 <?php if($_heading = $this->getContentHeading()): ?>
-    <div class="page-title container-fluid">
+    <div class="page-title container-fluid" style="background-image: url('<?php echo $this->getChildHtml('backgroundtitle'); ?>');">
         <h1><?php echo $_heading; ?></h1>
     </div>
 <?php endif; ?>
