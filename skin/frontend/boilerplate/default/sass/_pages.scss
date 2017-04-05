@@ -269,6 +269,7 @@ section {
     background-position: center bottom;
     background-size: auto;
     padding-bottom: 70px;
+    position: relative;
     .border-container {
         margin-left: -15px;
         width: calc( 100% + 30px);
@@ -285,17 +286,49 @@ section {
     .apdc-products-grid{
         list-style-type: none;
         padding-left: 0;
+        margin-bottom: 50px;
         .product-info{
+            height: 280px;
             form{
-                float: left;
-                width: 16%;
-                margin: 0 2% 20px;
+                position: relative;
+            }
+            .bottom{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
             }
         }
         .product-image{
             img{
                 width: 100%;
                 height: auto;
+            }
+            .product-labels{
+                li{
+                    .label-icon{
+                        display: block;
+                        width: 30px;
+                        height: 30px;
+                        overflow: hidden;
+                        text-align: center;
+                        background: #fff;
+                        margin: 0;
+                        padding: 0;
+                        img{
+                            position: relative;
+                            top: auto;
+                            left: auto;
+                            transform: none;
+                            width: auto;
+                            display: inline-block;
+                            vertical-align: middle;
+                            overflow: hidden;
+                            margin: 0 auto;
+                            padding: 0;
+                        }
+                    }
+                }
             }
         }
         .product-name{
@@ -328,29 +361,32 @@ section {
             font-weight: normal;
             margin: 10px auto 0;
         }
-        .owl-controls{
-            .owl-buttons{
-                position: absolute;
-                width: 100%;
-                top: 41%;
-                .owl-prev, .owl-next{
-                    background: none;
-                    color: #ccc;
-                    font-size: 3rem;
-                    border-radius: 0;
-                    margin: 0;
-                    padding: 0;
-                    opacity: 1;
-                }
-                .owl-prev{
-                    float: left;
-                    margin-left: -50px;
-                }
-                .owl-next{
-                    float: right;
-                    margin-right: -50px;
-                }
+        .owl-item{
+            & > .product-info{
+                height: 380px;
             }
+        }
+    }
+    .owl-buttons{
+        position: absolute;
+        width: 100%;
+        top: 49%;
+        .prev, .next{
+            background: none;
+            color: #ccc;
+            font-size: 3rem;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 1;
+        }
+        .prev{
+            float: left;
+            margin-left: -50px;
+        }
+        .next{
+            float: right;
+            margin-right: -20px;
         }
     }
 }
@@ -525,7 +561,7 @@ section {
     }
     article{
         margin-bottom: 20px;
-        h3{
+        h3, a{
             color: #fff;
             font-weight: 700;
             font-size: 1.125rem;

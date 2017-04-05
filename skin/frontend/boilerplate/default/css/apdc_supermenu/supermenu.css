@@ -351,9 +351,8 @@ a.level3:hover {
   }
   #supermenu .template-column .cat-thumbnail img {
     position: relative;
-    max-width: 50px;
-    width:100%;
-    max-height: 50px;
+    max-width: 30px;
+    max-height: 30px;
   }
 
   #supermenu .template-column .cat-name {

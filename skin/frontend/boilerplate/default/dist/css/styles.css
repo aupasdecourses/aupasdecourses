@@ -11623,6 +11623,7 @@ header .top-nav li a a:visited {
   z-index: 10;
   top: 40px;
   display: none;
+  width: 250px;
   padding: 20px;
   text-align: left;
   border-radius: 5px;
@@ -11662,9 +11663,15 @@ header .top-nav li a a:visited {
   font-size: .875rem;
   font-weight: normal;
   width: 100%;
+  margin-top: 0;
   margin-bottom: 0;
   color: #fff;
   border: none;
+}
+
+.header-account-container .block-login form #forgot-password {
+  font-size: .75rem;
+  text-decoration: underline;
 }
 
 #supermenu #storename a {
@@ -12469,6 +12476,7 @@ section .section-description {
 }
 
 .block-promos {
+  position: relative;
   padding-bottom: 70px;
   background: url(../images/picto/bandeau.png), #fff;
   background-repeat: no-repeat;
@@ -12493,19 +12501,53 @@ section .section-description {
 }
 
 .block-promos .apdc-products-grid {
+  margin-bottom: 50px;
   padding-left: 0;
   list-style-type: none;
 }
 
+.block-promos .apdc-products-grid .product-info {
+  height: 280px;
+}
+
 .block-promos .apdc-products-grid .product-info form {
-  float: left;
-  width: 16%;
-  margin: 0 2% 20px;
+  position: relative;
+}
+
+.block-promos .apdc-products-grid .product-info .bottom {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .block-promos .apdc-products-grid .product-image img {
   width: 100%;
   height: auto;
+}
+
+.block-promos .apdc-products-grid .product-image .product-labels li .label-icon {
+  display: block;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: #fff;
+}
+
+.block-promos .apdc-products-grid .product-image .product-labels li .label-icon img {
+  position: relative;
+  top: auto;
+  left: auto;
+  display: inline-block;
+  overflow: hidden;
+  width: auto;
+  margin: 0 auto;
+  padding: 0;
+  transform: none;
+  vertical-align: middle;
 }
 
 .block-promos .apdc-products-grid .product-name {
@@ -12542,14 +12584,18 @@ section .section-description {
   margin: 10px auto 0;
 }
 
-.block-promos .apdc-products-grid .owl-controls .owl-buttons {
+.block-promos .apdc-products-grid .owl-item > .product-info {
+  height: 380px;
+}
+
+.block-promos .owl-buttons {
   position: absolute;
-  top: 41%;
+  top: 49%;
   width: 100%;
 }
 
-.block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-prev,
-.block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-next {
+.block-promos .owl-buttons .prev,
+.block-promos .owl-buttons .next {
   font-size: 3rem;
   margin: 0;
   padding: 0;
@@ -12559,14 +12605,14 @@ section .section-description {
   background: none;
 }
 
-.block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-prev {
+.block-promos .owl-buttons .prev {
   float: left;
   margin-left: -50px;
 }
 
-.block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-next {
+.block-promos .owl-buttons .next {
   float: right;
-  margin-right: -50px;
+  margin-right: -20px;
 }
 
 .commercants-block .title-block {
@@ -12743,7 +12789,8 @@ section .section-description {
   margin-bottom: 20px;
 }
 
-.block-blog article h3 {
+.block-blog article h3,
+.block-blog article a {
   font-size: 1.125rem;
   font-weight: 700;
   margin-top: 0;
@@ -12901,17 +12948,33 @@ footer .social-list .btn-social-icon {
   width: 100%;
 }
 
+@media screen and (min-width: 1200px) {
+  .container {
+    width: 1150px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1020px) {
+  .container {
+    width: 945px;
+  }
+}
+
 @media screen and (max-width: 1260px) {
-  .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-next {
-    margin-right: -10px;
+  .block-promos .owl-buttons .next {
+    margin-right: 13px;
   }
 
-  .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-prev {
-    margin-left: -10px;
+  .block-promos .owl-buttons .prev {
+    margin-left: -15px;
   }
 }
 
 @media screen and (max-width: 1200px) {
+  .block-promos .apdc-products-grid .product-info {
+    height: 230px;
+  }
+
   .block-promos .apdc-products-grid .product-info form {
     float: none;
     width: auto;
@@ -12929,7 +12992,11 @@ footer .social-list .btn-social-icon {
   }
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 992px) {
+  .container {
+    width: auto;
+  }
+
   .logo,
     .skip-links .text-right {
     text-align: center;
@@ -13026,6 +13093,12 @@ footer .social-list .btn-social-icon {
   }
 }
 
+@media screen and (max-width: 740px) {
+  .block-promos .apdc-products-grid .owl-item > .product-info {
+    height: 50%;
+  }
+}
+
 @media screen and (max-width: 620px) {
   section#prices,
     section#concept {
@@ -13049,6 +13122,44 @@ footer .social-list .btn-social-icon {
   section#prices,
     section#concept {
     min-height: 0;
+  }
+
+  .page-title h1 {
+    font-size: 1.5rem;
+  }
+
+  h2,
+    .commercants-block .title-block,
+    .block-promos .inner-box h2 {
+    font-size: 1.5rem;
+  }
+
+  .block-sponsor {
+    padding: 20px;
+  }
+
+  .block-sponsor h2 {
+    font-size: 1.75rem;
+  }
+
+  .block-sponsor img {
+    margin-bottom: 20px;
+  }
+
+  .block-promos .apdc-products-grid .product-info {
+    height: 180px;
+  }
+
+  .block-promos .apdc-products-grid .owl-item > .product-info {
+    height: 560px;
+  }
+
+  .skip-links .text-right {
+    padding: 0 5px;
+  }
+
+  .header-account-container .block-login {
+    left: -50px;
   }
 }
 

@@ -6,13 +6,13 @@
 
                 <li>
                     <?php if (isset($label['icon'])) : ?>
-                        <span class="label-icon">
+                        <div class="label-icon">
                             <img src="<?php echo $label['icon']; ?>" alt="<?php echo $label['text']; ?>" title="<?php echo $label['text']; ?>" />
-                        </span>
+                        </div>
                     <?php else : ?>
-                         <span class="label-text">
+                         <div class="label-text">
                             <?php echo $label['text']; ?>
-                        </span>
+                        </div>
                     <?php endif; ?>
                 </li>
 

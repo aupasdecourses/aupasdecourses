@@ -18,7 +18,7 @@
 							$imageLabel = $this->stripTags($this->getImageLabel($selection, 'small_image'), null, true);
 							echo '<div class="product-info row item">' ;
 							?>
-								<form action="<?php echo $productUrl; ?>"
+								<form class="col-md-12" action="<?php echo $productUrl; ?>"
 									  method="post"
 									  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $selection['product_id']; ?>"
 									  id="product_addtocart_form_<?php echo $selection->getId(); ?>"
@@ -32,7 +32,7 @@
 										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(200, 125)?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
 										<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
 									</a>
-									<div class="product-info row">
+									<div class="product-info">
 										<a href="<?php echo $productUrl; ?>"
 										   title="<?php echo $strippedName; ?>"
 										   class="show-product-popup"
@@ -46,18 +46,20 @@
 													->getSource()
 													->getOptionText($selection->getData('commercant')); ?>
 										</p>-->
-										<?php echo $this->getPriceHtml($selection, true) ?>
-										<?php if($selection->getData('prix_kilo_site')) :?>
-											<div class="product-short_desc">
-												<?php echo $selection->getData('prix_kilo_site'); ?>
-											</div>
-										<?php endif; ?>
-										<div class="actions">
-											<div class="action-group">
-												<div>
-													<a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
-												</div>
-											</div>
+										<div class="bottom">
+										    <?php echo $this->getPriceHtml($selection, true) ?>
+                                            <?php if($selection->getData('prix_kilo_site')) :?>
+                                                <div class="product-short_desc">
+                                                    <?php echo $selection->getData('prix_kilo_site'); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="actions">
+                                                <div class="action-group">
+                                                    <div>
+                                                        <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
+                                                    </div>
+                                                </div>
+                                            </div>
 										</div>
 									</div>
 								</form>
@@ -74,7 +76,7 @@
 							$imageLabel = $this->stripTags($this->getImageLabel($selection, 'small_image'), null, true);
 							echo '<div class="product-info row item">' ;
 							?>
-								<form action="<?php echo $productUrl; ?>"
+								<form class="col-md-12" action="<?php echo $productUrl; ?>"
 									  method="post"
 									  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $selection['product_id']; ?>"
 									  id="product_addtocart_form_<?php echo $selection->getId(); ?>"
@@ -88,7 +90,7 @@
 										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(200, 125)?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
 										<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
 									</a>
-									<div class="product-info row">
+									<div class="product-info">
 										<a href="<?php echo $productUrl; ?>"
 										   title="<?php echo $strippedName; ?>"
 										   class="show-product-popup"
@@ -102,18 +104,20 @@
 													->getSource()
 													->getOptionText($selection->getData('commercant')); ?>
 										</p>-->
-										<?php echo $this->getPriceHtml($selection, true) ?>
-										<?php if($selection->getData('prix_kilo_site')) :?>
-											<div class="product-short_desc">
-												<?php echo $selection->getData('prix_kilo_site'); ?>
-											</div>
-										<?php endif; ?>
-										<div class="actions">
-											<div class="action-group">
-												<div>
-													<a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
-												</div>
-											</div>
+										<div class="bottom">
+										    <?php echo $this->getPriceHtml($selection, true) ?>
+                                            <?php if($selection->getData('prix_kilo_site')) :?>
+                                                <div class="product-short_desc">
+                                                    <?php echo $selection->getData('prix_kilo_site'); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="actions">
+                                                <div class="action-group">
+                                                    <div>
+                                                        <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="button button-green btn-cart show-product-popup" href="<?php echo $selection->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
+                                                    </div>
+                                                </div>
+                                            </div>
 										</div>
 									</div>
 								</form>
@@ -122,8 +126,10 @@
 						endforeach;
 					?>
 				</div>
-				<a href="#" class="prev">Prev</a>
-				<a href="#" class="next">Next</a>
+				<div class="owl-buttons">
+				    <a href="#" class="prev"><i class="fa fa-angle-left"></i></a>
+				    <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
+				</div>
 		    </div>
 	    </div>
 	</div>
@@ -133,7 +139,7 @@
 		
 		var optionsOwlCarouselSelectionHome = {
 			slideBy: 'page',
-			items:10,
+			items:8,
 			autoPlay : false,
 			loop: true,
 			slideSpeed : 800,
@@ -142,11 +148,19 @@
 					items:1,
 					slideBy: 1,
 				},
-				600:{
-					items:5,
-					slideBy: 5,
+                500:{
+					items:2,
+					slideBy: 2,
 				},
-				1000:{
+                740:{
+					items:4,
+					slideBy: 4,
+				},
+				980:{
+					items:6,
+					slideBy: 6,
+				},
+				1200:{
 					items:8,
 					slideBy: 8,
 				}

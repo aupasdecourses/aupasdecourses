@@ -1,9 +1,20 @@
-@media screen and (max-width: 1260px){
-    .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-next{
-        margin-right: -10px;
+@media screen and (min-width: 1200px){
+    .container{
+        width: 1150px;
     }
-    .block-promos .apdc-products-grid .owl-controls .owl-buttons .owl-prev{
-        margin-left: -10px;
+}
+@media screen and (min-width: 992px) and (max-width: 1020px){
+    .container{
+        width: 945px;
+    }
+}
+
+@media screen and (max-width: 1260px){
+    .block-promos .owl-buttons .next{
+        margin-right: 13px;
+    }
+    .block-promos .owl-buttons .prev{
+        margin-left: -15px;
     }
 }
 
@@ -11,6 +22,7 @@
     .block-promos{
         .apdc-products-grid{
             .product-info{
+                height: 230px;
                 form{
                     float: none;
                     width: auto;
@@ -35,7 +47,10 @@
     }
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 992px){
+    .container{
+        width: auto;
+    }
     .logo, .skip-links .text-right{
         text-align: center;
     }
@@ -136,7 +151,12 @@
             min-height:0;
         }
     }
+}
 
+@media screen and (max-width: 740px){
+    .block-promos .apdc-products-grid .owl-item > .product-info{
+        height: 50%;
+    }
 }
 
 @media screen and (max-width: 620px){
@@ -168,5 +188,38 @@
         &#prices, &#concept{
             min-height:0;
         }
+    }
+    .page-title h1{
+        font-size: 1.5rem;
+    }
+    h2,
+    .commercants-block .title-block,
+    .block-promos .inner-box h2{
+        font-size: 1.5rem;
+    }
+    .block-sponsor{
+        padding: 20px;
+        h2{
+            font-size: 1.75rem;
+        }
+        img{
+            margin-bottom: 20px;
+        }
+    }
+    .block-promos{
+        .apdc-products-grid{
+            .product-info{
+                height: 180px;
+            }
+            .owl-item > .product-info{
+                height: 560px;
+            }
+        }
+    }
+    .skip-links .text-right{
+        padding: 0 5px;
+    }
+    .header-account-container .block-login{
+        left: -50px;
     }
 }

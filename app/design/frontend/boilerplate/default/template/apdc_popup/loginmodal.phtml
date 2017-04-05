@@ -1,5 +1,4 @@
 <div class="account-login-container<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
-    <h1><?php echo $this->__('Connectez-vous!'); ?></h1>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getUrl('apdc-customer/account/ajaxLoginProcess');?>" method="post" id="login-form" class="form-validate scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
@@ -11,7 +10,9 @@
         </div>
         <div class="form-group">
             <?php echo $this->getChildHtml('form.additional.info'); ?>
-            <a href="" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" class="f-left" id="forgot-password"><?php echo $this->__('Forgot Your Password?') ?></a>
+            <div class="text-center">
+                <a href="" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" class="f-left" id="forgot-password"><?php echo $this->__('Forgot Your Password?') ?></a>
+            </div>
             <?php echo $this->getChildHtml('persistent.remember.me'); ?>
             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
         </div>
