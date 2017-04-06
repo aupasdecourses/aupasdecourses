@@ -408,6 +408,7 @@ section {
 }
 
 .commercants-block{
+    margin: 0;
     .title-block{
         font-size: 2.25rem;
         font-weight: 700;
@@ -415,7 +416,11 @@ section {
         text-align: center;
         margin: 50px auto;
     }
+    .commercants-list{
+        padding: 0;
+    }
     .products-grid{
+        padding: 0;
         #carrousel-commercant-home-row1{
             .owl-item{
                 &:nth-of-type(1),
@@ -679,7 +684,7 @@ section {
             padding: 24px 10px 25px;
             background-color: #FAFAFA;
             border-color: #eee;
-            border-radius: 5px;
+            border-radius: 5px!important;
             box-shadow: none;
             font-size: 0.875rem;
         }
@@ -702,7 +707,8 @@ section {
 }
 
 .block-advantages{
-    margin-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto 50px;
     img{
         max-width: 75px;
         height: auto;

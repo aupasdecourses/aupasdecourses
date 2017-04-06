@@ -12219,6 +12219,16 @@ p.required,
   color: #df280a;
 }
 
+.block-subscribe .validation-advice {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+}
+
+input.validation-failed {
+  border: 1px solid #df280a !important;
+}
+
 section > .container {
   background-color: #fff;
 }
@@ -12669,12 +12679,24 @@ section .section-description {
   margin-right: -20px;
 }
 
+.commercants-block {
+  margin: 0;
+}
+
 .commercants-block .title-block {
   font-size: 2.25rem;
   font-weight: 700;
   margin: 50px auto;
   text-align: center;
   color: #2f4da8;
+}
+
+.commercants-block .commercants-list {
+  padding: 0;
+}
+
+.commercants-block .products-grid {
+  padding: 0;
 }
 
 .commercants-block .products-grid #carrousel-commercant-home-row1 .owl-item:nth-of-type(1) .commercant-info,
@@ -12942,7 +12964,7 @@ section .section-description {
   font-size: .875rem;
   padding: 24px 10px 25px;
   border-color: #eee;
-  border-radius: 5px;
+  border-radius: 5px !important;
   background-color: #fafafa;
   box-shadow: none;
 }
@@ -12966,7 +12988,8 @@ section .section-description {
 }
 
 .block-advantages {
-  margin-bottom: 50px;
+  max-width: 1200px;
+  margin: 0 auto 50px;
 }
 
 .block-advantages img {
@@ -13051,7 +13074,7 @@ footer .social-list .btn-social-icon {
 
 @media screen and (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 1130px;
   }
 }
 
