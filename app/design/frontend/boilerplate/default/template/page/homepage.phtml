@@ -45,13 +45,13 @@ $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page">
         <?php echo $this->getChildHtml('header') ?>
-        <div class="main-container col1-layout container-fluid">
+        <div class="main-container col1-layout">
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <?php if ($_leftContent = $this->getChildHtml('left_first')): ?>
                     <div class="col-left sidebar col-left-first"><?php echo $_leftContent;   ?></div>
                 <?php endif; ?>
-                <div class="col-main">
+                <div class="col-main container-fluid">
                     <?php echo $this->getChildHtml('global_messages') ?>
                     <?php echo $this->getChildHtml('content') ?>
                     <?php echo $this->getChildHtml('newsletter/subscribe') ?>

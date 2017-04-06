@@ -5,13 +5,13 @@
         </a>
     </div>-->
     <div class="page-header-container row">
-            <div class="logo col-md-2 col-sm-12">
+            <div class="logo col-md-1 col-sm-12">
                 <a class="logo-link" href="<?php echo Mage::getUrl('../');?>">
                     <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
                 </a>
             </div>
 	         <!-- Skip Links -->
-	         <div class="skip-links col-md-10 col-sm-12">
+	         <div class="skip-links pull-right">
                 <div class="row">
                     <div class="skip-container skip-container-header-nav hide">
                         <a href="#header-nav" class="skip-link skip-nav">
@@ -20,8 +20,8 @@
                         </a>
                     </div>
 
-                    <div class="skip-container skip-container-header-search col-md-3 col-sm-12">
-                        <input type="text" placeholder="<?php echo $this->__('Search'); ?>">
+                    <div class="skip-container skip-container-header-search col-md-4 col-sm-12">
+                        <input type="text" placeholder="<?php echo $this->__('Your research here'); ?>">
                         <i class="fa fa-search"></i>
 
                         <!-- Search -->
@@ -40,11 +40,10 @@
                         </div>
                     <?php endif; ?>
 
-                    <div class="col-md-6 col-md-offset-2 col-sm-12 text-right">
+                    <div class="col-md-5 col-md-offset-3 col-sm-12 text-right">
                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
-                                <i class="fa fa-question-circle"></i>
-                                <span class="label">FAQ</span>
+                                <span class="label">Aide</span>
                             </a>
                             <ul id="header-help" class="dropdown-menu skip-content links" aria-labelledby="dLabel">
                                 <li class="first"><a href="<?php echo Mage::getBaseUrl();?>besoin-d-aide">Besoin d'aide ?</a></li>

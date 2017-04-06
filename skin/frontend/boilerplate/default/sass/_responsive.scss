@@ -1,11 +1,28 @@
 @media screen and (min-width: 1200px){
     .container{
-        width: 1150px;
+        width: 1200px;
     }
 }
 @media screen and (min-width: 992px) and (max-width: 1020px){
     .container{
         width: 945px;
+    }
+}
+
+@media screen and (max-width: 1324px){
+    #supermenu .nav{
+        display: block;
+        text-align: center;
+        & > li{
+            display: inline-block;
+            vertical-align: top;
+            width: auto;
+            margin-bottom: 10px;
+            float: none;
+            &:first-child{
+                display: block;
+            }
+        }
     }
 }
 
@@ -43,7 +60,12 @@
     }
     .page-header-container .skip-links .skip-container{
         margin-left: 0;
-        margin-right: 0;
+    }
+    #supermenu .nav{
+        flex-wrap: wrap;
+        & > li{
+            width: auto;
+        }
     }
 }
 
@@ -54,11 +76,22 @@
     .logo, .skip-links .text-right{
         text-align: center;
     }
+    .logo{
+        float: none;
+        width: 100%;
+        img{
+            margin-left: 0;
+        }
+    }
+    #supermenu #storename a{
+        margin-left: 0;
+    }
     .skip-links .text-right{
         margin: 20px 0;
     }
     .page-header-container{
         .skip-links{
+            width: 100%;
             .skip-container-header-search{
                 text-align: center;
                 input[type=text]{
@@ -151,6 +184,20 @@
             min-height:0;
         }
     }
+    .page-header-container{
+        .skip-links{
+            .skip-container-header-search{
+                width: 100%;
+            }
+        }
+    }
+    #supermenu .nav{
+        margin: 0;
+        & > li{
+            display: block;
+            margin-right: 0;
+        }
+    }
 }
 
 @media screen and (max-width: 740px){
@@ -174,6 +221,24 @@
 
     #login-form-popup-container{
         width:90% !important;
+    }
+    .block-blog{
+        padding: 15px;
+        article{
+            .crop-img{
+                margin-bottom: 15px;
+            }
+            h3, p{
+                text-align: center;
+            }
+        }
+    }
+    .block-subscribe form{
+        text-align: center;
+        input[type=text]{
+            float: none;
+            margin-bottom: 10px;
+        }
     }
 }
 
@@ -211,15 +276,18 @@
             .product-info{
                 height: 180px;
             }
-            .owl-item > .product-info{
-                height: 560px;
-            }
         }
+    }
+    .block-blog, .block-sponsor{
+        margin: 30px 0;
     }
     .skip-links .text-right{
         padding: 0 5px;
     }
+    #carrousel-commercant-home, .block_selection{
+        padding: 0;
+    }
     .header-account-container .block-login{
-        left: -50px;
+        margin-left: -45px;
     }
 }

@@ -116,11 +116,14 @@ header{
 .logo{
     float: left;
     text-align: center;
+    width: 200px;
+    margin-top: 5px;
     img{
         max-width: 100px;
         height: auto;
         display: inline-block;
         vertical-align: middle;
+        margin-left: -50px;
     }
 }
 
@@ -129,39 +132,44 @@ header{
 }
 .page-header-container{
     background-color: #fff;
-    padding: 10px 0;
+    padding: 10px 0 14px;
     .skip-links{
+        width: calc(100% - 200px);
+        padding-left: 5px;
+        padding-right: 15px;
         .label{
             color: #000;
             font-weight: 400;
             font-size: 0.875rem;
+            padding-left: 2px;
         }
         .skip-container{
-            margin-top: 12px;
+            margin-top: 17px;
             display: inline-block;
             vertical-align: -10px;
-            margin: 0 9px;
         }
         .skip-container-header-search{
             margin-top: 8px;
             input[type=text]{
                 color: #ddd;
                 font-size: 0.875rem;
-                padding: 5px 22px 5px 10px;
+                padding: 10px 30px 10px 10px;
                 border-radius: 5px;
                 border: 1px solid #eee;
                 background-color: #f6f6f6;
                 width: 90%;
+                outline: none;
             }
             i{
                 color: $color-main-green;
-                margin-left: -25px;
+                margin-left: -30px;
             }
         }
     }
 }
 .header-account-container{
     position: relative;
+    margin-right: 20px;
     a{
         span{
             i{
@@ -176,6 +184,7 @@ header{
         display: none;
         position: absolute;
         top: 40px;
+        margin-left: -80px;
         width: 250px;
         background: #fff;
         padding: 20px;
@@ -224,19 +233,18 @@ header{
                 
             }
         }
-    }
-}
-
-#supermenu{
-    #storename{
-        a{
-            font-style: italic;
+        #show-login-form{
+            font-size: 0.875rem;
         }
     }
 }
 
 .header-minicart{
     .skip-link{
+        background: url(../images/icon-minicart.png) no-repeat;
+        background-position: 0 0;
+        background-size: 21px 18px;
+        padding-left: 25px;
         .count{
             background: #F25150;
             width: 14px;
