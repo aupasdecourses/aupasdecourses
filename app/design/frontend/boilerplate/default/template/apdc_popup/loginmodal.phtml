@@ -3,7 +3,7 @@
     <form action="<?php echo $this->getUrl('apdc-customer/account/ajaxLoginProcess');?>" method="post" id="login-form" class="form-validate scaffold-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="form-group">
-            <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email form-control" title="<?php echo $this->__('Email Address') ?>" placeholder="<?php echo $this->__('Email Address') ?>"/>
+            <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email form-control fa" title="<?php echo $this->__('Email Address') ?>" placeholder="&#xf0e0; <?php echo $this->__('Email Address') ?>"/>
         </div>
         <div class="form-group">
              <input type="password" name="login[password]" class="input-text required-entry validate-password form-control" id="pass" title="<?php echo $this->__('Password') ?>" placeholder="<?php echo $this->__('Password') ?>"/>

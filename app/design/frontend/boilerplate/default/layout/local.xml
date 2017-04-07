@@ -30,7 +30,7 @@
             <!-- MAGNIFIC POPUP -->
             <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css</href><integrity>sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7</integrity><crossorigin>anonymous</crossorigin></action>
-            <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href> </action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
             <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Open+Sans:300,400,700</href></action>
