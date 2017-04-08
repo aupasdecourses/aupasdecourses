@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
+use Apdc\ApdcBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -208,7 +209,7 @@ class Product
      *
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
