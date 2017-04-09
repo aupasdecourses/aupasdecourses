@@ -1,4 +1,49 @@
 
+### 1.2.0 - 06/04/2017
+**Changes:** 
+- Update readme.txt
+
+### 1.2.0 - 06/04/2017
+**Changes:** 
+- Improved description
+
+### 1.2.0 - 19/01/2017
+**Changes:** 
+- Fixed security error for file field.
+- Added dashboard widget.
+
+### 1.1.3 - 11/01/2017
+**Changes:** 
+- Update readme.txt
+
+### 1.1.3 - 20/12/2016
+**Changes:** 
+- Sync with wp.org
+
+### 1.1.2 - 20/12/2016
+**Changes:** 
+- Added upsell for custom emails plugin
+- Fixed text domains errors
+- Added travis and grunt
+
+### 1.1.1 - 19/12/2016
+**Changes:** 
+- Update changelog
+
+### 1.1.0 - 19/12/2016
+**Changes:** 
+- Escape form fields
+
+### 1.0.18 - 07/11/2016
+**Changes:** 
+- Fixed php strict standards error
+- Update tags
+- Tested up to WordPress 4.6
+
+### 1.0.17 - 25/07/2016
+**Changes:** 
+- Development
+
 ### 1.0.16 - 13/07/2016
 **Changes:** 
 - Fixed IP issue when using web server behind a reverse proxy
