@@ -7,12 +7,15 @@ include '../../app/Mage.php';
 class Magento
 {
     use Credimemo;
+    use Products;
 
     const AUTHORIZED_GROUP = ['Administrators'];
 
     public function __construct()
     {
         \Mage::app();
+        $this->_attributeArray=$this->getAttributesArray('commercant');
+
     }
 
     public function mediaPath()
