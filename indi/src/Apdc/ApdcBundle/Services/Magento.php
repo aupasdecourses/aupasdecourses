@@ -692,18 +692,22 @@ class Magento
 		$tab = [];
 
 		$merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
-
+		
 		$merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
+
+		$merchants->getSelect()->join('apdc_commercant_contact', 'main_table.id_contact_billing = apdc_commercant_contact.id_contact');
+
+		$merchants->getSelect()->join('apdc_shop', 'main_table.id_commercant = apdc_shop.id_commercant')->group('main_table.id_commercant');
 
 		foreach ($merchants as $merchant) {
 			$tab[$merchant->getData('name')] = [
-				'id'		=> $merchant->getData('id_commercant'),
-				'name'		=> $merchant->getData('name'),
-				'ownerName' => $merchant->getData('owner_name'),
-				'iban'		=> $merchant->getData('account_iban'),
-				/*
-				 *	jointure avec apdc_commercant_contact + champs shopper email et shopper reference; 
-				 */
+				'id'				=> $merchant->getData('id_commercant'),
+				'reference'	=> 'PAY-'.date('Y-m').'-'.$merchant->getData('code').'-',
+				'name'				=> $merchant->getData('name'),
+				'ownerName'			=> $merchant->getData('owner_name'),
+				'iban'				=> $merchant->getData('account_iban'),
+				'shopperEmail'		=> $merchant->getData('email'),
+				'shopperReference'	=> $merchant->getData('firstname').' - '.$merchant->getData('lastname'),
 			];
 		}
 
