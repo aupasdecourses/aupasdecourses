@@ -67,9 +67,18 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     continue;
                 }
                 if (!isset($commercants[$commercant])) {
+					$color = '#000000';
                     $name = $product->setCommercant($commercant);
+					$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $commercant)->getFirstItem();
+					if($shop) {
+						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+						if($category && $category->getParentCategory()) {
+							$color = $category->getParentCategory()->getData('menu_bg_color');
+						}
+					}
                     $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
                     $commercants[$commercant]['items'] = array();
+					$commercants[$commercant]['color'] = $color;
                 }
                 $commercants[$item->getCommercant()]['items'][] = $item;
             }

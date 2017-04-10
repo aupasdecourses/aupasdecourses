@@ -1,6 +1,6 @@
 <?php
 	$shops = $this->getListShops();
-	$nbShops = count($shops);
+	$nbShops = $shops['count'];
 ?>
 <div id="commercants-block" class="row hp-section commercants-block">
 	<div class="commercants-list col-md-12">
@@ -10,10 +10,10 @@
 			<div class="commercants-main products-grid col-md-12" id="carrousel-commercant-home">
 				<div id="carrousel-commercant-home-row1" class="owl-carousel">
 					<?php
-						foreach ($shops as $shop) {
+						foreach ($shops['row1'] as $shop) {
 							?>
 								<div class="commercant-info-img item">
-									<div class="commercant-info">
+									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
 										<div>
 											<h3 class="product-name"><?= $shop['name'];?></h3>
 											<span><?= $shop['adresse'];?></span>
@@ -32,7 +32,7 @@
 				</div>
 				<div id="carrousel-commercant-home-row2" class="owl-carousel">
 					<?php
-						foreach ($shops as $shop) {
+						foreach ($shops['row2'] as $shop) {
 							?>	
 								<div class="commercant-img-info item">
 									<div class="commercant-img">
@@ -41,7 +41,7 @@
 											<img src="<?php echo Mage::getBaseUrl().'../skin/frontend/boilerplate/default/dist/images/img-commercants.jpg'?>" width="100%" alt="" title="" />
 										</a>
 									</div>
-									<div class="commercant-info">
+									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
 										<div>
 											<h3 class="product-name"><?= $shop['name'];?></h3>
 											<span><?= $shop['adresse'];?></span>
@@ -64,11 +64,11 @@
     $j(document).ready(function() {
 		
 		var optionsOwlCarouselCommencantsHome = {
-			slideBy: 'page',
+			slideBy: 3,
 			items:3,
 			autoPlay : false,
 			loop: true,
-			slideSpeed : 800,
+			slideSpeed : 1600,
 			responsive: {
                 0:{
 					items:1,
@@ -90,14 +90,14 @@
 		
 		$j("#carrousel-commercant-home .prev").click(function (evt) {
 			evt.preventDefault();
-			owlCarouselCommencantHomeRow1.trigger('prev.owl.carousel');
-			owlCarouselCommencantHomeRow2.trigger('prev.owl.carousel');
+			owlCarouselCommencantHomeRow1.trigger('next.owl.carousel');
+			owlCarouselCommencantHomeRow2.trigger('next.owl.carousel');
 		});
 
 		$j("#carrousel-commercant-home .next").click(function (evt) {
 			evt.preventDefault();
-			owlCarouselCommencantHomeRow1.trigger('next.owl.carousel');
-			owlCarouselCommencantHomeRow2.trigger('next.owl.carousel');
+			owlCarouselCommencantHomeRow1.trigger('prev.owl.carousel');
+			owlCarouselCommencantHomeRow2.trigger('prev.owl.carousel');
 		});
 		
     });

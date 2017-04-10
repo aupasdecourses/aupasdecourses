@@ -37,18 +37,30 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
 		$row2 = array();
 		$i = 1;
 		foreach($collection as $selection) {
-			if($i <= 10) {
+			if($i == 1) {
 				$row1[] = $selection;
 			}
 			else {
 				$row2[] = $selection;
 			}
-			if($i == 20) {
+			if($i == 2) {
 				$i = 1;
 			}
 			else {
 				$i ++;
 			}
+			/*if($i <= 5) {
+				$row1[] = $selection;
+			}
+			else {
+				$row2[] = $selection;
+			}
+			if($i == 10) {
+				$i = 1;
+			}
+			else {
+				$i ++;
+			}*/
 		}
 		
         //return $collection;

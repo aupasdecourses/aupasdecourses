@@ -59,7 +59,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
                 <?php foreach($commercants as $id => $commercant): ?>
                     <li>
                     <?php $closed = ((isset($apdcAccordion[$id]) && $apdcAccordion[$id] == 0) ? ' closed' : ''); ?>
-                    <div class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>"><span class="title"><?php echo $commercant['name']; ?></span> <span class="count"><?php echo count($commercant['items']); ?></span><i class="fa fa-angle-up"></i></div>
+                    <div style="background-color: <?php echo $commercant['color']; ?>;" class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>"><span class="title"><?php echo $commercant['name']; ?></span> <span class="count"><?php echo count($commercant['items']); ?></span><i class="fa fa-angle-up"></i></div>
                         <ul class="commercant-product-list">
                         <?php foreach ($commercant['items'] as $item): ?>
                             <?php echo $this->getItemHtml($item) ?>
