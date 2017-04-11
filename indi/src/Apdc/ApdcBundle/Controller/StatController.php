@@ -101,6 +101,7 @@ class StatController extends Controller
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
+			'json_data'		=> $json_data,
 		]);
 	}
 }

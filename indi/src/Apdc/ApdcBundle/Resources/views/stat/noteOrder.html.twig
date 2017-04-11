@@ -11,7 +11,7 @@
 	
 		<h2>Moyenne des notes des commandes (sur la période)</h2>	
 			<h4><i>Abscisse : Notes. Ordonnée : Nb commandes</i></h4>
-		<div id ="graph" ></div>
+		<div id = "graph"></div>
 	
 		<hr>
 
@@ -137,7 +137,16 @@ var y = d3.scale.linear().range([height, 0]);
 
 
 // load the data
-d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
+var json_data = '{{ json_data }}';
+
+
+
+
+var myjson = '[{"notes":0,"occurences":1},{"notes":0,"occurences":2},{"notes":0,"occurences":3}]';
+
+
+
+data = JSON.parse(json_data);
 
 	data.forEach(function(d) {
 		d.notes = d.notes;
@@ -180,7 +189,6 @@ d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
 		.attr("y", function(d) { return y(d.occurences); })
 		.attr("height", function(d) { return height - y(d.occurences); });
 
-});
 
 </script>
 

@@ -290,7 +290,7 @@ class Stats
 
 		}
 		sort($result);
-		$json_data = json_encode($result);
+//		$json_data = json_encode($result);
 		return $json_data;
 
 
