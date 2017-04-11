@@ -102,11 +102,11 @@ class Billing
 		return $response;
 	}
 
-	private function getRefunditemdata($item, $output)
+	private function getRefunditemdata($item)
 	{
 		$refund_items	= \Mage::getModel('pmainguet_delivery/refund_items');
 		$item			= $refund_items->load($item->getOrderItemId(), 'order_item_id');
-		$response		= $item->getData($output);
+		$response		= $item->getData();
 
 		return $response;
 	}
@@ -181,15 +181,22 @@ class Billing
 	public function data_facturation_products($debut, $fin)
 	{
 		$data = [];
-		$debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		//$debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		$debut = date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+
 		$list_commercant = $this->getShops();
 		$orders = \Mage::getModel('sales/order')->getCollection()
-			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
-			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
+			//->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE,\Mage_Sales_Model_Order::STATE_CLOSED)));
+			//->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin));
 
 		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+        $orders->addFilterToMap('ddate', 'mwddate.ddate');
+        $orders->addAttributeToFilter('ddate', array(
+                'from' => $debut,
+                'to' => $fin,
+            ));
 
 		foreach ($orders as $order) {
 				$ordered_items = $order->getAllItems();
@@ -234,8 +241,8 @@ class Billing
 					}
 					$sum_items_invoice = 0;
 					$sum_items_invoice_HT = 0;
-					$sum_items_credit = 0;					/////////////////////////////////////////////////
-					$sum_items_credit_HT = 0;				////////////////////////////////////////////////
+					$sum_items_credit = 0;				
+					$sum_items_credit_HT = 0;				
 					$sum_commission_HT = 0;
 					foreach ($invoiced_items as $item) {
 						$com_done = false;
@@ -249,28 +256,24 @@ class Billing
 								if ($order->hasCreditmemos()) {
 									foreach ($credit_items as $citem) {
 										if ($item->getProductID() == $citem->getProductID()) {
-											$sum_items_credit += floatval($citem->getRowTotalInclTax());			//////////////////////////////
-											$sum_items_credit_HT += floatval($citem->getRowTotal());				/////////////////////////////
+											$sum_items_credit += floatval($citem->getRowTotalInclTax());			
+											$sum_items_credit_HT += floatval($citem->getRowTotal());				
 
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $marge_arriere));
 											$com_done = true;
 										}
 									}
-									$creditdata = $this->getRefunditemdata($item, 'diffprixfinal');
+									$creditinfo = $this->getRefunditemdata($item);
+									$prixclient=$creditinfo['prix_final'];
+									$prixcommercant=$creditinfo['prix_commercant'];
 
-									/*************** FROM THERE ***********************/
-									$diffprixcom = $this->getRefunditemdata($item, 'diffprixcommercant');
+									$prix_final=($prixcommercant<>NULL?$prixcommercant:$prixclient);
 
-								//	$sum_items_credit += floatval($creditdata);								///////////////////////////////////////
-								//	$sum_items_credit_HT += floatval($creditdata) / (1 + $TVApercent);		//////////////////////////////////////
+									$creditvalue=$creditinfo['prix_initial']-$prix_final;
 
-									$sum_items_credit += floatval($diffprixcom);
-									$sum_items_credit_HT += floatval($diffprixcom) / (1 + $TVApercent);
-
-
-									/**************** TO THERE ****************************/
-									
-									$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditdata) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
+									$sum_items_credit += floatval($creditvalue);
+									$sum_items_credit_HT += floatval($creditvalue) / (1 + $TVApercent);
+									$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditvalue) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
 									$sum_items_credit_TVA = $sum_items_credit_HT * $TVApercent;
 									$com_done = true;
 								}
@@ -287,8 +290,8 @@ class Billing
 									foreach ($credit_items as $citem) {
 										if ($item->getProductID() == $citem->getProductID()) {
 											$cproduct = \Mage::getModel('catalog/product')->load($citem->getProductID());
-											$sum_items_credit += floatval($citem->getRowTotalInclTax());		///////////////////////////////////////
-											$sum_items_credit_HT += floatval($citem->getRowTotal());			//////////////////////////////////////
+											$sum_items_credit += floatval($citem->getRowTotalInclTax());		
+											$sum_items_credit_HT += floatval($citem->getRowTotal());		
 											$sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
 											$com_done = true;
 										}
@@ -325,8 +328,8 @@ class Billing
 							$sum_items_invoice = $sum_items_invoice_HT = $sum_items_invoice_TVA = 0;
 						}
 						if ($order->hasCreditMemos()) {
-							$sum_items_credit = round($sum_items_credit, FLOAT_NUMBER, PHP_ROUND_HALF_UP);					////////////////////////
-							$sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);			///////////////////////
+							$sum_items_credit = round($sum_items_credit, FLOAT_NUMBER, PHP_ROUND_HALF_UP);					
+							$sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);		
 							$sum_items_credit_TVA = round($sum_items_credit - $sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 						} else {
 							$sum_items_credit = $sum_items_credit_HT = $sum_items_credit_TVA = 0;
@@ -358,8 +361,8 @@ class Billing
 							'commercant' => $com,
 							'sum_items' => $sum_items,
 							'sum_items_HT' => $sum_items_HT,
-							'sum_items_credit' => $sum_items_credit,				///////////////////////////
-							'sum_items_credit_HT' => $sum_items_credit_HT,			//////////////////////////
+							'sum_items_credit' => $sum_items_credit,	
+							'sum_items_credit_HT' => $sum_items_credit_HT,
 							'remboursements' => $creditcom,
 							'sum_ticket' => $sum_items - $sum_items_credit,
 							'sum_ticket_HT' => $sum_items_HT - $sum_items_credit_HT,

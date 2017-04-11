@@ -125,16 +125,25 @@ class Stats
 	{
 		$data = [];
 		/* Format dates */
-		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
-		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		//$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+		$debut = date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		//$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		$fin	= date('Y-m-d', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+
 		$orders = \Mage::getModel('sales/order')->getCollection()
 			//->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addFieldToFilter('status', array('nin' => array('canceled', 'holded')))
-			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
+			//->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
 			->addAttributeToSort('increment_id', 'DESC');
 		//Get info on delivery date
 		$orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
+		$orders->addFilterToMap('ddate', 'mwddate.ddate');
+        $orders->addAttributeToFilter('ddate', array(
+                'from' => $debut,
+                'to' => $fin,
+            ));
+
 		foreach ($orders as $order) {
 			$status			= $order->getStatusLabel();
 			$date_commande	= date('d/m/Y', strtotime($order->getCreatedAt()));

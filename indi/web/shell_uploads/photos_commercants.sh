@@ -57,8 +57,11 @@ function save(){
   convert "${src_com}" -gravity ${gravity} -crop ${inter_com_w}x${inter_com_h}+0+0 +repage temp_com.psd;
   convert "${src_com}" -gravity ${gravity} -crop ${inter_thb_com_w}x${inter_thb_com_h}+0+0 +repage temp_thb.psd;
   # final convert! resize, sharpen, save
-  convert temp_com.psd -interpolate bicubic -filter Lagrange -resize ${dst_com_w}x${dst_com_h} -unsharp 0x${sharp_com} +repage -density 72x72 +repage -quality "${quality}" "${dst}full-merchant.jpg";
-  convert temp_thb.psd -interpolate bicubic -filter Lagrange -resize ${dst_thb_com_w}x${dst_thb_com_h} -unsharp 0x${sharp_thb_com} +repage -density 72x72 +repage -quality "${quality}" "${dst}thumbnail-merchant.jpg";
+  convert temp_com.psd -interpolate bicubic -filter Lagrange -resize ${dst_com_w}x${dst_com_h} -unsharp 0x${sharp_com} +repage -density 72x72 +repage -quality "${quality}" jpg:"${dst}"full-merchant.jpg;
+  convert temp_thb.psd -interpolate bicubic -filter Lagrange -resize ${dst_thb_com_w}x${dst_thb_com_h} -unsharp 0x${sharp_thb_com} +repage -density 72x72 +repage -quality "${quality}" jpg:"${dst}"thumbnail-merchant.jpg;
+  mv "${dst}"full-merchant-0.jpg "${dst}"full-merchant.jpg;
+  mv "${dst}"thumbnail-merchant-0.jpg "${dst}"thumbnail-merchant.jpg;
+  rm "${dst}"full-merchant-1.jpg "${dst}"thumbnail-merchant-1.jpg;
   #optimisation pour le web
   jpegoptim "${dst}"*.jpg --max=90 --all-progressive --strip-all --strip-com --strip-exif --strip-iptc --strip-icc
 

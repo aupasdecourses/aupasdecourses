@@ -26,7 +26,10 @@
 
 								{% for com_id, commercant in commercants %}
 									<tr>
-										<td> {{ commercant.name }} </td>
+										<td> {{ commercant.name }}
+										{% if commercant.warning_days != ""%}
+										</br><span style="color:red;">{{ commercant.warning_days }}</span></td>
+										{%endif%}
 										<td> {{ commercant.addr }} </td>
 										<td> {{ commercant.phone ~" / "~ commercant.mobile }} </td>
 										<td>

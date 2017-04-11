@@ -5,6 +5,15 @@
             <version>0.0.7</version>
         </Apdc_Attributesqtoi>
     </modules>
+    <frontend>
+        <product>
+            <collection>
+                <attributes>
+                    <commercant />
+                </attributes>
+            </collection>
+        </product>
+    </frontend>
     <global>
         <sales>
             <quote>

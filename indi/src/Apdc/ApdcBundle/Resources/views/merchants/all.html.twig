@@ -18,7 +18,7 @@
 						<div id="{{ store|replace({' ': '_'}) }}" class="store collapse">
 							{% for com_id, merchant in merchants %}
 								<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
-									<label><h3> {{ merchant.name }} </h3></label><br/>
+									<label><h3> {{ merchant.name }}</h3><h4 style="color:red;">{{ merchant.warning_days }}</h4></label><br/>
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>

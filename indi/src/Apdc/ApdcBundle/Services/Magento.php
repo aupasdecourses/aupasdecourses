@@ -7,12 +7,15 @@ include '../../app/Mage.php';
 class Magento
 {
     use Credimemo;
+    use Products;
 
     const AUTHORIZED_GROUP = ['Administrators'];
 
     public function __construct()
     {
         \Mage::app();
+        $this->_attributeArray=$this->getAttributesArray('commercant');
+
     }
 
     public function mediaPath()
@@ -78,6 +81,30 @@ class Magento
 	}
 	 */
 
+    public function getWarningDays($delivery_days,$closed_periods){
+
+
+        if($closed_periods!=array()){
+            $tmp="";
+            foreach($closed_periods as $key => $period){
+                $tmp="du ".$period['start']." au ".$period['end'];
+                $closed_periods[$key]=$tmp;
+            }
+            $period_warning="Magasin fermé ".implode(", ",$closed_periods).".";
+        }
+
+        $warning_days=array_diff([2,3,4,5],$delivery_days);
+        if($warning_days!=array()){
+            $tmp=\Mage::helper('apdc_commercant')->getDays();
+            foreach($warning_days as $key=>$day){
+                $warning_days[$key]=$tmp[$day-1];
+            }
+            $day_warning="Attention! Magasin fermé le ".implode(",",$warning_days).".";
+        }
+
+        return $day_warning." ".$period_warning;
+
+    }
 
 
 	/**	Le nouveau getShops
@@ -100,6 +127,10 @@ class Magento
             $cats = $shop->getIdCategory();
             foreach ($cats as $cat) {
                 $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
+
+                $delivery_days=$shop->getDeliveryDays();
+                $closed_periods=$shop->getClosingPeriods();
+
                 $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
@@ -114,8 +145,9 @@ class Magento
                         'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
                         'orders' => [],
                         'timetable' => implode(',', $shop->getTimetable()),
-                        'closing_periods' => $shop->getClosingPeriods(),
-                        'delivery_days' => 'Du Mardi au Vendredi',
+                        'closing_periods' => $closed_periods,
+                        'delivery_days' => $delivery_days,
+                        'warning_days' => $this->getWarningDays($delivery_days,$closed_periods),
                     ];
             }
         }

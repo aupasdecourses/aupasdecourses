@@ -83,9 +83,13 @@
 								</td>
 								<td>
 								{% if product.refund_prix_commercant is null %}
-									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type="text" name='form[{{product_id}}][ticket-commercant]' value='{{ product.prix_total }}' />
+									{% if product.refund_prix is null %}
+										<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.prix_total }}' />
+									{% else %}
+										<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix | round(2,'common')}}' />
+									{% endif %}
 								{% else %}
-									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type="text" name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix_commercant | round(2, 'common')}}' />
+									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix_commercant | round(2, 'common')}}' />
 									{% endif %}	
 								</td>
 								<td>

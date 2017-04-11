@@ -59,6 +59,9 @@ function save(){
   # final convert! resize, sharpen, save
   convert temp_com.psd -interpolate bicubic -filter Lagrange -resize ${dst_com_w}x${dst_com_h} -unsharp 0x${sharp_com} +repage -density 72x72 +repage -quality "${quality}" "${dst}full-category.jpg";
   convert temp_thb.psd -interpolate bicubic -filter Lagrange -resize ${dst_thb_com_w}x${dst_thb_com_h} -unsharp 0x${sharp_thb_com} +repage -density 72x72 +repage -quality "${quality}" "${dst}thumbnail-category.jpg";
+  mv "${dst}"full-category-0.jpg "${dst}"full-category.jpg;
+  mv "${dst}"thumbnail-category-0.jpg "${dst}"thumbnail-category.jpg;
+  rm "${dst}"full-category-1.jpg "${dst}"thumbnail-category-1.jpg;
   #optimisation pour le web
   jpegoptim "${dst}"*.jpg --max=90 --all-progressive --strip-all --strip-com --strip-exif --strip-iptc --strip-icc
 

@@ -16,22 +16,41 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             ->addFieldToFilter('stores', array('finset' =>$storeid))
             ->addFieldtoFilter('enabled',1);
 
+        $code_count=array();
+
         foreach ($shops as $shop) {
             $shop = $shop->getData();
             foreach($shop['id_category'] as $id){
                 if(array_key_exists($id,$filter)){
+
+                    $shop["postcode"];
+
                     $sub = [
                         'name' => (isset($shop['name'])) ? $shop['name'] : '',
                         'src' => (isset($filter[$id]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$id]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+                        'postcode' => $shop['postcode'],
                         'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
                         'url' => (isset($filter[$id]['url_path'])) ? Mage::getUrl($filter[$id]['url_path']) : '',
                     ];
-                    $data[] = $sub;
+                    $data[$shop['postcode']][] = $sub;
+                    if(isset($code_count[$shop['postcode']])){
+                        $code_count[$shop['postcode']]+=1;
+                    }else{
+                        $code_count[$shop['postcode']]=1;
+                    }
                 }
             }
         }
 
-        return $data;
+        arsort($code_count);
+        
+        $result=array();
+
+        foreach($code_count as $zip => $freq){
+            $result[$zip]=$data[$zip];
+        }
+
+        return $result;
     }
 
     public function getInfoShop()
