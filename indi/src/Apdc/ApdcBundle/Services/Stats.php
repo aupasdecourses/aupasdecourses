@@ -236,86 +236,6 @@ class Stats
 	/****************************
 	 * NOTES CLIENTS *****************/
 
-
-	/****************************************************************
-	 *
-	 * ************************************************************/
-
-    private function checkEntryToModel($model, array $filters)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if ($entry->getFirstItem()->getId() != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private function addEntryToModel($model, $data, $updatedFields)
-    {
-        foreach ($data as $k => $v) {
-            $model->setData($k, $v);
-        }
-        foreach ($updatedFields as $k => $v) {
-            $model->setData($k, $v);
-        }
-        $model->save();
-    }
-
-    private function updateEntryToModel($model, array $filters, array $updatedFields)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if (($id = $entry->getFirstItem()->getId()) != null) {
-            $model->load($id);
-            foreach ($updatedFields as $k => $v) {
-                $model->setData($k, $v);
-            }
-            $model->save();
-        } else {
-            $this->addEntryToModel($model, $updatedFields);
-        }
-    }
-
-    public function addEntryToApdcNotation(array $data)
-    {
-        $this->addEntryToModel(
-            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('apdc_notation/notation')),
-            $data
-        );
-    }
-
-    public function updateEntryToApdcNotation(array $filters, array $updatedFields)
-    {
-        $model = \Mage::getModel('apdc_notation/notation');
-        $check = $this->checkEntryToModel($model, $filters);
-
-        if ($check) {
-            $this->updateEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        } else {
-            $this->addEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        }
-    }
-
-/************************************************************************************
- *	
- *********************************************************************************/
-
-
-
 	public function end_month($date) 
 	{
 		$date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
@@ -325,13 +245,6 @@ class Stats
 		return $date;
 	}
 
-	/**	Plus interessant de lier sales_flat_order (table majeure) avec apdc_notation (table mineure)
-	 *	que l'inverse ?
-	 *
-	 *	La correlation entre les deux tables est le numero de commande
-	 *	"increment_id" en majeur et "order_id" en mineur
-	 *
-	 */
 	public function getNotes($date_debut, $date_fin)
 	{
 		$date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));

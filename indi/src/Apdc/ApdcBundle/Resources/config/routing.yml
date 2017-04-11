@@ -131,11 +131,6 @@ noteOrder:
   path: /stat/noteOrder/
   defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
 
-noteOrderSubmit:
-  path: /stat/noteOrder/{orderId}/submit/
-  defaults: { _controller: ApdcApdcBundle:Stat:noteOrderSubmit}
-  requirements: { orderId:"[0-9]+" }
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
