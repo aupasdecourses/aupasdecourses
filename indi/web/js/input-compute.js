@@ -52,12 +52,22 @@ $(document).ready(function() {
 		update_diff(merchant_id, 0, 0);
 		update_diff_commercant(merchant_id, 0, 0);
 
+		/* pour chaques tickets (chaques zones) */
 		$('#' + merchant_id + ' .ticket-input').each(function() {
 			$(this).on('change', function () {
 				var r_ticket = /([0-9]*)-ticket-input/;
 
 				var merchant_id = $(this).closest("table").attr('id'); 
 				var product_id = r_ticket.exec($(this).attr('id'))[1];
+
+				/* pour chaque ligne*/
+				/* ici commence */
+				$('#' + product_id + '-ticket-input').each(function() {
+
+					var ticket_input = $('#' + product_id + '-ticket-input').val();
+					$('#' + product_id + '-ticket-input-commercant').val(ticket_input);
+				});
+				/* ici s'arrete la maj input commercant quand on ecrit dans input client */
 
 				var input_value = parseFloat($(this).val());
 				var total_command = parseFloat($('#'+product_id+'-total').html());
