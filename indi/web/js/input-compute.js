@@ -66,6 +66,8 @@ $(document).ready(function() {
 
 					var ticket_input = $('#' + product_id + '-ticket-input').val();
 					$('#' + product_id + '-ticket-input-commercant').val(ticket_input);
+					/* maj du total des inputs commercants */
+					update_diff_commercant(merchant_id, 0, 0);
 				});
 				/* ici s'arrete la maj input commercant quand on ecrit dans input client */
 
@@ -77,10 +79,14 @@ $(document).ready(function() {
 
 				$('#'+product_id+'-diff').html(diff_total);
 				update_diff(merchant_id, 0, 0);
+
+				/* maj colonne diff commercant quand on ecrit dans input client et que input commercant se maj aussi*/
+				$('#'+product_id+'-diff-commercant').html(diff_total);
+				update_diff_commercant(merchant_id, 0, 0);
+
 			});
 		});
 
-		/* Maj de la colonne total commercant automatiquement via les =/= inputs */
 		$('#' + merchant_id + ' .ticket-input-commercant').each(function() {
 			$(this).on('change', function () {
 				var r_ticket_commercant = /([0-9]*)-ticket-input-commercant/;
