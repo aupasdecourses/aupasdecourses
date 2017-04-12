@@ -7,12 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Apdc\ApdcBundle\Entity\NoteOrder;
-use Apdc\ApdcBundle\Form\NoteOrderType;
-
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
@@ -87,15 +81,6 @@ class StatController extends Controller
 			$notes = $stats->getNotes($date_debut, $date_fin);
 			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
-
-		
-		$fs = new Filesystem();
-		
-		/* dossier & fichier seront a renommer */
-		if ($fs->exists('../web/json/histogramme.json')){
-			$fs->dumpFile('../web/json/histogramme.json', $json_data);
-		}
-		 
 
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,

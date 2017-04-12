@@ -137,16 +137,8 @@ var y = d3.scale.linear().range([height, 0]);
 
 
 // load the data
-var json_data = '{{ json_data }}';
-
-
-
-
-var myjson = '[{"notes":0,"occurences":1},{"notes":0,"occurences":2},{"notes":0,"occurences":3}]';
-
-
-
-data = JSON.parse(json_data);
+var json_data = {{ json_data|raw }};
+data = JSON.parse(JSON.stringify(json_data));
 
 	data.forEach(function(d) {
 		d.notes = d.notes;
