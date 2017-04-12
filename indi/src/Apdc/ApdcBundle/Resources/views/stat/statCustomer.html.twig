@@ -14,28 +14,32 @@
 	<table class="table table-striped" id="statCustomerTable">
 		<thead>
 			<tr>
-				<th class="sort">Nom Client</th>
-				<th class=float">Nb Commande</th>
-				<th class="float">Total</th>
+				<th>Nom Client</th>
+				<th class="float">Nbe Commande</th>
+				<th class="float">Panier Moyen</th>
+				<th class="float">Panier Max</th>
+				<th>Ecart type</th>
+				<th>Inscription</th>
 				<th>Dernière commande</th>
-				<th>Rue</th>
 				<th class="sort">Code Postal</th>
-				<th>Date inscription</th>
-				<th class="sort">Créé dans</th>
+				<th>Email</th>
+				<th>Téléphone</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for content in stat %}
 			{% if content != 'Mail Client' %}
 			<tr>
-				<td>{{ content['Nom Client'] }}</td>
-				<td>{{ content['Nb Commande'] }}</td>
-				<td>{{ content['Total'] }}</td>
-				<td>{{ content['Dernière commande'] }}</td>
-				<td>{{ content['Rue'] }}</td>
-				<td>{{ content['Code Postal'] }}</td>
-				<td>{{ content['Date Inscription'] }}</td>
-				<td>{{ content['Créé dans'] }}</td>
+				<td>{{ content['nom_client'] }}</td>
+				<td>{{ content['nb_commande'] }}</td>
+				<td>{{ content['panier_moyen'] }}</td>
+				<td>{{ content['panier_max'] }}</td>
+				<td>{{ content['ecart_type'] }}</td>
+				<td>{{ content['inscription'] }}</td>
+				<td>{{ content['derniere_commande'] }}</td>
+				<td>{{ content['code_postal'] }}</td>
+				<td><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></td>
+				<td>{{ content['telephone'] }}</td>
 			</tr>
 			{% endif %}
 			{% endfor %}
