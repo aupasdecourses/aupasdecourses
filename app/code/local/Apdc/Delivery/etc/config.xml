@@ -82,6 +82,11 @@
                     <file>delivery/creditnull_template.html</file>
                     <type>html</type>
                 </delivery_emailcreditnull_template>
+                <notification_new_note translate="label" module="pmainguet_delivery">
+                    <label>Vous avez reçu une nouvelle note sur une commande client</label>
+                    <file>notification/new_note.html</file>
+                    <type>html</type>
+                </notification_new_note>
             </email>
         </template>
 	</global>

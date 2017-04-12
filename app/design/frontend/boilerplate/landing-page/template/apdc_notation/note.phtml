@@ -1,6 +1,6 @@
 <?php
-	$i = mt_rand(1, 14); // generate random number size of the array
-	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+	$i = mt_rand(1, 10); // generate random number size of the array
+	$url = "dist/images/header_notation/".$i.".jpg"; // set variable equal to which random filename was chosen
     $_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -19,7 +19,7 @@
             <div class="intro-section">
                 <div class="section-header" >
                 	<div class="border-container"></div>
-                	<img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
+                	<a href="<?php echo $this->getBaseUrl().'../';?>"><img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses"></a>
 					<h2>Une commande <?php echo $this->getNote();?> étoile(s) !</h2>
 					<div class="col-xs-12">
 						<div class="icon">
