@@ -82,11 +82,14 @@ class StatController extends Controller
 			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
 
+		$base_url = $stats->getBaseUrl();
+
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
 			'json_data'		=> $json_data,
+			'base_url'		=> $base_url,
 		]);
 	}
 }

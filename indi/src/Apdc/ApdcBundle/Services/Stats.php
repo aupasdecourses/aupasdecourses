@@ -236,6 +236,11 @@ class Stats
 	/****************************
 	 * NOTES CLIENTS *****************/
 
+	public function getBaseUrl()
+	{
+		return \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/sales_order/view/order_id/';
+	}
+	
 	public function end_month($date) 
 	{
 		$date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
@@ -264,6 +269,7 @@ class Stats
 				'increment_id'		=> $n->getData('increment_id'), 
 				'nom_client'		=> $n->getCustomerName(),
 				'note'				=> $n->getNote(),
+				'entity_id'			=> $n->getData('entity_id'),	
 			];
 		}
 
