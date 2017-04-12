@@ -71,7 +71,7 @@ class BillingController extends Controller
 		}
 
 		$mage = $this->container->get('apdc_apdc.magento');
-		$merchants = $mage->getApdcBankFields();
+		$merchants	= $mage->getApdcBankFields();
 
 		$session = $request->getSession();
 
@@ -103,9 +103,9 @@ class BillingController extends Controller
 		}
 
 		return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig', [
-			'form'		=> $form->createView(),
-			'merchants'	=> $merchants,
-			'choice'	=> $choice,
+			'form'			=> $form->createView(),
+			'merchants'		=> $merchants,
+			'choice'		=> $choice,
 		]);
 	}
 }

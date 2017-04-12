@@ -7,12 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Apdc\ApdcBundle\Entity\NoteOrder;
-use Apdc\ApdcBundle\Form\NoteOrderType;
-
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
@@ -88,53 +82,11 @@ class StatController extends Controller
 			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
 
-		
-		$fs = new Filesystem();
-		
-		/* dossier & fichier seront a renommer */
-		if ($fs->exists('../web/json/histogramme.json')){
-			$fs->dumpFile('../web/json/histogramme.json', $json_data);
-		}
-		 
-
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
-		]);
-	}
-
-	public function noteOrderSubmitAction(Request $request, $orderId)
-	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
-			return $this->redirectToRoute('root');
-		}
-		
-		$stats		= $this->container->get('apdc_apdc.stats');			
-		$session	= $request->getSession();
-
-		$noteOrder				= new NoteOrder();
-		$form_note_order		= $this->createForm(NoteOrderType::class, $noteOrder);
-		
-		if ($request->isMethod('POST') && $form_note_order->handleRequest($request)->isValid()) {
-			try {
-				$stats->updateEntryToApdcNotation(
-					['order_id'	=> $form_note_order['orderId']->getData()],
-					['note'		=> $form_note_order['note']->getData()]
-				);
-
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
-
-			$session->getFlashBag()->add('success', 'Note Commande ajoutée !');
-			return $this->redirectToRoute('noteOrder');
-		}
-		
-
-		return $this->render('ApdcApdcBundle::stat/noteOrderSubmit.html.twig', [
-			'order_id'			=> $orderId,
-			'form_note_order'	=> $form_note_order->createView(),
+			'json_data'		=> $json_data,
 		]);
 	}
 }

@@ -13,7 +13,7 @@ class Stats
 	{
 		\Mage::app();
 	}
- 
+
 
 	private function array_columns($array, $column_name)
 	{
@@ -21,8 +21,8 @@ class Stats
 			function ($element) use ($column_name) {
 				return $element[$column_name];
 			},
-				$array
-			);
+			$array
+		);
 	}
 
 	public function stats_clients()
@@ -59,16 +59,16 @@ class Stats
 			$key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
 			if ($key == false) {
 				array_push($data, [
-						'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-						'Nb Commande'		=> 0,
-						'Total'				=> 0,
-						'Dernière commande' => 'NA',
-						'Mail client'		=> $customer->getEmail(),
-						'Rue'				=> "NA",
-						'Code Postal'		=> "NA",
-						'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-						'Créé dans'			=> $customer->getCreatedIn(),
-					]);
+					'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+					'Nb Commande'		=> 0,
+					'Total'				=> 0,
+					'Dernière commande' => 'NA',
+					'Mail client'		=> $customer->getEmail(),
+					'Rue'				=> "NA",
+					'Code Postal'		=> "NA",
+					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'Créé dans'			=> $customer->getCreatedIn(),
+				]);
 			}
 		}
 		return $data;
@@ -120,7 +120,7 @@ class Stats
  */
 
 
-	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml
+	/** Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_fidelity.phtml */
 	public function data_clients($debut, $fin)
 	{
 		$data = [];
@@ -158,15 +158,15 @@ class Stats
 					1 => 'Pour les articles ...',
 					2 => 'Pour la livraison ...',
 			);
-			if ($order->getCouponCode()<>"") {
+			if ($order->getCouponCode() <> "") {
 				$oCoupon	= \Mage::getSingleton('salesrule/coupon')->load($order->getCouponCode(), 'code');
 				$oRule		= \Mage::getSingleton('salesrule/rule')->load($oCoupon->getRuleId());
 				$coupondata	= "";
 				$coupondata	.= "Règle n°".$oRule->getData('rule_id');
 				$coupondata	.= ".\n Réduction de ".$oRule->getData('discount_amount');
-				$coupondata	.=" de type ".$oRule->getData('simple_action');
-				$coupondata	.=".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
-				$coupondata	.=".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';            
+				$coupondata	.= "de type ".$oRule->getData('simple_action');
+				$coupondata	.= ".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
+				$coupondata	.= ".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';
 			} else {
 				$coupondata	= "";
 			}
@@ -201,7 +201,7 @@ class Stats
 	/*******************************************/
 
 
-	//Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml
+	/** Used in /var/www/html/apdcdev/delivery/modules/clients/views/clients_coupon.phtml */
 	public function data_coupon($debut, $fin)
 	{
 		$data = [];
@@ -218,7 +218,7 @@ class Stats
 				'increment_id'	=> $order->getIncrementId(),
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
-				]);
+			]);
 			arsort($data);
 		}
 		$data_conso = [];
@@ -236,86 +236,6 @@ class Stats
 	/****************************
 	 * NOTES CLIENTS *****************/
 
-
-	/****************************************************************
-	 *
-	 * ************************************************************/
-
-    private function checkEntryToModel($model, array $filters)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if ($entry->getFirstItem()->getId() != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private function addEntryToModel($model, $data, $updatedFields)
-    {
-        foreach ($data as $k => $v) {
-            $model->setData($k, $v);
-        }
-        foreach ($updatedFields as $k => $v) {
-            $model->setData($k, $v);
-        }
-        $model->save();
-    }
-
-    private function updateEntryToModel($model, array $filters, array $updatedFields)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if (($id = $entry->getFirstItem()->getId()) != null) {
-            $model->load($id);
-            foreach ($updatedFields as $k => $v) {
-                $model->setData($k, $v);
-            }
-            $model->save();
-        } else {
-            $this->addEntryToModel($model, $updatedFields);
-        }
-    }
-
-    public function addEntryToApdcNotation(array $data)
-    {
-        $this->addEntryToModel(
-            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('apdc_notation/notation')),
-            $data
-        );
-    }
-
-    public function updateEntryToApdcNotation(array $filters, array $updatedFields)
-    {
-        $model = \Mage::getModel('apdc_notation/notation');
-        $check = $this->checkEntryToModel($model, $filters);
-
-        if ($check) {
-            $this->updateEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        } else {
-            $this->addEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        }
-    }
-
-/************************************************************************************
- *	
- *********************************************************************************/
-
-
-
 	public function end_month($date) 
 	{
 		$date = strtotime('+1 month', strtotime(str_replace('/', '-', $date)));
@@ -325,13 +245,6 @@ class Stats
 		return $date;
 	}
 
-	/**	Plus interessant de lier sales_flat_order (table majeure) avec apdc_notation (table mineure)
-	 *	que l'inverse ?
-	 *
-	 *	La correlation entre les deux tables est le numero de commande
-	 *	"increment_id" en majeur et "order_id" en mineur
-	 *
-	 */
 	public function getNotes($date_debut, $date_fin)
 	{
 		$date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));

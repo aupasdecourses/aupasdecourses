@@ -618,6 +618,7 @@ class Magento
                 'refund_diff'				=> 'refund.diffprixfinal',
 				'refund_comment'			=> 'refund.comment',
 				'refund_prix_commercant'	=> 'refund.prix_commercant',
+				'refund_diff_commercant'	=> 'refund.diffprixcommercant',
             ]);
 
             foreach ($products as $product) {
@@ -625,22 +626,26 @@ class Magento
                 $prod_data['refund_prix']				= $product->getData('refund_prix');
 				$prod_data['refund_diff']				= $product->getData('refund_diff');
 				$prod_data['refund_prix_commercant']	= $product->getData('refund_prix_commercant');
+				$prod_data['refund_diff_commercant']	= $product->getData('refund_diff_commercant');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
 					$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] = 0.0;
+					$rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant']	= 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
                 $rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+				$rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
 				$rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
 				$rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+				$rsl[-1]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
             }
         }
 
@@ -719,18 +724,22 @@ class Magento
 		$tab = [];
 
 		$merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
-
+		
 		$merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
+
+		$merchants->getSelect()->join('apdc_commercant_contact', 'main_table.id_contact_billing = apdc_commercant_contact.id_contact');
+
+		$merchants->getSelect()->join('apdc_shop', 'main_table.id_commercant = apdc_shop.id_commercant')->group('main_table.id_commercant');
 
 		foreach ($merchants as $merchant) {
 			$tab[$merchant->getData('name')] = [
-				'id'		=> $merchant->getData('id_commercant'),
-				'name'		=> $merchant->getData('name'),
-				'ownerName' => $merchant->getData('owner_name'),
-				'iban'		=> $merchant->getData('account_iban'),
-				/*
-				 *	jointure avec apdc_commercant_contact + champs shopper email et shopper reference; 
-				 */
+				'id'				=> $merchant->getData('id_commercant'),
+				'reference'	=> 'PAY-'.date('Y-m').'-'.$merchant->getData('code').'-',
+				'name'				=> $merchant->getData('name'),
+				'ownerName'			=> $merchant->getData('owner_name'),
+				'iban'				=> $merchant->getData('account_iban'),
+				'shopperEmail'		=> $merchant->getData('email'),
+				'shopperReference'	=> $merchant->getData('firstname').' - '.$merchant->getData('lastname'),
 			];
 		}
 

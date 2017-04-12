@@ -8,7 +8,12 @@
 		<div class="page-header">
 			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
-
+	
+		<h2>Moyenne des notes des commandes (sur la période)</h2>	
+			<h4><i>Abscisse : Notes. Ordonnée : Nb commandes</i></h4>
+		<div id = "graph"></div>
+	
+		<hr>
 
 		<table id="noteTable" class="table table-striped">
 			<thead>
@@ -35,30 +40,14 @@
 							<td>{{ order.nom_client }}</td>
 
 						{% if order.note is null %}
-							<td>
-								<!-- <a href="{{ path('noteOrderSubmit', {orderId : order.increment_id}) }}">NULL</a> -->
-								NULL
-							</td>
+							<td>NULL</td>
 						{% else %}
-							<td>
-								<!-- <a href="{{ path('noteOrderSubmit', {orderId: order.increment_id}) }}"> -->
-								{{ order.note }}
-								<!-- </a> -->
-							</td>
+							<td>{{ order.note }}</td>
 						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-
-		
-	<hr>
-		<h2>Moyenne des notes des commandes (sur la période)</h2>	
-			<h4><i>Abscisse : Notes. Ordonnée : Nb commandes</i></h4>
-		<div id ="graph" ></div>
-	
-
-
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
@@ -148,7 +137,8 @@ var y = d3.scale.linear().range([height, 0]);
 
 
 // load the data
-d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
+var json_data = {{ json_data|raw }};
+data = JSON.parse(JSON.stringify(json_data));
 
 	data.forEach(function(d) {
 		d.notes = d.notes;
@@ -191,7 +181,6 @@ d3.json("{{ path('root') }}json/histogramme.json", function(error, data) {
 		.attr("y", function(d) { return y(d.occurences); })
 		.attr("height", function(d) { return height - y(d.occurences); });
 
-});
 
 </script>
 
