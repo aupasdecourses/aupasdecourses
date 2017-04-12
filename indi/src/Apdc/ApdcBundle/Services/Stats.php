@@ -250,13 +250,12 @@ class Stats
 		$date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
 		$notationClient = \Mage::getModel('sales/order')->getCollection()
 			->addAttributeToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
-		$notationClient->getSelect()->joinLeft('apdc_notation', 'main_table.increment_id = apdc_notation.order_id');
+		$notationClient->getSelect()->joinLeft('apdc_notation', 'main_table.entity_id = apdc_notation.order_id');
 		$notationClient->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$notationClient->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
-
-
 		$result = [];
+
 		foreach ($notationClient as $n) {
 			$result[] = [
 				'date_creation'		=> date('d/m/Y', strtotime($n->getCreatedAt())),
