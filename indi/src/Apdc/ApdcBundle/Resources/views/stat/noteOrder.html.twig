@@ -15,6 +15,7 @@
 	
 		<hr>
 
+		{{ dump(base_url) }}
 		<table id="noteTable" class="table table-striped">
 			<thead>
 				<tr>
@@ -36,8 +37,8 @@
 					<tr>
 							<td>{{ order.date_creation }}</td>
 							<td>{{ order.date_livraison }}</td>
-							<td>{{ order.increment_id }}</td>
-							<td>{{ order.nom_client }}</td>
+							<td><a href={{ base_url ~ order.entity_id }} target="_blank">{{ order.increment_id }}</td>
+							<td><a href={{ base_url ~ order.entity_id }} target="_blank">{{ order.nom_client }}</td>
 
 						{% if order.note is null %}
 							<td>NULL</td>
