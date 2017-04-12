@@ -40,6 +40,12 @@ class Stats
 			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
 			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+			
+			if($customer->getPrimaryBillingAddress()!=''){
+				$phone = $customer->getPrimaryBillingAddress()->getTelephone();
+			} else{
+				$phone = '';
+			}
 			array_push($data, [
 					'nom_client'		=> $order->getCustomerName(),
 					'id_client'			=> $order->getCustomerId(),
@@ -50,11 +56,12 @@ class Stats
 					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-					//'Rue'				=> $dataadd->getStreet()[0],
+					'rue'				=> $dataadd->getStreet()[0],
 					'code_postal'		=> $dataadd->getPostcode(),
+					'ville'				=> $dataadd->getCity(),
 					//'Créé dans'			=> $customer->getCreatedIn(),
 					'email'				=> $order->getCustomerEmail(),
-					'telephone'			=> $customer->getPrimaryBillingAddress()->getTelephone(),
+					'telephone'			=> $phone,
 				]);
 		}
 		//Add customer who never ordered
@@ -73,9 +80,11 @@ class Stats
 					'ecart_type'		=> 0,
 					'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
 					'derniere_commande'	=> 'NA',
+					'rue'				=> '',
 					'code_postal'		=> $customer->getCreatedIn(),
+					'ville'				=> '',
 					'email'				=> $customer->getEmail(),
-					'telephone'			=> $customer->getPrimaryBillingAddress()->getTelephone(),
+					'telephone'			=> '',
 				]);
 			}
 		}
@@ -243,11 +252,6 @@ class Stats
 
 	/****************************
 	 * NOTES CLIENTS *****************/
-
-	public function getBaseUrl()
-	{
-		return \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/sales_order/view/order_id/';
-	}
 	
 	public function end_month($date) 
 	{
@@ -275,6 +279,7 @@ class Stats
 				'date_livraison'	=> date('d/m/Y', strtotime($n->getDdate())), 
 				'increment_id'		=> $n->getData('increment_id'), 
 				'nom_client'		=> $n->getCustomerName(),
+				'id_client'			=> $n->getCustomerId(),
 				'note'				=> $n->getNote(),
 				'entity_id'			=> $n->getData('entity_id'),	
 			];
