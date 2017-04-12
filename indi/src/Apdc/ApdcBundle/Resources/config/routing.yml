@@ -99,10 +99,6 @@ billingPayoutSubmit:
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
   requirements: { choice:"[0-9]+" }
 
-statNote:
-  path: /stat/note/
-  defaults: { _controller: ApdcApdcBundle:Stat:note}
-
 toolProduct:
   path: /tool/product/
   defaults: { _controller: ApdcApdcBundle:Tool:product}
@@ -130,6 +126,14 @@ statVoucher:
 noteOrder:
   path: /stat/noteOrder/
   defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
+
+mapMerchants:
+    path: /map/merchants/
+    defaults: { _controller: ApdcApdcBundle:Map:merchants}
+
+mapCustomers:
+    path: /map/customers/
+    defaults: { _controller: ApdcApdcBundle:Map:customers}
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
