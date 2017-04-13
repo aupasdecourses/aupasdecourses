@@ -79,7 +79,7 @@ $(function() {
 });
 $(function(){
 	$("#datepickerEndVoucher").change(function(){
-		window.location='{{ path('statVoucher') }}?module=clients&action=view&option=coupon&date_debut='+$("#datepickerVoucher").val()+'&date_fin='+this.value;
+		window.location='{{ path('statVoucher') }}?date_debut='+$("#datepickerVoucher").val()+'&date_fin='+this.value;
 	});
 });
 $(document).ready(function() {

@@ -118,18 +118,91 @@ class Stats
 	public function getCustomerMapData()
 	{
 		$stats = $this->getCustomerStatData();
-
-
 		echo'<pre>';
 		var_dump($stats);
-		echo'<pre>';	
-
-
-
-
-
-
+		echo'</pre>';	
 	}
+	
+	
+	/** Mettre dans trait Model **/
+    private function checkEntryToModel($model, array $filters)
+    {
+        $entry = $model->getCollection();
+        foreach ($filters as $k => $v) {
+            $entry->addFieldToFilter($k, $v);
+        }
+        if ($entry->getFirstItem()->getId() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+	/** Mettre dans trait Model **/
+    private function addEntryToModel($model, $data, $updatedFields)
+    {
+        foreach ($data as $k => $v) {
+            $model->setData($k, $v);
+        }
+        foreach ($updatedFields as $k => $v) {
+            $model->setData($k, $v);
+        }
+        $model->save();
+    }
+
+	/** Mettre dans trait Model **/
+    private function updateEntryToModel($model, array $filters, array $updatedFields)
+    {
+        $entry = $model->getCollection();
+        foreach ($filters as $k => $v) {
+            $entry->addFieldToFilter($k, $v);
+        }
+        if (($id = $entry->getFirstItem()->getId()) != null) {
+            $model->load($id);
+            foreach ($updatedFields as $k => $v) {
+                $model->setData($k, $v);
+            }
+            $model->save();
+        } else {
+            $this->addEntryToModel($model, $updatedFields);
+        }
+    }
+
+
+
+	/** Mettre dans trait Model **/
+    public function addEntryToGeocodeCustomers(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/geocode_customers')),
+            $data
+        );
+    }
+
+	/** Mettre dans trait Model **/
+    public function updateEntryToGeocodeCustomers(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+
+
 
 
 

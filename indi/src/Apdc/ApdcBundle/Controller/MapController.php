@@ -15,6 +15,21 @@ class MapController extends Controller
 
 	public function customersAction()
 	{
-		return $this->render('ApdcApdcBundle::map/customers.html.twig');
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats	= $this->container->get('apdc_apdc.stats');
+		$map	= $stats->getCustomerStatData();
+
+
+
+		// update entry to geocode customers
+		
+		
+		return $this->render('ApdcApdcBundle::map/customers.html.twig',
+		[
+			'map'	=> $map, 
+		]);
 	}
 }	

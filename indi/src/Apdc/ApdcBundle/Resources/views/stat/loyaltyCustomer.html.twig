@@ -98,7 +98,7 @@ $(function() {
 });
 $(function(){
 	$("#datepickerEndLoyalty").change(function(){
-		window.location='{{ path('loyaltyCustomer') }}?module=clients&action=view&option=fidelite&date_debut='+$("#datepickerLoyalty").val()+'&date_fin='+this.value;
+		window.location='{{ path('loyaltyCustomer') }}?date_debut='+$("#datepickerLoyalty").val()+'&date_fin='+this.value;
 	});
 });
 /* Custom filtering function which will search data in column four between two values */
