@@ -17,6 +17,8 @@ class StatController extends Controller
 
 		$stats	= $this->container->get('apdc_apdc.stats');
 
+	//	$lala	= $stats->getCustomerMapData();
+
 		return $this->render('ApdcApdcBundle::stat/statCustomer.html.twig', [
 			'stat'				=> $stats->stats_clients(),
 			'customer_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'

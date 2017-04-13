@@ -25,27 +25,29 @@ class Stats
 		);
 	}
 
-	public function stats_clients()
+	/** get data from customer_entity + join sales_flat_order_address + join geocode_customers
+	* fonction mère */
+	public function getCustomerStatData()
 	{
 		$data = [];
-		$orders = \Mage::getModel('sales/order')->getCollection()
+		$orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
+
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'telephone'));
+		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
+		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.address', array('lat', 'long'));
+
+		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
-			->columns('MAX(updated_at) AS last_order')
+			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
+
+//		dump($orders->getSelect()->__toString());	
 		foreach ($orders as $order) {
-			$customer	= \Mage::getModel('customer/customer')->load($order->getCustomerId());
-			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
-			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-			
-			if($customer->getPrimaryBillingAddress()!=''){
-				$phone = $customer->getPrimaryBillingAddress()->getTelephone();
-			} else{
-				$phone = '';
-			}
+
 			array_push($data, [
 					'nom_client'		=> $order->getCustomerName(),
 					'id_client'			=> $order->getCustomerId(),
@@ -54,16 +56,30 @@ class Stats
 					'panier_moyen'		=> round($order->getAverageOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'panier_max'		=> round($order->getMaxOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-					'inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-					'rue'				=> $dataadd->getStreet()[0],
-					'code_postal'		=> $dataadd->getPostcode(),
-					'ville'				=> $dataadd->getCity(),
-					//'Créé dans'			=> $customer->getCreatedIn(),
+					'rue'				=> $order->getStreet()[0], // street = addresse complete & pas seulement rue
+					'code_postal'		=> $order->getPostcode(),
+					'ville'				=> $order->getCity(),
+					//'Créé dans'		=> $order->getCreatedIn(),
 					'email'				=> $order->getCustomerEmail(),
-					'telephone'			=> $phone,
+					'telephone'			=> $order->getTelephone(),
+					'latitude'			=> '',
+					'longitude'			=> '',
 				]);
 		}
+
+		return $data;
+	}
+
+	/** getCustomerStatData 
+	 *	AND ADD NEW CUSTOMERS
+	 *	fonction fille pour les stats clients, avec l'ajout de new users
+	 **/
+	public function stats_clients()
+	{
+		$data = $this->getCustomerStatData();	
+
 		//Add customer who never ordered
 		$customers = \Mage::getModel('customer/customer')
 			->getCollection()
@@ -73,7 +89,7 @@ class Stats
 			if ($key == false) {
 				array_push($data, [
 					'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-					'id_client'			=> $order->getCustomerId(),
+					'id_client'			=> $customer->getCustomerId(),
 					'nb_commande'		=> 0,
 					'panier_moyen'		=> 0,
 					'panier_max'		=> 0,
@@ -85,17 +101,46 @@ class Stats
 					'ville'				=> '',
 					'email'				=> $customer->getEmail(),
 					'telephone'			=> '',
+					'latitude'			=> '',
+					'longitude'			=> '',
 				]);
 			}
-		}
+	 	}
+	 
 		return $data;
 	}
+
+	/** getCustomerStatData
+	 * fill in geocode table
+	 *  FOR MAP CUSTOMERS
+	 *  fonction fille pour la carte clients
+	 **/
+	public function getCustomerMapData()
+	{
+		$stats = $this->getCustomerStatData();
+
+
+		echo'<pre>';
+		var_dump($stats);
+		echo'<pre>';	
+
+
+
+
+
+
+	}
+
+
+
+
+
+
+
 
 	/* FIDELITE */
 	/*****************************/
 	/*****************/
-
-
 
 	private function getOrderAttachments($order)
 	{
