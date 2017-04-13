@@ -28,6 +28,7 @@ var greenMarker = L.AwesomeMarkers.icon({
     markerColor: 'green',
   });
 
+/* affiche infos sur pop up client */
 function setMarker(data){
 	var markers = [];
 	$.each(data,function(i,d){
@@ -50,7 +51,7 @@ var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
 });
 
 ///Get and set markers
-var data=getjson('../../json/clients.json');
+var data = getjson('../../json/clients.json');
 var lieu = setMarker(data);
 
 //Map Bounds
