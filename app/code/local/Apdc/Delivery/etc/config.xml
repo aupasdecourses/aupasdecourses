@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.0.8</version>
+            <version>0.0.9</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
@@ -56,7 +56,10 @@
                     </refund_order>
                     <refund_items>
                         <table>refund_items</table>
-                    </refund_items>
+					</refund_items>
+					<geocode_customers>
+						<table>geocode_customers</table>
+					</geocode_customers>
                 </entities>
             </delivery_resource>
         </models>
