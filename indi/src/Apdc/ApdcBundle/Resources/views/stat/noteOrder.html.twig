@@ -36,13 +36,13 @@
 					<tr>
 							<td>{{ order.date_creation }}</td>
 							<td>{{ order.date_livraison }}</td>
-							<td><a href={{ base_url ~ order.entity_id }} target="_blank">{{ order.increment_id }}</td>
-							<td><a href={{ base_url ~ order.entity_id }} target="_blank">{{ order.nom_client }}</td>
+							<td><a href={{ order_url ~ order.entity_id }} target="_blank">{{ order.increment_id }}</a></td>
+							<td><a href={{ customer_url ~ order.id_client }} target="_blank">{{ order.nom_client }}</a></td>
 
 						{% if order.note is null %}
 							<td>NULL</td>
 						{% else %}
-							<td>{{ order.note }}</td>
+							<td><a href="https://docs.google.com/spreadsheets/d/1DEvRZt5nZPzj5zP4tOa-Gm96oQ4J2Xu8wX68TSIgt0U/edit#gid=772705954" target="_blank">{{ order.note }}</a></td>
 						{% endif %}
 					</tr>
 				{% endfor %}

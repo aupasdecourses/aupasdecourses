@@ -37,6 +37,20 @@ trait Products
 
 		if($commercant<>NULL){
 
+
+			// $attributeCode = 'commercant';
+			// $alias = 'commercant'.'_table';
+			// $attribute = \Mage::getSingleton('eav/config')->getAttribute(\Mage_Catalog_Model_Product::ENTITY, 'commercant');
+			// $collection->getSelect()
+			// 	->join(
+			// 		array($alias => $attribute->getBackendTable()),
+			// 		"e.entity_id = $alias.entity_id AND $alias.attribute_id={$attribute->getId()}",
+			// 		array($attributeCode => 'value')
+			// 	)
+			// ->join(array('shop_id'=> 'apdc_shop'),$alias.'.value = shop_id.id_attribut_commercant', array('name_commercant'=>"shop_id.name"));
+			// $collection->addFilterToMap('name_commercant', 'shop_id.name');
+			//$collection->addFieldToFilter('name_commercant', "Boucherie des Moines");
+
 			$attributeArray=$this->_attributeArray;
 
 			$collection->addFieldToFilter('commercant', $attributeArray[$commercant]);

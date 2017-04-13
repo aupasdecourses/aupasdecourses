@@ -131,18 +131,23 @@ class Magento
                 $delivery_days=$shop->getDeliveryDays();
                 $closed_periods=$shop->getClosingPeriods();
 
+                $shop_manager=\Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem();
+
                 $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
+                        'shop_id' => $shop->getIdShop(),
                         'store' => $storeinfo['name'],
                         'store_id' => $storeinfo['store_id'],
                         'name' => $shop->getName(),
                         'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
                         'phone' => $shop->getPhone(),
-                        'mobile' => '',
                         'mail3' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
                         'mailc' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
                         'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                        'manager_name' => $shop_manager->getFirstname().' '.$shop_manager->getLastname(),
+                        'mobile' => $shop_manager->getPhone(),
+                        'manager_id' => $shop_manager->getIdContact(),
                         'orders' => [],
                         'timetable' => implode(',', $shop->getTimetable()),
                         'closing_periods' => $closed_periods,

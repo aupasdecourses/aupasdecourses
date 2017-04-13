@@ -16,10 +16,10 @@ class StatController extends Controller
 		}
 
 		$stats	= $this->container->get('apdc_apdc.stats');
-		$stat	= $stats->stats_clients();
 
 		return $this->render('ApdcApdcBundle::stat/statCustomer.html.twig', [
-			'stat'			=> $stat,	
+			'stat'				=> $stats->stats_clients(),
+			'customer_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'
 		]); 
 	
 	}
@@ -82,14 +82,13 @@ class StatController extends Controller
 			$json_data = $stats->histogramme($date_debut, $date_fin);
 		}
 
-		$base_url = $stats->getBaseUrl();
-
 		return $this->render('ApdcApdcBundle::stat/noteOrder.html.twig', [
 			'date_debut'	=> $date_debut,
 			'date_fin'		=> $date_fin,
 			'notes'			=> $notes,
 			'json_data'		=> $json_data,
-			'base_url'		=> $base_url,
+			'order_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/sales_order/view/order_id/',
+			'customer_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'
 		]);
 	}
 }

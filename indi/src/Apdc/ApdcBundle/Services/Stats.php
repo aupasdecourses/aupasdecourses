@@ -32,23 +32,36 @@ class Stats
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
-			->columns('SUM(base_grand_total) AS amount_total')
+			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
 			->columns('MAX(updated_at) AS last_order')
 			->group('customer_id');
 		foreach ($orders as $order) {
 			$customer	= \Mage::getModel('customer/customer')->load($order->getCustomerId());
 			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
 			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
+			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+			
+			if($customer->getPrimaryBillingAddress()!=''){
+				$phone = $customer->getPrimaryBillingAddress()->getTelephone();
+			} else{
+				$phone = '';
+			}
 			array_push($data, [
-					'Nom Client'		=> $order->getCustomerName(),
-					'Nb Commande'		=> $order->getNbOrder(),
-					'Total'				=> round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-					'Dernière commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-					'Mail client'		=> $order->getCustomerEmail(),
-					'Rue'				=> $dataadd->getStreet()[0],
-					'Code Postal'		=> $dataadd->getPostcode(),
-					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-					'Créé dans'			=> $customer->getCreatedIn(),
+					'nom_client'		=> $order->getCustomerName(),
+					'id_client'			=> $order->getCustomerId(),
+					'nb_commande'		=> $order->getNbOrder(),
+					//'Total'			=> $order->getAmountTotal(),
+					'panier_moyen'		=> round($order->getAverageOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'panier_max'		=> round($order->getMaxOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
+					'rue'				=> $dataadd->getStreet()[0],
+					'code_postal'		=> $dataadd->getPostcode(),
+					'ville'				=> $dataadd->getCity(),
+					//'Créé dans'			=> $customer->getCreatedIn(),
+					'email'				=> $order->getCustomerEmail(),
+					'telephone'			=> $phone,
 				]);
 		}
 		//Add customer who never ordered
@@ -59,15 +72,19 @@ class Stats
 			$key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
 			if ($key == false) {
 				array_push($data, [
-					'Nom Client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-					'Nb Commande'		=> 0,
-					'Total'				=> 0,
-					'Dernière commande' => 'NA',
-					'Mail client'		=> $customer->getEmail(),
-					'Rue'				=> "NA",
-					'Code Postal'		=> "NA",
-					'Date Inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-					'Créé dans'			=> $customer->getCreatedIn(),
+					'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+					'id_client'			=> $order->getCustomerId(),
+					'nb_commande'		=> 0,
+					'panier_moyen'		=> 0,
+					'panier_max'		=> 0,
+					'ecart_type'		=> 0,
+					'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'derniere_commande'	=> 'NA',
+					'rue'				=> '',
+					'code_postal'		=> $customer->getCreatedIn(),
+					'ville'				=> '',
+					'email'				=> $customer->getEmail(),
+					'telephone'			=> '',
 				]);
 			}
 		}
@@ -235,11 +252,6 @@ class Stats
 
 	/****************************
 	 * NOTES CLIENTS *****************/
-
-	public function getBaseUrl()
-	{
-		return \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/sales_order/view/order_id/';
-	}
 	
 	public function end_month($date) 
 	{
@@ -259,15 +271,15 @@ class Stats
 		$notationClient->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
 		$notationClient->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
 
-
-
 		$result = [];
+
 		foreach ($notationClient as $n) {
 			$result[] = [
 				'date_creation'		=> date('d/m/Y', strtotime($n->getCreatedAt())),
 				'date_livraison'	=> date('d/m/Y', strtotime($n->getDdate())), 
 				'increment_id'		=> $n->getData('increment_id'), 
 				'nom_client'		=> $n->getCustomerName(),
+				'id_client'			=> $n->getCustomerId(),
 				'note'				=> $n->getNote(),
 				'entity_id'			=> $n->getData('entity_id'),	
 			];
