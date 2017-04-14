@@ -176,6 +176,11 @@ class ProductController extends AbstractController
         );
     }
 
+    public function getModel($name = null, $setForm = true)
+    {
+        return $this->get('apdc_apdc.repository.products');
+    }
+
     /**
      * @inheritdoc
      */

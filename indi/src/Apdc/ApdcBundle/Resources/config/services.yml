@@ -25,5 +25,5 @@ services:
 
     apdc_apdc.repository.products:
         class: AppBundle\Repository\ProductRepository
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@apdc_apdc.magento'

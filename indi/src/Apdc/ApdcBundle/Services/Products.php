@@ -11,7 +11,7 @@ trait Products
      * Return an array Id => Label for the specified attributes.
      *
      * @param array attributeCodes
-     * list of attributes codes to process 
+     * list of attributes codes to process
      *
      * @return array
      */
@@ -42,7 +42,7 @@ trait Products
      * Return an array Label => Id for the specified attributes.
      *
      * @param array attributeCodes
-     * list of attributes codes to process 
+     * list of attributes codes to process
      *
      * @return array
      */
@@ -81,7 +81,7 @@ trait Products
     * 	@param string $commercant
     *   Correspond au nom de l'attribut commercant_value (ce sera mieux d'utiliser l'id commercant utilisé dans les tables)
     * 	@param string $name
-    *   Nom du produit 
+    *   Nom du produit
     *	@return Mage_Collection
     */
     public function getProductsList($size = 20, $page = 1, $order_param = 'name', $order = 'ASC', $commercant = null, $name = null)
@@ -282,9 +282,20 @@ trait Products
         }
 
         $product->save();
-        
+
         } catch (Exception $e) {
             Mage::log($e->getMessage());
         }
+    }
+
+
+    /**
+     * @param string $name
+     *
+     * @return false|\Mage_Core_Model_Abstract
+     */
+    public function getModel($name)
+    {
+        return \Mage::getModel($name);
     }
 }

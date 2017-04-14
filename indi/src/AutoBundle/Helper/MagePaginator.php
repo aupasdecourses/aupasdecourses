@@ -3,9 +3,9 @@ namespace AutoBundle\Helper;
 
 use Doctrine\ORM\QueryBuilder;
 
-class Paginator extends AbstractPaginator
+class MagePaginator extends AbstractPaginator
 {
-    /** @var QueryBuilder */
+    /** @var object */
     protected $qb;
 
     /**
@@ -17,7 +17,6 @@ class Paginator extends AbstractPaginator
     public function __construct($queryBuilder, $limit = 20, $offset = 0, $options = [10, 20, 30, 50, 100, 500])
     {
         $this->qb = clone $queryBuilder;
-        $this->qb->select('count(magic.id)');
 
         $this->limit  = $limit;
         $this->offset = $offset;
@@ -34,12 +33,7 @@ class Paginator extends AbstractPaginator
     public function getTotalCount()
     {
         if (!isset($this->totalCount)) {
-            $reset            = clone $this->qb;
-            $this->totalCount = $reset
-                ->resetDQLPart('join')
-                ->resetDQLPart('where')
-                ->resetDQLPart('groupBy')
-                ->getQuery()->getSingleScalarResult();
+            $this->totalCount = $this->qb->getSize();
         }
 
         return $this->totalCount;
@@ -51,10 +45,7 @@ class Paginator extends AbstractPaginator
     public function getSearchCount()
     {
         if (!isset($this->searchCount)) {
-            $reset             = clone $this->qb;
-            $this->searchCount = $reset
-                ->resetDQLPart('groupBy')
-                ->getQuery()->getSingleScalarResult();
+            $this->totalCount = $this->qb->getSize(); // getAllIds()
         }
 
         return $this->searchCount;
