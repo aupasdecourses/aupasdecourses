@@ -47,7 +47,7 @@
                 <href>js/custom.js</href>
             </action>
             <action method="addCss">
-                <stylesheet>ddate/css/ddate.css</stylesheet>
+                <stylesheet>css/ddate.css</stylesheet>
             </action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
         </reference>

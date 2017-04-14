@@ -40,8 +40,22 @@
                         </div>
                     <?php endif; ?>
 
-                    <div class="col-md-5 col-md-offset-3 col-sm-12 text-right">
-                        <div class="skip-help skip-container">
+                    <div class="col-md-6 col-md-offset-2 col-sm-12 text-right">
+
+                        <div class="header-delivery-container skip-container">
+                             <a href="#" title="Livraison">
+								<i class="fa fa-list-ul"></i>
+								<span class="label"><?php echo $this->__('Delivery') ?></span>
+								<i class="fa fa-angle-down"></i>
+							 </a>
+							<div class="block block-delivery" id="header-delivery">
+								<div class="apdc-popup-content">
+									<?php echo $this->getChildHtml('header.delivery') ?>
+								</div>
+							</div>
+                         </div>
+                         
+                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
                                 <span class="label">Aide</span>
                             </a>
@@ -54,54 +68,22 @@
                             </ul>
                         </div>
 
-                        <div class="skip-container col-sm-3">
-                             <a href="#header-delivery" class="skip-link skip-delivery">
-                                <i class="fa fa-question-circle"></i>
-                                <span class="label"><?php echo $this->__('Delivery') ?></span>
-                             </a>
-                             <div id="header-delivery" class="dropdown-menu skip-content">
-                                 <?php echo $this->getChildHtml('header.delivery') ?>
-                             </div>
-                         </div>
-
                         <div class="header-account-container skip-container">
-
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>
                                 <span class="label"><?php echo $this->__('Account'); ?></span>
                                 <i class="fa fa-check account-connected"></i>
                             <?php else : ?>
                                 <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
                             <?php endif; ?>
-                                <!--<a href="#header-account" class="skip-link skip-account">
-                                <i class="fa fa-user"></i>
-                                <?php if($this->helper('customer')->isLoggedIn()) : ?>
-                                    <span class="label"><?php echo $this->__('Account'); ?></span>
-                                    <i class="fa fa-check account-connected"></i>
-                                <?php else : ?>
-                                    <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
-                                    <span class="label"><?php echo $this->__('Account'); ?><span>
-                                <?php endif; ?>-->
-                            <!--</a>-->
-                            <!-- Account Menu-->
-                            <!-- <div id="header-account" class="dropdown-menu skip-content" id="right-links">
-                                <?php echo $this->getChildHtml('topLinks') ?>
-                            </div> -->
-
-
-                            <?php if($this->helper('customer')->isLoggedIn()) : ?>
-                                <?php echo $this->getChildHtml('topLinks') ?>
-                                <a href="">My account</a>
-                                <a href="">Logout</a>
-                            <?php else : ?>
-                                <?php /*echo $this->getChildHtml('customer_form_login')*/ ?>
-								<div class="block block-login" id="login-form-header_popup">
-									<div class="apdc-popup-content">
+                            <div class="block block-login" id="login-form-header_popup">
+								<div class="apdc-popup-content">
+									<?php if($this->helper('customer')->isLoggedIn()) : ?>
+										<?php echo $this->getChildHtml('topLinks') ?>
+									<?php else : ?>
 										<?php echo $this->getChildHtml('customer_login') ?>
-									</div>
+									<?php endif; ?>
 								</div>
-                            <?php endif; ?>
-
-
+							</div>
                         </div>
 
                         <!-- Cart -->
@@ -124,7 +106,7 @@
 <?php echo $this->getChildHtml('page_content_heading'); ?>
 <script>
 	$j(document).ready(function(){
-		console.log('ready');
+		
 		$j('.header-account-container a').click(function(evt){
 			if($j(this).parent().find('.block-login').hasClass('open') ){
 				$j(this).parent().find('.block-login').removeClass('open');
@@ -135,5 +117,17 @@
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
+		
+		$j('.header-delivery-container a').click(function(evt){
+			if($j(this).parent().find('.block-delivery').hasClass('open') ){
+				$j(this).parent().find('.block-delivery').removeClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
+			}
+			else{
+				$j(this).parent().find('.block-delivery').addClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
+			}
+		});
+		
 	});
 </script>
