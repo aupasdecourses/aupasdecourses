@@ -12127,36 +12127,79 @@ header .top-nav li a a:visited {
   position: fixed !important;
 }
 
+.header-delivery-container {
+  margin-right: 10px;
+}
+
+.header-delivery-container .skip-links .label {
+  padding: 0;
+}
+
 #header-delivery {
   position: absolute;
   z-index: 100;
-  top: 0;
+  top: 60px;
   left: -120px;
+  display: none;
+  padding: 10px;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
 }
 
-#header-delivery .deli_time {
-  width: 20%;
+#header-delivery.open {
+  display: block;
 }
 
-#header-delivery .deli_date {
-  width: 80%;
+#header-delivery h3 {
+  margin: 0;
+  text-transform: none;
 }
 
-#header-delivery .deli_date_top ul li {
-  width: 57px;
-}
-
-#header-delivery .select_one ul li {
-  width: 57px;
-  padding: 10px 5px;
+#header-delivery fieldset ul {
+  list-style-type: none;
 }
 
 #header-delivery .delivery {
   width: auto !important;
+  border: none;
 }
 
-#header-delivery .slideshow-content {
+#header-delivery .delivery .deli_time {
+  width: 20%;
+}
+
+#header-delivery .delivery .deli_time p {
+  font-size: .8125rem;
+  margin: 20px 0 36px;
+  color: #000;
+}
+
+#header-delivery .delivery .deli_date {
+  width: 80%;
+}
+
+#header-delivery .delivery .deli_date .slideshow-content {
   width: 100%;
+}
+
+#header-delivery .delivery .deli_date_top ul li {
+  width: 66px;
+}
+
+#header-delivery .delivery .select_one ul li {
+  width: 66px;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+#header-delivery .delivery .select_one ul li i {
+  font-size: 1rem;
+}
+
+#header-delivery .delivery .select_one ul li a {
+  width: auto;
+  padding: 0;
 }
 
 /* -------------------------------------------- *

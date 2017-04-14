@@ -124,12 +124,13 @@
                                                                         <a href="#select" onclick="selectDdate('<?php echo date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)) ?>','<?php echo $slot->getDtimeId(); ?>'); selectDdateAct(jQuery(this));" data-ddatei="dd_<?php echo $slot->getId().'_'.$i; ?>">
                                                                         <!-- <span class="remliv"><?php
                                                                         echo $remliv;?> </span> -->
-                                                                            <i class="fa fa-calendar-check-o remliv-icon"></i>
+                                                                            <i class="fa fa-check remliv-icon"></i><br>
                                                                             Créneau Dispo</a>
     																</li>
     															<?php }else{ ?>
     																<li class="disablerow">
-                                                                    <i class="fa fa-calendar-times-o remliv-icon"></i>Créneau Non Dispo</li>
+                                                                    <i class="fa fa-close remliv-icon"></i><br>
+                                                                    Créneau Non Dispo</li>
     															<?php
                                                                 };
                                                             }

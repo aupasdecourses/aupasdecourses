@@ -583,28 +583,67 @@ header{
     position: fixed !important;
 }
 
+.header-delivery-container{
+    margin-right: 10px;
+    .skip-links{
+        .label{
+            padding: 0;
+        }
+    }
+}
 #header-delivery{
     position: absolute;
-    top: 0;
+    top: 60px;
     left: -120px;
     z-index: 100;
-    .deli_time{
-        width: 20%;
+    display: none;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+    &.open{
+        display: block;
     }
-    .deli_date{
-        width: 80%;
+    h3{
+        margin: 0;
+        text-transform: none;
     }
-    .deli_date_top ul li{
-        width: 57px;
-    }
-    .select_one ul li{
-        padding: 10px 5px;
-        width: 57px;
+    fieldset{
+        ul{
+            list-style-type: none;
+        }
     }
     .delivery{
         width: auto!important;
-    }
-    .slideshow-content{
-        width: 100%;
+        border: none;
+        .deli_time{
+            width: 20%;
+            p{
+                font-size: 0.8125rem;
+                color: #000;
+                margin: 20px 0 36px;
+            }
+        }
+        .deli_date{
+            width: 80%;
+            .slideshow-content{
+                width: 100%;
+            }
+        }
+        .deli_date_top ul li{
+            width: 66px;
+        }
+        .select_one ul li{
+            padding: 10px 5px;
+            width: 66px;
+            text-align: center;
+            i{
+                font-size: 1rem;
+            }
+            a{
+                padding: 0;
+                width: auto;
+            }
+        }
     }
 }
