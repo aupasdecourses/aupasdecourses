@@ -114,18 +114,16 @@ abstract class AbstractMageRepository
         $only = null
     ) {
         $qb = $this->model->getCollection();
-        $qb->addAttributeToSelect('*');
-        $qb->setPageSize(20);
-        $qb->setCurPage(1);
 
-        /* TODO: Reimplement
-         if ($only) {
+        if ($only) {
             if (!is_array($only)) {
                 $only = [$only];
             }
 
-            $qb->select('magic.' . implode(', magic.', $only));
-        }*/
+            $qb->addAttributeToSelect(implode(', ', $only));
+        } else {
+            $qb->addAttributeToSelect('*');
+        }
 
         if (!empty($search['value'])) {
             $utf8 = [
@@ -181,14 +179,13 @@ abstract class AbstractMageRepository
             }
         }
 
-        /* TODO: Reimplement
         foreach ($orderBy as $key => $value) {
             if (isset($this->orderWithjoin) && array_key_exists($key, $this->orderWithjoin)) {
-                $qb->add('orderBy', $this->orderWithjoin[$key] . ' ' . $value);
+                // $qb->add('orderBy', $this->orderWithjoin[$key] . ' ' . $value); TODO: Reimplement
             } else {
-                $qb->add('orderBy', 'magic.' . $key . ' ' . $value);
+                $qb->addAttributeToSort($key, $value);
             }
-        }*/
+        }
 
         return $qb;
     }
@@ -212,13 +209,12 @@ abstract class AbstractMageRepository
      */
     protected function filtersQuery($filters, $qb)
     {
-        return; // TODO: reimplemwent
         if (!empty($filters)) {
             foreach ($filters as $name => $filter) {
                 if (is_array($filter)) {
-                    $qb->andWhere('magic.' . $name . ' IN (' . implode(',', $filter) . ')');
+                    $qb->addFieldToFilter($name, ['in' => $filter]);
                 } else {
-                    $qb->andWhere('magic.' . $name . ' = \'' . $filter . '\'');
+                    $qb->addFieldToFilter($name, $filter);
                 }
             }
         }
@@ -234,7 +230,9 @@ abstract class AbstractMageRepository
      */
     protected function with($qb, $relation, $alias = null, $groupBy = null)
     {
-        // TODO: reimplement
+        // TODO: reimplement in needed
+        return;
+
         if (!$alias) {
             //TODO: generate alias based on relation name (eg. magic.revisions -> revisions or magicRevisions)
         }
@@ -269,12 +267,6 @@ abstract class AbstractMageRepository
      */
     public function count()
     {
-        // TODO: reimplement
-        $count = $this->createQueryBuilder('magic')
-            ->select('count(magic.id)')
-            ->setMaxResults(1)
-            ->getQuery()->getSingleScalarResult();
-
-        return $count;
+        return $this->model->getCollection()->getSize;
     }
 }
