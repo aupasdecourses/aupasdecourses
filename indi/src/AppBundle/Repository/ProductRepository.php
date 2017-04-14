@@ -9,10 +9,11 @@ class ProductRepository extends AbstractMageRepository
 
     /**
      * @inheritdoc
+     *
+     * @see http://devdocs.magento.com/guides/m1x/magefordev/mage-for-dev-8.html#other-comparison-operators
      */
     protected function searchQuery($search, $qb)
     {
-        // TODO: reimplement
-        $qb->andWhere('magic.name LIKE \'%' . str_replace('\'', '\'\'', $search) . '%\'');
+        $qb->addFieldToFilter('name', ['like' => $search]);
     }
 }
