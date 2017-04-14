@@ -12127,6 +12127,38 @@ header .top-nav li a a:visited {
   position: fixed !important;
 }
 
+#header-delivery {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: -120px;
+}
+
+#header-delivery .deli_time {
+  width: 20%;
+}
+
+#header-delivery .deli_date {
+  width: 80%;
+}
+
+#header-delivery .deli_date_top ul li {
+  width: 57px;
+}
+
+#header-delivery .select_one ul li {
+  width: 57px;
+  padding: 10px 5px;
+}
+
+#header-delivery .delivery {
+  width: auto !important;
+}
+
+#header-delivery .slideshow-content {
+  width: 100%;
+}
+
 /* -------------------------------------------- *
  * Messages
  */
@@ -12587,6 +12619,7 @@ section .section-description {
 
 .block-promos .apdc-products-grid .product-image img {
   width: 100%;
+  max-width: 210px;
   height: auto;
 }
 
