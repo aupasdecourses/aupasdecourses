@@ -2,13 +2,29 @@
 
 namespace AutoBundle\Repository;
 
-use AutoBundle\Helper\Paginator;
+use Apdc\ApdcBundle\Services\Magento;
+use AutoBundle\Helper\MagePaginator as Paginator;
 
 /**
  * Abstract Mage Repository
  */
 abstract class AbstractMageRepository
 {
+    /**
+     * @var Magento
+     */
+    protected $mage;
+
+    /**
+     * @var object
+     */
+    protected $model;
+
+    /**
+     * @var string
+     */
+    protected $modelName;
+
     /** @var   array  Table field name aliases, defined as aliasFieldName => actualFieldName */
     protected $aliasFields = [];
 
@@ -19,6 +35,17 @@ abstract class AbstractMageRepository
     protected $withs = [];
 
     protected $orderWithjoin = null;
+
+    /**
+     * AbstractMageRepository constructor.
+     *
+     * @param $mage
+     */
+    public function __construct(Magento $mage)
+    {
+        $this->mage  = $mage;
+        $this->model = $mage->getModel($this->modelName);
+    }
 
     /**
      * Get the real name of a field name based on its alias.
@@ -57,7 +84,15 @@ abstract class AbstractMageRepository
         $offset = null,
         $only = null
     ) {
-        return $this->searchAndfindQuery($search, $filters, $orderBy, $limit, $offset, $only)->getResult();
+        $return = [];
+
+        if ($items = $this->searchAndfindQuery($search, $filters, $orderBy, $limit, $offset, $only)) {
+            foreach ($items as $item) {
+                $return[] = $item->toArray();
+            }
+        }
+
+        return $return;
     }
 
     /**
@@ -78,15 +113,19 @@ abstract class AbstractMageRepository
         $offset = null,
         $only = null
     ) {
-        $qb = $this->createQueryBuilder('magic');
+        $qb = $this->model->getCollection();
+        $qb->addAttributeToSelect('*');
+        $qb->setPageSize(20);
+        $qb->setCurPage(1);
 
-        if ($only) {
+        /* TODO: Reimplement
+         if ($only) {
             if (!is_array($only)) {
                 $only = [$only];
             }
 
             $qb->select('magic.' . implode(', magic.', $only));
-        }
+        }*/
 
         if (!empty($search['value'])) {
             $utf8 = [
@@ -135,20 +174,23 @@ abstract class AbstractMageRepository
             $this->paginator = new Paginator($qb, $limit, $offset);
 
             if ($limit > 0) {
-                $qb->setFirstResult($offset);
-                $qb->setMaxResults($limit);
+                $page = 1 + ($offset / $limit);
+
+                $qb->setPageSize($limit);
+                $qb->setCurPage($page);
             }
         }
 
+        /* TODO: Reimplement
         foreach ($orderBy as $key => $value) {
             if (isset($this->orderWithjoin) && array_key_exists($key, $this->orderWithjoin)) {
                 $qb->add('orderBy', $this->orderWithjoin[$key] . ' ' . $value);
             } else {
                 $qb->add('orderBy', 'magic.' . $key . ' ' . $value);
             }
-        }
+        }*/
 
-        return $qb->getQuery();
+        return $qb;
     }
 
     /**
@@ -170,6 +212,7 @@ abstract class AbstractMageRepository
      */
     protected function filtersQuery($filters, $qb)
     {
+        return; // TODO: reimplemwent
         if (!empty($filters)) {
             foreach ($filters as $name => $filter) {
                 if (is_array($filter)) {
@@ -191,6 +234,7 @@ abstract class AbstractMageRepository
      */
     protected function with($qb, $relation, $alias = null, $groupBy = null)
     {
+        // TODO: reimplement
         if (!$alias) {
             //TODO: generate alias based on relation name (eg. magic.revisions -> revisions or magicRevisions)
         }
@@ -214,7 +258,7 @@ abstract class AbstractMageRepository
     public function getPaginator()
     {
         if (!isset($this->paginator)) {
-            $this->paginator = new Paginator($this->createQueryBuilder('magic'));
+            $this->paginator = new Paginator($this->model->getCollection());
         }
 
         return $this->paginator;
@@ -225,6 +269,7 @@ abstract class AbstractMageRepository
      */
     public function count()
     {
+        // TODO: reimplement
         $count = $this->createQueryBuilder('magic')
             ->select('count(magic.id)')
             ->setMaxResults(1)
