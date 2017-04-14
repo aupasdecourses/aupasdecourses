@@ -28,7 +28,7 @@
 									   class="show-product-popup product-image"
 									   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
 
-										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(200, 125)?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
+										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
 										<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
 									</a>
 									<div class="product-info">
@@ -86,7 +86,7 @@
 									   class="show-product-popup product-image"
 									   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
 
-										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')->resize(200, 125)?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
+										<img src="<?= $this->helper('catalog/image')->init($selection, 'small_image')?>" width="200" height="125" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
 										<?php echo $this->getChild('product_labels')->setData('product', $selection)->toHtml(); ?>
 									</a>
 									<div class="product-info">

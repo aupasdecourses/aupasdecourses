@@ -582,3 +582,29 @@ header{
 .header-minicart .minicart-wrapper:before, .header-minicart .minicart-wrapper:after {
     position: fixed !important;
 }
+
+#header-delivery{
+    position: absolute;
+    top: 0;
+    left: -120px;
+    z-index: 100;
+    .deli_time{
+        width: 20%;
+    }
+    .deli_date{
+        width: 80%;
+    }
+    .deli_date_top ul li{
+        width: 57px;
+    }
+    .select_one ul li{
+        padding: 10px 5px;
+        width: 57px;
+    }
+    .delivery{
+        width: auto!important;
+    }
+    .slideshow-content{
+        width: 100%;
+    }
+}
