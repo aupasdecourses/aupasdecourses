@@ -100,8 +100,7 @@ class ProductController extends AbstractController
                     $to
                 );
 
-                if (!$result = $this->get('mailer')->send($message))
-                {
+                if (!$result = $this->get('mailer')->send($message)) {
                     // TODO: Maybe log error later?
                     // TODO: Maybe we can also add some notification to the user
                 }
@@ -135,7 +134,7 @@ class ProductController extends AbstractController
                 }
 
                 $photo = $this->get('request_stack')->getMasterRequest()
-                    ->getUriForPath('/uploads/products/'.$entity->getId().'/'.$entity->getPhoto());;
+                    ->getUriForPath('/uploads/products/'.$entity->getId().'/'.$entity->getPhoto());
 
                 $bodyChanges = [
                     'ref'              => 'Référence : '.$entity->getRef(),
@@ -169,8 +168,7 @@ class ProductController extends AbstractController
                     $to
                 );
 
-                if (!$result = $this->get('mailer')->send($message))
-                {
+                if (!$result = $this->get('mailer')->send($message)) {
                     // TODO: Maybe log error later?
                     // TODO: Maybe we can also add some notification to the user
                 }
