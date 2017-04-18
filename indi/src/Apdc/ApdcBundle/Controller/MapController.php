@@ -23,20 +23,21 @@ class MapController extends Controller
 		}
 
 		$stats	= $this->container->get('apdc_apdc.stats');
-		$map	= $stats->getCustomerMapData();
 
-		/*
-		$fs = new Filesystem();
-		if($fs->exists('../web/json/clients.json')) {
-			$fs->dumpFile('../web/json/clients.json', $map);
-		}
-		*/
+
+//		$json_data = $stats->addLatLongAndJsonEncode();
+//		$fs = new Filesystem();
+//		if($fs->exists('../web/json/clients.json')) {
+//			$fs->dumpFile('../web/json/clients.json', $json_data);
+//		}
+
+
 		// update entry to geocode customers
 		
 		
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
-		[
-			'map'	=> $map, 
+			[
+//				'json_data'	=> $json_data,
 		]);
 	}
 }	

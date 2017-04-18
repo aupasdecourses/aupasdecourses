@@ -115,14 +115,14 @@ class Stats
 	public function geocodeAdress($adress) {
 		$data	= [];
 		$adress = urlencode(htmlentities($adress));
-		$query	= 'http://nominatim.openstreetmap.org/search?format=json&q='.$adress.'&countrycodes=fr';
+		$query	= 'http://nominatim.openstreetmap.org/search?format=json&street='.$adress.'&city=Paris&country=France&countrycodes=fr';
 		$string = file_get_contents($query);
 		$json	= json_decode($string, true);
 
 		return $json;
 	}
 
-	public function addLatLong()
+	public function addLatLongAndJsonEncode()
 	{
 		$stats = $this->getCustomerStatData();
 
@@ -134,6 +134,10 @@ class Stats
 				$stat['lon'] = floatval($json[0]['lon']);
 			}
 		}
+
+		$json_data = json_encode($stats);
+
+		return $json_data;
 	}
 
 	/** getCustomerStatData
@@ -142,14 +146,7 @@ class Stats
 	 *  fonction fille pour la carte clients
 	 **/
 	public function getCustomerMapData()
-	{
-		$stats = $this->addLatLong();
-		
-//		$json_data = json_encode($stats);	
-//		return $json_data;
-
-		return $stats;
-	}
+	{}
 	
 	
 	/** Mettre dans trait Model **/
