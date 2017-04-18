@@ -11614,6 +11614,10 @@ header .top-nav li a a:visited {
   vertical-align: -10px;
 }
 
+.page-header-container .skip-links .skip-container .account-connected {
+  color: #3ab64b;
+}
+
 .page-header-container .skip-links .skip-container-header-search {
   margin-top: 8px;
 }
@@ -11636,7 +11640,7 @@ header .top-nav li a a:visited {
 
 .header-account-container {
   position: relative;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .header-account-container a span i {
@@ -12152,8 +12156,10 @@ header .top-nav li a a:visited {
 }
 
 #header-delivery h3 {
+  font-size: 1.125rem;
   margin: 0;
   text-transform: none;
+  color: #1e555a;
 }
 
 #header-delivery fieldset ul {
@@ -12167,6 +12173,10 @@ header .top-nav li a a:visited {
 
 #header-delivery .delivery .deli_time {
   width: 20%;
+}
+
+#header-delivery .delivery .deli_time h6 {
+  border: none;
 }
 
 #header-delivery .delivery .deli_time p {
@@ -12193,13 +12203,59 @@ header .top-nav li a a:visited {
   text-align: center;
 }
 
+#header-delivery .delivery .select_one ul li.disablerow i {
+  color: #000;
+}
+
 #header-delivery .delivery .select_one ul li i {
   font-size: 1rem;
+  color: #3ab64b;
 }
 
 #header-delivery .delivery .select_one ul li a {
   width: auto;
   padding: 0;
+  color: #3ab64b;
+}
+
+#header-delivery .delivery .select_one ul li a:hover {
+  border: none;
+}
+
+#header-delivery .delivery .select_one ul li a.ddate_day_active {
+  padding: 5px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #3ab64b;
+}
+
+#header-delivery .delivery .select_one ul li a.ddate_day_active i {
+  color: #fff;
+}
+
+#header-delivery .delivery .deli_date_top {
+  border: none;
+}
+
+#header-delivery .delivery .deli_date_top.deli_date_head li {
+  font-size: .875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#header-delivery .delivery .deli_date_top.deli_date_head li.oddrow {
+  background: none;
+}
+
+#header-delivery .delivery .deli_date_top.deli_date_head li span {
+  font-size: .75rem;
+  text-transform: none;
+  color: #000;
+}
+
+#header-delivery .ddate_selected span {
+  color: #3ab64b;
 }
 
 /* -------------------------------------------- *
@@ -13146,6 +13202,12 @@ footer .social-list .btn-social-icon {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+#opc-billing h2 {
+  font-size: 2.25rem;
+  text-transform: none;
+  color: #3ab64b;
 }
 
 @media screen and (min-width: 1200px) {

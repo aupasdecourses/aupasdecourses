@@ -24,6 +24,7 @@
             <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
         </reference>
         <remove name="header.delivery"/>
+        <remove name="top.menu"/>
         <!-- Merge Payment & Review -->
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">

@@ -30,17 +30,17 @@
                         </div>
                     </div>
 
-                    <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
-                    <?php if($session->isLoggedIn()) : ?>
-                        <div class="skip-container hidden-sm">
-                            <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
-                                <i class="fa fa-bullhorn"></i>
-                                <span class="label">Parrainez</span>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-
                     <div class="col-md-6 col-md-offset-2 col-sm-12 text-right">
+                        
+                        <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
+                        <?php if($session->isLoggedIn()) : ?>
+                            <div class="skip-container hidden-sm">
+                                <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
+                                    <i class="fa fa-bullhorn"></i>
+                                    <span class="label">Parrainez</span>
+                                </a>
+                            </div>
+                        <?php endif; ?>
 
                         <div class="header-delivery-container skip-container">
                              <a href="#" title="Livraison">
@@ -70,8 +70,8 @@
 
                         <div class="header-account-container skip-container">
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>
+                                <i class="fa fa-user account-connected"></i>
                                 <span class="label"><?php echo $this->__('Account'); ?></span>
-                                <i class="fa fa-check account-connected"></i>
                             <?php else : ?>
                                 <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
                             <?php endif; ?>

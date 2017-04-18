@@ -147,6 +147,9 @@ header{
             margin-top: 17px;
             display: inline-block;
             vertical-align: -10px;
+            .account-connected{
+                color: $color-main-green;
+            }
         }
         .skip-container-header-search{
             margin-top: 8px;
@@ -169,7 +172,7 @@ header{
 }
 .header-account-container{
     position: relative;
-    margin-right: 20px;
+    margin-right: 10px;
     a{
         span{
             i{
@@ -607,6 +610,8 @@ header{
     h3{
         margin: 0;
         text-transform: none;
+        font-size: 1.125rem;
+        color: $color-second-green;
     }
     fieldset{
         ul{
@@ -618,6 +623,9 @@ header{
         border: none;
         .deli_time{
             width: 20%;
+            h6{
+                border: none;
+            }
             p{
                 font-size: 0.8125rem;
                 color: #000;
@@ -637,13 +645,56 @@ header{
             padding: 10px 5px;
             width: 66px;
             text-align: center;
+            &.disablerow{
+                i{
+                    color: #000;
+                }
+            }
             i{
                 font-size: 1rem;
+                color: $color-main-green;
             }
             a{
                 padding: 0;
                 width: auto;
+                color: $color-main-green;
+                &:hover{
+                    border: none;
+                }
+                &.ddate_day_active{
+                    background-color: $color-main-green;
+                    border-radius: 5px;
+                    padding: 5px;
+                    color: #fff;
+                    border: none;
+                    i{
+                        color: #fff;
+                    }
+                }
             }
+        }
+        .deli_date_top{
+            border: none;
+            &.deli_date_head{
+                li{
+                    text-transform: uppercase;
+                    font-size: 0.875rem;
+                    font-weight: 700;
+                    &.oddrow{
+                        background: none;
+                    }
+                    span{
+                        text-transform: none;
+                        color: #000;
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+        }
+    }
+    .ddate_selected{
+        span{
+            color: $color-main-green;
         }
     }
 }
