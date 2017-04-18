@@ -1,5 +1,5 @@
  
-///PROCESS JSON FOR COMMERCANTS ///
+///PROCESS JSON FOR CUSTOMERS ///
 
  //Make getJSON asachrynous, to get elements from geocode1 function
  $.ajaxSetup({
@@ -33,12 +33,12 @@ function setMarker(data){
 	var markers = [];
 	$.each(data,function(i,d){
 			if(d.lat!=="" && d.lon!=="" && d.lat!==null && d.lon!==null){
-				if(d.Adresse.substring(0, 3) == "750"){
+				if(d.addr.substring(0, 3) == "750"){
 					var marker = L.marker([d.lat, d.lon], {icon: redMarker});
 				}else{
 					var marker = L.marker([d.lat, d.lon], {icon: greenMarker});
 				}
-				marker.bindPopup('<div>'+d.Nom+'</div><div>'+d.Adresse+'</div><div>Lat: '+d.lat+'</div><div>Lon:'+d.lon+'</div>');
+				marker.bindPopup('<div>'+d.nom_client+'</div><div>'+d.ville+'</div><div>'+d.addr+'</div><div>Lat: '+d.lat+'</div><div>Lon:'+d.lon+'</div>');
 				markers.push(marker);
 			}
 		});

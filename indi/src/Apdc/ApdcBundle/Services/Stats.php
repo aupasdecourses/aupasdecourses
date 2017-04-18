@@ -34,7 +34,7 @@ class Stats
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
 
-		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'telephone'));
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
 		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.address', array('lat', 'long'));
 
@@ -58,14 +58,15 @@ class Stats
 					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-					'rue'				=> $order->getStreet()[0], // street = addresse complete & pas seulement rue
+					'rue'				=> $order->getStreet()[0], 
+					'addr'				=> $order->getStreet(),
 					'code_postal'		=> $order->getPostcode(),
 					'ville'				=> $order->getCity(),
 					//'Créé dans'		=> $order->getCreatedIn(),
 					'email'				=> $order->getCustomerEmail(),
 					'telephone'			=> $order->getTelephone(),
-					'latitude'			=> '',
-					'longitude'			=> '',
+					'lat'				=> '',
+					'lon'				=> '',
 				]);
 		}
 
@@ -97,17 +98,42 @@ class Stats
 					'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
 					'derniere_commande'	=> 'NA',
 					'rue'				=> '',
+					'addr'				=> '',
 					'code_postal'		=> $customer->getCreatedIn(),
 					'ville'				=> '',
 					'email'				=> $customer->getEmail(),
 					'telephone'			=> '',
-					'latitude'			=> '',
-					'longitude'			=> '',
+					'lat'				=> '',
+					'lon'				=> '',
 				]);
 			}
 	 	}
 	 
 		return $data;
+	}
+
+	public function geocodeAdress($adress) {
+		$data	= [];
+		$adress = urlencode(htmlentities($adress));
+		$query	= 'http://nominatim.openstreetmap.org/search?format=json&q='.$adress.'&countrycodes=fr';
+		$string = file_get_contents($query);
+		$json	= json_decode($string, true);
+
+		return $json;
+	}
+
+	public function addLatLong()
+	{
+		$stats = $this->getCustomerStatData();
+
+		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
+		foreach ($stats as &$stat) {
+			if($stat['addr'] != "") {
+				$json = $this->geocodeAdress(htmlentities($stat['addr']));
+				$stat['lat'] = floatval($json[0]['lat']);
+				$stat['lon'] = floatval($json[0]['lon']);
+			}
+		}
 	}
 
 	/** getCustomerStatData
@@ -117,10 +143,12 @@ class Stats
 	 **/
 	public function getCustomerMapData()
 	{
-		$stats = $this->getCustomerStatData();
-		echo'<pre>';
-		var_dump($stats);
-		echo'</pre>';	
+		$stats = $this->addLatLong();
+		
+//		$json_data = json_encode($stats);	
+//		return $json_data;
+
+		return $stats;
 	}
 	
 	
