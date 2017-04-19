@@ -1,4 +1,3 @@
- 
 ///PROCESS JSON FOR CUSTOMERS ///
 
  //Make getJSON asachrynous, to get elements from geocode1 function
@@ -51,7 +50,9 @@ var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
 });
 
 ///Get and set markers
-var data = getjson('../../json/clients.json');
+
+
+data = JSON.parse(JSON.stringify(json_data));
 var lieu = setMarker(data);
 
 //Map Bounds

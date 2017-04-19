@@ -24,5 +24,8 @@
 	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-routing-machine.js"></script>	
 	<script type="text/javascript" src="{{ path ('root') }}js/map/Control.Geocoder.js"></script>	
 	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.markercluster-src.js"></script>	
+	<script type="text/javascript">	
+		var json_data = {{ json_data|raw }};
+	</script>
 	<script type="text/javascript" src="{{ path ('root') }}js/map/clients.js"></script>	
 {% endblock %}

@@ -6,9 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 class MapController extends Controller 
 {
 	public function merchantsAction()
@@ -25,19 +22,15 @@ class MapController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats');
 
 
-//		$json_data = $stats->addLatLongAndJsonEncode();
-//		$fs = new Filesystem();
-//		if($fs->exists('../web/json/clients.json')) {
-//			$fs->dumpFile('../web/json/clients.json', $json_data);
-//		}
 
+		$json_data = $stats->addLatLongAndJsonEncode();
 
 		// update entry to geocode customers
 		
 		
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
 			[
-//				'json_data'	=> $json_data,
+				'json_data'	=> $json_data,
 		]);
 	}
 }	

@@ -112,7 +112,31 @@ class Stats
 		return $data;
 	}
 
-	public function geocodeAdress($adress) {
+
+	public function cleanAddrForMap()
+	{
+		$stats = $this->getCustomerStatData();
+
+		/*	On ne conserve que des rues + addr
+		 *	On supprime les codes, étages ... des adresses.
+		 */
+		
+	//	$streetType = ['allee','allée','avenue','boulevard','
+
+	//	foreach ($stats as $stat) {
+			
+	//	}
+
+
+		return $stats;
+	}
+
+
+
+
+
+
+	private function geocodeAdress($adress) {
 		$data	= [];
 		$adress = urlencode(htmlentities($adress));
 		$query	= 'http://nominatim.openstreetmap.org/search?format=json&street='.$adress.'&city=Paris&country=France&countrycodes=fr';
@@ -124,6 +148,7 @@ class Stats
 
 	public function addLatLongAndJsonEncode()
 	{
+	//	$stats = $this->cleanAddrForMap();
 		$stats = $this->getCustomerStatData();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
@@ -134,6 +159,7 @@ class Stats
 				$stat['lon'] = floatval($json[0]['lon']);
 			}
 		}
+
 
 		$json_data = json_encode($stats);
 
