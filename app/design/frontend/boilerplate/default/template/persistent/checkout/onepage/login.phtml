@@ -71,7 +71,7 @@
         <div class="col-sm-2"></div>
         <div class="col-sm-8" style="text-align:center;">
             <p class="required">&nbsp;</p>
-            <span>Pas encore de compte ? </span><button id="onepage-guest-register-button" type="button" class="button" onclick="window.location='<?php echo $this->helper('checkout/url')->getRegistrationUrl();?>'"><span><span><?php echo $this->__('Register') ?></span></span></button>
+            <span>Pas encore de compte ? </span><button id="onepage-guest-register-button" type="button" class="button" onclick="window.location='<?php echo $this->helper('checkout/url')->getRegistrationUrl();?>?checkout=1'"><span><span><?php echo $this->__('Register') ?></span></span></button>
         </div>
         <div class="col-sm-2"></div>
     </div>

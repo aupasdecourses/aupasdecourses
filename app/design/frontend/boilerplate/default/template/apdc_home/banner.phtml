@@ -25,7 +25,7 @@
  */
 ?>
 <?php if($_heading = $this->getContentHeading()): ?>
-    <div class="page-title">
+    <div class="page-title" style="background-image: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).Mage::getBlockSingleton('cms/page')->getPage()->getImgBanner(); ?>');">
         <h1><span><?php echo $_heading; ?></span></h1>
     </div>
 <?php endif; ?>

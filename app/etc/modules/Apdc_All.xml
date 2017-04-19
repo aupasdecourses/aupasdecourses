@@ -124,5 +124,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Notation>
+		<Apdc_CMS>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_CMS>
     </modules>
 </config>

@@ -42,9 +42,10 @@
         </reference>
         <reference name="content">
             <remove name="cms.wrapper" />
-			<block type="core/template" name="page_content_heading" template="cms/content_heading.phtml">
+			<block type="core/template" name="page_content_heading" template="apdc_home/banner.phtml" />
+			<!--<block type="core/template" name="page_content_heading" template="cms/content_heading.phtml">
 				<block type="cms/page" name="backgroundtitle" as="backgroundtitle" translate="label" />
-			</block>
+			</block>-->
             <!-- Inclusion du Carroussel et des liens droite-->
             <block type="core/template" name="headband" template="page/html/headband.phtml" />
             <!-- Inclusion du block promos & produits favoris-->
