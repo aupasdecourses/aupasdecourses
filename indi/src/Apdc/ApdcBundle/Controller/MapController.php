@@ -22,8 +22,10 @@ class MapController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats');
 
 
+		$json_data = $stats->getCustomerMapData();
 
-		$json_data = $stats->addLatLongAndJsonEncode();
+
+//		$json_data = $stats->addLatLongAndJsonEncode();
 
 		// update entry to geocode customers
 		

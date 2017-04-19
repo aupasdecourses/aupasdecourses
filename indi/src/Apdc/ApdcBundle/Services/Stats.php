@@ -65,8 +65,8 @@ class Stats
 					//'Créé dans'		=> $order->getCreatedIn(),
 					'email'				=> $order->getCustomerEmail(),
 					'telephone'			=> $order->getTelephone(),
-					'lat'				=> '',
-					'lon'				=> '',
+					'lat'				=> $order->getData('lat'),
+					'lon'				=> $order->getData('long'),
 				]);
 		}
 
@@ -103,8 +103,6 @@ class Stats
 					'ville'				=> '',
 					'email'				=> $customer->getEmail(),
 					'telephone'			=> '',
-					'lat'				=> '',
-					'lon'				=> '',
 				]);
 			}
 	 	}
@@ -172,7 +170,12 @@ class Stats
 	 *  fonction fille pour la carte clients
 	 **/
 	public function getCustomerMapData()
-	{}
+	{
+		$stats = $this->getCustomerStatData();
+		$json_data = json_encode($stats);
+
+		return $json_data;
+	}
 	
 	
 	/** Mettre dans trait Model **/
