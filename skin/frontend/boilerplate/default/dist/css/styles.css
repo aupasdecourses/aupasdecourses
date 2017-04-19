@@ -11390,6 +11390,7 @@ a:hover {
   margin: 20px auto;
   padding: 10px 30px;
   color: #fff;
+  border: none;
   border-radius: 3px;
 }
 
@@ -11622,7 +11623,7 @@ header .top-nav li a a:visited {
   margin-top: 8px;
 }
 
-.page-header-container .skip-links .skip-container-header-search input[type=text] {
+.page-header-container .skip-links .skip-container-header-search input[type=search] {
   font-size: .875rem;
   width: 90%;
   padding: 10px 30px 10px 10px;
@@ -11633,8 +11634,16 @@ header .top-nav li a a:visited {
   background-color: #f6f6f6;
 }
 
-.page-header-container .skip-links .skip-container-header-search i {
+.page-header-container .skip-links .skip-container-header-search .search-button {
+  margin: 0;
   margin-left: -30px;
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.page-header-container .skip-links .skip-container-header-search i {
   color: #3ab64b;
 }
 
@@ -12166,96 +12175,12 @@ header .top-nav li a a:visited {
   list-style-type: none;
 }
 
-#header-delivery .delivery {
-  width: auto !important;
-  border: none;
-}
-
-#header-delivery .delivery .deli_time {
-  width: 20%;
-}
-
-#header-delivery .delivery .deli_time h6 {
-  border: none;
-}
-
-#header-delivery .delivery .deli_time p {
-  font-size: .8125rem;
-  margin: 20px 0 36px;
-  color: #000;
-}
-
-#header-delivery .delivery .deli_date {
-  width: 80%;
-}
-
 #header-delivery .delivery .deli_date .slideshow-content {
-  width: 100%;
+  width: auto;
 }
 
 #header-delivery .delivery .deli_date_top ul li {
-  width: 66px;
-}
-
-#header-delivery .delivery .select_one ul li {
-  width: 66px;
-  padding: 10px 5px;
-  text-align: center;
-}
-
-#header-delivery .delivery .select_one ul li.disablerow i {
-  color: #000;
-}
-
-#header-delivery .delivery .select_one ul li i {
-  font-size: 1rem;
-  color: #3ab64b;
-}
-
-#header-delivery .delivery .select_one ul li a {
-  width: auto;
-  padding: 0;
-  color: #3ab64b;
-}
-
-#header-delivery .delivery .select_one ul li a:hover {
-  border: none;
-}
-
-#header-delivery .delivery .select_one ul li a.ddate_day_active {
-  padding: 5px;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  background-color: #3ab64b;
-}
-
-#header-delivery .delivery .select_one ul li a.ddate_day_active i {
-  color: #fff;
-}
-
-#header-delivery .delivery .deli_date_top {
-  border: none;
-}
-
-#header-delivery .delivery .deli_date_top.deli_date_head li {
-  font-size: .875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-#header-delivery .delivery .deli_date_top.deli_date_head li.oddrow {
-  background: none;
-}
-
-#header-delivery .delivery .deli_date_top.deli_date_head li span {
-  font-size: .75rem;
-  text-transform: none;
-  color: #000;
-}
-
-#header-delivery .ddate_selected span {
-  color: #3ab64b;
+  max-width: 66px;
 }
 
 /* -------------------------------------------- *
@@ -12728,9 +12653,9 @@ section .section-description {
   width: 30px;
   height: 30px;
   margin: 0;
+  margin-left: 10px;
   padding: 0;
   text-align: center;
-  background: #fff;
 }
 
 .block-promos .apdc-products-grid .product-image .product-labels li .label-icon img {
@@ -13204,10 +13129,271 @@ footer .social-list .btn-social-icon {
   width: 100%;
 }
 
-#opc-billing h2 {
+#checkoutSteps {
+  padding: 0;
+}
+
+#checkoutSteps .section {
+  display: none;
+}
+
+#checkoutSteps .section.active {
+  display: block;
+}
+
+#checkoutSteps .section h2 {
   font-size: 2.25rem;
+  margin-top: 30px;
   text-transform: none;
   color: #3ab64b;
+}
+
+#checkoutSteps .fieldset {
+  padding: 15px 70px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#co-billing-form,
+#co-shipping-method-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 70px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.apdc-form .form-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.apdc-form .form-list li {
+  margin-bottom: 20px;
+}
+
+.apdc-form p.required {
+  margin-bottom: 20px;
+  color: #3ab64b;
+}
+
+.apdc-form input[type=text],
+.apdc-form input[type=email],
+.apdc-form input[type=password],
+.apdc-form input[type=number],
+.apdc-form select {
+  font-size: .875rem;
+  width: 100%;
+  padding: 10px 30px 10px 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
+.apdc-form input[type=checkbox] {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.apdc-form input[type=checkbox] + label {
+  font-size: .875rem;
+  line-height: 25px;
+  display: inline-block;
+  height: 25px;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  background-image: url(../images/checkbox.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+}
+
+.apdc-form input[type=checkbox]:checked + label {
+  background-position: 0 -25px;
+}
+
+.apdc-form label.control-label {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1e555a;
+}
+
+.apdc-form label em {
+  color: #3ab64b;
+}
+
+.apdc-form p.required {
+  margin-bottom: 20px;
+  color: #3ab64b;
+}
+
+.apdc-form ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.apdc-form .field {
+  margin-bottom: 20px;
+}
+
+.apdc-form .fields label {
+  font-size: .875rem;
+  font-weight: normal;
+  color: #999;
+}
+
+.apdc-form .fields label em {
+  color: #3ab64b;
+}
+
+.block-progress dl {
+  margin: 0;
+}
+
+.delivery {
+  width: auto !important;
+  border: none;
+}
+
+.delivery .deli_time {
+  width: 20%;
+}
+
+.delivery .deli_time h6 {
+  border: none;
+}
+
+.delivery .deli_time p {
+  font-size: .8125rem;
+  margin: 20px 0 36px;
+  color: #000;
+}
+
+.delivery .deli_date {
+  width: 80%;
+}
+
+.delivery .deli_date .slideshow-content {
+  width: 100%;
+}
+
+.delivery .deli_date_top ul li {
+  width: 14.28%;
+}
+
+.delivery .select_one ul li {
+  width: 14.28%;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+.delivery .select_one ul li.disablerow i {
+  color: #000;
+}
+
+.delivery .select_one ul li i {
+  font-size: 1rem;
+  color: #3ab64b;
+}
+
+.delivery .select_one ul li a {
+  width: auto;
+  padding: 0;
+  color: #3ab64b;
+}
+
+.delivery .select_one ul li a:hover {
+  border: none;
+}
+
+.delivery .select_one ul li a.ddate_day_active {
+  padding: 5px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #3ab64b;
+}
+
+.delivery .select_one ul li a.ddate_day_active i {
+  color: #fff;
+}
+
+.delivery .deli_date_top {
+  border: none;
+}
+
+.delivery .deli_date_top.deli_date_head li {
+  font-size: .875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.delivery .deli_date_top.deli_date_head li.oddrow {
+  background: none;
+}
+
+.delivery .deli_date_top.deli_date_head li span {
+  font-size: .75rem;
+  text-transform: none;
+  color: #000;
+}
+
+.ddate_selected span {
+  color: #3ab64b;
+}
+
+#co-shipping-method-form .delivery #slideshow-holder {
+  width: 100% !important;
+}
+
+#co-shipping-method-form .delivery .select_one ul li {
+  font-size: .75rem;
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+#co-shipping-method-form .delivery .select_one ul li a {
+  font-size: .75rem;
+}
+
+#co-shipping-method-form .delivery .select_one ul li i {
+  font-size: 1.125rem;
+}
+
+#co-shipping-method-form .delivery .deli_date_top.deli_date_head li {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#co-shipping-method-form .delivery .deli_time p {
+  font-size: 1.125rem;
+  margin: 0;
+  padding: 19px 0;
+  border-bottom: 1px solid #eee;
+}
+
+#ddate_calendar > h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1e555a;
 }
 
 @media screen and (min-width: 1200px) {

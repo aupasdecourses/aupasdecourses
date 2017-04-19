@@ -8,10 +8,10 @@
     $str = Mage::getVersion();
     $version = Mage::helper('ddate')->checkVersion($str);
 ?>
-<div class="block block-progress opc-block-progress">
-    <div class="block-title">
+<div class="block block-progress opc-block-progress col-md-4 col-sm-12">
+    <!--<div class="block-title">
         <strong><span><?php echo $this->__('Your Checkout Progress') ?></span></strong>
-    </div>
+    </div>-->
     <div class="block-content">
         <?php if($version == "mg1.8" || $version == "mg1.9" || $version == "enterprise14"): ?>
             <dl>
