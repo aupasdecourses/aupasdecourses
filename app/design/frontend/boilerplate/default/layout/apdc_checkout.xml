@@ -10,7 +10,13 @@
                 <file>mw_ddate/jquery-noconflict.js</file>
             </action>
             <action method="addJs"><script>apdc/coupon.js</script></action>
+			
         </reference>
+		<reference name="header">
+			<action method="unsetChild"><name>topMenu</name></action>
+			<action method="unsetChild"><name>topSearch</name></action>
+			<remove name="top.search"/>
+		</reference>
         <!-- Merge Billing & Shipping -->
         <reference name="checkout.onepage.billing"> Change the template of billing block
           <action method="setTemplate"><template>apdc_checkout/persistent/checkout/onepage/billing.phtml</template></action>
@@ -24,7 +30,7 @@
             <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
         </reference>
         <remove name="header.delivery"/>
-        <remove name="top.menu"/>
+        
         <!-- Merge Payment & Review -->
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">
