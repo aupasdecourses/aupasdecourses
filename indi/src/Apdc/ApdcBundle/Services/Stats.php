@@ -115,16 +115,40 @@ class Stats
 	{
 		$stats = $this->getCustomerStatData();
 
-		/*	On ne conserve que des rues + addr
-		 *	On supprime les codes, étages ... des adresses.
+//		$streetTypes		= ['allee','allée','avenue','boulevard','bd','bvd','chaussee','chemin','cite','cité','clos','cour','impasse','passage','place','pont','quai','rue','ruelle','route','voie'];
+
+//		foreach ($stats as &$stat) {
+//			foreach ($streetTypes as $streets) {
+//				if (strpos($stat['addr'], $streets) || strpos($stat['addr'], ucfirst($streets)) || strpos($stat['addr'], strtoupper($streets))) {
+//					$stat['lalalala'] = 'lalalala';	
+//				}
+//			}	
+//		}
+
+
+		/**	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
 		 */
-		
-	//	$streetType = ['allee','allée','avenue','boulevard','
 
-	//	foreach ($stats as $stat) {
-			
-	//	}
+		foreach ($stats as &$stat) {
+			if (strpos($stat['addr'], "\n")) {
+				$cut_pos		= strpos($stat['addr'], "\n");	
+				$stat['addr']	= substr($stat['addr'], 0, $cut_pos);
+			}
+			if (strpos($stat['addr'], "-")) {
+				$cut_pos_two	= strpos($stat['addr'], "-");
+				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_two);
+			}
+			if (strpos($stat['addr'], "code")) {
+				$cut_pos_three	= strpos($stat['addr'], "code");
+				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_three);
+			}
+			if (strpos($stat['addr'], "interphone")) {
+				$cut_pos_four	= strpos($stat['addr'], "interphone");
+				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_four);
+			}
 
+			$stat['addr'] = str_replace(",", "", $stat['addr']);
+		}
 
 		return $stats;
 	}
@@ -171,7 +195,7 @@ class Stats
 	 **/
 	public function getCustomerMapData()
 	{
-		$stats = $this->getCustomerStatData();
+		$stats = $this->cleanAddrForMap();
 		$json_data = json_encode($stats);
 
 		return $json_data;
