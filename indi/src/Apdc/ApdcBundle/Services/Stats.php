@@ -36,7 +36,7 @@ class Stats
 
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
-		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.address', array('lat', 'long'));
+		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.former_address', array('address', 'lat', 'long'));
 
 		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
@@ -59,7 +59,7 @@ class Stats
 					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
 					'rue'				=> $order->getStreet()[0], 
-					'addr'				=> $order->getStreet(),
+					'addr'				=> $order->getAddress(), // from geocode_customers
 					'code_postal'		=> $order->getPostcode(),
 					'ville'				=> $order->getCity(),
 					//'Créé dans'		=> $order->getCreatedIn(),
@@ -201,20 +201,9 @@ class Stats
 	 **/
 	public function getCustomerMapData()
 	{
-		$stats = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
-		$stats->addFieldToFilter('address', ['neq' => null]);
 
-		$data = [];
-		foreach ($stats as $stat) {
-			array_push($data, [
-				'addr'	=> $stat->getAddress(),
-				'postcode'	=> $stat->getPostcode(),
-				'city'		=> $stat->getCity(),
-				'lat'		=> $stat->getData('lat'),
-				'lon'		=> $stat->getData('long'),
-			]);
-		}
-
+		$data = $this->getCustomerStatData();
+		
 		$json_data = json_encode($data);
 
 		return $json_data;
