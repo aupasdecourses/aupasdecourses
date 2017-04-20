@@ -11,14 +11,14 @@
     <address><?php echo $this->getBilling()->format('html') ?></address>
 </dd> -->
 <dt class="complete">
-    <a href="#billing" onclick="checkout.changeSection('opc-billing'); return false;"><i class="fa fa-home" style="width: 20px;"></i><strong><?php echo $this->__('Billing Address') ?></strong></a>
+    <a href="#billing" onclick="checkout.changeSection('opc-billing'); return false;"><strong><?php echo $this->__('Billing Address') ?></strong></a>
 </dt>
-<dd class="complete">
+<!--<dd class="complete">
     <address><?php echo $this->getShipping()->format('html') ?></address>
-</dd>
+</dd>-->
 <?php else: ?>
 <dt>
-    <i class="fa fa-home" style="width: 20px;"></i><?php echo $this->__('Billing Address') ?>
+    <?php echo $this->__('Billing Address') ?>
 </dt>
 <!-- <dt>
     <?php echo $this->__('Shipping Address') ?>

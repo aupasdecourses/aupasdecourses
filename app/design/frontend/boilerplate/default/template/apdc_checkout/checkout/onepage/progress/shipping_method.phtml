@@ -26,9 +26,9 @@
 ?>
 <?php if ($this->getCheckout()->getStepData('shipping_method', 'complete')): ?>
 <dt class="complete">
-    <a href="#shipping_method" onclick="checkout.changeSection('opc-shipping_method'); return false;"><i class="fa fa-bicycle" style="width: 20px;"></i><strong><?php echo $this->__('Shipping Method') ?></strong></a>
+    <a href="#shipping_method" onclick="checkout.changeSection('opc-shipping_method'); return false;"><strong><?php echo $this->__('Shipping Method') ?></strong></a>
 </dt>
-<dd class="complete">
+<!--<dd class="complete">
     <?php if ($this->getShippingMethod()): ?>
         <?php echo $this->getShippingDescription() ?>
 
@@ -48,9 +48,9 @@
     <br/><?php echo Mage::helper('ddate')->__('Delivery Date');?>
     <?php if(isset($_SESSION['ddate'])) echo $_SESSION['ddate']; ?><br/>
     <?php if(isset($_SESSION['dtime'])) echo Mage::getModel('ddate/dtime')->load($_SESSION['dtime'])->getDtime(); ?>
-</dd>
+</dd>-->
 <?php else: ?>
 <dt>
-   <i class="fa fa-bicycle" style="width: 20px;"></i><?php echo $this->__('Shipping Method') ?>
+   <?php echo $this->__('Shipping Method') ?>
 </dt>
 <?php endif; ?>

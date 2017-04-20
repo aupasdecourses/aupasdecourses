@@ -11438,6 +11438,20 @@ a:hover {
   background-color: #1e555a;
 }
 
+.button.button-grey {
+  background-color: #ccc;
+}
+
+.button.button-grey:hover {
+  color: #fff;
+  background-color: #3ab64b;
+}
+
+.button.button-grey:hover:before,
+.button.button-grey:hover:after {
+  background-color: #1e555a;
+}
+
 .button.button-pink {
   background-color: #ff7d73;
 }
@@ -13267,6 +13281,39 @@ footer .social-list .btn-social-icon {
   margin: 0;
 }
 
+.block-progress dl > div {
+  position: relative;
+  display: inline-block;
+  margin: 10px 25px 0;
+  vertical-align: top;
+  border-radius: 5px;
+  background-color: #3ab64b;
+}
+
+.block-progress dl > div:after {
+  position: absolute;
+  top: 14px;
+  right: -55px;
+  display: block;
+  width: 55px;
+  height: 5px;
+  content: '';
+  background-color: #3ab64b;
+}
+
+.block-progress dl > div dt {
+  font-size: .8125rem;
+  font-weight: normal;
+  padding: 7px 20px;
+  color: #fff;
+}
+
+.block-progress dl > div dt a,
+.block-progress dl > div dt strong {
+  font-weight: normal;
+  color: #fff;
+}
+
 .delivery {
   width: auto !important;
   border: none;
@@ -13304,12 +13351,18 @@ footer .social-list .btn-social-icon {
   text-align: center;
 }
 
-.delivery .select_one ul li.disablerow i {
-  color: #000;
+.delivery .select_one ul li > span {
+  font-weight: 700;
+  color: #999;
+}
+
+.delivery .select_one ul li > span i {
+  color: #999;
 }
 
 .delivery .select_one ul li i {
   font-size: 1rem;
+  margin-bottom: 3px;
   color: #3ab64b;
 }
 
@@ -13364,13 +13417,14 @@ footer .social-list .btn-social-icon {
 }
 
 #co-shipping-method-form .delivery .select_one ul li {
-  font-size: .75rem;
-  padding: 10px 20px;
+  padding: 10px;
   border-bottom: 1px solid #eee;
 }
 
-#co-shipping-method-form .delivery .select_one ul li a {
+#co-shipping-method-form .delivery .select_one ul li a,
+#co-shipping-method-form .delivery .select_one ul li > span {
   font-size: .75rem;
+  padding: 5px 10px;
 }
 
 #co-shipping-method-form .delivery .select_one ul li i {
@@ -13385,8 +13439,57 @@ footer .social-list .btn-social-icon {
 #co-shipping-method-form .delivery .deli_time p {
   font-size: 1.125rem;
   margin: 0;
-  padding: 19px 0;
+  padding: 27px 0;
   border-bottom: 1px solid #eee;
+}
+
+#checkout-shipping-method-load {
+  border-bottom: 1px solid #eee;
+}
+
+#checkout-shipping-method-load dl {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+#checkout-shipping-method-load dl i {
+  color: #3ab64b;
+}
+
+#checkout-shipping-method-load dl .price {
+  font-size: 1.75rem;
+  font-weight: normal;
+  color: #3ab64b;
+}
+
+#checkout-review-table .crop {
+  display: inline-block;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  margin: 0 30px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+#checkout-review-table .infos_prod_review {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#checkout-review-table .infos_prod_review h3 {
+  font-size: 1.125rem;
+  text-align: left;
+  text-transform: none;
+  color: #333;
+}
+
+#checkout-review-table .infos_prod_review .artisan-name {
+  font-size: .875rem;
+  font-weight: 700;
+  color: #ff7d73;
 }
 
 #ddate_calendar > h3 {
@@ -13394,6 +13497,22 @@ footer .social-list .btn-social-icon {
   font-weight: 700;
   margin-bottom: 20px;
   color: #1e555a;
+}
+
+.back-link {
+  display: inline-block;
+}
+
+.buttons-set .button {
+  font-weight: normal;
+}
+
+.buttons-set .button i.fa-angle-left {
+  margin-right: 5px;
+}
+
+.buttons-set .button i.fa-angle-right {
+  margin-left: 5px;
 }
 
 @media screen and (min-width: 1200px) {

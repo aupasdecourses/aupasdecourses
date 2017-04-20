@@ -111,7 +111,17 @@ a{
         &:hover{
             color: #fff;
             &:before, &:after{
-                background-color: $color-second-green;;
+                background-color: $color-second-green;
+            }
+        }
+    }
+    &.button-grey{
+        background-color: #ccc;
+        &:hover{
+            color: #fff;
+            background-color: $color-main-green;
+            &:before, &:after{
+                background-color: $color-second-green;
             }
         }
     }
