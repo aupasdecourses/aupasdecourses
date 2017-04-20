@@ -138,8 +138,8 @@ class Stats
 				$cut_pos		= strpos($stat['addr'], "\n");	
 				$stat['addr']	= substr($stat['addr'], 0, $cut_pos);
 			}
-			if (strpos($stat['addr'], "-")) {
-				$cut_pos_two	= strpos($stat['addr'], "-");
+			if (strpos($stat['addr'], "&nbsp;-")) {
+				$cut_pos_two	= strpos($stat['addr'], "&nbsp;-");
 				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_two);
 			}
 			if (strpos($stat['addr'], "code")) {

@@ -27,6 +27,8 @@ class MapController extends Controller
 
 		$json_data = $stats->getCustomerMapData();
 
+		$lala = $stats->cleanAddrForMap();
+
 //		$dataIntoFile = $stats->addlatLongAndJsonEncode();
 
 		//		var_dump($dataIntoFile);
