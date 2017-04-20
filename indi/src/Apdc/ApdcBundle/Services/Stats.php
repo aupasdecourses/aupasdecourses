@@ -127,7 +127,11 @@ class Stats
 
 
 		/**	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
+		 *	strtr sur tous les caracteres accentués
 		 */
+
+		$bad_chars = ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
+		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
 
 		foreach ($stats as &$stat) {
 			if (strpos($stat['addr'], "\n")) {
@@ -148,6 +152,8 @@ class Stats
 			}
 
 			$stat['addr'] = str_replace(",", "", $stat['addr']);
+
+			$stat['addr'] = strtr($stat['addr'], array_combine($bad_chars, $good_chars));
 		}
 
 		return $stats;
@@ -170,8 +176,8 @@ class Stats
 
 	public function addLatLongAndJsonEncode()
 	{
-	//	$stats = $this->cleanAddrForMap();
-		$stats = $this->getCustomerStatData();
+		$stats = $this->cleanAddrForMap();
+	//		$stats = $this->getCustomerStatData();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
 		foreach ($stats as &$stat) {
@@ -195,8 +201,21 @@ class Stats
 	 **/
 	public function getCustomerMapData()
 	{
-		$stats = $this->cleanAddrForMap();
-		$json_data = json_encode($stats);
+		$stats = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$stats->addFieldToFilter('address', ['neq' => null]);
+
+		$data = [];
+		foreach ($stats as $stat) {
+			array_push($data, [
+				'addr'	=> $stat->getAddress(),
+				'postcode'	=> $stat->getPostcode(),
+				'city'		=> $stat->getCity(),
+				'lat'		=> $stat->getData('lat'),
+				'lon'		=> $stat->getData('long'),
+			]);
+		}
+
+		$json_data = json_encode($data);
 
 		return $json_data;
 	}

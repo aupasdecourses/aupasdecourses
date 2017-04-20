@@ -6,6 +6,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 class MapController extends Controller 
 {
 	public function merchantsAction()
@@ -23,6 +26,16 @@ class MapController extends Controller
 
 
 		$json_data = $stats->getCustomerMapData();
+
+//		$dataIntoFile = $stats->addlatLongAndJsonEncode();
+
+		//		var_dump($dataIntoFile);
+
+
+//		$fs = new Filesystem();
+//		if($fs->exists('../web/json/cleanCustomers.json')) {
+//			$fs->dumpFile('../web/json/cleanCustomers.json', $dataIntoFile);
+//		}
 
 
 //		$json_data = $stats->addLatLongAndJsonEncode();
