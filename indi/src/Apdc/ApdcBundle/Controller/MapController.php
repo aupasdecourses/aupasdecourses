@@ -27,24 +27,13 @@ class MapController extends Controller
 
 		$json_data = $stats->getCustomerMapData();
 
-		$lala = $stats->cleanAddrForMap();
 
 //		$dataIntoFile = $stats->addlatLongAndJsonEncode();
-
-		//		var_dump($dataIntoFile);
-
-
 //		$fs = new Filesystem();
-//		if($fs->exists('../web/json/cleanCustomers.json')) {
-//			$fs->dumpFile('../web/json/cleanCustomers.json', $dataIntoFile);
+//		if($fs->exists('../web/json/customers.json')) {
+//			$fs->dumpFile('../web/json/customers.json', $dataIntoFile);
 //		}
 
-
-//		$json_data = $stats->addLatLongAndJsonEncode();
-
-		// update entry to geocode customers
-		
-		
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
 			[
 				'json_data'	=> $json_data,

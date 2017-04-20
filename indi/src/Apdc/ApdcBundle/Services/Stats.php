@@ -36,7 +36,7 @@ class Stats
 
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
-		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.former_address', array('address', 'lat', 'long'));
+		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.former_address', array('address','lat', 'long'));
 
 		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
@@ -138,8 +138,8 @@ class Stats
 				$cut_pos		= strpos($stat['addr'], "\n");	
 				$stat['addr']	= substr($stat['addr'], 0, $cut_pos);
 			}
-			if (strpos($stat['addr'], "&nbsp;-")) {
-				$cut_pos_two	= strpos($stat['addr'], "&nbsp;-");
+			if (strpos($stat['addr'], ' '."-")) {
+				$cut_pos_two	= strpos($stat['addr'], ' '."-");
 				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_two);
 			}
 			if (strpos($stat['addr'], "code")) {
@@ -177,7 +177,6 @@ class Stats
 	public function addLatLongAndJsonEncode()
 	{
 		$stats = $this->cleanAddrForMap();
-	//		$stats = $this->getCustomerStatData();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
 		foreach ($stats as &$stat) {
@@ -187,7 +186,6 @@ class Stats
 				$stat['lon'] = floatval($json[0]['lon']);
 			}
 		}
-
 
 		$json_data = json_encode($stats);
 
