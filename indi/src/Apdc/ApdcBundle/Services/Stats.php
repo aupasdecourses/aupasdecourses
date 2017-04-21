@@ -246,48 +246,17 @@ class Stats
 		$data = $this->cleanAddrForMap();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
-//		foreach ($data as &$v) {
-//			if($v['address'] != "") {
-//				$json = $this->geocodeAdress(htmlentities($v['address']));
-//				$v['lat']	= floatval($json[0]['lat']);
-//				$v['long']	= floatval($json[0]['lon']);
-//			}
-//		}
+		foreach ($data as &$v) {
+			if($v['address'] != "") {
+				$json = $this->geocodeAdress(htmlentities($v['address']));
+				$v['lat']	= floatval($json[0]['lat']);
+				$v['long']	= floatval($json[0]['lon']);
+			}
+		}
 
 		return $data;
 	}
 
-
-
-	/** Mettre dans trait Model **/
-    public function addEntryToGeocodeCustomers(array $data)
-    {
-        $this->addEntryToModel(
-            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/geocode_customers')),
-            $data
-        );
-    }
-
-	/** Mettre dans trait Model **/
-    public function updateEntryToGeocodeCustomers(array $filters, array $updatedFields)
-    {
-        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
-        $check = $this->checkEntryToModel($model, $filters);
-
-        if ($check) {
-            $this->updateEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        } else {
-            $this->addEntryToModel(
-                $model,
-                $filters,
-                $updatedFields
-            );
-        }
-    }
 
 
 

@@ -20,6 +20,8 @@ class MapController extends Controller
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
+		
+		$session	= $request->getSession();
 
 		$stats	= $this->container->get('apdc_apdc.stats');
 		$mage	= $this->container->get('apdc_apdc.magento');
@@ -35,12 +37,25 @@ class MapController extends Controller
 		if ($request->isMethod('POST')) {
 			$form_new_customers->handleRequest($request);
 			$new_customers_to_add	= $stats->addLatAndLong();
-			echo'<pre>';
-			print_R($new_customers_to_add);
-			echo'<pre>';
-		
-		}
 
+			foreach ($new_customers_to_add as $content) {
+				try {
+						$mage->updateEntryToGeocodeCustomers(
+							['geocode_customer_id'		=> $content['geocode_customer_id']],	
+							['address'					=> $content['address']],
+							['postcode'					=> $content['postcode']],
+							['city'						=> $content['city']],
+							['lat'						=> $content['lat']],
+							['long'						=> $content['long']],
+							['former_address'			=> $content['former_address']]
+						);
+			//		$session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
+			//		return $this->redirectToRoute('mapCustomers');
+				} catch (Exception $e) {
+					$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des clients sur la carte');
+				}		
+			}
+		}
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
 			[
 				'json_data'				=> $json_data_for_map,

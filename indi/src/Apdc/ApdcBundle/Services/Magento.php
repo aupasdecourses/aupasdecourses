@@ -426,6 +426,45 @@ class Magento
         }
     }
 
+
+
+	/** Mettre dans trait Model **/
+    public function addEntryToGeocodeCustomers(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/geocode_customers')),
+            $data
+        );
+    }
+
+	/** Mettre dans trait Model **/
+    public function updateEntryToGeocodeCustomers(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+
+
+
+
+
+
+
 	/** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
