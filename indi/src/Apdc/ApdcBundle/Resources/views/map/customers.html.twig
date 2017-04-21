@@ -3,6 +3,14 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+
+	<div>
+		{{ form_start(form_new_customers) }}
+		{{ form_widget(form_new_customers) }}
+		<input type = "submit" value = "Maj clients" class = "btn btn-default"/>
+		{{ form_end(form_new_customers) }}
+	</div>
+
 	<div id="map" class="map"></div>
 {% endblock %}
 

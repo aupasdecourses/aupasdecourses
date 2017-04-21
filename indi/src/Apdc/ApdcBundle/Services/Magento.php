@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-include '../../app/Mage.php';
+include_once '../../app/Mage.php';
 
 class Magento
 {

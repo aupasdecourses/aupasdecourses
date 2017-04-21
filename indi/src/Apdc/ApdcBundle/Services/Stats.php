@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-include '../../app/Mage.php';
+include_once '../../app/Mage.php';
 
 define('FLOAT_NUMBER', 2);
 
@@ -196,17 +196,10 @@ class Stats
 			}
 
 			$v['address'] = str_replace(",", "", $v['address']);
-
 			$v['address'] = strtr($v['address'], array_combine($bad_chars, $good_chars));
 		}
 
-
-		echo'<pre>';
-		print_R($data);
-		echo'<pre>';
-
-
-//		return $data;
+		return $data;
 	}
 
 
@@ -214,33 +207,29 @@ class Stats
 	 *	C-a-d les clients dont lat + long = 0
 	 *	C-a-d les nouveaux clients Et/OU les clients où l'adresse est mal écrite
 	 */
-	public function getCustomersNotMapped()
-	{
-		$data = $this->cleanAddrForMap();
-
-		$cpt = 0;
-		$temp = [];
-		foreach ($data as $content) {
-			if ($content['lat'] == 0 && $content['lon'] == 0) {
-				$temp[$cpt] = [
-					'nom_client'	=> $content['nom_client'],
-					'addr'			=> $content['addr'],
-					'lat'			=> $content['lat'],
-					'lon'			=> $content['lon'],
-				];
-			++$cpt;
-			}
-		}
+//	public function getCustomersNotMapped()
+//	{
+//		$data = $this->cleanAddrForMap();
+//
+//		$cpt = 0;
+//		$temp = [];
+//		foreach ($data as $content) {
+//			if ($content['lat'] == 0 && $content['lon'] == 0) {
+//				$temp[$cpt] = [
+//					'nom_client'	=> $content['nom_client'],
+//					'addr'			=> $content['addr'],
+//					'lat'			=> $content['lat'],
+//					'lon'			=> $content['lon'],
+//				];
+//			++$cpt;
+//			}
+//		}
 			
-		echo'<pre>';
-		print_R($temp);
-		echo'<pre>';
+//		echo'<pre>';
+//		print_R($temp);
+//		echo'<pre>';
 
-	}
-
-
-
-
+//	}
 
 	private function geocodeAdress($adress) {
 		$data	= [];
@@ -252,73 +241,21 @@ class Stats
 		return $json;
 	}
 
-	public function addLatLongAndJsonEncode()
+	public function addLatAndLong()
 	{
-		$stats = $this->cleanAddrForMap();
+		$data = $this->cleanAddrForMap();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
-		foreach ($stats as &$stat) {
-			if($stat['addr'] != "") {
-				$json = $this->geocodeAdress(htmlentities($stat['addr']));
-				$stat['lat'] = floatval($json[0]['lat']);
-				$stat['lon'] = floatval($json[0]['lon']);
-			}
-		}
+//		foreach ($data as &$v) {
+//			if($v['address'] != "") {
+//				$json = $this->geocodeAdress(htmlentities($v['address']));
+//				$v['lat']	= floatval($json[0]['lat']);
+//				$v['long']	= floatval($json[0]['lon']);
+//			}
+//		}
 
-		$json_data = json_encode($stats);
-
-		return $json_data;
+		return $data;
 	}
-
-
-
-
-	
-	
-	/** Mettre dans trait Model **/
-    private function checkEntryToModel($model, array $filters)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if ($entry->getFirstItem()->getId() != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-	/** Mettre dans trait Model **/
-    private function addEntryToModel($model, $data, $updatedFields)
-    {
-        foreach ($data as $k => $v) {
-            $model->setData($k, $v);
-        }
-        foreach ($updatedFields as $k => $v) {
-            $model->setData($k, $v);
-        }
-        $model->save();
-    }
-
-	/** Mettre dans trait Model **/
-    private function updateEntryToModel($model, array $filters, array $updatedFields)
-    {
-        $entry = $model->getCollection();
-        foreach ($filters as $k => $v) {
-            $entry->addFieldToFilter($k, $v);
-        }
-        if (($id = $entry->getFirstItem()->getId()) != null) {
-            $model->load($id);
-            foreach ($updatedFields as $k => $v) {
-                $model->setData($k, $v);
-            }
-            $model->save();
-        } else {
-            $this->addEntryToModel($model, $updatedFields);
-        }
-    }
 
 
 
@@ -351,14 +288,6 @@ class Stats
             );
         }
     }
-
-
-
-
-
-
-
-
 
 
 
