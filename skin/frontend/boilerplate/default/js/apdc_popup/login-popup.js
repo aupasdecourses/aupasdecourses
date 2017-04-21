@@ -17,7 +17,7 @@ jQuery(document).ready(function() {
         showLoginForm(this,'apdc_login_view');
     });
 
-    jQuery(document).on('submit','#login-form', function(e) {
+    jQuery(document).on('submit','.header-account-container #login-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
         processLoginForm(this);
@@ -27,13 +27,13 @@ jQuery(document).ready(function() {
         apdcLoginPopup.close();
     });
 
-    jQuery(document).on('click','#forgot-password', function(e) {
+    jQuery(document).on('click','.header-account-container #forgot-password', function(e) {
         e.preventDefault();
         e.stopPropagation();
         showLoginForm(this, 'apdc_forgotpassword_view');
     });
 
-    jQuery(document).on('submit','#password-form', function(e) {
+    jQuery(document).on('submit','.header-account-container #password-form', function(e) {
         e.preventDefault();
         e.stopPropagation();
         processLoginForm(this);

@@ -66,6 +66,16 @@
                 <action method="addItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
 				
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
+				<action method="addItem"><rel>skin_css</rel><href>css/apdc_catalog/category_view.css</href></action>
+				<action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-add-to-cart.css</file></action>
+				<!--<action method="addItem"><rel>skin_css</rel><href>css/apdc_home/selection_all.css</href></action>-->
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/ddate/opcheckout.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/ddate/opcheckout_rwd.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/ddate/jscal2.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/ddate/lang/en.js</file></action>
+				
 				<!--<action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>-->
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>

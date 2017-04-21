@@ -1,0 +1,9 @@
+<?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>
+		<dt class="complete">
+			<a href="#shipping" onclick="checkout.changeSection('opc-shipping'); return false;"><strong><?php echo $this->__('Votre adresse') ?></strong></a>
+		</dt>
+	<?php else: ?>
+		<dt>
+			<?php echo $this->__('Votre adresse') ?>
+		</dt>
+<?php endif; ?>

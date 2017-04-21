@@ -8,34 +8,49 @@
     $str = Mage::getVersion();
     $version = Mage::helper('ddate')->checkVersion($str);
 ?>
-<div class="block block-progress opc-block-progress col-md-4 col-sm-12">
-    <!--<div class="block-title">
-        <strong><span><?php echo $this->__('Your Checkout Progress') ?></span></strong>
-    </div>-->
-    <div class="block-content">
-        <?php if($version == "mg1.8" || $version == "mg1.9" || $version == "enterprise14"): ?>
-            <dl>
-                <?php if ($this->getCheckout()->getStepData('billing', 'is_show')): ?>
-                <div id="billing-progress-opcheckout">
-                    <?php echo $this->getChildHtml('billing.progress') ?>
-                </div>
-                <!--<div id="shipping-progress-opcheckout">
-                    <?php echo $this->getChildHtml('shipping.progress') ?>
-                </div>-->
-                <?php endif; ?>
 
-                <?php if ($this->getCheckout()->getStepData('shipping_method', 'is_show')): ?>
-                <div id="shipping_method-progress-opcheckout">
-                    <?php echo $this->getChildHtml('shippingmethod.progress') ?>
-                </div>
-                <!--<div id="ddate-progress-opcheckout">
-                    <?php echo $this->getChildHtml('ddate.progress') ?>
-                </div>-->
-                <!--  <div id="payment-progress-opcheckout">
-                    <?php echo $this->getChildHtml('payment.progress') ?>
-                </div> -->
-                <?php endif; ?>
-            </dl>
-        <?php endif; ?>
-    </div>
-</div>
+<?php
+	if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+		?>
+			<div class="block block-progress opc-block-progress col-md-4 col-sm-12">
+				<!--<div class="block-title">
+					<strong><span><?php echo $this->__('Your Checkout Progress') ?></span></strong>
+				</div>-->
+				<div class="block-content">
+					<?php if($version == "mg1.8" || $version == "mg1.9" || $version == "enterprise14"): ?>
+						<dl>
+							
+							<div id="shipping-progress-opcheckout">
+								<?php echo $this->getChildHtml('shipping.progress') ?>
+							</div>
+							
+							<div id="shipping_method-progress-opcheckout">
+								<?php echo $this->getChildHtml('shippingmethod.progress') ?>
+							</div>
+							
+							<div id="billing-progress-opcheckout">
+								<?php echo $this->getChildHtml('billing.progress') ?>
+							</div>
+							
+							<div id="payment-progress-opcheckout">
+								<?php echo $this->getChildHtml('payment.progress') ?>
+							</div>
+							
+							<!--<div id="billing-progress-opcheckout">
+								<?php echo $this->getChildHtml('billing.progress') ?>
+							</div>-->
+							<!--<div id="shipping-progress-opcheckout">
+								<?php echo $this->getChildHtml('shipping.progress') ?>
+							</div>-->
+							
+							<!--<div id="ddate-progress-opcheckout">
+								<?php echo $this->getChildHtml('ddate.progress') ?>
+							</div>-->
+							
+						</dl>
+					<?php endif; ?>
+				</div>
+			</div>
+		<?php
+	}
+?>
