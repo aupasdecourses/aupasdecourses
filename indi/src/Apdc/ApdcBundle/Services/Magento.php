@@ -432,7 +432,7 @@ class Magento
     public function addEntryToGeocodeCustomers(array $data)
     {
         $this->addEntryToModel(
-            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/geocode_customers')),
+            \Mage::getModel('pmainguet_delivery/geocode_customers'),
             $data
         );
     }

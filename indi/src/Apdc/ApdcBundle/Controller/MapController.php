@@ -38,22 +38,36 @@ class MapController extends Controller
 			$form_new_customers->handleRequest($request);
 			$new_customers_to_add	= $stats->addLatAndLong();
 
-			foreach ($new_customers_to_add as $content) {
-				try {
-						$mage->updateEntryToGeocodeCustomers(
-							['geocode_customer_id'		=> $content['geocode_customer_id']],	
-							['address'					=> $content['address']],
-							['postcode'					=> $content['postcode']],
-							['city'						=> $content['city']],
-							['lat'						=> $content['lat']],
-							['long'						=> $content['long']],
-							['former_address'			=> $content['former_address']]
+			try {
+				foreach ($new_customers_to_add as $content) {
+			//		dump($content);
+					$mage->addEntryToGeocodeCustomers(
+						[
+
+							// to do
+							// creer PK AI sur table geocode NON SUBMITTED
+							// et conserver geocode_customer_id pour la liaison avec la table entity
+							//
+							// FAIRE UN ADD ENTRY QUAND TABLE VIDE
+							// PUIS UPDATE ENTRY QUAND LAT ET LONG A ZERO
+
+
+
+						//	'geocode_customer_id'		=> $content['geocode_customer_id'],
+							'former_address'			=> $content['former_address'],
+							'address'					=> $content['address'],
+							'postcode'					=> $content['postcode'],
+							'city'						=> $content['city'],
+							'lat'						=> $content['lat'],
+							'long'						=> $content['long'],
+						]
 						);
-			//		$session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
-			//		return $this->redirectToRoute('mapCustomers');
-				} catch (Exception $e) {
-					$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des clients sur la carte');
-				}		
+				}
+					$session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
+					return $this->redirectToRoute('mapCustomers');
+
+			} catch (Exception $e) {
+				$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des clients sur la carte');
 			}
 		}
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
