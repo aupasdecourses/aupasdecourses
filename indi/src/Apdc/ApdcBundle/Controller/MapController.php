@@ -26,7 +26,9 @@ class MapController extends Controller
 
 
 
-		$lala = $stats->getCustomersNotMapped();
+		$lalala = $stats->cleanAddrForMap();
+
+//		$lala = $stats->getCustomersNotMapped();
 
 		$json_data = $stats->getCustomerMapData();
 

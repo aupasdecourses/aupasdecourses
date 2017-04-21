@@ -123,8 +123,46 @@ class Stats
 		return $json_data;
 	}
 	
+	/****************************************************************************************/
+	/***************************************************************************************/
 
 
+
+	/**	Fonction identique à getCustomerStatData
+	 *	MAIS pas de jointure sur geocode
+	 *	Utilisé pour l'ajout dans la table geocode_customers, des new users
+	 */
+	public function getNewCustomerData()
+	{
+		$data = [];
+		$orders = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
+
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city'));
+		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at' => 'customer_entity.created_at'));
+		$orders->addAttributeToFilter('address_type', 'shipping');
+		$orders->getSelect()->columns('COUNT(*) AS nb_order')
+			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
+			->columns('MAX(main_table.created_at) AS last_order')
+			->group('customer_id');
+
+		// data[] n'a que les champs utiles pour l'update de la table geocode_customers
+		// le nom des champs de data[] est le meme que les colonnes de la table geocode
+		foreach ($orders as $order) {
+			array_push($data, [
+				'geocode_customer_id'		=> $order->getCustomerId(),
+				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
+				'postcode'					=> $order->getPostcode(),
+				'city'						=> $order->getCity(),
+				'lat'						=> '',
+				'long'						=> '',  // lat et long seront géocodés dans la fonction geocode(); 
+				'former_address'			=> $order->getStreet(), // CELLE CI NE SERA PAS MODIF CAR UTILE A JOINTURE ENTRE GEOCODE ET SALES_ORDER_ADDRESS
+			]);
+		}
+
+		return $data;
+	}
 
 	/**	Fonction utilisée pour la MAJ de la table geocode_customers
 	 *	La jointure entre sales_flat_order_adress.street et geocode_customers.former_address (checker la jointure de la fonction getCustomerStatData() )
@@ -134,37 +172,41 @@ class Stats
 	 */
 	public function cleanAddrForMap()
 	{
-		$data = $this->getCustomerStatData();
+		$data = $this->getNewCustomerData();
 
 		$bad_chars	= ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
 		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
-//		$streetTypes = ['allee','allée','avenue','boulevard','bd','bvd','chaussee','chemin','cite','cité','clos','cour','impasse','passage','place','pont','quai','rue','ruelle','route','voie'];
 
-
-		foreach ($data as &$stat) {
-			if (strpos($stat['addr'], "\n")) {
-				$cut_pos		= strpos($stat['addr'], "\n");	
-				$stat['addr']	= substr($stat['addr'], 0, $cut_pos);
+		foreach ($data as &$v) {
+			if (strpos($v['address'], "\n")) {
+				$cut_pos		= strpos($v['address'], "\n");	
+				$v['address']	= substr($v['address'], 0, $cut_pos);
 			}
-			if (strpos($stat['addr'], ' '."-")) {
-				$cut_pos_two	= strpos($stat['addr'], ' '."-");
-				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_two);
+			if (strpos($v['address'], ' '."-")) {
+				$cut_pos_two	= strpos($v['address'], ' '."-");
+				$v['address']	= substr($v['address'], 0, $cut_pos_two);
 			}
-			if (strpos($stat['addr'], "code")) {
-				$cut_pos_three	= strpos($stat['addr'], "code");
-				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_three);
+			if (strpos($v['address'], "code")) {
+				$cut_pos_three	= strpos($v['address'], "code");
+				$v['address']	= substr($v['address'], 0, $cut_pos_three);
 			}
-			if (strpos($stat['addr'], "interphone")) {
-				$cut_pos_four	= strpos($stat['addr'], "interphone");
-				$stat['addr']	= substr($stat['addr'], 0, $cut_pos_four);
+			if (strpos($v['address'], "interphone")) {
+				$cut_pos_four	= strpos($v['address'], "interphone");
+				$v['address']	= substr($v['address'], 0, $cut_pos_four);
 			}
 
-			$stat['addr'] = str_replace(",", "", $stat['addr']);
+			$v['address'] = str_replace(",", "", $v['address']);
 
-			$stat['addr'] = strtr($stat['addr'], array_combine($bad_chars, $good_chars));
+			$v['address'] = strtr($v['address'], array_combine($bad_chars, $good_chars));
 		}
 
-		return $data;
+
+		echo'<pre>';
+		print_R($data);
+		echo'<pre>';
+
+
+//		return $data;
 	}
 
 
@@ -227,6 +269,9 @@ class Stats
 
 		return $json_data;
 	}
+
+
+
 
 	
 	
