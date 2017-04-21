@@ -36,7 +36,8 @@ Checkout.prototype = {
         this.method = '';
         this.payment = '';
         this.loadWaiting = false;
-        this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'payment', 'ddate','review'];
+		this.steps = ['login', 'billing', 'shipping_method', 'checkcart', 'payment'];
+		//this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'payment', 'ddate','review'];
         //We use billing as beginning step since progress bar tracks from billing
         this.currentStep = 'billing';
 
@@ -101,6 +102,8 @@ Checkout.prototype = {
             if (this.loadWaiting) {
                 this.setLoadWaiting(false);
             }
+			console.log(step+'-buttons-container');
+			console.log($(step+'-buttons-container'));
             var container = $(step+'-buttons-container');
             container.addClassName('disabled');
             container.setStyle({opacity:.5});
@@ -986,4 +989,72 @@ Review.prototype = {
     },
 
     isSuccess: false
+}
+
+var Checkcart = Class.create();
+Checkcart.prototype = {
+    initialize: function(form, saveUrl){
+        this.form = form;
+        this.saveUrl = saveUrl;
+        this.onAddressLoad = this.fillForm.bindAsEventListener(this);
+        this.onSave = this.nextStep.bindAsEventListener(this);
+        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+    },
+
+    fillForm: function(transport){
+        var elementValues = {};
+        arrElements = Form.getElements(this.form);
+        for (var elemIndex in arrElements) {
+            if (arrElements[elemIndex].id) {
+                var fieldName = arrElements[elemIndex].id.replace(/^checkcart:/, '');
+                arrElements[elemIndex].value = elementValues[fieldName] ? elementValues[fieldName] : '';
+            }
+        }
+    },
+
+    save: function(){
+        if (checkout.loadWaiting!=false) return;
+
+        var validator = new Validation(this.form);
+        if (validator.validate()) {
+            checkout.setLoadWaiting('checkcart');
+            var request = new Ajax.Request(
+                this.saveUrl,
+                {
+                    method: 'post',
+                    onComplete: this.onComplete,
+                    onSuccess: this.onSave,
+                    onFailure: checkout.ajaxFailure.bind(checkout),
+                    parameters: Form.serialize(this.form)
+                }
+            );
+        }
+    },
+
+    resetLoadWaiting: function(transport){
+        checkout.setLoadWaiting(false);
+    },
+
+    nextStep: function(transport){
+        if (transport && transport.responseText){
+            try{
+                response = eval('(' + transport.responseText + ')');
+            }
+            catch (e) {
+                response = {};
+            }
+        }
+
+        if (response.error){
+            if ((typeof response.message) == 'string') {
+                alert(response.message);
+            } else {
+                alert(response.message.join("\n"));
+            }
+
+            return false;
+        }
+
+        checkout.setStepResponse(response);
+    }
 }

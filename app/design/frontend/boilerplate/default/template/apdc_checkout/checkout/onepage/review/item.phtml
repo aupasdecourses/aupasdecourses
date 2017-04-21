@@ -43,15 +43,17 @@ $name=Mage::helper('apdc_checkout')->getCommercantname($this);
                 <p class="artisan-name"><?php echo $name;?></p>
             <?php 
                 if(isset($_SESSION['ddate'])){
-                if(array_key_exists($name,$commercants)){
-                    if(!in_array($day,$commercants[$name])){
-                        if(count($commercants[$name])==0){
-                            echo '</br><strong style="color:red;">Non disponible cette semaine.</strong>';
-                        }elseif(count($commercants[$name])<4){
-                            echo "</br><strong style='color:orange;'>Non disponible pour ce jour de livraison";
-                        }
-                    }
-             }}?>
+					if(array_key_exists($name,$commercants)){
+						if(!in_array($day,$commercants[$name])){
+							if(count($commercants[$name])==0){
+								echo '</br><strong style="color:red;">Non disponible cette semaine.</strong>';
+							}elseif(count($commercants[$name])<4){
+								echo "</br><strong style='color:orange;'>Non disponible pour ce jour de livraison";
+							}
+						}
+					}
+				}
+			?>
             <?php if ($_item->getItemComment()):?>
             <dl class="item-options" id="checkout_cart_item_default">
             <dt><?php echo $this->__('Commentaires')?></dt>

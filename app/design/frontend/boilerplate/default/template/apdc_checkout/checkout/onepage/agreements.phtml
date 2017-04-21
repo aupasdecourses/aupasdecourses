@@ -5,8 +5,10 @@
 	<?php foreach ($this->getAgreements() as $_a): ?>
 	    <li style="margin:0px;">
 	        <p class="agree">
-	            <input type="checkbox" id="cgv-checkbox" value="1" title="<?php echo $this->escapeHtml($_a->getCheckboxText()) ?>" class="checkbox" /><label for="agreement-<?php echo $_a->getId()?>">J'ai lu et j'accepte les <a href="<?= Mage::getUrl('mentions-legales-cgv')?>" target="_blank">Conditions Générales de Vente</a></label>
+	            <input type="checkbox" id="agreement-<?php echo $_a->getId()?>" value="1" title="<?php echo $this->escapeHtml($_a->getCheckboxText()) ?>" class="checkbox" />
+				<label for="agreement-<?php echo $_a->getId()?>">J'ai lu et j'accepte les <a href="<?= Mage::getUrl('mentions-legales-cgv')?>" target="_blank">Conditions Générales de Vente</a></label>
 	        </p>
+			
 	    </li>
 	<?php endforeach ?>
 	</ol>
