@@ -2,11 +2,11 @@
     <div class="discount-form row">
         <h3><?php echo $this->__('Votre code de réduction') ?></h3>
         <div class="field-wrapper" style="width:100%">
-            <input style="height:33px;margin-top:0px" class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />
+            <input style="height:45px;margin-top:0px" class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />
             <div class="button-wrapper col-sm-6">
                 <div style="width:100%;">
                     <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())==0): ?>
-                    <button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button addcoupon col-xs-7" value="<?php echo $this->__('Apply Coupon') ?>" style="width: 100%;" ><span><?php echo $this->__('Utiliser') ?></span></button>
+                    <button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button button-green addcoupon col-xs-7" value="<?php echo $this->__('Apply Coupon') ?>" style="width: 100%;" ><span><?php echo $this->__('Utiliser') ?></span></button>
                     <?php endif;?>
                     <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())): ?>
                         <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button cancelcoupon col-xs-7" value="<?php echo $this->__('Cancel Coupon') ?>" style="width: 100%;" ><span><?php echo $this->__('Annuler') ?></span></button>

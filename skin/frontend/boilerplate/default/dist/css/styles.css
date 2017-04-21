@@ -13169,7 +13169,8 @@ footer .social-list .btn-social-icon {
 }
 
 #co-billing-form,
-#co-shipping-method-form {
+#co-shipping-method-form,
+#checkout-step-payment {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 70px;
@@ -13464,6 +13465,10 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+#checkout-review-table {
+  width: 100%;
+}
+
 #checkout-review-table .crop {
   display: inline-block;
   overflow: hidden;
@@ -13476,11 +13481,13 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table .infos_prod_review {
   display: inline-block;
+  max-width: 540px;
   vertical-align: middle;
 }
 
 #checkout-review-table .infos_prod_review h3 {
   font-size: 1.125rem;
+  font-weight: normal;
   text-align: left;
   text-transform: none;
   color: #333;
@@ -13490,6 +13497,72 @@ footer .social-list .btn-social-icon {
   font-size: .875rem;
   font-weight: 700;
   color: #ff7d73;
+}
+
+#checkout-review-table th {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+}
+
+#checkout-review-table td {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+#checkout-review-table td.quantity {
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: 0 20px;
+  color: #1e555a;
+}
+
+#checkout-review-table td.price {
+  font-size: 1.75rem;
+  font-weight: 300;
+  padding: 0 20px;
+  color: #3ab64b;
+}
+
+#checkout-review-table td.subtotal {
+  color: #999;
+}
+
+#checkout-review-table td h3 {
+  margin-top: 0;
+}
+
+#checkout-review-table tfoot td {
+  font-size: 1.125rem;
+  border: none;
+}
+
+#checkout-review-table tfoot td.last {
+  color: #3ab64b;
+}
+
+#co-payment-form h3,
+#discount-coupon-form h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: left;
+  text-transform: none;
+  color: #1e555a;
+}
+
+#discount-coupon-form input {
+  font-size: .875rem;
+  padding: 10px 30px 10px 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
+#discount-coupon-form .button {
+  margin: 0;
 }
 
 #ddate_calendar > h3 {

@@ -20,7 +20,8 @@
 }
 
 #co-billing-form,
-#co-shipping-method-form{
+#co-shipping-method-form,
+#checkout-step-payment{
     background-color: #fff;
     border-radius: 10px;
     padding: 40px 70px;
@@ -294,6 +295,7 @@
 }
 
 #checkout-review-table{
+    width: 100%;
     .crop{
         display: inline-block;
         vertical-align: middle;
@@ -306,9 +308,11 @@
     .infos_prod_review{
         display: inline-block;
         vertical-align: middle;
+        max-width: 540px;
         h3{
             text-transform: none;
             font-size: 1.125rem;
+            font-weight: normal;
             color: #333;
             text-align: left;
         }
@@ -317,6 +321,68 @@
             font-weight: 700;
             color: $color-main-pink;
         }
+    }
+    th{
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-align: center;
+        color: #333;
+    }
+    td{
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        &.quantity{
+            font-weight: 700;
+            color: $color-second-green;
+            font-size: 1.125rem;
+            padding: 0 20px;
+        }
+        &.price{
+            font-size: 1.75rem;
+            color: $color-main-green;
+            font-weight: 300;
+            padding: 0 20px;
+        }
+        &.subtotal{
+            color: $color-main-grey;
+        }
+        h3{
+            margin-top: 0;
+        }
+    }
+    tfoot{
+        td{
+            border: none;
+            font-size: 1.125rem;
+            &.last{
+                color: $color-main-green;
+            }
+        }
+    }
+}
+
+#co-payment-form,
+#discount-coupon-form{
+    h3{
+        text-transform: none;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: $color-second-green;
+        text-align: left;
+    }
+}
+#discount-coupon-form{
+    input{
+        color: $color-main-grey;
+        font-size: 0.875rem;
+        padding: 10px 30px 10px 10px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #f6f6f6;
+        outline: none;
+    }
+    .button{
+        margin: 0;
     }
 }
 

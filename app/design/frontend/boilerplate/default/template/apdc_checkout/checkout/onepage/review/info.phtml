@@ -17,8 +17,8 @@
         <thead class="checkout-review-table-collapse collapse" style="border-bottom:solid 1px #CCC">
             <tr>
                 <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-                <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
                 <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+                <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
                 <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
             </tr>
             <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
