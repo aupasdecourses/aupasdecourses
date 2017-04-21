@@ -25,8 +25,10 @@ class Stats
 		);
 	}
 
-	/** get data from customer_entity + join sales_flat_order_address + join geocode_customers
-	* fonction mère */
+	/**
+	 *	Fonction mère pour les stats clients + le mapping client
+	 *	Jointure entre sales_order / address / customer_entity et geocode
+	 */
 	public function getCustomerStatData()
 	{
 		$data = [];
@@ -73,9 +75,8 @@ class Stats
 		return $data;
 	}
 
-	/** getCustomerStatData 
-	 *	AND ADD NEW CUSTOMERS
-	 *	fonction fille pour les stats clients, avec l'ajout de new users
+	/** Fonction fille pour les stats clients
+	 *	Permet l'ajout de nouveaux users, en + des fonctionnalités existantes de la fonction mère
 	 **/
 	public function stats_clients()
 	{
@@ -110,30 +111,37 @@ class Stats
 		return $data;
 	}
 
+	/**	Fonction fille pour le mapping client
+	 *	Convertit simplement la data de la fonction mère en tableau json
+	 *	Ce json sera utilisé dans le controlleur de mapping clients
+	 *	Puis parsé dans la vue twig afin d'afficher les clients sur la carte */
+	public function getCustomerMapData()
+	{
+		$data = $this->getCustomerStatData();
+		$json_data = json_encode($data);
 
+		return $json_data;
+	}
+	
+
+
+
+	/**	Fonction utilisée pour la MAJ de la table geocode_customers
+	 *	La jointure entre sales_flat_order_adress.street et geocode_customers.former_address (checker la jointure de la fonction getCustomerStatData() )
+	 *	se fait sur des adresses à syntaxe incorrecte	
+	 *	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
+	 *	Strtr sur tous les caracteres accentués et les types de voies approximatifs
+	 */
 	public function cleanAddrForMap()
 	{
-		$stats = $this->getCustomerStatData();
+		$data = $this->getCustomerStatData();
 
-//		$streetTypes		= ['allee','allée','avenue','boulevard','bd','bvd','chaussee','chemin','cite','cité','clos','cour','impasse','passage','place','pont','quai','rue','ruelle','route','voie'];
-
-//		foreach ($stats as &$stat) {
-//			foreach ($streetTypes as $streets) {
-//				if (strpos($stat['addr'], $streets) || strpos($stat['addr'], ucfirst($streets)) || strpos($stat['addr'], strtoupper($streets))) {
-//					$stat['lalalala'] = 'lalalala';	
-//				}
-//			}	
-//		}
-
-
-		/**	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
-		 *	strtr sur tous les caracteres accentués
-		 */
-
-		$bad_chars = ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
+		$bad_chars	= ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
 		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
+//		$streetTypes = ['allee','allée','avenue','boulevard','bd','bvd','chaussee','chemin','cite','cité','clos','cour','impasse','passage','place','pont','quai','rue','ruelle','route','voie'];
 
-		foreach ($stats as &$stat) {
+
+		foreach ($data as &$stat) {
 			if (strpos($stat['addr'], "\n")) {
 				$cut_pos		= strpos($stat['addr'], "\n");	
 				$stat['addr']	= substr($stat['addr'], 0, $cut_pos);
@@ -156,9 +164,37 @@ class Stats
 			$stat['addr'] = strtr($stat['addr'], array_combine($bad_chars, $good_chars));
 		}
 
-		return $stats;
+		return $data;
 	}
 
+
+	/**	Fonction permettant de récuperer les clients pas encore géoencodés
+	 *	C-a-d les clients dont lat + long = 0
+	 *	C-a-d les nouveaux clients Et/OU les clients où l'adresse est mal écrite
+	 */
+	public function getCustomersNotMapped()
+	{
+		$data = $this->cleanAddrForMap();
+
+		$cpt = 0;
+		$temp = [];
+		foreach ($data as $content) {
+			if ($content['lat'] == 0 && $content['lon'] == 0) {
+				$temp[$cpt] = [
+					'nom_client'	=> $content['nom_client'],
+					'addr'			=> $content['addr'],
+					'lat'			=> $content['lat'],
+					'lon'			=> $content['lon'],
+				];
+			++$cpt;
+			}
+		}
+			
+		echo'<pre>';
+		print_R($temp);
+		echo'<pre>';
+
+	}
 
 
 
@@ -192,20 +228,6 @@ class Stats
 		return $json_data;
 	}
 
-	/** getCustomerStatData
-	 * fill in geocode table
-	 *  FOR MAP CUSTOMERS
-	 *  fonction fille pour la carte clients
-	 **/
-	public function getCustomerMapData()
-	{
-
-		$data = $this->getCustomerStatData();
-		
-		$json_data = json_encode($data);
-
-		return $json_data;
-	}
 	
 	
 	/** Mettre dans trait Model **/

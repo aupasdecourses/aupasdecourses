@@ -25,6 +25,9 @@ class MapController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats');
 
 
+
+		$lala = $stats->getCustomersNotMapped();
+
 		$json_data = $stats->getCustomerMapData();
 
 
