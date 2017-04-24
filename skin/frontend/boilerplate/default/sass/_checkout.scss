@@ -21,12 +21,13 @@
 
 #co-billing-form,
 #co-shipping-method-form,
-#checkout-step-payment{
+#checkout-step-payment,
+#checkout-step-checkcart{
     background-color: #fff;
     border-radius: 10px;
     padding: 40px 70px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
 
 .apdc-form{
@@ -132,6 +133,11 @@
             background-color: $color-main-green;
             border-radius: 5px;
             margin: 10px 25px 0;
+            &#payment-progress-opcheckout{
+                &:after{
+                    display: none;
+                }
+            }
             &:after{
                 content: "";
                 display: block;
@@ -294,8 +300,33 @@
     }
 }
 
+#checkout-review-table-wrapper{
+    & > h3{
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-transform: none;
+        color: $color-second-green;
+        text-align: left;
+    }
+    #amorderattr{
+        label{
+            display: inline-block;
+            vertical-align: bottom;
+            font-size: 1.125rem;
+            color: #333;
+            font-weight: normal;
+            margin-right: 10px;
+        }
+        select{
+            display: inline-block;
+            vertical-align: bottom;
+            width: auto;
+        }
+    }
+}
 #checkout-review-table{
     width: 100%;
+    margin-top: 20px;
     .crop{
         display: inline-block;
         vertical-align: middle;
@@ -327,27 +358,41 @@
         font-size: 1.125rem;
         text-align: center;
         color: #333;
+        padding-bottom: 30px;
+        min-width: 140px;
     }
     td{
-        padding: 10px 0;
+        padding: 15px 0;
         border-bottom: 1px solid #eee;
+        min-width: 140px;
         &.quantity{
             font-weight: 700;
             color: $color-second-green;
             font-size: 1.125rem;
             padding: 0 20px;
+            text-align: center;
         }
         &.price{
             font-size: 1.75rem;
             color: $color-main-green;
             font-weight: 300;
             padding: 0 20px;
+            text-align: center;
         }
         &.subtotal{
             color: $color-main-grey;
+            text-align: center;
         }
         h3{
             margin-top: 0;
+        }
+        .item-options{
+            .tooltip-options{
+                display: inline-block!important;
+            }
+            .tooltip{
+                text-align: left;
+            }
         }
     }
     tfoot{
@@ -359,6 +404,9 @@
             }
         }
     }
+}
+#co-checkcart-form{
+    margin-top: 30px;
 }
 
 #co-payment-form,
@@ -384,6 +432,57 @@
     .button{
         margin: 0;
     }
+}
+
+#checkout-payment-method-load{
+    #dt_method_adyen_cc{
+        display: none;
+    }
+    #payment_form_adyen_cc{
+        display: block!important;
+    }
+    label{
+        font-size: 0.875rem;
+        color: $color-main-grey;
+        font-weight: normal;
+    }
+}
+
+#checkout-agreements{
+    .checkout-agreements{
+        list-style-type: none;
+        padding: 0;
+        .agree{
+            margin: 30px 0;
+            padding: 0;
+        }
+    }
+}
+
+#checkout-step-payment{
+    .fieldset, .hipay_infobox_headline{
+        padding: 15px;
+    }
+    .hipay_infobox_headline{
+        font-size: 1.125rem;
+        font-weight: normal;
+        opacity: 1;
+        color: #333;
+    }
+    .input-box{
+        .v-fix{
+            margin-bottom: 10px;
+            display: inline-block;
+            vertical-align: bottom;
+            #adyen_cc_expiration_yr{
+                margin-top: 26px;
+            }
+        }
+    }
+}
+
+.sp-methods .adyen_payment_input_fields{
+    clear: none;
 }
 
 #ddate_calendar{

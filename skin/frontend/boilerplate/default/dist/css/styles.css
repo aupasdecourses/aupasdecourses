@@ -13170,9 +13170,10 @@ footer .social-list .btn-social-icon {
 
 #co-billing-form,
 #co-shipping-method-form,
-#checkout-step-payment {
+#checkout-step-payment,
+#checkout-step-checkcart {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   padding: 40px 70px;
   border-radius: 10px;
   background-color: #fff;
@@ -13289,6 +13290,10 @@ footer .social-list .btn-social-icon {
   vertical-align: top;
   border-radius: 5px;
   background-color: #3ab64b;
+}
+
+.block-progress dl > div#payment-progress-opcheckout:after {
+  display: none;
 }
 
 .block-progress dl > div:after {
@@ -13465,8 +13470,32 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+#checkout-review-table-wrapper > h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: left;
+  text-transform: none;
+  color: #1e555a;
+}
+
+#checkout-review-table-wrapper #amorderattr label {
+  font-size: 1.125rem;
+  font-weight: normal;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: bottom;
+  color: #333;
+}
+
+#checkout-review-table-wrapper #amorderattr select {
+  display: inline-block;
+  width: auto;
+  vertical-align: bottom;
+}
+
 #checkout-review-table {
   width: 100%;
+  margin-top: 20px;
 }
 
 #checkout-review-table .crop {
@@ -13502,12 +13531,15 @@ footer .social-list .btn-social-icon {
 #checkout-review-table th {
   font-size: 1.125rem;
   font-weight: 700;
+  min-width: 140px;
+  padding-bottom: 30px;
   text-align: center;
   color: #333;
 }
 
 #checkout-review-table td {
-  padding: 10px 0;
+  min-width: 140px;
+  padding: 15px 0;
   border-bottom: 1px solid #eee;
 }
 
@@ -13515,6 +13547,7 @@ footer .social-list .btn-social-icon {
   font-size: 1.125rem;
   font-weight: 700;
   padding: 0 20px;
+  text-align: center;
   color: #1e555a;
 }
 
@@ -13522,15 +13555,25 @@ footer .social-list .btn-social-icon {
   font-size: 1.75rem;
   font-weight: 300;
   padding: 0 20px;
+  text-align: center;
   color: #3ab64b;
 }
 
 #checkout-review-table td.subtotal {
+  text-align: center;
   color: #999;
 }
 
 #checkout-review-table td h3 {
   margin-top: 0;
+}
+
+#checkout-review-table td .item-options .tooltip-options {
+  display: inline-block !important;
+}
+
+#checkout-review-table td .item-options .tooltip {
+  text-align: left;
 }
 
 #checkout-review-table tfoot td {
@@ -13540,6 +13583,10 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table tfoot td.last {
   color: #3ab64b;
+}
+
+#co-checkcart-form {
+  margin-top: 30px;
 }
 
 #co-payment-form h3,
@@ -13563,6 +13610,56 @@ footer .social-list .btn-social-icon {
 
 #discount-coupon-form .button {
   margin: 0;
+}
+
+#checkout-payment-method-load #dt_method_adyen_cc {
+  display: none;
+}
+
+#checkout-payment-method-load #payment_form_adyen_cc {
+  display: block !important;
+}
+
+#checkout-payment-method-load label {
+  font-size: .875rem;
+  font-weight: normal;
+  color: #999;
+}
+
+#checkout-agreements .checkout-agreements {
+  padding: 0;
+  list-style-type: none;
+}
+
+#checkout-agreements .checkout-agreements .agree {
+  margin: 30px 0;
+  padding: 0;
+}
+
+#checkout-step-payment .fieldset,
+#checkout-step-payment .hipay_infobox_headline {
+  padding: 15px;
+}
+
+#checkout-step-payment .hipay_infobox_headline {
+  font-size: 1.125rem;
+  font-weight: normal;
+  opacity: 1;
+  color: #333;
+}
+
+#checkout-step-payment .input-box .v-fix {
+  display: inline-block;
+  margin-bottom: 10px;
+  vertical-align: bottom;
+}
+
+#checkout-step-payment .input-box .v-fix #adyen_cc_expiration_yr {
+  margin-top: 26px;
+}
+
+.sp-methods .adyen_payment_input_fields {
+  clear: none;
 }
 
 #ddate_calendar > h3 {

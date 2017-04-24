@@ -1,5 +1,5 @@
 <form id="discount-coupon-form" action="" method="post">
-    <div class="discount-form row">
+    <div class="discount-form">
         <h3><?php echo $this->__('Votre code de réduction') ?></h3>
         <div class="field-wrapper" style="width:100%">
             <input style="height:45px;margin-top:0px" class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />

@@ -1,9 +1,14 @@
-<div class="row">
-    <h3 style="float:left;"><?php echo $this->__('Total de votre commande') ?></h3>
-    <a data-target=".checkout-review-table-collapse" style="float:right;color: rgba(0,0,0,0.57);">Voir le détail des produits commandés <span class="icon-collapse glyphicon glyphicon-collapse-down" aria-hidden="true"></span></a>
-    </div>
 <?php echo $this->getChildHtml('items_before'); ?>
 <div id="checkout-review-table-wrapper">
+   <h3><?php echo $this->__('En cas de non disponibilité') ?></h3>
+    <div id="amorderattr" class="form-horizontal">
+        <label for="produit_equivalent" class="label-checkout">Je fais confiance aux commerçants pour trouver un produit équivalent</label>
+        <select id="produit_equivalent" name="amorderattr[produit_equivalent]" class="required-entry required-entry select">
+            <option value="1" selected="selected">Oui</option>
+            <option value="0">Non</option>
+        </select>
+        <div type="anchor" id="anchor_produit_equivalent"></div><div style="padding: 4px;"></div>
+    </div>
     <table class="data-table" id="checkout-review-table">
         <?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
         <col />
@@ -14,7 +19,7 @@
         <col width="1" />
         <col width="1" />
         <?php endif; ?>
-        <thead class="checkout-review-table-collapse collapse" style="border-bottom:solid 1px #CCC">
+        <thead class="checkout-review-table-collapse" style="border-bottom:solid 1px #CCC">
             <tr>
                 <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
                 <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
@@ -50,14 +55,14 @@ $j(function() {
   $j("a").click(function(e) {
     var target = $j(this).data("target");
     var isTargetExpanded = $j(target).hasClass('in');
-    $j('.checkout-review-table-collapse').addClass('collapse').removeClass('in'); // collapse all before expading clicked target
-    if (isTargetExpanded) {
+    //$j('.checkout-review-table-collapse').addClass('collapse').removeClass('in'); // collapse all before expading clicked target
+    /*if (isTargetExpanded) {
       $j('.icon-collapse').removeClass('glyphicon-collapse-up').addClass('glyphicon-collapse-down');
       $j(target).addClass('collapse').removeClass("in"); // collapse clicked target
     } else {
       $j('.icon-collapse').removeClass('glyphicon-collapse-down').addClass('glyphicon-collapse-up');
       $j(target).removeClass('collapse').addClass("in"); // expand clicked target
-    }
+    }*/
   });
 });
 </script>

@@ -14,6 +14,7 @@
 		<reference name="header">
 			<action method="unsetChild"><name>topMenu</name></action>
 			<action method="unsetChild"><name>topContainer</name></action>
+			<action method="setData"><name>isCheckout</name><value>1</value></action>
 			<remove name="top.search"/>
 			<remove name="top.container"/>
 			<block type="checkout/onepage_progress" name="checkout.progress" as="checkout.progress" template="apdc_checkout/checkout/onepage/progress.phtml">
@@ -57,6 +58,7 @@
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
             <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
+            <block type="checkout/cart_totals" name="checkout.onepage.totals" as="recap_totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
         </reference>
         <!-- <reference name="checkout.payment.methods.child0">
             <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>

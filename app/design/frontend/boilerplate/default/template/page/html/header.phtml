@@ -32,17 +32,17 @@
                         </div>
                     </div>-->
 
-                    <div class="col-md-6 col-md-offset-2 col-sm-12 text-right">
+                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2'; }?> col-md-6 col-sm-12 text-right">
                         
                         <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
-                        <?php if($session->isLoggedIn()) : ?>
+                        <!--<?php if($session->isLoggedIn()) : ?>
                             <div class="skip-container hidden-sm">
                                 <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
                                     <i class="fa fa-bullhorn"></i>
                                     <span class="label">Parrainez</span>
                                 </a>
                             </div>
-                        <?php endif; ?>
+                        <?php endif; ?>-->
 
                         <div class="header-delivery-container skip-container">
                              <a href="#" title="Livraison">
