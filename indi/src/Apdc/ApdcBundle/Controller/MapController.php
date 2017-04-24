@@ -26,8 +26,11 @@ class MapController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats');
 		$mage	= $this->container->get('apdc_apdc.magento');
 
-		$json_data_for_map		= $stats->getCustomerMapData();
+		/* Comparaison pour afficher ou non, le button de MAJ carte */
+		$comparaison = $stats->compareCustomersAdress();
 
+		/* data json pour l'affichage des clients*/
+		$json_data_for_map		= $stats->getCustomerMapData();
 
 		/* Ajout des new customers dans table geocode_customers + sur la carte */
 		/* qd on clique sur le bouton MAJ clients */
@@ -42,14 +45,14 @@ class MapController extends Controller
 			try {
 				foreach ($new_customers_to_add as $content) {
 					$mage->updateEntryToGeocodeCustomers(
-						['address' => $content['address']],
+						['id_customer' => $content['id_customer']],
 
-							['former_address'			=> $content['former_address'],
+							['address'					=> $content['address'],
 							'postcode'					=> $content['postcode'],
 							'city'						=> $content['city'],
 							'lat'						=> $content['lat'],
 							'long'						=> $content['long'],
-							'id_customer'				=> $content['id_customer']
+							'former_address'			=> $content['former_address']
 						]
 						);
 				}
@@ -64,6 +67,7 @@ class MapController extends Controller
 			[
 				'json_data'				=> $json_data_for_map,
 				'form_new_customers'	=> $form_new_customers->createView(),
+				'comparaison'			=> $comparaison,
 		]);
 	}
 }	

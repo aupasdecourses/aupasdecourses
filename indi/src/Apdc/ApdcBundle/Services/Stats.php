@@ -118,8 +118,11 @@ class Stats
 	public function getCustomerMapData()
 	{
 		$data = $this->getCustomerStatData();
-		$json_data = json_encode($data);
 
+//		unset($data['25'], $data['42'], $data['105'], $data['148'], $data['153'], $data['164']);
+//		unset($data['195']);
+
+		$json_data = json_encode($data);
 		return $json_data;
 	}
 	
@@ -230,6 +233,43 @@ class Stats
 		return $data;
 	}
 
+	/***************/
+	/** Comparaison entre les sales_flat_order_address.street ET geocode_customers.former_adress
+	 *	pour afficher ou non le bouton submit de la MAJ map clients */
+
+	public function compareCustomersAdress()
+	{
+
+		$orderAdresses = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))                       
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));                 
+	   	$orderAdresses->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('street')); 
+		$orderAdresses->getSelect()->group('customer_id');
+		$orders = [];
+
+		$geocodeAdresses = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$geocodes = [];
+
+		foreach ($orderAdresses as $streets) {
+			$orders[] = $streets->getStreet();
+		}
+
+		foreach ($geocodeAdresses as $adresses) {
+			$geocodes[] = $adresses->getData('former_address');
+		}
+
+		if (count($orders) !== count($geocodes)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+
+
+	/**************/
 
 
 
