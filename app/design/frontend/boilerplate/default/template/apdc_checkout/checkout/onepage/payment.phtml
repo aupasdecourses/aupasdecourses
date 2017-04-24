@@ -34,7 +34,7 @@
 </script>
 <div class="row">
     <div class="col-sm-6">
-        <?php echo $this->getChildHtml('recap_totals'); ?>
+        <?php echo $this->getChildHtml('payment_totals'); ?>
         <!--<?php echo $this->getChildChildHtml('additional') ?>-->
     </div>
     <div class="col-sm-1 hidden-xs"></div>
@@ -91,7 +91,7 @@
 <script type="text/javascript">
 //<![CDATA[
     function button_onclick(){
-        if($j('#cgv-checkbox').is(":checked")){
+        if($j('#agreement-1').is(":checked")){
             tagmanager_event('validationPaiement',{});
             payment.save();
         }

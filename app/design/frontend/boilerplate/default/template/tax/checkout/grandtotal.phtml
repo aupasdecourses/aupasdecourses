@@ -24,43 +24,35 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 /**
- * @var $this Mage_Tax_Block_Checkout_Shipping
- * @see Mage_Tax_Block_Checkout_Shipping
+ * @var $this Mage_Tax_Block_Checkout_Grandtotal
+ * @see Mage_Tax_Block_Checkout_Grandtotal
  */
 ?>
-<?php if ($this->displayBoth()):?>
+<?php if ($this->includeTax() && $this->getTotalExclTax()>=0):?>
 <tr>
     <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getExcludeTaxLabel() ?>
+        <strong><?php echo $this->helper('tax')->__('Grand Total Excl. Tax')?></strong>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotalExclTax()) ?></strong>
     </td>
 </tr>
+<?php echo $this->renderTotals('taxes', $this->getColspan()); ?>
 <tr>
     <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getIncludeTaxLabel() ?>
+        <strong><?php echo $this->helper('tax')->__('Grand Total Incl. Tax')?></strong>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
-    </td>
-</tr>
-<?php elseif($this->displayIncludeTax()) : ?>
-<tr>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right apdc_checkout-tax-checkout-shipping.phtml" colspan="<?php echo $this->getColspan(); ?>">
-        Frais de préparation, de mise en caisse et de livraison
-    </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+        <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?></strong>
     </td>
 </tr>
 <?php else:?>
 <tr>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->escapeHtml($this->getTotal()->getTitle()) ?>
+    <td style="<?php echo $this->getStyle() ?>" class="a-right tax-checkout-grandtotal.phtml" colspan="<?php echo $this->getColspan(); ?>">
+        <strong><?php echo $this->getTotal()->getTitle() ?></strong>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        <strong><?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?></strong>
     </td>
 </tr>
 <?php endif;?>

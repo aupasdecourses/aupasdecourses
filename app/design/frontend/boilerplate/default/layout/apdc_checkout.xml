@@ -58,15 +58,9 @@
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
             <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
-            <block type="checkout/cart_totals" name="checkout.onepage.totals" as="recap_totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
+            <block type="checkout/cart_totals" name="checkout.onepage.totals" as="payment_totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
         </reference>
-        <!-- <reference name="checkout.payment.methods.child0">
-            <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
-        </reference> -->
-        <!--update shipping totals template-->
-        <reference name="shipping_total_renderer">
-            <action method="setTemplate"><template>apdc_checkout/tax/checkout/shipping.phtml</template></action>
-        </reference>
+		
         <!-- Affichage spécial pour la livraison en triporteur -->
         <reference name="checkout.onepage.shipping_method.available">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method/available.phtml</template></action>

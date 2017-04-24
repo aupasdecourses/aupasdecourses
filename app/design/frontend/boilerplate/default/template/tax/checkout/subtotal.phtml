@@ -24,43 +24,34 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 /**
- * @var $this Mage_Tax_Block_Checkout_Shipping
- * @see Mage_Tax_Block_Checkout_Shipping
+ * @var $this Mage_Tax_Block_Checkout_Subtotal
+ * @see Mage_Tax_Block_Checkout_Subtotal
  */
 ?>
 <?php if ($this->displayBoth()):?>
 <tr>
     <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getExcludeTaxLabel() ?>
+        <?php echo $this->helper('tax')->__('Subtotal (Excl. Tax)') ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueExclTax()) ?>
     </td>
 </tr>
 <tr>
     <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->getIncludeTaxLabel() ?>
+        <?php echo $this->helper('tax')->__('Subtotal (Incl. Tax)') ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValueInclTax()) ?>
     </td>
 </tr>
-<?php elseif($this->displayIncludeTax()) : ?>
-<tr>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right apdc_checkout-tax-checkout-shipping.phtml" colspan="<?php echo $this->getColspan(); ?>">
-        Frais de préparation, de mise en caisse et de livraison
-    </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
-    </td>
-</tr>
-<?php else:?>
+<?php else : ?>
 <tr>
     <td style="<?php echo $this->getStyle() ?>" class="a-right" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo $this->escapeHtml($this->getTotal()->getTitle()) ?>
+        <?php echo $this->getTotal()->getTitle() ?>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
     </td>
 </tr>
 <?php endif;?>

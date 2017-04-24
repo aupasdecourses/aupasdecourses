@@ -18,7 +18,7 @@ $j(document).ready(function(){
                 $j('.message-coupon').removeClass('error').removeClass('success');
                 if(data.status == 'SUCCESS'){
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('success');
@@ -30,7 +30,7 @@ $j(document).ready(function(){
                       }
                 }else{
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('error');
@@ -62,7 +62,7 @@ $j(document).ready(function(){
                 $j('.message-coupon').removeClass('error').removeClass('success');
                 if(data.status == 'SUCCESS'){
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('success');
@@ -74,7 +74,7 @@ $j(document).ready(function(){
                       }
                 }else{
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('error');
