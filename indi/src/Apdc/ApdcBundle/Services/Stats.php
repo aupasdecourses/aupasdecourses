@@ -130,7 +130,7 @@ class Stats
 
 	/**	Fonction identique à getCustomerStatData
 	 *	MAIS pas de jointure sur geocode
-	 *	Utilisé pour l'ajout dans la table geocode_customers, des new users
+	 *	Utilisé pour l'ajout, dans la table geocode_customers, des new users
 	 */
 	public function getNewCustomerData()
 	{
@@ -148,16 +148,15 @@ class Stats
 			->group('customer_id');
 
 		// data[] n'a que les champs utiles pour l'update de la table geocode_customers
-		// le nom des champs de data[] est le meme que les colonnes de la table geocode
 		foreach ($orders as $order) {
 			array_push($data, [
-				'geocode_customer_id'		=> $order->getCustomerId(),
 				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
 				'postcode'					=> $order->getPostcode(),
 				'city'						=> $order->getCity(),
 				'lat'						=> '',
 				'long'						=> '',  // lat et long seront géocodés dans la fonction geocode(); 
 				'former_address'			=> $order->getStreet(), // CELLE CI NE SERA PAS MODIF CAR UTILE A JOINTURE ENTRE GEOCODE ET SALES_ORDER_ADDRESS
+				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode_customers et customer_entity
 			]);
 		}
 
@@ -203,34 +202,6 @@ class Stats
 	}
 
 
-	/**	Fonction permettant de récuperer les clients pas encore géoencodés
-	 *	C-a-d les clients dont lat + long = 0
-	 *	C-a-d les nouveaux clients Et/OU les clients où l'adresse est mal écrite
-	 */
-//	public function getCustomersNotMapped()
-//	{
-//		$data = $this->cleanAddrForMap();
-//
-//		$cpt = 0;
-//		$temp = [];
-//		foreach ($data as $content) {
-//			if ($content['lat'] == 0 && $content['lon'] == 0) {
-//				$temp[$cpt] = [
-//					'nom_client'	=> $content['nom_client'],
-//					'addr'			=> $content['addr'],
-//					'lat'			=> $content['lat'],
-//					'lon'			=> $content['lon'],
-//				];
-//			++$cpt;
-//			}
-//		}
-			
-//		echo'<pre>';
-//		print_R($temp);
-//		echo'<pre>';
-
-//	}
-
 	private function geocodeAdress($adress) {
 		$data	= [];
 		$adress = urlencode(htmlentities($adress));
@@ -246,6 +217,8 @@ class Stats
 		$data = $this->cleanAddrForMap();
 
 		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
+		/* Attention à ne pas abuser de la limite des encodages lat/long PAR JOUR :) */
+		/* sinon toutes les lat long seront a zero pour la journée */
 		foreach ($data as &$v) {
 			if($v['address'] != "") {
 				$json = $this->geocodeAdress(htmlentities($v['address']));

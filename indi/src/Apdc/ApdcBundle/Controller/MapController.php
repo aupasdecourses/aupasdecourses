@@ -29,7 +29,8 @@ class MapController extends Controller
 		$json_data_for_map		= $stats->getCustomerMapData();
 
 
-		/* Ajout des new customers dans table geocode_customers */
+		/* Ajout des new customers dans table geocode_customers + sur la carte */
+		/* qd on clique sur le bouton MAJ clients */
 		$entity_submit_new_customers = new \Apdc\ApdcBundle\Entity\Model();
 		$form_new_customers = $this->createFormBuilder($entity_submit_new_customers);
 		$form_new_customers = $form_new_customers->getForm();
@@ -40,26 +41,15 @@ class MapController extends Controller
 
 			try {
 				foreach ($new_customers_to_add as $content) {
-			//		dump($content);
-					$mage->addEntryToGeocodeCustomers(
-						[
+					$mage->updateEntryToGeocodeCustomers(
+						['address' => $content['address']],
 
-							// to do
-							// creer PK AI sur table geocode NON SUBMITTED
-							// et conserver geocode_customer_id pour la liaison avec la table entity
-							//
-							// FAIRE UN ADD ENTRY QUAND TABLE VIDE
-							// PUIS UPDATE ENTRY QUAND LAT ET LONG A ZERO
-
-
-
-						//	'geocode_customer_id'		=> $content['geocode_customer_id'],
-							'former_address'			=> $content['former_address'],
-							'address'					=> $content['address'],
+							['former_address'			=> $content['former_address'],
 							'postcode'					=> $content['postcode'],
 							'city'						=> $content['city'],
 							'lat'						=> $content['lat'],
 							'long'						=> $content['long'],
+							'id_customer'				=> $content['id_customer']
 						]
 						);
 				}
