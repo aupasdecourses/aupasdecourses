@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-routing-machine.css" type="text/css" />
 	<link rel="stylesheet" href="{{ path ('root') }}css/map/MarkerCluster.css" type="text/css" />
 	<link rel="stylesheet" href="{{ path ('root') }}css/map/MarkerCluster.Default.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-search.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-search.mobile.css" type="text/css" />
 {% endblock %}
 {% block javascript_mapCustomers %}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
@@ -31,7 +33,9 @@
 	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.awesome-markers.js"></script>	
 	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-routing-machine.js"></script>	
 	<script type="text/javascript" src="{{ path ('root') }}js/map/Control.Geocoder.js"></script>	
-	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.markercluster-src.js"></script>	
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.markercluster-src.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-search.js"></script>
 	<script type="text/javascript">	
 		var json_data = {{ json_data|raw }};
 	</script>

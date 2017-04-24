@@ -82,3 +82,33 @@ function onLocationFound(e) {L.marker(e.latlng).addTo(map).bindPopup("Vous êtes
 map.on('locationfound', onLocationFound);
 function onLocationError(e) {alert(e.message);}
 map.on('locationerror', onLocationError);
+
+/* barre de recherche Google API */
+var geocoder = new google.maps.Geocoder();
+function googleGeocoding(text, callResponse)
+{
+	geocoder.geocode({address: text}, callResponse);
+}
+function formatJSON(rawjson)
+{
+	var json = {},
+	key, loc, disp = [];
+	for(var i in rawjson)
+	{
+		key = rawjson[i].formatted_address;
+
+		loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
+
+		json[ key ]= loc;	//key,value format
+	}
+	return json;
+}
+map.addControl( new L.Control.Search({
+	sourceData: googleGeocoding,
+	formatData: formatJSON,
+	markerLocation: true,
+	autoType: false,
+	autoCollapse: true,
+	minLength: 2
+}) );
+
