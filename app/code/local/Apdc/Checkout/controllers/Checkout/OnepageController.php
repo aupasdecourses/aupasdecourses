@@ -94,14 +94,19 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
                                   'quote' => $this->getOnepage()->getQuote(), ));
                         $this->getOnepage()->getQuote()->collectTotals();
                         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-                        //Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
-
+						
+                        Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
+						
                         /*$result['goto_section'] = 'payment';
                         $result['update_section'] = array(
                             'name' => 'payment-method',
                             'html' => $this->_getPaymentMethodsHtml(),
                         );*/
 						$result['goto_section'] = 'checkcart';
+						$result['update_section'] = array(
+                            'name' => 'checkcart', 
+                            'html' => $this->_getCheckcartHtml(),
+                        );
                         /*$result['update_section'] = array(
                             'name' => 'payment-method',
                             'html' => $this->_getPaymentMethodsHtml(),
@@ -134,6 +139,10 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
                         'html' => $this->_getPaymentMethodsHtml(),
                     );*/
 					$result['goto_section'] = 'checkcart';
+					$result['update_section'] = array(
+						'name' => 'checkcart',
+						'html' => $this->_getCheckcartHtml(),
+					);
                 }
                 $this->getOnepage()->getQuote()->collectTotals()->save();
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
@@ -146,9 +155,9 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 			return;
 		}
 		if ($this->getRequest()->isPost()) {
-			/*$data = $this->getRequest()->getPost("checkcart", "");
-			$result = $this->getOnepage()->saveDeliveryinstructions($data);
-			if (!$result) {
+			$data = $this->getRequest()->getPost("custom_attr_quote", "");
+			$result = $this->getOnepage()->saveCheckcart($data);
+			/*if (!$result) {
 				Mage::dispatchEvent("checkout_controller_onepage_save_deliveryinstructions", array("request" => $this->getRequest(), "quote" => $this->getOnepage()->getQuote()));
 				$this->getResponse()->setBody(Zend_Json::encode($result));
 
@@ -158,7 +167,6 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 					"html" => $this->_getPaymentMethodsHtml()
 				);
 			}*/
-			$result = $this->getOnepage()->saveCheckcart();
 			$result["goto_section"] = "payment";
 			$result["update_section"] = array(
 				"name" => "payment-method",
@@ -166,5 +174,15 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 			);
 			$this->getResponse()->setBody(Zend_Json::encode($result));
 		}
+	}
+	
+	public function _getCheckcartHtml() {
+		$layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_onepage_checkcart');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $output = $layout->getOutput();
+        return $output;
 	}
 }

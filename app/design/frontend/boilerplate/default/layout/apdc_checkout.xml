@@ -15,8 +15,11 @@
 			<action method="unsetChild"><name>topMenu</name></action>
 			<action method="unsetChild"><name>topContainer</name></action>
 			<action method="setData"><name>isCheckout</name><value>1</value></action>
+			<action method="unsetChild"><name>header.delivery</name></action>
 			<remove name="top.search"/>
 			<remove name="top.container"/>
+			<remove name="header.delivery"/>
+			
 			<block type="checkout/onepage_progress" name="checkout.progress" as="checkout.progress" template="apdc_checkout/checkout/onepage/progress.phtml">
 				<!--<block type="checkout/onepage_progress" name="shipping.progress" template="apdc_checkout/checkout/onepage/progress/shipping.phtml"></block>-->
 				<block type="checkout/onepage_progress" name="shippingmethod.progress" template="apdc_checkout/checkout/onepage/progress/shipping_method.phtml"></block>
@@ -114,13 +117,13 @@
 	
 	<checkout_onepage_checkcart>
         <remove name="root"/>
-        <block type="checkout/onepage_payment_methods" name="root_init" output="toHtml" template="apdc_checkout/checkout/onepage/payment/methods.phtml">
-            <block type="checkout/onepage_review_info" name="root1" template="apdc_checkout/checkout/onepage/review/info.phtml">
-                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
-            </block>
-        </block>
+        <block type="apdc_checkout/onepage_checkcart" name="checkout.onepage.checkcart" output="toHtml" template="apdc_checkout/checkout/onepage/checkcart.phtml">
+			<block type="checkout/onepage_review_info" name="checkout.onepage.checkcart.info" template="apdc_checkout/checkout/onepage/review/info.phtml">
+				<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
+			</block>
+		</block>
     </checkout_onepage_checkcart>
 	
     <!-- HiPay Redirect -->

@@ -33,47 +33,50 @@
 //]]>
 </script>
 <div class="row">
-    <div class="col-sm-6">
-        <?php echo $this->getChildHtml('payment_totals'); ?>
-        <!--<?php echo $this->getChildChildHtml('additional') ?>-->
-    </div>
-    <div class="col-sm-1 hidden-xs"></div>
-    <div class="col-sm-5">
-        <?php echo $this->getChildHtml('ajaxcoupon'); ?>
-        <?php echo $this->getChildHtml('agreements') ?>
-    </div>
+	<div class="col-sm-6">
+		<h3><?php echo $this->__('Total de votre commande') ?></h3>
+		<?php echo $this->getChildHtml('payment_totals'); ?>
+		<!--<?php echo $this->getChildChildHtml('additional') ?>-->
+	</div>
+	<div class="col-sm-1 hidden-xs"></div>
+	<div class="col-sm-5">
+		<?php echo $this->getChildHtml('ajaxcoupon'); ?>
+		<?php echo $this->getChildHtml('agreements') ?>
+	</div>
 </div>
 <hr>
 <div class="row">
    <div class="hipay_infobox_headline">
-        <a style="color:#000;opacity:0.84;font-weight:bold;" href="https://www.hipaywallet.com/" target="_blank"><i class="fa fa-lock" aria-hidden="true"></i> Paiement 100% sécurisé en ligne</a>
-    </div>
-    <div class="fieldset">
-        <?php echo $this->getChildChildHtml('methods_additional', '', true, true) ?>
-        <?php echo $this->getChildHtml('methods') ?>
-    </div>
-    <div class="tool-tip" id="payment-tool-tip" style="display:none;">
-        <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>"><?php echo $this->__('Close') ?></a></div>
-        <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" /></div>
-    </div>
+		<a style="color:#000;opacity:0.84;font-weight:bold;" href="https://www.hipaywallet.com/" target="_blank"><i class="fa fa-lock" aria-hidden="true"></i> Paiement 100% sécurisé en ligne</a>
+	</div>
+	<form id="co-payment-form">
+		<div class="fieldset">
+			<?php echo $this->getChildChildHtml('methods_additional', '', true, true) ?>
+			<?php echo $this->getChildHtml('methods') ?>
+		</div>
+	</form>
+	<div class="tool-tip" id="payment-tool-tip" style="display:none;">
+		<div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Close')) ?>"><?php echo $this->__('Close') ?></a></div>
+		<div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Card Verification Number Visual Reference')) ?>" /></div>
+	</div>
 </div>
 <div class="row">
-    <div class="buttons-set clearfix" id="payment-buttons-container">
-        <p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
+	<div class="buttons-set clearfix" id="payment-buttons-container">
+		<p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
 		<button type="button" class="button button-green pull-right" style="margin-left:auto;margin-right:auto;" onclick="button_onclick()"><?php echo Mage::helper('core')->quoteEscape($this->__('Place Order')) ?> <i class="fa fa-angle-right"></i></button>
-        <span class="please-wait" id="payment-please-wait" style="display:none;">
-            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
-        </span>
-    </div>
+		<span class="please-wait" id="payment-please-wait" style="display:none;">
+			<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+		</span>
+	</div>
 </div>
- <script type="text/javascript">
+<script type="text/javascript">
     //<![CDATA[
-        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('agreement-1'));
     //]]>
 </script>
 <script type="text/javascript">
 //<![CDATA[
-    function toggleToolTip(event){
+    /*function toggleToolTip(event){
         if($('payment-tool-tip')){
             $('payment-tool-tip').setStyle({
                 top: (Event.pointerY(event)-560)+'px'//,
@@ -85,7 +88,7 @@
     }
     if($('payment-tool-tip-close')){
         Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
-    }
+    }*/
 //]]>
 </script>
 <script type="text/javascript">

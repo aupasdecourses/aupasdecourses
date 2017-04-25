@@ -1,5 +1,20 @@
-<?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
-<div id="co-checkcart-form">
+<?php
+	$produit_equivalent = 1;
+	$produit_equivalent_db = $this->getQuote()->getData('produit_equivalent');
+	if($produit_equivalent_db == '0') {
+		$produit_equivalent = 0;
+	}
+?>
+<form id="co-checkcart-form">
+	<h3><?php echo $this->__('En cas de non disponibilité') ?></h3>
+    <div id="amorderattr" class="form-horizontal">
+        <label for="produit_equivalent" class="label-checkout">Je fais confiance aux commerçants pour trouver un produit équivalent</label>
+        <select id="produit_equivalent" name="custom_attr_quote[produit_equivalent]" class="required-entry required-entry select">
+            <option value="1" <?php if($produit_equivalent==1) echo 'selected="selected"'; ?>>Oui</option>
+            <option value="0" <?php if($produit_equivalent==0) echo 'selected="selected"'; ?>>Non</option>
+        </select>
+    </div>
+	<?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
 	<div class="buttons-set clearfix" id="checkcart-buttons-container">
 		<p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
 		<button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="checkcart.save()"><?php echo $this->__('Continuer') ?> <i class="fa fa-angle-right"></i></button>
@@ -7,10 +22,13 @@
 			<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" title="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" class="v-middle" /> <?php echo $this->__('Un instant s\'il vous plaît...') ?>
 		</span>
 	</div>
-</div>
+</form>
 <script type="text/javascript">
     //<![CDATA[
     var checkcart = new Checkcart('co-checkcart-form', '<?php echo $this->getUrl('checkout/onepage/saveCheckcart') ?>');
     //var ddateForm = new VarienForm('co-ddate-form');
     //]]>
+	jQuery(document).ready(function(){
+        jQuery('a[data-toggle=tooltip]').tooltip();
+    });
 </script>

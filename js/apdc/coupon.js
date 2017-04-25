@@ -1,6 +1,7 @@
 $j.noConflict();
 $j(document).ready(function(){
-    $j('.addcoupon').on('click',function(){
+    $j('#discount-coupon-form').submit(function(evt){
+		evt.preventDefault();
         $j('.message-coupon').hide();
         $j('#coupon_code').removeClass('validation-failed');
         if($j('#coupon_code').val() == ''){
@@ -45,7 +46,8 @@ $j(document).ready(function(){
         });
     });
 
-    $j('.cancelcoupon').on('click',function(){
+    $j('.cancelcoupon').on('click',function(evt){
+		evt.preventDefault();
         var data1 = new Object();
         data1.remove = 1;
         $j('.message-coupon').hide();

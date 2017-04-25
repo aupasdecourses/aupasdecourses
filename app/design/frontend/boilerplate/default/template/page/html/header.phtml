@@ -44,18 +44,20 @@
                             </div>
                         <?php endif; ?>-->
 
-                        <div class="header-delivery-container skip-container">
-                             <a href="#" title="Livraison">
-								<i class="fa fa-list-ul"></i>
-								<span class="label"><?php echo $this->__('Delivery') ?> <i class="fa fa-angle-down"></i></span>
-								
-							 </a>
-							<div class="block block-delivery" id="header-delivery">
-								<div class="apdc-popup-content">
-									<?php echo $this->getChildHtml('header.delivery') ?>
+						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+							<div class="header-delivery-container skip-container">
+								 <a href="#" title="Livraison">
+									<i class="fa fa-list-ul"></i>
+									<span class="label"><?php echo $this->__('Delivery') ?> <i class="fa fa-angle-down"></i></span>
+
+								 </a>
+								<div class="block block-delivery" id="header-delivery">
+									<div class="apdc-popup-content">
+										<?php echo $this->getChildHtml('header.delivery') ?>
+									</div>
 								</div>
 							</div>
-                        </div>
+						<?php } ?>
 						
                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
@@ -72,8 +74,10 @@
 
                         <div class="header-account-container skip-container">
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>
-                                <i class="fa fa-user account-connected"></i>
-                                <span class="label"><?php echo $this->__('Account'); ?></span>
+								<a href="#" title="Mon Compte">
+									<i class="fa fa-user account-connected"></i>
+									<span class="label"><?php echo $this->__('Account'); ?> <i class="fa fa-angle-down"></i></span>
+								</a>
                             <?php else : ?>
                                 <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
                             <?php endif; ?>
@@ -89,9 +93,11 @@
                         </div>
 
                         <!-- Cart -->
-                        <div class="header-minicart skip-container">
-                            <?php echo $this->getChildHtml('minicart_head'); ?>
-                        </div>
+						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+							<div class="header-minicart skip-container">
+								<?php echo $this->getChildHtml('minicart_head'); ?>
+							</div>
+						<?php } ?>
                     </div>
                 </div>
 	        </div>

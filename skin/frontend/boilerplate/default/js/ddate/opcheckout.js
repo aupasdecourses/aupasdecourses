@@ -102,9 +102,7 @@ Checkout.prototype = {
             if (this.loadWaiting) {
                 this.setLoadWaiting(false);
             }
-			console.log(step+'-buttons-container');
-			console.log($(step+'-buttons-container'));
-            var container = $(step+'-buttons-container');
+			var container = $(step+'-buttons-container');
             container.addClassName('disabled');
             container.setStyle({opacity:.5});
             this._disableEnableAll(container, true);
@@ -125,7 +123,9 @@ Checkout.prototype = {
     },
 
     gotoSection: function (section, reloadProgressBlock) {
-
+		console.log('gotoSection');
+		console.log(section);
+		console.log(reloadProgressBlock);
         if (reloadProgressBlock) {
             this.reloadProgressBlock(this.currentStep);
         }
@@ -151,7 +151,7 @@ Checkout.prototype = {
                     item.remove();
                 });
                 $(progressDiv).select('dt').each(function (item) {
-                    item.removeClassName('complete');
+					item.removeClassName('complete');
                 });
                 //Remove the content
                 $(progressDiv).select('dd.complete').each(function (item) {
@@ -159,6 +159,9 @@ Checkout.prototype = {
                 });
             }
         }
+		$(this.steps[stepIndex]+ '-progress-opcheckout').select('dt').each(function (item) {
+			item.addClassName('active');
+		});
     },
 
     changeSection: function (section) {
@@ -219,6 +222,9 @@ Checkout.prototype = {
     },
 	setDate: function() {
         this.gotoSection('review', true);
+    },
+	setCheckcart: function() {
+        this.gotoSection('checkcart', true);
     },
 
     setReview: function() {
@@ -465,7 +471,41 @@ Billing.prototype = {
 
         checkout.setStepResponse(response);
         payment.initWhatIsCvvListeners();
-    }
+    },
+	
+	setSameAsShipping: function(flag, rowBillingAddress) {
+        $('billing:same_as_shipping').checked = flag;
+        // #5599. Also it hangs up, if the flag is not false
+        if (flag) {
+            this.syncWithShipping();
+			$(rowBillingAddress).addClassName('hide');
+        }
+		else {
+			$(rowBillingAddress).removeClassName('hide');
+		}
+    },
+	
+	syncWithShipping: function () {
+        //$('billing-address-select') && this.newAddress(!$('billing-address-select').value);
+        $('billing:same_as_shipping').checked = true;
+        /*if (!$('billing-address-select') || !$('billing-address-select').value) {*/
+            arrElements = Form.getElements(this.form);
+            for (var elemIndex in arrElements) {
+                if (arrElements[elemIndex].id) {
+                    var sourceField = $(arrElements[elemIndex].id.replace(/^billing:/, 'shipping:'));
+                    if (sourceField){
+                        arrElements[elemIndex].value = sourceField.value;
+                    }
+                }
+            }
+            shippingRegionUpdater.update();
+            $('billing:region_id').value = $('shipping:region_id').value;
+            $('billing:region').value = $('shipping:region').value;
+        /*} else {
+            $('shipping-address-select').value = $('billing-address-select').value;
+        }*/
+    },
+	
 }
 
 // shipping
@@ -691,7 +731,7 @@ ShippingMethod.prototype = {
         }
 
         if (response.update_section) {
-            $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
+			$('checkout-step-'+response.update_section.name).update(response.update_section.html);
         }
 
         payment.initWhatIsCvvListeners();
@@ -707,7 +747,9 @@ ShippingMethod.prototype = {
         }
 
         checkout.setShippingMethod();
-    }
+    },
+	
+	
 }
 
 
@@ -903,7 +945,8 @@ Payment.prototype = {
                 }
                 return;
             }
-            alert(response.error);
+            alert('ERREUR (détails dans la console)');
+			console.log(response);
             return;
         }
 
