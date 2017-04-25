@@ -284,7 +284,6 @@ p.ddate_day_selected{margin: 0;}
 	.ddate_selected{display: block;}
 	.mw-osc-block-content  .slideshow-container{width: 90%}
 
-	.first_column_header{background: #3498db;}
 	.first_column_header strong{color: white;}
 	.slideshow-content{position: relative;}
 }
@@ -326,7 +325,6 @@ p.ddate_day_selected{margin: 0;}
 	/*.ddate_selected{display: block;}*/
 	.slideshow-container{width: 90%}
 
-	.first_column_header{background: #3498db;}
 	.first_column_header strong{color: white;}
 	.slideshow-content{position: relative;}
 
