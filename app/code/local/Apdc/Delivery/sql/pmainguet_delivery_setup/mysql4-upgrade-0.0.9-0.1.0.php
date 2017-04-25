@@ -10,7 +10,7 @@ $installer = $this;
 $installer->startSetup();
 
 $table = $installer->getConnection()
-	->addColumn($installer->getTable('pmainguet_delivery/geocode_customers'),'former_address', array(
+	->addColumn($installer->getTable('pmainguet_delivery/geocode'),'former_address', array(
 		'type'		=>	Varien_Db_Ddl_Table::TYPE_TEXT,
 		'nullable'	=> true,
 		'default'	=> null,

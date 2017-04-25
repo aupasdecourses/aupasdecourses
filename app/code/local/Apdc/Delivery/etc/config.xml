@@ -58,7 +58,7 @@
                         <table>refund_items</table>
 					</refund_items>
 					<geocode_customers>
-						<table>geocode_customers</table>
+						<table>geocode</table>
 					</geocode_customers>
                 </entities>
             </delivery_resource>

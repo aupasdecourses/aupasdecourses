@@ -38,7 +38,7 @@ class Stats
 
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
-		$orders->getSelect()->joinLeft('geocode_customers' ,'sales_flat_order_address.street = geocode_customers.former_address', array('address','lat', 'long'));
+		$orders->getSelect()->joinLeft('geocode' ,'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
 
 		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
@@ -61,7 +61,7 @@ class Stats
 					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
 					'rue'				=> $order->getStreet()[0], 
-					'addr'				=> $order->getAddress(), // from geocode_customers
+					'addr'				=> $order->getAddress(), // from geocode
 					'code_postal'		=> $order->getPostcode(),
 					'ville'				=> $order->getCity(),
 					//'Créé dans'		=> $order->getCreatedIn(),
@@ -133,7 +133,7 @@ class Stats
 
 	/**	Fonction identique à getCustomerStatData
 	 *	MAIS pas de jointure sur geocode
-	 *	Utilisé pour l'ajout, dans la table geocode_customers, des new users
+	 *	Utilisé pour l'ajout, dans la table geocode, des new users
 	 */
 	public function getNewCustomerData()
 	{
@@ -150,7 +150,7 @@ class Stats
 			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
 
-		// data[] n'a que les champs utiles pour l'update de la table geocode_customers
+		// data[] n'a que les champs utiles pour l'update de la table geocode
 		foreach ($orders as $order) {
 			array_push($data, [
 				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
@@ -159,15 +159,15 @@ class Stats
 				'lat'						=> '',
 				'long'						=> '',  // lat et long seront géocodés dans la fonction geocode(); 
 				'former_address'			=> $order->getStreet(), // CELLE CI NE SERA PAS MODIF CAR UTILE A JOINTURE ENTRE GEOCODE ET SALES_ORDER_ADDRESS
-				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode_customers et customer_entity
+				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode et customer_entity
 			]);
 		}
 
 		return $data;
 	}
 
-	/**	Fonction utilisée pour la MAJ de la table geocode_customers
-	 *	La jointure entre sales_flat_order_adress.street et geocode_customers.former_address (checker la jointure de la fonction getCustomerStatData() )
+	/**	Fonction utilisée pour la MAJ de la table geocode
+	 *	La jointure entre sales_flat_order_adress.street et geocode.former_address (checker la jointure de la fonction getCustomerStatData() )
 	 *	se fait sur des adresses à syntaxe incorrecte	
 	 *	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
 	 *	Strtr sur tous les caracteres accentués et les types de voies approximatifs
@@ -234,28 +234,28 @@ class Stats
 	}
 
 	/***************/
-	/** Comparaison entre les sales_flat_order_address.street ET geocode_customers.former_adress
+	/** Comparaison entre les sales_flat_order_address.customer_id ET geocode.customer_id
 	 *	pour afficher ou non le bouton submit de la MAJ map clients */
 
-	public function compareCustomersAdress()
+	public function compareCustomersId()
 	{
 
-		$orderAdresses = \Mage::getModel('sales/order')->getCollection()
+		$orderIds = \Mage::getModel('sales/order')->getCollection()
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))                       
 			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));                 
-	   	$orderAdresses->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('street')); 
-		$orderAdresses->getSelect()->group('customer_id');
+	   	$orderIds->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('customer_id')); 
+		$orderIds->getSelect()->group('sales_flat_order_address.customer_id');
 		$orders = [];
 
-		$geocodeAdresses = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
 		$geocodes = [];
 
-		foreach ($orderAdresses as $streets) {
-			$orders[] = $streets->getStreet();
+		foreach ($orderIds as $orderId) {
+			$orders[] = $orderId->getData('customer_id');
 		}
 
-		foreach ($geocodeAdresses as $adresses) {
-			$geocodes[] = $adresses->getData('former_address');
+		foreach ($geocodeIds as $geocodeId) {
+			$geocodes[] = $geocodeId->getData('id_customer');
 		}
 
 		if (count($orders) !== count($geocodes)) {
@@ -269,11 +269,11 @@ class Stats
 
 	/**
 	 * Fonction pour le mapping commercant */
-	public function getMerchantsStatData()
+/*	public function getMerchantsStatData()
 	{
 		$data = [];
 		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
-		$merchants->getSelect()->joinLeft('geocode_merchants', 'main_table.?? = geocode_merchants.??', array('lat', 'long'));
+		$merchants->getSelect()->joinLeft('geocode', 'main_table.?? = geocode.??', array('lat', 'long'));
 
 		foreach ($merchants as $merchant) {
 			array_push($data, [
@@ -282,7 +282,7 @@ class Stats
 				'code_postal'		=> $merchant->getPostcode(),
 				'ville'				=> $merchant->getCity(),
 				'telephone'			=> $merchant->getPhone(),
-				'timetable'			=> /*serialize*/($merchant->getTimetable()),
+				'timetable'			=> serialize($merchant->getTimetable()),
 				'lat'				=> $merchant->getData('lat'),
 				'lon'				=> $merchant->getData('long'),
 
@@ -293,7 +293,7 @@ class Stats
 		print_R($data);
 		echo'<pre>';
 	}
-
+*/
 
 	/**************/
 

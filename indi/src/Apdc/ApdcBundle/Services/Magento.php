@@ -429,7 +429,7 @@ class Magento
 
 
 	/** Mettre dans trait Model **/
-    public function addEntryToGeocodeCustomers(array $data)
+    public function addEntryToGeocode(array $data)
     {
         $this->addEntryToModel(
             \Mage::getModel('pmainguet_delivery/geocode_customers'),
@@ -438,7 +438,7 @@ class Magento
     }
 
 	/** Mettre dans trait Model **/
-    public function updateEntryToGeocodeCustomers(array $filters, array $updatedFields)
+    public function updateEntryToGeocode(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
         $check = $this->checkEntryToModel($model, $filters);
