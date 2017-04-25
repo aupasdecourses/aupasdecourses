@@ -12,6 +12,14 @@ class MapController extends Controller
 {
 	public function merchantsAction()
 	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats'); 
+
+		$json_data_for_merchants = $stats->getMerchantsStatData();
+
 		return $this->render('ApdcApdcBundle::map/merchants.html.twig');
 	}
 
@@ -30,7 +38,7 @@ class MapController extends Controller
 		$comparaison = $stats->compareCustomersAdress();
 
 		/* data json pour l'affichage des clients*/
-		$json_data_for_map		= $stats->getCustomerMapData();
+		$json_data_for_customers		= $stats->getCustomerMapData();
 
 		/* Ajout des new customers dans table geocode_customers + sur la carte */
 		/* qd on clique sur le bouton MAJ clients */
@@ -65,7 +73,7 @@ class MapController extends Controller
 		}
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
 			[
-				'json_data'				=> $json_data_for_map,
+				'json_data'				=> $json_data_for_customers,
 				'form_new_customers'	=> $form_new_customers->createView(),
 				'comparaison'			=> $comparaison,
 		]);

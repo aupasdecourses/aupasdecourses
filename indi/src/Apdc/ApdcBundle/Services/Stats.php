@@ -267,6 +267,32 @@ class Stats
 
 
 
+	/**
+	 * Fonction pour le mapping commercant */
+	public function getMerchantsStatData()
+	{
+		$data = [];
+		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		$merchants->getSelect()->joinLeft('geocode_merchants', 'main_table.?? = geocode_merchants.??', array('lat', 'long'));
+
+		foreach ($merchants as $merchant) {
+			array_push($data, [
+				'nom_commercant'	=> $merchant->getName(),
+				'addr'				=> $merchant->getStreet(),
+				'code_postal'		=> $merchant->getPostcode(),
+				'ville'				=> $merchant->getCity(),
+				'telephone'			=> $merchant->getPhone(),
+				'timetable'			=> /*serialize*/($merchant->getTimetable()),
+				'lat'				=> $merchant->getData('lat'),
+				'lon'				=> $merchant->getData('long'),
+
+			]);
+		}
+
+		echo'<pre>';
+		print_R($data);
+		echo'<pre>';
+	}
 
 
 	/**************/

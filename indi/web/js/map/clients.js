@@ -37,7 +37,7 @@ function setMarker(data){
 				}else{
 					var marker = L.marker([d.lat, d.lon], {icon: greenMarker});
 				}
-				marker.bindPopup('<div>'+d.nom_client+'</div><div>'+d.ville+'</div><div>'+d.addr+'</div><div>Lat: '+d.lat+'</div><div>Lon:'+d.lon+'</div>');
+				marker.bindPopup('<div>'+d.nom_client+'</div><div>'+d.addr+'</div><div>'+d.ville+'</div><div>Panier moyen : '+d.panier_moyen+'</div><div>Nb commandes : '+d.nb_commande+'</div>');
 				markers.push(marker);
 			}
 		});
@@ -59,7 +59,7 @@ var lieu = setMarker(data);
 var group = new L.featureGroup(lieu);
 
 //map
-var map = L.map('map',{
+var map = L.map('mapCustomer',{
 	maxZoom: 18,
     center: [48.8888208, 2.3194718],
     zoom:10,
