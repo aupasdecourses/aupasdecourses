@@ -33,7 +33,19 @@ if(isset($_SESSION['ddate'])){
 }
 $name=Mage::helper('apdc_checkout')->getCommercantname($this);
 ?>
-<tr class="checkout-review-table-collapse" >
+<tr class="checkout-review-table-collapse <?php 
+                if(isset($_SESSION['ddate'])){
+					if(array_key_exists($name,$commercants)){
+						if(!in_array($day,$commercants[$name])){
+							if(count($commercants[$name])==0){
+								echo 'no-dispo';
+							}elseif(count($commercants[$name])<4){
+								echo "no-dispo";
+							}
+						}
+					}
+				}
+			?>">
     <td>
         <div class="crop">
             <img class="thumb_review" src="<?php echo Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75, 75); ?>" alt="<?php echo $this->htmlEscape($_item->getName()); ?>" border="0" width="75" />
@@ -41,19 +53,6 @@ $name=Mage::helper('apdc_checkout')->getCommercantname($this);
         <div class="infos_prod_review">
             <h3 class="product-name"><?php echo $this->escapeHtml($this->getProductName()).' - '.$this->escapeHtml($_product->getShortDescription()) ?></h3>
                 <p class="artisan-name"><?php echo $name;?></p>
-            <?php 
-                if(isset($_SESSION['ddate'])){
-					if(array_key_exists($name,$commercants)){
-						if(!in_array($day,$commercants[$name])){
-							if(count($commercants[$name])==0){
-								echo '</br><strong style="color:red;">Non disponible cette semaine.</strong>';
-							}elseif(count($commercants[$name])<4){
-								echo "</br><strong style='color:orange;'>Non disponible pour ce jour de livraison";
-							}
-						}
-					}
-				}
-			?>
             <?php if ($_item->getItemComment()):?>
             <dl class="item-options" id="checkout_cart_item_default">
                 <a href="#" class="tooltip-options" data-toggle="tooltip" data-html="true" title="

@@ -11860,6 +11860,7 @@ header .top-nav li a a:visited {
 .header-minicart #header-cart .mini-cart-bottom .checkout-types {
   padding-left: 0;
   list-style-type: none;
+  background: #fff;
 }
 
 .header-minicart #header-cart .minicart-wrapper {
@@ -13158,8 +13159,14 @@ footer .social-list .btn-social-icon {
 #checkoutSteps .section h2 {
   font-size: 2.25rem;
   margin-top: 30px;
+  letter-spacing: normal;
   text-transform: none;
   color: #3ab64b;
+}
+
+#checkoutSteps .section h2 span {
+  font-weight: normal;
+  color: #1e555a;
 }
 
 #checkoutSteps .fieldset {
@@ -13284,34 +13291,43 @@ footer .social-list .btn-social-icon {
 }
 
 .block-progress dl > div {
-  position: relative;
   display: inline-block;
-  margin: 10px 25px 0;
+  margin: 9px 25px 0;
   vertical-align: top;
-  border-radius: 5px;
-  background-color: #3ab64b;
 }
 
-.block-progress dl > div#payment-progress-opcheckout:after {
+.block-progress dl > div#billing-progress-opcheckout dt:before {
   display: none;
-}
-
-.block-progress dl > div:after {
-  position: absolute;
-  top: 14px;
-  right: -55px;
-  display: block;
-  width: 55px;
-  height: 5px;
-  content: '';
-  background-color: #3ab64b;
 }
 
 .block-progress dl > div dt {
   font-size: .8125rem;
   font-weight: normal;
-  padding: 7px 20px;
+  position: relative;
+  padding: 9px 20px;
+  color: #999;
+  border-radius: 5px;
+  background-color: #eee;
+}
+
+.block-progress dl > div dt:before {
+  position: absolute;
+  top: 16px;
+  left: -54px;
+  display: block;
+  width: 54px;
+  height: 5px;
+  content: '';
+  background-color: #eee;
+}
+
+.block-progress dl > div dt.complete {
   color: #fff;
+  background-color: #3ab64b;
+}
+
+.block-progress dl > div dt.complete:before {
+  background-color: #3ab64b;
 }
 
 .block-progress dl > div dt a,
@@ -13438,8 +13454,16 @@ footer .social-list .btn-social-icon {
 }
 
 #co-shipping-method-form .delivery .deli_date_top.deli_date_head li {
+  font-size: 1.125rem;
+  font-weight: 700;
   padding-bottom: 10px;
+  color: #333;
   border-bottom: 1px solid #eee;
+}
+
+#co-shipping-method-form .delivery .deli_date_top.deli_date_head li span {
+  font-size: .875rem;
+  margin-top: 5px;
 }
 
 #co-shipping-method-form .delivery .deli_time p {
@@ -13450,11 +13474,15 @@ footer .social-list .btn-social-icon {
 }
 
 #checkout-shipping-method-load {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
   border-bottom: 1px solid #eee;
 }
 
 #checkout-shipping-method-load dl {
-  padding: 10px;
+  position: relative;
+  margin: 0;
+  padding: 10px 0;
   border: 1px solid #eee;
   border-radius: 5px;
   background-color: #fafafa;
@@ -13465,9 +13493,30 @@ footer .social-list .btn-social-icon {
 }
 
 #checkout-shipping-method-load dl .price {
-  font-size: 1.75rem;
-  font-weight: normal;
+  font-size: 1.5rem;
+  font-weight: 300;
   color: #3ab64b;
+}
+
+#checkout-shipping-method-load dl input[type=radio] {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+#checkout-shipping-method-load dl input[type=radio]:checked {
+  border: 2px solid #3ab64b;
 }
 
 #checkout-review-table-wrapper > h3 {
@@ -13476,6 +13525,12 @@ footer .social-list .btn-social-icon {
   text-align: left;
   text-transform: none;
   color: #1e555a;
+}
+
+#checkout-review-table-wrapper #amorderattr {
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
 }
 
 #checkout-review-table-wrapper #amorderattr label {
@@ -13495,7 +13550,7 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 #checkout-review-table .crop {
@@ -13510,7 +13565,7 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table .infos_prod_review {
   display: inline-block;
-  max-width: 540px;
+  max-width: 500px;
   vertical-align: middle;
 }
 
@@ -13525,7 +13580,12 @@ footer .social-list .btn-social-icon {
 #checkout-review-table .infos_prod_review .artisan-name {
   font-size: .875rem;
   font-weight: 700;
+  margin-bottom: 2px;
   color: #ff7d73;
+}
+
+#checkout-review-table thead {
+  border-bottom: 1px solid #eee;
 }
 
 #checkout-review-table th {
@@ -13535,6 +13595,16 @@ footer .social-list .btn-social-icon {
   padding-bottom: 30px;
   text-align: center;
   color: #333;
+}
+
+#checkout-review-table tr.no-dispo {
+  background-color: #eee;
+}
+
+#checkout-review-table tr.no-dispo td,
+#checkout-review-table tr.no-dispo h3,
+#checkout-review-table tr.no-dispo .artisan-name {
+  color: #999 !important;
 }
 
 #checkout-review-table td {
@@ -13566,6 +13636,7 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table td h3 {
   margin-top: 0;
+  margin-bottom: 2px;
 }
 
 #checkout-review-table td .item-options .tooltip-options {
@@ -13590,7 +13661,8 @@ footer .social-list .btn-social-icon {
 }
 
 #co-payment-form h3,
-#discount-coupon-form h3 {
+#checkout-step-payment h3,
+#co-ddate-form h3 {
   font-size: 1.125rem;
   font-weight: 700;
   text-align: left;
@@ -13632,8 +13704,14 @@ footer .social-list .btn-social-icon {
 }
 
 #checkout-agreements .checkout-agreements .agree {
-  margin: 30px 0;
+  margin: 120px 0 0 !important;
   padding: 0;
+}
+
+#checkout-agreements .checkout-agreements .agree label {
+  font-size: 1.125rem;
+  font-weight: normal;
+  padding-left: 35px;
 }
 
 #checkout-step-payment .fieldset,
@@ -13654,8 +13732,45 @@ footer .social-list .btn-social-icon {
   vertical-align: bottom;
 }
 
+#checkout-step-payment .input-box .v-fix #adyen_cc_expiration {
+  margin-right: 10px;
+}
+
 #checkout-step-payment .input-box .v-fix #adyen_cc_expiration_yr {
-  margin-top: 26px;
+  margin-left: 10px;
+}
+
+#checkout-step-payment .input-box .v-fix #adyen_cc_expiration,
+#checkout-step-payment .input-box .v-fix #adyen_cc_expiration_yr {
+  max-width: 120px;
+}
+
+#checkout-step-payment .input-box .v-fix span {
+  color: #999;
+}
+
+#checkout-step-payment .input-box .v-fix label[for=adyen_cc_expiration] {
+  display: block;
+}
+
+#checkout-step-payment .refreshcoupon {
+  margin-top: 20px;
+}
+
+#checkout-step-payment .refreshcoupon td {
+  font-size: 1.125rem;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  color: #333;
+}
+
+#checkout-step-payment .refreshcoupon td span.price {
+  color: #3ab64b;
+}
+
+#checkout-step-payment .refreshcoupon td strong {
+  font-size: 2.25rem;
+  font-weight: normal;
 }
 
 .sp-methods .adyen_payment_input_fields {

@@ -1,9 +1,9 @@
-<?php if ($this->getCheckout()->getStepData('billing', 'complete')): ?>
+<?php if ($this->getCheckout()->getStepData('billing', 'complete') || $this->getCheckout()->getStepData('billing', 'allow') ): ?>
 		<dt class="complete">
-			<a href="#billing" onclick="checkout.changeSection('opc-billing'); return false;"><strong><?php echo $this->__('Vérification / Panier') ?></strong></a>
+			<a href="#billing" onclick="checkout.changeSection('opc-billing'); return false;"><strong><?php echo $this->__('Votre adresse') ?></strong></a>
 		</dt>
 	<?php else: ?>
 		<dt>
-			<?php echo $this->__('Vérification / Panier') ?>
+			<?php echo $this->__('Votre adresse') ?>
 		</dt>
 <?php endif; ?>

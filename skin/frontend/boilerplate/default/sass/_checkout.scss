@@ -10,6 +10,11 @@
             color: $color-main-green;
             text-transform: none;
             margin-top: 30px;
+            letter-spacing: normal;
+            span{
+                font-weight: normal;
+                color: $color-second-green;
+            }
         }
     }
     .fieldset{
@@ -127,32 +132,41 @@
     dl{
         margin: 0;
         & > div{
-            position: relative;
             display: inline-block;
             vertical-align: top;
-            background-color: $color-main-green;
-            border-radius: 5px;
-            margin: 10px 25px 0;
-            &#payment-progress-opcheckout{
-                &:after{
-                    display: none;
+            margin: 9px 25px 0;
+            &#billing-progress-opcheckout{
+                dt{
+                    &:before{
+                        display: none;
+                    }
                 }
             }
-            &:after{
-                content: "";
-                display: block;
-                position: absolute;
-                top: 14px;
-                right: -55px;
-                width: 55px;
-                height: 5px;
-                background-color: $color-main-green;
-            }
             dt{
-                padding: 7px 20px;
+                position: relative;
+                padding: 9px 20px;
                 font-size: 0.8125rem;
-                color: #fff;
+                color: $color-main-grey;
                 font-weight: normal;
+                background-color: #eee;
+                border-radius: 5px;
+                &:before{
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: 16px;
+                    left: -54px;
+                    width: 54px;
+                    height: 5px;
+                    background-color: #eee;
+                }
+                &.complete{
+                    color: #fff;
+                    background-color: $color-main-green;
+                    &:before{
+                        background-color: $color-main-green;
+                    }
+                }
                 a, strong{
                     color: #fff;
                     font-weight: normal;
@@ -267,8 +281,15 @@
         }
         .deli_date_top.deli_date_head{
             li{
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: #333;
                 padding-bottom: 10px;
                 border-bottom: 1px solid #eee;
+                span{
+                    font-size: 0.875rem;
+                    margin-top: 5px;
+                }
             }
         }
         .deli_time{
@@ -284,18 +305,41 @@
 
 #checkout-shipping-method-load{
     border-bottom: 1px solid #eee;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
     dl{
+        position: relative;
         background-color: #fafafa;
         border: 1px solid #eee;
         border-radius: 5px;
-        padding: 10px;
+        padding: 10px 0;
+        margin: 0;
         i{
             color: $color-main-green;
         }
         .price{
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             color: $color-main-green;
-            font-weight: normal;
+            font-weight: 300;
+        }
+        input[type=radio]{
+            display: block;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            z-index: 1;
+            cursor: pointer;
+            outline: none;
+            border-radius: 5px;
+            &:checked{
+                border: 2px solid $color-main-green;
+            }
         }
     }
 }
@@ -309,6 +353,9 @@
         text-align: left;
     }
     #amorderattr{
+        border-bottom: 1px solid #eee;
+        padding-bottom: 30px;
+        margin-bottom: 50px;
         label{
             display: inline-block;
             vertical-align: bottom;
@@ -326,7 +373,7 @@
 }
 #checkout-review-table{
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
     .crop{
         display: inline-block;
         vertical-align: middle;
@@ -339,7 +386,7 @@
     .infos_prod_review{
         display: inline-block;
         vertical-align: middle;
-        max-width: 540px;
+        max-width: 500px;
         h3{
             text-transform: none;
             font-size: 1.125rem;
@@ -351,7 +398,11 @@
             font-size: 0.875rem;
             font-weight: 700;
             color: $color-main-pink;
+            margin-bottom: 2px;
         }
+    }
+    thead{
+        border-bottom: 1px solid #eee;
     }
     th{
         font-weight: 700;
@@ -360,6 +411,14 @@
         color: #333;
         padding-bottom: 30px;
         min-width: 140px;
+    }
+    tr{
+        &.no-dispo{
+            background-color: #eee;
+            td, h3, .artisan-name{
+                color: $color-main-grey!important;
+            }
+        }
     }
     td{
         padding: 15px 0;
@@ -385,6 +444,7 @@
         }
         h3{
             margin-top: 0;
+            margin-bottom: 2px;
         }
         .item-options{
             .tooltip-options{
@@ -410,7 +470,8 @@
 }
 
 #co-payment-form,
-#discount-coupon-form{
+#checkout-step-payment,
+#co-ddate-form{
     h3{
         text-transform: none;
         font-size: 1.125rem;
@@ -453,8 +514,13 @@
         list-style-type: none;
         padding: 0;
         .agree{
-            margin: 30px 0;
+            margin: 120px 0 0!important;
             padding: 0;
+            label{
+                font-size: 1.125rem;
+                font-weight: normal;
+                padding-left: 35px;
+            }
         }
     }
 }
@@ -474,8 +540,36 @@
             margin-bottom: 10px;
             display: inline-block;
             vertical-align: bottom;
+            #adyen_cc_expiration{
+                margin-right: 10px;
+            }
             #adyen_cc_expiration_yr{
-                margin-top: 26px;
+                margin-left: 10px;
+            }
+            #adyen_cc_expiration, #adyen_cc_expiration_yr{
+                max-width: 120px;
+            }
+            span{
+                color: $color-main-grey;
+            }
+            label[for=adyen_cc_expiration]{
+                display: block;
+            }
+        }
+    }
+    .refreshcoupon{
+        margin-top: 20px;
+        td{
+            font-size: 1.125rem;
+            color: #333;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            span.price{
+                color: $color-main-green;
+            }
+            strong{
+                font-size: 2.25rem;
+                font-weight: normal;
             }
         }
     }

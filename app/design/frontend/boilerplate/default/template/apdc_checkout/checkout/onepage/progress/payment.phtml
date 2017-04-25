@@ -1,4 +1,4 @@
-<?php if ($this->getCheckout()->getStepData('payment', 'complete')): ?>
+<?php if ($this->getCheckout()->getStepData('payment', 'complete') || $this->getCheckout()->getStepData('payment', 'allow') ): ?>
 <dt class="complete">
     <a href="#payment" onclick="checkout.changeSection('opc-payment'); return false;"><?php echo $this->__('Validation & paiement') ?></a>
 </dt>

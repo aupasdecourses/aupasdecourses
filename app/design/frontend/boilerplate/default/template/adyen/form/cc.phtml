@@ -65,9 +65,7 @@ $_code = $this->getMethodCode();
                         <?php foreach ($this->getCcMonths() as $k=>$v): ?>
                             <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
                         <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="v-fix col-md-4">
+                    </select> <span>/</span> 
                     <?php $_ccExpYear = $this->getInfoData('cc_exp_year') ?>
                     <select id="<?php echo $_code ?>_expiration_yr" <?php echo (!$this->isCseEnabled() ? "name=\"payment[cc_exp_year]\"" : "data-encrypted-name=\"expiryYear\""); ?> class="year required-entry">
                         <?php foreach ($this->getCcYears() as $k=>$v): ?>

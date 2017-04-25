@@ -36,6 +36,7 @@
                                             document.getElementById('ddate:dtime').value = dtime;
 
                                             jQuery('#slideshow-holder ul li a').removeClass('ddate_day_active');
+                                            jQuery('#slideshow-holder ul li a i').removeClass('fa-thumbs-up').addClass('fa-check');
                                         }
 
                                         function selectDdateAct(current_select){
@@ -44,8 +45,10 @@
                                                 // nguoc lai
                                                 var option_responsive = jQuery('#slideshow-holder').find('.ddate_day_option').find("a[data-ddatei='"+ddatei+"']");
                                                 option_responsive.addClass('ddate_day_active');
+                                                jQuery('> i', option_responsive).removeClass('fa-check').addClass('fa-thumbs-up');
                                                 jQuery('#slideshow-holder').find("a[data-ddatei='"+ddatei+"']").addClass('ddate_day_active');
-                                                current_select.addClass('ddate_day_active'); 
+                                                current_select.addClass('ddate_day_active');
+                                                jQuery('> i', current_select).removeClass('fa-check').addClass('fa-thumbs-up');
                                                 
                                                 var showdtimetext = jQuery(option_responsive).text();
                                                 var showddate = jQuery(option_responsive).closest('li')
@@ -260,6 +263,8 @@
 							return date in DISABLED_DATES;
 						}
 					<?php };?>
+                    
+                    jQuery()
                 });
             </script>
         <?php } ?>

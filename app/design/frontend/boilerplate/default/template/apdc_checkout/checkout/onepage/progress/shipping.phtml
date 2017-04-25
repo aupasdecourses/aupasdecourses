@@ -1,4 +1,4 @@
-<?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>
+<?php if ($this->getCheckout()->getStepData('shipping', 'complete') || $this->getCheckout()->getStepData('shipping', 'allow') ): ?>
 		<dt class="complete">
 			<a href="#shipping" onclick="checkout.changeSection('opc-shipping'); return false;"><strong><?php echo $this->__('Votre adresse') ?></strong></a>
 		</dt>

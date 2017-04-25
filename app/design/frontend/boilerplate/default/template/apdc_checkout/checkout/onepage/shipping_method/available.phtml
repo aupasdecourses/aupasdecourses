@@ -32,7 +32,19 @@
 <?php else: ?>
     <div class="row">
         <div class="col-md-4">
-            <dl class="sp-methods">
+            <dl class="sp-methods row">
+                <input type="radio" name="shipping_method" value="Triporteur" checked="checked">
+                <div class="col-md-2">
+                    <i class="fa fa-bicycle fa-2x"></i>
+                </div>
+                <div class="col-md-7">
+                    <span>Livraison en triporteur électrique</span>
+                </div>
+                <div class="col-md-3 text-right">
+                    <span class="price">4€</span>
+                </div>
+            
+            
             <?php $shippingCodePrice = array(); ?>
             <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
                 <?php
@@ -114,6 +126,34 @@
                 </dd>
             <?php endif;?>
             <?php endforeach; ?>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="sp-methods row">
+                <input type="radio" name="shipping_method" value="Transport en commun">
+                <div class="col-md-2">
+                    <i class="fa fa-train fa-2x"></i>
+                </div>
+                <div class="col-md-7">
+                    <span>Livraison en transports en commun</span>
+                </div>
+                <div class="col-md-3 text-right">
+                    <span class="price">7,50€</span>
+                </div>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="sp-methods row">
+                <input type="radio" name="shipping_method" value="Skateboard">
+                <div class="col-md-2">
+                    <i class="fa fa-male fa-2x"></i>
+                </div>
+                <div class="col-md-7">
+                    <span>Livraison en skateboard</span>
+                </div>
+                <div class="col-md-3 text-right">
+                    <span class="price">2€</span>
+                </div>
             </dl>
         </div>
     </div>
