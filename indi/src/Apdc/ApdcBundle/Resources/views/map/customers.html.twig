@@ -4,11 +4,11 @@
 
 {% block body %}
 	
-	{% if comparaison == true %}
+	{% if comparaisonCustomers == true %}
 	<div>
 		{{ form_start(form_new_customers) }}
 		{{ form_widget(form_new_customers) }}
-		<input type = "submit" value = "MAJ clients" class = "btn btn-default"/>
+		<input type="submit" value="MAJ clients" class="btn btn-default"/>
 		{{ form_end(form_new_customers) }}
 	</div>
 	{% endif %}
@@ -39,7 +39,7 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
 	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-search.js"></script>
 	<script type="text/javascript">	
-		var json_data = {{ json_data|raw }};
+		var json_data_for_customers = {{ json_data_for_customers|raw }};
 	</script>
 	<script type="text/javascript" src="{{ path ('root') }}js/map/clients.js"></script>	
 {% endblock %}

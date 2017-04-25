@@ -1,16 +1,16 @@
 <?php
 
-/**	Creation de la table geocode_customer 
+/**	Creation de la table geocode 
  *	Colonnes lattitude et longitude
  *	Jointure avec la table sales_flat_order_address
- *	sales_flat_order_address.street = geocode_customer.address
+ *	sales_flat_order_address.street = geocode.address
  **/
 
 $installer = $this;
 $installer->startSetup();
 
 $table = $installer->getConnection()
-	->newTable($installer->getTable('pmainguet_delivery/geocode'))
+	->newTable($installer->getTable('pmainguet_delivery/geocode_customers'))
 	->addColumn('geocode_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
 		'auto_increment'	=> true,
 		'identity'			=> true,

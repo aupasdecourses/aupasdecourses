@@ -10,17 +10,56 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MapController extends Controller 
 {
-	public function merchantsAction()
+	public function merchantsAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
 
-		$stats = $this->container->get('apdc_apdc.stats'); 
+		$session = $request->getSession();
+
+		$stats	= $this->container->get('apdc_apdc.stats'); 
+		$mage	= $this->container->get('apdc_apdc.magento');
 
 		$json_data_for_merchants = $stats->getMerchantsStatData();
 
-		return $this->render('ApdcApdcBundle::map/merchants.html.twig');
+		$entity_submit_new_merchants = new \Apdc\ApdcBundle\Entity\Model();
+		$form_new_merchants = $this->createFormBuilder($entity_submit_new_merchants);
+		$form_new_merchants = $form_new_merchants->getForm();
+
+
+		if ($request->isMethod('POST')) {
+			$form_new_merchants->handleRequest($request);
+			$new_merchants_to_add = $stats->getNewShopData();
+
+			try {
+				foreach ($new_merchants_to_add as $content) {
+					$mage->updateEntryToGeocode(
+						['id_shop' => $content['id_shop']],
+
+							['address'			=> $content['address'],
+							'postcode'			=> $content['postcode'],
+							'city'				=> $content['city'],
+							'lat'				=> $content['lat'],
+							'long'				=> $content['long'],
+							'former_address'	=> $content['former_address'],
+							'whoami'			=> 'SHOP'
+						]
+					);
+				}
+					$session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
+					return $this->redirectToRoute('mapMerchants');
+
+			} catch (Exception $e) {
+				$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des commercants sur la carte');
+			}
+		}
+
+		return $this->render('ApdcApdcBundle::map/merchants.html.twig', 
+			[
+				'json_data_for_shops'			=> $json_data_for_merchants,
+				'form_new_merchants'			=> $form_new_merchants->createView(),
+			]);
 	}
 
 	public function customersAction(Request $request)
@@ -29,13 +68,13 @@ class MapController extends Controller
 			return $this->redirectToRoute('root');
 		}
 		
-		$session	= $request->getSession();
+		$session = $request->getSession();
 
 		$stats	= $this->container->get('apdc_apdc.stats');
 		$mage	= $this->container->get('apdc_apdc.magento');
 
 		/* Comparaison pour afficher ou non, le button de MAJ carte */
-		$comparaison = $stats->compareCustomersId();
+		$comparaisonCustomers = $stats->compareCustomersId();
 
 		/* data json pour l'affichage des clients*/
 		$json_data_for_customers		= $stats->getCustomerMapData();
@@ -60,9 +99,10 @@ class MapController extends Controller
 							'city'						=> $content['city'],
 							'lat'						=> $content['lat'],
 							'long'						=> $content['long'],
-							'former_address'			=> $content['former_address']
+							'former_address'			=> $content['former_address'],
+							'whoami'					=> 'CUSTOMER'
 						]
-						);
+					);
 				}
 					$session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
 					return $this->redirectToRoute('mapCustomers');
@@ -73,9 +113,9 @@ class MapController extends Controller
 		}
 		return $this->render('ApdcApdcBundle::map/customers.html.twig',
 			[
-				'json_data'				=> $json_data_for_customers,
-				'form_new_customers'	=> $form_new_customers->createView(),
-				'comparaison'			=> $comparaison,
+				'json_data_for_customers'				=> $json_data_for_customers,
+				'form_new_customers'					=> $form_new_customers->createView(),
+				'comparaisonCustomers'					=> $comparaisonCustomers,
 		]);
 	}
 }	

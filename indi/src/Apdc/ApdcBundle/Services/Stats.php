@@ -122,8 +122,8 @@ class Stats
 //		unset($data['25'], $data['42'], $data['105'], $data['148'], $data['153'], $data['164']);
 //		unset($data['195']);
 
-		$json_data = json_encode($data);
-		return $json_data;
+		$json_customers = json_encode($data);
+		return $json_customers;
 	}
 	
 	/****************************************************************************************/
@@ -265,16 +265,16 @@ class Stats
 		}
 	}
 
-
+	/******** MERCHANTS ****/
 
 	/**
 	 * Fonction pour le mapping commercant */
-/*	public function getMerchantsStatData()
+	public function getMerchantsStatData()
 	{
 		$data = [];
 		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
-		$merchants->getSelect()->joinLeft('geocode', 'main_table.?? = geocode.??', array('lat', 'long'));
-
+		$merchants->getSelect()->joinLeft('geocode', 'main_table.street = geocode.former_address', array('lat', 'long'));
+		$merchants->getSelect()->group('main_table.id_shop');
 		foreach ($merchants as $merchant) {
 			array_push($data, [
 				'nom_commercant'	=> $merchant->getName(),
@@ -282,23 +282,48 @@ class Stats
 				'code_postal'		=> $merchant->getPostcode(),
 				'ville'				=> $merchant->getCity(),
 				'telephone'			=> $merchant->getPhone(),
-				'timetable'			=> serialize($merchant->getTimetable()),
+				'timetable'			=> $merchant->getTimetable(),
 				'lat'				=> $merchant->getData('lat'),
 				'lon'				=> $merchant->getData('long'),
 
 			]);
 		}
 
-		echo'<pre>';
-		print_R($data);
-		echo'<pre>';
+		$json_merchants = json_encode($data);
+		return $json_merchants;
 	}
-*/
 
-	/**************/
+	/** Fonction utilisée pour l'ajout de nouveaux merchants dans geocode */
+	public function getNewShopData()
+	{
+		$data = [];
+		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		foreach ($merchants as $merchant) {
+			array_push($data, [
+				'address'			=> $merchant->getStreet(), // peut potentiellement etre modifié pour respecter la syntaxe de l'encodage géographique
+				'postcode'			=> $merchant->getPostcode(),
+				'city'				=> $merchant->getCity(),
+				'lat'				=> '', // lat et long seront encodé par la suite
+				'long'				=> '',
+				'former_address'	=> $merchant->getStreet(), // sera utilisé pour la jointure de la fonction getMerchantsStatData. NEST PAS MODIFIE
+				'id_shop'			=> $merchant->getData('id_shop'),
+			]);	
+		}
+		/* c'est comme la fonction addLatAndLong(), pour les commercants cette fois */
+		foreach ($data as &$content) {
+			if ($content['address'] != "") {
+				$json = $this->geocodeAdress(htmlentities($content['address']));
+				$content['lat']		= floatval($json[0]['lat']);
+				$content['long']	= floatval($json[0]['lon']);
+			}
+		}
+
+		return $data;
+	}
 
 
-
+	/********************************************************/
+	/********************************************************/
 	/* FIDELITE */
 	/*****************************/
 	/*****************/

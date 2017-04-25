@@ -1,4 +1,4 @@
-///PROCESS JSON FOR CUSTOMERS ///
+///PROCESS JSON FOR SHOPS ///
 
  //Make getJSON asachrynous, to get elements from geocode1 function
  $.ajaxSetup({
@@ -27,7 +27,7 @@ var greenMarker = L.AwesomeMarkers.icon({
     markerColor: 'green',
   });
 
-/* affiche infos sur pop up client */
+/* affiche infos sur pop up commercant */
 function setMarker(data){
 	var markers = [];
 	$.each(data,function(i,d){
@@ -37,7 +37,7 @@ function setMarker(data){
 				}else{
 					var marker = L.marker([d.lat, d.lon], {icon: greenMarker});
 				}
-				marker.bindPopup('<div>'+d.nom_client+'</div><div>'+d.addr+'</div><div>'+d.ville+'</div><div>Panier moyen : '+d.panier_moyen+'</div><div>Nb commandes : '+d.nb_commande+'</div>');
+				marker.bindPopup('<div>'+d.nom_commercant+'</div><div>'+d.addr+'</div><div>'+d.ville+'</div><div>'+d.telephone+'</div><div>Horaires ouvertures : '+d.timetable+'</div>');
 				markers.push(marker);
 			}
 		});
@@ -52,14 +52,14 @@ var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
 ///Get and set markers
 
 
-data = JSON.parse(JSON.stringify(json_data_for_customers));
+data = JSON.parse(JSON.stringify(json_data_for_shops));
 var lieu = setMarker(data);
 
 //Map Bounds
 var group = new L.featureGroup(lieu);
 
 //map
-var map = L.map('mapCustomer',{
+var map = L.map('mapShops',{
 	maxZoom: 18,
     center: [48.8888208, 2.3194718],
     zoom:10,
