@@ -21,6 +21,8 @@ class MapController extends Controller
 		$stats	= $this->container->get('apdc_apdc.stats'); 
 		$mage	= $this->container->get('apdc_apdc.magento');
 
+		$comparaisonMerchants = $stats->compareMerchants();
+
 		$json_data_for_merchants = $stats->getMerchantsStatData();
 
 		$entity_submit_new_merchants = new \Apdc\ApdcBundle\Entity\Model();
@@ -59,6 +61,7 @@ class MapController extends Controller
 			[
 				'json_data_for_shops'			=> $json_data_for_merchants,
 				'form_new_merchants'			=> $form_new_merchants->createView(),
+				'comparaisonMerchants'			=> $comparaisonMerchants,
 			]);
 	}
 
@@ -74,7 +77,7 @@ class MapController extends Controller
 		$mage	= $this->container->get('apdc_apdc.magento');
 
 		/* Comparaison pour afficher ou non, le button de MAJ carte */
-		$comparaisonCustomers = $stats->compareCustomersId();
+		$comparaisonCustomers = $stats->compareCustomers();
 
 		/* data json pour l'affichage des clients*/
 		$json_data_for_customers		= $stats->getCustomerMapData();

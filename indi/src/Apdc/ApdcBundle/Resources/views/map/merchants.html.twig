@@ -3,13 +3,15 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	
+
+	{% if comparaisonMerchants == true %}
 	<div>
 		{{ form_start(form_new_merchants) }}
 		{{ form_widget(form_new_merchants) }}
 		<input type="submit" value="MAJ shops" class="btn btn-default" />
 		{{ form_end(form_new_merchants) }}
 	</div>
+	{% endif %}
 
 	<div id="mapShops" class="map"></div>
 {% endblock %}

@@ -119,21 +119,13 @@ class Stats
 	{
 		$data = $this->getCustomerStatData();
 
-//		unset($data['25'], $data['42'], $data['105'], $data['148'], $data['153'], $data['164']);
-//		unset($data['195']);
-
 		$json_customers = json_encode($data);
 		return $json_customers;
 	}
 	
-	/****************************************************************************************/
-	/***************************************************************************************/
-
-
-
 	/**	Fonction identique à getCustomerStatData
 	 *	MAIS pas de jointure sur geocode
-	 *	Utilisé pour l'ajout, dans la table geocode, des new users
+	 *	Utilisé pour l'ajout, dans la table geocode, des new CLIENTS
 	 */
 	public function getNewCustomerData()
 	{
@@ -234,10 +226,10 @@ class Stats
 	}
 
 	/***************/
-	/** Comparaison entre les sales_flat_order_address.customer_id ET geocode.customer_id
+	/** Comparaison entre les sales_flat_order_address.customer_id ET geocode.whoami
 	 *	pour afficher ou non le bouton submit de la MAJ map clients */
 
-	public function compareCustomersId()
+	public function compareCustomers()
 	{
 
 		$orderIds = \Mage::getModel('sales/order')->getCollection()
@@ -255,10 +247,13 @@ class Stats
 		}
 
 		foreach ($geocodeIds as $geocodeId) {
-			$geocodes[] = $geocodeId->getData('id_customer');
+			$geocodes[] = $geocodeId->getData('whoami');
 		}
 
-		if (count($orders) !== count($geocodes)) {
+		$countCustomers = array_count_values($geocodes);
+
+		// delete le +1 qd 5 rue jules lefebvre value null sera résolu
+		if (count($orders) !== ($countCustomers['CUSTOMER'])+1) {
 			return true;
 		} else {
 			return false;
@@ -316,11 +311,39 @@ class Stats
 				$content['lat']		= floatval($json[0]['lat']);
 				$content['long']	= floatval($json[0]['lon']);
 			}
-		}
+		}	
 
 		return $data;
 	}
 
+	/**	Comparaison entre apdc_shop.id_shop ET geocode.whoami
+	 *	pour afficher ou non le bouton submit de la MAJ map commercants */
+
+	public function compareMerchants()
+	{
+		$shopIds = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		$shops = [];
+
+		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$geocodes = [];
+
+		foreach ($shopIds as $shopId) {
+			$shops[] = $shopId->getData('id_shop');
+		}
+
+		foreach ($geocodeIds as $geocodeId) {
+			$geocodes[] = $geocodeId->getData('whoami');
+		}
+
+		$countShops = array_count_values($geocodes);
+
+		if (count($shops) !== ($countShops['SHOP'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 
 	/********************************************************/
 	/********************************************************/
