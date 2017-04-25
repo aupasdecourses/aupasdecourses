@@ -12,9 +12,6 @@ class MapController extends Controller
 {
 	public function merchantsAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
-			return $this->redirectToRoute('root');
-		}
 
 		$session = $request->getSession();
 
