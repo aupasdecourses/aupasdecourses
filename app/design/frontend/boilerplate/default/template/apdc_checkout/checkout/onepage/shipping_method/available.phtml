@@ -32,7 +32,7 @@
 <?php else: ?>
     <div class="row">
         <div class="col-md-4">
-            <dl class="sp-methods row">
+            <dl class="sp-methods row active">
 				<?php
 					$shippingCodePrice = array();
 					$_sole = count($_shippingRateGroups) == 1;
@@ -190,6 +190,11 @@
             }
        });
     });
+    
+    jQuery('dl.sp-methods').click(function(){
+        jQuery('dl.sp-methods').removeClass('active');
+        jQuery(this).addClass('active');
+    })
 //]]>
 </script>
 <?php endif; ?>

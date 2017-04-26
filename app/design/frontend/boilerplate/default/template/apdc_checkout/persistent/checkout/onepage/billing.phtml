@@ -149,85 +149,42 @@
 			</fieldset>
 		</div>
 		<div class="col-sm-6">
-			<div id="amorderattr" class="apdc-form">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="batiment">Bâtiment</label>
-										<div class="col-sm-5">
-											<input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_batiment"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label required" for="etage">Etage <em>*</em></label>
-										<div class="col-sm-5">
-											<input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_etage"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>                    
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="codeporte1">Code porte n°1</label>
-										<div class="col-sm-6">
-											<input id="codeporte1" name="amorderattr[codeporte1]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte1');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_codeporte1"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="codeporte2">Code porte n°2</label>
-										<div class="col-sm-6">
-											<input id="codeporte2" name="amorderattr[codeporte2]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte2');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_codeporte2"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>                    
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="form-horizontal">
-							<div class="form-group fields">
-								<label class="col-sm-5 control-label required" for="contactvoisin">Contact en cas d'absence <em>*</em></label>
-								<div class="col-sm-7">
-									<input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" input-text" type="text"/>
-									<div type="anchor" id="anchor_contactvoisin"></div><div style="padding: 4px;"></div>
-								</div>
-							</div>
-							<div class="form-group fields">
-								<label class="col-sm-5 control-label required" for="telcontact">Téléphone du contact <em>*</em></label>
-								<div class="col-sm-7">
-									<input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class="input-text" type="text"/>
-									<div type="anchor" id="anchor_telcontact"></div><div style="padding: 4px;"></div>
-								</div>
-							</div>
-						</div>                    
-					</div>
-					<div class="col-sm-6">
-						<div class="form-horizontal">
-							<div class="form-group fields">
-								<label class="control-label" for="infoscomplementaires">Autres informations importantes</label>
-								<input id="infoscomplementaires" name="amorderattr[infoscomplementaires]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('infoscomplementaires');?>" class=" input-text" type="text"/>
-								<div type="anchor" id="anchor_infoscomplementaires"></div><div style="padding: 4px;"></div>
-							</div>
-						</div>
-				   </div>   
+			<div id="amorderattr" class="form-second-column">
+			    <div class="row fields">
+                    <div class="field col-md-4">
+                        <label for="batiment">Bâtiment</label>
+                        <input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class="input-text" type="text"/>
+                        <div type="anchor" id="anchor_batiment"></div>
+                    </div>
+                    <div class="field col-md-4">
+                        <label class="required" for="etage">Etage <em>*</em></label>
+                        <input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="input-text" type="text"/>
+                        <div type="anchor" id="anchor_etage"></div>
+                    </div>
+                    <div class="field col-md-4">
+                        <label for="codeporte1">Code porte 1 & 2</label>
+                        <input id="codeporte1" name="amorderattr[codeporte1]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte1');?>" class="input-text" type="text"/>
+                        <div type="anchor" id="anchor_codeporte1"></div>
+                    </div>
+                </div>
+				<div class="row fields">
+				    <div class="field col-md-6">
+                        <label class="required" for="contactvoisin">Contact en cas d'absence <em>*</em></label>
+                        <input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" input-text" type="text"/>
+                        <div type="anchor" id="anchor_contactvoisin"></div>
+                    </div>
+                    <div class="field col-md-6">
+                        <label class="required" for="telcontact">Téléphone du contact <em>*</em></label>
+                        <input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class="input-text" type="text"/>
+                        <div type="anchor" id="anchor_telcontact"></div>
+                    </div>
+				</div>
+				<div class="row fields">
+				    <div class="field col-md-12">
+                        <label for="infoscomplementaires">Informations complémentaires</label>
+                        <input id="infoscomplementaires" name="amorderattr[infoscomplementaires]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('infoscomplementaires');?>" class=" input-text" type="text"/>
+                        <div type="anchor" id="anchor_infoscomplementaires"></div>
+                    </div>
 				</div>
 			</div>
 		</div>

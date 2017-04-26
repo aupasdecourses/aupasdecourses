@@ -126,6 +126,9 @@
             }
         }
     }
+    .form-second-column{
+        margin-top: 45px;
+    }
 }
 
 .block-progress{
@@ -160,7 +163,7 @@
                     height: 5px;
                     background-color: #eee;
                 }
-                &.complete{
+                &.complete, &.active{
                     color: #fff;
                     background-color: $color-main-green;
                     &:before{
@@ -314,6 +317,9 @@
         border-radius: 5px;
         padding: 10px 0;
         margin: 0;
+        &.active{
+            border: 1px solid $color-main-green;
+        }
         i{
             color: $color-main-green;
         }
@@ -338,27 +344,23 @@
             outline: none;
             border-radius: 5px;
             opacity: 0;
-            &:checked:after{
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: 2px solid $color-main-green;
-            }
         }
     }
 }
 
-#checkout-review-table-wrapper{
+#co-checkcart-form{
+    margin-top: 30px;
     & > h3{
         font-size: 1.125rem;
         font-weight: 700;
         text-transform: none;
         color: $color-second-green;
         text-align: left;
+    }
+    & > p{
+        font-size: 1rem;
+        margin-top: 20px;
+        color: $color-main-grey;
     }
     #amorderattr{
         border-bottom: 1px solid #eee;
@@ -473,13 +475,11 @@
         }
     }
 }
-#co-checkcart-form{
-    margin-top: 30px;
-}
 
 #co-payment-form,
 #checkout-step-payment,
-#co-ddate-form{
+#co-ddate-form,
+#co-checkcart-form{
     h3{
         text-transform: none;
         font-size: 1.125rem;
@@ -503,6 +503,12 @@
     }
 }
 
+#co-payment-form{
+    #dt_method_adyen_cc{
+        display: none;
+    }
+}
+
 #checkout-payment-method-load{
     #dt_method_adyen_cc{
         display: none;
@@ -517,31 +523,35 @@
     }
 }
 
-#checkout-agreements{
-    .checkout-agreements{
-        list-style-type: none;
+.checkout-agreements{
+    list-style-type: none;
+    padding: 0;
+    .agree{
+        margin: 120px 0 0!important;
         padding: 0;
-        .agree{
-            margin: 120px 0 0!important;
-            padding: 0;
-            label{
-                font-size: 1.125rem;
-                font-weight: normal;
-                padding-left: 35px;
-            }
+        label{
+            font-size: 1.125rem!important;
+            font-weight: normal;
+            padding-left: 35px!important;
         }
     }
 }
 
 #checkout-step-payment{
+    & > hr{
+        margin-top: 40px;
+    }
     .fieldset, .hipay_infobox_headline{
         padding: 15px;
     }
-    .hipay_infobox_headline{
+    .hipay_infobox_headline a{
         font-size: 1.125rem;
         font-weight: normal;
         opacity: 1;
         color: #333;
+        i{
+            color: $color-main-green;
+        }
     }
     .input-box{
         .v-fix{
