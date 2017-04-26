@@ -9,7 +9,7 @@
                 <type>js</type>
                 <file>mw_ddate/jquery-noconflict.js</file>
             </action>
-            <action method="addJs"><script>apdc/coupon.js</script></action>
+			<action method="addItem"><type>skin_js</type><file>js/coupon.js</file></action>
         </reference>
 		<reference name="header">
 			<action method="unsetChild"><name>topMenu</name></action>
@@ -114,6 +114,22 @@
             </block>
         </block>
     </checkout_onepage_paymentmethod>
+	
+	 <checkout_onepage_payment>
+        <remove name="root"/>
+        <block type="checkout/onepage_payment" name="root_init" output="toHtml" template="apdc_checkout/checkout/onepage/payment.phtml">
+			<block type="core/template" name="ajaxcoupon" as="ajaxcoupon" template="apdc_coupon/ajaxcoupon.phtml"/>
+			<block type="checkout/onepage_payment_methods" name="checkout.onepage.methods" as="methods" template="apdc_checkout/checkout/onepage/payment/methods.phtml" />
+            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
+            <block type="checkout/cart_totals" name="checkout.onepage.totals" as="payment_totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
+        </block>
+    </checkout_onepage_payment>
+	
+	<reference name="checkout.onepage.payment">
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
+            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
+            <block type="checkout/cart_totals" name="checkout.onepage.totals" as="payment_totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
+        </reference>
 	
 	<checkout_onepage_checkcart>
         <remove name="root"/>

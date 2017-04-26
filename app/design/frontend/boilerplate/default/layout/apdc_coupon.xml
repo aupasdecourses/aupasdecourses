@@ -11,6 +11,5 @@
         <remove name="left"/>
         <block type="core/template" name="ajaxcoupon" template="apdc_coupon/ajaxcoupon.phtml"/>
         <block type="checkout/cart_totals" after="deliverycheck_review" name="totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
-        <block type="checkout/onepage_progress" name="progress" template="ddate/checkout/onepage/progress/shipping_method.phtml"></block>
     </ajaxcoupon_index_customcouponpost>
 </layout> 

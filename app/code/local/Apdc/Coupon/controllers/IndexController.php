@@ -62,10 +62,8 @@ class Apdc_Coupon_IndexController extends Mage_Checkout_CartController
         $this->loadLayout(false);
         $review = $this->getLayout()->getBlock('ajaxcoupon')->toHtml();
         $totals=$this->getLayout()->getBlock('totals')->toHtml();
-        $progress=$this->getLayout()->getBlock('progress')->toHtml();
         $response['review'] = $review;
         $response['totals'] = $totals;
-        $response['progress'] = $progress;
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
 }

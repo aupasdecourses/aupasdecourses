@@ -155,18 +155,12 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 			return;
 		}
 		if ($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost("custom_attr_quote", "");
-			$result = $this->getOnepage()->saveCheckcart($data);
-			/*if (!$result) {
-				Mage::dispatchEvent("checkout_controller_onepage_save_deliveryinstructions", array("request" => $this->getRequest(), "quote" => $this->getOnepage()->getQuote()));
-				$this->getResponse()->setBody(Zend_Json::encode($result));
-
-				$result["goto_section"] = "payment";
-				$result["update_section"] = array(
-					"name" => "payment-method",
-					"html" => $this->_getPaymentMethodsHtml()
-				);
-			}*/
+			$attrQuote = $this->getRequest()->getPost("custom_attr_quote", "");
+			$entityId = $this->getRequest()->getPost("entity_id", "");
+			$result = $this->getOnepage()->saveCheckcart($attrQuote);
+			$result = $this->getOnepage()->cleanQuote($entityId);
+			$this->getOnepage()->getQuote()->collectTotals()->save();
+			
 			$result["goto_section"] = "payment";
 			$result["update_section"] = array(
 				"name" => "payment-method",
@@ -185,4 +179,16 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         $output = $layout->getOutput();
         return $output;
 	}
+	
+	protected function _getPaymentMethodsHtml()
+    {
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_onepage_payment');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $output = $layout->getOutput();
+        return $output;
+    }
+	
 }

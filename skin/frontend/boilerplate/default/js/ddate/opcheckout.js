@@ -1098,6 +1098,33 @@ Checkcart.prototype = {
             return false;
         }
 
-        checkout.setStepResponse(response);
+        this.setStepResponse(response);
+    },
+	
+	setStepResponse: function(response){
+        if (response.update_section) {
+            $('checkout-step-payment').update(response.update_section.html);
+        }
+        if (response.allow_sections) {
+            response.allow_sections.each(function(e){
+                $('opc-'+e).addClassName('allow');
+            });
+        }
+
+        if(response.duplicateBillingInfo)
+        {
+            this.syncBillingShipping = true;
+            shipping.setSameAsBilling(true);
+        }
+
+        if (response.goto_section) {
+            checkout.gotoSection(response.goto_section, true);
+            return true;
+        }
+        if (response.redirect) {
+            location.href = response.redirect;
+            return true;
+        }
+        return false;
     }
 }

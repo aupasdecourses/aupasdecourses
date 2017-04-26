@@ -39,6 +39,7 @@ if(isset($_SESSION['ddate'])){
 		if(!in_array($day,$commercants[$name])){
 			if(count($commercants[$name]) < 4){
 				$class = 'no-dispo';
+				echo '<input type="hidden" name="entity_id[]" value="'.$_item->getId().'" />';
 			}
 		}
 	}

@@ -15,6 +15,7 @@
         </select>
     </div>
 	<?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
+	<p>En cliquant sur continuer les produits non disponibles seront supprimés.</p>
 	<div class="buttons-set clearfix" id="checkcart-buttons-container">
 		<p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
 		<button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="checkcart.save()"><?php echo $this->__('Continuer') ?> <i class="fa fa-angle-right"></i></button>

@@ -60,4 +60,14 @@ class Apdc_Checkout_Model_Type_Onepage extends MW_Ddate_Model_Type_Onepage
 
         return array();
     }
+	
+	public function cleanQuote($items) {
+		if(is_array($items) && count($items) > 0) {
+			foreach ($items as $item) {
+				$this->getQuote()->removeItem($item);
+			}
+			$this->getQuote()->save();
+		}
+		return array();
+	}
 }
