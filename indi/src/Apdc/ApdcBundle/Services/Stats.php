@@ -252,8 +252,7 @@ class Stats
 
 		$countCustomers = array_count_values($geocodes);
 
-		// delete le +1 qd 5 rue jules lefebvre value null sera résolu
-		if (count($orders) !== ($countCustomers['CUSTOMER'])+1) {
+		if (count($orders) !== ($countCustomers['CUSTOMER'])) {
 			return true;
 		} else {
 			return false;
