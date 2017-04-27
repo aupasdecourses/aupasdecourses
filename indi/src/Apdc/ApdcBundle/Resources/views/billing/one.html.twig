@@ -1,0 +1,40 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<h1> Facture n°{{ bill.increment_id }}</h1><br/>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	{% for order_id, order in orders %}
+	<div id="{{ order_id }}" class="order">
+		<table class="table table-striped">
+			<tr>
+				<th>Produit</th>
+				<th>Quantite</th>
+				<th>Description</th>
+				<th>Prix</th>
+				<th>Total</th>
+				<th>Commentaire</th>
+			</tr>
+			{% for product in order.products %}
+			<tr>
+				<td>{{ product.nom }}</td>
+				<td>{{ product.quantite }}</td>
+				<td>{{ product.description }}</td>
+				<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
+				<td>{{ product.prix_total }}</td>
+				<td>{{ product.comment }}</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td><b>TOTAL</b></td>
+				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+				<td colspan="2"><b>{{ order.total_prix }}</b></td>
+			</tr>
+		</table>
+	</div>
+	{% endfor %}
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

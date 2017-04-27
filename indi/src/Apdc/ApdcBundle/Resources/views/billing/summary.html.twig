@@ -10,62 +10,55 @@
 		</div>
 		<div id="filter"><label>Selectionnez le commercant : &nbsp; </label></div>
 
-
-
-
-
 	<table id="billIndex" class="table table-striped">
 		<thead>
 			<tr>
-				<th colspan="2">Date</th>
-				<th>#Commande</th>
-				<th>Nom client</th>
-				<th>Commercant</th>
-				<th colspan="2">Commande Client</th>
-				<th colspan="2">Avoir</th>
-				<th>Detail Avoir</th>
+				<th># Facture</th>
+				<th>Magasins</th>
 				<th colspan="2">Valeur Ticket</th>
 				<th colspan="2">Commission APDC</th>
+				<th colspan="2">Total Commercant</th>
+				<th colspan="2">Discount Commercant</th>
+				<th colspan="2">Frais bancaires</th>
 				<th colspan="2">Versement Commercant</th>
+				<th>Lien</th>
 			</tr>
 			<tr>
-				<th>Création</th>
-				<th>Livraison</th>
-				<th></th>
 				<th></th>
 				<th class="sort"></th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
 				<th></th>
-				<th class="float">TTC</th>
-				<th class="float">HT</th>
-				<th class="float">TTC</th>
-				<th class="float">HT</th>
-				<th class="float">TTC</th>
-				<th class="float">HT</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for order in bill %}
+			{% for order in summary %}
 				<tr>
-					<td>{{ order.date_creation }}</td>
-					<td>{{ order.date_livraison }}</td>
 					<td>{{ order.increment_id }}</td>
-					<td>{{ order.nom_client }}</td>
-					<td>{{ order.commercant }}</td>
-					<td>{{ order.sum_items }}</td>
-					<td>{{ order.sum_items_HT }}</td>
-					<td>{{ order.sum_items_credit }}</td>
-					<td>{{ order.sum_items_credit_HT }}</td>
-					<td>{{ order.remboursements }}</td>
+					<td>{{ order.shop }}</td>
 					<td>{{ order.sum_ticket }}</td>
 					<td>{{ order.sum_ticket_HT }}</td>
 					<td>{{ order.sum_commission }}</td>
 					<td>{{ order.sum_commission_HT }}</td>
 					<td>{{ order.sum_versement }}</td>
 					<td>{{ order.sum_versement_HT }}</td>
+					<td>{{ order.discount_shop_HT }}</td>
+					<td>{{ order.discount_shop_TTC }}</td>
+					<td>{{ order.processing_fees_HT }}</td>
+					<td>{{ order.processing_fees_TTC }}</td>
+					<td>{{ order.sum_payout_HT }}</td>
+					<td>{{ order.sum_payout_TTC }}</td>
+					<td>fdgfdgd</td>
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -87,6 +80,7 @@
 		</tfoot>
 	</table>
 </div>
+
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
 {% block css_billing %}
@@ -117,7 +111,7 @@
 		
 		$(function(){
 			$("#datepickerBill").change(function(){
-				window.location='{{ path('billingIndex') }}?module=facturation&action=view&date_debut='+this.value;
+				window.location='{{ path('billingSummary') }}?date_debut='+this.value;
 			});
 		});
 

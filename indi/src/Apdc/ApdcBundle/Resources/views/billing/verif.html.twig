@@ -1,0 +1,140 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<h1> Facturation INDI <subtitle>Vérification</subtitle></h1>
+	
+		<div class="page-header">
+			<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		</div>
+
+	{{ form_start(form) }}
+		<div>
+			<h3>Commandes (complete) de la n°{{ verif.id_min }} à la n°{{ verif.id_max }}</h3>
+			<table class="table table-striped">
+				<thead>
+				    <tr>
+				      <th>Vérification</th>
+				      <th>Statut</th>
+				      <th>Détails</th>
+				    </tr>
+				</thead>
+				<tr>
+					<td>Facturation pas encore faites ?</td>
+					<td>
+					{% if verif.verif_noentry %}
+						<i class="fa fa-check fa-2" style="color:green"></i>
+					{% else %}
+						<i class="fa fa-times fa-2" style="color:red"></i>
+					{% endif %}
+					</td>
+					<td>
+						{% if verif.verif_noentry %}
+							<span>Le calcul de la facturation n'a pas encore été réalisé.</span>
+						{% else %}
+							<span style="color:red">Le calcul de la facturation a déjà été réalisé (entrées dans la base de données)!</span>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Mois actuel > Mois de facturation ?</td>
+					<td>
+					{% if verif.verif_mois %}
+						<i class="fa fa-check fa-2" style="color:green"></i>
+					{% else %}
+						<i class="fa fa-times fa-2" style="color:red"></i>
+					{% endif %}
+					</td>
+					<td>
+					{% if verif.verif_mois %}
+						<span>Le mois à facturer est bien écoulé.</span>
+					{% else %}
+						<span style="color:red">Vous ne pouvez facturer que les mois déjà écoulés!</span>
+					{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Pas de commande en processing ?</td>
+					<td>
+					{% if verif.verif_noprocessing %}
+						<i class="fa fa-check fa-2" style="color:green"></i>
+					{% else %}
+						<i class="fa fa-times fa-2" style="color:red"></i>
+					{% endif %}
+					</td>
+					<td>
+						<ul>
+							<li>Nombre totale de commande: {{ verif.order_total }}</li>
+							<li>Nombre de commandes traitées: {{ verif.status_ok_count }}</li>
+							<li>Nombre de commandes annulées: {{ verif.status_nok_count }}</li>
+							{% if verif.status_processing_count !=0 %}
+								<li style="color:red">Nombre de commandes en processing: {{ verif.status_processing_count }} - Merci de traiter ces commandes avant de facturer!</li>
+							{% else %}
+								<li>Nombre de commandes en processing: {{ verif.status_processing_count }}</li>
+							{% endif %}
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>Totaux facturation & Magento égaux ?</td>
+					<td>
+						{% if verif.verif_totaux %}
+							<i class="fa fa-check fa-2" style="color:green"></i>
+						{% else %}
+							<i class="fa fa-times fa-2" style="color:red"></i>
+						{% endif %}
+					</td>
+					<td>
+						<ul>
+							<li>Total produits facturées: {{ verif.sum_items_facturation }}€</li>
+							<li>Total produits Magento: {{ verif.sum_items_magento }}€</li>
+							<li {% if verif.diff_facturation_magento != 0 %} style="color:red;"{% endif %} >Différence facturée/Magento: {{verif.diff_facturation_magento}}€</li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			<ul>
+		</div>
+		{% if verif.display_button %}
+			<div class="row">
+				<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Lancer Calcul</button>
+			</div>
+		{% endif %}
+		
+	{{ form_end(form) }}
+
+	
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_billing %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_billing %}
+
+	<script>
+		$(function() {
+			$( "#datepickerBill" ).datepicker({
+				altField: "#datepickerBill",
+				closeText: 'Fermer',
+				prevText: 'Précédent',
+				nextText: 'Suivant',
+				currentText: 'Aujourd\'hui',
+				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+				weekHeader: 'Sem.',
+				dateFormat: 'dd/mm/yy',
+			});
+		});
+		
+		$(function(){
+			$("#datepickerBill").change(function(){
+				window.location='{{ path('billingVerif') }}?date_debut='+this.value;
+			});
+		});
+	</script>
+{% endblock %}
