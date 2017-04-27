@@ -39,80 +39,92 @@
 					foreach ($_shippingRateGroups as $code => $_rates):
 						//Affichage spécial pour livraison à triporteur (code=tablerate)
 						if ($code=="tablerate"): ?>
-							<i class="fa fa-bicycle fa-2x"></i>
-							<span><?php echo $this->escapeHtml($this->getCarrierName($code)) ?> </span>
-							<dd>
-								<ul>
-								<?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
-									<?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
-									<li>
-										<?php if ($_rate->getErrorMessage()): ?>
-										<ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
-										<?php else: ?>
-										   <?php if ($_sole) : ?>
-										   <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
-										   <?php else: ?>
-										   <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+						    <div class="col-md-2">
+						        <img src="<?php echo $this->getSkinUrl('dist/images/icon-triporteur.png') ?>" alt="">
+						    </div>
+						    <div class="col-md-7">
+						        <span><?php echo $this->escapeHtml($this->getCarrierName($code)) ?> </span>
+						        <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                                    <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                                    <label class="infos" for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></label>
+                                <?php endforeach; ?>
+						    </div>
+						    <div class="col-md-3 text-right">
+						        <dd>
+                                    <ul>
+                                    <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                                        <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                                        <li>
+                                            <?php if ($_rate->getErrorMessage()): ?>
+                                            <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                                            <?php else: ?>
+                                               <?php if ($_sole) : ?>
+                                               <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                                               <?php else: ?>
+                                               <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
 
-										   <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
-										   <script type="text/javascript">
-											   //<![CDATA[
-												   lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
-											   //]]>
-										   </script>
-										   <?php endif; ?>
+                                               <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                               <script type="text/javascript">
+                                                   //<![CDATA[
+                                                       lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                                                   //]]>
+                                               </script>
+                                               <?php endif; ?>
 
-										   <?php endif; ?>
-										   <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-										   <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-										   <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-										   <?php echo $_excl; ?>
-										   <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-											   (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-										   <?php endif; ?>
-										   </label>
-									  <?php endif ?>
-									</li>
-								<?php endforeach; ?>
-								</ul>
-							</dd>
+                                               <?php endif; ?>
+                                               <label for="s_method_<?php echo $_rate->getCode() ?>">
+                                                   <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                                   <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                                   <?php echo $_excl; ?>
+                                                   <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                                       (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                                   <?php endif; ?>
+                                               </label>
+                                          <?php endif ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                    </ul>
+                                </dd>
+						    </div>
 						<?php else:?>
-							<dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
-							<dd>
-								<ul>
-								<?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
-									<?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
-									<li>
-									   <?php if ($_rate->getErrorMessage()): ?>
-										<ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
-									   <?php else: ?>
-											<?php if ($_sole) : ?>
-											<span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
-											<?php else: ?>
-											<input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+						    <div class="col-md-12">
+						        <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+                                <dd>
+                                    <ul>
+                                    <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                                        <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                                        <li>
+                                           <?php if ($_rate->getErrorMessage()): ?>
+                                            <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                                           <?php else: ?>
+                                                <?php if ($_sole) : ?>
+                                                <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                                                <?php else: ?>
+                                                <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
 
-											<?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
-											<script type="text/javascript">
-												//<![CDATA[
-													lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
-												//]]>
-											</script>
-											<?php endif; ?>
+                                                <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                                <script type="text/javascript">
+                                                    //<![CDATA[
+                                                        lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                                                    //]]>
+                                                </script>
+                                                <?php endif; ?>
 
-											<?php endif; ?>
-											<label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-											<?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-											<?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-											<?php echo $_excl; ?>
-											<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-												(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-											<?php endif; ?>
-											</label>
-									   <?php endif ?>
-									</li>
-								<?php endforeach; ?>
-								</ul>
-							</dd>
+                                                <?php endif; ?>
+                                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                                <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                                <?php echo $_excl; ?>
+                                                <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                                    (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                                <?php endif; ?>
+                                                </label>
+                                           <?php endif ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                    </ul>
+                                </dd>
+						    </div>
 							<?php
 						endif;
 					endforeach;
@@ -139,7 +151,7 @@
             <dl class="sp-methods row">
                 <input type="radio" name="shipping_method" value="Transport en commun">
                 <div class="col-md-2">
-                    <i class="fa fa-train fa-2x"></i>
+                    <img src="<?php echo $this->getSkinUrl('dist/images/icon-transports.png') ?>" alt="">
                 </div>
                 <div class="col-md-7">
                     <span>Livraison en transports en commun</span>
@@ -153,7 +165,7 @@
             <dl class="sp-methods row">
                 <input type="radio" name="shipping_method" value="Skateboard">
                 <div class="col-md-2">
-                    <i class="fa fa-male fa-2x"></i>
+                    <img src="<?php echo $this->getSkinUrl('dist/images/icon-skate.png') ?>" alt="">
                 </div>
                 <div class="col-md-7">
                     <span>Livraison en skateboard</span>

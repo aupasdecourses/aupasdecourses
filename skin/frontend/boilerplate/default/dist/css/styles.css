@@ -11735,6 +11735,25 @@ header .top-nav li a a:visited {
   font-size: .875rem;
 }
 
+.header-account-container .block-login .links {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.header-account-container .block-login .links li {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.header-account-container .block-login .links li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: 0;
+}
+
 .header-minicart .skip-link {
   padding-left: 25px;
   background: url(../images/icon-minicart.png) no-repeat;
@@ -13392,6 +13411,7 @@ footer .social-list .btn-social-icon {
 
 .delivery .select_one ul li a.ddate_day_active {
   padding: 5px;
+  text-decoration: none;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -13422,6 +13442,7 @@ footer .social-list .btn-social-icon {
   color: #000;
 }
 
+.ddate_selected i,
 .ddate_selected span {
   color: #3ab64b;
 }
@@ -13484,14 +13505,18 @@ footer .social-list .btn-social-icon {
   border: 1px solid #3ab64b;
 }
 
-#checkout-shipping-method-load dl i {
+#checkout-shipping-method-load dl .price {
+  font-size: 1.25rem;
+  font-weight: 300;
   color: #3ab64b;
 }
 
-#checkout-shipping-method-load dl .price {
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: #3ab64b;
+#checkout-shipping-method-load dl .infos {
+  font-size: .875rem;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.2rem;
+  margin-top: 5px;
 }
 
 #checkout-shipping-method-load dl input[type=radio] {
@@ -13568,7 +13593,7 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table .infos_prod_review {
   display: inline-block;
-  max-width: 500px;
+  max-width: 300px;
   vertical-align: middle;
 }
 
@@ -13635,6 +13660,25 @@ footer .social-list .btn-social-icon {
 #checkout-review-table td.subtotal {
   text-align: center;
   color: #999;
+}
+
+#checkout-review-table td.availibility .fa-check {
+  color: #3ab64b;
+}
+
+#checkout-review-table td.comments {
+  min-width: 200px;
+}
+
+#checkout-review-table td.comments .button {
+  font-size: .875rem;
+  font-weight: normal;
+  margin-right: 10px;
+  padding: 10px 15px;
+}
+
+#checkout-review-table td.comments .delete i {
+  color: #1e555a;
 }
 
 #checkout-review-table td h3 {
@@ -13810,6 +13854,32 @@ footer .social-list .btn-social-icon {
 
 .buttons-set .button i.fa-angle-right {
   margin-left: 5px;
+}
+
+.please-wait {
+  clear: both;
+  width: 100%;
+  text-align: center;
+}
+
+#warning_days {
+  margin-bottom: 50px;
+}
+
+#warning_days .warning {
+  margin-top: 50px;
+}
+
+#warning_days .warning,
+#warning_days ul {
+  font-size: 1rem;
+  opacity: 1;
+  color: #999;
+}
+
+#warning_days .warning strong,
+#warning_days ul strong {
+  color: #3ab64b;
 }
 
 @media screen and (min-width: 1200px) {

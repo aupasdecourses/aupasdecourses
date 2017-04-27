@@ -88,7 +88,7 @@ if(isset($_SESSION['ddate'])){
         <?php endif;?>
     </td>
     <td class="a-center quantity" data-rwd-label="<?php echo $this->__('Qty') ?>"><?php echo $_item->getQty() ?></td>
-    <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+    <!--<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
     <td class="a-right" data-rwd-label="<?php echo $this->__('Price') ?>">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <span class="cart-tax-total" onclick="taxToggle('eunit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -180,10 +180,10 @@ if(isset($_SESSION['ddate'])){
             <?php endif; ?>
         <?php endif; ?>
     </td>
-    <?php endif; ?>
+    <?php endif; ?>-->
     <!-- sub total starts here -->
     <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td class="a-right subtotal" data-rwd-label="<?php echo $this->__('Subtotal') ?>">
+    <td class="a-right price" data-rwd-label="<?php echo $this->__('Subtotal') ?>">
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <span class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
         <?php else: ?>
@@ -228,7 +228,7 @@ if(isset($_SESSION['ddate'])){
     </td>
     <?php endif; ?>
     <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-    <td class="subtotal" data-rwd-label="<?php echo $this->__('Subtotal') ?>">
+    <td class="price" data-rwd-label="<?php echo $this->__('Subtotal') ?>">
         <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <span class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -275,4 +275,11 @@ if(isset($_SESSION['ddate'])){
         <?php endif; ?>
     </td>
     <?php endif; ?>
+    <td class="availibility text-center">
+        <i class="fa fa-check"></i>
+    </td>
+    <td class="comments text-center">
+        <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" data-item-id="<?php echo $_item->getId(); ?>" class="button button-grey show-item-popup"><i class="fa fa-pencil"></i> Commentaires</a>
+        <a href="#" title="Supprimer" class="delete"><i class="fa fa-trash-o"></i></a>
+    </td>
 </tr>

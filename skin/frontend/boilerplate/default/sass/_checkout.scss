@@ -231,6 +231,7 @@
                 padding: 5px;
                 color: #fff;
                 border: none;
+                text-decoration: none;
                 i{
                     color: #fff;
                 }
@@ -257,7 +258,7 @@
     }
 }
 .ddate_selected{
-    span{
+    i, span{
         color: $color-main-green;
     }
 }
@@ -320,13 +321,17 @@
         &.active{
             border: 1px solid $color-main-green;
         }
-        i{
-            color: $color-main-green;
-        }
         .price{
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             color: $color-main-green;
             font-weight: 300;
+        }
+        .infos{
+            font-weight: normal;
+            font-style: italic;
+            font-size: 0.875rem;
+            line-height: 1.2rem;
+            margin-top: 5px;
         }
         input[type=radio]{
             display: block;
@@ -396,7 +401,7 @@
     .infos_prod_review{
         display: inline-block;
         vertical-align: middle;
-        max-width: 500px;
+        max-width: 300px;
         h3{
             text-transform: none;
             font-size: 1.125rem;
@@ -451,6 +456,25 @@
         &.subtotal{
             color: $color-main-grey;
             text-align: center;
+        }
+        &.availibility{
+            .fa-check{
+                color: $color-main-green;
+            }
+        }
+        &.comments{
+            min-width: 200px;
+            .button{
+                font-size: 0.875rem;
+                font-weight: normal;
+                padding: 10px 15px;
+                margin-right: 10px;
+            }
+            .delete{
+                i{
+                    color: $color-second-green;
+                }
+            }
         }
         h3{
             margin-top: 0;
@@ -617,6 +641,26 @@
         }
         i.fa-angle-right{
             margin-left: 5px;
+        }
+    }
+}
+.please-wait{
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#warning_days{
+    margin-bottom: 50px;
+    .warning{
+        margin-top: 50px;
+    }
+    .warning, ul{
+        font-size: 1rem;
+        color: $color-main-grey;
+        opacity: 1;
+        strong{
+            color: $color-main-green;
         }
     }
 }

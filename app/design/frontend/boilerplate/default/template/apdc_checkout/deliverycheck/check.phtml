@@ -2,7 +2,7 @@
 $commercants=Mage::helper('apdc_checkout')->getSpottyCom();
 if($commercants):?>
 <div class="col-sm-12">
-	<p><strong style="color:red;">ATTENTION</strong>: Des commerçants ne sont pas disponibles certains jours de la semaine:</p>
+	<p class="warning"><strong>ATTENTION</strong>: Des commerçants ne sont pas disponibles certains jours de la semaine:</p>
 	<ul id="list_commercants_days">
 	<?php foreach($commercants as $name=>$days):?>
 		<li>

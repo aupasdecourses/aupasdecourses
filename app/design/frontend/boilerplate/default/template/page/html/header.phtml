@@ -32,7 +32,7 @@
                         </div>
                     </div>-->
 
-                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2'; }?> col-md-6 col-sm-12 text-right">
+                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2 col-md-6'; }?> col-md-2 col-sm-12 text-right">
                         
                         <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
                         <!--<?php if($session->isLoggedIn()) : ?>

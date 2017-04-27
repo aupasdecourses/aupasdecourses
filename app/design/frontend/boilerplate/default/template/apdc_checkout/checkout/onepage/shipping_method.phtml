@@ -40,14 +40,14 @@
     <div id="ddate_calendar">
         <?php echo $this->getChildHtml('ddate') ?>
     </div>
-    <div id="warning_days" style='margin-top:15px;'>
+    <div id="warning_days" class="row">
         <?php echo $this->getChildHtml('deliverycheck') ?>
     </div>
     <div class="buttons-set clearfix" id="shipping-method-buttons-container">
         <p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
         <button type="button" class="button button-green pull-right" onclick="shippingMethod.save()"><?php echo $this->__('Continue') ?> <i class="fa fa-angle-right"></i></button>
-        <span id="shipping-method-please-wait" class="please-wait" style="display:none;">
+        <div id="shipping-method-please-wait" class="please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Un instant s\'il vous plaît...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Un instant s\'il vous plaît...')) ?>" class="v-middle" /> <?php echo $this->__('Un instant s\'il vous plaît...') ?>
-        </span>
+        </div>
     </div>
 </form>

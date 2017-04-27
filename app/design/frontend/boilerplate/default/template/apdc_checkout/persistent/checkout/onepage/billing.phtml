@@ -156,9 +156,9 @@
                         <input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class="input-text" type="text"/>
                         <div type="anchor" id="anchor_batiment"></div>
                     </div>
-                    <div class="field col-md-4">
-                        <label class="required" for="etage">Etage <em>*</em></label>
-                        <input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="input-text" type="text"/>
+                    <div class="field required col-md-4">
+                        <label for="etage">Etage <em>*</em></label>
+                        <input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="required-entry input-text" type="text"/>
                         <div type="anchor" id="anchor_etage"></div>
                     </div>
                     <div class="field col-md-4">
@@ -168,14 +168,14 @@
                     </div>
                 </div>
 				<div class="row fields">
-				    <div class="field col-md-6">
-                        <label class="required" for="contactvoisin">Contact en cas d'absence <em>*</em></label>
-                        <input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" input-text" type="text"/>
+				    <div class="field required col-md-6">
+                        <label for="contactvoisin">Contact en cas d'absence <em>*</em></label>
+                        <input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class="required-entry input-text" type="text"/>
                         <div type="anchor" id="anchor_contactvoisin"></div>
                     </div>
-                    <div class="field col-md-6">
-                        <label class="required" for="telcontact">Téléphone du contact <em>*</em></label>
-                        <input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class="input-text" type="text"/>
+                    <div class="required field col-md-6">
+                        <label for="telcontact">Téléphone du contact <em>*</em></label>
+                        <input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class="required-entry input-text" type="text"/>
                         <div type="anchor" id="anchor_telcontact"></div>
                     </div>
 				</div>
@@ -186,6 +186,7 @@
                         <div type="anchor" id="anchor_infoscomplementaires"></div>
                     </div>
 				</div>
+				<p class="required"><?php echo $this->__('* Required Fields') ?></p>
 			</div>
 		</div>
 	</div>	
@@ -425,12 +426,11 @@
 			</span>
 		</div>
 	</div>-->
-    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
     <div class="buttons-set clearfix" id="billing-buttons-container">
         <button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="billing.save()"><?php echo $this->__('Continue') ?> <i class="fa fa-angle-right"></i></button>
-        <span class="please-wait" id="billing-please-wait" style="display:none;">
+        <div class="please-wait" id="billing-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" title="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" class="v-middle" /> <?php echo $this->__('Un instant s\'il vous plaît...') ?>
-        </span>
+        </div>
     </div>
 </form>
 

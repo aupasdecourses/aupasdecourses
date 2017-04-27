@@ -246,6 +246,22 @@ header{
         #show-login-form{
             font-size: 0.875rem;
         }
+        .links{
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            li{
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+                text-align: center;
+                &:last-child{
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    border: 0;
+                }
+            }
+        }
     }
 }
 
