@@ -3,38 +3,196 @@
 
 {% block body %}
 
-<div class="container">
-	<h1> Facture n°{{ bill.increment_id }}</h1><br/>
+<div class="container-fluid">
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
-	{% for order_id, order in orders %}
-	<div id="{{ order_id }}" class="order">
-		<table class="table table-striped">
-			<tr>
-				<th>Produit</th>
-				<th>Quantite</th>
-				<th>Description</th>
-				<th>Prix</th>
-				<th>Total</th>
-				<th>Commentaire</th>
-			</tr>
-			{% for product in order.products %}
-			<tr>
-				<td>{{ product.nom }}</td>
-				<td>{{ product.quantite }}</td>
-				<td>{{ product.description }}</td>
-				<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
-				<td>{{ product.prix_total }}</td>
-				<td>{{ product.comment }}</td>
-			</tr>
-			{% endfor %}
-			<tr>
-				<td><b>TOTAL</b></td>
-				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
-				<td colspan="2"><b>{{ order.total_prix }}</b></td>
-			</tr>
+	<h2> Synthèse de la facture commerçant</h2></br>
+	{{ form_start(form2) }}
+	<div id="billing-summary" class="order">
+		<table id="billSummary" class="table table-striped">
+			<thead>
+				<tr>
+					<th># Facture</th>
+					<th>Magasins</th>
+					<th colspan="2">Valeur Ticket</th>
+					<th colspan="2">Commission APDC</th>
+					<th colspan="2">Total Commercant</th>
+					<th colspan="2">Discount Commercant</th>
+					<th colspan="2">Frais bancaires</th>
+					<th colspan="2">Versement Commercant</th>
+				</tr>
+				<tr>
+					<th></th>
+					<th class="sort"></th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+					<th class="float">TTC</th>
+					<th class="float">HT</th>
+				</tr>
+			</thead>
+			<tbody>
+					{% for summary in bill.summary %}
+					<tr>
+						<td>{{ summary.increment_id }}</td>
+						<td>{{ summary.shop }}</td>
+						<td>{{ summary.sum_ticket }}</td>
+						<td>{{ summary.sum_ticket_HT }}</td>
+						<td>{{ summary.sum_commission }}</td>
+						<td>{{ summary.sum_commission_HT }}</td>
+						<td>{{ summary.sum_versement }}</td>
+						<td>{{ summary.sum_versement_HT }}</td>
+						<td>{{ summary.discount_shop_HT }}</td>
+						<td>{{ summary.discount_shop_TTC }}</td>
+						<td>{{ summary.processing_fees_HT }}</td>
+						<td>{{ summary.processing_fees_TTC }}</td>
+						<td>{{ summary.sum_payout_HT }}</td>
+						<td>{{ summary.sum_payout_TTC }}</td>
+					</tr>
+					{% endfor %}
+			</tbody>
 		</table>
 	</div>
-	{% endfor %}
+	<h2> Détails de la facture commerçant</h2></br>
+	<div id="billing-details" class="order">
+		<table id="billDetails" class="table table-striped">
+		<thead>
+			<tr>
+				<th colspan="2">Date</th>
+				<th>#Commande</th>
+				<th>#Facture</th>
+				<th>Nom client</th>
+				<th>Commercant</th>
+				<th colspan="2">Commande Client</th>
+				<th colspan="2">Avoir</th>
+				<th colspan="2">Valeur Ticket</th>
+				<th colspan="2">Commission APDC</th>
+				<th colspan="2">Total Commercant</th>
+			</tr>
+			<tr>
+				<th>Création</th>
+				<th>Livraison</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th class="sort"></th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for detail in bill.details %}
+				<tr>
+					<td>{{ detail.creation_date }}</td>
+					<td>{{ detail.delivery_date }}</td>
+					<td>{{ detail.increment_id }}</td>
+					<td>{{ detail.id_billing }}</td>
+					<td>{{ detail.customer_name }}</td>
+					<td>{{ detail.shop }}</td>
+					<td>{{ detail.sum_items }}</td>
+					<td>{{ detail.sum_items_HT }}</td>
+					<td>{{ detail.sum_items_credit }}</td>
+					<td>{{ detail.sum_items_credit_HT }}</td>
+					<td>{{ detail.sum_ticket }}</td>
+					<td>{{ detail.sum_ticket_HT }}</td>
+					<td>{{ detail.sum_commission }}</td>
+					<td>{{ detail.sum_commission_HT }}</td>
+					<td>{{ detail.sum_versement }}</td>
+					<td>{{ detail.sum_versement_HT }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="5">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+	<div class="row">
+		<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Générer PDF</button>
+	</div>
+		{{ form_end(form2) }}
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_billing %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_billing %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var table=$('#billDetails').DataTable({
+				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+				"pageLength": -1,
+				"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+				initComplete: function () {
+					this.api().columns(['.sort']).every(function () {
+						var column = this;
+						var select = $('<select><option value=""></option></select>')
+							.appendTo( $('#filter') )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+										$(this).val()
+										);
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					});
+					},
+
+				"footerCallback": function ( row, data, start, end, display ) {
+					var api = this.api(), data;
+
+					var intVal = function ( i ) {
+						return typeof i === 'string' ?
+							i.replace(/[\$,]/g, '')*1 :
+							typeof i === 'number' ?
+							i : 0;
+					};
+					this.api().columns(['.float']).every(function (){
+						var index = this.index();
+						pageTotal = api
+							.column( index, { page: 'current'} )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+						pageTotal=pageTotal.toFixed(2);
+						$( api.column( index ).footer() ).html(pageTotal);
+					});
+				}
+			} );
+		});
+	</script>
 {% endblock %}

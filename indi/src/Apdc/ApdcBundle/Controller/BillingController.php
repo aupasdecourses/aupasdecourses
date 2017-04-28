@@ -137,17 +137,42 @@ class BillingController extends Controller
     public function billingOneAction(Request $request, $id)
     {
         $factu = $this->container->get('apdc_apdc.billing');
+        $pdfbilling = $this->container->get('apdc_apdc.pdfbilling');
+        $session = $request->getSession();
 
+        //Select Billing id form
         $entity_id  = new \Apdc\ApdcBundle\Entity\OrderId();
-        $form_id    = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id, [
-            'action' => $this->generateUrl('ordersIndex'),
+        $form_id    = $this->createForm(\Apdc\ApdcBundle\Form\BillingId::class, $entity_id, [
+            'action' => $this->generateUrl('billingOne',['id' => $id]),
         ]);
         $form_id->get('id')->setData($id);
 
+        //Input form
+        $entity_input   = new \Apdc\ApdcBundle\Entity\Input();
+        $form_input     = $this->createFormBuilder($entity_input);
+        $form_input->setAction($this->generateUrl('billingOne', array('id' => $id)));
+        $form_input     = $form_input->getForm();
+
         $bill=$factu->getOneBilling($id);
 
+        if (isset($_POST['submit'])) {
+            try {
+
+                $pdfbilling->setBillingTemplate();
+                $pdfbilling->save('/var/www/html/apdcdev/var/truc.pdf');
+
+                $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_summary');
+                $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_details');
+
+                return $this->redirectToRoute('billingOne', ['id' => $id]);
+            } catch (Exception $e) {
+                $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
+            }
+        }
+
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
-            'form' => $form_id->createView(),
+            'forms' => [$form_id->createView()],
+            'form2'=> $form_input->createView(),
             'bill' => $bill
         ]);
         
