@@ -47,7 +47,7 @@ if(isset($_SESSION['ddate'])){
 
 ?>
 <tr class="checkout-review-table-collapse <?php echo $class; ?>">
-    <td>
+    <td class="product-name">
         <div class="crop">
             <img class="thumb_review" src="<?php echo Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75, 75); ?>" alt="<?php echo $this->htmlEscape($_item->getName()); ?>" border="0" width="75" />
         </div>
@@ -56,7 +56,7 @@ if(isset($_SESSION['ddate'])){
                 <p class="artisan-name"><?php echo $name;?></p>
             <?php if ($_item->getItemComment()):?>
             <dl class="item-options" id="checkout_cart_item_default">
-                <a href="#" class="tooltip-options" data-toggle="tooltip" data-html="true" title="
+                <a href="#" class="tooltip-options" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
                     <dt><?php echo $this->__('Commentaires')?></dt>
                     <dd><?php echo $_item->getItemComment(); ?></dd>
                 "><i class="fa fa-info-circle"></i></a>
@@ -65,7 +65,7 @@ if(isset($_SESSION['ddate'])){
     <?php endif; ?>
         <?php if ($_options = $this->getOptionList()):?>
         <dl class="item-options">
-            <a href="#" class="tooltip-options" data-toggle="tooltip" data-html="true" title="
+            <a href="#" class="tooltip-options" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
                 <?php foreach ($_options as $_option) : ?>
                 <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
@@ -279,7 +279,10 @@ if(isset($_SESSION['ddate'])){
         <i class="fa fa-check"></i>
     </td>
     <td class="comments text-center">
-        <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" data-item-id="<?php echo $_item->getId(); ?>" class="button button-grey show-item-popup"><i class="fa fa-pencil"></i> Commentaires</a>
-        <a href="#" title="Supprimer" class="delete"><i class="fa fa-trash-o"></i></a>
+        <!--<a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" data-item-id="<?php echo $_item->getId(); ?>" class="button button-grey show-item-popup"><i class="fa fa-pencil"></i> Commentaires</a>-->
+        <input type="text"><button class="button button-green">Ok</button>
+    </td>
+    <td class="delete text-center">
+        <a href="#" title="Supprimer"><i class="fa fa-trash-o"></i></a>
     </td>
 </tr>

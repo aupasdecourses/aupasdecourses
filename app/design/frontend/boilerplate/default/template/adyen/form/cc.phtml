@@ -29,8 +29,8 @@
 /** @var Adyen_Payment_Block_Form_Cc $this */
 $_code = $this->getMethodCode();
 ?>
-<ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
-    <li class="adyen_payment_creditcard_labels row">
+<div class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+    <div class="adyen_payment_creditcard_labels input-box row">
         <div class="col-md-12">
             <?php $count = 0;
             foreach ($this->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
@@ -40,25 +40,15 @@ $_code = $this->getMethodCode();
             endforeach; ?>
             <input type="hidden" id="<?php echo $_code ?>_cc_type" name="payment[cc_type]" value=""/>
         </div>
-    </li>
+    </div>
     <div class="row">
-        <li class="adyen_payment_input_fields col-md-6">
-            <label for="<?php echo $_code ?>_cc_number" class="required"><?php echo $this->__('Numéro de la carte') ?> <em>*</em></label>
+        <div class="adyen_payment_input_fields col-md-7">
             <div class="input-box">
+                <label for="<?php echo $_code ?>_cc_number" class="required"><?php echo $this->__('Numéro de la carte') ?> <em>*</em></label>
                 <input type="text" id="<?php echo $_code ?>_cc_number" <?php echo (!$this->isCseEnabled() ? "name=\"payment[cc_number]\"" : " data-encrypted-name=\"number\""); ?> title="<?php echo $this->__('Credit Card Number') ?>" class="input-text validate-cc-type required-entry" value="" maxlength="23"/>
             </div>
-        </li>
-        <li class="adyen_payment_input_fields col-md-6">
-            <label for="<?php echo $_code ?>_cc_owner" class="required"><?php echo $this->__('Nom du titulaire de la carte') ?> <em>*</em></label>
-            <div class="input-box">
-                <input type="text" title="<?php echo $this->__('Name on Card') ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_owner" <?php echo (!$this->isCseEnabled() ? "name=\"payment[cc_owner]\"" : "data-encrypted-name=\"holderName\""); ?> value="<?php echo $this->htmlEscape($this->getInfoData('cc_owner')) ?>" maxlength="100" />
-            </div>
-        </li>
-    </div>
-    <li class="adyen_payment_input_fields row">
-        <div class="col-md-12">
             <div class="input-box row">
-                <div class="v-fix col-md-4">
+                <div class="v-fix col-md-7">
                     <label for="<?php echo $_code ?>_expiration" class="required"><?php echo $this->__('Date d\'expiration') ?> <em>*</em></label>
                     <select id="<?php echo $_code ?>_expiration" <?php echo (!$this->isCseEnabled() ? "name=\"payment[cc_exp_month]\"" : "data-encrypted-name=\"expiryMonth\""); ?> class="month validate-cc-exp required-entry">
                         <?php $_ccExpMonth = $this->getInfoData('cc_exp_month') ?>
@@ -74,7 +64,7 @@ $_code = $this->getMethodCode();
                     </select>
                 </div>
                 <?php if($this->hasVerification()): ?>
-                <div class="v-fix adyen_payment_input_fields col-md-4">
+                <div class="v-fix adyen_payment_input_fields col-md-5">
                     <label for="<?php echo $_code ?>_cc_cid" class="required"><?php echo $this->__('Numéro de vérification') ?> <em>*</em></label>
                     <div class="input-box">
                         <div class="v-fix">
@@ -85,12 +75,19 @@ $_code = $this->getMethodCode();
                 <?php endif; ?>
             </div>
         </div>
-    </li>
+        <div class="adyen_payment_input_fields col-md-5">
+            <label for="<?php echo $_code ?>_cc_owner" class="required"><?php echo $this->__('Nom du titulaire de la carte') ?> <em>*</em></label>
+            <div class="input-box">
+                <input type="text" title="<?php echo $this->__('Name on Card') ?>" class="input-text required-entry" id="<?php echo $_code ?>_cc_owner" <?php echo (!$this->isCseEnabled() ? "name=\"payment[cc_owner]\"" : "data-encrypted-name=\"holderName\""); ?> value="<?php echo $this->htmlEscape($this->getInfoData('cc_owner')) ?>" maxlength="100" />
+            </div>
+            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        </div>
+    </div>
     <?php echo $this->getChildHtml() ?>
 
     
     <?php if($this->hasInstallments()): ?>
-    <li class="adyen_payment_input_fields row">
+    <div class="adyen_payment_input_fields row">
         <div class="col-md-12">
             <label for="<?php echo $_code ?>_installments" class="required"><?php echo $this->__('Mensualités') ?> <em>*</em></label>
             <div class="input-box">
@@ -103,18 +100,18 @@ $_code = $this->getMethodCode();
                 </div>
             </div>
         </div>
-    </li>
+    </div>
     <?php endif;?>
 
     <?php if($this->canCreateBillingAgreement()): ?>
-    <li id="adyen-cc-remember-these-details" class="adyen_payment_input_fields row">
+    <div id="adyen-cc-remember-these-details" class="adyen_payment_input_fields row">
         <div class="input-box col-md-12">
             <div class="v-fix">
                 <input type="checkbox" name="payment[store_cc]" id="<?php echo $_code ?>_store_cc" value="1" checked />
                 <label for="<?php echo $_code ?>_store_cc"><?php echo $this->__('Sauvegarder mes données bancaires') ?> <em>*</em></label>
             </div>
         </div>
-    </li>
+    </div>
     <script type="text/javascript">
         // don't show save cc for quest checkout. Only possible to detect with javascript
         if ($('login:guest') && $('login:guest').checked) {
@@ -359,4 +356,4 @@ $_code = $this->getMethodCode();
             cseInit();
         </script>
     <?php endif;?>
-</ul>
+</div>

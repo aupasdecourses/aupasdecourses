@@ -13,11 +13,12 @@
         <?php endif; ?>
         <thead class="checkout-review-table-collapse">
             <tr>
-                <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
+                <th rowspan="<?php echo $rowspan ?>" class="product-name"><?php echo $this->__('Product Name') ?></th>
                 <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
                 <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
                 <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Availibility') ?></th>
                 <th colspan="<?php echo $colspan ?>" class="a-center"></th>
+                <th colspan="<?php echo $colspan ?>" class="a-center delete"></th>
             </tr>
             <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
                 <tr>

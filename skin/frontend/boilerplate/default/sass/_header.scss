@@ -468,7 +468,8 @@ header{
                     font-weight: normal;
                     line-height: 1.2em;
                     display: block;
-                    &.details {
+                    &.tooltip-options {
+                        display: inline-block!important;
                         cursor: help;
                         margin-top: 5px;
                         color: $color-main-green;

@@ -396,7 +396,7 @@
         height: 75px;
         border-radius: 50%;
         overflow: hidden;
-        margin: 0 30px;
+        margin: 0 15px;
     }
     .infos_prod_review{
         display: inline-block;
@@ -425,7 +425,13 @@
         text-align: center;
         color: #333;
         padding-bottom: 30px;
-        min-width: 140px;
+        min-width: 120px;
+        &.product-name{
+            min-width: 450px;
+        }
+        &.delete{
+            min-width: 40px;
+        }
     }
     tr{
         &.no-dispo{
@@ -438,7 +444,10 @@
     td{
         padding: 15px 0;
         border-bottom: 1px solid #eee;
-        min-width: 140px;
+        min-width: 120px;
+        &.product-name{
+            min-width: 450px;
+        }
         &.quantity{
             font-weight: 700;
             color: $color-second-green;
@@ -464,16 +473,22 @@
         }
         &.comments{
             min-width: 200px;
+            input[type=text]{
+                width: 140px;
+                margin-right: 5px;
+                padding: 10px;
+            }
             .button{
                 font-size: 0.875rem;
                 font-weight: normal;
                 padding: 10px 15px;
-                margin-right: 10px;
             }
-            .delete{
-                i{
-                    color: $color-second-green;
-                }
+        }
+        &.delete{
+            min-width: 40px;
+            width: 40px;
+            i{
+                color: $color-second-green;
             }
         }
         h3{
@@ -530,6 +545,14 @@
 #co-payment-form{
     #dt_method_adyen_cc{
         display: none;
+    }
+    .input-box{
+        margin-bottom: 20px;
+    }
+    label{
+        font-weight: normal;
+        font-size: 0.875rem;
+        color: $color-main-grey;
     }
 }
 
@@ -614,6 +637,10 @@
                 font-weight: normal;
             }
         }
+    }
+    .message-coupon{
+        color: $color-main-grey;
+        margin-top: 5px;
     }
 }
 

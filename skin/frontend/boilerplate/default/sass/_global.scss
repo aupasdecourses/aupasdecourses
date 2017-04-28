@@ -138,3 +138,27 @@ a{
         }
     }
 }
+
+.tooltip{
+    &.bottom > .tooltip-arrow{
+        border-bottom: 8px solid #F6F6F6;
+        border-width: 0 8px 8px;
+        top: -3px;
+        margin-left: -8px;
+    }
+    .tooltip-inner{
+        background-color: #F6F6F6;
+        padding: 10px;
+        text-align: left;
+        dt{
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: $color-second-green;
+        }
+        dd{
+            font-size: 0.75rem;
+            font-weight: normal;
+            color: $color-main-grey;
+        }
+    }
+}
