@@ -158,7 +158,7 @@ class BillingController extends Controller
         if (isset($_POST['submit'])) {
             try {
 
-                $pdfbilling->setBillingTemplate();
+                $pdfbilling->printBillingShop($bill);
                 $pdfbilling->save('/var/www/html/apdcdev/var/truc.pdf');
 
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_summary');

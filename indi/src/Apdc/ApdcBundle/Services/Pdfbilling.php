@@ -2,16 +2,26 @@
 
 namespace Apdc\ApdcBundle\Services;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 class Pdfbilling
 {
+    const FLOAT_NUMBER = 2;
+    private $_router;
+    private $_rootdir;
+
     //Pdf
     private $_pdf;
     private $_finalized = false;
+
+    //Locale
+    private $_currency;
 
     //Font
     private $_font;
     private $_font_bold;
     private $_font_italic;
+    private $_currentfontsize=12;
 
     //Format page
     private static $_width_ls = 842;
@@ -23,9 +33,13 @@ class Pdfbilling
     private $_format;
     private $_page = [];
 
+    //Table format
+    private $_table_column_set;
+    private $_table_padding = 5;
+
     //Margin & Offset Page
-    private $_margin_horizontal = 50;
-    private $_margin_vertical = 50;
+    private $_margin_horizontal = 20;
+    private $_margin_vertical = 20;
     private $_lineHeight = 15;
     private $_page_columnWidth;
     private $_page_columnOffset;
@@ -34,9 +48,12 @@ class Pdfbilling
     private $_ls_startColumnOffset = 0;
     private $_ls_maxColumnOffset = 2;
     private $_ls_startLineOffset = 9;
+    private $_offset;
 
     //Ressources
     private $_logo;
+    private $_logo_h = 100;
+    private $_logo_w = 175;
 
     //Order summary template
     private $_summary_lineHeight = 20;
@@ -46,6 +63,7 @@ class Pdfbilling
     //Order lists template
     private $_orders_startLineOffset_first = 14;
     private $_orders_startLineOffset_second = 8;
+    private static $_orders_table_column_set = [5, 120, 185, 300, 415, 475];
     private $_orders_template;
     private $_orders = [];
     private $_orders_count = 0;
@@ -53,8 +71,15 @@ class Pdfbilling
     private $_name;
     private $_mails = [];
 
-    public function __construct()
+    private $_currentpage;
+    private $_data;
+
+    public function __construct($rootdir, $router)
     {
+        //To use controller methods
+        $this->_router = $router;
+        $this->_rootdir = $rootdir.'/../..';
+
         $this->_pdf = new \Zend_Pdf();
 
         // Algorithm constants set ==>>
@@ -63,7 +88,16 @@ class Pdfbilling
         $this->_font_italic = \Zend_Pdf_Font::fontWithName(\Zend_Pdf_Font::FONT_HELVETICA_ITALIC);
         $this->_font_bold_italic = \Zend_Pdf_Font::fontWithName(\Zend_Pdf_Font::FONT_HELVETICA_BOLD_ITALIC);
 
-        //$this->_logo = \Zend_Pdf_Image::imageWithPath(dirname(__FILE__).'/logo.png');
+        $this->_logo = $this->_rootdir.$this->generateUrl('root').'img/logo_pdf.png';
+
+        setlocale(LC_TIME, 'fr_FR.UTF8');
+        setlocale(LC_CTYPE, 'fr_FR.UTF8');
+        $this->_locale_info = localeconv();
+    }
+
+    public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        return $this->_router->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -71,8 +105,8 @@ class Pdfbilling
      */
     private function _setLandscapeTemplate()
     {
-        $this->_width=static::$_width_ls;
-        $this->_height=static::$_height_ls;
+        $this->_width = static::$_width_ls;
+        $this->_height = static::$_height_ls;
         $this->_page_columnWidth = ($this->_width - ($this->_margin_horizontal * 2)) / number_format($this->_ls_maxColumnOffset + 1, 2);
         $this->_page_columnOffset = $this->_ls_startColumnOffset;
         $this->_page_lineOffset = $this->_ls_startLineOffset;
@@ -88,8 +122,8 @@ class Pdfbilling
      */
     private function _setPortraitTemplate()
     {
-        $this->_width=static::$_width_po;
-        $this->_height=static::$_height_po;
+        $this->_width = static::$_width_po;
+        $this->_height = static::$_height_po;
         $this->_page_columnWidth = ($this->_width - ($this->_margin_horizontal * 2)) / number_format($this->_ls_maxColumnOffset + 1, 2);
         $this->_page_columnOffset = $this->_ls_startColumnOffset;
         $this->_page_lineOffset = $this->_ls_startLineOffset;
@@ -100,6 +134,241 @@ class Pdfbilling
         $this->_format = $this->_width.':'.$this->_height.':';
     }
 
+    private function _drawLogo($page, $height, $width, $position = 'UPPER_LEFT')
+    {
+        $image = \Zend_Pdf_Image::imageWithPath($this->_logo);
+        switch ($position) {
+            case 'UPPER_LEFT':
+                $page->drawImage($image, $this->_margin_horizontal, $this->_height - $height - $this->_margin_vertical, $width, ($this->_height - $this->_margin_vertical));
+                $this->_offset = $this->_height - $height - $this->_margin_vertical;
+                break;
+            case 'UPPER_CENTER':
+                $page->drawImage($image, ($this->_width - $width) / 2, $this->_height - $height - $this->_margin_vertical, ($this->_width + $width) / 2, ($this->_height - $this->_margin_vertical));
+                $this->_offset = $this->_height - $height - $this->_margin_vertical;
+                break;
+            case 'UPPER_RIGHT':
+                $page->drawImage($image, $this->_width - $this->_margin_horizontal - $width, $this->_height - $height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, ($this->_height - $this->_margin_vertical));
+                $this->_offset = $this->_height - $height - $this->_margin_vertical;
+                break;
+            case 'BOTTOM_LEFT':
+                $page->drawImage($image, $this->_margin_horizontal, $this->_margin_vertical, $width, $this->_margin_vertical + $height);
+                $this->_offset = 0;
+                break;
+            case 'BOTTOM_CENTER':
+                $page->drawImage($image, ($this->_width - $width) / 2, $this->_margin_vertical, ($this->_width + $width) / 2, $this->_margin_vertical + $height);
+                $this->_offset = 0;
+                break;
+            case 'BOTTOM_RIGHT':
+                $page->drawImage($image, $this->_width - $this->_margin_horizontal - $width, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical + $height);
+                $this->_offset = 0;
+                break;
+
+        }
+
+        return $this->_offset;
+    }
+
+    private function _computeColumnSet($columnset)
+    {
+        $offset = 0;
+        foreach ($columnset as $id => $w) {
+            $columnset[$id] = $offset + $this->_table_padding;
+            $offset += intval(round(floatval($w * ($this->_width - 2 * $this->_margin_horizontal)),0,PHP_ROUND_HALF_UP));
+        }
+        return $columnset;
+    }
+
+    private function _computeTotals($table)
+    {
+        $index = 0;
+        foreach ($table['header_type'] as $type) {
+            if ($type == 'float') {
+                foreach ($table['rows'] as $row) {
+                    $keys=array_keys($row);
+                    $table['total'][$index] += floatval($row[$keys[$index]]);
+                }
+            }
+            ++$index;
+        }
+
+        return $table;
+    }
+
+    private function _printBillingSummaryHeader()
+    {
+        $increment_id = $this->_data['increment_id'];
+        $data_s = $this->_data['summary'][0];
+        $created_at = date('d/m/Y', strtotime($data_s['created_at']));
+        $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data_s['billing_month']))));
+
+        $standart_lh = $this->_lineHeight;
+        $this->_lineHeight = 20;
+
+        $this->_offset = $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w);
+
+        $this->_currentpage->drawText('Facture n° '.$increment_id, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Date d'émission: ".$created_at, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Commerçant {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_offset -= $this->_lineHeight * 7;
+
+        $this->_currentpage->setFont($this->_font_bold, 12);
+
+        $this->_currentpage->drawText("Facture de {$month} pour la prestation d'Au Pas De Courses", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_offset -= $this->_lineHeight * 3;
+        $this->_lineHeight = $standart_lh;
+    }
+
+    private function _printBillingDetailsTemplate(){
+        $this->_currentpage->drawText("Au Pas De Courses - Facture n° xxx pour {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - $this->_margin_vertical / 1.5);
+        $this->_currentpage->setLineWidth(0.5);
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
+
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical);
+        $this->_currentpage->setFont($this->_font, 8);
+        $this->_currentpage->drawText('Généré le: ', $this->_margin_horizontal, $this->_margin_vertical / 2);
+    }
+
+    private function _printFooter($text,$fontsize)
+    {
+        $this->_currentpage->setFont($this->_font, $fontsize);
+        $text = $this->_lineSplit($text, $fontsize, $this->_width-2*$this->_margin_horizontal);
+        foreach ($text as $id => $line) {
+            $this->_currentpage->drawText($line, $this->_margin_horizontal, $this->_margin_vertical + $this->_lineHeight * (count($text) - ($id + 1)));
+        }
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+    }
+
+    private function _printTable($table)
+    {
+        foreach ($table as $type => $row) {
+            switch ($type) {
+                case 'header':
+                    $this->_currentpage->setFont($this->_font_bold, $table['config']['font_size_header']);
+                    $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Html($table['config']['fill_color_header']));
+                    $this->_currentpage->setLineColor(new \Zend_Pdf_Color_Html($table['config']['line_color_header']));
+                    $this->_currentpage->drawRectangle($this->_margin_horizontal, $this->_offset - $this->_lineHeight, $this->_width - $this->_margin_horizontal, $this->_offset);
+                    $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(1, 1, 1));
+                    $this->_offset -= $this->_lineHeight;
+                    foreach ($row as $id => $col) {
+                        $this->_currentpage->drawText($col, $this->_margin_horizontal + $this->_table_column_set[$id], $this->_offset + $this->_lineHeight / 3);
+                    }
+                    $this->_currentpage->setFont($this->_font, $table['config']['font_size_body']);
+                    break;
+                case 'rows':
+                    $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
+                    foreach ($row as $r) {
+                        $this->_offset -= $this->_lineHeight;
+                        $col_id=0;
+                        foreach ($r as $col) {
+                            $col = (in_array($table['header_type'][$col_id], array('float', 'percent'))) ? round(floatval($col), 2, PHP_ROUND_HALF_UP) : $col;                            
+                            $this->_currentpage->drawText($col, $this->_margin_horizontal + $this->_table_column_set[$col_id], $this->_offset);
+                            $col_id++;
+                        }
+                    }
+                    break;
+                case 'total':
+                    $this->_offset -= $this->_lineHeight;
+                    $this->_currentpage->setLineWidth(0.5);
+                    $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_width - $this->_margin_horizontal, $this->_offset);
+                    $this->_currentpage->setFont($this->_font_bold, $table['config']['font_size_total']);
+                    $this->_offset -= $this->_lineHeight;
+                    foreach ($row as $id => $col) {
+                        $this->_currentpage->drawText($col, $this->_margin_horizontal + $this->_table_column_set[$id], $this->_offset);
+                    }
+                    $this->_currentpage->setFont($this->_font, $table['config']['font_size_total']);
+                    break;
+            }
+        }
+    }
+
+    public function printBillingShop($data)
+    {
+        $this->_data = $data;
+        $data_s = $this->_data['summary'][0];
+        $data_d = $this->_data['details'];
+
+        //Table
+        $table_s = [
+            'config' => [
+                'font_size_header' => 12,
+                'font_size_body' => 12,
+                'font_size_total' => 12,
+                'fill_color_header' => '#188071',
+                'line_color_header' => '#188071',
+            ],
+            'column_set' => [0.46, 0.135, 0.135, 0.135, 0.135],
+            'header_type' => ['string', 'float', 'percent', 'float', 'float'],
+            'header' => ['Prestation', 'Prix HT', '%TVA', 'TVA', 'Prix TTC'],
+            'rows' => [
+                ['Commission sur les ventes', $data_s['sum_commission_HT'], 1 - $data_s['sum_commission_HT'] / $data_s['sum_commission'], $data_s['sum_commission'] - $data_s['sum_commission_HT'], $data_s['sum_commission']],
+                ['Discount commerçants', $data_s['discount_shop_HT'], 1 - $data_s['discount_shop_HT'] / $data_s['discount_shop'], $data_s['discount_shop'] - $data_s['discount_shop_HT'], $data_s['discount_shop']],
+                ['Frais HiPay', $data_s['processing_fees_HT'], 1 - $data_s['processing_fees_HT'] / $data_s['processing_fees'], $data_s['processing_fees'] - $data_s['processing_fees_HT'], $data_s['processing_fees']],
+                ],
+            'total' => ['TOTAL', 0, '', 0, 0],
+        ];
+
+        //Create Billing Summary
+        $this->_setPortraitTemplate();
+        $this->_currentpage = $this->_page[0] = $this->_pdf->newPage($this->_format);
+        $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+
+        $this->_printBillingSummaryHeader();
+        $this->_table_column_set = $this->_computeColumnSet($table_s['column_set']);
+        $table_s = $this->_computeTotals($table_s);
+        $this->_printTable($table_s);
+
+        $this->_offset -= $this->_lineHeight * 4;
+
+        $this->_currentpage->drawText('Tous les prix sont en euros', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $footer_text = 'Au Pas De Courses - SAS au capital de 12000€ - 17 rue Henry Monnier, 75009 Paris - RCS Paris 810 707 000 - Numéro de TVA Intracommunautaire - FR48810707000';
+
+        $this->_printFooter($footer_text,8);
+
+        // create billing details pages
+        $this->_setLandscapeTemplate();
+        $this->_currentpage = $this->_page[1] = $this->_pdf->newPage($this->_format);
+        $this->_currentpage->setFont($this->_font, 8);
+        $this->_offset=$this->_height-2*$this->_margin_vertical;
+        
+        $this->_printBillingDetailsTemplate();
+
+        //Table
+        $table_d = [
+            'config' => [
+                'font_size_header'=>8,
+                'font_size_body' => 8,
+                'font_size_total' => 8,
+                'fill_color_header' => '#188071',
+                'line_color_header' => '#188071',
+            ],
+            'column_set' => [0.07, 0.07, 0.07, 0.08, 0.11, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06],
+            'header_type' => ['string','string','string','string','string','float','float','float','float','float','float','float','float','float','float'],
+            'header' => ['Date création','Date livraison','Mois factu','#Commande','Client','Sum_Items','Sum_Items_HT','Sum_Credit','Sum_Credit_HT','Sum_Ticket','Sum_Ticket_HT','Sum_Com','Sum_Com_HT','Sum_Versement','Sum_Versement_HT'],
+            'rows' => [],
+            'total' => ['TOTAL','','','','',0,0,0,0,0,0,0,0,0,0],
+        ];
+
+        foreach($data_d as $id => $row){
+            unset($row['order_shop_id']);
+            unset($row['id_billing']);
+            unset($row['id']);
+            unset($row['shop_id']);
+            unset($row['shop']);
+            $data_d[$id]=$row;
+        }
+
+        $table_d['rows']=$data_d;
+
+        $this->_table_column_set = $this->_computeColumnSet($table_d['column_set']);
+        $table_d = $this->_computeTotals($table_d);
+        $this->_printTable($table_d);
+
+    }
+
     public function setOrderTemplate()
     {
         $this->_setLandscapeTemplate();
@@ -107,12 +376,12 @@ class Pdfbilling
         // create summary first page and draw header ==>>
         $this->_summary[0] = $this->_pdf->newPage($this->_format);
         $this->_summary[0]->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
-        $this->_summary[0]->setFont($this->_font, 16);
+        $this->_summary[0]->setFont($this->_font, $this->_currentfontsize);
         $this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 5));
-        $this->_summary[0]->setFont($this->_font, 12);
+        $this->_summary[0]->setFont($this->_font, $this->_currentfontsize);
         $this->_summary[0]->drawText("A {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 6));
 
-        //$this->_summary[0]->drawImage($image, $this->width - $this->_margin_horizontal - $image->getPixelWidth(), $this->_height - $image->getPixelHeight() - ($this->_lineHeight * 6), $this->width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 6));
+        //$this->_summary[0]->drawImage($image, $this->_width - $this->_margin_horizontal - $image->getPixelWidth(), $this->_height - $image->getPixelHeight() - ($this->_lineHeight * 6), $this->_width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 6));
         // <<==
 
         // create orders template page ==>>
@@ -121,40 +390,12 @@ class Pdfbilling
         $this->_orders_template->setFont($this->_font, 8);
         $this->_orders_template->drawText("Commande Au Pas De Courses - {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - $this->_margin_vertical + 10);
         $this->_orders_template->setLineWidth(0.5);
-        $this->_orders_template->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
+        $this->_orders_template->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
 
-        $this->_orders_template->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->width - $this->_margin_horizontal, $this->_margin_vertical);
+        $this->_orders_template->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical);
         $this->_orders_template->setFont($this->_font, 8);
-        $this->_orders_template->drawText('Genere le: '.date('r'), $this->_margin_horizontal, $this->_margin_vertical - 10);
+        $this->_orders_template->drawText('Généré le: '.date('r'), $this->_margin_horizontal, $this->_margin_vertical - 10);
         // <<==
-    }
-
-    public function setBillingTemplate()
-    {
-
-        //Create Billing Page
-        $this->_setPortraitTemplate();
-        $this->_page[0] = $this->_pdf->newPage($this->_format);
-        $this->_page[0]->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
-        $this->_page[0]->setFont($this->_font, 16);
-        $this->_page[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 5));
-        // $billingpage->setFont($this->_font, 12);
-        // $billingpage->drawText("A {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 6));
-        //$image = \Zend_Pdf_Image::imageWithPath(dirname(__FILE__).'/logo.png');
-        //$this->_summary[0]->drawImage($image, $this->width - $this->_margin_horizontal - $image->getPixelWidth(), $this->_height - $image->getPixelHeight() - ($this->_lineHeight * 6), $this->width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 6));
-        // <<==
-
-        // create orders template page ==>>
-        // $this->_orders_template = $this->_pdf->newPage($this->_format);
-
-        // $this->_orders_template->setFont($this->_font, 8);
-        // $this->_orders_template->drawText("Commande Au Pas De Courses - {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - $this->_margin_vertical + 10);
-        // $this->_orders_template->setLineWidth(0.5);
-        // $this->_orders_template->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
-
-        // $this->_orders_template->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->width - $this->_margin_horizontal, $this->_margin_vertical);
-        // $this->_orders_template->setFont($this->_font, 8);
-        // $this->_orders_template->drawText('Genere le: '.date('r'), $this->_margin_horizontal, $this->_margin_vertical - 10);
     }
 
     public function setDate($date)
@@ -180,13 +421,13 @@ class Pdfbilling
         //$this->_summary[0]->drawText('Nombre de commandes: '.$this->_orders_count, $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 8));
         foreach ($this->_page as $page) {
             //$page->setFont($this->_font, 8);
-            //$page->drawText("page {$page_id}/{$page_count}", $this->width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
+            //$page->drawText("page {$page_id}/{$page_count}", $this->_width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
             //++$page_id;
             $this->_pdf->pages[] = $page;
         }
         /*foreach ($this->_orders as $page) {
             $page->setFont($this->_font, 8);
-            $page->drawText("page {$page_id}/{$page_count}", $this->width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
+            $page->drawText("page {$page_id}/{$page_count}", $this->_width - ($this->_margin_horizontal * 2), $this->_margin_vertical - 10);
             ++$page_id;
             $this->_pdf->pages[] = $page;
         }*/
@@ -211,14 +452,12 @@ class Pdfbilling
         $this->_summary[$this->_summary_id]->drawText('Commande n°'.++$this->_orders_count.": {$order['id']}", $this->_margin_horizontal + ($this->_page_columnWidth * $this->_page_columnOffset), $this->_height - ($this->_summary_lineHeight * $this->_page_lineOffset++));
     }
 
-    private static $_orders_table_column_set = [5, 120, 185, 300, 415, 475];
-
     private function _orders_header_draw(&$page)
     {
         $page->setFont($this->_font, 12);
         $page->setFillColor(new \Zend_Pdf_Color_Html('#188071'));
         $page->setLineColor(new \Zend_Pdf_Color_Html('#188071'));
-        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset - 2)));
+        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->_width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset - 2)));
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(1, 1, 1));
         $page->drawText('Produit', $this->_margin_horizontal + static::$_orders_table_column_set[0], $this->_height - ($this->_lineHeight * ($this->_page_lineOffset - 0.75)));
         $page->drawText('Quantité', $this->_margin_horizontal + static::$_orders_table_column_set[1], $this->_height - ($this->_lineHeight * ($this->_page_lineOffset - 0.75)));
@@ -229,14 +468,28 @@ class Pdfbilling
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
     }
 
-    private static function _lineSplit($line, $width)
+    private function _stringWidth($string,$fontsize)
+    {
+        $drawingString = iconv('UTF-8', 'UTF-16BE//IGNORE', $string);
+        $characters = array();
+        for ($i = 0; $i < strlen($drawingString); ++$i) {
+            $characters[] = (ord($drawingString[$i++]) << 8) | ord($drawingString[$i]);
+        }
+        $glyphs = $this->_font->glyphNumbersForCharacters($characters);
+        $widths = $this->_font->widthsForGlyphs($glyphs);
+        $stringWidth = (array_sum($widths) / $this->_font->getUnitsPerEm()) * $fontsize;
+
+        return $stringWidth;
+    }
+
+    private function _lineSplit($line, $fontsize, $width)
     {
         $rsl = [''];
         $line_id = 0;
         $split = preg_split("/[\s]+/", $line);
 
         foreach ($split as $word) {
-            if (strlen($rsl[$line_id]) + strlen(" $word") > $width) {
+            if ($this->_stringWidth($rsl[$line_id],$fontsize) + $this->_stringWidth(" $word",$fontsize) > $width) {
                 ++$line_id;
                 $rsl[$line_id] = '';
             }
@@ -244,6 +497,7 @@ class Pdfbilling
         }
 
         return $rsl;
+
     }
 
     private function _textPrint($text, &$page, $column_begin)
@@ -272,7 +526,7 @@ class Pdfbilling
         $max_height = max([1, count($title), count($quantite), count($comment)]);
         $page->setFillColor($color);
         $page->setLineColor($color);
-        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + $max_height)));
+        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->_width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + $max_height)));
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
         $page->setLineColor($column_line_color);
 
@@ -316,7 +570,7 @@ class Pdfbilling
                 $pages[$page_id] = clone $this->_orders_template;
                 $this->_page_lineOffset = $this->_orders_startLineOffset_second;
                 $this->_orders_header_draw($pages[$page_id]);
-                $pages[$page_id]->setFont($this->_font, 16);
+                $pages[$page_id]->setFont($this->_font, $this->_currentfontsize);
                 $pages[$page_id]->drawText("Commande n°  {$order['id']}", $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 5));
                 $pages[$page_id]->setFont($this->_font, 10);
             }
@@ -330,7 +584,7 @@ class Pdfbilling
         $page->setFont($this->_font_bold, 10);
         $page->setFillColor(new \Zend_Pdf_Color_Html('#188071'));
         $page->setLineColor(new \Zend_Pdf_Color_Html('#188071'));
-        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + 2)));
+        $page->drawRectangle($this->_margin_horizontal, $this->_height - ($this->_lineHeight * $this->_page_lineOffset), $this->_width - $this->_margin_horizontal, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + 2)));
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(1, 1, 1));
         $page->drawText('TOTAL', $this->_margin_horizontal + static::$_orders_table_column_set[0] + 150, $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + 1.25)));
         $page->drawText("{$order['Total prix']}€", $this->_margin_horizontal + static::$_orders_table_column_set[4], $this->_height - ($this->_lineHeight * ($this->_page_lineOffset + 1.25)));
@@ -349,7 +603,7 @@ class Pdfbilling
         $this->addOrderToSummary($order);
         $pages[0] = clone $this->_orders_template;
 
-        $pages[0]->setFont($this->_font, 16);
+        $pages[0]->setFont($this->_font, $this->_currentfontsize);
         $pages[0]->drawText("Commande n°  {$order['id']}", $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 5));
         $pages[0]->setFont($this->_font, 12);
         $pages[0]->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $this->_margin_horizontal, $this->_height - ($this->_lineHeight * 6));
@@ -378,8 +632,8 @@ class Pdfbilling
         $page_count = count($pages);
         $page_id = 1;
         foreach ($pages as $page) { // finalyse order
-            $page->setFont($this->_font, 16);
-            $page->drawText("{$page_id}/{$page_count}", $this->width - $this->_margin_horizontal - 50, $this->_height - ($this->_lineHeight * 5));
+            $page->setFont($this->_font, $this->_currentfontsize);
+            $page->drawText("{$page_id}/{$page_count}", $this->_width - $this->_margin_horizontal - 50, $this->_height - ($this->_lineHeight * 5));
             $this->_orders[] = $page;
             ++$page_id;
         }
