@@ -75,32 +75,24 @@ trait Pdf
         switch ($position) {
             case 'UPPER_LEFT':
                 $page->drawImage($image, $this->_margin_horizontal, $this->_height - $height - $this->_margin_vertical, $width, ($this->_height - $this->_margin_vertical));
-                $this->_offset = $this->_height - $height - $this->_margin_vertical;
                 break;
             case 'UPPER_CENTER':
                 $page->drawImage($image, ($this->_width - $width) / 2, $this->_height - $height - $this->_margin_vertical, ($this->_width + $width) / 2, ($this->_height - $this->_margin_vertical));
-                $this->_offset = $this->_height - $height - $this->_margin_vertical;
                 break;
             case 'UPPER_RIGHT':
                 $page->drawImage($image, $this->_width - $this->_margin_horizontal - $width, $this->_height - $height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, ($this->_height - $this->_margin_vertical));
-                $this->_offset = $this->_height - $height - $this->_margin_vertical;
                 break;
             case 'BOTTOM_LEFT':
                 $page->drawImage($image, $this->_margin_horizontal, $this->_margin_vertical, $width, $this->_margin_vertical + $height);
-                $this->_offset = 0;
                 break;
             case 'BOTTOM_CENTER':
                 $page->drawImage($image, ($this->_width - $width) / 2, $this->_margin_vertical, ($this->_width + $width) / 2, $this->_margin_vertical + $height);
-                $this->_offset = 0;
                 break;
             case 'BOTTOM_RIGHT':
                 $page->drawImage($image, $this->_width - $this->_margin_horizontal - $width, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical + $height);
-                $this->_offset = 0;
                 break;
-
         }
-
-        return $this->_offset;
+        $this->_offset = $this->_height - $height - $this->_margin_vertical;
     }
 
     private function _printFooter($text, $fontsize)
@@ -113,14 +105,15 @@ trait Pdf
         $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
     }
 
-    private function _pageCount($start_count){
-        $page_id=1;
-        $page_count=count($this->_page)-$start_count;
-        foreach ($this->_page as $id=>$page) {
-            if($id>=$start_count){
+    private function _pageCount($start_count)
+    {
+        $page_id = 1;
+        $page_count = count($this->_page) - $start_count;
+        foreach ($this->_page as $id => $page) {
+            if ($id >= $start_count) {
                 $page->setFont($this->_font, 8);
-                $string="page {$page_id}/{$page_count}";
-                $page->drawText($string, $this->_width - $this->_margin_horizontal-$this->_stringWidth($string,8), $this->_margin_vertical - 10);
+                $string = "page {$page_id}/{$page_count}";
+                $page->drawText($string, $this->_width - $this->_margin_horizontal - $this->_stringWidth($string, 8), $this->_margin_vertical - 10);
                 ++$page_id;
             }
         }
@@ -132,7 +125,7 @@ trait Pdf
         //$page_count = count($this->_summary) + count($this->_orders);
         //$page_count = count($this->_page);
         //$this->_summary[0]->drawText('Nombre de commandes: '.$this->_orders_count, $this->_margin_horizontal, $this->_height - ($this->_summary_lineHeight * 8));
-        $this->_pageCount(1);
+        //$this->_pageCount(1);
         $this->_pdf->pages = $this->_page;
         /*foreach ($this->_orders as $page) {
             $page->setFont($this->_font, 8);
@@ -234,14 +227,14 @@ trait Pdf
         $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
         foreach ($table['rows'] as $r) {
             $this->_offset -= $this->_lineHeight;
-            if ($this->_offset < $this->_margin_vertical) {
+            if ($this->_offset < 3 * $this->_margin_vertical) {
                 $this->_currentpage = $this->_page[count($this->_page)] = $this->_pdf->newPage($this->_format);
-                $this->_offset = $this->_height - 2*$this->_margin_vertical;
+                $this->_offset = $this->_height - 2 * $this->_margin_vertical;
                 $this->_printTableHeader($table);
                 $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
                 $this->_currentpage->setFont($this->_font, $table['config']['font_size_body']);
                 $this->_offset -= $this->_lineHeight;
-            }            
+            }
             $col_id = 0;
             foreach ($r as $col) {
                 $col = (in_array($table['header_type'][$col_id], array('float', 'percent'))) ? round(floatval($col), 2, PHP_ROUND_HALF_UP) : $col;

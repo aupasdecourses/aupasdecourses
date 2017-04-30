@@ -162,3 +162,7 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+download_route:
+    path:  /download/{filename}
+    defaults: { _controller: ApdcApdcBundle:Default:download }

@@ -375,7 +375,7 @@ class Billing
                             'customer_name' => $nom_client,
                             'shop_id' => intval($com['shop_id']),
                             'shop' => $com['name'],
-                            'id_billing' =>'',
+                            'id_billing' => '',
                             'sum_items_HT' => $sum_items_HT,
                             'sum_items' => $sum_items,
                             'sum_items_credit_HT' => $sum_items_credit_HT,
@@ -404,6 +404,8 @@ class Billing
                 'sum_ticket_HT',
                 'sum_ticket',
                 'sum_commission_HT',
+                'sum_commission_TVA_percent',
+                'sum_commission_TVA',
                 'sum_commission',
                 'sum_due_HT',
                 'sum_due',
@@ -426,7 +428,6 @@ class Billing
                     }
                 }
             }
-
         }
 
         if ($type == 'all') {
@@ -501,13 +502,13 @@ class Billing
             $result['verif_noentry'] = false;
         }
 
-        if(!$result['verif_noentry']){
+        if (!$result['verif_noentry']) {
             $result = [
-                'verif_mois'=>false,
-                'verif_noentry'=>false,
-                'verif_noprocessing'=>false,
-                'verif_totaux'=>false,
-                'display_button'=>false,
+                'verif_mois' => false,
+                'verif_noentry' => false,
+                'verif_noprocessing' => false,
+                'verif_totaux' => false,
+                'display_button' => false,
                 'sum_items_facturation' => 'NA',
                 'sum_items_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
@@ -518,7 +519,7 @@ class Billing
                 'id_max' => 'NA',
                 'id_min' => 'NA',
             ];
-        }else{
+        } else {
 
             // 2 - verify that current month > month chosen for billing
             $current_month = date('01/m/Y', time());
@@ -617,36 +618,29 @@ class Billing
         return $result;
     }
 
-    public function updateDataBillingId($debut){
-
+    public function updateDataBillingId($debut)
+    {
         $billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
 
         $model_summary = \Mage::getModel('pmainguet_delivery/indi_billingsummary')->getCollection();
         $data_summary = $model_summary->addFieldtoFilter('billing_month', $billing_month)->toArray();
 
-        dump($data_summary['items']);
-
-        $array=array();
-        foreach($data_summary['items'] as $row){
-            $array[$row['shop_id']]=$row['increment_id'];
+        $array = array();
+        foreach ($data_summary['items'] as $row) {
+            $array[$row['shop_id']] = $row['increment_id'];
         }
-
-        dump($array);
 
         $model_details = \Mage::getModel('pmainguet_delivery/indi_billingdetails')->getCollection();
         $data_details = $model_details->addFieldtoFilter('billing_month', $billing_month)->toArray();
 
-        $update=$data_details['items'];
+        $update = $data_details['items'];
 
-        dump($update);
-
-        foreach($update as $id => $row){
-            $shop_id=$update[$id]['shop_id'];
-            $update[$id]['id_billing']=$array[$shop_id];
+        foreach ($update as $id => $row) {
+            $shop_id = $update[$id]['shop_id'];
+            $update[$id]['id_billing'] = $array[$shop_id];
         }
 
         return $update;
-
     }
 
     /**
@@ -667,10 +661,12 @@ class Billing
     }
 
     /**
-     * [getOneBilling description]
-     * @param  [type] $increment_id [description]
-     * @param  [type] $shop         [description]
-     * @return [type]               [description]
+     * [getOneBilling description].
+     *
+     * @param [type] $increment_id [description]
+     * @param [type] $shop         [description]
+     *
+     * @return [type] [description]
      */
     public function getOneBilling($increment_id)
     {
@@ -680,7 +676,7 @@ class Billing
         $model_summary = \Mage::getModel('pmainguet_delivery/indi_billingsummary')->getCollection();
         $data_summary = $model_summary->addFieldtoFilter('increment_id', $increment_id)->toArray();
 
-        $return=[
+        $return = [
             'increment_id' => $increment_id,
             'details' => $data_details['items'],
             'summary' => $data_summary['items'],
@@ -688,4 +684,49 @@ class Billing
 
         return $return;
     }
+
+    public function finalizeFacturation($data, $id)
+    {
+        $model_summary = \Mage::getModel('pmainguet_delivery/indi_billingsummary')->getCollection();
+        $data_summary = $model_summary->addFieldtoFilter('increment_id', $id)->toArray();
+
+        $result = $data_summary['items'][0];
+
+        //Get Form inputs
+        $result['discount_shop_HT'] = $data['discount_shop_HT'];
+        $result['discount_shop_TVA_percent'] = $data['discount_shop_TVA_percent'];
+        $result['comments_discount_shop'] = $data['comments_discount_shop'];
+        $result['processing_fees_HT'] = $data['processing_fees_HT'];
+        $result['processing_fees_TVA_percent'] = $data['processing_fees_TVA_percent'];
+
+        //Calcul du taux de TVA et TTC pour commission totale
+        $result['sum_commission_TVA_percent'] = 0.2;
+        $result['sum_commission_TVA'] = $result['sum_commission_HT'] * $result['sum_commission_TVA_percent'];
+        $result['sum_commission'] = $result['sum_commission_HT'] + $result['sum_commission_TVA'];
+
+        //Calcul TTC somme due
+        $result['sum_due'] = $result['sum_ticket'] - $result['sum_commission'];
+
+        //Calcul TVA et TTC Remise commerciale
+        $result['discount_shop_TVA'] = $result['discount_shop_HT'] * $result['discount_shop_TVA_percent'];
+        $result['discount_shop'] = $result['discount_shop_HT'] + $result['discount_shop_TVA'];
+
+        //Calcul TVA et TTC Processing fees
+        $result['processing_fees_TVA'] = $result['processing_fees_HT'] * $result['processing_fees_TVA_percent'];
+        $result['processing_fees'] = $result['processing_fees_HT'] + $result['processing_fees_TVA'];
+
+        //Calcul Total Facture (Commission - Remise Commerciale + Frais HiPay)
+        $result['sum_billing_HT'] = $result['sum_commission_HT'] - $result['discount_shop_HT'] + $result['processing_fees_HT'];
+        $result['sum_billing_TVA'] = $result['sum_commission_TVA'] - $result['discount_shop_TVA'] + $result['processing_fees_TVA'];
+        $result['sum_billing'] = $result['sum_commission'] - $result['discount_shop'] + $result['processing_fees'];
+
+        //Calcul Total Virement Banque (Somme Due + Remise Commerciale - Frais Bancaire)
+        $result['sum_payout'] = $result['sum_due'] + $result['discount_shop'] - $result['processing_fees'];
+
+        //current time
+        $result['date_finalized']= \Varien_Date::toTimestamp(\Varien_Date::now());
+
+        return $result;
+    }
+
 }

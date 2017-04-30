@@ -31,11 +31,11 @@ class BillingController extends Controller
             }
         } else {
             $verif = [
-                'verif_mois'=>false,
-                'verif_noentry'=>false,
-                'verif_noprocessing'=>false,
-                'verif_totaux'=>false,
-                'display_button'=>false,
+                'verif_mois' => false,
+                'verif_noentry' => false,
+                'verif_noprocessing' => false,
+                'verif_totaux' => false,
+                'display_button' => false,
                 'sum_items_facturation' => 'NA',
                 'sum_items_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
@@ -55,18 +55,17 @@ class BillingController extends Controller
 
         if (isset($_POST['submit'])) {
             try {
-
                 $bill = $factu->data_facturation($date_debut, $date_fin, 'all');
 
                 foreach ($bill['details'] as $row) {
                     $mage->updateEntryToBillingDetails(['order_shop_id' => $row['order_shop_id']], $row);
                 }
-                
+
                 foreach ($bill['summary'] as $row) {
                     $mage->updateEntryToBillingSummary(['increment_id' => $row['increment_id']], $row);
                 }
 
-                $update=$factu->updateDataBillingId($date_debut);
+                $update = $factu->updateDataBillingId($date_debut);
                 foreach ($update as $row) {
                     $mage->updateEntryToBillingDetails(['order_shop_id' => $row['order_shop_id']], $row);
                 }
@@ -74,7 +73,7 @@ class BillingController extends Controller
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_summary');
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_details');
 
-                return $this->redirectToRoute('billingVerif', ['date_debut' => $date_debut]);
+                return $this->redirectToRoute('billingSummary', ['date_debut' => $date_debut]);
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
             }
@@ -101,13 +100,16 @@ class BillingController extends Controller
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
-            $bill = $factu->getDataFacturation('indi_billingdetails',$date_debut);
+            $bill = $factu->getDataFacturation('indi_billingdetails', $date_debut);
         }
+
+        $check_date = (strtotime(str_replace('/', '-', $date_debut))<strtotime("2017/01/01"))?1:0;
 
         return $this->render('ApdcApdcBundle::billing/details.html.twig', [
             'bill' => $bill,
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
+            'check_date' => $check_date,
         ]);
     }
 
@@ -124,58 +126,115 @@ class BillingController extends Controller
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
-            $summary = $factu->getDataFacturation('indi_billingsummary',$date_debut);
+            $summary = $factu->getDataFacturation('indi_billingsummary', $date_debut);
         }
+
+                dump($summary);
+
+        $check_date = (strtotime(str_replace('/', '-', $date_debut))<strtotime("2017/01/01"))?1:0;
 
         return $this->render('ApdcApdcBundle::billing/summary.html.twig', [
             'summary' => $summary,
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
+            'check_date' => $check_date,
         ]);
     }
 
     public function billingOneAction(Request $request, $id)
     {
         $factu = $this->container->get('apdc_apdc.billing');
+        $mage = $this->container->get('apdc_apdc.magento');
         $pdfbilling = $this->container->get('apdc_apdc.pdfbilling');
         $session = $request->getSession();
 
         //Select Billing id form
-        $entity_id  = new \Apdc\ApdcBundle\Entity\OrderId();
-        $form_id    = $this->createForm(\Apdc\ApdcBundle\Form\BillingId::class, $entity_id, [
-            'action' => $this->generateUrl('billingOne',['id' => $id]),
+        $entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+        $form_id = $this->createForm(\Apdc\ApdcBundle\Form\BillingId::class, $entity_id, [
+            'action' => $this->generateUrl('billingOne', ['id' => $id]),
         ]);
         $form_id->get('id')->setData($id);
 
-        //Input form
-        $entity_input   = new \Apdc\ApdcBundle\Entity\Input();
-        $form_input     = $this->createFormBuilder($entity_input);
-        $form_input->setAction($this->generateUrl('billingOne', array('id' => $id)));
-        $form_input     = $form_input->getForm();
+        //Billing Finalization Input Form
+        $entity_billing = new \Apdc\ApdcBundle\Entity\Billing();
+        $form_billing = $this->createForm(\Apdc\ApdcBundle\Form\BillingForm::class, $entity_billing, [
+            'action' => $this->generateUrl('billingOne', ['id' => $id]),
+        ]);
 
-        $bill=$factu->getOneBilling($id);
+        $data_billing_form = $request->get('billing_form');
+        if ($data_billing_form != null) {
+            $data_billing_form['id_billing']=$id;
+            $result=$factu->finalizeFacturation($data_billing_form,$id);
+            $mage->updateEntryToBillingSummary(['increment_id' => $data_billing_form['id_billing']], $result);
+        }
+
+        //Payout form
+        $entity_input = new \Apdc\ApdcBundle\Entity\Input();
+        $form_payout = $this->createFormBuilder($entity_input);
+        $form_payout->setAction($this->generateUrl('billingOne', array('id' => $id)));
+        $form_payout = $form_payout->getForm();
+
+        //Download form
+        $entity_input = new \Apdc\ApdcBundle\Entity\Input();
+        $form_download = $this->createFormBuilder($entity_input);
+        $form_download->setAction($this->generateUrl('billingOne', array('id' => $id)));
+        $form_download = $form_download->getForm();
+
+        //Send form
+        $entity_input = new \Apdc\ApdcBundle\Entity\Input();
+        $form_send = $this->createFormBuilder($entity_input);
+        $form_send->setAction($this->generateUrl('billingOne', array('id' => $id)));
+        $form_send = $form_send->getForm();
+
+        $bill = $factu->getOneBilling($id);
 
         if (isset($_POST['submit'])) {
-            try {
-
-                $pdfbilling->printBillingShop($bill);
-                $pdfbilling->save('/var/www/html/apdcdev/var/truc.pdf');
-
-                $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_summary');
-                $session->getFlashBag()->add('success', 'Information enregistrée avec succès dans indi_billing_details');
-
-                return $this->redirectToRoute('billingOne', ['id' => $id]);
-            } catch (Exception $e) {
-                $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement.');
+            switch ($_POST['submit']){
+                case 'payout':
+                    try {
+                        $mage->updateEntryToBillingSummary(['increment_id' => $id], ['date_payout' => \Varien_Date::toTimestamp(\Varien_Date::now())]);
+                        $session->getFlashBag()->add('success', 'Payout checké avec succès!');
+                        return $this->redirectToRoute('billingOne', ['id' => $id]);    
+                        break;
+                    } catch (Exception $e) {
+                        $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement du payout.');
+                    }
+                case 'download':
+                    try {
+                        $pdfbilling->printBillingShop($bill);
+                        $path = $this->get('kernel')->getRootDir(). "/../web/docs/billing/";
+                        $pdfbilling->save($path.$id.'.pdf');
+                        $session->getFlashBag()->add('success', 'PDF généré avec succès!');
+                        return $this->redirectToRoute('billingOne', ['id' => $id]);
+                    } catch (Exception $e) {
+                        $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
+                    }
+                    break;
+                case 'send':
+                    try {
+                            $pdfbilling->printBillingShop($bill);
+                            $path = $this->get('kernel')->getRootDir(). "/../web/docs/billing/";
+                            $pdfbilling->save($path.$id.'.pdf');
+                            $session->getFlashBag()->add('success', 'PDF généré avec succès!');
+                            return $this->redirectToRoute('billingOne', ['id' => $id]);
+                        } catch (Exception $e) {
+                            $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
+                        }
+                    break;
             }
         }
 
+        $check_date = (strtotime(str_replace('/', '-', $bill['summary'][0]['billing_month']))<strtotime("2017/01/01"))?1:0;
+
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
             'forms' => [$form_id->createView()],
-            'form2'=> $form_input->createView(),
-            'bill' => $bill
+            'billing_form' => $form_billing->createView(),
+            'form_payout' => $form_download->createView(),
+            'form_download' => $form_download->createView(),
+            'form_send' => $form_download->createView(),
+            'bill' => $bill,
+            'check_date' => $check_date,
         ]);
-        
     }
 
     public function payoutIndexAction(Request $request)

@@ -95,11 +95,11 @@ class Pdfbilling
         $standart_lh = $this->_lineHeight;
         $this->_lineHeight = 20;
 
-        $this->_offset = $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w);
+        $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w);
 
         $this->_currentpage->drawText('Facture n° '.$increment_id, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
         $this->_currentpage->drawText("Date d'émission: ".$created_at, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText("Commerçant {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Commerçant: {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
 
         $this->_offset -= $this->_lineHeight * 7;
 
@@ -113,17 +113,64 @@ class Pdfbilling
 
     private function _printBillingDetailsTemplate($start, $end)
     {
+        $increment_id = $this->_data['increment_id'];
+        $data = $this->_data['summary'][0];
+        $created_at = $data['created_at'];
+        $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data['billing_month']))));
         $id = $start;
         while ($id <= $end) {
-            $this->_page[$id]->drawText("Au Pas De Courses - Facture n° xxx pour {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - $this->_margin_vertical / 1.5);
+            $this->_page[$id]->drawText("Au Pas De Courses - Facture n° {$increment_id} pour {$data['shop']} pour ".$month, $this->_margin_horizontal, $this->_height - $this->_margin_vertical / 1.5);
             $this->_page[$id]->setLineWidth(0.5);
             $this->_page[$id]->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
 
             $this->_page[$id]->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical);
             $this->_page[$id]->setFont($this->_font, 8);
-            $this->_page[$id]->drawText('Généré le: ', $this->_margin_horizontal, $this->_margin_vertical / 2);
+            $this->_page[$id]->drawText('Généré le: '.$created_at, $this->_margin_horizontal, $this->_margin_vertical / 2);
             $id++;
         }
+    }
+
+    private function _printBillingPayout()
+    {
+        $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w,'BOTTOM_CENTER');
+
+        $this->_offset = $this->_height-2*$this->_margin_vertical;
+        $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
+
+        $data=$this->_data["summary"][0];
+        $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data['billing_month']))));
+
+        $this->_currentpage->drawText("Calcul des sommes versées sur le compte de {$data['shop']},", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+         $this->_currentpage->drawText("pour le mois de {$month}.", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+        $this->_offset -= $this->_lineHeight * 2;
+
+        $this->_currentpage->drawText('Somme Ticket:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_ticket'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText('Commission APDC:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['sum_commission'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->setLineWidth(0.5);
+        $this->_offset = $this->_offset - $this->_lineHeight;
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+250, $this->_offset);
+        $this->_currentpage->drawText('Somme due:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_due'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText('Remise commerciale', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['discount_shop'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText('Frais Hipay:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['processing_fees'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
+        $this->_currentpage->setLineWidth(0.5);
+        $this->_offset = $this->_offset - $this->_lineHeight;
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+250, $this->_offset);
+        $this->_currentpage->drawText('Total versé:  ', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_payout'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+        $this->_offset -= $this->_lineHeight * 3;
+
+        $this->_currentpage->drawText('Toutes les sommes sont en euros TTC', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
     }
 
     public function printBillingShop($data)
@@ -145,11 +192,11 @@ class Pdfbilling
             'header_type' => ['string', 'float', 'percent', 'float', 'float'],
             'header' => ['Prestation', 'Prix HT', '%TVA', 'TVA', 'Prix TTC'],
             'rows' => [
-                ['Commission sur les ventes', $data_s['sum_commission_HT'], 1 - $data_s['sum_commission_HT'] / $data_s['sum_commission'], $data_s['sum_commission'] - $data_s['sum_commission_HT'], $data_s['sum_commission']],
-                //['Discount commerçants', $data_s['discount_shop_HT'], 1 - $data_s['discount_shop_HT'] / $data_s['discount_shop'], $data_s['discount_shop'] - $data_s['discount_shop_HT'], $data_s['discount_shop']],
-                //['Frais HiPay', $data_s['processing_fees_HT'], 1 - $data_s['processing_fees_HT'] / $data_s['processing_fees'], $data_s['processing_fees'] - $data_s['processing_fees_HT'], $data_s['processing_fees']],
+                ['Commission sur les ventes', $data_s['sum_commission_HT'], $data_s['sum_commission_TVA_percent'], $data_s['sum_commission_TVA'], $data_s['sum_commission']],
+                ['Discount commerçants', -$data_s['discount_shop_HT'], $data_s['discount_shop_TVA_percent'], -$data_s['discount_shop_TVA'], -$data_s['discount_shop']],
+                ['Frais Bancaires', $data_s['processing_fees_HT'], $data_s['processing_fees_TVA_percent'], $data_s['processing_fees_TVA'], $data_s['processing_fees']],
                 ],
-            'total' => ['TOTAL', 0, '', 0, 0],
+            'total' => ['TOTAL', $data_s['sum_billing_HT'], '', $data_s['sum_billing_TVA'], $data_s['sum_billing']],
         ];
 
         //Create Billing Summary
@@ -160,7 +207,6 @@ class Pdfbilling
 
         $this->_printBillingSummaryHeader();
         $this->_table_column_set = $this->_computeColumnSet($table_s['column_set']);
-        $table_s = $this->_computeTotals($table_s);
         $this->_printTable($table_s);
 
         $this->_offset -= $this->_lineHeight * 4;
@@ -186,11 +232,11 @@ class Pdfbilling
                 'fill_color_header' => '#188071',
                 'line_color_header' => '#188071',
             ],
-            'column_set' => [0.07, 0.07, 0.07, 0.08, 0.11, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06],
-            'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
-            'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Sum_Items', 'Sum_Items_HT', 'Sum_Credit', 'Sum_Credit_HT', 'Sum_Ticket', 'Sum_Ticket_HT', 'Sum_Com', 'Sum_Com_HT', 'Sum_Versement', 'Sum_Versement_HT'],
+            'column_set' => [0.07, 0.075, 0.07, 0.08, 0.13, 0.08, 0.085, 0.055, 0.06, 0.055, 0.06, 0.09, 0.09],
+            'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
+            'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Commande HT', 'Commande TTC', 'Avoir HT', 'Avoir TTC', 'Ticket HT', 'Ticket TTC', 'Commission HT', 'Somme due HT'],
             'rows' => [],
-            'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0],
         ];
 
         foreach ($data_d as $id => $row) {
@@ -209,18 +255,14 @@ class Pdfbilling
         $this->_printTable($table_d);
         $this->_printBillingDetailsTemplate(1, count($this->_page) - 1);
 
-        // create billing details pages
-        $this->_setPortraitTemplate();
+        // create billing payout page
+        $this->_setLandscapeTemplate();
         $this->_currentpage = $this->_page[count($this->_page)] = $this->_pdf->newPage($this->_format);
-        $this->_currentpage->setFont($this->_font, 12);
+        $this->_currentpage->setFont($this->_font, 8);
+        $this->_printBillingDetailsTemplate(count($this->_page)-1, count($this->_page) - 1);
         $this->_offset = $this->_height - 2 * $this->_margin_vertical;
-
-        $this->_currentpage->drawText('Synthèse des sommes versées (TTC)', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText('Somme due: {$data_s["discount_shop"]}', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText('Discount Commerçant: {$data_s["discount_shop"]}', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText('Frais Hipay: {$data_s["processing_fees"]}', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText('Total versé sur le compte du commmerçant:  ', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        //su
+        $this->_printBillingPayout();
+        $this->_pageCount(1);
 
     }
 }

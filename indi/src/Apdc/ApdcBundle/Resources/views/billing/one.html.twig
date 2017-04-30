@@ -5,8 +5,33 @@
 
 <div class="container-fluid">
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<span style="float:right;"><a href="{{ path('billingSummary') }}?date_debut={{ bill.summary[0].billing_month }}">Retour à la liste des commandes du mois</a></span>
+	{% if check_date  %}
+		<div class="alert alert-warning">Attention, pour les mois antérieurs à Janvier 2017, les factures présentées ici diffèrent des factures envoyées aux commerçants (prise en compte de la date de livraison et non plus de la date de commande) - se référer au Google Drive pour les factures correctes.</div>
+	{% endif %}
+	{% if bill.summary[0].date_finalized is null%}
+		{% include 'ApdcApdcBundle::forms/versement.html.twig' %}
+	{% endif %}
+	{% if bill.summary[0].date_finalized != NULL %}
+		<h2>Régler, télécharger et envoyer le PDF</h2>
+		{{ form_start(form_payout) }}
+		{{ form_start(form_download) }}
+		{{ form_start(form_send) }}
+		<div class="btn-group btn-group-lg" role="group" aria-label="">
+			{% if bill.summary[0].date_payout is null%}
+					<button type="submit" name="submit" value='payout' class="btn btn-success btn-lg">Régler</button>
+			{% endif %}
+			{% if bill.summary[0].date_payout != NULL %}
+				<button type="submit" name="submit" value='download' class="btn btn-success btn-lg">Generate PDF</button>
+				<a href="{{ path('download_route', {'filename': bill.summary[0].increment_id ~ '.pdf'}) }}" target="_blank" class="btn btn-lg">Lien vers PDF</a>
+				<button type="submit" name="submit" value='send' class="btn btn-success btn-lg">Envoyer PDF</button>
+			{% endif %}
+		</div>
+		{{ form_end(form_send) }}
+		{{ form_end(form_download) }}
+		{{ form_end(form_payout) }}
+	{% endif %}
 	<h2> Synthèse de la facture commerçant</h2></br>
-	{{ form_start(form2) }}
 	<div id="billing-summary" class="order">
 		<table id="billSummary" class="table table-striped">
 			<thead>
@@ -15,15 +40,14 @@
 					<th>Magasins</th>
 					<th colspan="2">Valeur Ticket</th>
 					<th colspan="2">Commission APDC</th>
-					<th colspan="2">Total Commercant</th>
-					<th colspan="2">Discount Commercant</th>
+					<th colspan="2">Somme due</th>
+					<th colspan="2">Remise commerciale</th>
 					<th colspan="2">Frais bancaires</th>
-					<th colspan="2">Versement Commercant</th>
+					<th colspan="2">Somme versée</th>
 				</tr>
 				<tr>
 					<th></th>
 					<th class="sort"></th>
-					<th class="float">TTC</th>
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
 					<th class="float">HT</th>
@@ -34,7 +58,7 @@
 					<th class="float">TTC</th>
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
-					<th class="float">HT</th>
+					<th class="float">TTC</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,18 +66,17 @@
 					<tr>
 						<td>{{ summary.increment_id }}</td>
 						<td>{{ summary.shop }}</td>
-						<td>{{ summary.sum_ticket }}</td>
 						<td>{{ summary.sum_ticket_HT }}</td>
-						<td>{{ summary.sum_commission }}</td>
+						<td>{{ summary.sum_ticket }}</td>
 						<td>{{ summary.sum_commission_HT }}</td>
-						<td>{{ summary.sum_due }}</td>
+						<td>{{ summary.sum_commission }}</td>
 						<td>{{ summary.sum_due_HT }}</td>
+						<td>{{ summary.sum_due }}</td>
 						<td>{{ summary.discount_shop_HT }}</td>
-						<td>{{ summary.discount_shop_TTC }}</td>
+						<td>{{ summary.discount_shop }}</td>
 						<td>{{ summary.processing_fees_HT }}</td>
-						<td>{{ summary.processing_fees_TTC }}</td>
-						<td>{{ summary.sum_payout_HT }}</td>
-						<td>{{ summary.sum_payout_TTC }}</td>
+						<td>{{ summary.processing_fees }}</td>
+						<td>{{ summary.sum_payout }}</td>
 					</tr>
 					{% endfor %}
 			</tbody>
@@ -71,9 +94,9 @@
 				<th>Commercant</th>
 				<th colspan="2">Commande Client</th>
 				<th colspan="2">Avoir</th>
-				<th colspan="2">Valeur Ticket</th>
-				<th colspan="2">Commission APDC</th>
-				<th colspan="2">Total Commercant</th>
+				<th colspan="2">Ticket</th>
+				<th>Commission APDC</th>
+				<th>Somme due</th>
 			</tr>
 			<tr>
 				<th>Création</th>
@@ -82,15 +105,13 @@
 				<th></th>
 				<th></th>
 				<th class="sort"></th>
-				<th class="float">TTC</th>
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
-				<th class="float">TTC</th>
+				<th class="float">TTC</th>				
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
-				<th class="float">TTC</th>
 				<th class="float">HT</th>
 			</tr>
 		</thead>
@@ -103,15 +124,13 @@
 					<td>{{ detail.id_billing }}</td>
 					<td>{{ detail.customer_name }}</td>
 					<td>{{ detail.shop }}</td>
-					<td>{{ detail.sum_items }}</td>
 					<td>{{ detail.sum_items_HT }}</td>
-					<td>{{ detail.sum_items_credit }}</td>
+					<td>{{ detail.sum_items }}</td>
 					<td>{{ detail.sum_items_credit_HT }}</td>
-					<td>{{ detail.sum_ticket }}</td>
+					<td>{{ detail.sum_items_credit }}</td>
 					<td>{{ detail.sum_ticket_HT }}</td>
-					<td>{{ detail.sum_commission }}</td>
+					<td>{{ detail.sum_ticket }}</td>
 					<td>{{ detail.sum_commission_HT }}</td>
-					<td>{{ detail.sum_due }}</td>
 					<td>{{ detail.sum_due_HT }}</td>
 				</tr>
 			{% endfor %}
@@ -128,16 +147,10 @@
 				<th></th>
 				<th></th>
 				<th></th>
-				<th></th>
-				<th></th>
 			</tr>
 		</tfoot>
 	</table>
 	</div>
-	<div class="row">
-		<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Générer PDF</button>
-	</div>
-		{{ form_end(form2) }}
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
