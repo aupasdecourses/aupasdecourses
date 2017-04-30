@@ -344,18 +344,22 @@ class Billing
                             $sum_items_credit = $sum_items_credit_HT = $sum_items_credit_TVA = 0;
                         }
                         if ($order->hasInvoices()) {
-                            $sum_commission = round($sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                            //$sum_commission = round($sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
                             $sum_commission_HT = round($sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_commission_TVA = round($sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                            //$sum_commission_TVA = round($sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
                         } else {
-                            $sum_commission = $sum_commission_HT = $sum_commission_TVA = 0;
+                            //$sum_commission = 0;
+                            $sum_commission_HT = 0;
+                            //$sum_commission_TVA = 0;
                         }
                         if ($order->hasInvoices()) {
-                            $sum_versement = round($sum_items_invoice - $sum_items_credit - $sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_versement_HT = round($sum_items_invoice_HT - $sum_items_credit_HT - $sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_versement_TVA = round($sum_items_invoice - $sum_items_invoice_HT - ($sum_items_credit - $sum_items_credit_HT) - $sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                            //$sum_due = round($sum_items_invoice - $sum_items_credit - $sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                            $sum_due_HT = round($sum_items_invoice_HT - $sum_items_credit_HT - $sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                            //$sum_due_TVA = round($sum_items_invoice - $sum_items_invoice_HT - ($sum_items_credit - $sum_items_credit_HT) - $sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
                         } else {
-                            $sum_versement = $sum_versement_HT = $sum_versement_TVA = 0;
+                            //$sum_due = 0;
+                            $sum_due_HT = 0;
+                            //$sum_due_TVA = 0;
                         }
                         if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
                             $creditcom = $credit_comments[$com['name']];
@@ -372,16 +376,16 @@ class Billing
                             'shop_id' => intval($com['shop_id']),
                             'shop' => $com['name'],
                             'id_billing' =>'',
-                            'sum_items' => $sum_items,
                             'sum_items_HT' => $sum_items_HT,
-                            'sum_items_credit' => $sum_items_credit,
+                            'sum_items' => $sum_items,
                             'sum_items_credit_HT' => $sum_items_credit_HT,
-                            'sum_ticket' => $sum_items - $sum_items_credit,
+                            'sum_items_credit' => $sum_items_credit,
                             'sum_ticket_HT' => $sum_items_HT - $sum_items_credit_HT,
-                            'sum_commission' => $sum_commission,
+                            'sum_ticket' => $sum_items - $sum_items_credit,
                             'sum_commission_HT' => $sum_commission_HT,
-                            'sum_versement' => $sum_versement,
-                            'sum_versement_HT' => $sum_versement_HT,
+                            //'sum_commission' => $sum_commission,
+                            'sum_due_HT' => $sum_due_HT,
+                            //'sum_due' => $sum_due,
                         ]);
                     }
                 }
@@ -393,16 +397,16 @@ class Billing
         if ($type != 'details') {
             $data_summary = array();
             $data_summary_key = array(
-                'sum_items',
                 'sum_items_HT',
-                'sum_items_credit',
+                'sum_items',
                 'sum_items_credit_HT',
-                'sum_ticket',
+                'sum_items_credit',
                 'sum_ticket_HT',
-                'sum_commission',
+                'sum_ticket',
                 'sum_commission_HT',
-                'sum_versement',
-                'sum_versement_HT',
+                'sum_commission',
+                'sum_due_HT',
+                'sum_due',
                 );
 
             foreach ($list_commercant as $id => $com) {
@@ -558,17 +562,17 @@ class Billing
             //get data_facturation total
             $data_facturation = $this->data_facturation($debut, $fin, 'details');
             $result_data_facturation = [
-                'sum_items' => 0,
                 'sum_items_HT' => 0,
-                'sum_items_credit' => 0,
+                'sum_items' => 0,
                 'sum_items_credit_HT' => 0,
+                'sum_items_credit' => 0,
                 'remboursements' => 0,
-                'sum_ticket' => 0,
                 'sum_ticket_HT' => 0,
-                'sum_commission' => 0,
+                'sum_ticket' => 0,
                 'sum_commission_HT' => 0,
-                'sum_versement' => 0,
-                'sum_versement_HT' => 0,
+                //'sum_commission' => 0,
+                'sum_due_HT' => 0,
+                //'sum_due' => 0,
             ];
             foreach ($data_facturation as $row) {
                 foreach ($result_data_facturation as $key => $value) {
