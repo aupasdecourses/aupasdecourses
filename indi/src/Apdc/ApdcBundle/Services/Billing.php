@@ -694,10 +694,10 @@ class Billing
 
         //Get Form inputs
         $result['discount_shop_HT'] = $data['discount_shop_HT'];
-        $result['discount_shop_TVA_percent'] = $data['discount_shop_TVA_percent'];
+        $result['discount_shop_TVA_percent'] = $data['discount_shop_TVA_percent'] / 100;
         $result['comments_discount_shop'] = $data['comments_discount_shop'];
         $result['processing_fees_HT'] = $data['processing_fees_HT'];
-        $result['processing_fees_TVA_percent'] = $data['processing_fees_TVA_percent'];
+        $result['processing_fees_TVA_percent'] = $data['processing_fees_TVA_percent'] / 100;
 
         //Calcul du taux de TVA et TTC pour commission totale
         $result['sum_commission_TVA_percent'] = 0.2;
@@ -724,9 +724,35 @@ class Billing
         $result['sum_payout'] = $result['sum_due'] + $result['discount_shop'] - $result['processing_fees'];
 
         //current time
-        $result['date_finalized']= \Varien_Date::toTimestamp(\Varien_Date::now());
+        $result['date_finalized'] = \Varien_Date::toTimestamp(\Varien_Date::now());
 
         return $result;
     }
 
+    public function sendBilling($bill, $filepath)
+    {
+        $bill = $bill['summary'][0];
+        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        //$shops->addFieldtoSelect('id_shop', 'id_commercant', 'enabled', 'name');
+        $shops->getSelect()->join('apdc_commercant', 'main_table.id_commercant=apdc_commercant.id_commercant', array('commercant_name' => 'apdc_commercant.name', 'id_contact_ceo', 'id_contact_billing'));
+        $shops->getSelect()->join(array('contact_ceo' => 'apdc_commercant_contact'), 'apdc_commercant.id_contact_ceo=contact_ceo.id_contact', array('ceo_lastname' => 'contact_ceo.lastname', 'ceo_firstname' => 'contact_ceo.firstname', 'ceo_email' => 'contact_ceo.email'));
+        $shops->getSelect()->join(array('contact_billing' => 'apdc_commercant_contact'), 'apdc_commercant.id_contact_billing=contact_billing.id_contact', array('billing_lastname' => 'contact_billing.lastname', 'billing_firstname' => 'contact_billing.firstname', 'billing_email' => 'contact_billing.email'));
+        $data = $shops->addFieldToFilter('id_shop', $bill['shop_id'])->getFirstItem()->getData();
+        $monthnumeric = str_replace('/', '-', $bill['billing_month']);
+        $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $bill['billing_month']))));
+ 
+        $result['mails'][0] = $data['ceo_email'];
+        if ($data['ceo_email'] != $data['billing_email']) {
+            $result['mails'][1] = $data['billing_email'];
+        }
+        $result['subject'] = 'Au Pas De Courses - Facture et détails de '.$month;
+        $result['mail_template'] = 'billing_shop_mail';
+        $result['mail_vars'] = ['commercant' => $data['name'], 'month' => $month];
+        $result['attachment'] = array('path' => $filepath, 'name' => 'Facture_'.$bill['increment_id'].$month_numeric.'.pdf');
+
+        $model_summary = \Mage::getModel('pmainguet_delivery/indi_billingsummary')->getCollection();
+        $data_summary = $model_summary->addFieldtoFilter('increment_id', $bill['increment_id'])->toArray();
+        $result['date_sent']= \Varien_Date::toTimestamp(\Varien_Date::now());
+        return $result;
+    }
 }

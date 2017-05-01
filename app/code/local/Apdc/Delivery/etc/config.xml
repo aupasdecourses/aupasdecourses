@@ -93,6 +93,11 @@
                     <file>notification/new_note.html</file>
                     <type>html</type>
                 </notification_new_note>
+                <billing_shop_mail translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses - Facture mensuelle</label>
+                    <file>delivery/billing/billing_shop.html</file>
+                    <type>html</type>
+                </billing_shop_mail>
             </email>
         </template>
 	</global>

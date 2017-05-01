@@ -17,12 +17,13 @@
 			<tr>
 				<th># Facture</th>
 				<th>Magasins</th>
-				<th colspan="2">Valeur Ticket</th>
-				<th colspan="2">Commission APDC</th>
+				<th>Commande</th>
+				<th colspan="2">Ticket</th>
+				<th colspan="2">Commission</th>
 				<th colspan="2">Total Commercant</th>
-				<th colspan="2">Discount Commercant</th>
+				<th colspan="2">Remise</th>
 				<th colspan="2">Frais bancaires</th>
-				<th>Versement Commercant</th>
+				<th>Virement</th>
 				<th>Lien</th>
 				<th>Finalisé</th>
 				<th>Réglé</th>
@@ -31,6 +32,7 @@
 			<tr>
 				<th></th>
 				<th class="sort"></th>
+				<th class="float">TTC</th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
@@ -53,6 +55,7 @@
 				<tr>
 					<td>{{ order.increment_id }}</td>
 					<td>{{ order.shop }}</td>
+					<td>{{ order.sum_items }}</td>
 					<td>{{ order.sum_ticket }}</td>
 					<td>{{ order.sum_ticket_HT }}</td>
 					<td>{{ order.sum_commission }}</td>
@@ -91,7 +94,13 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th colspan="5">Total</th>
+				<th colspan="2">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>

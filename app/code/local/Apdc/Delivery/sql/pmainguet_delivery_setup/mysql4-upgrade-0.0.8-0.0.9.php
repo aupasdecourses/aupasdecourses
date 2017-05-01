@@ -116,7 +116,7 @@ if (!$installer->tableExists($tableName)) {
           'nullable' => false,
           'default' => '0.0000',
           ), 'Sum commission HT')
-          ->addColumn('sum_commission_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,2', array(
+          ->addColumn('sum_commission_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '7,4', array(
           'nullable' => false,
           'default' => '0.0000',
           ), 'TVA commission %')
@@ -140,7 +140,7 @@ if (!$installer->tableExists($tableName)) {
           'nullable' => false,
           'default' => '0.0000',
           ), 'Discount Shop HT')
-         ->addColumn('discount_shop_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,2', array(
+         ->addColumn('discount_shop_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '7,4', array(
           'nullable' => false,
           'default' => '0.0000',
           ), 'TVA discount shop %')
@@ -160,7 +160,7 @@ if (!$installer->tableExists($tableName)) {
           'nullable' => false,
           'default' => '0.0000',
           ), 'Processing Fees HT')
-         ->addColumn('processing_fees_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '12,2', array(
+         ->addColumn('processing_fees_TVA_percent', Varien_Db_Ddl_Table::TYPE_DECIMAL, '7,4', array(
           'nullable' => false,
           'default' => '0.0000',
           ), 'TVA processing_fees %')

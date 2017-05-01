@@ -23,12 +23,12 @@ class BillingForm extends AbstractType
         ]);
 
         $builder->add('discount_shop_TVA_percent', PercentType::class, [
-                    'scale' => 1,
+                    'scale' => 2,
                     'label_attr' => ['class' => 'sr-only'],
-                    'attr' => ['placeholder' => '% TVA', 'style' => 'margin-left:10px;width:100px;'],
+                    'attr' => ['placeholder' => '% TVA', 'style' => 'margin-left:10px;width:100px;','readonly' => true],
                     'type' => 'fractional',
                     'data' => 0.2,
-                    'disabled' => true,
+                    //'disabled' => true,
         ]);
 
         $builder->add('comments_discount_shop', TextType::class, [
@@ -40,19 +40,19 @@ class BillingForm extends AbstractType
         $builder->add('processing_fees_HT', MoneyType::class, [
                     'label' => 'Frais bancaires',
                     'label_attr' => ['style' => 'margin-left: 20px;margin-right:10px'],
-                    'attr' => ['placeholder' => 'Valeur HT','style'=>'width:100px;'],
+                    'attr' => ['placeholder' => 'Valeur HT','style'=>'width:100px;','readonly' => true],
                     'divisor' => 100,
                     'data' => 5,
-                    'disabled' => true,
+                    //'disabled' => true,
         ]);
 
         $builder->add('processing_fees_TVA_percent', PercentType::class, [
-                    'scale' => 1,
+                    'scale' => 2,
                     'label_attr' => ['class' => 'sr-only'],
-                    'attr' => ['placeholder' => '%TVA','style' => 'margin-left:10px;width:100px;'],
+                    'attr' => ['placeholder' => '%TVA','style' => 'margin-left:10px;width:100px;', 'readonly' => true],
                     'type' => 'fractional',
                     'data' => 0,
-                    'disabled' => true,
+                    //'disabled' => true,
         ]);
         $builder->add('Finaliser Facture', SubmitType::class, [
         			'attr' => ['class'=>'btn btn-success btn-lg right', 'style'=>'margin-left:10px;'],

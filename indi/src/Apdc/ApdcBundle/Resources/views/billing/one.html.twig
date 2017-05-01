@@ -4,8 +4,7 @@
 {% block body %}
 
 <div class="container-fluid">
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
-	<span style="float:right;"><a href="{{ path('billingSummary') }}?date_debut={{ bill.summary[0].billing_month }}">Retour à la liste des commandes du mois</a></span>
+	<div><a class="btn btn-link btn-lg" href="{{ path('billingSummary') }}?date_debut={{ bill.summary[0].billing_month }}">Retour à la liste des commandes du mois</a></div>
 	{% if check_date  %}
 		<div class="alert alert-warning">Attention, pour les mois antérieurs à Janvier 2017, les factures présentées ici diffèrent des factures envoyées aux commerçants (prise en compte de la date de livraison et non plus de la date de commande) - se référer au Google Drive pour les factures correctes.</div>
 	{% endif %}
@@ -19,13 +18,13 @@
 		{{ form_start(form_send) }}
 		<div class="btn-group btn-group-lg" role="group" aria-label="">
 			{% if bill.summary[0].date_payout is null%}
-					<button type="submit" name="submit" value='payout' class="btn btn-success btn-lg">Régler</button>
+				<button type="submit" name="submit" value='payout' class="btn btn-danger btn-lg">Régler</button>
 			{% endif %}
-			{% if bill.summary[0].date_payout != NULL %}
-				<button type="submit" name="submit" value='download' class="btn btn-success btn-lg">Generate PDF</button>
-				<a href="{{ path('download_route', {'filename': bill.summary[0].increment_id ~ '.pdf'}) }}" target="_blank" class="btn btn-lg">Lien vers PDF</a>
-				<button type="submit" name="submit" value='send' class="btn btn-success btn-lg">Envoyer PDF</button>
+			<button type="submit" name="submit" value='download' class="btn btn-success btn-lg">Generate PDF</button>
+			{% if check_file %}
+				<a href="{{ path('download_route', {'filename': bill.summary[0].increment_id ~ '.pdf'}) }}" target="_blank" class="btn btn-info btn-lg">Lien vers PDF</a>
 			{% endif %}
+			<button type="submit" name="submit" value='send' class="btn btn-success btn-lg">Envoyer PDF</button>
 		</div>
 		{{ form_end(form_send) }}
 		{{ form_end(form_download) }}

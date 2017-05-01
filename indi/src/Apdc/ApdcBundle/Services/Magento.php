@@ -345,7 +345,6 @@ class Magento
         foreach ($updatedFields as $k => $v) {
             $model->setData($k, $v);
         }
-        dump($model);
         $model->save();
     }
 

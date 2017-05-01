@@ -143,40 +143,71 @@ trait Pdf
         $this->_pdf->save($filename);
     }
 
-    public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com'])
+    // public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com'])
+    // {
+    //     if (!$this->_finalized) {
+    //         $this->_finalizePdf();
+    //     }
+    //     $pdf = $this->_pdf->render();
+    //     $tr = new \Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
+    //     $mail = new \Zend_Mail('utf-8');
+    //     $tmp = [];
+    //     foreach ($this->_mails as $m) {
+    //         if ($m != '' && $m != '') {
+    //             $tmp[] = $m;
+    //         }
+    //     }
+    //     //test $tmp="pierre@aupasdecourses.com";
+    //     $mail->addTo($tmp);
+    //     $mail->addCc(\Mage::getStoreConfig('trans_email/ident_general/email'));
+    //     $mail->setFrom(\Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
+    //     $mail->setSubject("Au Pas De Courses {$this->_orders_count} commandes le {$this->_date}");
+    //     $mail->setBodyHtml(
+    //         \Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
+    //         ->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])
+    //     );
+    //     $attach = new \Zend_Mime_Part($pdf);
+    //     $attach->type = 'application/pdf';
+    //     $attach->disposition = \Zend_Mime::DISPOSITION_ATTACHMENT;
+    //     $attach->encoding = \Zend_Mime::ENCODING_BASE64;
+    //     $attach->filename = "{$this->_name}_{$this->_date}.pdf";
+    //     $mail->addAttachment($attach);
+    //     try {
+    //         $mail->send($tr);
+    //     } catch (Exception $e) {
+    //         \Mage::log($e, null, 'send_daily_order.log');
+    //     }
+    // }
+
+    public function send($data)
     {
-        if (!$this->_finalized) {
-            $this->_finalizePdf();
-        }
-        $pdf = $this->_pdf->render();
-        $tr = new \Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
-        $mail = new \Zend_Mail('utf-8');
-        $tmp = [];
-        foreach ($this->_mails as $m) {
-            if ($m != '' && $m != '') {
-                $tmp[] = $m;
-            }
-        }
-        //test $tmp="pierre@aupasdecourses.com";
-        $mail->addTo($tmp);
-        $mail->addCc(\Mage::getStoreConfig('trans_email/ident_general/email'));
-        $mail->setFrom(\Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
-        $mail->setSubject("Au Pas De Courses {$this->_orders_count} commandes le {$this->_date}");
-        $mail->setBodyHtml(
-            \Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
-            ->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])
-        );
-        $attach = new \Zend_Mime_Part($pdf);
-        $attach->type = 'application/pdf';
-        $attach->disposition = \Zend_Mime::DISPOSITION_ATTACHMENT;
-        $attach->encoding = \Zend_Mime::ENCODING_BASE64;
-        $attach->filename = "{$this->_name}_{$this->_date}.pdf";
-        $mail->addAttachment($attach);
+        $templateId = $data['mail_template'];
+        $sender = [
+            'name' => "L'équipe d'Au Pas De Courses",
+            'email' => \Mage::getStoreConfig('trans_email/ident_general/email')
+        ];
+
+        $nameTo = 'truc';
+        $emailTo = $data['mails'];
+        $vars = $data['mail_vars'];
+
+        $transactionalEmail = \Mage::getSingleton('core/email_template');
+        $transactionalEmail->getMail()->createAttachment(
+             file_get_contents($data['attachment']['path']),
+             'application/pdf',
+             \Zend_Mime::DISPOSITION_ATTACHMENT,
+             \Zend_Mime::ENCODING_BASE64,
+             basename($data['attachment']['name'])
+         );
+        $transactionalEmail->addBcc(\Mage::getStoreConfig('trans_email/ident_general/email'));
+       
         try {
-            $mail->send($tr);
+            $transactionalEmail->sendTransactional($templateId, $sender, $emailTo, $nameTo, $vars);
         } catch (Exception $e) {
-            \Mage::log($e, null, 'send_daily_order.log');
+            \Mage::log($e, null, 'send_billing.log');
         }
+
+        return $transactionalEmail->getSentSuccess();
     }
 
     // TABLE GENERAL FUNCTIONS
