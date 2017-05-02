@@ -150,6 +150,43 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         }
     }
 	
+	public function deleteProductInCheckcartAction() {
+		if ($this->_expireAjax()) {
+			return;
+		}
+		if ($this->getRequest()->isPost()) {
+			$entityId = $this->getRequest()->getPost("entity_id", "");
+			$result = $this->getOnepage()->cleanQuote(array($entityId));
+			$this->getOnepage()->getQuote()->collectTotals()->save();
+			
+			$result["goto_section"] = "checkcart";
+			$result["update_section"] = array(
+				"name" => "checkcart",
+				"html" => $this->_getCheckcartHtml()
+			);
+			$this->getResponse()->setBody(Zend_Json::encode($result));
+		}
+	}
+	
+	public function saveCommentInCheckcartAction() {
+		if ($this->_expireAjax()) {
+			return;
+		}
+		if ($this->getRequest()->isPost()) {
+			$entityId = $this->getRequest()->getPost("entity_id", "");
+			$comment = $this->getRequest()->getPost("comment", "");
+			$result = $this->getOnepage()->saveComment($entityId, $comment);
+			$this->getOnepage()->getQuote()->collectTotals()->save();
+			
+			$result["goto_section"] = "checkcart";
+			$result["update_section"] = array(
+				"name" => "checkcart",
+				"html" => $this->_getCheckcartHtml()
+			);
+			$this->getResponse()->setBody(Zend_Json::encode($result));
+		}
+	}
+	
 	public function saveCheckcartAction() {
 		if ($this->_expireAjax()) {
 			return;

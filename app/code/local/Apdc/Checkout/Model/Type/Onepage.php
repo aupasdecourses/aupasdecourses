@@ -70,4 +70,12 @@ class Apdc_Checkout_Model_Type_Onepage extends MW_Ddate_Model_Type_Onepage
 		}
 		return array();
 	}
+	
+	public function saveComment($item, $comment) {
+		$comment = htmlentities($comment, ENT_QUOTES, 'UTF-8');
+		$item = $this->getQuote()->getItemById($item);
+		$item->setItemComment($comment)->save();
+		$this->getQuote()->save();
+		return array();
+	}
 }

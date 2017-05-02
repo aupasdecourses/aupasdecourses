@@ -54,5 +54,44 @@
         saveMethod: '<?php echo $this->getUrl('checkout/onepage/saveMethod') ?>',
         failure: '<?php echo $this->getUrl('checkout/cart') ?>'}
     );
+	
+	var ajaxUrlDeleteProductInCheckcart = '<?php echo $this->getUrl('checkout/onepage/deleteProductInCheckcart') ?>';
+	var ajaxUrlSaveCommentInCheckcart = '<?php echo $this->getUrl('checkout/onepage/saveCommentInCheckcart') ?>';
+	
+	function deleteProductInCheckcart(event, entity_id) {
+		event = event || window.event;
+		event.preventDefault();
+		jQuery.ajax({
+			url: ajaxUrlDeleteProductInCheckcart,
+			data: {entity_id : entity_id},
+			dataType: 'json',
+			type: 'POST'
+		})
+		.done(function(response) {
+			checkcartContent = response.update_section.html; 
+			jQuery('#checkout-step-checkcart').html(checkcartContent);
+		})
+		.fail(function() {
+			console.log('failed');
+		});
+	}
+	
+	function saveCommentInCheckcart(event, entity_id) {
+		event = event || window.event;
+		event.preventDefault();
+		jQuery.ajax({
+			url: ajaxUrlSaveCommentInCheckcart,
+			data: {entity_id : entity_id, comment : jQuery('#comment-'+entity_id).val()},
+			dataType: 'json',
+			type: 'POST'
+		})
+		.done(function(response) {
+			checkcartContent = response.update_section.html; 
+			jQuery('#checkout-step-checkcart').html(checkcartContent);
+		})
+		.fail(function() {
+			console.log('failed');
+		});
+	}
 //]]>
 </script>
