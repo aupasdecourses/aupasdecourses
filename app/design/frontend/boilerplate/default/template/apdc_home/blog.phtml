@@ -1,0 +1,21 @@
+<?php
+	$articles = $this->getArticlesBlog();
+?>
+<div class="block-blog">
+	<h2>Le blog - Avec ceci ?</h2>
+	<?php foreach($articles as $article) { ?>
+		<article class="row">
+			<div class="col-md-3 text-center">
+				<div class="crop-img">
+					<img src="<?php echo $article['img']; ?>" alt="<?php echo $article['title']; ?>" title="<?php echo $article['title']; ?>" />
+				</div>
+			</div>
+			<div class="col-md-9 text-left">
+				<h3>
+					<a href="<?php echo $article['link']; ?>" title="<?php echo $article['title']; ?>" target="_blank"><?php echo $article['title']; ?></a>
+				</h3>
+				<p><?php echo $article['description']; ?></p>
+			</div>
+		</article>
+	<?php } ?>
+</div>

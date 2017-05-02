@@ -1,0 +1,17 @@
+<?php
+	$orders = $this->getLastOrdersByCustomer();
+?>
+<div class="block-lastorder">
+	<h2>Mes dernières commandes</h2>
+	<?php foreach($orders as $order) { ?>
+		<?php
+			$date = new Zend_Date(Mage::getModel('core/date')->timestamp(strtotime($order->getCreatedAt()), false, Mage::app()->getLocale()->getLocaleCode()));
+		?>
+		<article class="row">
+			<p>Ma commande du <?php echo $date->toString("d MMMM YYYY"); ?></p>
+			<p><?php echo Mage::helper('core')->currency($order->getGrandTotal(), true, false); ?></p>
+			<a href="<?php echo Mage::getUrl('sales/order/view', array('order_id' => $order->getId())); ?>">Voir la commande</a>
+			<a href="<?php echo Mage::getUrl('sales/order/reorder', array('order_id' => $order->getId())); ?>">Recommander</a>
+		</article>
+	<?php } ?>
+</div>
