@@ -589,7 +589,7 @@ section {
     }
 }
 
-.block-sponsor{
+.block-sponsor, .block-lastorder{
     display: inline-block;
     vertical-align: top;
     background-color: #fff;
@@ -619,6 +619,40 @@ section {
         height: auto;
     }
 }
+.block-lastorder{
+    background: none;
+    border: 0;
+    max-width: 600px;
+    text-align: left;
+    h3{
+        font-size: 1rem;
+        font-weight: normal;
+        color: $color-second-green;
+        text-transform: none;
+        text-align: left;
+        strong{
+            font-size: 1.125rem;
+            font-weight: 700;
+            display: block;
+        }
+    }
+    p{
+        margin-bottom: 0;
+    }
+    .link{
+        display: block;
+        color: $color-main-green;
+        text-decoration: underline;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+    .button{
+        font-weight: normal;
+        font-size: 0.875rem;
+        padding: 10px 20px;
+    }
+}
+
 .block-blog{
     display: inline-block;
     vertical-align: top;

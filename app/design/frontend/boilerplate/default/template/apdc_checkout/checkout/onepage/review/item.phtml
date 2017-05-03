@@ -59,30 +59,26 @@ if(isset($_SESSION['ddate'])){
 					<a href="#" class="tooltip-options" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
 						<dt><?php echo $this->__('Commentaires')?></dt>
 						<dd><?php echo $_item->getItemComment(); ?></dd>
+						<?php if ($_options = $this->getOptionList()):
+                            foreach ($_options as $_option) : ?>
+                                <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+                                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class='truncated'<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+                                    <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                    <div class='truncated_full_value'>
+                                        <dl class='item-options'>
+                                            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+                                            <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                                        </dl>
+                                    </div>
+                                    <?php endif; ?>
+                                </dd>
+                            <?php endforeach;
+                        endif;?>
 					"><i class="fa fa-info-circle"></i></a>
 				</dl>
 			<?php endif; ?>
 		</div>
-        <?php if ($_options = $this->getOptionList()):?>
-        <dl class="item-options">
-            <a href="#" class="tooltip-options" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                <?php foreach ($_options as $_option) : ?>
-                <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
-                    <?php if (isset($_formatedOptionValue['full_view'])): ?>
-                    <div class="truncated_full_value">
-                        <dl class="item-options">
-                            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                            <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
-                        </dl>
-                    </div>
-                    <?php endif; ?>
-                </dd>
-                <?php endforeach; ?>
-            "><i class="fa fa-info-circle"></i></a>
-        </dl>
-        <?php endif;?>
         <?php if ($addtInfoBlock = $this->getProductAdditionalInformationBlock()):?>
             <?php echo $addtInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>

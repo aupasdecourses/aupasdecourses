@@ -11425,6 +11425,13 @@ a:hover {
   width: 100%;
 }
 
+.button:active,
+.button:focus,
+.button:visited {
+  text-decoration: none;
+  color: #fff;
+}
+
 .button.button-green {
   background-color: #3ab64b;
 }
@@ -11705,7 +11712,7 @@ header .top-nav li a a:visited {
   top: 40px;
   display: none;
   width: 250px;
-  margin-left: -80px;
+  margin-left: -150px;
   padding: 20px;
   text-align: left;
   border-radius: 5px;
@@ -12153,12 +12160,13 @@ header .top-nav li a a:visited {
 *::-ms-backdrop, .header-minicart #header-cart.skip-active .block-subtitle, #header-cart.skip-active .mini-cart-bottom {
     transform:translateX(-360px);
 }
-.header-minicart #header-cart .mini-commercant-name.closed + .commercant-product-list {
-    max-height:0px;
-}
 *::-ms-backdrop, .header-minicart #header-cart .commercant-product-list .item-cell.item-actions {
     text-align:left;
 }*/
+.header-minicart #header-cart .mini-commercant-name.closed + .commercant-product-list {
+  max-height: 0;
+}
+
 .header-minicart #header-cart .commercant-product-list .item-details .item-options {
   margin: 0;
 }
@@ -12955,7 +12963,8 @@ section .section-description {
   margin-right: 40px;
 }
 
-.block-sponsor {
+.block-sponsor,
+.block-lastorder {
   display: inline-block;
   max-width: 550px;
   margin: 30px 20px;
@@ -12966,7 +12975,8 @@ section .section-description {
   background-color: #fff;
 }
 
-.block-sponsor h2 {
+.block-sponsor h2,
+.block-lastorder h2 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 30px;
@@ -12975,7 +12985,8 @@ section .section-description {
   color: #ff7d73;
 }
 
-.block-sponsor p {
+.block-sponsor p,
+.block-lastorder p {
   font-size: 1.5rem;
   font-weight: 200;
   line-height: 1.4em;
@@ -12983,10 +12994,50 @@ section .section-description {
   color: #999;
 }
 
-.block-sponsor img {
+.block-sponsor img,
+.block-lastorder img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.block-lastorder {
+  max-width: 600px;
+  text-align: left;
+  border: 0;
+  background: none;
+}
+
+.block-lastorder h3 {
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: left;
+  text-transform: none;
+  color: #1e555a;
+}
+
+.block-lastorder h3 strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+  display: block;
+}
+
+.block-lastorder p {
+  margin-bottom: 0;
+}
+
+.block-lastorder .link {
+  font-size: .75rem;
+  font-weight: 700;
+  display: block;
+  text-decoration: underline;
+  color: #3ab64b;
+}
+
+.block-lastorder .button {
+  font-size: .875rem;
+  font-weight: normal;
+  padding: 10px 20px;
 }
 
 .block-blog {
@@ -13175,6 +13226,11 @@ footer .social-list .btn-social-icon {
   width: 100%;
 }
 
+.checkout-onepage-index .skip-links .link-header-right {
+  float: right;
+  min-width: 185px;
+}
+
 #checkoutSteps {
   padding: 0;
 }
@@ -13190,6 +13246,7 @@ footer .social-list .btn-social-icon {
 #checkoutSteps .section h2 {
   font-size: 2.25rem;
   margin-top: 30px;
+  margin-bottom: 40px;
   letter-spacing: normal;
   text-transform: none;
   color: #3ab64b;
@@ -13329,6 +13386,14 @@ footer .social-list .btn-social-icon {
   display: inline-block;
   margin: 9px 25px 0;
   vertical-align: top;
+}
+
+.block-progress dl > div:first-of-type {
+  margin-left: 0;
+}
+
+.block-progress dl > div:last-of-type {
+  margin-right: 0;
 }
 
 .block-progress dl > div#billing-progress-opcheckout dt:before {
@@ -13704,6 +13769,10 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+#checkout-review-table td.availibility .fa-close {
+  color: #f30;
+}
+
 #checkout-review-table td.comments {
   min-width: 200px;
 }
@@ -13764,6 +13833,7 @@ footer .social-list .btn-social-icon {
 
 #discount-coupon-form input {
   font-size: .875rem;
+  height: 45px;
   padding: 10px 30px 10px 10px;
   color: #999;
   border: 1px solid #eee;
@@ -13773,6 +13843,7 @@ footer .social-list .btn-social-icon {
 }
 
 #discount-coupon-form .button {
+  width: 100%;
   margin: 0;
 }
 
@@ -13856,7 +13927,7 @@ footer .social-list .btn-social-icon {
 
 #checkout-step-payment .input-box .v-fix #adyen_cc_expiration,
 #checkout-step-payment .input-box .v-fix #adyen_cc_expiration_yr {
-  max-width: 120px;
+  max-width: 110px;
 }
 
 #checkout-step-payment .input-box .v-fix span {
@@ -14014,6 +14085,53 @@ footer .social-list .btn-social-icon {
   #supermenu .nav > li {
     width: auto;
   }
+
+  #checkout-shipping-method-load dl > div {
+    float: none;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  #checkout-review-table th {
+    min-width: 0;
+  }
+
+  #checkout-review-table th.product-name {
+    min-width: 0;
+  }
+
+  #checkout-review-table td {
+    min-width: 0;
+  }
+
+  #checkout-review-table td.product-name,
+    #checkout-review-table td.comments {
+    min-width: 0;
+  }
+
+  #checkout-review-table td.price {
+    padding: 0 10px;
+  }
+
+  #checkout-review-table .crop {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .block-progress dl > div {
+    display: block;
+    margin: 10px auto;
+  }
+
+  .block-progress dl > div:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .block-progress dl > div dt:before {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -14021,8 +14139,7 @@ footer .social-list .btn-social-icon {
     width: auto;
   }
 
-  .logo,
-    .skip-links .text-right {
+  .logo {
     text-align: center;
   }
 
@@ -14045,6 +14162,7 @@ footer .social-list .btn-social-icon {
 
   .page-header-container .skip-links {
     width: 100%;
+    padding-left: 15px;
   }
 
   .page-header-container .skip-links .skip-container-header-search {
@@ -14054,6 +14172,35 @@ footer .social-list .btn-social-icon {
   .page-header-container .skip-links .skip-container-header-search input[type=text] {
     max-width: 500px;
     margin: 10px auto 0;
+  }
+
+  .block-progress {
+    float: none;
+    margin: 20px auto 0;
+    padding: 0 15px;
+  }
+
+  #co-billing-form,
+    #co-shipping-method-form,
+    #checkout-step-payment,
+    #checkout-step-checkcart {
+    padding: 40px 20px;
+  }
+
+  #discount-coupon-form .button {
+    padding: 10px;
+  }
+
+  #co-ddate-form {
+    padding-bottom: 20px;
+  }
+
+  #co-ddate-form .delivery {
+    overflow-x: auto;
+  }
+
+  #co-ddate-form .delivery .deli_date_time {
+    min-width: 944px;
   }
 
   section.packages .item p {
@@ -14145,11 +14292,53 @@ footer .social-list .btn-social-icon {
     display: block;
     margin-right: 0;
   }
+
+  .block-lastorder {
+    text-align: center;
+  }
+
+  .block-lastorder h3,
+    .block-lastorder p {
+    text-align: center;
+  }
+
+  #checkout-shipping-method-load dl {
+    margin-bottom: 15px;
+  }
+
+  #checkout-step-payment .input-box .v-fix {
+    width: 60%;
+    vertical-align: top;
+  }
+
+  #checkout-step-payment .input-box .v-fix.adyen_payment_input_fields {
+    width: 38%;
+  }
+
+  #discount-coupon-form input {
+    float: left;
+    margin-left: 15px;
+  }
+
+  #discount-coupon-form input + div {
+    float: left;
+  }
+
+  .checkout-agreements .agree {
+    margin-top: 30px !important;
+  }
 }
 
 @media screen and (max-width: 740px) {
   .block-promos .apdc-products-grid .owl-item > .product-info {
     height: 50%;
+  }
+
+  #checkout-review-table th.availibility,
+    #checkout-review-table th.comments,
+    #checkout-review-table td.availibility,
+    #checkout-review-table td.comments {
+    display: none;
   }
 }
 
@@ -14188,11 +14377,38 @@ footer .social-list .btn-social-icon {
     float: none;
     margin-bottom: 10px;
   }
+
+  #checkout-step-payment .adyen_payment_input_fields {
+    padding: 0;
+  }
+
+  #checkout-step-payment .input-box .v-fix {
+    display: block;
+    width: 100% !important;
+    padding: 0;
+  }
 }
 
 @media screen and (max-width: 420px) {
   #html-body header {
     margin-bottom: 70px;
+  }
+
+  .container-fluid {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .row {
+    margin-right: -5px;
+    margin-left: -5px;
+  }
+
+  #co-billing-form,
+    #co-shipping-method-form,
+    #checkout-step-payment,
+    #checkout-step-checkcart {
+    padding: 40px 10px;
   }
 
   section#prices,
@@ -14240,8 +14456,52 @@ footer .social-list .btn-social-icon {
     padding: 0;
   }
 
-  .header-account-container .block-login {
-    margin-left: -45px;
+  .buttons-set {
+    text-align: center;
+  }
+
+  .buttons-set .back-link {
+    display: block;
+    text-align: center;
+  }
+
+  .buttons-set .button {
+    float: none !important;
+  }
+
+  #checkout-review-table th {
+    font-size: 1rem;
+  }
+
+  #checkout-review-table th.delete {
+    min-width: 0;
+  }
+
+  #checkout-review-table td.quantity {
+    font-size: 1rem;
+  }
+
+  #checkout-review-table td.price {
+    font-size: 1.125rem;
+  }
+
+  #checkout-review-table td.delete {
+    width: auto;
+    min-width: 0;
+  }
+
+  #checkout-review-table .infos_prod_review h3 {
+    font-size: 1rem;
+  }
+
+  #discount-coupon-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 0;
+  }
+
+  #discount-coupon-form input + div {
+    float: none;
   }
 }
 

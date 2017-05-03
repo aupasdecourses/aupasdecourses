@@ -67,13 +67,59 @@
             width: auto;
         }
     }
+    #checkout-shipping-method-load{
+        dl{
+            & > div{
+                float: none;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+    }
+    #checkout-review-table{
+        th{
+            min-width: 0;
+            &.product-name{
+                min-width: 0;
+            }
+        }
+        td{
+            min-width: 0;
+            &.product-name,
+            &.comments{
+                min-width: 0;
+            }
+            &.price{
+                padding: 0 10px;
+            }
+        }
+        .crop{
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 1130px){
+    .block-progress{
+        dl > div{
+            display: block;
+            margin: 10px auto;
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+            dt:before{
+                display: none;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 992px){
     .container{
         width: auto;
     }
-    .logo, .skip-links .text-right{
+    .logo{
         text-align: center;
     }
     .logo{
@@ -92,12 +138,36 @@
     .page-header-container{
         .skip-links{
             width: 100%;
+            padding-left: 15px;
             .skip-container-header-search{
                 text-align: center;
                 input[type=text]{
                     max-width: 500px;
                     margin: 10px auto 0;
                 }
+            }
+        }
+    }
+    .block-progress{
+        float: none;
+        margin: 20px auto 0;
+        padding: 0 15px;
+    }
+    #co-billing-form, #co-shipping-method-form, #checkout-step-payment, #checkout-step-checkcart{
+        padding: 40px 20px;
+    }
+    #discount-coupon-form{
+        .button{
+            padding: 10px;
+        }
+    }
+    
+    #co-ddate-form{
+        padding-bottom: 20px;
+        .delivery{
+            overflow-x: auto;
+            .deli_date_time{
+                min-width: 944px;
             }
         }
     }
@@ -198,11 +268,53 @@
             margin-right: 0;
         }
     }
+    .block-lastorder{
+        text-align: center;
+        h3, p{
+            text-align: center;
+        }
+    }
+    #checkout-shipping-method-load{
+        dl{
+            margin-bottom: 15px;
+        }
+    }
+    #checkout-step-payment{
+        .input-box{
+            .v-fix{
+                width: 60%;
+                vertical-align: top;
+                &.adyen_payment_input_fields{
+                    width: 38%;
+                }
+            }
+        }
+    }
+    #discount-coupon-form{
+        input{
+            float: left;
+            margin-left: 15px;
+            & + div{
+                float: left;
+            }
+        }
+    }
+    .checkout-agreements .agree{
+        margin-top: 30px!important;
+    }
 }
 
 @media screen and (max-width: 740px){
     .block-promos .apdc-products-grid .owl-item > .product-info{
         height: 50%;
+    }
+    #checkout-review-table{
+        th, td{
+            &.availibility,
+            &.comments{
+                display: none;
+            }
+        }
     }
 }
 
@@ -240,6 +352,18 @@
             margin-bottom: 10px;
         }
     }
+    #checkout-step-payment{
+        .adyen_payment_input_fields{
+            padding: 0;
+        }
+        .input-box{
+            .v-fix{
+                display: block;
+                width: 100%!important;
+                padding: 0;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 420px){
@@ -247,6 +371,17 @@
         header{
             margin-bottom: 70px;
         }
+    }
+    .container-fluid{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .row{
+        margin-right: -5px;
+        margin-left: -5px;
+    }
+    #co-billing-form, #co-shipping-method-form, #checkout-step-payment, #checkout-step-checkcart{
+        padding: 40px 10px;
     }
 
     section{
@@ -287,7 +422,47 @@
     #carrousel-commercant-home, .block_selection{
         padding: 0;
     }
-    .header-account-container .block-login{
-        margin-left: -45px;
+    .buttons-set{
+        text-align: center;
+        .back-link{
+            display: block;
+            text-align: center;
+        }
+        .button{
+            float: none!important;
+        }
+    }
+    #checkout-review-table{
+        th{
+            font-size: 1rem;
+            &.delete{
+                min-width: 0;
+            }
+        }
+        td{
+            &.quantity{
+                font-size: 1rem;
+            }
+            &.price{
+                font-size: 1.125rem;
+            }
+            &.delete{
+                min-width: 0;
+                width: auto;
+            }
+        }
+        .infos_prod_review{
+            h3{
+                font-size: 1rem;
+            }
+        }
+    }
+    #discount-coupon-form input{
+        margin-left: 0;
+        margin-bottom: 10px;
+        width: 100%;
+        & + div{
+            float: none;
+        }
     }
 }

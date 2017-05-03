@@ -292,7 +292,7 @@ p.ddate_day_selected{margin: 0;}
 	.mw-osc-block-content.ddate-delivery .deli_time{width: 52%}	
 	.mw-osc-block-content.ddate-delivery .deli_date{width: 47%}	
 }
-@media only screen and (max-width: 780px) {
+/*@media only screen and (max-width: 780px) {
 	#slideshow-holder{ width: 100% !important; height: 272px; overflow: hidden; }
 
 	.delivery{width: 100% !important;}
@@ -306,11 +306,10 @@ p.ddate_day_selected{margin: 0;}
 
 	.delivery .deli_date_top ul li{width: 100%; text-align: left; position: relative; max-height: 50px; background: transparent; border: none; border-bottom: 1px solid #cecece;}
 	.delivery .deli_date_top ul li:hover{background: #fff0e0}
-	/*.deli_date_top ul li span{display: inline;}*/
+	
 	.deli_date_top .option_slot_select{display: block; width: 80px; text-align: right; float: right;}
 	.delivery .first_column_header{ text-align: center; padding: 5px 0; border-bottom: none;}
-	/*.delivery{width: 100% !important;}*/
-	/*.delivery .option_slot_select .ddate_day_option a{display: none;}*/
+	
 	.delivery .ddate_day_option {width: 80px; text-align: left; float: right; background: white; z-index: 2; position: absolute; display: none; border: 1px solid #cecece; border-bottom: none; }
 	p.ddate_day_selected,.ddate_day_option a, .ddate_day_option a:hover{padding: 4px 3px; border-bottom: 1px solid #e0e0e0; line-height: 20px;  display: block; cursor: pointer; }
 	p.ddate_day_selected{background: url('../images/select_bg.png') no-repeat 95% 50%; padding-right: 15px; z-index: 1; border: none;}
@@ -318,11 +317,10 @@ p.ddate_day_selected{margin: 0;}
 	.deli_date_top ul li .ddate_day_option a{padding: 3px 8px; font-weight: normal;}
 	.deli_date_top ul li .ddate_day_option a:hover{font-weight: bold}
 	.deli_date_top ul li .ddate_day_option .disablerow{background: url('../images/disablerow.jpg') repeat;}
-	/*.option_slot_select:hover .ddate_day_option{display: block; }*/
+	
 
 	select.option_slot_select{border: none; background: transparent; outline: none; font-size: 12px; line-height: 14px;}
 	#slideshow-area, #slideshow-scroller{overflow: visible;}
-	/*.ddate_selected{display: block;}*/
 	.slideshow-container{width: 90%}
 
 	.first_column_header strong{color: white;}
@@ -330,5 +328,12 @@ p.ddate_day_selected{margin: 0;}
 
     .ddate-delivery .group-select{
     	width: auto;
-    }
-}
+    }*/
+
+    /* LIGNES COMMENTEES */
+    /*.deli_date_top ul li span{display: inline;}*/
+    /*.delivery{width: 100% !important;}*/
+	/*.delivery .option_slot_select .ddate_day_option a{display: none;}*/
+    /*.option_slot_select:hover .ddate_day_option{display: block; }*/
+    /*.ddate_selected{display: block;}*/
+/*}*/

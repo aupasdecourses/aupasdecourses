@@ -1,21 +1,19 @@
 <form id="discount-coupon-form" onsubmit="return submitCoupon();" method="post">
     <div class="discount-form">
         <h3><?php echo $this->__('Votre code de réduction') ?></h3>
-        <div class="field-wrapper" style="width:100%">
-            <input style="height:45px;margin-top:0px" class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />
+        <div class="field-wrapper row">
+            <input class="col-sm-6" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode()) ?>" />
             <div class="button-wrapper col-sm-6">
-                <div style="width:100%;">
-                    <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())==0): ?>
-						<button type="submit" title="<?php echo $this->__('Apply Coupon') ?>" class="button button-green addcoupon col-xs-7" value="<?php echo $this->__('Apply Coupon') ?>" style="width: 100%;" ><span><?php echo $this->__('Utiliser') ?></span></button>
-                    <?php endif;?>
-                    <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())): ?>
-                        <button type="button" onclick="return cancelCoupon();" title="<?php echo $this->__('Cancel Coupon') ?>" class="button button-grey cancelcoupon col-xs-7" value="<?php echo $this->__('Cancel Coupon') ?>" style="width: 100%;" ><span><?php echo $this->__('Annuler') ?></span></button>
-                    <?php endif;?>
-                        <div class="coupon-please-wait" id="coupon-please-wait" style="display:none;">
-                            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" title="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" class="v-middle" />
-                        </div>
-                        <!--<span class="coupon-please-wait loader col-xs-7" id="coupon-please-wait" style="display:none; line-height:19px; margin-left:5px;"></span>-->
+                <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())==0): ?>
+                    <button type="submit" title="<?php echo $this->__('Apply Coupon') ?>" class="button button-green addcoupon col-xs-7" value="<?php echo $this->__('Apply Coupon') ?>"><span><?php echo $this->__('Utiliser') ?></span></button>
+                <?php endif;?>
+                <?php if(strlen(Mage::getSingleton('checkout/session')->getQuote()->getCouponCode())): ?>
+                    <button type="button" onclick="return cancelCoupon();" title="<?php echo $this->__('Cancel Coupon') ?>" class="button button-grey cancelcoupon col-xs-7" value="<?php echo $this->__('Cancel Coupon') ?>"><span><?php echo $this->__('Annuler') ?></span></button>
+                <?php endif;?>
+                <div class="coupon-please-wait" id="coupon-please-wait" style="display:none;">
+                    <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" title="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" class="v-middle" />
                 </div>
+                <!--<span class="coupon-please-wait loader col-xs-7" id="coupon-please-wait" style="display:none; line-height:19px; margin-left:5px;"></span>-->
             </div>
         </div>
         <div style="width:100%;height:21px">

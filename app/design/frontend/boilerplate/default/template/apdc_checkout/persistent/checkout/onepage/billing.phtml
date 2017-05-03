@@ -52,8 +52,9 @@
 				<ul class="form-list">
 					<label class="control-label" for="shipping-address-select"><?php echo $this->__('Votre adresse d\'expédition') ?></label>
 				<?php if ($this->customerHasAddresses()): ?>
-				   <li class="wide">
+				   <li class="wide fields">
 					   <div class="input-box">
+					       <label><?php echo $this->__('Vos adresses enregistrées') ?></label>
 						   <?php echo $this->getAddressesHtmlSelect('shipping') ?>
 					   </div>
 				   </li>

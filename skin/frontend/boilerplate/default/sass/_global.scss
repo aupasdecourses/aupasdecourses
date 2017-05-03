@@ -106,6 +106,10 @@ a{
             width: 100%;
         }
     }
+    &:active, &:focus, &:visited{
+        color: #fff;
+        text-decoration: none;
+    }
     &.button-green{
         background-color: $color-main-green;
         &:hover{

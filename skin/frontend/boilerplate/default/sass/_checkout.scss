@@ -1,3 +1,12 @@
+.checkout-onepage-index{
+    .skip-links{
+        .link-header-right{
+            float: right;
+            min-width: 185px;
+        }
+    }
+}
+
 #checkoutSteps{
     padding: 0;
     .section{
@@ -10,6 +19,7 @@
             color: $color-main-green;
             text-transform: none;
             margin-top: 30px;
+            margin-bottom: 40px;
             letter-spacing: normal;
             span{
                 font-weight: normal;
@@ -138,6 +148,12 @@
             display: inline-block;
             vertical-align: top;
             margin: 9px 25px 0;
+            &:first-of-type{
+                margin-left: 0;
+            }
+            &:last-of-type{
+                margin-right: 0;
+            }
             &#billing-progress-opcheckout{
                 dt{
                     &:before{
@@ -470,6 +486,9 @@
             .fa-check{
                 color: $color-main-green;
             }
+            .fa-close{
+                color: #FF3300;
+            }
         }
         &.comments{
             min-width: 200px;
@@ -536,9 +555,11 @@
         border: 1px solid #eee;
         background-color: #f6f6f6;
         outline: none;
+        height: 45px;
     }
     .button{
         margin: 0;
+        width: 100%;
     }
 }
 
@@ -612,7 +633,7 @@
                 margin-left: 10px;
             }
             #adyen_cc_expiration, #adyen_cc_expiration_yr{
-                max-width: 120px;
+                max-width: 110px;
             }
             span{
                 color: $color-main-grey;
