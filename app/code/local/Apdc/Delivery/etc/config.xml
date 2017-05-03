@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.0.8</version>
+            <version>0.0.9</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
@@ -57,6 +57,12 @@
                     <refund_items>
                         <table>refund_items</table>
                     </refund_items>
+                    <indi_billingdetails>
+                        <table>indi_billing_details</table>
+                    </indi_billingdetails>
+                    <indi_billingsummary>
+                        <table>indi_billing_summary</table>
+                    </indi_billingsummary>
                 </entities>
             </delivery_resource>
         </models>
@@ -87,6 +93,11 @@
                     <file>notification/new_note.html</file>
                     <type>html</type>
                 </notification_new_note>
+                <billing_shop_mail translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses - Facture mensuelle</label>
+                    <file>delivery/billing/billing_shop.html</file>
+                    <type>html</type>
+                </billing_shop_mail>
             </email>
         </template>
 	</global>

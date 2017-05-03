@@ -176,14 +176,13 @@ class Stats
 					2 => 'Pour la livraison ...',
 			);
 			if ($order->getCouponCode() <> "") {
-				$oCoupon	= \Mage::getSingleton('salesrule/coupon')->load($order->getCouponCode(), 'code');
-				$oRule		= \Mage::getSingleton('salesrule/rule')->load($oCoupon->getRuleId());
 				$coupondata	= "";
-				$coupondata	.= "Règle n°".$oRule->getData('rule_id');
-				$coupondata	.= ".\n Réduction de ".$oRule->getData('discount_amount');
-				$coupondata	.= "de type ".$oRule->getData('simple_action');
-				$coupondata	.= ".\n Appliquée au shipping: ".$oRule->getData('apply_to_shipping');
-				$coupondata	.= ".\n Livraison gratuite ".$afs[$oRule->getData('simple_free_shipping')].'.';
+				if(floatval($order->getBaseDiscountAmount())<>0){
+					$coupondata	.= "Réduction de ".(-floatval($order->getBaseDiscountAmount()))."€.";
+				}
+				if($order->getBaseShippingAmount()==0){
+					$coupondata	.= "Livraison gratuite.";
+				}
 			} else {
 				$coupondata	= "";
 			}
