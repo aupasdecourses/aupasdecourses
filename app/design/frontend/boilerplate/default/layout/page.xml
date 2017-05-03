@@ -87,6 +87,14 @@
 				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
 				<!-- IMPORTANT -->
 				
+				<action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-options.css</file></action>
+				<action method="addJs"><file>varien/product.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_optionsPrices.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_configurable.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_custom_options.js</file></action>
+				
 				<action method="addItem"><type>skin_js</type><name>dist/js/script.js</name></action>
 
                 <!-- Add stylesheets with media queries for use by modern browsers -->

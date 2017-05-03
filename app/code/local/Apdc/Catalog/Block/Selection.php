@@ -49,21 +49,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
 			else {
 				$i ++;
 			}
-			/*if($i <= 5) {
-				$row1[] = $selection;
-			}
-			else {
-				$row2[] = $selection;
-			}
-			if($i == 10) {
-				$i = 1;
-			}
-			else {
-				$i ++;
-			}*/
 		}
-		
-        //return $collection;
 		return array('row1' => $row1, 'row2' => $row2, 'count' => $collection->count());
     }
 
@@ -79,9 +65,11 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
         $storeId = Mage::app()->getStore()->getId();
         $collection = $this->_addProductAttributesAndPrices($collection)
             ->addStoreFilter($storeId)
-            ->addFieldToFilter('status', 1)
+			->addFieldToFilter('entity_id', array('in'=>array(4365)));
+            /*->addFieldToFilter('status', 1)
             ->addFieldToFilter('on_selection', 1)
-            ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
+            ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);*/
+				
         $collection->getSelect()
             ->joinLeft(
                 array('_gallery_table' => $collection->getTable('catalog/product_attribute_media_gallery')),
