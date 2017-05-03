@@ -42,7 +42,7 @@ class BillingForm extends AbstractType
                     'label_attr' => ['style' => 'margin-left: 20px;margin-right:10px'],
                     'attr' => ['placeholder' => 'Valeur HT','style'=>'width:100px;','readonly' => true],
                     'divisor' => 100,
-                    'data' => 5,
+                    'data' => 50,
                     //'disabled' => true,
         ]);
 

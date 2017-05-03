@@ -18,7 +18,7 @@ class Apdc_Delivery_Model_Entity_Increment extends Mage_Eav_Model_Entity_Increme
             ->loadByCode('order');
         $entityStoreConfig = Mage::getModel('eav/entity_store')
             ->loadByEntityStore($productEntityType->getId(), $this->getLastStoreId());
-        $prefix=$entityStoreConfig->setEntityTypeId($productEntityType->getId())->getIncrementPrefix();
+        $prefix='COM-'.$entityStoreConfig->setEntityTypeId($productEntityType->getId())->getIncrementPrefix();
         return $prefix;
     }
 

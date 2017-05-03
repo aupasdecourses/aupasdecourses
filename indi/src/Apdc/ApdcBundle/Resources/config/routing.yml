@@ -101,7 +101,7 @@ billingSummary:
 billingOne:
   path:    /billing/{id}
   defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
-  requirements: { id:"[0-9-]+" }
+  requirements: { id:"COM-[0-9-]+" }
 
 billingPayoutIndex:
   path: /billing/payout/

@@ -89,7 +89,7 @@ class Pdfbilling
     {
         $increment_id = $this->_data['increment_id'];
         $data_s = $this->_data['summary'][0];
-        $created_at = date('d/m/Y', strtotime($data_s['created_at']));
+        $date_finalized = date('d/m/Y', strtotime($data_s['date_finalized']));
         $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data_s['billing_month']))));
 
         $standart_lh = $this->_lineHeight;
@@ -98,8 +98,8 @@ class Pdfbilling
         $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w);
 
         $this->_currentpage->drawText('Facture n° '.$increment_id, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText("Date d'émission: ".$created_at, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText("Commerçant: {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Date d'émission: ".$date_finalized, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Magasin: {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
 
         $this->_offset -= $this->_lineHeight * 7;
 
@@ -115,7 +115,7 @@ class Pdfbilling
     {
         $increment_id = $this->_data['increment_id'];
         $data = $this->_data['summary'][0];
-        $created_at = $data['created_at'];
+        $date_finalized = $data['date_finalized'];
         $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data['billing_month']))));
         $id = $start;
         while ($id <= $end) {
@@ -125,7 +125,7 @@ class Pdfbilling
 
             $this->_page[$id]->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical);
             $this->_page[$id]->setFont($this->_font, 8);
-            $this->_page[$id]->drawText('Généré le: '.$created_at, $this->_margin_horizontal, $this->_margin_vertical / 2);
+            $this->_page[$id]->drawText('Généré le: '.$date_finalized, $this->_margin_horizontal, $this->_margin_vertical / 2);
             $id++;
         }
     }
@@ -193,11 +193,14 @@ class Pdfbilling
             'header' => ['Prestation', 'Prix HT', '%TVA', 'TVA', 'Prix TTC'],
             'rows' => [
                 ['Commission sur les ventes', $data_s['sum_commission_HT'], $data_s['sum_commission_TVA_percent'], $data_s['sum_commission_TVA'], $data_s['sum_commission']],
-                ['Discount commerçants', -$data_s['discount_shop_HT'], $data_s['discount_shop_TVA_percent'], -$data_s['discount_shop_TVA'], -$data_s['discount_shop']],
-                ['Frais Bancaires', $data_s['processing_fees_HT'], $data_s['processing_fees_TVA_percent'], $data_s['processing_fees_TVA'], $data_s['processing_fees']],
+                //['Frais Bancaires', $data_s['processing_fees_HT'], $data_s['processing_fees_TVA_percent'], $data_s['processing_fees_TVA'], $data_s['processing_fees']],
                 ],
             'total' => ['TOTAL', $data_s['sum_billing_HT'], '', $data_s['sum_billing_TVA'], $data_s['sum_billing']],
         ];
+
+        if($data_s['discount_shop_HT']!=0){
+            array_push($table_s['rows'],['Remise Commerciale', -$data_s['discount_shop_HT'], $data_s['discount_shop_TVA_percent'], -$data_s['discount_shop_TVA'], -$data_s['discount_shop']]);
+        }
 
         //Create Billing Summary
         $this->_setPortraitTemplate();
@@ -213,7 +216,7 @@ class Pdfbilling
 
         $this->_currentpage->drawText('Tous les prix sont en euros', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
 
-        $footer_text = 'Au Pas De Courses - SAS au capital de 12000€ - 17 rue Henry Monnier, 75009 Paris - RCS Paris 810 707 000 - Numéro de TVA Intracommunautaire - FR48810707000';
+        $footer_text = 'Au Pas De Courses - SARL au capital de 12000€ - 31 rue de Constantinople 75008 Paris - RCS Paris 810 707 000 - Numéro de TVA Intracommunautaire - FR48810707000';
 
         $this->_printFooter($footer_text, 8);
 
