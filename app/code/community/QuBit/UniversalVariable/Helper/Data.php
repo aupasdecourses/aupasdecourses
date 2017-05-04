@@ -132,6 +132,15 @@ class QuBit_UniversalVariable_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * @return bool
      */
+    public function isSignInPage()
+    {
+        return 'customer_account_create' == $this->getRequestPath();
+    }
+
+
+    /**
+     * @return bool
+     */
     public function isCategoryPage()
     {
         return 'catalog_category_view' == $this->getRequestPath();
