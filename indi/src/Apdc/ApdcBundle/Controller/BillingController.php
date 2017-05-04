@@ -129,8 +129,6 @@ class BillingController extends Controller
             $summary = $factu->getDataFacturation('indi_billingsummary', $date_debut);
         }
 
-        dump($summary);
-
         $check_date = (strtotime(str_replace('/', '-', $date_debut)) < strtotime('2017/01/01')) ? 1 : 0;
 
         return $this->render('ApdcApdcBundle::billing/summary.html.twig', [

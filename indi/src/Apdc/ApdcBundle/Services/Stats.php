@@ -46,7 +46,6 @@ class Stats
 			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
 
-//		dump($orders->getSelect()->__toString());	
 		foreach ($orders as $order) {
 			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 
