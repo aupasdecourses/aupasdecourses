@@ -460,14 +460,43 @@ class Magento
     {
         $this->addEntryToModel(
             \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_billingsummary')),
+                $data
+        );
+    }
+
+    public function addEntryToGeocode(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel('pmainguet_delivery/geocode_customers'),
             $data
         );
     }
+
 
     /** Mettre dans trait Model **/
     public function updateEntryToBillingSummary(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/indi_billingsummary');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+	/** Mettre dans trait Model **/
+    public function updateEntryToGeocode(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
         $check = $this->checkEntryToModel($model, $filters);
         if ($check) {
             $this->updateEntryToModel(

@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-include '../../app/Mage.php';
+include_once '../../app/Mage.php';
 
 define('FLOAT_NUMBER', 2);
 
@@ -25,27 +25,31 @@ class Stats
 		);
 	}
 
-	public function stats_clients()
+	/**
+	 *	Fonction mère pour les stats clients + le mapping client
+	 *	Jointure entre sales_order / address / customer_entity et geocode
+	 */
+	public function getCustomerStatData()
 	{
 		$data = [];
-		$orders = \Mage::getModel('sales/order')->getCollection()
+		$orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE));
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
+
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
+		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
+		$orders->getSelect()->joinLeft('geocode' ,'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
+
+		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
-			->columns('MAX(updated_at) AS last_order')
+			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
+
+//		dump($orders->getSelect()->__toString());	
 		foreach ($orders as $order) {
-			$customer	= \Mage::getModel('customer/customer')->load($order->getCustomerId());
-			$dataadd	= \Mage::getModel('sales/order_address')->load($order->getShippingAddressId());
-			$address	= $dataadd->getStreet()[0].' '.$dataadd->getPostcode().' '.$dataadd->getCity();
 			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-			
-			if($customer->getPrimaryBillingAddress()!=''){
-				$phone = $customer->getPrimaryBillingAddress()->getTelephone();
-			} else{
-				$phone = '';
-			}
+
 			array_push($data, [
 					'nom_client'		=> $order->getCustomerName(),
 					'id_client'			=> $order->getCustomerId(),
@@ -54,16 +58,30 @@ class Stats
 					'panier_moyen'		=> round($order->getAverageOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'panier_max'		=> round($order->getMaxOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
 					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-					'inscription'	=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
 					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-					'rue'				=> $dataadd->getStreet()[0],
-					'code_postal'		=> $dataadd->getPostcode(),
-					'ville'				=> $dataadd->getCity(),
-					//'Créé dans'			=> $customer->getCreatedIn(),
+					'rue'				=> $order->getStreet()[0], 
+					'addr'				=> $order->getAddress(), // from geocode
+					'code_postal'		=> $order->getPostcode(),
+					'ville'				=> $order->getCity(),
+					//'Créé dans'		=> $order->getCreatedIn(),
 					'email'				=> $order->getCustomerEmail(),
-					'telephone'			=> $phone,
+					'telephone'			=> $order->getTelephone(),
+					'lat'				=> $order->getData('lat'),
+					'lon'				=> $order->getData('long'),
 				]);
 		}
+
+		return $data;
+	}
+
+	/** Fonction fille pour les stats clients
+	 *	Permet l'ajout de nouveaux users, en + des fonctionnalités existantes de la fonction mère
+	 **/
+	public function stats_clients()
+	{
+		$data = $this->getCustomerStatData();	
+
 		//Add customer who never ordered
 		$customers = \Mage::getModel('customer/customer')
 			->getCollection()
@@ -73,7 +91,7 @@ class Stats
 			if ($key == false) {
 				array_push($data, [
 					'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-					'id_client'			=> $order->getCustomerId(),
+					'id_client'			=> $customer->getCustomerId(),
 					'nb_commande'		=> 0,
 					'panier_moyen'		=> 0,
 					'panier_max'		=> 0,
@@ -81,21 +99,256 @@ class Stats
 					'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
 					'derniere_commande'	=> 'NA',
 					'rue'				=> '',
+					'addr'				=> '',
 					'code_postal'		=> $customer->getCreatedIn(),
 					'ville'				=> '',
 					'email'				=> $customer->getEmail(),
 					'telephone'			=> '',
 				]);
 			}
-		}
+	 	}
+	 
 		return $data;
 	}
 
+	/**	Fonction fille pour le mapping client
+	 *	Convertit simplement la data de la fonction mère en tableau json
+	 *	Ce json sera utilisé dans le controlleur de mapping clients
+	 *	Puis parsé dans la vue twig afin d'afficher les clients sur la carte */
+	public function getCustomerMapData()
+	{
+		$data = $this->getCustomerStatData();
+
+		$json_customers = json_encode($data);
+		return $json_customers;
+	}
+	
+	/**	Fonction identique à getCustomerStatData
+	 *	MAIS pas de jointure sur geocode
+	 *	Utilisé pour l'ajout, dans la table geocode, des new CLIENTS
+	 */
+	public function getNewCustomerData()
+	{
+		$data = [];
+		$orders = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
+
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city'));
+		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at' => 'customer_entity.created_at'));
+		$orders->addAttributeToFilter('address_type', 'shipping');
+		$orders->getSelect()->columns('COUNT(*) AS nb_order')
+			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
+			->columns('MAX(main_table.created_at) AS last_order')
+			->group('customer_id');
+
+		// data[] n'a que les champs utiles pour l'update de la table geocode
+		foreach ($orders as $order) {
+			array_push($data, [
+				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
+				'postcode'					=> $order->getPostcode(),
+				'city'						=> $order->getCity(),
+				'lat'						=> '',
+				'long'						=> '',  // lat et long seront géocodés dans la fonction geocode(); 
+				'former_address'			=> $order->getStreet(), // CELLE CI NE SERA PAS MODIF CAR UTILE A JOINTURE ENTRE GEOCODE ET SALES_ORDER_ADDRESS
+				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode et customer_entity
+			]);
+		}
+
+		return $data;
+	}
+
+	/**	Fonction utilisée pour la MAJ de la table geocode
+	 *	La jointure entre sales_flat_order_adress.street et geocode.former_address (checker la jointure de la fonction getCustomerStatData() )
+	 *	se fait sur des adresses à syntaxe incorrecte	
+	 *	On supprime les virgules et tout le contenu des adresses après les \n , les tirets, 'interphone' , 'code'
+	 *	Strtr sur tous les caracteres accentués et les types de voies approximatifs
+	 */
+	public function cleanAddrForMap()
+	{
+		$data = $this->getNewCustomerData();
+
+		$bad_chars	= ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
+		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
+
+		foreach ($data as &$v) {
+			if (strpos($v['address'], "\n")) {
+				$cut_pos		= strpos($v['address'], "\n");	
+				$v['address']	= substr($v['address'], 0, $cut_pos);
+			}
+			if (strpos($v['address'], ' '."-")) {
+				$cut_pos_two	= strpos($v['address'], ' '."-");
+				$v['address']	= substr($v['address'], 0, $cut_pos_two);
+			}
+			if (strpos($v['address'], "code")) {
+				$cut_pos_three	= strpos($v['address'], "code");
+				$v['address']	= substr($v['address'], 0, $cut_pos_three);
+			}
+			if (strpos($v['address'], "interphone")) {
+				$cut_pos_four	= strpos($v['address'], "interphone");
+				$v['address']	= substr($v['address'], 0, $cut_pos_four);
+			}
+
+			$v['address'] = str_replace(",", "", $v['address']);
+			$v['address'] = strtr($v['address'], array_combine($bad_chars, $good_chars));
+		}
+
+		return $data;
+	}
+
+
+	private function geocodeAdress($adress) {
+		$data	= [];
+		$adress = urlencode(htmlentities($adress));
+		$query	= 'http://nominatim.openstreetmap.org/search?format=json&street='.$adress.'&city=Paris&country=France&countrycodes=fr';
+		$string = file_get_contents($query);
+		$json	= json_decode($string, true);
+
+		return $json;
+	}
+
+	public function addLatAndLong()
+	{
+		$data = $this->cleanAddrForMap();
+
+		/* foreach long en terme de tps car on crée beaucoup de latitude/longitude */
+		/* Attention à ne pas abuser de la limite des encodages lat/long PAR JOUR :) */
+		/* sinon toutes les lat long seront a zero pour la journée */
+		foreach ($data as &$v) {
+			if($v['address'] != "") {
+				$json = $this->geocodeAdress(htmlentities($v['address']));
+				$v['lat']	= floatval($json[0]['lat']);
+				$v['long']	= floatval($json[0]['lon']);
+			}
+		}
+
+		return $data;
+	}
+
+	/***************/
+	/** Comparaison entre les sales_flat_order_address.customer_id ET geocode.whoami
+	 *	pour afficher ou non le bouton submit de la MAJ map clients */
+
+	public function compareCustomers()
+	{
+
+		$orderIds = \Mage::getModel('sales/order')->getCollection()
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))                       
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));                 
+	   	$orderIds->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('customer_id')); 
+		$orderIds->getSelect()->group('sales_flat_order_address.customer_id');
+		$orders = [];
+
+		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$geocodes = [];
+
+		foreach ($orderIds as $orderId) {
+			$orders[] = $orderId->getData('customer_id');
+		}
+
+		foreach ($geocodeIds as $geocodeId) {
+			$geocodes[] = $geocodeId->getData('whoami');
+		}
+
+		$countCustomers = array_count_values($geocodes);
+
+		if (count($orders) !== ($countCustomers['CUSTOMER'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/******** MERCHANTS ****/
+
+	/**
+	 * Fonction pour le mapping commercant */
+	public function getMerchantsStatData()
+	{
+		$data = [];
+		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		$merchants->getSelect()->joinLeft('geocode', 'main_table.street = geocode.former_address', array('lat', 'long'));
+		$merchants->getSelect()->group('main_table.id_shop');
+		foreach ($merchants as $merchant) {
+			array_push($data, [
+				'nom_commercant'	=> $merchant->getName(),
+				'addr'				=> $merchant->getStreet(),
+				'code_postal'		=> $merchant->getPostcode(),
+				'ville'				=> $merchant->getCity(),
+				'telephone'			=> $merchant->getPhone(),
+				'timetable'			=> $merchant->getTimetable(),
+				'lat'				=> $merchant->getData('lat'),
+				'lon'				=> $merchant->getData('long'),
+
+			]);
+		}
+
+		$json_merchants = json_encode($data);
+		return $json_merchants;
+	}
+
+	/** Fonction utilisée pour l'ajout de nouveaux merchants dans geocode */
+	public function getNewShopData()
+	{
+		$data = [];
+		$merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		foreach ($merchants as $merchant) {
+			array_push($data, [
+				'address'			=> $merchant->getStreet(), // peut potentiellement etre modifié pour respecter la syntaxe de l'encodage géographique
+				'postcode'			=> $merchant->getPostcode(),
+				'city'				=> $merchant->getCity(),
+				'lat'				=> '', // lat et long seront encodé par la suite
+				'long'				=> '',
+				'former_address'	=> $merchant->getStreet(), // sera utilisé pour la jointure de la fonction getMerchantsStatData. NEST PAS MODIFIE
+				'id_shop'			=> $merchant->getData('id_shop'),
+			]);	
+		}
+		/* c'est comme la fonction addLatAndLong(), pour les commercants cette fois */
+		foreach ($data as &$content) {
+			if ($content['address'] != "") {
+				$json = $this->geocodeAdress(htmlentities($content['address']));
+				$content['lat']		= floatval($json[0]['lat']);
+				$content['long']	= floatval($json[0]['lon']);
+			}
+		}	
+
+		return $data;
+	}
+
+	/**	Comparaison entre apdc_shop.id_shop ET geocode.whoami
+	 *	pour afficher ou non le bouton submit de la MAJ map commercants */
+
+	public function compareMerchants()
+	{
+		$shopIds = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		$shops = [];
+
+		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
+		$geocodes = [];
+
+		foreach ($shopIds as $shopId) {
+			$shops[] = $shopId->getData('id_shop');
+		}
+
+		foreach ($geocodeIds as $geocodeId) {
+			$geocodes[] = $geocodeId->getData('whoami');
+		}
+
+		$countShops = array_count_values($geocodes);
+
+		if (count($shops) !== ($countShops['SHOP'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+
+	/********************************************************/
+	/********************************************************/
 	/* FIDELITE */
 	/*****************************/
 	/*****************/
-
-
 
 	private function getOrderAttachments($order)
 	{

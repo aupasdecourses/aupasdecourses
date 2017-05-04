@@ -197,7 +197,7 @@ $installer->addEntityType('billing', array(
     'table' => 'pmainguet_delivery/indi_billingsummary',
     'increment_model' => 'pmainguet_delivery/entity_increment',
     'increment_per_store' => false,
-    'increment_pad_length' => 6,
+    'increment_pad_length' => 4,
     'increment_pad_char' => 0,
 ));
 

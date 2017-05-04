@@ -79,7 +79,7 @@ $(function() {
 
 $(function(){
 	$("#datepickerNote").change(function(){
-		window.location='{{ path('noteOrder') }}?module=clients&action=view&option=note&date_debut='+this.value;
+		window.location='{{ path('noteOrder') }}?date_debut='+this.value;
 	});
 });
 $(document).ready(function() {

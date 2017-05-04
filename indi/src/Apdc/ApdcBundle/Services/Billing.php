@@ -470,6 +470,8 @@ class Billing
             array_push($data, [
                 'status' => $status,
                 'increment_id' => $incrementid,
+                'total_commande' => $total_withship,
+                'frais_livraison' => $frais_livraison,
                 'total_produit' => $total_withoutship,
                 'discount' => $discount,
             ]);
@@ -511,6 +513,9 @@ class Billing
                 'display_button' => false,
                 'sum_items_facturation' => 'NA',
                 'sum_items_magento' => 'NA',
+                'sum_order_magento' => 'NA',
+                'sum_shipping_magento' => 'NA',
+                'sum_discount_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
                 'status_ok_count' => 'NA',
                 'status_nok_count' => 'NA',
@@ -533,6 +538,8 @@ class Billing
             //get Magento total products & coupons
             $data_magento = $this->data_clients_light($debut, $fin);
             $result_data_magento = array(
+                'total_commande' => 0,
+                'frais_livraison' => 0,
                 'total_produit' => 0,
                 'discount' => 0,
                 'status_ok_count' => 0,
@@ -544,6 +551,8 @@ class Billing
             );
             foreach ($data_magento as $row) {
                 if (in_array(strtolower($row['status']), [strtolower(\Mage_Sales_Model_Order::STATE_COMPLETE), strtolower(\Mage_Sales_Model_Order::STATE_CLOSED)])) {
+                    $result_data_magento['total_commande'] += floatval($row['total_commande']);
+                    $result_data_magento['frais_livraison'] += floatval($row['frais_livraison']);
                     $result_data_magento['total_produit'] += floatval($row['total_produit']);
                     $result_data_magento['discount'] += floatval($row['discount']);
                     $result_data_magento['status_ok_count'] += 1;
@@ -604,6 +613,9 @@ class Billing
 
             $result = array_merge($result, [
                 'sum_items_facturation' => $result_data_facturation['sum_items'],
+                'sum_order_magento' => $result_data_magento['total_commande'],
+                'sum_shipping_magento' => $result_data_magento['frais_livraison'],
+                'sum_discount_magento' => $result_data_magento['discount'],
                 'sum_items_magento' => $result_data_magento['total_produit'] + $result_data_magento['discount'],
                 'diff_facturation_magento' => round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'] - $result_data_magento['discount'], FLOAT_NUMBER, PHP_ROUND_HALF_UP),
                 'status_ok_count' => $result_data_magento['status_ok_count'],
