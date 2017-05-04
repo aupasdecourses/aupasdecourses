@@ -7,7 +7,7 @@ $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 <?php if ($_product->isSaleable() && count($_attributes)):?>
 <dl>
     <?php foreach($_attributes as $_attribute): ?>
-    <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel() ?></label></dt>
+    <dt><label class="required"><?php echo $_attribute->getLabel() ?> <em>*</em></label></dt>
     <dd<?php if ($_attribute->decoratedIsLast){?><?php }?>>
         <div>
         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() . '-' . $_product->getId(); ?>" class="required-entry form-control super-attribute-select_<?php echo $_product->getId()?>">

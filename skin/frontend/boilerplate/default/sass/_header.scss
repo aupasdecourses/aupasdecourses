@@ -81,7 +81,7 @@ header{
                 -ms-transition: all 100ms ease-in;
                 -o-transition: all 100ms ease-in;
                 transition: all 100ms ease-in;
-                &:hover{
+                &:not(.button):hover{
                     text-decoration: none;
                     color: $color-second-green;
                     &:after{
@@ -89,7 +89,7 @@ header{
                         bottom: -5px;
                     }
                 }
-                &:after{
+                &:not(.button):after{
                     content: "";
                     display: block;
                     position: absolute;

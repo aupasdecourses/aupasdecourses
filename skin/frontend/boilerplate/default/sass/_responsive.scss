@@ -26,6 +26,12 @@
     }
 }
 
+@media screen and (max-width: 1316px){
+    .checkout-onepage-index .skip-links .link-header-right{
+        margin-top: -45px;
+    }
+}
+
 @media screen and (max-width: 1260px){
     .block-promos .owl-buttons .next{
         margin-right: 13px;
@@ -112,6 +118,9 @@
                 display: none;
             }
         }
+    }
+    .checkout-onepage-index .skip-links .link-header-right{
+        margin-top: 0;
     }
 }
 

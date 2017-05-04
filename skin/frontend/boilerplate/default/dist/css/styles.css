@@ -11589,17 +11589,17 @@ header .top-nav li a {
   outline: none;
 }
 
-header .top-nav li a:hover {
+header .top-nav li a:not(.button):hover {
   text-decoration: none;
   color: #1e555a;
 }
 
-header .top-nav li a:hover:after {
+header .top-nav li a:not(.button):hover:after {
   bottom: -5px;
   background: #1e555a;
 }
 
-header .top-nav li a:after {
+header .top-nav li a:not(.button):after {
   position: absolute;
   bottom: -15px;
   left: 0;
@@ -12681,18 +12681,17 @@ section .section-description {
 
 .block-promos .apdc-products-grid .product-info {
   height: 200px;
+    /*.bottom{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }*/
 }
 
 .block-promos .apdc-products-grid .product-info form {
   position: relative;
   margin-bottom: 10px;
-}
-
-.block-promos .apdc-products-grid .product-info .bottom {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .block-promos .apdc-products-grid .product-image img {
@@ -12759,8 +12758,49 @@ section .section-description {
   margin: 10px auto 0;
 }
 
+.block-promos .apdc-products-grid .btn-cart img {
+  display: inline-block;
+  width: 21px;
+  height: auto;
+  margin-right: 3px;
+  vertical-align: top;
+}
+
+.block-promos .apdc-products-grid .owl-item {
+  margin-bottom: 10px;
+}
+
+.block-promos .apdc-products-grid .owl-item:hover {
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .5);
+}
+
 .block-promos .apdc-products-grid .owl-item > .product-info {
   height: auto;
+}
+
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover {
+  position: relative;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options label {
+  font-size: 1rem;
+  color: #1e555a;
+}
+
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options input[type=text],
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options select {
+  font-size: .875rem;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
 }
 
 .block-promos .owl-buttons {
@@ -13843,6 +13883,7 @@ footer .social-list .btn-social-icon {
 }
 
 #discount-coupon-form .button {
+  font-weight: normal;
   width: 100%;
   margin: 0;
 }
@@ -14047,6 +14088,12 @@ footer .social-list .btn-social-icon {
   }
 }
 
+@media screen and (max-width: 1316px) {
+  .checkout-onepage-index .skip-links .link-header-right {
+    margin-top: -45px;
+  }
+}
+
 @media screen and (max-width: 1260px) {
   .block-promos .owl-buttons .next {
     margin-right: 13px;
@@ -14131,6 +14178,10 @@ footer .social-list .btn-social-icon {
 
   .block-progress dl > div dt:before {
     display: none;
+  }
+
+  .checkout-onepage-index .skip-links .link-header-right {
+    margin-top: 0;
   }
 }
 

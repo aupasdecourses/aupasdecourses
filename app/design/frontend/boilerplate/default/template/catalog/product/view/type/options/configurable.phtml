@@ -50,7 +50,7 @@ $_renderers = $this->getChild('attr_renderers')->getSortedChildren();
 
         if (!$_rendered):
         ?>
-        <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel(); ?></label></dt>
+        <dt><label class="required"><?php echo $_attribute->getLabel(); ?> <em>*</em></label></dt>
         <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
             <div class="input-box">
                 <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="<?php echo $containerId; ?>attribute<?php echo $_attribute->getAttributeId() . '-' . $_product->getId(); ?>" class="required-entry super-attribute-select form-control super-attribute-select_<?php echo $_product->getId(); ?>">

@@ -11522,12 +11522,12 @@ header .top-nav li a:hover {
   color: #1e555a;
 }
 
-header .top-nav li a:hover:after {
+header .top-nav li a:not(.button):hover:after {
   bottom: -5px;
   background: #1e555a;
 }
 
-header .top-nav li a:after {
+header .top-nav li a:not(.button):after {
   position: absolute;
   bottom: -15px;
   left: 0;
