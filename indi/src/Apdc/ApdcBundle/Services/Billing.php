@@ -723,6 +723,9 @@ class Billing
         $result['discount_shop_TVA'] = $result['discount_shop_HT'] * $result['discount_shop_TVA_percent'];
         $result['discount_shop'] = $result['discount_shop_HT'] + $result['discount_shop_TVA'];
 
+        //Calcul Virement
+        $result['sum_virement'] = $result['sum_due'] + $result['discount_shop'];
+
         //Calcul TVA et TTC Processing fees
         $result['processing_fees_TVA'] = $result['processing_fees_HT'] * $result['processing_fees_TVA_percent'];
         $result['processing_fees'] = $result['processing_fees_HT'] + $result['processing_fees_TVA'];

@@ -40,7 +40,7 @@ class BillingForm extends AbstractType
         $builder->add('processing_fees_HT', MoneyType::class, [
                     'label' => 'Frais bancaires',
                     'label_attr' => ['style' => 'margin-left: 20px;margin-right:10px'],
-                    'attr' => ['placeholder' => 'Valeur HT','style'=>'width:100px;','readonly' => true],
+                    'attr' => ['placeholder' => 'Valeur HT','style'=>'width:100px;'],
                     'divisor' => 100,
                     'data' => 50,
                     //'disabled' => true,

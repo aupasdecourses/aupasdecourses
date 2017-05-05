@@ -111,7 +111,7 @@ class QuBit_UniversalVariable_Model_Uv extends Varien_Object
         return $this;
     }
 
-    protected function _initUser()
+    protected function _initUser()  
     {
         /** @var Mage_Customer_Model_Customer $user */
         $user = Mage::helper('customer')->getCustomer();

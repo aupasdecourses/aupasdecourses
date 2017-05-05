@@ -41,8 +41,9 @@
 					<th colspan="2">Commission APDC</th>
 					<th colspan="2">Somme due</th>
 					<th colspan="2">Remise commerciale</th>
+					<th>Virement</th>
 					<th colspan="2">Frais bancaires</th>
-					<th colspan="2">Somme versée</th>
+					<th>Retrait</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -54,6 +55,7 @@
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
 					<th class="float">HT</th>
+					<th class="float">TTC</th>
 					<th class="float">TTC</th>
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
@@ -73,9 +75,10 @@
 						<td>{{ summary.sum_due }}</td>
 						<td>{{ summary.discount_shop_HT }}</td>
 						<td>{{ summary.discount_shop }}</td>
+						<td style="font-weight:bold;text-decoration:underline;">{{ summary.sum_virement }}</td>
 						<td>{{ summary.processing_fees_HT }}</td>
 						<td>{{ summary.processing_fees }}</td>
-						<td>{{ summary.sum_payout }}</td>
+						<td style="font-weight:bold;text-decoration:underline;">{{ summary.sum_payout }}</td>
 					</tr>
 					{% endfor %}
 			</tbody>
