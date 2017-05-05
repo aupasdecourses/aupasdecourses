@@ -298,22 +298,36 @@ section {
             margin-bottom: 50px;
         }
     }
+    #carrousel-selection-home{
+        overflow-x: hidden;
+        padding-left: 3px;
+        padding-bottom: 70px;
+    }
     .apdc-products-grid{
         list-style-type: none;
         padding-left: 0;
         margin-bottom: 50px;
+        .owl-stage-outer{
+            overflow: visible;
+        }
         .product-info{
-            height: 200px;
+            height: 240px;
             form{
                 position: relative;
-                margin-bottom: 10px;
+                &:after{
+                    clear: none;
+                }
             }
-            /*.bottom{
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }*/
+            .action-loading{
+                margin: -15px auto 0;
+                .loader{
+                    text-align: center;
+                    img{
+                        display: inline-block;
+                        max-width: 80px;
+                    }
+                }
+            }
         }
         .product-image{
             img{
@@ -386,18 +400,33 @@ section {
             }
         }
         .owl-item{
-            margin-bottom: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            //width: 219.1px!important;
+            &:after{
+                content: "";
+                display: block;
+                clear: both;
+            }
             &:hover{
-                -webkit-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.5);
-                box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.5);
+                -webkit-box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
+                box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
+                //margin-bottom: -85px;
             }
             & > .product-info{
-                height: auto;
+                padding-top: 30px;
                 .display-hover{
                     position: relative;
-                    box-shadow: none;
+                    margin: 0;
                     border: 0;
-                    background: none;
+                    /*-webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.4);
+                    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.4);*/
+                    box-shadow: none;
+                    border-radius: 0 0 10px 10px;
+                    right: auto;
+                    left: auto;
+                    width: 219.1px;
+                    padding-bottom: 15px;
                     .apdc-product-custom-options{
                         label{
                             font-size: 1rem;

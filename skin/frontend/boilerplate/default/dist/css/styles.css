@@ -12673,25 +12673,45 @@ section .section-description {
   color: #3ab64b;
 }
 
+.block-promos #carrousel-selection-home {
+  overflow-x: hidden;
+  padding-bottom: 70px;
+  padding-left: 3px;
+}
+
 .block-promos .apdc-products-grid {
   margin-bottom: 50px;
   padding-left: 0;
   list-style-type: none;
 }
 
+.block-promos .apdc-products-grid .owl-stage-outer {
+  overflow: visible;
+}
+
 .block-promos .apdc-products-grid .product-info {
-  height: 200px;
-    /*.bottom{
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }*/
+  height: 240px;
 }
 
 .block-promos .apdc-products-grid .product-info form {
   position: relative;
-  margin-bottom: 10px;
+}
+
+.block-promos .apdc-products-grid .product-info form:after {
+  clear: none;
+}
+
+.block-promos .apdc-products-grid .product-info .action-loading {
+  margin: -15px auto 0;
+}
+
+.block-promos .apdc-products-grid .product-info .action-loading .loader {
+  text-align: center;
+}
+
+.block-promos .apdc-products-grid .product-info .action-loading .loader img {
+  display: inline-block;
+  max-width: 80px;
 }
 
 .block-promos .apdc-products-grid .product-image img {
@@ -12767,21 +12787,34 @@ section .section-description {
 }
 
 .block-promos .apdc-products-grid .owl-item {
-  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.block-promos .apdc-products-grid .owl-item:after {
+  display: block;
+  clear: both;
+  content: '';
 }
 
 .block-promos .apdc-products-grid .owl-item:hover {
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .5);
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, .4);
 }
 
 .block-promos .apdc-products-grid .owl-item > .product-info {
-  height: auto;
+  padding-top: 30px;
 }
 
 .block-promos .apdc-products-grid .owl-item > .product-info .display-hover {
   position: relative;
+  right: auto;
+  left: auto;
+  width: 219.1px;
+  margin: 0;
+  padding-bottom: 15px;
   border: 0;
-  background: none;
+  border-radius: 0 0 10px 10px;
+    /*-webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.4);
+                    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.4);*/
   box-shadow: none;
 }
 
@@ -14105,15 +14138,6 @@ footer .social-list .btn-social-icon {
 }
 
 @media screen and (max-width: 1200px) {
-  .block-promos .apdc-products-grid .product-info {
-    height: 230px;
-  }
-
-  .block-promos .apdc-products-grid .product-info form {
-    float: none;
-    width: auto;
-  }
-
   .commercants-block .products-grid .commercant-item .commercant-info-img,
     .commercants-block .products-grid .commercant-item .commercant-img-info {
     float: none;

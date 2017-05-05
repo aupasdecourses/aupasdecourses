@@ -123,6 +123,8 @@
 				<div id="carrousel-selection-home-row2" class="owl-carousel apdc-products-grid">
 					<?php
 						foreach($collection['row2'] as $selection):
+                            $this->getChild("card-product")->setData("product", $selection);
+							echo $this->getChildHtml('card-product', false);
 							/*$productUrl = $selection->getProductUrl();
 							$strippedName = $this->stripTags($selection->getName(), null, true);
 							$imageLabel = $this->stripTags($this->getImageLabel($selection, 'small_image'), null, true);
@@ -284,6 +286,10 @@
 			owlCarouselSelectionHomeRow1.trigger('next.owl.carousel');
 			owlCarouselSelectionHomeRow2.trigger('next.owl.carousel');
 		});
+        
+        $j('.block-promos .apdc-products-grid .owl-item').hover(function(){
+            $j(this).css({'margin-bottom' : -$j(' > .product-info .display-hover', this).outerHeight()+'px'});
+        });
 		
     });
 </script>
