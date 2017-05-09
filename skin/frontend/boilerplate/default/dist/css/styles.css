@@ -12679,6 +12679,10 @@ section .section-description {
   padding-left: 3px;
 }
 
+.block-promos #carrousel-selection-home-row1 {
+  z-index: 2;
+}
+
 .block-promos .apdc-products-grid {
   margin-bottom: 50px;
   padding-left: 0;
@@ -12699,6 +12703,10 @@ section .section-description {
 
 .block-promos .apdc-products-grid .product-info form:after {
   clear: none;
+}
+
+.block-promos .apdc-products-grid .product-info form:hover {
+  z-index: 1000;
 }
 
 .block-promos .apdc-products-grid .product-info .action-loading {
@@ -12797,6 +12805,7 @@ section .section-description {
 }
 
 .block-promos .apdc-products-grid .owl-item:hover {
+  z-index: 1000;
   box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, .4);
 }
 
@@ -12823,6 +12832,10 @@ section .section-description {
   color: #1e555a;
 }
 
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options .checkbox {
+  display: inline-block;
+}
+
 .block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options input[type=text],
 .block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options select {
   font-size: .875rem;
@@ -12834,6 +12847,11 @@ section .section-description {
   border-radius: 5px;
   outline: none;
   background-color: #f6f6f6;
+}
+
+.block-promos .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options ul {
+  padding-left: 0;
+  list-style-type: none;
 }
 
 .block-promos .owl-buttons {
@@ -14467,16 +14485,6 @@ footer .social-list .btn-social-icon {
 @media screen and (max-width: 420px) {
   #html-body header {
     margin-bottom: 70px;
-  }
-
-  .container-fluid {
-    padding-right: 5px;
-    padding-left: 5px;
-  }
-
-  .row {
-    margin-right: -5px;
-    margin-left: -5px;
   }
 
   #co-billing-form,

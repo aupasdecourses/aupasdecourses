@@ -303,6 +303,9 @@ section {
         padding-left: 3px;
         padding-bottom: 70px;
     }
+    #carrousel-selection-home-row1{
+        z-index: 2;
+    }
     .apdc-products-grid{
         list-style-type: none;
         padding-left: 0;
@@ -316,6 +319,9 @@ section {
                 position: relative;
                 &:after{
                     clear: none;
+                }
+                &:hover{
+                    z-index: 1000;
                 }
             }
             .action-loading{
@@ -411,6 +417,7 @@ section {
             &:hover{
                 -webkit-box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
                 box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
+                z-index: 1000;
                 //margin-bottom: -85px;
             }
             & > .product-info{
@@ -432,6 +439,9 @@ section {
                             font-size: 1rem;
                             color: $color-second-green;
                         }
+                        .checkbox{
+                            display: inline-block;
+                        }
                         input[type=text],
                         select{
                             color: $color-main-grey;
@@ -443,6 +453,10 @@ section {
                             width: 100%;
                             height: auto;
                             outline: none;
+                        }
+                        ul{
+                            padding-left: 0;
+                            list-style-type: none;
                         }
                     }
                 }
