@@ -26,6 +26,12 @@
     }
 }
 
+@media screen and (max-width: 1316px){
+    .checkout-onepage-index .skip-links .link-header-right{
+        margin-top: -45px;
+    }
+}
+
 @media screen and (max-width: 1260px){
     .block-promos .owl-buttons .next{
         margin-right: 13px;
@@ -36,17 +42,6 @@
 }
 
 @media screen and (max-width: 1200px){
-    .block-promos{
-        .apdc-products-grid{
-            .product-info{
-                height: 230px;
-                form{
-                    float: none;
-                    width: auto;
-                }
-            }
-        }
-    }
     .commercants-block{
         .products-grid{
             .commercant-item{
@@ -112,6 +107,9 @@
                 display: none;
             }
         }
+    }
+    .checkout-onepage-index .skip-links .link-header-right{
+        margin-top: 0;
     }
 }
 
@@ -371,14 +369,6 @@
         header{
             margin-bottom: 70px;
         }
-    }
-    .container-fluid{
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-    .row{
-        margin-right: -5px;
-        margin-left: -5px;
     }
     #co-billing-form, #co-shipping-method-form, #checkout-step-payment, #checkout-step-checkcart{
         padding: 40px 10px;

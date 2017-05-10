@@ -89,6 +89,10 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             });
           } else {
             form.find('.advice-must-select-options').show();
+            //$('.block-promos .apdc-products-grid .owl-item button[type=submit]').click(function(){
+                var $element = form.parents('.owl-item') ;
+                $($element).css({'margin-bottom' : -$(' > .product-info .display-hover', $element).outerHeight()+'px'});
+            //});
           }
         }
         return false;
