@@ -854,7 +854,7 @@
         <jobs>
             <catalog_product_index_price_reindex_all>
                 <schedule>
-                    <cron_expr>0 2 * * *</cron_expr>
+                    <cron_expr>0 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>catalog/observer::reindexProductPrices</model>
