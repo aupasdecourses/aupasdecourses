@@ -8,28 +8,33 @@ var indi		= './indi';
 
 /* Reordonner declarations CSS + reindentation et reformatage */
 gulp.task('css', function () {
-	return gulp.src([
-			indi + '/web/css/*.css',
-			indi + '/web/css/map/*.css'
-			])
+	return gulp.src(indi + '/web/css/*.css')
 			.pipe(plugins.csscomb())
 			.pipe(plugins.cssbeautify({indent: '  '}))
-			.pipe(gulp.dest(indi + '/web/css/'))
+			.pipe(gulp.dest(indi + '/web/css/'));
+	});
+
+gulp.task('cssMap', function () {
+	return gulp.src(indi + '/web/css/map/*.css')
+			.pipe(plugins.csscomb())
+			.pipe(plugins.cssbeautify({indent: '  '}))
 			.pipe(gulp.dest(indi + '/web/css/map/'));
 	});
 
 
 /* Minification CSS */
 gulp.task('minify', function () {
-	return gulp.src([
-			indi + '/web/css/*.css',
-			indi + '/web/css/map/*.css'
-			])
+	return gulp.src(indi + '/web/css/*.css')
 			.pipe(plugins.csso())
-			.pipe(gulp.dest(indi + '/web/css/'))
+			.pipe(gulp.dest(indi + '/web/css/'));
+	});
+
+gulp.task('minifyMap', function () {
+	return gulp.src(indi + '/web/css/map/*.css')
+			.pipe(plugins.csso())
 			.pipe(gulp.dest(indi + '/web/css/map/'));
 	});
 
 
 // Run gulp indi at www/
-gulp.task('indi', ['css', 'minify']);
+gulp.task('indi', ['css', 'cssMap', 'minify', 'minifyMap']);
