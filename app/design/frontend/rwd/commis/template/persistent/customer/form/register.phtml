@@ -172,7 +172,7 @@
                     <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
                 </div>
                 <div class="buttons-set">
-                    <button type="submit" title="<?php echo $this->__('Register') ?>" class="button" style="width:100%"><span><span><?php echo $this->__('Register') ?></span></span></button>
+                    <button type="submit" onclick="button_onclick()" title="<?php echo $this->__('Register') ?>" class="button" style="width:100%"><span><span><?php echo $this->__('Register') ?></span></span></button>
                     <p class="required"><?php echo $this->__('* Required Fields') ?></p>
                 </div>
                 <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
@@ -186,6 +186,9 @@
                 new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
                 <?php endif; ?>
             //]]>
+            </script>
+            <script>
+                function button_onclick(){tagmanager_event('validationInscription',{});}
             </script>
         </div>
         <div class="col-sm-4"></div>

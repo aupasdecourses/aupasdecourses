@@ -302,15 +302,15 @@ class Magento
     {
         $prod_data = [
             'id' => $product->getItemId(),
-                'nom' => $product->getName(),
-                'order_id' => $order_id,
-                'prix_kilo' => $product->getPrixKiloSite(),
-                'quantite' => round($product->getQtyOrdered(), 0),
-                'description' => $product->getShortDescription(),
-                'prix_unitaire' => round($product->getPriceInclTax(), 2),
-                'prix_total' => round($product->getRowTotalInclTax(), 2),
-                'commercant_id' => $product->getCommercant(),
-                'refund_comment' => $product->getRefundComment(),
+            'nom' => $product->getName(),
+            'order_id' => $order_id,
+            'prix_kilo' => $product->getPrixKiloSite(),
+            'quantite' => round($product->getQtyOrdered(), 0),
+            'description' => $product->getShortDescription(),
+            'prix_unitaire' => round($product->getPriceInclTax(), 2),
+            'prix_total' => round($product->getRowTotalInclTax(), 2),
+            'commercant_id' => $product->getCommercant(),
+            'refund_comment' => $product->getRefundComment(),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
@@ -356,7 +356,7 @@ class Magento
             $entry->addFieldToFilter($k, $v);
         }
         if (($id = $entry->getFirstItem()->getId()) != null) {
-            $model->load($id);
+            $model->load($id);                 
             foreach ($updatedFields as $k => $v) {
                 $model->setData($k, $v);
             }
@@ -426,23 +426,20 @@ class Magento
         }
     }
 
-
-
-	/** Mettre dans trait Model **/
-    public function addEntryToGeocode(array $data)
+    /** Mettre dans trait Model **/
+    public function addEntryToBillingDetails(array $data)
     {
         $this->addEntryToModel(
-            \Mage::getModel('pmainguet_delivery/geocode_customers'),
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_billingdetails')),
             $data
         );
     }
 
-	/** Mettre dans trait Model **/
-    public function updateEntryToGeocode(array $filters, array $updatedFields)
+    /** Mettre dans trait Model **/
+    public function updateEntryToBillingDetails(array $filters, array $updatedFields)
     {
-        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
+        $model = \Mage::getModel('pmainguet_delivery/indi_billingdetails');
         $check = $this->checkEntryToModel($model, $filters);
-
         if ($check) {
             $this->updateEntryToModel(
                 $model,
@@ -458,12 +455,63 @@ class Magento
         }
     }
 
+    /** Mettre dans trait Model **/
+    public function addEntryToBillingSummary(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_billingsummary')),
+                $data
+        );
+    }
+
+    public function addEntryToGeocode(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel('pmainguet_delivery/geocode_customers'),
+            $data
+        );
+    }
 
 
+    /** Mettre dans trait Model **/
+    public function updateEntryToBillingSummary(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_billingsummary');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
 
-
-
-
+	/** Mettre dans trait Model **/
+    public function updateEntryToGeocode(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
 
 	/** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)

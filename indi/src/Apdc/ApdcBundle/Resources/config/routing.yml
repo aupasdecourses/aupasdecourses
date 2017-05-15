@@ -86,9 +86,22 @@ refundAdyenForm:
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
   requirements: { psp:"[0-9]+" }
 
-billingIndex:
-  path: /billing/
-  defaults: { _controller: ApdcApdcBundle:Billing:index}
+billingVerif:
+  path: /billing/verif
+  defaults: { _controller: ApdcApdcBundle:Billing:verif}
+
+billingDetails:
+  path: /billing/details
+  defaults: { _controller: ApdcApdcBundle:Billing:details}
+
+billingSummary:
+  path: /billing/summary
+  defaults: { _controller: ApdcApdcBundle:Billing:summary}
+
+billingOne:
+  path:    /billing/{id}
+  defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
+  requirements: { id:"COM-[0-9-]+" }
 
 billingPayoutIndex:
   path: /billing/payout/
@@ -153,3 +166,7 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+download_route:
+    path:  /download/{filename}
+    defaults: { _controller: ApdcApdcBundle:Default:download }

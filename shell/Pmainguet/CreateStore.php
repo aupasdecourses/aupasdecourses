@@ -82,6 +82,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
         'Poissonnier' => "#5496d7",
         'Epicerie' => '#2f4da8',
         'Traiteur' => '#272b32',
+        'Bio' => '#00595E',
     ];
 
     public function __construct(){
@@ -532,14 +533,16 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             array_push($options, $opt['label']);
         }
  
-        foreach ($catnames as $parentcat => $childcat) {
-            if (!in_array($childcat, $options)) {
-                echo 'Attribute option '.$childcat." CREATED!\n";
-                $option['attribute_id'] = $attr_id;
-                $option['value'][$childcat][0] = $childcat;
-                $setup_check = true;
-            } else {
-                echo 'Attribute option '.$childcat." already EXISTS.Next!\n";
+        foreach ($catnames as $parentcat => $childcat_array) {
+            foreach($childcat_array as $childcat){
+                if (!in_array($childcat, $options)) {
+                    echo 'Attribute option '.$childcat." CREATED!\n";
+                    $option['attribute_id'] = $attr_id;
+                    $option['value'][$childcat][0] = $childcat;
+                    $setup_check = true;
+                } else {
+                    echo 'Attribute option '.$childcat." already EXISTS.Next!\n";
+                }
             }
         }
 
@@ -577,97 +580,99 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             return ;
         }
 
-        foreach ($catnames as $parentcat => $childcat) {
-            if($childcat != '' ){
-                $parentCategory = Mage::getModel('catalog/category')->getCollection()
-                    ->addAttributeToFilter('is_active', true)
-                    ->addAttributeToFilter('path', array('like' => '1/'.$rootCategoryId.'/%'))
-                    ->addAttributeToFilter('name', $parentcat)
-                    ->getFirstItem();
-                $childCategory = Mage::getModel('catalog/category')->getCollection()
-                    ->addAttributeToFilter('is_active', true)
-                    ->addIdFilter($parentCategory->getChildren())
-                    ->addAttributeToFilter('name', $childcat)
-                    ->getFirstItem();
-            
+        foreach ($catnames as $parentcat => $childcat_array) {
+            foreach($childcat_array as $childcat){
+                if($childcat != '' ){
+                    $parentCategory = Mage::getModel('catalog/category')->getCollection()
+                        ->addAttributeToFilter('is_active', true)
+                        ->addAttributeToFilter('path', array('like' => '1/'.$rootCategoryId.'/%'))
+                        ->addAttributeToFilter('name', $parentcat)
+                        ->getFirstItem();
+                    $childCategory = Mage::getModel('catalog/category')->getCollection()
+                        ->addAttributeToFilter('is_active', true)
+                        ->addIdFilter($parentCategory->getChildren())
+                        ->addAttributeToFilter('name', $childcat)
+                        ->getFirstItem();
+                
 
-                if (null == $childCategory->getId()) {
+                    if (null == $childCategory->getId()) {
 
-                    $meta_description=$childcat.', votre '.strtolower($parentCategory->getName()).' de '.$this->_city.' '.$this->_codeboutique.' vous livre à domicile grâce à Au Pas De Courses. Profitez-en, faites vous livrer ce soir!';
+                        $meta_description=$childcat.', votre '.strtolower($parentCategory->getName()).' de '.$this->_city.' '.$this->_codeboutique.' vous livre à domicile grâce à Au Pas De Courses. Profitez-en, faites vous livrer ce soir!';
 
-                    //id of parent category
-                    $parentId = $parentCategory->getId();
-                    $category = Mage::getModel('catalog/category');
-                    $category->setName($childcat);
-                    $category->setIsActive(1);
-                    $category->setIsAnchor(1);
-                    $category->setIsClickable(1);
-                    $category->setData('estcom_commercant', 70);
-                    $category->setStoreId($storeid);
-                    $parentCategory = Mage::getModel('catalog/category')->load($parentId);
-                    $category->setPath($parentCategory->getPath());
-                    $category->setMenuTemplate('template2');
-                    $category->setMetaDescription($meta_description);
-                    $category->save();
-                    $parentCatUrlKey=$parentCategory->getUrlKey();
+                        //id of parent category
+                        $parentId = $parentCategory->getId();
+                        $category = Mage::getModel('catalog/category');
+                        $category->setName($childcat);
+                        $category->setIsActive(1);
+                        $category->setIsAnchor(1);
+                        $category->setIsClickable(1);
+                        $category->setData('estcom_commercant', 70);
+                        $category->setStoreId($storeid);
+                        $parentCategory = Mage::getModel('catalog/category')->load($parentId);
+                        $category->setPath($parentCategory->getPath());
+                        $category->setMenuTemplate('template2');
+                        $category->setMetaDescription($meta_description);
+                        $category->save();
+                        $parentCatUrlKey=$parentCategory->getUrlKey();
 
-                    //Create Content Block
-                    $check=null;
-                    if($check == null){
-                        $contentblock='<ul class="main-cats"><li class="item-main-block"><a class="level2" href="{{store url=""}}'.$parentCatUrlKey.'/';
-                        $contentblock.=$category->getUrlKey();
-                        $contentblock.='/tous-les-produits.html"><div class="cat-thumbnail"><img src="{{config path="web/secure/base_url"}}media/catalog/category/tous.jpg"></div><span class="cat-name">Tous les produits</span></a></li></ul>';
-                        $contentblock.='<ul><li class="item-main-block info-commercant fa fa-info-circle" aria-hidden="true"> <a href="{{store url=""}}';
-                        $contentblock.=$parentCategory->getUrlKey();
-                        $contentblock.='/'.$category->getUrlKey().'.html">En savoir plus sur '.$childcat.'</a></li>
-                            </ul>';
+                        //Create Content Block
+                        $check=null;
+                        if($check == null){
+                            $contentblock='<ul class="main-cats"><li class="item-main-block"><a class="level2" href="{{store url=""}}'.$parentCatUrlKey.'/';
+                            $contentblock.=$category->getUrlKey();
+                            $contentblock.='/tous-les-produits.html"><div class="cat-thumbnail"><img src="{{config path="web/secure/base_url"}}media/catalog/category/tous.jpg"></div><span class="cat-name">Tous les produits</span></a></li></ul>';
+                            $contentblock.='<ul><li class="item-main-block info-commercant fa fa-info-circle" aria-hidden="true"> <a href="{{store url=""}}';
+                            $contentblock.=$parentCategory->getUrlKey();
+                            $contentblock.='/'.$category->getUrlKey().'.html">En savoir plus sur '.$childcat.'</a></li>
+                                </ul>';
 
-                        $datablock=[
-                            'title'=>"Main Block ".$childcat." - ".$this->_city." ".$this->_nameboutique,
-                            'identifier'=>'main-block-'.$category->getUrlKey(),
-                            'stores'=>array($storeid),
-                            'is_active'=>true,
-                            'content'=>$contentblock,
+                            $datablock=[
+                                'title'=>"Main Block ".$childcat." - ".$this->_city." ".$this->_nameboutique,
+                                'identifier'=>'main-block-'.$category->getUrlKey(),
+                                'stores'=>array($storeid),
+                                'is_active'=>true,
+                                'content'=>$contentblock,
+                            ];
+
+                            $mainblockmenu=Mage::getModel('cms/block')->setData($datablock)->save();
+
+                            $category->setMenuMainStaticBlock($mainblockmenu->getIdentifier());
+                        }else{
+                            $text="CMS block %s already exists. Setup category with existing blocks";
+                            echo sprintf($text,'main-block-'.$category->getUrlKey());
+                            $category->setMenuMainStaticBlock('main-block-'.$category->getUrlKey());
+                        }
+                        $category->save();
+
+                        //Create Shop Entity
+                        $namecommercant=Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $this->_commercant[$childcat])->getFirstItem()->getName();
+                        $mail=$this->_contacts[$childcat]['email'];
+                        $id_contact=Mage::getSingleton('apdc_commercant/contact')->getCollection()->addFieldToFilter('email', $mail)->getFirstItem()->getId();
+                        $id_attribut_commercant = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('commercant')->getFirstItem()->getSource()->getOptionId($childcat);
+
+                        $S = Mage::helper('apdc_commercant')->getStoresArray();
+
+                        $data=[
+                            'enabled'=>true,
+                            'name'=>$childcat,
+                            'id_commercant'=>Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $namecommercant)->getFirstItem()->getId(),
+                            'id_contact_manager'=>$id_contact,
+                            'id_category'=>array($category->getId()),
+                            'stores'=>array($S[explode('/', $category->getPath())[1]]['store_id']),
+                            'id_attribut_commercant'=>$id_attribut_commercant,
+                            'delivery_days'=>array(2,3,4,5),
+                            'city'=>'Paris',
+                            'postcode'=>$this->_zipcode[0],
+                            'google_id'=>$this->_googlesheets[$childcat]['google_id'],
+                            'google_key'=>$this->_googlesheets[$childcat]['google_key'],
                         ];
 
-                        $mainblockmenu=Mage::getModel('cms/block')->setData($datablock)->save();
+                        echo $this->create_magasinentity($data);
 
-                        $category->setMenuMainStaticBlock($mainblockmenu->getIdentifier());
-                    }else{
-                        $text="CMS block %s already exists. Setup category with existing blocks";
-                        echo sprintf($text,'main-block-'.$category->getUrlKey());
-                        $category->setMenuMainStaticBlock('main-block-'.$category->getUrlKey());
+                        echo 'Category, contact, commercants, shop, main static block '.$childcat." CREATED!\n";
+                    } else {
+                        echo 'Category '.$childcat." already EXISTS. Next!\n";
                     }
-                    $category->save();
-
-                    //Create Shop Entity
-                    $namecommercant=Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $this->_commercant[$childcat])->getFirstItem()->getName();
-                    $mail=$this->_contacts[$childcat]['email'];
-                    $id_contact=Mage::getSingleton('apdc_commercant/contact')->getCollection()->addFieldToFilter('email', $mail)->getFirstItem()->getId();
-                    $id_attribut_commercant = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('commercant')->getFirstItem()->getSource()->getOptionId($childcat);
-
-                    $S = Mage::helper('apdc_commercant')->getStoresArray();
-
-                    $data=[
-                        'enabled'=>true,
-                        'name'=>$childcat,
-                        'id_commercant'=>Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $namecommercant)->getFirstItem()->getId(),
-                        'id_contact_manager'=>$id_contact,
-                        'id_category'=>array($category->getId()),
-                        'stores'=>array($S[explode('/', $category->getPath())[1]]['store_id']),
-                        'id_attribut_commercant'=>$id_attribut_commercant,
-                        'delivery_days'=>array(2,3,4,5),
-                        'city'=>'Paris',
-                        'postcode'=>$this->_zipcode[0],
-                        'google_id'=>$this->_googlesheets[$childcat]['google_id'],
-                        'google_key'=>$this->_googlesheets[$childcat]['google_key'],
-                    ];
-
-                    echo $this->create_magasinentity($data);
-
-                    echo 'Category, contact, commercants, shop, main static block '.$childcat." CREATED!\n";
-                } else {
-                    echo 'Category '.$childcat." already EXISTS. Next!\n";
                 }
             }
         }

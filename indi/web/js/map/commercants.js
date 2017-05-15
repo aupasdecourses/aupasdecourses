@@ -45,9 +45,12 @@ function setMarker(data){
 }
 
 //Tile
-var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-});
+// var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
+//     attribution: '© OpenStreetMap contributors'
+// });
+var city = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: '© OpenStreetMap contributors'
+ });
 
 ///Get and set markers
 
@@ -69,11 +72,15 @@ var map = L.map('mapShops',{
 map.fitBounds(group.getBounds());
 
 //Add Cluster with markers
-var cluster = new L.MarkerClusterGroup();
+// var layer_commercant = new L.layerGroup();
 $.each(lieu,function(i,d){
-	cluster.addLayer(d);
+ 	d.addTo(map);
 });
-map.addLayer(cluster);
+// var cluster = new L.MarkerClusterGroup();
+// $.each(lieu,function(i,d){
+// 	cluster.addLayer(d);
+// });
+// map.addLayer(cluster);
 
 
 //Geolocalisation
@@ -84,7 +91,7 @@ function onLocationError(e) {alert(e.message);}
 map.on('locationerror', onLocationError);
 
 /* barre de recherche Google API */
-var geocoder = new google.maps.Geocoder();
+var geocoder = new google.maps.Geocoder(google_key);
 function googleGeocoding(text, callResponse)
 {
 	geocoder.geocode({address: text}, callResponse);
@@ -103,12 +110,16 @@ function formatJSON(rawjson)
 	}
 	return json;
 }
-map.addControl( new L.Control.Search({
+
+var searchControl=new L.Control.Search({
 	sourceData: googleGeocoding,
 	formatData: formatJSON,
 	markerLocation: true,
 	autoType: false,
 	autoCollapse: true,
-	minLength: 2
-}) );
+	minLength: 2,
+	zoom:16,
+});
+
+map.addControl(searchControl);
 

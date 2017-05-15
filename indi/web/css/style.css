@@ -261,3 +261,7 @@ input#datepickerBill,input#datepickerLoyalty,input#datepickerEndLoyalty,input#da
 	width:100%;
 	height:100%;
 }
+
+#mapShops{
+	margin-top:-20px;
+}
