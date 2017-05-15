@@ -18,7 +18,7 @@ gulp.task('minifyRequiredCSSMap', function () {
 			indi + '/css/map/leaflet-search.css',
 			indi + '/css/map/leaflet-search.mobile.css',
 			indi + '/css/map/MarkerCluster.css',
-			indi + '/css/map/MarkerCluster.Default.css
+			indi + '/css/map/MarkerCluster.Default.css'
 			])
 			.pipe(plugins.csso())
 			.pipe(gulp.dest(indi + '/css/map/'));
@@ -67,7 +67,7 @@ gulp.task('formatJS', function () {
 			indi + '/js/datepicker.js',
 			indi + '/js/digest-gallery.js',
 			indi + '/js/input-compute.js',
-			indi + '/js/input-ticket.js
+			indi + '/js/input-ticket.js'
 			])
 			.pipe(plugins.beautify({indent_size: 2}))
 			.pipe(gulp.dest(indi + '/js/'));
