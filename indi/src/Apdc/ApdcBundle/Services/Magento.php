@@ -135,6 +135,7 @@ class Magento
                 $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
+                        'code' => $shop->getData('code'),
                         'shop_id' => $shop->getIdShop(),
                         'store' => $storeinfo['name'],
                         'store_id' => $storeinfo['store_id'],

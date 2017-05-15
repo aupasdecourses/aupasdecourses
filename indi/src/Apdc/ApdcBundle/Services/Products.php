@@ -135,6 +135,7 @@ trait Products
      *                         "short_description" string
      *                         "nbre_portion" int
      *                         "tax_class_id" int 5, 9 or 10
+     *
      * @return bool Whether the update was performed successfully or not
      */
     public function updateProduct($entity_id, $data)
@@ -166,17 +167,105 @@ trait Products
             $data['image_label'] = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
 
             //poids
-            $data['weight'] = $data['poids_portion'];
+            $data['weight'] = $data['poids_portion'] * $data['nbre_portion'];
             foreach ($data as $key => $value) {
                 if ($key != 'commercant') {
                     $product->setData($key, $value);
                 }
             }
+
+            $product->setUpdatedAt(strtotime('now'));
+
             $product->save();
 
             return true;
         } catch (Exception $e) {
             return false;
+        }
+    }
+
+    /**
+     * Create product in Magento tables.
+     *
+     * @param array $data      list of product attributes to create
+     *                         "name" string
+     *                         "produit_biologique" string "Oui" or "Non"
+     *                         "reference_interne_magasin" int
+     *                         "poids_portion" string
+     *                         "unite_prix" string kg / piece / ...
+     *                         "prix_public" float
+     *                         "status" boolean
+     *                         "commercant" int (à ne pas intégrer pour le moment)
+     *                         "on_selection" boolean
+     *                         "produit_de_saison" string "Oui" or "Non"
+     *                         "short_description" string
+     *                         "nbre_portion" int
+     *                         "tax_class_id" int 5, 9 or 10
+     *
+     * @return bool Whether the update was performed successfully or not
+     */
+    public function createProduct($data)
+    {
+        \Mage::app()->setCurrentStore(\Mage_Core_Model_App::ADMIN_STORE_ID);
+        $product = \Mage::getModel('catalog/product');
+
+        try {
+
+        //find websiteId
+        $data_commercant = $this->getMerchants($data['commercant']);
+            $websiteIds = array();
+            $datas = array();
+            foreach ($data_commercant as $store_id => $data) {
+                array_push($websiteIds, $store_id);
+                array_push($datas, $data);
+            }
+        $data['website_ids']=$websiteIds;
+        $data['attribute_set_id']=4;
+        $data['type_id']='simple';
+        $data['created_at']=strtotime('now');
+        $data['visibility']=\Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH;
+
+        //Calculate SKU
+        $data['sku'] = $datas[0]['code'].'-'.$data['name'].'-'.(1000 + round(100 * rand(), 0));
+
+        //Convert specific attribute codes value to EAV id
+        foreach (self::ATTRIBUTE_CODES as $code) {
+            if ($code != 'commercant') {
+                $data[$code] = $this->_attributeArraysIds[$key][$data[$code]];
+            }
+        }
+
+        //calculate price
+        if (strtolower($data['unite_prix']) == 'kg') {
+            $data['price'] = $data['poids_portion'] * $data['prix_public'] * $data['nbre_portion'];
+        } else {
+            $data['price'] = $data['prix_public'] * $data['nbre_portion'];
+        }
+        $data['prix_kilo_site'] = $data['prix_public'].'€/'.$data['unite_prix'];
+
+        //meta_title
+        $data['meta_title'] = $data['name'].' - Au Pas De Courses';
+        $data['meta_description'] = $data['name'].' - Au Pas De Courses - '.$data['short_description'];
+        $data['image_label'] = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
+
+        //poids
+        $data['weight'] = $data['poids_portion'] * $data['nbre_portion'];
+        foreach ($data as $key => $value) {
+            if ($key != 'commercant') {
+                $product->setData($key, $value);
+            }
+        }
+
+        foreach ($data as $key => $value) {
+            if ($key != 'commercant') {
+                $product->setData($key, $value);
+            }
+        }
+
+        $product->save();
+        
+        } catch (Exception $e) {
+            Mage::log($e->getMessage());
         }
     }
 }
