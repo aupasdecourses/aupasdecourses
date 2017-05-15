@@ -3,11 +3,8 @@
  */
 
 var gulp		= require('gulp');
-var cssbeautify = require('gulp-cssbeautify');
-var csscomb		= require('gulp-csscomb');
-var csso		= require('gulp-csso');
-
-var indi = './indi';
+var plugins		= require('gulp-load-plugins')();
+var indi		= './indi';
 
 /* Reordonner declarations CSS + reindentation et reformatage */
 gulp.task('css', function () {
@@ -16,7 +13,9 @@ gulp.task('css', function () {
 			indi + '/web/css/map/*.css'
 			])
 			.pipe(plugins.csscomb())
-			.pipe(plugins.cssbeautify({indent: '  '})); // choix d'indent de 2 espaces
+			.pipe(plugins.cssbeautify({indent: '  '}))
+			.pipe(gulp.dest(indi + '/web/css/'))
+			.pipe(gulp.dest(indi + '/web/css/map/'));
 	});
 
 
@@ -26,9 +25,11 @@ gulp.task('minify', function () {
 			indi + '/web/css/*.css',
 			indi + '/web/css/map/*.css'
 			])
-			.pipe(plugins.csso());
+			.pipe(plugins.csso())
+			.pipe(gulp.dest(indi + '/web/css/'))
+			.pipe(gulp.dest(indi + '/web/css/map/'));
 	});
 
 
-
-// execute avec 'gulp css' et 'gulp minify'
+// Run gulp indi at www/
+gulp.task('indi', ['css', 'minify']);
