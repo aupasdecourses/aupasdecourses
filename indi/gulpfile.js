@@ -4,7 +4,7 @@
 
 var gulp		= require('gulp');
 var plugins		= require('gulp-load-plugins')();
-var indi		= './indi/web';
+var indi		= './web';
 
 
 /** CSS à minifier obligatoirement UNE SEULE FOIS
