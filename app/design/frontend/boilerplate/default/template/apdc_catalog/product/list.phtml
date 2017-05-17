@@ -43,7 +43,6 @@
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
-    <?php echo $this->getToolbarHtml() ?>
 
     <?php // Grid Mode ?>
 
@@ -111,7 +110,9 @@
         <?php endforeach ?>
     </ul>
     <script type="text/javascript">
-        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last'])
+        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last']);
+        
+        //$j('.apdc-products-grid').owlCarousel();
     </script>
 
     <div class="toolbar-bottom">

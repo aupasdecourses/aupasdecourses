@@ -56,66 +56,55 @@
                     <input type="hidden" name="item_id" value="<?php echo $_product->getCartItemId(); ?>" />
                 <?php endif; ?>
             </div>
-            <div class="product-img-box">
-                <div class="product-name">
-                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-                </div>
-                <?php echo $this->getChildHtml('media') ?>
-                <div class="product-secondaryinfos">
-                    <?php $attributes = $_product->getAttributes();
-                        $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
-                    ?>
-                    <table class="tags-product">
-                        <thead>
-                            <tr>
-                                <?php foreach ($tags as $tag=>$label) {    
+            <div class="product-img-box row">
+                <div class="col-md-4">
+                    <?php echo $this->getChildHtml('media') ?>
+                    <div class="product-secondaryinfos">
+                        <?php $attributes = $_product->getAttributes();
+                            $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
+                        ?>
+                        <div class="tags-product">
+                            <?php
+                                foreach ($tags as $tag=>$label) {
                                     $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
-                                    if (in_array($attributeValue,['Non','',' ','N/A',null])){}else{?>
-                                <th class="tags-title"><?php echo $label?></th>
-                                <?php }} ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <?php
-                                        foreach ($tags as $tag=>$label) {    
-                                            $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
-                                            if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
-                                                <td class='tags-wrapper'>
-                                                <?php if($tag=='producteur'){?>
-                                                        <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
-                                                    
-                                                    <?php }elseif($tag=='origine'){?>
-                                                        <?php if (substr($attributeValue, 0, 6) == "France"){?>
-                                                            <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
-                                                        <?php }else{?>
-                                                            <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
-                                                        <?php } ?>
-                                                <?php }elseif($tag=='produit_biologique'){?>
-                                                        <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
-                                                <?php } else{?>
-                                                        <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                    if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
+                                        <div class='tags-wrapper'>
+                                        <?php if($tag=='producteur'){?>
+                                                <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
+
+                                            <?php }elseif($tag=='origine'){?>
+                                                <?php if (substr($attributeValue, 0, 6) == "France"){?>
+                                                    <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
+                                                <?php }else{?>
+                                                    <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
                                                 <?php } ?>
-                                                </td>
-                                        <?php }} 
-                                ?>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <?php }elseif($tag=='produit_biologique'){?>
+                                                <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
+                                        <?php } else{?>
+                                                <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                        <?php } ?>
+                                        </div>
+                                <?php }} 
+                            ?>
+                        </div>
+                    </div>
+                    <div class="long-description">
+                        <?php if ($_description = $this->getProduct()->getDescription()):?>
+                            <h2>Description</h2>
+                            <p><?php echo $_description;?></p>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <div class="long-description">
-                    <?php if ($_description = $this->getProduct()->getDescription()):?>
-                        <?php echo $_description;?>
-                    <?php endif; ?>
+                <div class="col-md-8">
+                    <div class="product-name">
+                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    </div>
+                    <?php if($_product->getAttributeText('commercant')!=""){?>
+                        <div class="commercant-name"><?php echo $_product->getAttributeText('commercant') ?></div>
+                    <?php }?>
                 </div>
             </div>
             <div class="product-shop">
-                <div class="product-name">
-                    <div class="h1" itemprop="name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></div>
-                    <?php if($_product->getAttributeText('commercant')!=""){?>
-                        <div class="nom-commercant"><?php echo $_product->getAttributeText('commercant') ?></div>
-                    <?php }?>
-                </div>
                 <div class="price-info" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                       <meta itemprop="priceCurrency" content="<?php echo $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode(); ?>"/>
                       <!--<?php echo $this->getChildHtml('product_type_availability_snippet'); ?>-->
@@ -160,3 +149,10 @@
         <?php echo $this->getChildHtml('product_additional_data') ?>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $j(window).ready(function(){
+        $j('.mini-products-list').owlCarousel();
+    })
+</script>
