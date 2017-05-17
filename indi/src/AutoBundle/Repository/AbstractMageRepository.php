@@ -4,6 +4,9 @@ namespace AutoBundle\Repository;
 
 use Apdc\ApdcBundle\Services\Magento;
 use AutoBundle\Helper\MagePaginator as Paginator;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Abstract Mage Repository
@@ -25,6 +28,14 @@ abstract class AbstractMageRepository
      */
     protected $modelName;
 
+    protected $entity;
+
+    /** @var  FormBuilder */
+    protected $formBuilder;
+
+    /** @var  Form */
+    protected $form;
+
     /** @var   array  Table field name aliases, defined as aliasFieldName => actualFieldName */
     protected $aliasFields = [];
 
@@ -45,6 +56,89 @@ abstract class AbstractMageRepository
     {
         $this->mage  = $mage;
         $this->model = $mage->getModel($this->modelName);
+    }
+
+    /**
+     * @param FormBuilder $form
+     *
+     * @return $this
+     */
+    public function setFormBuilder(FormBuilder $form)
+    {
+        $this->formBuilder = $form;
+
+        return $this;
+    }
+
+    /**
+     * @return FormBuilder
+     */
+    public function getFormBuilder()
+    {
+        return $this->formBuilder;
+    }
+
+    /**
+     * @return Form
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * Finds an entity by its primary key / identifier.
+     *
+     * @param mixed $id The identifier.
+     *
+     * @return object|null The entity instance or NULL if the entity can not be found.
+     */
+    public function find($id)
+    {
+        $qb = $this->model->load($id);
+
+        if (!$qb) {
+            return null;
+        }
+
+        $this->entity = $qb;
+
+        return $this->entity->toArray();
+    }
+
+    /**
+     * @return void
+     */
+    public function save()
+    {
+        \Mage::app()->setCurrentStore(\Mage_Core_Model_App::ADMIN_STORE_ID);
+
+        foreach ($this->form->getData() as $key => $data) {
+            $this->entity->setData($key, $data);
+        }
+
+        $this->entity->save();
+    }
+
+    /**
+     * Check if the Request is valid using the Form
+     *
+     * @param Request $request
+     * @param bool    $clearMissing
+     *
+     * @return bool
+     */
+    public function isValid(Request $request, $clearMissing = false)
+    {
+        $entity = $this->entity->toArray();
+
+        $this->form = $this->formBuilder
+            ->setData($entity)
+            ->getForm();
+
+        return $this->form
+            ->submit($request->request->all(), $clearMissing)
+            ->isValid();
     }
 
     /**

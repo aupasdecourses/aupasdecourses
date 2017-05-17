@@ -7,8 +7,13 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class UserController extends AbstractController
 {
+    /** @var string */
+    protected $bundleName = 'ApdcApdcBundle';
+
+    /** @var string */
     protected $entityName = 'User';
 
+    /** @var array The ACL for each Action */
     protected $acl = [
         'default' => 'ROLE_ADMIN'
     ];

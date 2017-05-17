@@ -28,7 +28,7 @@ class ProductController extends AbstractController
         'patch'   => 'ROLE_USER',
     ];
 
-    protected $orderable = ['available', 'name', 'origin', 'bio'];
+    protected $orderable = ['status', 'name', 'origine', 'produit_biologique'];
 
     protected $filterable = ['user'];
 
@@ -178,7 +178,29 @@ class ProductController extends AbstractController
 
     public function getModel($name = null, $setForm = true)
     {
-        return $this->get('apdc_apdc.repository.products');
+        if (isset($name)) {
+            // Note: Well, not good, if the needed model has a service like here, it will not work
+
+            return parent::getModel($name, $setForm);
+        }
+
+        if (!isset($this->modelInstances['Product'])) {
+            $this->modelInstances['Product'] = $this->get('apdc_apdc.repository.products');
+
+            if ($setForm) {
+                $this->modelInstances['Product']->setFormBuilder(
+                    $this->get('form.factory')->createBuilder(
+                        $this->makeForm('Product'),
+                        null,
+                        [
+                            'attr' => ['id' => 'form-Main']
+                        ]
+                    )
+                );
+            }
+        }
+
+        return $this->modelInstances['Product'];
     }
 
     /**

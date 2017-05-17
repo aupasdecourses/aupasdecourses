@@ -45,7 +45,7 @@ class MagePaginator extends AbstractPaginator
     public function getSearchCount()
     {
         if (!isset($this->searchCount)) {
-            $this->totalCount = $this->qb->getSize(); // getAllIds()
+            $this->searchCount = $this->qb->getSize();
         }
 
         return $this->searchCount;

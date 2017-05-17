@@ -2,14 +2,25 @@
 namespace AutoBundle\Repository;
 
 use AutoBundle\Helper\Paginator;
-
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Magic Repository
  */
 abstract class AbstractRepository extends EntityRepository
 {
+    protected $entity;
+
+    /** @var  FormBuilder */
+    protected $formBuilder;
+
+    /** @var  Form */
+    protected $form;
+
     /** @var   array  Table field name aliases, defined as aliasFieldName => actualFieldName */
     protected $aliasFields = [];
 
@@ -19,7 +30,100 @@ abstract class AbstractRepository extends EntityRepository
     /** @var array Array alreay join table */
     protected $withs = [];
 
-    protected $orderWithjoin = null;
+    /** @var null|array Order from relations */
+    protected $orderWiths = null;
+
+    /**
+     * @param FormBuilder $form
+     *
+     * @return $this
+     */
+    public function setFormBuilder(FormBuilder $form)
+    {
+        $this->formBuilder = $form;
+
+        return $this;
+    }
+
+    /**
+     * @return FormBuilder
+     */
+    public function getFormBuilder()
+    {
+        return $this->formBuilder;
+    }
+
+    /**
+     * @return Form
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param integer $id
+     *
+     * @return $this
+     */
+    public function load($id)
+    {
+        $this->find($id, LockMode::NONE, null);
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        $this->entity = parent::find($id, $lockMode, $lockVersion);
+
+        return $this->entity;
+    }
+
+    /**
+     * @return void
+     */
+    public function save()
+    {
+        $em = $this->getEntityManager();
+
+        $em->merge($this->entity);
+        $em->flush();
+    }
+
+    /**
+     * Check if the Request is valid using the Form
+     *
+     * @param Request $request
+     * @param bool    $clearMissing
+     *
+     * @return bool
+     */
+    public function isValid(Request $request, $clearMissing = false)
+    {
+        $entity = is_object($this->entity) ? clone $this->entity : $this->entity;
+
+        $this->form = $this->formBuilder
+            ->setData($entity)
+            ->getForm();
+
+        return $this->form
+            ->submit($request->request->all(), $clearMissing)
+            ->isValid();
+    }
+
+    /**
+     * Get the current entity
+     *
+     * @return mixed
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
 
     /**
      * Get the real name of a field name based on its alias.
@@ -50,8 +154,14 @@ abstract class AbstractRepository extends EntityRepository
      *
      * @return array
      */
-    public function searchAndfindBy($search = null, $filters = array(), $orderBy = array(), $limit = null, $offset = null, $only = null)
-    {
+    public function searchAndfindBy(
+        $search = null,
+        $filters = [],
+        $orderBy = [],
+        $limit = null,
+        $offset = null,
+        $only = null
+    ) {
         return $this->searchAndfindQuery($search, $filters, $orderBy, $limit, $offset, $only)->getResult();
     }
 
@@ -65,12 +175,17 @@ abstract class AbstractRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function searchAndfindQuery($search = null, $filters = [], $orderBy = [], $limit = null, $offset = null, $only = null)
-    {
+    public function searchAndfindQuery(
+        $search = null,
+        $filters = [],
+        $orderBy = [],
+        $limit = null,
+        $offset = null,
+        $only = null
+    ) {
         $qb = $this->createQueryBuilder('magic');
 
         if ($only) {
-
             if (!is_array($only)) {
                 $only = [$only];
             }
@@ -103,16 +218,15 @@ abstract class AbstractRepository extends EntityRepository
                 case 'startWith':
                     $val = $val.'%';
                     break;
-                case 'endWith'  :
+                case 'endWith':
                     $val = '%'.$val;
                     break;
                 case 'exactWord':
-                    $val = $val;
                     break;
-                case 'contains' :
+                case 'contains':
                     $val = '%'.$val.'%';
                     break;
-                default         :
+                default:
                     $val = '%'.$val.'%';
             }
 
@@ -122,7 +236,7 @@ abstract class AbstractRepository extends EntityRepository
         $this->filtersQuery($filters, $qb);
 
         if ((isset($offset)) && (isset($limit))) {
-            $this->paginator = new Paginator($qb, $limit, $offset);
+            $this->setPaginator($qb, $limit, $offset);
 
             if ($limit > 0) {
                 $qb->setFirstResult($offset);
@@ -131,8 +245,8 @@ abstract class AbstractRepository extends EntityRepository
         }
 
         foreach ($orderBy as $key => $value) {
-            if (isset($this->orderWithjoin) && array_key_exists($key, $this->orderWithjoin)) {
-                $qb->add('orderBy', $this->orderWithjoin[$key].' '.$value);
+            if (isset($this->orderWiths) && array_key_exists($key, $this->orderWiths)) {
+                $qb->add('orderBy', $this->orderWiths[$key].' '.$value);
             } else {
                 $qb->add('orderBy', 'magic.'.$key.' '.$value);
             }
@@ -164,6 +278,8 @@ abstract class AbstractRepository extends EntityRepository
             foreach ($filters as $name => $filter) {
                 if (is_array($filter)) {
                     $qb->andWhere('magic.'.$name.' IN ('.implode(',', $filter).')');
+                } elseif (!isset($filter)) {
+                    $qb->andWhere('magic.'.$name.' IS NULL');
                 } else {
                     $qb->andWhere('magic.'.$name.' = \''.$filter.'\'');
                 }
@@ -185,7 +301,9 @@ abstract class AbstractRepository extends EntityRepository
             //TODO: generate alias based on relation name (eg. magic.revisions -> revisions or magicRevisions)
         }
 
-        if (isset($this->withs[$alias])) {
+        $allAlias = $qb->getAllAliases();
+
+        if (in_array($alias, $allAlias)) {
             return;
         }
 
@@ -194,8 +312,20 @@ abstract class AbstractRepository extends EntityRepository
         if (isset($groupBy)) {
             $qb->groupBy($groupBy);
         }
+    }
 
-        $this->withs[$alias] = 1;
+    /**
+     * @param $qb
+     * @param $limit
+     * @param $offset
+     *
+     * @return $this
+     */
+    public function setPaginator($qb, $limit, $offset)
+    {
+        $this->paginator = new Paginator($qb, $limit, $offset);
+
+        return $this;
     }
 
     /**
@@ -216,9 +346,9 @@ abstract class AbstractRepository extends EntityRepository
     public function count()
     {
         $count = $this->createQueryBuilder('magic')
-            ->select('count(magic.id)')
+            ->select('count(magic.'.$this->getFieldAlias('id').')')
             ->setMaxResults(1)
-            ->getQuery()->getSingleScalarResult();;
+            ->getQuery()->getSingleScalarResult();
 
         return $count;
     }

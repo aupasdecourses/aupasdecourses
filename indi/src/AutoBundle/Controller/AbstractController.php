@@ -100,12 +100,13 @@ abstract class AbstractController extends Controller implements ClassResourceInt
                 ->getRepository($this->bundleName.':'.$modelName);
 
             if ($setForm) {
-                $this->modelInstances[$modelName]->setForm(
+                $this->modelInstances[$modelName]->setFormBuilder(
                     $this->get('form.factory')->createBuilder(
                         $this->makeForm($modelName),
                         null,
                         [
-                            'attr' => ['id' => 'form-Main']
+                            'attr' => ['id' => 'form-Main'],
+                            'em'   => $this->getDoctrine()->getManager()
                         ]
                     )
                 );
@@ -118,13 +119,11 @@ abstract class AbstractController extends Controller implements ClassResourceInt
     /**
      * @param string $modelName
      *
-     * @return Form
+     * @return string
      */
     protected function makeForm($modelName)
     {
-        $formName = $this->bundleName.'\Form\\'.$modelName.'Type';
-
-        return new $formName(['em' => $this->getDoctrine()->getManager()]);
+        return $this->bundleName.'\Form\\'.$modelName.'Type';
     }
 
     /**
@@ -132,7 +131,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     public function getFormBuilder()
     {
-        return $this->getModel()->getForm();
+        return $this->getModel()->getFormBuilder();
     }
 
     /**
@@ -140,7 +139,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     public function getForm()
     {
-        return $this->getModel()->getForm()->getForm();
+        return $this->getModel()->getForm();
     }
 
     /**
@@ -328,7 +327,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      * @param integer $id      The entity id
      * @param Request $request The Request
      *
-     * @return array
+     * @return array|object
      *
      * @ViewTemplate()
      * @ApiDoc(output={})
@@ -455,7 +454,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     protected function putPatch($id, Request $request, $clearMissing = true)
     {
-        if (!$entity = $this->getModel(null, false)->find($id)) {
+        if (!$entity = $this->getModel()->find($id)) {
             return $this->notFound();
         }
 
@@ -467,15 +466,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             ]
         );
 
-        $formName = 'AppBundle\Form\\'.$this->entityName.'Type';
-        $form     = $this->createForm(
-            $formName,
-            $entity
-        );
-
-        $form->submit($request->request->all(), $clearMissing);
-
-        if ($form->isValid()) {
+        if ($this->getModel()->isValid($request, $clearMissing)) {
             $this->triggerEvent(
                 'onUpdateBeforeSave',
                 [
@@ -483,10 +474,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
                 ]
             );
 
-            $em = $this->getDoctrine()->getManager();
-
-            $em->merge($entity);
-            $em->flush();
+            $this->getModel()->save();
 
             $this->triggerEvent(
                 'onUpdateAfterSave',
@@ -497,7 +485,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
 
             return $entity;
         } else {
-            return $form;
+            return $this->getForm();
         }
     }
 

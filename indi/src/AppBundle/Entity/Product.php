@@ -142,7 +142,7 @@ class Product
      *
      * @var string
      *
-     * @ORM\Column(name="nbe_portion", type="integer", length=11)
+     * @ORM\Column(name="nbre_portion", type="integer", length=11)
      */
     private $portionNumber = 1;
 
@@ -153,15 +153,15 @@ class Product
      *
      * @ORM\Column(name="tax_class_id", type="integer", length=11)
      */
-    private $tax = 1;
+    private $tax = 5;
 
     /**
      * @var array
      */
     private $taxValues = [
-        1 => '5.5',
-        2 => '10',
-        3 => '20'
+        5  => '5.5',
+        9  => '10',
+        10 => '20'
     ];
 
     /**
@@ -178,7 +178,7 @@ class Product
      *
      * @var string
      *
-     * @ORM\Column(name="produit_bio", type="boolean")
+     * @ORM\Column(name="produit_biologique", type="boolean")
      */
     private $bio = false;
 
@@ -607,14 +607,11 @@ class Product
     {
         $this->photoFile = $file;
 
-        if (isset($this->photo))
-        {
+        if (isset($this->photo)) {
             // store the old name to delete after the update
             $this->tempPhoto = $this->photo;
             $this->photo     = null;
-        }
-        else
-        {
+        } else {
             $this->photo = 'initial';
         }
     }
