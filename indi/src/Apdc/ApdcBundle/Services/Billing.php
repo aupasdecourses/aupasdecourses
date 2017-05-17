@@ -670,7 +670,20 @@ class Billing
         $return = $model->addFieldtoFilter('billing_month', $billing_month)->toArray();
 
         return $return['items'];
-    }
+	}
+
+	/**
+	 * Surcharge permettant l'affichage des X derniers mois
+	 * dans le controlleur billingIndex
+	 */
+	public function getDataFactu($model, $debut, $fin)
+	{
+		$billing_month = date('01:m:Y', strtotime(str_replace('/', '-', $debut)));
+		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
+		$return = $model->addFieldToFilter('billing_month', array('from' => $debut, 'to' => $fin))->toArray();
+
+		return $return['items'];
+	}
 
     /**
      * [getOneBilling description].

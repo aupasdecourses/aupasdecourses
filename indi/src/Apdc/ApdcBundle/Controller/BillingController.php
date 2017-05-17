@@ -10,7 +10,24 @@ use Apdc\ApdcBundle\Form\PayoutType;
 class BillingController extends Controller
 {
     public function indexAction(Request $request)
-    {
+	{
+		if (!$this->isGranted('ROLE_ADMIN')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$factu = $this->container->get('apdc_apdc.billing');
+
+		if (isset($_GET['date_debut'])) {
+			$date_debut		= $_GET['date_debut'];
+			$date_fin		= $factu->end_month(date('Y-m-d H:i:s'));
+			$summary		= $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
+		}
+
+		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
+			'summary'			=> $summary,
+			'date_debut'		=> $date_debut,
+			'date_fin'			=> $date_fin,
+		]);
     }
 
     public function verifAction(Request $request)
