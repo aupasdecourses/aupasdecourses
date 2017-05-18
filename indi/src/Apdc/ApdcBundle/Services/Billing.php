@@ -673,14 +673,14 @@ class Billing
 	}
 
 	/**
-	 * Surcharge permettant l'affichage des X derniers mois
-	 * dans le controlleur billingIndex
+	 * Surcharge avec ajout de @param string $fin
+	 * Permettant l'affichage des X derniers mois
 	 */
 	public function getDataFactu($model, $debut, $fin)
 	{
-		$billing_month = date('01:m:Y', strtotime(str_replace('/', '-', $debut)));
+		$billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
-		$return = $model->addFieldToFilter('billing_month', array('from' => $debut, 'to' => $fin))->toArray();
+		$return = $model->addFieldToFilter('billing_month', ['from' => $billing_month, 'to' => $fin])->toArray();
 
 		return $return['items'];
 	}
