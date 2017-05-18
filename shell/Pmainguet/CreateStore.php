@@ -559,13 +559,15 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
 
         foreach ($catnames as $parentcat => $childcat_array) {
             foreach ($childcat_array as $childcat) {
-                if (!in_array($childcat, $options)) {
-                    echo 'Attribute option '.$childcat." CREATED!\n";
-                    $option['attribute_id'] = $attr_id;
-                    $option['value'][$childcat][0] = $childcat;
-                    $setup_check = true;
-                } else {
-                    echo 'Attribute option '.$childcat." already EXISTS.Next!\n";
+                if($childcat<>''){
+                    if (!in_array($childcat, $options)) {
+                        echo 'Attribute option '.$childcat." CREATED!\n";
+                        $option['attribute_id'] = $attr_id;
+                        $option['value'][$childcat][0] = $childcat;
+                        $setup_check = true;
+                    } else {
+                        echo 'Attribute option '.$childcat." already EXISTS.Next!\n";
+                    }
                 }
             }
         }
