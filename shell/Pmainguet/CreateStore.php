@@ -499,7 +499,11 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
             $text = "Bank Info %s already EXISTS. Next!\n";
         }
 
-        return array('id' => $bankinfo->getId(), sprintf($text, $data['name']));
+        if(null == $check->getId()){
+            return array('id' => $bankinfo->getId(), sprintf($text, $data['name']));
+        }else{
+            return array('id' => $check->getId(), sprintf($text, $data['name']));
+        }
     }
 
     //Création des entités commerçants pour script quartier
