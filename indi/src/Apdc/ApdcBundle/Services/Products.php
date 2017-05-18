@@ -124,7 +124,7 @@ trait Products
      * @param array $data      list of product attributes to update
      *                         "name" string
      *                         "produit_biologique" string "Oui" or "Non"
-     *                         "reference_interne_magasin" int
+     *                         "reference_interne_magasin" string
      *                         "poids_portion" string
      *                         "unite_prix" string kg / piece / ...
      *                         "prix_public" float
@@ -140,6 +140,7 @@ trait Products
      */
     public function updateProduct($entity_id, $data)
     {
+        \Mage::app()->setCurrentStore(\Mage_Core_Model_App::ADMIN_STORE_ID);
         $product = \Mage::getModel('catalog/product')->load($entity_id);
 
         $attributeArrays = $this->_attributeArraysIds;
@@ -190,7 +191,7 @@ trait Products
      * @param array $data      list of product attributes to create
      *                         "name" string
      *                         "produit_biologique" string "Oui" or "Non"
-     *                         "reference_interne_magasin" int
+     *                         "reference_interne_magasin" string
      *                         "poids_portion" string
      *                         "unite_prix" string kg / piece / ...
      *                         "prix_public" float
