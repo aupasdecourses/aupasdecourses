@@ -116,5 +116,9 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Notation>
+        <Apdc_Neighborhood>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Neighborhood>
     </modules>
 </config>
