@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{% block metatags %}{% endblock %}
 		<title>
 			{% block title %}
 				Au Pas De Courses - Indi
@@ -20,6 +21,8 @@
 		{% block css_loyaltyCustomer %}{% endblock %}
 		{% block css_statVoucher %}{% endblock %}
 		{% block css_noteOrder %}{% endblock %}
+		{% block css_mapCustomers %}{% endblock %}
+		{% block css_mapShops %}{% endblock %}
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 	</head>
 	<body>
@@ -53,6 +56,8 @@
 		{% block javascript_loyaltyCustomer %}{% endblock %}
 		{% block javascript_statVoucher %}{% endblock %}
 		{% block javascript_noteOrder %}{% endblock %}
+		{% block javascript_mapCustomers %}{% endblock %}
+		{% block javascript_mapShops %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 	</body>
 </html>

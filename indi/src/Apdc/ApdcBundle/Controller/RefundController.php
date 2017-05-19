@@ -163,7 +163,6 @@ class RefundController extends Controller
                             mkdir($folder, 0777, true);
                             umask($oldmask);
                         } catch (Exception $e) {
-                            dump($e);
                         }
                     }
                     if (file_exists($folder)) {
@@ -178,7 +177,6 @@ class RefundController extends Controller
                         try {
                             copy($tmp_file, $file);
                         } catch (Exception $e) {
-                            dump($e);
                         }
                     }
                 }

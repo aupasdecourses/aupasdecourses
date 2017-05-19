@@ -10,7 +10,7 @@ define('CHEMIN_MAGE', dirname(__FILE__).'/../');
 define('AMASTY_MW_DATE', date('Y-m-d', mktime(0, 0, 0, 1, 20, 2016)));
 define('TODAY_DATE', date('Y-m-d'));
 
-$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
+$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
 
 $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 

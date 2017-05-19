@@ -86,9 +86,22 @@ refundAdyenForm:
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
   requirements: { psp:"[0-9]+" }
 
-billingIndex:
-  path: /billing/
-  defaults: { _controller: ApdcApdcBundle:Billing:index}
+billingVerif:
+  path: /billing/verif
+  defaults: { _controller: ApdcApdcBundle:Billing:verif}
+
+billingDetails:
+  path: /billing/details
+  defaults: { _controller: ApdcApdcBundle:Billing:details}
+
+billingSummary:
+  path: /billing/summary
+  defaults: { _controller: ApdcApdcBundle:Billing:summary}
+
+billingOne:
+  path:    /billing/{id}
+  defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
+  requirements: { id:"COM-[0-9-]+" }
 
 billingPayoutIndex:
   path: /billing/payout/
@@ -98,10 +111,6 @@ billingPayoutSubmit:
   path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
   requirements: { choice:"[0-9]+" }
-
-statNote:
-  path: /stat/note/
-  defaults: { _controller: ApdcApdcBundle:Stat:note}
 
 toolProduct:
   path: /tool/product/
@@ -131,6 +140,14 @@ noteOrder:
   path: /stat/noteOrder/
   defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
 
+mapMerchants:
+    path: /map/merchants/
+    defaults: { _controller: ApdcApdcBundle:Map:merchants}
+
+mapCustomers:
+    path: /map/customers/
+    defaults: { _controller: ApdcApdcBundle:Map:customers}
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -149,3 +166,7 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+download_route:
+    path:  /download/{filename}
+    defaults: { _controller: ApdcApdcBundle:Default:download }

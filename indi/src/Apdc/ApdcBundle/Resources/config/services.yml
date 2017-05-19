@@ -13,5 +13,12 @@ services:
     apdc_apdc.billing:
         class: Apdc\ApdcBundle\Services\Billing
 
+    apdc_apdc.pdfbilling:
+        class: Apdc\ApdcBundle\Services\Pdfbilling
+        arguments: [ '%kernel.root_dir%', '@router' ]
+
+    apdc_apdc.pdforder:
+        class: Apdc\ApdcBundle\Services\Pdforder
+
     apdc_apdc.stats:
         class: Apdc\ApdcBundle\Services\Stats
