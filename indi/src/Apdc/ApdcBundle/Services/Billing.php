@@ -680,7 +680,9 @@ class Billing
 	{
 		$billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
-		$return = $model->addFieldToFilter('billing_month', ['from' => $billing_month, 'to' => $fin])->toArray();
+		$return = $model->addFieldToFilter('billing_month', ['from' => $billing_month, 'to' => $fin]);
+		
+		$return = $return->toArray();
 
 		return $return['items'];
 	}

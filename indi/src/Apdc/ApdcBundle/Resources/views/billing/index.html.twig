@@ -13,7 +13,6 @@
 	<table id="billIndex" class="table table-striped">
 		<thead>
 			<tr>
-				<th># Facture</th>
 				<th class="sort">Magasin</th>
 				<th class="float">Commande TTC</th>
 				<th class="float">Total Commercant TTC</th>
@@ -28,13 +27,11 @@
 				<th></th>
 				<th></th>
 				<th></th>
-				<th></th>
 			</tr>
 		</tfoot>
 		<tbody>
 			{% for order in summary %}
 			<tr>
-				<td>{{ order.increment_id }}</td>
 				<td>{{ order.shop }}</td>
 				<td>{{ order.sum_items }}</td>
 				<td>{{ order.sum_due }}</td>
