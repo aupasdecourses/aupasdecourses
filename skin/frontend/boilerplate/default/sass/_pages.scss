@@ -443,9 +443,9 @@ section {
         font-weight: normal;
         margin: 10px auto 0;
         img{
-            display: inline-block;
+            display: inline-block!important;
             vertical-align: top;
-            width: 21px;
+            width: 21px!important;
             height: auto;
             margin-right: 3px;
         }
@@ -877,5 +877,60 @@ section {
     p{
         font-size: 0.75rem;
         padding: 0 60px;
+    }
+}
+
+.toolbar-bottom{
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 10px;
+    .pages{
+        margin-top: -10px;
+        & > strong{
+            display: none;
+        }
+        li{
+            &.current, a{
+                font-size: 1rem;
+                font-weight: 700;
+                width: 40px;
+                height: 40px;
+                line-height: 29px;
+                padding: 5px 0;
+                background: #eee;
+                color: $color-main-grey;
+                border-radius: 30px;
+            }
+            &.current{
+                display: inline-block;
+                color: #fff;
+                background: $color-main-green;
+            }
+        }
+    }
+    .sort-by, .limiter{
+        label{
+            font-size: 1rem;
+            color: $color-second-green;
+        }
+    }
+    .limiter{
+        margin-top: -10px;
+    }
+    .amount{
+        color: #333;
+    }
+    select{
+        color: $color-main-grey;
+        font-size: 0.875rem;
+        padding: 10px 30px 10px 10px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #f6f6f6;
+        width: auto;
+        outline: none;
     }
 }
