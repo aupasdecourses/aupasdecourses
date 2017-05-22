@@ -5,7 +5,7 @@
 Category default layout
 -->
 
-    <catalog_category_default translate="label">
+    <!--<catalog_category_default translate="label">
         <label>Catalog Category (Non-Anchor)</label>
 	      <reference name="left_first">
             <block type="catalog/navigation" name="catalog.leftnav" after="currency" template="catalog/navigation/left.phtml">
@@ -25,12 +25,12 @@ Category default layout
                 </block>
             </block>
         </reference>
-    </catalog_category_default>
+    </catalog_category_default>-->
 
 <!--
 Category layered navigation layout
 -->
-
+<!--
     <catalog_category_layered translate="label">
         <label>Catalog Category (Anchor)</label>
         <reference name="content">
@@ -47,7 +47,7 @@ Category layered navigation layout
             </block>
         </reference>
     </catalog_category_layered>
-
+-->
 <!--
 Compare products page
 -->

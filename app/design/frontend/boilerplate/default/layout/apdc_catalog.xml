@@ -26,17 +26,44 @@
     </apdc_quickview_onload>
 
     <apdc_catalog_product_list>
-
+		<!--<remove name="breadcrumbs" />-->
+		<reference name="content">
+			<block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
+				<block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml">
+					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+						<block type="core/text_list" name="product_list.name.after" as="name.after" />
+						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+					</block>
+					<!--<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />-->
+				</block>
+				<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
+			</block>
+			
+            <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
+                <block type="catalog/product_list" name="product_list" template="apdc_catalog/product/list.phtml">
+					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+						<block type="core/text_list" name="product_list.name.after" as="name.after" />
+						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+					</block>
+                    <block type="core/text_list" name="product_list.name.after" as="name.after" />
+                    <block type="core/text_list" name="product_list.after" as="after" />
+                    <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                        <block type="page/html_pager" name="product_list_toolbar_pager"/>
+                    </block>
+                    <action method="setColumnCount"><count>5</count></action>
+                    <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+                </block>
+            </block>
+        </reference>
+		
+		<!--
         <reference name="product_list">
 			<action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
-			<!--<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
-			<block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />-->
-			<!--<action method="setColumnCount"><count>5</count></action>-->
 			<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
 				<block type="core/text_list" name="product_list.name.after" as="name.after" />
 				<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
 			</block>
-        </reference>
+        </reference>-->
 
         <!--<reference name="product_list.name.after">
           <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml" />
@@ -202,7 +229,7 @@
 
 
     <!-- Page Commerçant => 'Primeur Clémence' -->
-    <PAGE_COMMERCANT>
+    <!--<PAGE_COMMERCANT>
         <reference name="root">
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -233,5 +260,5 @@
         </reference>
         <remove name="product_list" />
     </PAGE_COMMERCANT>
-
+	-->
 </layout>

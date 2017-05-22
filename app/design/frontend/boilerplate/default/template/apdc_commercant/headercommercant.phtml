@@ -46,6 +46,9 @@
 	</div>
 </div>
 <div class="row">
+	<?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml()?>
+</div>
+<div class="row">
 	<?php echo $this->getChildHtml("commercant-categories");?>
 </div>
 <div class="row">
