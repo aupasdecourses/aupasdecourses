@@ -42,7 +42,7 @@ $count=1;
                     <span itemprop="title"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span>
                 <?php endif; ?>
                 <?php if(!$_crumbInfo['last']): ?>
-                    <span itemprop="title">/ </span>
+                    <span itemprop="title"><i class="fa fa-angle-right"></i> </span>
                 <?php endif; ?>
             </li>
         <?php 

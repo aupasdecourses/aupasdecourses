@@ -934,3 +934,40 @@ section {
         outline: none;
     }
 }
+
+.category-products{
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breadcrumbs{
+    text-align: center;
+    padding: 20px 0;
+    ul{
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        li{
+            display: inline-block;
+            vertical-align: top;
+            &:last-child{
+                & > span{
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    color: #333;
+                }
+            }
+            & > span{
+                color: $color-main-green;
+            }
+            a{
+                span{
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    color: #333;
+                }
+            }
+        }
+    }
+}

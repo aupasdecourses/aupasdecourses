@@ -13360,6 +13360,44 @@ section .section-description {
   background-color: #f6f6f6;
 }
 
+.category-products {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.breadcrumbs {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.breadcrumbs ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.breadcrumbs ul li {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.breadcrumbs ul li:last-child > span {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.breadcrumbs ul li > span {
+  color: #3ab64b;
+}
+
+.breadcrumbs ul li a span {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #333;
+}
+
 footer {
   padding: 20px 0;
   background-color: #3ab64b;
