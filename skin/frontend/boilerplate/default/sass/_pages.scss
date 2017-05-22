@@ -887,6 +887,7 @@ section {
     width: 100%;
     background: #fff;
     padding: 10px;
+    z-index: 1000;
     .pages{
         margin-top: -10px;
         & > strong{
@@ -935,12 +936,6 @@ section {
     }
 }
 
-.category-products{
-    background-color: #fff;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .breadcrumbs{
     text-align: center;
     padding: 20px 0;
@@ -968,6 +963,13 @@ section {
                     color: #333;
                 }
             }
+        }
+    }
+}
+.commercant-selection{
+    .infos-commercant{
+        a{
+            color: #333;
         }
     }
 }

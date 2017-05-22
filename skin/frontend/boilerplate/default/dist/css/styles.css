@@ -13301,6 +13301,7 @@ section .section-description {
 .toolbar-bottom {
   position: -webkit-sticky;
   position: sticky;
+  z-index: 1000;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -13360,12 +13361,6 @@ section .section-description {
   background-color: #f6f6f6;
 }
 
-.category-products {
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #fff;
-}
-
 .breadcrumbs {
   padding: 20px 0;
   text-align: center;
@@ -13395,6 +13390,10 @@ section .section-description {
 .breadcrumbs ul li a span {
   font-size: 1.125rem;
   font-weight: 700;
+  color: #333;
+}
+
+.commercant-selection .infos-commercant a {
   color: #333;
 }
 
@@ -14256,6 +14255,132 @@ footer .social-list .btn-social-icon {
 #warning_days .warning strong,
 #warning_days ul strong {
   color: #3ab64b;
+}
+
+.catalog-category-view h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 20px;
+  text-align: left;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #1e555a;
+}
+
+.catalog-category-view .commercant_product_cat,
+.catalog-category-view .breadcrumbs {
+  display: none;
+}
+
+.catalog-category-view .commercant-collapse {
+  padding: 20px;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .commercant-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .commercant-name h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 5px;
+  text-transform: none;
+  color: #3ab64b;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .commercant-name a {
+  color: #333;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .photo-commercant {
+  display: inline-block;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  margin-right: 15px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .photo-commercant img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days h2,
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days div {
+  display: inline-block;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .open-collapse {
+  line-height: 59px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  text-align: center;
+  border: 3px solid #ddd;
+  border-radius: 50%;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .open-collapse.open {
+  line-height: 53px;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .open-collapse i {
+  font-size: 2.25rem;
+  color: #ddd;
+}
+
+.catalog-category-view .commercant-collapse .collapse-wrapper {
+  display: none;
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.catalog-category-view .commercant-collapse .collapse-wrapper .commercant-img img {
+  width: 100%;
+  height: auto;
+}
+
+.catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant p {
+  font-size: .75rem;
+  color: #999;
+}
+
+.catalog-category-view .block-promos {
+  margin-top: 0;
+}
+
+.catalog-category-view .block-promos .title-block {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 5px;
+  text-transform: uppercase;
+  color: #3ab64b;
+}
+
+.catalog-category-view .block-promos .inner-box {
+  padding-top: 0;
+}
+
+.catalog-category-view .block_selection {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.catalog-category-view .block_selection .breadcrumbs {
+  display: block;
+}
+
+.catalog-category-view .category-products {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
 }
 
 .apdc-popup-close {

@@ -1,58 +1,66 @@
 <?php
     $shop_info=$this->getInfoShop();
  ?>
-<div class="row">
-	<div class="page-title category-title col-xs-12">
-	    <h1 class="subtitle commercant_name"><?= $shop_info['name'] ?></h1>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12 commercant-bottom-margin">
+<div class="row commercant-collapse">
+	<div class="col-md-12 commercant-info">
 		<div class="row">
 			<div class="col-md-6" style="z-index:9;">
 				<div class="photo-commercant">
-					<img class="img-responsive img-thumbnail" src="<?= $shop_info["image"] ?>">
+					<img class="img-responsive" src="<?= $shop_info["image"] ?>">
+				</div>
+				<div class="commercant-name">
+				    <h1 class="subtitle"><?= $shop_info['name'] ?></h1>
+				    <a href="$url_adresse" target="_blank"><i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?></a>
 				</div>
 			</div>
-			<div class="col-md-6 commercant-selection">
+			<div class="col-md-5 push-right delivery-days">
+			    <h2>Jour livraisons</h2><div><?= $shop_info['delivery_days'] ?></div>
+			</div>
+			<div class="col-md-1 text-center">
+			    <div class="open-collapse">
+			        <i class="fa fa-angle-down"></i>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 collapse-wrapper">
+		<div class="row">
+			<div class="col-md-3 commercant-opening">
+			    <h2>Horaires du magasin</h2>
+			    <div><?= $shop_info['timetable']?></div>
+			</div>
+			<div class="col-md-4 col-md-offset-1 commercant-img">
+			    <img class="img-responsive" src="<?= $shop_info["image"] ?>">
+			</div>
+			<div class="col-md-3 col-md-offset-1 desc-commercant">
 				<h2 class="title-block" style="width:300px">La petite histoire</h2>
-				<div class="colored-line"></div>
-				<div class="desc-commercant">
-					<p><?= $shop_info['description'] ?></p>
-				</div>
+				<p><?= $shop_info['description'] ?></p>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12">
-		<div class="row commercant-selection">
-			<h2 class="title-block" style="width:300px">Les infos pratiques</h2>
-			<div class="colored-line"></div>
-			<div class="col-md-6">
-				<dl class="dl-horizontal infos-commercant">
-				  <dt>Adresse</dt>
-				  	<dd>
-				  		<a href="$url_adresse" target="_blank"><?= $shop_info['adresse'];?></a>
-				  		<iframe class="map-commercant" src="https://www.google.com/maps?q=<?= $shop_info['adresse'];?>&output=embed"></iframe>
-				  	</dd>
-				</dl>
-			</div>
-			<div class="col-md-6">
-				<dl class="dl-horizontal infos-commercant">
-				  <dt>Jour livraisons</dt><dd><?= $shop_info['delivery_days'] ?></dd>
-				  <dt>Horaires du magasin</dt><dd><?= $shop_info['timetable']?></dd>
-				</dl>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml()?>
 </div>
 <div class="row">
 	<?php echo $this->getChildHtml("commercant-categories");?>
 </div>
-<div class="row">
-	<div class="col-sm-12 block_selection">
-		<?php echo $this->getChildHtml('blockselection')?>
-	</div>
+<div class="block_selection">
+    <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml()?>
+    <?php echo $this->getChildHtml('blockselection')?>
 </div>
+
+
+<script type="text/javascript">
+    $j(window).ready(function(){
+        $j('.open-collapse').click(function(){
+            if($j(this).hasClass('open')){
+                $j('.collapse-wrapper').hide();
+                $j(this).removeClass('open');
+                $j('i', this).removeClass('fa-angle-up').addClass('fa-angle-down');
+            }
+            else{
+                $j('.collapse-wrapper').show();
+                $j(this).addClass('open');
+                $j('i', this).removeClass('fa-angle-down').addClass('fa-angle-up');
+            }
+        });
+    })
+</script>
