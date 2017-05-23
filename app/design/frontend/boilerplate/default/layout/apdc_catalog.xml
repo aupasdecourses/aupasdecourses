@@ -54,6 +54,10 @@
                     <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
                 </block>
             </block>
+            <block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>
+            <block type="cms/block" name="block_advantages" as="block_advantages">
+                <action method="setBlockId"><block_id>block_advantages</block_id></action>
+            </block>
         </reference>
 		
 		<!--

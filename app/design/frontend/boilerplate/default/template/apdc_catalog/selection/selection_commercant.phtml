@@ -5,7 +5,7 @@
 ?>
 <?php if($collection->count() > 0) :?>
 <div class="row apdc_home_selection">
-	<div class="col-xs-12">
+	<div class="col-md-12">
 	    <div class="block-promos text-center">
 	    	<div class="inner-box">
                 <div class="title-block"><?php echo $this->__('En ce moment chez %s'); ?> <?= $shop_info["image"] ?></div>
@@ -86,6 +86,7 @@
             itemsScaleUp : true,
             pagination:false,
             autoPlay : false,
+            autoHeight: false,
             navigation : true,
             afterInit:function() {
                 alignProductGridActions();
