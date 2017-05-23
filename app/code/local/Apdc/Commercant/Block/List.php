@@ -74,14 +74,33 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shop_info["website"]=$data["website"];
         $shop_info["closing_periods"]=$data["closing_periods"];
         $shop_info["description"]=$categoryShop->getDescription();
-        $shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
+        //$shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
         $shop_info["image"]=$categoryShop->getImageURL();
-
-        $html="";
-        $days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+		$shop_info["thumbnail_image"] = Mage::getBaseUrl('media').'catalog/category/'.$categoryShop->getThumbnail();
+		
+        $html = "";
+		$delivery_daysAll = array();
+        $days = ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+		$delivery_days = Mage::helper('apdc_commercant')->formatDays($data["delivery_days"], false, true);
+		foreach($days as $day) {
+			if(in_array($day,$delivery_days)) {
+				$delivery_daysAll[$day] = 0;
+			}
+			else {
+				$delivery_daysAll[$day] = 1;
+			}
+		}
+		$shop_info["delivery_days"] = $delivery_daysAll;
+		
         foreach($data["timetable"] as $day=>$hours){
             $hours=($hours=="")?"Fermé":$hours;
-            $html.=$days[$day].": ".$hours."</br>";
+			$hoursExplode = explode('-', $hours);
+			if(count($hoursExplode) > 2) {
+				$hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
+				$hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
+				$hours = $hoursExplode1.' / '.$hoursExplode2;
+			}
+            $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
         }
         $shop_info["timetable"]=$html;
 

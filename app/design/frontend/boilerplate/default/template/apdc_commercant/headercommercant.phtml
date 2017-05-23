@@ -1,5 +1,6 @@
 <?php
     $shop_info=$this->getInfoShop();
+	$delivery_days = $shop_info['delivery_days'];
  ?>
 <div class="container-fluid commercant-collapse">
     <div class="row">
@@ -15,7 +16,38 @@
                     </div>
                 </div>
                 <div class="col-md-5 text-right delivery-days">
-                    <h2>Jour livraisons</h2><div><?= $shop_info['delivery_days'] ?></div>
+                    <h2>Livraison disponible le</h2>
+					<div>
+						<table>
+							<thead>
+								<?php
+									foreach($delivery_days as $key => $value) {
+										$class = '';
+										if($value == 1) {
+											$class = 'no';
+										}
+										else {
+											$class = 'yes';
+										}
+										echo '<th class="'.$class.'">'.$key.'</th>';
+									}
+								?>
+							</thead>
+							<tbody>
+								<?php
+									foreach($delivery_days as $key => $value) {
+										if($value == 1) {
+											echo '<td><i class="fa fa-close"></i></td>';
+										}
+										else {
+											echo '<td><i class="fa fa-check"></i></td>';
+										}
+									}
+								?>
+							</tbody>
+						</table>
+						
+					</div>
                 </div>
                 <div class="col-md-1 text-right text-center">
                     <div class="open-collapse">
@@ -27,7 +59,7 @@
         <div class="col-md-12 collapse-wrapper">
             <div class="row">
                 <div class="col-md-3 col-sm-4 commercant-opening">
-                    <h2>Horaires du magasin</h2>
+                    <h2>Horaires de la boutique</h2>
                     <div><?= $shop_info['timetable']?></div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-md-offset-1 commercant-img">
@@ -45,8 +77,11 @@
 	<?php echo $this->getChildHtml("commercant-categories");?>
 </div>
 <div class="block_selection">
-    <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml()?>
-    <?php echo $this->getChildHtml('blockselection')?>
+    <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
+	<?php
+		$this->getChild("blockselection")->setData("shop_info", $shop_info);
+		echo $this->getChildHtml('blockselection', false);
+	?>
 </div>
 
 

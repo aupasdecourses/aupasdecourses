@@ -9,18 +9,26 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     }
+	
+	public function getShortDays()
+    {
+        return ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    }
 
-    public function formatDays($days, $string=false){
-    	$labeldays=$this->getDays();
+    public function formatDays($days, $string = false, $short = false){
+    	$labeldays = $this->getDays();
+		if($short == true) {
+			$labeldays = $this->getShortDays();
+		}
         $rsl=[];
         foreach($days as $day){
             $rsl[]=$labeldays[$day-1];
         }
-
+ 
         if ($string){
-           	$r=implode(", ", $rsl);
+           	$r = implode(", ", $rsl);
         }else {
-        	$return=$rsl;
+        	$r = $rsl;
         }
         return $r;
     }

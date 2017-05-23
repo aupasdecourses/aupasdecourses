@@ -1,14 +1,14 @@
 <?php
 	$currentCat = Mage::registry('current_category');
 	$collection = $this->getSelectionById($currentCat->getId());
-    $shop_info=$this->getInfoShop();
+    $shop_info = $this->getData('shop_info');
 ?>
 <?php if($collection->count() > 0) :?>
 <div class="row apdc_home_selection">
 	<div class="col-md-12">
 	    <div class="block-promos text-center">
 	    	<div class="inner-box">
-                <div class="title-block"><?php echo $this->__('En ce moment chez %s'); ?> <?= $shop_info["image"] ?></div>
+                <div class="title-block"><?php echo sprintf($this->__('En ce moment chez %s'), $shop_info['name']); ?></div>
 			    <div class="colored-line"></div>
 			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid">
 				    	<?php foreach($collection as $selection):?>
@@ -87,7 +87,7 @@
             pagination:false,
             autoPlay : false,
             autoHeight: false,
-            navigation : true,
+            nav : true,
             afterInit:function() {
                 alignProductGridActions();
             }
