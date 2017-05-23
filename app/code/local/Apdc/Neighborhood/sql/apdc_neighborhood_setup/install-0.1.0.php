@@ -48,7 +48,16 @@ $table = $installer->getConnection()
         array(
             'nullable' => false
         ),
-        'Attribute Set Id'
+        'Neighborhood Image'
+    )
+    ->addColumn(
+        'postcodes',
+        Varien_Db_Ddl_Table::TYPE_TEXT,
+        '32k',
+        array(
+            'nullable' => false
+        ),
+        'Neighborhood Postcodes'
     )
     ->addColumn(
         'website_id',
@@ -68,7 +77,7 @@ $table = $installer->getConnection()
             'unsigned' => true,
             'nullable' => false
         ),
-        'Used to order messages'
+        'Used to order neighborhood'
     )
     ->addIndex(
         $installer->getIdxName(

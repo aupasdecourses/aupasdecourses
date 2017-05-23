@@ -25,6 +25,10 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
     protected function _prepareForm()
     {
         $model = Mage::registry('current_neighborhood');
+        $postcodes = $model->getPostcodes();
+        if (is_array($postcodes)) {
+            $model->setPostcodes(implode(',', $postcodes));
+        }
         if ($this->_isAllowedAction('save')) {
             $isElementDisabled = false;
         } else {
@@ -76,6 +80,18 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
                 'name' => 'name',
                 'label' => $this->_helper()->__('Nom du quartier'),
                 'title' => $this->_helper()->__('Nom du quartier'),
+                'required' => true,
+                'disabled' => $isElementDisabled
+            )
+        );
+
+        $fieldset->addField(
+            'postcodes',
+            'text',
+            array(
+                'name' => 'postcodes',
+                'label' => $this->_helper()->__('Code postal'),
+                'title' => $this->_helper()->__('Code postal'),
                 'required' => true,
                 'disabled' => $isElementDisabled
             )

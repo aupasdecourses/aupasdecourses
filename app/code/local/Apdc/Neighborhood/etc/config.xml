@@ -3,7 +3,7 @@
 
   <modules>
     <Apdc_Neighborhood>
-      <version>0.1.1</version>
+      <version>0.2.0</version>
     </Apdc_Neighborhood>
   </modules>
 
@@ -46,10 +46,19 @@
   </global>
 
   <frontend>
+    <routers>
+      <apdc_neighborhood>
+        <use>standard</use>
+        <args>
+          <module>Apdc_Neighborhood</module>
+          <frontName>neighborhood</frontName>
+        </args>
+      </apdc_neighborhood>
+    </routers>
     <layout>
       <updates>
         <apdc_neighborhood>
-          <file>apdc/apdc_neighborhood.xml</file>
+          <file>apdc_neighborhood.xml</file>
         </apdc_neighborhood>
       </updates>
     </layout>
