@@ -46,11 +46,39 @@
                 }
             }
             .delivery-days{
-                margin-top: 22px;
+                margin-top: 5px;
+                h2{
+                    font-size: 1rem;
+                }
                 h2, div{
                     display: inline-block;
                     vertical-align: middle;
                     margin: 0 5px;
+                }
+                table{
+                    text-align: center;
+                    th{
+                        border-bottom: 1px solid #ddd;
+                        padding: 7px;
+                        text-transform: uppercase;
+                        font-size: 0.875rem;
+                        &.yes{
+                            color: #333;
+                        }
+                        &.no{
+                            color: $color-main-grey;
+                        }
+                    }
+                    td{
+                        font-size: 1.125rem;
+                        padding: 7px;
+                        i.fa-check{
+                            color: $color-main-green;
+                        }
+                        i.fa-close{
+                            color: $color-main-grey;
+                        }
+                    }
                 }
             }
             .open-collapse{
@@ -129,6 +157,7 @@
         #carrousel-selection-home{
             padding-bottom: 50px;
             margin-bottom: 0;
+            overflow: visible!important;
             &:after{
                 content: "";
                 display: block;
@@ -136,6 +165,12 @@
                 height: 1px;
                 background-color: #eee;
                 margin: 50px auto 0;
+            }
+        }
+        .owl-nav{
+            top: 40%;
+            .owl-next{
+                margin-right: -50px;
             }
         }
     }
@@ -171,6 +206,7 @@
                 margin-bottom: 10px;
                 form{
                     border-bottom: 1px solid #eee;
+                    margin-top: 10px;
                     margin-bottom: 40px;
                     padding-bottom: 20px;
                 }
@@ -186,6 +222,13 @@
     .block-subscribe{
         h2, form{
             display: none;
+        }
+    }
+    
+    .apdc-products-grid{
+        .owl-stage-outer{
+            overflow: hidden!important;
+            padding: 20px 0;
         }
     }
 }
@@ -224,6 +267,16 @@
                 display: inline-block;
                 color: #fff;
                 background: $color-main-green;
+            }
+            a{
+                &.previous, &.next{
+                    color: $color-main-green;
+                    background: none;
+                    font-size: 1.75rem;
+                    border: none;
+                    position: relative;
+                    top: 2px;
+                }
             }
         }
     }

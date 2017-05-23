@@ -309,11 +309,12 @@ section {
             background: #fff;
         }
     }
-    .owl-buttons{
+    .owl-buttons, .owl-nav{
         position: absolute;
         width: 100%;
         top: 49%;
-        .prev, .next{
+        .prev, .next,
+        .owl-prev, .owl-next{
             background: none;
             color: #ccc;
             font-size: 3rem;
@@ -322,11 +323,11 @@ section {
             padding: 0;
             opacity: 1;
         }
-        .prev{
+        .prev, .owl-prev{
             float: left;
             margin-left: -50px;
         }
-        .next{
+        .next, .owl-next{
             float: right;
             margin-right: -20px;
         }

@@ -12687,14 +12687,21 @@ section .section-description {
   background: #fff;
 }
 
-.block-promos .owl-buttons {
+.block-promos .owl-buttons,
+.block-promos .owl-nav {
   position: absolute;
   top: 49%;
   width: 100%;
 }
 
 .block-promos .owl-buttons .prev,
-.block-promos .owl-buttons .next {
+.block-promos .owl-buttons .next,
+.block-promos .owl-buttons .owl-prev,
+.block-promos .owl-buttons .owl-next,
+.block-promos .owl-nav .prev,
+.block-promos .owl-nav .next,
+.block-promos .owl-nav .owl-prev,
+.block-promos .owl-nav .owl-next {
   font-size: 3rem;
   margin: 0;
   padding: 0;
@@ -12704,12 +12711,18 @@ section .section-description {
   background: none;
 }
 
-.block-promos .owl-buttons .prev {
+.block-promos .owl-buttons .prev,
+.block-promos .owl-buttons .owl-prev,
+.block-promos .owl-nav .prev,
+.block-promos .owl-nav .owl-prev {
   float: left;
   margin-left: -50px;
 }
 
-.block-promos .owl-buttons .next {
+.block-promos .owl-buttons .next,
+.block-promos .owl-buttons .owl-next,
+.block-promos .owl-nav .next,
+.block-promos .owl-nav .owl-next {
   float: right;
   margin-right: -20px;
 }
@@ -14267,7 +14280,11 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .commercant-collapse .commercant-info .delivery-days {
-  margin-top: 22px;
+  margin-top: 5px;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days h2 {
+  font-size: 1rem;
 }
 
 .catalog-category-view .commercant-collapse .commercant-info .delivery-days h2,
@@ -14275,6 +14292,38 @@ footer .social-list .btn-social-icon {
   display: inline-block;
   margin: 0 5px;
   vertical-align: middle;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table {
+  text-align: center;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table th {
+  font-size: .875rem;
+  padding: 7px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table th.yes {
+  color: #333;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table th.no {
+  color: #999;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table td {
+  font-size: 1.125rem;
+  padding: 7px;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table td i.fa-check {
+  color: #3ab64b;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .delivery-days table td i.fa-close {
+  color: #999;
 }
 
 .catalog-category-view .commercant-collapse .commercant-info .open-collapse {
@@ -14351,6 +14400,7 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .block-promos #carrousel-selection-home {
+  overflow: visible !important;
   margin-bottom: 0;
   padding-bottom: 50px;
 }
@@ -14362,6 +14412,14 @@ footer .social-list .btn-social-icon {
   margin: 50px auto 0;
   content: '';
   background-color: #eee;
+}
+
+.catalog-category-view .block-promos .owl-nav {
+  top: 40%;
+}
+
+.catalog-category-view .block-promos .owl-nav .owl-next {
+  margin-right: -50px;
 }
 
 .catalog-category-view .block_selection {
@@ -14403,6 +14461,7 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .category-products .apdc-products-grid .item form {
+  margin-top: 10px;
   margin-bottom: 40px;
   padding-bottom: 20px;
   border-bottom: 1px solid #eee;
@@ -14415,6 +14474,11 @@ footer .social-list .btn-social-icon {
 .catalog-category-view .block-subscribe h2,
 .catalog-category-view .block-subscribe form {
   display: none;
+}
+
+.catalog-category-view .apdc-products-grid .owl-stage-outer {
+  overflow: hidden !important;
+  padding: 20px 0;
 }
 
 .toolbar-bottom {
@@ -14459,6 +14523,16 @@ footer .social-list .btn-social-icon {
   display: inline-block;
   color: #fff;
   background: #3ab64b;
+}
+
+.toolbar-bottom .pages li a.previous,
+.toolbar-bottom .pages li a.next {
+  font-size: 1.75rem;
+  position: relative;
+  top: 2px;
+  color: #3ab64b;
+  border: none;
+  background: none;
 }
 
 .toolbar-bottom .sort-by label,
