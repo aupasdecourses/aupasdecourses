@@ -20,9 +20,18 @@ trait Products
         $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
-            foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
-                $attributeArray[$code][$option['value']] = $option['label'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_name']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_id']]=$tax['class_name'];
+                    }
+                }
+            }else{
+                $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
+                foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
+                    $attributeArray[$code][$option['value']] = $option['label'];
+                }
             }
         }
 
@@ -42,9 +51,18 @@ trait Products
         $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
-            foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
-                $attributeArray[$code][$option['label']] = $option['value'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_id']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_name']]=$tax['class_id'];
+                    }
+                }
+            }else{
+                $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
+                foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
+                    $attributeArray[$code][$option['label']] = $option['value'];
+                }
             }
         }
 
