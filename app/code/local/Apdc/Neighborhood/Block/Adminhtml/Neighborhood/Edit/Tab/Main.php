@@ -93,7 +93,9 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
                 'label' => $this->_helper()->__('Code postal'),
                 'title' => $this->_helper()->__('Code postal'),
                 'required' => true,
-                'disabled' => $isElementDisabled
+                'disabled' => $isElementDisabled,
+                'note' => $this->_helper()->__('Vous pouvez renseigner plusieurs code postaux en les séparants par des virgules (ex : 75015,75003,76010)')
+
             )
         );
         
