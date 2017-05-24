@@ -241,8 +241,12 @@
     width: 100%;
     background: #fff;
     padding: 10px;
-    margin-bottom: 50px;
     z-index: 1000;
+    &:before,
+    &:after {
+        content: '';
+        display: table;
+    }
     .toolbar{
         margin: 0;
     }
@@ -250,6 +254,9 @@
         margin-top: -10px;
         & > strong{
             display: none;
+        }
+        ol{
+            padding-left: 0;
         }
         li{
             &.current, a{
@@ -279,6 +286,9 @@
                 }
             }
         }
+    }
+    .pager{
+        margin-bottom: 0;
     }
     .sort-by, .limiter{
         label{

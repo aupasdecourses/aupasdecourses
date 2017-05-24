@@ -341,8 +341,14 @@ section {
     .owl-stage-outer{
         overflow: visible!important;
     }
+    .product-item-info{
+        .product-info{
+            height: 240px;
+            margin: 0;
+        }
+    }
     .product-info{
-        height: 240px;
+        /*height: 240px;*/
         margin: 0;
         form{
             position: relative;

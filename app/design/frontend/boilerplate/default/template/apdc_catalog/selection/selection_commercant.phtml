@@ -91,7 +91,25 @@
             navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'], 
             afterInit:function() {
                 alignProductGridActions();
-            }
+            },
+            responsive: {
+				0:{
+					items:1,
+					slideBy: 1,
+				},
+                480:{
+					items:2,
+					slideBy: 2,
+				},
+                640:{
+					items:4,
+					slideBy: 4,
+				},
+				980:{
+					items:5,
+					slideBy: 5,
+				}
+			}	
       });
     });
 </script>

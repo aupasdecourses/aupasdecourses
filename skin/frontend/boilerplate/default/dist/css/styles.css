@@ -12737,8 +12737,13 @@ section .section-description {
   overflow: visible !important;
 }
 
-.apdc-products-grid .product-info {
+.apdc-products-grid .product-item-info .product-info {
   height: 240px;
+  margin: 0;
+}
+
+.apdc-products-grid .product-info {
+    /*height: 240px;*/
   margin: 0;
 }
 
@@ -14489,9 +14494,14 @@ footer .social-list .btn-social-icon {
   bottom: 0;
   left: 0;
   width: 100%;
-  margin-bottom: 50px;
   padding: 10px;
   background: #fff;
+}
+
+.toolbar-bottom:before,
+.toolbar-bottom:after {
+  display: table;
+  content: '';
 }
 
 .toolbar-bottom .toolbar {
@@ -14504,6 +14514,10 @@ footer .social-list .btn-social-icon {
 
 .toolbar-bottom .pages > strong {
   display: none;
+}
+
+.toolbar-bottom .pages ol {
+  padding-left: 0;
 }
 
 .toolbar-bottom .pages li.current,
@@ -14533,6 +14547,10 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
   border: none;
   background: none;
+}
+
+.toolbar-bottom .pager {
+  margin-bottom: 0;
 }
 
 .toolbar-bottom .sort-by label,
@@ -14609,6 +14627,10 @@ p.info {
 
 #product_addtocart_form .button {
   font-size: .875rem;
+}
+
+#product_addtocart_form #image-main {
+  max-width: 100%;
 }
 
 #product_addtocart_form .commercant-name {
@@ -14875,6 +14897,14 @@ p.info {
   #supermenu .nav > li:first-child {
     display: block;
   }
+
+  .catalog-category-view .block-promos .owl-nav .owl-next {
+    margin-right: -10px;
+  }
+
+  .catalog-category-view .block-promos .owl-nav .owl-prev {
+    margin-left: -10px;
+  }
 }
 
 @media screen and (max-width: 1316px) {
@@ -14885,11 +14915,18 @@ p.info {
 
 @media screen and (max-width: 1260px) {
   .block-promos .owl-buttons .next {
-    margin-right: 13px;
+    margin-right: 18px;
   }
 
   .block-promos .owl-buttons .prev {
     margin-left: -15px;
+  }
+
+  .toolbar-bottom .toolbar .sorter,
+    .toolbar-bottom .toolbar .pager {
+    float: none;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -14968,6 +15005,10 @@ p.info {
 @media screen and (max-width: 992px) {
   .container {
     width: auto;
+  }
+
+  #product-quick-view_popup-container {
+    width: 100%;
   }
 
   .logo {
@@ -15068,11 +15109,25 @@ p.info {
   .item-mission > div {
     margin-top: auto !important;
   }
+
+  .catalog-category-view .commercant-collapse .commercant-info .delivery-days {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .catalog-category-view .category-products .apdc-products-grid .item {
+    width: 33.333333%;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .container {
     width: auto;
+  }
+
+  #product-quick-view_popup-container {
+    width: 100%;
   }
 
   #html-body header {
@@ -15161,7 +15216,6 @@ p.info {
 
   .catalog-category-view .commercant-collapse .collapse-wrapper .commercant-opening {
     margin-bottom: 20px;
-    text-align: center;
   }
 
   .catalog-category-view .commercant-collapse .collapse-wrapper .commercant-opening h2 {
@@ -15183,6 +15237,19 @@ p.info {
     #checkout-review-table td.availibility,
     #checkout-review-table td.comments {
     display: none;
+  }
+
+  .catalog-category-view .commercant-collapse .commercant-info .commercant-name,
+    .catalog-category-view .commercant-collapse .commercant-info .photo-commercant {
+    display: block;
+    margin: 0 auto 10px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .catalog-category-view .category-products .apdc-products-grid .item {
+    width: 50%;
   }
 }
 
@@ -15272,8 +15339,9 @@ p.info {
     margin-bottom: 20px;
   }
 
-  .block-promos .apdc-products-grid .product-info {
-    height: 180px;
+  .block-promos .owl-buttons,
+    .block-promos .owl-nav {
+    width: 99%;
   }
 
   .block-blog,
@@ -15337,6 +15405,38 @@ p.info {
   #discount-coupon-form input + div {
     float: none;
   }
+
+  .catalog-category-view .category-products .apdc-products-grid .item {
+    width: 100%;
+  }
+
+  .catalog-category-view .commercant-collapse .commercant-info .delivery-days {
+    margin-top: 20px;
+  }
+
+  .catalog-category-view .commercant-collapse .commercant-info .delivery-days h2,
+    .catalog-category-view .commercant-collapse .commercant-info .delivery-days div {
+    width: 100%;
+    margin: 0;
+  }
+
+  .catalog-category-view .commercant-collapse .commercant-info .delivery-days table th {
+    font-size: .75rem;
+    padding: 7px 5px;
+  }
+
+  .catalog-category-view .commercant-collapse .commercant-info .delivery-days table td {
+    font-size: 1rem;
+    padding: 7px 5px;
+  }
+
+  .toolbar-bottom .pages li.current,
+    .toolbar-bottom .pages li a {
+    font-size: .875rem;
+    line-height: 19px;
+    width: 30px;
+    height: 30px;
+  }
 }
 
 /* LOGIN FORM */
@@ -15363,4 +15463,17 @@ p.info {
 
 #login-form-popup-close {
   display: none;
+}
+
+.ie footer {
+  margin-bottom: 85px;
+}
+
+.edge .toolbar-bottom {
+  position: absolute;
+  margin-bottom: 365px;
+}
+
+.edge .block-subscribe {
+  margin-top: 130px;
 }

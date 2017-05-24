@@ -24,6 +24,18 @@
             }
         }
     }
+    .catalog-category-view{
+        .block-promos{
+            .owl-nav{
+                .owl-next{
+                    margin-right: -10px;
+                }
+                .owl-prev{
+                    margin-left: -10px;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 1316px){
@@ -34,10 +46,19 @@
 
 @media screen and (max-width: 1260px){
     .block-promos .owl-buttons .next{
-        margin-right: 13px;
+        margin-right: 18px;
     }
     .block-promos .owl-buttons .prev{
         margin-left: -15px;
+    }
+    .toolbar-bottom{
+        .toolbar{
+            .sorter, .pager{
+                float: none;
+                width: 100%;
+                text-align: center;
+            }
+        }
     }
 }
 
@@ -116,6 +137,9 @@
 @media screen and (max-width: 992px){
     .container{
         width: auto;
+    }
+    #product-quick-view_popup-container{
+        width: 100%;
     }
     .logo{
         text-align: center;
@@ -210,12 +234,36 @@
     .item-mission > div {
         margin-top: auto !important;
     }
+    
+    .catalog-category-view{
+        .commercant-collapse{
+            .commercant-info{
+                .delivery-days{
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
 
+@media screen and (max-width: 840px){
+    .catalog-category-view{
+        .category-products{
+            .apdc-products-grid{
+                .item{
+                    width: 33.333333%;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 768px){
     .container{
         width: auto;
+    }
+    #product-quick-view_popup-container{
+        width: 100%;
     }
     #html-body{
         header{
@@ -305,7 +353,6 @@
         .commercant-collapse{
             .collapse-wrapper{
                 .commercant-opening{
-                    text-align: center;
                     margin-bottom: 20px;
                     h2{
                         text-align: center;
@@ -328,6 +375,30 @@
             &.availibility,
             &.comments{
                 display: none;
+            }
+        }
+    }
+    .catalog-category-view{
+        .commercant-collapse{
+            .commercant-info{
+                .commercant-name,
+                .photo-commercant{
+                    display: block;
+                    margin: 0 auto 10px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 660px){
+    .catalog-category-view{
+        .category-products{
+            .apdc-products-grid{
+                .item{
+                    width: 50%;
+                }
             }
         }
     }
@@ -414,10 +485,8 @@
         }
     }
     .block-promos{
-        .apdc-products-grid{
-            .product-info{
-                height: 180px;
-            }
+        .owl-buttons, .owl-nav{
+            width: 99%;
         }
     }
     .block-blog, .block-sponsor{
@@ -470,6 +539,48 @@
         width: 100%;
         & + div{
             float: none;
+        }
+    }
+    .catalog-category-view{
+        .category-products{
+            .apdc-products-grid{
+                .item{
+                    width: 100%;
+                }
+            }
+        }
+        .commercant-collapse{
+            .commercant-info{
+                .delivery-days{
+                    margin-top: 20px;
+                    h2, div{
+                        width: 100%;
+                        margin: 0;
+                    }
+                    table{
+                        th{
+                            font-size: 0.75rem;
+                            padding: 7px 5px;
+                        }
+                        td{
+                            font-size: 1rem;
+                            padding: 7px 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .toolbar-bottom{
+        .pages{
+            li{
+                &.current, a{
+                    line-height: 19px;
+                    font-size: 0.875rem;
+                    width: 30px;
+                    height: 30px;
+                }
+            }
         }
     }
 }

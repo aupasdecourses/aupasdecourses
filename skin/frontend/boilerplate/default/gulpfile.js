@@ -92,7 +92,8 @@ gulp.task('js', function() {
 	//'vendor/apdc_popup/js/popup.js',
 	//'vendor/apdc_popup/js/login-popup.js',
 	//'vendor/apdc_popup/js/newsletter-popup.js',
-    'js/script.js'
+    'js/script.js',
+    'js/custom.js'
   ];
 
   var stream = gulp

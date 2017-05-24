@@ -45,4 +45,23 @@ $j(document).ready(function() {
     for (var k in color_menu){
         $j("#custommenu .parentMenu span:contains('"+k+"')").parent().css("background",color_menu[k]);
     }
+    
+    msieversion();
 });
+
+function msieversion() {
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    var edge = ua.indexOf('Edge/');
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // detect IE
+    {
+        $j('body').addClass('ie');
+    }
+    else if (edge > 0) { // detect Edge
+        $j('body').addClass('edge');
+    }
+
+    return false;
+}
