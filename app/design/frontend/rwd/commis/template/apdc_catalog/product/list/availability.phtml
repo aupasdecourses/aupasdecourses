@@ -2,9 +2,10 @@
 <?php $body = ''; ?>
 <?php 
 $product = $this->getProduct();
-if($this->getRequest()->getControllerName()=='category'){
-    $availability = $this->getAvailability();
-} else if ($product && $product->getId()) {
+/*if($this->getRequest()->getControllerName()=='category'){
+    $availability = $this->getAvailability($product);
+} else if ($product && $product->getId()) {*/
+if ($product && $product->getId()) {
     $availability = $this->getProductAvailability($product);
 } else{
     $availability = $this->getProductAvailability(Mage::registry('current_product'));
