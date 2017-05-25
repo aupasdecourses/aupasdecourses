@@ -32,10 +32,8 @@ $count=1;
     <ul>
         <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
         <li class="<?php echo $_crumbName ?>" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <?php if($_crumbInfo['link'] && $count<>2): ?>
+                <?php if($_crumbInfo['link']): ?>
                     <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>" itemprop="url"><span itemprop="title"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span></a>
-                <?php elseif($count==2): ?>
-                    <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>" itemprop="url" onclick="event.preventDefault();"><span itemprop="title"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span></a>
                 <?php elseif($_crumbInfo['last']): ?>
                     <span itemprop="title"><strong><?php echo $this->escapeHtml($_crumbInfo['label']) ?></strong></span>
                 <?php else: ?>

@@ -26,7 +26,6 @@
     </apdc_quickview_onload>
 
     <apdc_catalog_product_list>
-		<!--<remove name="breadcrumbs" />-->
 		<reference name="content">
 			<block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
 				<block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml">
@@ -34,7 +33,6 @@
 						<block type="core/text_list" name="product_list.name.after" as="name.after" />
 						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
 					</block>
-					<!--<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />-->
 				</block>
 				<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
 			</block>
@@ -45,13 +43,9 @@
 						<block type="core/text_list" name="product_list.name.after" as="name.after" />
 						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
 					</block>
-                    <block type="core/text_list" name="product_list.name.after" as="name.after" />
-                    <block type="core/text_list" name="product_list.after" as="after" />
-                    <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                    <!--<block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
                         <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-                    <action method="setColumnCount"><count>5</count></action>
-                    <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+                    </block>-->
                 </block>
             </block>
             <block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>
@@ -60,30 +54,6 @@
             </block>
         </reference>
 		
-		<!--
-        <reference name="product_list">
-			<action method="setTemplate"><file>apdc_catalog/product/list.phtml</file></action>
-			<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
-				<block type="core/text_list" name="product_list.name.after" as="name.after" />
-				<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
-			</block>
-        </reference>-->
-
-        <!--<reference name="product_list.name.after">
-          <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml" />
-          <block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
-            <block type="catalog/product_view_type_configurable" name="product_options.configurable" template="apdc_catalog/product/list/options/configurable.phtml" />
-            <block type="core/template" name="options_js" template="catalog/product/view/options/js.phtml"/>
-            <block type="catalog/product_view_options" name="product.info.options" template="apdc_catalog/product/list/options/custom-options.phtml">
-                <action method="addOptionRenderer"><type>text</type><block>catalog/product_view_options_type_text</block><template>catalog/product/view/options/type/text.phtml</template></action>
-                <action method="addOptionRenderer"><type>file</type><block>catalog/product_view_options_type_file</block><template>catalog/product/view/options/type/file.phtml</template></action>
-                <action
-                  method="addOptionRenderer"><type>select</type><block>apdc_catalog/product_view_options_type_select</block><template>catalog/product/view/options/type/select.phtml</template></action>
-                <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
-            </block>
-            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
-          </block>
-        </reference>-->
 		<reference name="product_list.name.after">
 			<block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
 				<block type="catalog/product_view_type_configurable" name="product_options.configurable" template="apdc_catalog/product/list/options/configurable.phtml" />
@@ -97,6 +67,16 @@
 				<block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
 			</block>
 		</reference>
+		
+		<reference name="footer">
+			<block type="catalog/product_list" name="toolbar_only" template="apdc_catalog/product/list/toolbar-only.phtml">
+				<block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                        <block type="page/html_pager" name="product_list_toolbar_pager"/>
+                    </block>
+				<action method="setToolbarBlockName"><name>product_list_toolbar_only</name></action>
+			</block>
+		</reference>  
+		
     </apdc_catalog_product_list>
 
     <catalog_category_view>
@@ -230,39 +210,5 @@
             <action method="addRenderer"><type>checkbox</type><block>bundle/catalog_product_view_type_bundle_option_checkbox</block><template>apdc_bundle/catalog/product/view/type/bundle/option/checkbox.phtml</template></action>
         </reference>
     </PRODUCT_TYPE_bundle>
-
-
-    <!-- Page Commerçant => 'Primeur Clémence' -->
-    <!--<PAGE_COMMERCANT>
-        <reference name="root">
-            <action method="setTemplate">
-                <template>page/1column.phtml</template>
-            </action>
-        </reference>
-        <reference name="head">
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.carousel.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_css</rel>
-                <href>owl-carrousel/owl.theme.css</href>
-            </action>
-            <action method="addItem">
-                <rel>skin_js</rel>
-                <href>owl-carrousel/owl.carousel.min.js</href>
-            </action>
-        </reference>
-        <reference name="content">
-            <remove name="category.products"/>
-            <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
-                <block type="apdc_catalog/selection" name="blockselection" as="blockselection" after="all" template="apdc_catalog/selection/selection_commercant.phtml">
-                  <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
-                </block>
-                <block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
-            </block>
-        </reference>
-        <remove name="product_list" />
-    </PAGE_COMMERCANT>
-	-->
+	
 </layout>
