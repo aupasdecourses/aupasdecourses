@@ -50,61 +50,6 @@
             <?php
 				$this->getChild("card-product")->setData("product", $_product);
 				echo $this->getChildHtml('card-product', false);
-				/*
-					<li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?> col-lg-3 col-md-3 col-sm-4 col-xs-6">
-					<form action="<?php echo $_product->getProductUrl() ?>" data-ajax-action="<?php echo $this->helper('apdccart')->getAjaxAddUrl($_product) ?>" method="post" class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $_product->getId(); ?>" id="product_addtocart_form_<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> data-product-id="<?php echo $_product->getId(); ?>">
-
-							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
-								<?php $_imgSize = 210; ?>
-								<img id="product-collection-image-<?php echo $_product->getId(); ?>"
-									 src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize); ?>"
-									 alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
-
-								<?php echo $this->getChild('product_labels')->setData('product', $_product)->toHtml(); ?>
-							</a>
-							<div class="product-info row">
-								<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="show-product-popup" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
-								<div class="product-info-left product-info-column">
-									<p class="product-commercant-name"><?php echo $_product->getData('short_description'); ?></p>
-									<p class="product-commercant-name">
-										<?php echo Mage::getResourceSingleton('catalog/product')
-											->getAttribute('commercant')
-											->getSource()
-											->getOptionText($_product->getData('commercant')); ?>
-									</p>
-								</div>
-								<div class="product-info-right product-info-column">
-									<?php echo $this->getPriceHtml($_product, true) ?>
-
-									<?php if($_product->getData('prix_kilo_site')) :?>
-										<div class="product-short_desc">		            
-											<?php echo $_product->getData('prix_kilo_site'); ?>
-										</div>
-									<?php endif; ?>
-
-								</div>
-
-								<?php echo $this->getChild('product_actions')->setProduct($_product)->toHtml(); ?>
-
-							</div>
-							<div class="display-hover">
-								<p class="advice-must-select-options"><?php echo $this->__('Veuillez choisir une option pour pouvoir ajouter ce produit au panier'); ?></p>
-								<?php
-								// Provides extra blocks on which to hang some features for products in the list
-								// Features providing UI elements targeting this block will display directly below the product name
-								if ($this->getChild('name.after')) {
-									$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
-									foreach ($_nameAfterChildren as $_nameAfterChildName) {
-										$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
-										$_nameAfterChild->setProduct($_product);
-										echo $_nameAfterChild->toHtml();
-									}
-								}
-								?>
-							</div>
-						</form>
-					</li>
-				*/
 			?>
         <?php endforeach ?>
     </ul>

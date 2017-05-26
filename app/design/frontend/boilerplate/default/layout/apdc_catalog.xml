@@ -36,16 +36,16 @@
 				</block>
 				<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
 			</block>
-			
             <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
                 <block type="catalog/product_list" name="product_list" template="apdc_catalog/product/list.phtml">
+					<block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                        <block type="page/html_pager" name="product_list_toolbar_pager" as="product_list_toolbar_pager"/>
+                    </block>
 					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
 						<block type="core/text_list" name="product_list.name.after" as="name.after" />
 						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
 					</block>
-                    <!--<block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                        <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>-->
+					<action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
                 </block>
             </block>
             <block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>
@@ -66,16 +66,7 @@
 				</block>
 				<block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
 			</block>
-		</reference>
-		
-		<reference name="footer">
-			<block type="catalog/product_list" name="toolbar_only" template="apdc_catalog/product/list/toolbar-only.phtml">
-				<block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-                        <block type="page/html_pager" name="product_list_toolbar_pager"/>
-                    </block>
-				<action method="setToolbarBlockName"><name>product_list_toolbar_only</name></action>
-			</block>
-		</reference>  
+		</reference> 
 		
     </apdc_catalog_product_list>
 
