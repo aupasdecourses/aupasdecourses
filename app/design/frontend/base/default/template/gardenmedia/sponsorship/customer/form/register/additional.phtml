@@ -37,7 +37,7 @@
         <label for="sponsor_code"><?php echo $this->__('Sponsor Code') ?></label>
         <p class="form-instructions"><?php echo $this->getInstruction(); ?></p>
         <div class="input-box">
-        <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text validate-sponsor-code" placeholder="<?= $this->__("Si vous avez un code parrain, indiquez le ici.")?>" value="<?php echo $this->getSponsorCodeValue(); ?>" />
+        <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text validate-sponsor-code" placeholder="<?= $this->__("Si vous avez un code parrain, indiquez le ici.")?>" value="<?php echo trim($this->getSponsorCodeValue()); ?>" />
         </div>
     </div>
     <script type="text/javascript">
@@ -48,7 +48,6 @@
                 var length = parseInt("<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_length'); ?>");
                 var start = "<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>";
                 var startReg = new RegExp("^<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>", "i");
-                console.log(value.replace(start, '').replace(/-/g, '').length === length);
                 if (value.replace(start, '').replace(/-/g, '').length === length && startReg.test(value)) {
                     return true;
                 } else {
@@ -56,6 +55,10 @@
                 }
             }
             return true;
+        });
+        jQuery('#sponsor_code').on('change, blur', function() {
+            var value = jQuery(this).val().trim().replace(/\s+/g, '');
+            jQuery(this).val(value);
         });
     </script>
 </li>

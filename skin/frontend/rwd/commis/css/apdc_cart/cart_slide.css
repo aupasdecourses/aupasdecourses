@@ -1,10 +1,13 @@
 
 .header-minicart #header-cart .minicart-wrapper {
     height: 100%;
-    overflow: auto;
-    padding-bottom: 105px;
+    overflow-x:hidden;
+    overflow-y:scroll;
     padding-top: 47px;
     width: 320px;
+}
+.header-minicart #header-cart .minicart-wrapper #minicart-widgets {
+  margin-bottom:105px;
 }
 
 #header-cart {
