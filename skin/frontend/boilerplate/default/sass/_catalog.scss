@@ -204,11 +204,76 @@
                 padding-left: 15px;
                 padding-right: 15px;
                 margin-bottom: 10px;
+                &:hover{
+                    .display-hover{
+                        visibility: visible;
+                        height: auto;
+                    }
+                    form{
+                        z-index: 1000;
+                        overflow: auto;
+                    }
+                }
+                .display-hover{
+                    position: relative;
+                    visibility: hidden;
+                    height: 0;
+                    margin: 0;
+                    border: 0;
+                    //-webkit-box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.4);
+                    //box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.4);
+                    box-shadow: none;
+                    border-radius: 0 0 10px 10px;
+                    right: auto;
+                    left: auto;
+                    //width: 219.1px;
+                    padding: 0 9px;
+                    text-align: left;
+                    /*&:hover{
+                        z-index: 1001;
+                    }*/
+                    .apdc-product-custom-options{
+                        padding-bottom: 15px;
+                        background: #fff;
+                        label{
+                            font-size: 1rem;
+                            color: $color-second-green;
+                        }
+                        .checkbox{
+                            display: inline-block;
+                        }
+                        input[type=text],
+                        select{
+                            color: $color-main-grey;
+                            font-size: 0.875rem;
+                            padding: 10px;
+                            border-radius: 5px;
+                            border: 1px solid #eee;
+                            background-color: #f6f6f6;
+                            width: 100%;
+                            height: auto;
+                            outline: none;
+                        }
+                        ul{
+                            padding-left: 0;
+                            list-style-type: none;
+                        }
+                        .validation-advice{
+                            display: none!important;
+                        }
+                    }
+                    .product-options{
+                        dd{
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
                 form{
                     border-bottom: 1px solid #eee;
                     margin-top: 10px;
                     margin-bottom: 40px;
                     padding-bottom: 20px;
+                    max-height: 520px;
                 }
                 .product-image{
                     img{

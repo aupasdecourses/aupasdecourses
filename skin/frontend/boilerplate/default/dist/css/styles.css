@@ -14465,7 +14465,75 @@ footer .social-list .btn-social-icon {
   padding-left: 15px;
 }
 
+.catalog-category-view .category-products .apdc-products-grid .item:hover .display-hover {
+  visibility: visible;
+  height: auto;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item:hover form {
+  z-index: 1000;
+  overflow: auto;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover {
+  position: relative;
+  right: auto;
+  left: auto;
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0 9px;
+  text-align: left;
+  border: 0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: none;
+    /*&:hover{
+                        z-index: 1001;
+                    }*/
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options {
+  padding-bottom: 15px;
+  background: #fff;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options label {
+  font-size: 1rem;
+  color: #1e555a;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options .checkbox {
+  display: inline-block;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options input[type=text],
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options select {
+  font-size: .875rem;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options .validation-advice {
+  display: none !important;
+}
+
+.catalog-category-view .category-products .apdc-products-grid .item .display-hover .product-options dd {
+  margin-bottom: 10px;
+}
+
 .catalog-category-view .category-products .apdc-products-grid .item form {
+  max-height: 520px;
   margin-top: 10px;
   margin-bottom: 40px;
   padding-bottom: 20px;
