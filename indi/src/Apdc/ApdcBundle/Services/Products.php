@@ -20,9 +20,18 @@ trait Products
         $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
-            foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
-                $attributeArray[$code][$option['value']] = $option['label'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_name']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_id']]=$tax['class_name'];
+                    }
+                }
+            }else{
+                $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
+                foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
+                    $attributeArray[$code][$option['value']] = $option['label'];
+                }
             }
         }
 
@@ -42,9 +51,18 @@ trait Products
         $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
-            foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
-                $attributeArray[$code][$option['label']] = $option['value'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_id']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_name']]=$tax['class_id'];
+                    }
+                }
+            }else{
+                $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
+                foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
+                    $attributeArray[$code][$option['label']] = $option['value'];
+                }
             }
         }
 
@@ -124,7 +142,7 @@ trait Products
      * @param array $data      list of product attributes to update
      *                         "name" string
      *                         "produit_biologique" string "Oui" or "Non"
-     *                         "reference_interne_magasin" int
+     *                         "reference_interne_magasin" string
      *                         "poids_portion" string
      *                         "unite_prix" string kg / piece / ...
      *                         "prix_public" float
@@ -140,6 +158,7 @@ trait Products
      */
     public function updateProduct($entity_id, $data)
     {
+        \Mage::app()->setCurrentStore(\Mage_Core_Model_App::ADMIN_STORE_ID);
         $product = \Mage::getModel('catalog/product')->load($entity_id);
 
         $attributeArrays = $this->_attributeArraysIds;
@@ -190,7 +209,7 @@ trait Products
      * @param array $data      list of product attributes to create
      *                         "name" string
      *                         "produit_biologique" string "Oui" or "Non"
-     *                         "reference_interne_magasin" int
+     *                         "reference_interne_magasin" string
      *                         "poids_portion" string
      *                         "unite_prix" string kg / piece / ...
      *                         "prix_public" float

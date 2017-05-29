@@ -10,7 +10,7 @@ class Magento
     use Products;
 
     const AUTHORIZED_GROUP = ['Administrators'];
-    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison');
+    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison','tax_class_id');
     const CLASS_TAX_IDS = array(5 => '5.5%', 9 => '10%', 10 => '20%');
 
     public function __construct()

@@ -33,6 +33,11 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
             'index' => 'postcode',
         ]);
 
+        $this->addColumn('code', [
+            'header' => $this->__('Code'),
+            'index' => 'code',
+        ]);
+
         $this->addColumn('name', [
             'header' => $this->__('Nom'),
             'index' => 'name',
