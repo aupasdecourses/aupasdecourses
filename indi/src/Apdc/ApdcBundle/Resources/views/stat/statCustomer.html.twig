@@ -24,6 +24,7 @@
 				<th class="sort">Code Postal</th>
 				<th>Email</th>
 				<th>Téléphone</th>
+				<th>Commentaires</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,6 +41,7 @@
 				<td>{{ content['code_postal'] }}</td>
 				<td><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></td>
 				<td><a href="tel:{{ content['telephone'] }}">{{ content['telephone'] }}</td>
+				<td>{{ content['commentaires'] }}</td>
 			</tr>
 			{% endif %}
 			{% endfor %}
@@ -47,6 +49,9 @@
 		<tfoot>
 			<tr>
 				<th>Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
