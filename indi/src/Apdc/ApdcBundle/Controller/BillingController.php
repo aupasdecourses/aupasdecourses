@@ -21,7 +21,8 @@ class BillingController extends Controller
 		$cpt = 0;
 		if (isset($_GET['date_debut'])) {
 			$date_debut		= $_GET['date_debut'];
-			$date_fin		= $factu->end_month(date('Y-m-d H:i:s'));
+			$today			= date('Y-m-d H:i:s');
+			$date_fin		= date('Y-m-t', strtotime($today));
 			$summary		= $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
 
 			foreach ($summary as $sum) {
@@ -34,9 +35,9 @@ class BillingController extends Controller
 				$cpt++;
 			}
 
-			echo'<pre>';
-			print_R($table);
-			echo'<pre>';
+//			echo'<pre>';
+//			print_R($table);
+//			echo'<pre>';
 
 		}
 
