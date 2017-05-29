@@ -17,10 +17,27 @@ class BillingController extends Controller
 
 		$factu = $this->container->get('apdc_apdc.billing');
 
+		$table = [];
+		$cpt = 0;
 		if (isset($_GET['date_debut'])) {
 			$date_debut		= $_GET['date_debut'];
 			$date_fin		= $factu->end_month(date('Y-m-d H:i:s'));
 			$summary		= $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
+
+			foreach ($summary as $sum) {
+
+				$table[$sum['shop']]['shop'][$cpt] = $sum['shop'];
+				$table[$sum['shop']]['sum_items'][$cpt] = $sum['sum_items'];
+				$table[$sum['shop']]['sum_due'][$cpt] = $sum['sum_due'];
+				$table[$sum['shop']]['sum_payout'][$cpt] = $sum['sum_payout'];
+			
+				$cpt++;
+			}
+
+			echo'<pre>';
+			print_R($table);
+			echo'<pre>';
+	
 		}
 
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
