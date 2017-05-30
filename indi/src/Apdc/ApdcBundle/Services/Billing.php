@@ -672,11 +672,7 @@ class Billing
         return $return['items'];
 	}
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 00077ff25fd8f979707398e2077d7b7b500456d6
 	/**
 	 * Surcharge avec ajout de @param string $fin
 	 * Permettant l'affichage des X derniers mois
@@ -686,19 +682,10 @@ class Billing
 		$billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
 		$return = $model->addFieldToFilter('billing_month', ['from' => $billing_month, 'to' => $fin]);
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> 00077ff25fd8f979707398e2077d7b7b500456d6
 		$return = $return->toArray();
 
 		return $return['items'];
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 00077ff25fd8f979707398e2077d7b7b500456d6
 
     /**
      * [getOneBilling description].

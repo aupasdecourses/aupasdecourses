@@ -45,7 +45,6 @@
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
 {% block css_billing %}
-<<<<<<< HEAD
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
 {% endblock %}
 {% block javascript_billing %}
@@ -125,85 +124,3 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
-
-=======
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
-{% endblock %}
-{% block javascript_billing %}
-
-	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-
-	<script>
-		$(function() {
-			$( "#datepickerBill" ).datepicker({
-				altField: "#datepickerBill",
-				closeText: 'Fermer',
-				prevText: 'Précédent',
-				nextText: 'Suivant',
-				currentText: 'Aujourd\'hui',
-				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-				weekHeader: 'Sem.',
-				dateFormat: 'dd/mm/yy',
-			});
-		});
-		
-		$(function(){
-			$("#datepickerBill").change(function(){
-				window.location='{{ path('billingIndex') }}?date_debut='+this.value;
-			});
-		});
-
-		$(document).ready(function() {
-			var table=$('#billIndex').DataTable({
-				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
-				"pageLength": -1,
-				"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
-				initComplete: function () {
-					this.api().columns(['.sort']).every(function () {
-						var column = this;
-						var select = $('<select><option value=""></option></select>')
-							.appendTo( $('#filter') )
-							.on( 'change', function () {
-								var val = $.fn.dataTable.util.escapeRegex(
-										$(this).val()
-										);
-								column
-									.search( val ? '^'+val+'$' : '', true, false )
-									.draw();
-							} );
-						column.data().unique().sort().each( function ( d, j ) {
-							select.append( '<option value="'+d+'">'+d+'</option>' )
-						} );
-					});
-					},
-
-				"footerCallback": function ( row, data, start, end, display ) {
-					var api = this.api(), data;
-
-					var intVal = function ( i ) {
-						return typeof i === 'string' ?
-							i.replace(/[\$,]/g, '')*1 :
-							typeof i === 'number' ?
-							i : 0;
-					};
-					this.api().columns(['.float']).every(function (){
-						var index = this.index();
-						pageTotal = api
-							.column( index, { page: 'current'} )
-							.data()
-							.reduce( function (a, b) {
-								return intVal(a) + intVal(b);
-							}, 0 );
-						pageTotal=pageTotal.toFixed(2);
-						$( api.column( index ).footer() ).html(pageTotal);
-					});
-				}
-			} );
-		});
-	</script>
-{% endblock %}
->>>>>>> 00077ff25fd8f979707398e2077d7b7b500456d6
