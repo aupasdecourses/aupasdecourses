@@ -120,5 +120,12 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Neighborhood>
+        <Apdc_Shiprestriction>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Amasty_Shiprestriction />
+          </depends>
+        </Apdc_Shiprestriction>
     </modules>
 </config>
