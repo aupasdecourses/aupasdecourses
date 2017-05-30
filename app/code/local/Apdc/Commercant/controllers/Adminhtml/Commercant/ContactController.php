@@ -7,13 +7,13 @@ class Apdc_Commercant_Adminhtml_Commercant_ContactController extends Mage_Adminh
 {
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/commercant/contact'); 
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/commercant/contact'); 
     }
 
     protected function _initAction()
     {
         $this->loadLayout()
-            ->_setActiveMenu('catalog/contact')
+            ->_setActiveMenu('neighborhoods/contact')
             ->_addBreadcrumb($this->__('Contact'), $this->__('Contact'));
 
         return $this;

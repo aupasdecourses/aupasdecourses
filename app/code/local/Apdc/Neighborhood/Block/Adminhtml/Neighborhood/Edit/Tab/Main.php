@@ -191,6 +191,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
      */
     protected function _isAllowedAction($action)
     {
-        return Mage::getSingleton('admin/session')->isAllowed('system/apdc_neighborhood/' . $action);
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/apdc_neighborhood/' . $action);
     }
 }

@@ -7,13 +7,13 @@ class Apdc_Commercant_Adminhtml_Commercant_BankinfoController extends Mage_Admin
 {
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/commercant/bank_information'); 
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/commercant/bank_information'); 
     }
 
     protected function _initAction()
     {
         $this->loadLayout()
-            ->_setActiveMenu('catalog/commercant')
+            ->_setActiveMenu('neighborhoods/commercant')
             ->_addBreadcrumb($this->__('Commercant'), $this->__('Commercant'));
 
         return $this;
