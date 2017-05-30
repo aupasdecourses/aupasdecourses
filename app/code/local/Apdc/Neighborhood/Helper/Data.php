@@ -37,6 +37,7 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         if ($isActive === true) {
             $neighborhoods->addFieldToFilter('is_active', 1);
         }
+        $neighborhoods->getSelect()->order('sort_order ASC');
         return $neighborhoods;
     }
 
@@ -53,6 +54,7 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         if ($isActive === true) {
             $neighborhoods->addFieldToFilter('is_active', 1);
         }
+        $neighborhoods->getSelect()->order('sort_order ASC');
         return $neighborhoods;
     }
 
