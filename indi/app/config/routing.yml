@@ -6,27 +6,4 @@ oneup_uploader:
     resource: . 
     type: uploader
 
-apdc_api:
-    resource: "@AppBundle/Controller/"
-    prefix:   /api
-    type:     rest
 
-fos_oauth_server_token:
-    prefix:   /api
-    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
-
-fos_oauth_server_authorize:
-    prefix:   /api
-    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
-
-# We need to manage the API / Website
-fos_user_resetting_send_email:
-    path: /api/resetting/send-email
-    methods: ['POST']
-    defaults: { _controller: AppBundle:Resetting:sendEmail }
-
-# We need to manage the API / Website
-fos_user_resetting_reset:
-    path: /api/resetting/reset/{token}
-    methods: ['GET', 'POST']
-    defaults: { _controller: AppBundle:Resetting:reset }
