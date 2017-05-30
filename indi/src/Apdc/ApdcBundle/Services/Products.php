@@ -4,10 +4,10 @@ namespace Apdc\ApdcBundle\Services;
 
 trait Products
 {
-    public $_attributeArraysLabels;
+	public $_attributeArraysLabels;
     public $_attributeArraysIds;
 
-    /**
+        /**
      * Return an array Id => Label for the specified attributes.
      *
      * @param array attributeCodes
@@ -81,7 +81,7 @@ trait Products
     * 	@param string $commercant
     *   Correspond au nom de l'attribut commercant_value (ce sera mieux d'utiliser l'id commercant utilisé dans les tables)
     * 	@param string $name
-    *   Nom du produit 
+    *   Nom du produit
     *	@return Mage_Collection
     */
     public function getProductsList($size = 20, $page = 1, $order_param = 'name', $order = 'ASC', $commercant = null, $name = null)

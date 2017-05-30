@@ -35,7 +35,12 @@
         "symfony/assetic-bundle": "^2.8",
         "symfony/validator": "^3.2",
         "symfony/filesystem": "^3.2",
-        "symfony/finder": "^3.2"
+        "symfony/finder": "^3.2",
+        "friendsofsymfony/rest-bundle": "2.1.x",
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "jms/serializer-bundle": "1.1.x",
+        "nelmio/api-doc-bundle": "2.13.x",
+        "nelmio/cors-bundle": "1.4.x"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
