@@ -43,10 +43,12 @@
         <?php if ($this->getVisitingNeighborhood() && $this->getVisitingNeighborhood()->getId() != $currentNeighborhood->getId()): ?>
             <li class="neighborhood_list selected">
                 <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($currentNeighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-                <img src="<?php echo $imageUrl; ?>" title="<?php echo $currentNeighborhood->getName(); ?>" width="50" height="50" />
-                <span><?php echo $currentNeighborhood->getName(); ?></span>
+                <a href="<?php echo $currentNeighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>">
+                    <img src="<?php echo $imageUrl; ?>" title="<?php echo $currentNeighborhood->getName(); ?>" width="50" height="50" />
+                    <span><?php echo $currentNeighborhood->getName(); ?></span>
+                </a>
                 <ul class="neighborhood_actions">
-                    <li><a href="<?php echo $this->getVisitUrl($currentNeighborhood); ?>" title="<?php echo $this->__('Visit this currentNeighborhood'); ?>"><i class="fa fa-eye"></i></a></li>
+                    <li><a href="<?php echo $currentNeighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>"><i class="fa fa-eye"></i></a></li>
                 </ul>
             </li>
         <?php else : ?>
@@ -71,10 +73,12 @@
         <?php endif; ?>
         <li class="neighborhood_list choose">
             <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-            <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="50" height="50" />
-            <span><?php echo $neighborhood->getName(); ?></span>
+            <a href="<?php echo $neighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>">
+                <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="50" height="50" />
+                <span><?php echo $neighborhood->getName(); ?></span>
+            </a>
             <ul class="neighborhood_actions">
-                <li><a href="<?php echo $this->getVisitUrl($neighborhood); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>"><i class="fa fa-eye"></i></a></li>
+                <li><a href="<?php echo $neighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>"><i class="fa fa-eye"></i></a></li>
                 <?php if ($this->getSession()->isLoggedIn()) : ?>
                     <li><a href="<?php echo $this->getSaveUrl($neighborhood); ?>" title="<?php echo $this->__('Set this neighborhood as my new neighborhood'); ?>"><i class="fa fa-save"></i></a></li>
                 <?php endif; ?>

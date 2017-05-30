@@ -55,7 +55,10 @@ background: none repeat scroll 0% 0% #e94e19;
   background-color:#fff;
   border-top:1px solid #e4e4e4;
 }
-
+#my_neighborhood_menu_links li.neighborhood_list a {
+  padding:0;
+  height:100%;
+}
 #my_neighborhood_menu_links li.neighborhood_list img {
   border-radius: 50px;
   transform: translate(5px, 4px);
@@ -75,7 +78,10 @@ background: none repeat scroll 0% 0% #e94e19;
   position:absolute;
   top:0;
   right:0;
-  display: none;
+  display:inline-block;
+}
+.no-touch #my_neighborhood_menu_links li.neighborhood_list ul.neighborhood_actions {
+  display:none;
 }
 #my_neighborhood_menu_links li.neighborhood_list:hover ul.neighborhood_actions {
   display:inline-block;

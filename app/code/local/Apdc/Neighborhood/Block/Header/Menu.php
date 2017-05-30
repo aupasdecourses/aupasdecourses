@@ -106,27 +106,14 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     }
 
     /**
-     * getVisitUrl 
-     * 
-     * @param Apdc_Neighborhood_Model_NeighborHood $neighborhood neighborhood 
-     * 
-     * @return string
-     */
-    public function getVisitUrl(Apdc_Neighborhood_Model_NeighborHood $neighborhood)
-    {
-        return $this->getUrl('apdc_neighborhood/index/visit', array('id' => $neighborhood->getId()));
-    }
-
-    /**
      * getSaveVisitUrl 
      * 
      * @return string | null
      */
     public function getSaveVisitUrl()
     {
-        if ($this->getSession()->getNeighborhoodVisitingId()) {
-            $neighborhood = $this->getVisitingNeighborhood();
-            return $this->getSaveUrl($neighborhood);
+        if ($this->getSession()->getNeighborhoodVisiting()) {
+            return $this->getSaveUrl($this->getSession()->getNeighborhoodVisiting());
         }
         return null;
     }
@@ -140,8 +127,8 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     {
         if (is_null($this->visitingNeighborhood)) {
             $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood');
-            if ($this->getSession()->getNeighborhoodVisitingId()) {
-                $neighborhood = $neighborhood->load((int)$this->getSession()->getNeighborhoodVisitingId());
+            if ($this->getSession()->getNeighborhoodVisiting()) {
+                $neighborhood = $this->getSession()->getNeighborhoodVisiting();
             }
             $this->visitingNeighborhood = $neighborhood;
         }

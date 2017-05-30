@@ -24,7 +24,7 @@
                 <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
                     <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
                 <?php else: ?>
-                    <li><a href="<?= $_helper->getCustomerWebsite()?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                    <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
                 <?php endif ?>
             </ul>
             <div class="intro-section">

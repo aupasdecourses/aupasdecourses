@@ -71,6 +71,17 @@
         </Apdc_Neighborhood>
       </modules>
     </translate>
+    <events>
+      <controller_action_predispatch>
+        <observers>
+          <apdc_neighborhood>
+            <type>singleton</type>
+            <class>apdc_neighborhood/observer</class>
+            <method>setNeighborhoodVisiting</method>
+          </apdc_neighborhood>
+        </observers>
+      </controller_action_predispatch>
+    </events>
   </frontend>
 
   <adminhtml>
