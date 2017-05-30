@@ -12,7 +12,7 @@ class BillingController extends Controller
 
 	public function indexAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -46,7 +46,7 @@ class BillingController extends Controller
 
 	public function verifAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -120,7 +120,7 @@ class BillingController extends Controller
 
 	public function detailsAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -146,7 +146,7 @@ class BillingController extends Controller
 
 	public function summaryAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -172,6 +172,11 @@ class BillingController extends Controller
 
 	public function billingOneAction(Request $request, $id)
 	{
+		
+		if (!$this->isGranted('ROLE_GESTION')) {
+			return $this->redirectToRoute('root');
+		}
+	
 		$factu = $this->container->get('apdc_apdc.billing');
 		$mage = $this->container->get('apdc_apdc.magento');
 		$pdfbilling = $this->container->get('apdc_apdc.pdfbilling');
@@ -283,7 +288,7 @@ class BillingController extends Controller
 
 	public function payoutIndexAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -312,7 +317,7 @@ class BillingController extends Controller
 
 	public function payoutSubmitAction(Request $request, $choice)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_GESTION')) {
 			return $this->redirectToRoute('root');
 		}
 

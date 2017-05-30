@@ -11,7 +11,7 @@ class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -26,7 +26,7 @@ class StatController extends Controller
 
 	public function loyaltyCustomerAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -46,7 +46,7 @@ class StatController extends Controller
 
 	public function statVoucherAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -69,7 +69,7 @@ class StatController extends Controller
 
 	public function noteOrderAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_ADMIN')) {
+		if (!$this->isGranted('ROLE_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 		

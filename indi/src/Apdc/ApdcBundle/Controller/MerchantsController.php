@@ -11,6 +11,10 @@ class MerchantsController extends Controller
 {
     public function indexAction(Request $request)
     {
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
@@ -44,7 +48,11 @@ class MerchantsController extends Controller
     }
 
     public function merchantsOneAction(Request $request, $id, $from, $to)
-    {
+	{
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
@@ -66,6 +74,11 @@ class MerchantsController extends Controller
 
     public function merchantsAllAction(Request $request, $from, $to)
     {
+	
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
