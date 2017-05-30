@@ -255,6 +255,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             $filters = [];
 
             foreach ($this->filterable as $name) {
+
                 $filter = $request->get($name);
                 $filters[$name] = $filter;
             }
@@ -317,7 +318,8 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         $this->init('count');
 
         /** @var \AutoBundle\Repository\AbstractRepository $repository */
-        $repository = $this->getModel(null, false);
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('AppBundle:'.$this->entityName);
 
         return $repository->count();
     }
@@ -337,7 +339,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
     {
         $this->init('get');
 
-        if (!$entity = $this->getModel(null, false)->find($id)) {
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$entity = $em->getRepository('AppBundle:'.$this->entityName)->find($id)) {
             return $this->notFound();
         }
 
@@ -455,7 +459,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     protected function putPatch($id, Request $request, $clearMissing = true)
     {
-        if (!$entity = $this->getModel(null, false)->find($id)) {
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$entity = $em->getRepository('AppBundle:'.$this->entityName)->find($id)) {
             return $this->notFound();
         }
 
@@ -500,7 +506,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             return $form;
         }
     }
-
+    
     /**
      * Delete an entity
      *
@@ -518,7 +524,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
 
         $em = $this->getDoctrine()->getManager();
 
-        if ($entity = $this->getModel(null, false)->find($id)) {
+        if ($entity = $em->getRepository('AppBundle:'.$this->entityName)->find($id)) {
             $em->remove($entity);
             $em->flush();
         }
@@ -582,9 +588,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
 
     /**
      * @param Request $request
-     *
+     * 
      * @return StreamedResponse
-     *
+     * 
      * @ApiDoc()
      */
     public function exportAction(Request $request)
@@ -599,6 +605,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         $options = null;
 
         $response = new StreamedResponse(function() use($container, $request) {
+
             $em = $this->getDoctrine()->getManager();
 
             $search  = $this->getSearch($request);
@@ -608,7 +615,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             // The getExportQuery method returns a query that is used to retrieve
             // all the objects (lines of your csv file) you need. The iterate method
             // is used to limit the memory consumption
-            $results = $this->getModel(null, false)->searchAndfindQuery(
+            $results = $em->getRepository('AppBundle:'.$this->entityName)->searchAndfindQuery(
                 $search,
                 $filters,
                 $orderBy
@@ -616,7 +623,8 @@ abstract class AbstractController extends Controller implements ClassResourceInt
 
             $handle = fopen('php://output', 'r+');
 
-            while (false !== ($row = $results->next())) {
+            while (false !== ($row = $results->next()))
+            {
                 // add a line in the csv file. You need to implement a toArray() method
                 // to transform your object into an array
                 fputcsv($handle, $row[0]->toArray());
@@ -648,10 +656,14 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     protected function checkAcl($name = 'default')
     {
-        if ($this->acl) {
-            if (isset($this->acl[$name])) {
+        if ($this->acl)
+        {
+            if (isset($this->acl[$name]))
+            {
                 $this->denyAccessUnlessGranted($this->acl[$name]);
-            } elseif (isset($this->acl['default'])) {
+            }
+            elseif (isset($this->acl['default']))
+            {
                 $this->denyAccessUnlessGranted($this->acl['default']);
             }
         }
@@ -681,9 +693,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         return $this->get('kernel')->getEnvironment();
     }
 
-    /**
-     * @return string
-     */
+
     public function getNSEntity ()
     {
         return 'AppBundle\Entity\\'.$this->entityName;
