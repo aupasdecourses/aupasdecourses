@@ -2,17 +2,17 @@
 namespace AppBundle\Repository;
 
 use AutoBundle\Repository\AbstractMageRepository;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class ProductRepository extends AbstractMageRepository
 {
-    protected $modelName = 'catalog/product';
+    use ContainerAwareTrait;
 
     /**
      * @inheritdoc
      */
     protected function searchQuery($search, $qb)
     {
-        // TODO: reimplement
         $qb->andWhere('magic.name LIKE \'%' . str_replace('\'', '\'\'', $search) . '%\'');
     }
 }

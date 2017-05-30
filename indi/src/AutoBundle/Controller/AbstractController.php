@@ -1,7 +1,6 @@
 <?php
 namespace AutoBundle\Controller;
 
-use AutoBundle\Repository\AbstractRepository;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View as ViewTemplate;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -9,8 +8,6 @@ use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +19,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 abstract class AbstractController extends Controller implements ClassResourceInterface
 {
-    /** @var bool True if init() already done once */
-    private $initiated = false;
-
     /** @var ContainerAwareEventDispatcher */
     protected $dispatcher;
-
-    /** @var string */
-    protected $bundleName = 'AppBundle';
 
     /** @var string */
     protected $entityName = null;
@@ -52,15 +43,6 @@ abstract class AbstractController extends Controller implements ClassResourceInt
     /** @var null|array */
     protected $filterable = null;
 
-    /** @var boolean */
-    protected $searchable = true;
-
-    /** @var  AbstractRepository[] */
-    protected $modelInstances = [];
-
-    /** @var  FormBuilder */
-    protected $form = null;
-
     /**
      * Replace __construct that doesn't exist in Symfony
      *
@@ -68,79 +50,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     public function init($type = 'default')
     {
-        if ($this->initiated) {
-            return;
-        }
-
         $this->checkAcl($type);
 
         $this->dispatcher = new ContainerAwareEventDispatcher($this->container);
-
-        $this->initiated = true;
-    }
-
-    /**
-     * Get the entity repository
-     *
-     * @param string $name
-     * @param bool   $setForm
-     *
-     * @return AbstractRepository
-     */
-    public function getModel($name = null, $setForm = true)
-    {
-        if (!empty($name)) {
-            $modelName = $name;
-        } else {
-            $modelName = $this->entityName;
-        }
-
-        if (!isset($this->modelInstances[$modelName])) {
-            $this->modelInstances[$modelName] = $this->getDoctrine()->getManager()
-                ->getRepository($this->bundleName.':'.$modelName);
-
-            if ($setForm) {
-                $this->modelInstances[$modelName]->setForm(
-                    $this->get('form.factory')->createBuilder(
-                        $this->makeForm($modelName),
-                        null,
-                        [
-                            'attr' => ['id' => 'form-Main']
-                        ]
-                    )
-                );
-            }
-        }
-
-        return $this->modelInstances[$modelName];
-    }
-
-    /**
-     * @param string $modelName
-     *
-     * @return Form
-     */
-    protected function makeForm($modelName)
-    {
-        $formName = $this->bundleName.'\Form\\'.$modelName.'Type';
-
-        return new $formName(['em' => $this->getDoctrine()->getManager()]);
-    }
-
-    /**
-     * @return FormBuilder
-     */
-    public function getFormBuilder()
-    {
-        return $this->getModel()->getForm();
-    }
-
-    /**
-     * @return Form
-     */
-    public function getForm()
-    {
-        return $this->getModel()->getForm()->getForm();
     }
 
     /**
@@ -178,7 +90,8 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         }
 
         /** @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->getModel(null, false);
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('AppBundle:'.$this->entityName);
 
         /** Check if repository implemented method */
         if (method_exists($repository, 'searchAndfindBy')) {
