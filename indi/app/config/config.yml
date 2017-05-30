@@ -7,8 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    server_root: %kernel.root_dir%/../..
-    billing_folder_root: %kernel.root_dir%/../web/docs/billing
+    server_root: "%kernel.root_dir%/../.."
+    billing_folder_root: "%kernel.root_dir%/../web/docs/billing"
 
 framework:
     #esi:             ~
@@ -43,9 +43,9 @@ twig:
     form_themes:
         - 'bootstrap_3_layout.html.twig'
     globals:
-        adyen_platform_first_part:  %adyen_platform_first_part%
-        adyen_platform_second_part: %adyen_platform_second_part%
-        server_root: %server_root%
+        adyen_platform_first_part:  "%adyen_platform_first_part%"
+        adyen_platform_second_part: "%adyen_platform_second_part%"
+        server_root: "%server_root%"
 
 # Doctrine Configuration
 doctrine:

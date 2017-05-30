@@ -47,13 +47,11 @@ class Billing
     }
 
     /** Récupère l'information commercant dans la table order */
-    private function comid_item($item, $order)
+    private function comid_item($itemid, $ordered_items)
     {
-        $pid = $item->getProductId();
-        $items = $order->getAllItems();
         $commercant = null;
-        foreach ($items as $itemId => $item) {
-            if ($item->getProductId() == $pid) {
+        foreach ($ordered_items as $itemId => $item) {
+            if ($item->getProductId() == $itemid) {
                 $commercant = $item->getCommercant();
             }
         }
@@ -255,7 +253,7 @@ class Billing
                     $sum_commission_HT = 0;
                     foreach ($invoiced_items as $item) {
                         $com_done = false;
-                        $commercant_id = $this->comid_item($item, $order);
+                        $commercant_id = $this->comid_item($item->getProductId(), $ordered_items);
                         if ($commercant_id !== null) {
                             if ($commercant_id == $id) {
                                 $sum_items_invoice += floatval($item->getRowTotalInclTax());
@@ -428,6 +426,14 @@ class Billing
                     }
                 }
             }
+
+            //Remove shopid with 0 à facturer
+            foreach($data_summary as $shopid => $dat){
+                if($dat['sum_ticket_HT']==0){
+                    unset($data_summary[$shopid]);
+                }
+            }
+
         }
 
         if ($type == 'all') {
