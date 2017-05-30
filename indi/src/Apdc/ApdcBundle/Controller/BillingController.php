@@ -15,27 +15,29 @@ class BillingController extends Controller
 		if (!$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('root');
 		}
+
 		$factu = $this->container->get('apdc_apdc.billing');
-		$table = [];
-		$cpt = 0;
+
+		$result = [];
 		if (isset($_GET['date_debut'])) {
 			$date_debut		= $_GET['date_debut'];
 			$today			= date('Y-m-d H:i:s');
 			$date_fin		= date('Y-m-t', strtotime($today));
 			$summary		= $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
+
+
 			foreach ($summary as $sum) {
-				$table[$sum['shop']]['shop'][$cpt] = $sum['shop'];
-				$table[$sum['shop']]['sum_items'][$cpt] = $sum['sum_items'];
-				$table[$sum['shop']]['sum_due'][$cpt] = $sum['sum_due'];
-				$table[$sum['shop']]['sum_payout'][$cpt] = $sum['sum_payout'];
-				$cpt++;
+
+				$result[$sum['shop']]['shop'] = $sum['shop'];
+				$result[$sum['shop']]['sum_items'] += $sum['sum_items'];
+				$result[$sum['shop']]['sum_due'] += $sum['sum_due'];
+				$result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
 			}
-			//			echo'<pre>';
-			//			print_R($table);
-			//			echo'<pre>';
+
 		}
+
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
-			'summary'			=> $summary,
+			'result'			=> $result,
 			'date_debut'		=> $date_debut,
 			'date_fin'			=> $date_fin,
 		]);
