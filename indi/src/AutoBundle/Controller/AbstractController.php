@@ -143,6 +143,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         $search = $request->get('search');
 
         if (null !== $search) {
+
             if (!is_array($search)) {
                 $search = ['value' => $search, 'type' => 'contains'];
             }

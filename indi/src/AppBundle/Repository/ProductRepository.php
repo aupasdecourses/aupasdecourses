@@ -1,13 +1,10 @@
 <?php
 namespace AppBundle\Repository;
 
-use AutoBundle\Repository\AbstractMageRepository;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use AutoBundle\Repository\AbstractRepository;
 
-class ProductRepository extends AbstractMageRepository
+class ProductRepository extends AbstractRepository
 {
-    use ContainerAwareTrait;
-
     /**
      * @inheritdoc
      */
