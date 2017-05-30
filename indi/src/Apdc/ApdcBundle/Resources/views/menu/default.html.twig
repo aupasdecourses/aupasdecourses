@@ -14,6 +14,10 @@
 
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class ="nav navbar-nav">
+					
+					
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+					{% if is_granted('ROLE_DISPATCH') %}
 					<li class="dropdown">	
 						<a class="dropdown-toggle" data-toggle="dropdown"href="">Liste Commandes<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -29,8 +33,8 @@
 							<li><a href="{{ path ('mapMerchants')}}">Carte Commercants</a></li>
 						</ul>
 					</li>
-				
-					{% if is_granted('ROLE_ADMIN') %}			
+					{% endif %} {# end role dispatch #}
+
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Remboursement<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -48,6 +52,8 @@
 							<li><a href="{{ path ('billingPayoutIndex') }}">Payout</a></li>
 						</ul>
 					</li>
+
+					{% if is_granted('ROLE_COMMUNICATION') %}
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Clients<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -66,7 +72,10 @@
 							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
 						</ul>
 					</li>
-					{% endif %}
+					{% endif %} {# end role communication #}
+					{% endif %} {# end role admin et role gestion #}
+
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
