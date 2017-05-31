@@ -180,7 +180,7 @@ class Billing
      */
     public function data_facturation($debut, $fin, $type = 'all')
     {
-        $data = [];
+        $data_order=array();
 
         //current time
         $currentTime = \Varien_Date::now();
@@ -207,191 +207,113 @@ class Billing
         foreach ($orders as $order) {
             $ordered_items = $order->getAllItems();
             $credit_comments = $this->getRefundorderdata($order, 'comment');
+            $incrementid = $order->getIncrementId();
+            $nom_client = $order->getCustomerName();
+            $ddate=$order->getDdate();
+            $hascreditmemos=$order->hasCreditmemos();
 
-            if ($order->hasInvoices()) {
-                $invoices = $order->getInvoiceCollection();
-            }
-
+            //Create Invoices Items collection
+            $invoices = $order->getInvoiceCollection();
             foreach ($invoices as $invoice) {
                 $invoiced_items = $invoice->getAllItems();
             }
 
-            foreach ($list_commercant as $id => $com) {
-                $nb_products = 0;
-                $sum_items = 0;
-                $sum_items_HT = 0;
-                foreach ($ordered_items as $item) {
-                    if ($item->getCommercant() !== null) {
-                        if ($item->getData('commercant') == $id) {
-                            $nb_products += floatval($item->getQtyOrdered());
-                            $sum_items += floatval($item->getRowTotalInclTax());
-                            $sum_items_HT += floatval($item->getRowTotal());
-                        }
+            //Get Credit Memo items
+            if ($hascreditmemos) {
+                $creditmemos = \Mage::getResourceModel('sales/order_creditmemo_collection')->addAttributeToFilter('order_id', $order->getId());
+                foreach ($creditmemos as $creditmemo) {
+                    $credit_items = $creditmemo->getAllItems();
+                }
+            }
+
+            //Process ordered_items
+            foreach ($ordered_items as $item) {
+                if($item->getProductType()!="bundle"){
+                    $itcom=$item->getCommercant();
+                    $do=$data_order[$incrementid][$itcom];
+                    $do['shop_id']=$list_commercant[$itcom]['shop_id'];
+                    $do['order_shop_id'] = $incrementid.'-'.$do['shop_id'];
+                    $do['billing_month']=$billing_month;
+                    $do['customer_name']=$nom_client;
+                    $do['increment_id'] = $incrementid;
+                    $do['shop']=$list_commercant[$itcom]['name'];
+                    $do['nb_products']+=floatval($item->getQtyOrdered());
+                    $do['sum_items']+=floatval($item->getRowTotalInclTax());
+                    $do['sum_items_HT']+=floatval($item->getRowTotal());
+                    $do['creation_date'] = date('d/m/Y', strtotime($order->getCreatedAt()));
+                    if (!is_null($ddate)) {
+                        $do['delivery_date'] = date('d/m/Y', strtotime($ddate));
                     } else {
-                        $product = \Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-                        if ($product->getCategoryIds()[2] == $id) {
-                            $nb_products += floatval($item->getQtyOrdered());
-                            $sum_items += floatval($item->getRowTotalInclTax());
-                            $sum_items_HT += floatval($item->getRowTotal());
-                        }
+                        $do['delivery_date'] = $do['billing_month'] = 'Non Dispo';
+                    }
+                    $data_order[$incrementid][$itcom]=$do;
+                }
+
+            }
+
+            //Add info from invoiced_items
+            foreach ($invoiced_items as $item) {
+                $itcom = $this->comid_item($item->getProductId(), $ordered_items);
+                if ($itcom == null) {
+                    $product = \Mage::getModel('catalog/product')->load($item->getProductID());
+                    if($product->getTypeId()=="bundle"){
+                        continue;
                     }
                 }
-                if ($order->hasInvoices()) {
-                    if ($order->hasCreditmemos()) {
-                        if ($order->hasCreditmemos()) {
-                            $creditmemos = \Mage::getResourceModel('sales/order_creditmemo_collection')->addAttributeToFilter('order_id', $order->getId());
+                $do=$data_order[$incrementid][$itcom];
 
-                            foreach ($creditmemos as $creditmemo) {
-                                $credit_items = $creditmemo->getAllItems();
-                            }
+                $do['sum_items_invoice'] += floatval($item->getRowTotalInclTax());
+                $do['sum_items_invoice_HT'] += floatval($item->getRowTotal());
+                $TVApercent = ($do['sum_items_invoice'] - $do['sum_items_invoice_HT']) / $do['sum_items_invoice_HT'];
+                $marge_arriere = $this->marge_item($item, $order);
+                if ($hascreditmemos) {
+                    foreach ($credit_items as $citem) {
+                        if ($item->getProductID() == $citem->getProductID()) {
+                            $do['sum_items_credit'] += floatval($citem->getRowTotalInclTax());
+                            $do['sum_items_credit_HT'] += floatval($citem->getRowTotal())/(1+$TVAPercent);
+
+                            $do['sum_commission_HT'] += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $marge_arriere));
                         }
                     }
-                    $sum_items_invoice = 0;
-                    $sum_items_invoice_HT = 0;
-                    $sum_items_credit = 0;
-                    $sum_items_credit_HT = 0;
-                    $sum_commission_HT = 0;
-                    foreach ($invoiced_items as $item) {
-                        $com_done = false;
-                        $commercant_id = $this->comid_item($item->getProductId(), $ordered_items);
-                        if ($commercant_id !== null) {
-                            if ($commercant_id == $id) {
-                                $sum_items_invoice += floatval($item->getRowTotalInclTax());
-                                $sum_items_invoice_HT += floatval($item->getRowTotal());
-                                $TVApercent = ($sum_items_invoice - $sum_items_invoice_HT) / $sum_items_invoice_HT;
-                                $marge_arriere = $this->marge_item($item, $order);
-                                if ($order->hasCreditmemos()) {
-                                    foreach ($credit_items as $citem) {
-                                        if ($item->getProductID() == $citem->getProductID()) {
-                                            $sum_items_credit += floatval($citem->getRowTotalInclTax());
-                                            $sum_items_credit_HT += floatval($citem->getRowTotal());
+                    $creditinfo = $this->getRefunditemdata($item);
+                    $prixclient = $creditinfo['prix_final'];
+                    $prixcommercant = $creditinfo['prix_commercant'];
 
-                                            $sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $marge_arriere));
-                                            $com_done = true;
-                                        }
-                                    }
-                                    $creditinfo = $this->getRefunditemdata($item);
-                                    $prixclient = $creditinfo['prix_final'];
-                                    $prixcommercant = $creditinfo['prix_commercant'];
+                    $prix_final = ($prixcommercant != null ? $prixcommercant : $prixclient);
 
-                                    $prix_final = ($prixcommercant != null ? $prixcommercant : $prixclient);
+                    $creditvalue = $creditinfo['prix_initial'] - $prix_final;
 
-                                    $creditvalue = $creditinfo['prix_initial'] - $prix_final;
+                    $do['sum_items_credit'] += floatval($creditvalue);
+                    $do['sum_items_credit_HT'] += floatval($creditvalue) / (1 + $TVApercent);
+                    $do['sum_commission_HT'] += (floatval($item->getRowTotal()) - floatval($creditvalue) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
+                } else {
+                    $do['sum_items_credit']=$do['sum_items_credit_HT']=0;
+                    $do['sum_commission_HT'] += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $marge_arriere));
+                }
 
-                                    $sum_items_credit += floatval($creditvalue);
-                                    $sum_items_credit_HT += floatval($creditvalue) / (1 + $TVApercent);
-                                    $sum_commission_HT += (floatval($item->getRowTotal()) - floatval($creditvalue) / (1 + $TVApercent)) * floatval(str_replace(',', '.', $marge_arriere));
-                                    $sum_items_credit_TVA = $sum_items_credit_HT * $TVApercent;
-                                    $com_done = true;
-                                }
-                                if (!$com_done) {
-                                    $sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $marge_arriere));
-                                }
-                            }
-                        } else {
-                            $product = \Mage::getModel('catalog/product')->load($item->getProductID());
-                            if ($product->getCategoryIds()[2] == $id) {
-                                $sum_items_invoice += floatval($item->getRowTotalInclTax());
-                                $sum_items_invoice_HT += floatval($item->getRowTotal());
-                                if ($order->hasCreditmemos()) {
-                                    foreach ($credit_items as $citem) {
-                                        if ($item->getProductID() == $citem->getProductID()) {
-                                            $cproduct = \Mage::getModel('catalog/product')->load($citem->getProductID());
-                                            $sum_items_credit += floatval($citem->getRowTotalInclTax());
-                                            $sum_items_credit_HT += floatval($citem->getRowTotal());
-                                            $sum_commission_HT += (floatval($item->getRowTotal()) - floatval($citem->getRowTotal())) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
-                                            $com_done = true;
-                                        }
-                                    }
-                                }
-                                if (!$com_done) {
-                                    $sum_commission_HT += floatval($item->getRowTotal()) * floatval(str_replace(',', '.', $product->getData('marge_arriere')));
-                                }
-                            }
-                        }
-                    }
+                //Process sum_ticket
+                $do['sum_ticket_HT'] = $do['sum_items_HT'] - $do['sum_items_credit_HT'];
+                $do['sum_ticket'] = $do['sum_items'] - $do['sum_items_credit'];
+                $do['sum_due_HT'] = $do['sum_items_invoice_HT'] - $do['sum_items_credit_HT'] - $do['sum_commission_HT'];
 
-                    if ($sum_items != 0 || ($sum_items_invoice != 0 && $order->hasInvoices())) {
-                        $date_creation = date('d/m/Y', strtotime($order->getCreatedAt()));
-                        if (!is_null($order->getDdate())) {
-                            $date_livraison = date('d/m/Y', strtotime($order->getDdate()));
-                        } else {
-                            $date_livraison = $billing_month = 'Non Dispo';
-                        }
-                        if ($parentid == null) {
-                            $parentid = $order->getIncrementId();
-                        }
-                        $incrementid = $order->getIncrementId();
-                        $order_shop_id = $incrementid.'-'.$com['shop_id'];
-                        $nom_client = $order->getCustomerName();
-                        $sum_items = round($sum_items, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        $sum_items_HT = round($sum_items_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        $sum_items_TVA = round($sum_items - $sum_items_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        if ($order->hasInvoices()) {
-                            $sum_items_invoice = round($sum_items_invoice, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_items_invoice_HT = round($sum_items_invoice_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_items_invoice_TVA = round($sum_items_invoice - $sum_items_invoice_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        } else {
-                            $sum_items_invoice = $sum_items_invoice_HT = $sum_items_invoice_TVA = 0;
-                        }
-                        if ($order->hasCreditMemos()) {
-                            $sum_items_credit = round($sum_items_credit, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_items_credit_HT = round($sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_items_credit_TVA = round($sum_items_credit - $sum_items_credit_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        } else {
-                            $sum_items_credit = $sum_items_credit_HT = $sum_items_credit_TVA = 0;
-                        }
-                        if ($order->hasInvoices()) {
-                            //$sum_commission = round($sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_commission_HT = round($sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            //$sum_commission_TVA = round($sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        } else {
-                            //$sum_commission = 0;
-                            $sum_commission_HT = 0;
-                            //$sum_commission_TVA = 0;
-                        }
-                        if ($order->hasInvoices()) {
-                            //$sum_due = round($sum_items_invoice - $sum_items_credit - $sum_commission_HT * (1 + TAX_SERVICE), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            $sum_due_HT = round($sum_items_invoice_HT - $sum_items_credit_HT - $sum_commission_HT, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                            //$sum_due_TVA = round($sum_items_invoice - $sum_items_invoice_HT - ($sum_items_credit - $sum_items_credit_HT) - $sum_commission_HT * TAX_SERVICE, FLOAT_NUMBER, PHP_ROUND_HALF_UP);
-                        } else {
-                            //$sum_due = 0;
-                            $sum_due_HT = 0;
-                            //$sum_due_TVA = 0;
-                        }
-                        if ((int) $order->getIncrementId() > $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT']) {
-                            $creditcom = $credit_comments[$com['name']];
-                        } else {
-                            $creditcom = $credit_comments;
-                        }
-                        array_push($data, [
-                            'order_shop_id' => $order_shop_id,
-                            'creation_date' => $date_creation,
-                            'delivery_date' => $date_livraison,
-                            'billing_month' => $billing_month,
-                            'increment_id' => $incrementid,
-                            'customer_name' => $nom_client,
-                            'shop_id' => intval($com['shop_id']),
-                            'shop' => $com['name'],
-                            'id_billing' => '',
-                            'sum_items_HT' => $sum_items_HT,
-                            'sum_items' => $sum_items,
-                            'sum_items_credit_HT' => $sum_items_credit_HT,
-                            'sum_items_credit' => $sum_items_credit,
-                            'sum_ticket_HT' => $sum_items_HT - $sum_items_credit_HT,
-                            'sum_ticket' => $sum_items - $sum_items_credit,
-                            'sum_commission_HT' => $sum_commission_HT,
-                            //'sum_commission' => $sum_commission,
-                            'sum_due_HT' => $sum_due_HT,
-                            //'sum_due' => $sum_due,
-                        ]);
+                $data_order[$incrementid][$itcom]=$do;
+            }
+        }//end foreach orders
+
+        //Reformat and round numbers
+        $data_details=array();
+        foreach($data_order as $incrementid => $dat){
+            foreach($dat as $itcom => $da){
+                foreach($da as $key => $value){
+                    if(is_float($value)){
+                        $data_order[$incrementid][$itcom][$key] = round($value, FLOAT_NUMBER,   PHP_ROUND_HALF_UP);
                     }
                 }
+                $data_details[]=$da;
             }
         }
 
-    //indi_billing_summary calculation
-
+        //indi_billing_summary calculation
         if ($type != 'details') {
             $data_summary = array();
             $data_summary_key = array(
@@ -419,7 +341,7 @@ class Billing
                 $data_summary[$com['shop_id']]['created_at'] = $currentTimestamp;
             }
 
-            foreach ($data as $row) {
+            foreach($data_details as $row){
                 foreach ($data_summary_key as $key) {
                     if (!in_array($key, array('shop_id', 'shop'))) {
                         $data_summary[$row['shop_id']][$key] += $row[$key];
@@ -437,9 +359,9 @@ class Billing
         }
 
         if ($type == 'all') {
-            $return = array('details' => $data, 'summary' => $data_summary);
+            $return = array('details' => $data_details, 'summary' => $data_summary);
         } elseif ($type == 'details') {
-            $return = $data;
+            $return = $data_details;
         } elseif ($type == 'summary') {
             $return = $data_summary;
         }
@@ -473,6 +395,17 @@ class Billing
             $total_withship = $order->getGrandTotal();
             $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
             $total_withoutship = $total_withship - $frais_livraison;
+            $ordered_items = $order->getAllItems();
+
+            $missing_com_att_count=0;
+            foreach($ordered_items as $oi){
+                if($oi->getProductType()!="bundle"){
+                    if($oi->getCommercant()==null || $oi->getCommercant()==""){
+                        $missing_com_att_count+=1;
+                    }
+                }
+            }
+
             array_push($data, [
                 'status' => $status,
                 'increment_id' => $incrementid,
@@ -480,6 +413,7 @@ class Billing
                 'frais_livraison' => $frais_livraison,
                 'total_produit' => $total_withoutship,
                 'discount' => $discount,
+                'missing_com_att_count' => $missing_com_att_count
             ]);
         }
 
@@ -515,6 +449,7 @@ class Billing
                 'verif_mois' => false,
                 'verif_noentry' => false,
                 'verif_noprocessing' => false,
+                'verif_nomissingcom' => false,
                 'verif_totaux' => false,
                 'display_button' => false,
                 'sum_items_facturation' => 'NA',
@@ -551,6 +486,7 @@ class Billing
                 'status_ok_count' => 0,
                 'status_nok_count' => 0,
                 'status_processing_count' => 0,
+                'missing_com_att_count' => 0,
                 'id_max' => 0,
                 'id_min' => 999999999999999999999,
                 'diff_facturation_magento' => 0,
@@ -573,6 +509,9 @@ class Billing
                 } else {
                     $result_data_magento['status_nok_count'] += 1;
                 }
+
+                $result_data_magento['missing_com_att_count'] += $row['missing_com_att_count'];
+
             }
 
             //get data_facturation total
@@ -586,10 +525,9 @@ class Billing
                 'sum_ticket_HT' => 0,
                 'sum_ticket' => 0,
                 'sum_commission_HT' => 0,
-                //'sum_commission' => 0,
                 'sum_due_HT' => 0,
-                //'sum_due' => 0,
             ];
+
             foreach ($data_facturation as $row) {
                 foreach ($result_data_facturation as $key => $value) {
                     $result_data_facturation[$key] += floatval($row[$key]);
@@ -603,6 +541,13 @@ class Billing
                 $result['verif_noprocessing'] = true;
             }
 
+            // 3 bis - Vérification pas de order items sans attributs commerçant
+            if ($result_data_magento['missing_com_att_count'] != 0) {
+                $result['verif_nomissingcom'] = false;
+            } else {
+                $result['verif_nomissingcom'] = true;
+            }
+
             // 4 - Vérification totaux égaux
             if (round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'] - $result_data_magento['discount'], FLOAT_NUMBER, PHP_ROUND_HALF_UP) == 0) {
                 $result['verif_totaux'] = true;
@@ -611,7 +556,7 @@ class Billing
             }
 
             // 5 - Verif affichage bouton ou non
-            if ($result['verif_totaux'] * $result['verif_noprocessing'] * $result['verif_noentry'] * $result['verif_mois'] == 1) {
+            if ($result['verif_totaux'] * $result['verif_noprocessing'] * $result['verif_noentry'] * $result['verif_mois'] * $result['verif_missingcom'] == 1) {
                 $result['display_button'] = true;
             } else {
                 $result['display_button'] = false;
@@ -627,6 +572,7 @@ class Billing
                 'status_ok_count' => $result_data_magento['status_ok_count'],
                 'status_nok_count' => $result_data_magento['status_nok_count'],
                 'status_processing_count' => $result_data_magento['status_processing_count'],
+                'missing_com_att_count' => $result_data_magento['missing_com_att_count'],
                 'order_total' => $result_data_magento['status_ok_count'] + $result_data_magento['status_nok_count'] + $result_data_magento['status_processing_count'],
                 'id_max' => $result_data_magento['id_max'],
                 'id_min' => $result_data_magento['id_min'],

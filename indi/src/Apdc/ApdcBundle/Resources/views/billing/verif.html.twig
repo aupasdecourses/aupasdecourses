@@ -80,6 +80,17 @@
 					</td>
 				</tr>
 				<tr>
+					<td>Pas d'attributs commerçants manquants dans les produits commandés ?</td>
+					<td>
+					{% if verif.verif_nomissingcom %}
+						<i class="fa fa-check fa-2" style="color:green"></i>
+					{% else %}
+						<i class="fa fa-times fa-2" style="color:red"></i>
+					{% endif %}
+					</td>
+					<td {% if verif.verif_nomissingcom == false %} style="color:red;"{% endif %} > Nombre d'attribut manquant: {{ verif.missing_com_att_count }}</td>
+				</tr>
+				<tr>
 					<td>Totaux facturation & Magento égaux ?</td>
 					<td>
 						{% if verif.verif_totaux %}
