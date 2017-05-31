@@ -18,7 +18,7 @@ class ProductType extends AbstractType
             ->add('reference_interne_magasin')
             ->add('status')  // TODO: ChoiceType, 0 / 1
             ->add('on_selection')  // TODO: ChoiceType, 0 / 1
-            ->add('prix_public')
+            ->add('price')
             ->add('unite_prix', null, [
                 'empty_data' => '1'
             ])  // TODO: ChoiceType, and get choice form Mage

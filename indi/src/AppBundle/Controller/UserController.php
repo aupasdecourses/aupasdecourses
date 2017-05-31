@@ -18,6 +18,8 @@ class UserController extends AbstractController
         'default' => 'ROLE_ADMIN'
     ];
 
+    protected $filterable = ['shopId', 'type'];
+
     /**
      * @inheritdoc
      */
@@ -40,5 +42,13 @@ class UserController extends AbstractController
                 $userManager->updatePassword($entity);
             }
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function makeForm($modelName)
+    {
+        return 'Apdc\ApdcBundle\Form\UserType';
     }
 }

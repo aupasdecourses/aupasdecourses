@@ -7,7 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="api_user")
+ * @ORM\Table(name="api_old_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="fos_user.email.already_used")
  */
@@ -95,7 +95,6 @@ class User extends BaseUser
 
     /**
      * Set firstName
-     * 
      *
      * @param string $firstName
      *

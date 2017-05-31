@@ -19,6 +19,13 @@ class User extends BaseUser
     /** @Accessor(getter="getMainRole") */
     protected $role;
 
+    /**
+     * User first name
+     *
+     * @var integer
+     */
+    private $shopId;
+
     public function getMainRole()
     {
         if ($this->hasRole('ROLE_ADMIN') || $this->isSuperAdmin()) {
@@ -26,5 +33,29 @@ class User extends BaseUser
         }
 
         return 'ROLE_USER';
+    }
+
+    /**
+     * Set shopId
+     *
+     * @param integer $shopId
+     *
+     * @return User
+     */
+    public function setShopId($shopId)
+    {
+        $this->shopId = $shopId;
+
+        return $this;
+    }
+
+    /**
+     * Get shopId
+     *
+     * @return integer
+     */
+    public function getShopId()
+    {
+        return $this->shopId;
     }
 }

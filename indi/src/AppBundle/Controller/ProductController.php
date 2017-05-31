@@ -26,14 +26,15 @@ class ProductController extends AbstractController
         'post'    => 'ROLE_USER',
         'put'     => 'ROLE_USER',
         'patch'   => 'ROLE_USER',
+        'delete'  => 'ROLE_USER',
     ];
 
     protected $orderable = ['status', 'name', 'origine', 'produit_biologique'];
 
-    protected $filterable = ['user'];
+    protected $filterable = ['shop_id'];
 
     /** @var null|array The name of the changed fields */
-    private $changes = null;
+    private $original = null;
 
     public function init($type = 'default')
     {
@@ -56,7 +57,7 @@ class ProductController extends AbstractController
 
                 $request->request->add(
                     [
-                        'user' => $this->getUser()->getId(),
+                        'shop_id' => $this->getUser()->getShopId(),
                     ]
                 );
             }
@@ -73,21 +74,21 @@ class ProductController extends AbstractController
                     return;
                 }
 
-                $title = 'Produit créé chez '.$entity->getUser()->getShopName();
-                $body  = 'Le produit suivant a été créé par '.$this->getUser().', le '.date("Y-m-d").' :'.PHP_EOL
-                    .'SKU : '.$entity->getSku().PHP_EOL
-                    .'Nom du produit : '.$entity->getName().PHP_EOL.PHP_EOL
-                    .'Référence : '.$entity->getRef().PHP_EOL
-                    .'Disponible : '.($entity->getAvailable() ? 'Oui' : 'Non').PHP_EOL
-                    .'Sélection APDC : '.($entity->getSelected() ? 'Oui' : 'Non').PHP_EOL
-                    .'Prix : '.$entity->getPrice().PHP_EOL
-                    .'Unit : '.$entity->getPriceUnitValue().PHP_EOL
-                    .'Description : '.$entity->getShortDescription().PHP_EOL
-                    .'Poids portion : '.$entity->getPortionWeight().PHP_EOL
-                    .'Nombre portion : '.$entity->getPortionNumber().PHP_EOL
-                    .'Tax : '.$entity->getTaxValue().PHP_EOL
-                    .'Origin : '.$entity->getOrigin().PHP_EOL
-                    .'Bio : '.($entity->getBio() ? 'Oui' : 'Non').PHP_EOL
+                $title = 'Produit créé chez le commerçant ID : '.$entity['commercant'];
+                $body  = 'Le produit suivant a été créé par '.$this->getUser()->getUsername().', le '.date("Y-m-d").' :'.PHP_EOL
+                    .'SKU : '.$entity['sku'].PHP_EOL
+                    .'Nom du produit : '.$entity['name'].PHP_EOL.PHP_EOL
+                    .'Référence : '.$entity['reference_interne_magasin'].PHP_EOL
+                    .'Disponible : '.($entity['status'] ? 'Oui' : 'Non').PHP_EOL
+                    .'Sélection APDC : '.($entity['on_selection']  ? 'Oui' : 'Non').PHP_EOL
+                    .'Prix : '.$entity['price'].PHP_EOL
+                    .'Unit : '.$entity['unite_prix'].PHP_EOL
+                    .'Description : '.$entity['short_description'].PHP_EOL
+                    .'Poids portion : '.$entity['poids_portion'].PHP_EOL
+                    .'Nombre portion : '.$entity['nbre_portion'].PHP_EOL
+                    .'Tax : '.$entity['tax_class_id'].PHP_EOL
+                    .'Origin : '.$entity['origine'].PHP_EOL
+                    .'Bio : '.($entity['produit_biologique'] ? 'Oui' : 'Non').PHP_EOL
                 ;
 
                 $from = $this->getParameter('from_email');
@@ -109,53 +110,47 @@ class ProductController extends AbstractController
         $this->dispatcher->addListener(
             'Product.onUpdateBeforeSave',
             function (GenericEvent $event) {
-                /** @var \AppBundle\Entity\Product $entity */
                 if (!$entity = $event->getArgument('entity')) {
                     return;
                 }
 
-                /* Note: We could send the email here, but it's more secure to send it after the flush() */
-
-                $em  = $this->getDoctrine()->getManager();
-                $uow = $em->getUnitOfWork();
-                $uow->computeChangeSets();
-
-                $changes = $uow->getEntityChangeSet($entity);
-
-                $this->changes = array_flip(array_keys($changes));
+                $this->original = $entity;
             }
         );
         $this->dispatcher->addListener(
             'Product.onUpdateAfterSave',
             function (GenericEvent $event) {
-                /** @var \AppBundle\Entity\Product $entity */
-                if (!$this->changes || !$entity = $event->getArgument('entity')) {
+                if (!$entity = $event->getArgument('entity')) {
                     return;
                 }
 
-                $photo = $this->get('request_stack')->getMasterRequest()
-                    ->getUriForPath('/uploads/products/'.$entity->getId().'/'.$entity->getPhoto());
+                $entity  = $entity->getData();
+                $changes = array_diff($this->original, $entity);
+
+                $photo = null;
+//                $photo = $this->get('request_stack')->getMasterRequest()
+//                    ->getUriForPath('/uploads/products/'.$entity->getId().'/'.$entity->getPhoto());
 
                 $bodyChanges = [
-                    'ref'              => 'Référence : '.$entity->getRef(),
-                    'available'        => 'Disponible : '.($entity->getAvailable() ? 'Oui' : 'Non'),
-                    'selected'         => 'Sélection APDC : '.($entity->getSelected() ? 'Oui' : 'Non'),
-                    'price'            => 'Prix : '.$entity->getPrice(),
-                    'priceUnit'        => 'Unit : '.$entity->getPriceUnitValue(),
-                    'shortDescription' => 'Description : '.$entity->getShortDescription(),
-                    'portionWeight'    => 'Poids portion : '.$entity->getPortionWeight(),
-                    'portionNumber'    => 'Nombre portion : '.$entity->getPortionNumber(),
-                    'tax'              => 'Tax : '.$entity->getTaxValue(),
-                    'origin'           => 'Origin : '.$entity->getOrigin(),
-                    'bio'              => 'Bio : '.($entity->getBio() ? 'Oui' : 'Non'),
-                    'photo'            => 'Photo : '.$photo,
+                    'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'],
+                    'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non'),
+                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non'),
+                    'price'                     => 'Prix : ' . $entity['price'],
+                    'unite_prix'                => 'Unit : ' . $entity['unite_prix'],
+                    'short_description'         => 'Description : ' . $entity['short_description'],
+                    'poids_portion'             => 'Poids portion : ' . $entity['poids_portion'],
+                    'nbre_portion'              => 'Nombre portion : ' . $entity['nbre_portion'],
+                    'tax_class_id'              => 'Tax : ' . $entity['tax_class_id'],
+                    'origine'                   => 'Origin : ' . $entity['origine'],
+                    'produit_biologique'        => 'Bio : ' . ($entity['produit_biologique'] ? 'Oui' : 'Non'),
+                    'photo'                     => 'Photo : ' . $photo,
                 ];
 
-                $title = 'Produit mise à jour chez '.$entity->getUser()->getShopName();
-                $body  = 'Le produit suivant a été mis à jour par '.$this->getUser().', le '.date("Y-m-d").' :'.PHP_EOL
-                    .'SKU : '.$entity->getSku().PHP_EOL
-                    .'Nom du produit : '.$entity->getName().PHP_EOL.PHP_EOL
-                    .implode(PHP_EOL, array_intersect_key($bodyChanges, $this->changes))
+                $title = 'Produit mise à jour chez le commerçant ID : '.$entity['commercant'];
+                $body  = 'Le produit suivant a été mis à jour par '.$this->getUser()->getUsername().', le '.date("Y-m-d").' :'.PHP_EOL
+                    .'SKU : '.$entity['sku'].PHP_EOL
+                    .'Nom du produit : '.$entity['name'].PHP_EOL.PHP_EOL
+                    .implode(PHP_EOL, array_intersect_key($bodyChanges, $changes))
                 ;
 
                 $from = $this->getParameter('from_email');
@@ -218,6 +213,48 @@ class ProductController extends AbstractController
         return $filters;
     }
     // TODO : Security, check user on GET and PUT for non-admin
+
+    /**
+     * Set the status to false and send an email to the admin
+     *
+     * @inheritdoc
+     *
+     * @ViewTemplate()
+     * @ApiDoc()
+     */
+    public function deleteAction($id, Request $request)
+    {
+        $this->init('delete');
+
+        if (!$entity = $this->getModel()->find($id)) {
+            return $this->notFound();
+        }
+
+        $title = 'Suppression d\'un produit chez'.$this->getUser()->getUsername();
+        $body  = 'La suppression du produit suivant a été demandé par '.$this->getUser()->getUsername().', le '.date("Y-m-d").' :'.PHP_EOL
+            .'ID : '.$entity['entity_id'].PHP_EOL
+            .'SKU : '.$entity['sku'].PHP_EOL
+        ;
+
+        $from = $this->getParameter('from_email');
+        $to   = $this->getParameter('to_email');
+
+        $message = $this->prepareEmail(
+            $title,
+            $body,
+            $from,
+            $to
+        );
+
+        if (!$result = $this->get('mailer')->send($message)) {
+            // TODO: Maybe log error later?
+            // TODO: Maybe we can also add some notification to the user
+        }
+
+        $request->request->replace(['status' => false]);
+
+        return $this->putPatch($id, $request, false);
+    }
 
     /**
      * Patch an existing entity

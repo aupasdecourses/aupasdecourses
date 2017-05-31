@@ -20,7 +20,7 @@ class OrderController extends AbstractController
     protected $defaultOrder = ['entity_id' => 'desc'];
 
     /** @var array  */
-    protected $orderable = [];
+    protected $orderable = ['increment_id'];
 
     /** @var array  */
     protected $filterable = ['customer_id'];

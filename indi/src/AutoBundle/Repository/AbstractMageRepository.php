@@ -142,6 +142,16 @@ abstract class AbstractMageRepository
     }
 
     /**
+     * Get the current entity
+     *
+     * @return mixed
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
      * Get the real name of a field name based on its alias.
      * If the field is not aliased $alias is returned
      *

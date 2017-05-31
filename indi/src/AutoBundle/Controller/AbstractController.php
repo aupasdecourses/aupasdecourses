@@ -479,7 +479,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             $this->triggerEvent(
                 'onUpdateAfterSave',
                 [
-                    'entity' => $entity,
+                    'entity' => $this->getModel()->getEntity(),
                 ]
             );
 
