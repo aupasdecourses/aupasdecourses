@@ -115,6 +115,9 @@ class ProductController extends AbstractController
                 }
 
                 $this->original = $entity;
+
+                $this->getModel('ProductHistory')->addHistory($entity);
+                die;
             }
         );
         $this->dispatcher->addListener(
@@ -126,6 +129,8 @@ class ProductController extends AbstractController
 
                 $entity  = $entity->getData();
                 $changes = array_diff($this->original, $entity);
+
+                // $this->getModel('ProductHistory')->addHistory($entity);
 
                 $photo = null;
 //                $photo = $this->get('request_stack')->getMasterRequest()

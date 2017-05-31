@@ -6,37 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use \AutoBundle\Entity\UploadTrait;
-
 /**
- * @ORM\Table(name="api_product")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Table(name="api_product_history")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductHistoryRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Product
+class ProductHistory
 {
-    use UploadTrait;
-
-    /** Upload configuration */
-    private $config = [
-        'upload' => [
-            'rootDir'   => '/../../../web/',
-            'uploadDir' => 'uploads/products/',
-            /* 'photo' => [
-                'thumbnail' => [
-                    'width'  => 150,
-                    'height' => 100
-                ],
-                'resize' => [
-                    'width'  => 250,
-                    'height' => 250
-                ]
-            ] */
-        ]
-    ];
-
-    private $uploadFiles = ['photo'];
-
     /**
      * Autoincrement ID
      *
@@ -204,6 +180,14 @@ class Product
      */
     public $photoFile;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shop_id", type="integer", length=11, nullable=true)
+     */
+    private $shopId;
+
     /**
      * The merchant user
      *
@@ -213,6 +197,7 @@ class Product
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
 
     /**
      * Object to Array, used for export
@@ -624,6 +609,30 @@ class Product
     public function getPhotoFile()
     {
         return $this->photoFile;
+    }
+
+    /**
+     * Set bio
+     *
+     * @param integer $shopId
+     *
+     * @return Product
+     */
+    public function setShopId($shopId)
+    {
+        $this->shop_id = $shopId;
+
+        return $this;
+    }
+
+    /**
+     * Get bio
+     *
+     * @return boolean
+     */
+    public function getShopId()
+    {
+        return $this->shop_id;
     }
 
     /**

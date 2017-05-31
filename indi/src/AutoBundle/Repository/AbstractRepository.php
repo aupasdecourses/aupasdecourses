@@ -99,12 +99,13 @@ abstract class AbstractRepository extends EntityRepository
      *
      * @param Request $request
      * @param bool    $clearMissing
+     * @param bool    $clone
      *
      * @return bool
      */
-    public function isValid(Request $request, $clearMissing = false)
+    public function isValid(Request $request, $clearMissing = false, $clone = true)
     {
-        $entity = is_object($this->entity) ? clone $this->entity : $this->entity;
+        $entity = is_object($this->entity) && $clone ? clone $this->entity : $this->entity;
 
         $this->form = $this->formBuilder
             ->setData($entity)

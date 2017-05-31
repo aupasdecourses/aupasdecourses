@@ -55,7 +55,7 @@ abstract class AbstractMageRepository
     public function __construct(Magento $mage)
     {
         $this->mage  = $mage;
-        $this->model = $mage->getModel($this->modelName);
+        $this->model = $mage->getModel($this->modelName)->getCollection();
     }
 
     /**
@@ -95,13 +95,13 @@ abstract class AbstractMageRepository
      */
     public function find($id)
     {
-        $qb = $this->model->load($id);
+        $qb = $this->model->addFieldToFilter('entity_id', $id);
 
         if (!$qb) {
             return null;
         }
 
-        $this->entity = $qb;
+        $this->entity = $qb->addAttributeToSelect('*')->getFirstItem();
 
         return $this->entity->toArray();
     }
@@ -217,7 +217,7 @@ abstract class AbstractMageRepository
         $offset = null,
         $only = null
     ) {
-        $qb = $this->model->getCollection();
+        $qb = $this->model;
 
         if ($only) {
             if (!is_array($only)) {
@@ -360,7 +360,7 @@ abstract class AbstractMageRepository
     public function getPaginator()
     {
         if (!isset($this->paginator)) {
-            $this->paginator = new Paginator($this->model->getCollection());
+            $this->paginator = new Paginator($this->model);
         }
 
         return $this->paginator;
@@ -371,6 +371,6 @@ abstract class AbstractMageRepository
      */
     public function count()
     {
-        return $this->model->getCollection()->getSize;
+        return $this->model->getSize;
     }
 }
