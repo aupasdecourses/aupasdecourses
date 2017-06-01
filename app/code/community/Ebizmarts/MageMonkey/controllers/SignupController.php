@@ -38,7 +38,7 @@ class Ebizmarts_MageMonkey_SignupController extends Mage_Core_Controller_Front_A
         $path = '/';
 
         if (Mage::helper('customer')->isLoggedIn()) {
-            $path = 'monkey/customer_account/index';
+            $path = 'customer/account';
         }
 
         return $path;

@@ -1,0 +1,71 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="col2-set">
+    <div class="col-1">
+        <div class="box">
+            <div class="box-title">
+                <h3><?php echo $this->__('Contact Information') ?></h3>
+				<div class="edit_customer_show show">
+					Nom<br />
+					<?php echo $this->escapeHtml($this->getCustomer()->getLastname()) ?><br />
+					Prénom<br />
+					<?php echo $this->escapeHtml($this->getCustomer()->getFirstname()) ?><br />
+					Adresse email<br />
+					<?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?><br />
+					Mot de passe<br />
+					*****
+					<a href="javascript:toggleEditCustomerForm();">Modifier</a>
+				</div>
+				<div class="edit_customer_form hide">
+					<?php echo $this->getChildHtml('customer_edit')?>
+					<a href="javascript:toggleEditCustomerForm();">Annuler</a>
+				</div>
+            </div>
+        </div>
+    </div>
+    <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="col-2">
+        <div class="box">
+            <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
+        </div>
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
+    </div>
+    <?php endif; ?>
+</div>
+<script type="text/javascript">
+	function toggleEditCustomerForm() {
+		if(jQuery('.edit_customer_show').hasClass('show')) {
+			jQuery('.edit_customer_show').removeClass('show').addClass('hide');
+			jQuery('.edit_customer_form').removeClass('hide').addClass('show');
+		}
+		else {
+			jQuery('.edit_customer_show').removeClass('hide').addClass('show');
+			jQuery('.edit_customer_form').removeClass('show').addClass('hide');
+		}
+	}
+</script>
