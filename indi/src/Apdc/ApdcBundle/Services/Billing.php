@@ -386,10 +386,11 @@ class Billing
 
         foreach ($orders as $order) {
             $status = $order->getStatusLabel();
+            $discount = -floatval($order->getBaseDiscountAmount());
             if ($order->getCouponCode() != '') {
-                $discount = -floatval($order->getBaseDiscountAmount());
+                $discount_coupon = -floatval($order->getBaseDiscountAmount());
             } else {
-                $discount = 0;
+                $discount_coupon = 0;
             }
             $incrementid = $order->getIncrementId();
             $total_withship = $order->getGrandTotal();
@@ -413,6 +414,7 @@ class Billing
                 'frais_livraison' => $frais_livraison,
                 'total_produit' => $total_withoutship,
                 'discount' => $discount,
+                'discount_coupon' => $discount_coupon,
                 'missing_com_att_count' => $missing_com_att_count
             ]);
         }
@@ -457,6 +459,7 @@ class Billing
                 'sum_order_magento' => 'NA',
                 'sum_shipping_magento' => 'NA',
                 'sum_discount_magento' => 'NA',
+                'sum_discount_coupon_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
                 'status_ok_count' => 'NA',
                 'status_nok_count' => 'NA',
@@ -483,6 +486,7 @@ class Billing
                 'frais_livraison' => 0,
                 'total_produit' => 0,
                 'discount' => 0,
+                'discount_coupon' => 0,
                 'status_ok_count' => 0,
                 'status_nok_count' => 0,
                 'status_processing_count' => 0,
@@ -497,6 +501,7 @@ class Billing
                     $result_data_magento['frais_livraison'] += floatval($row['frais_livraison']);
                     $result_data_magento['total_produit'] += floatval($row['total_produit']);
                     $result_data_magento['discount'] += floatval($row['discount']);
+                    $result_data_magento['discount_coupon'] += floatval($row['discount_coupon']);
                     $result_data_magento['status_ok_count'] += 1;
                     if ($result_data_magento['id_max'] < $row['increment_id']) {
                         $result_data_magento['id_max'] = $row['increment_id'];
@@ -556,7 +561,7 @@ class Billing
             }
 
             // 5 - Verif affichage bouton ou non
-            if ($result['verif_totaux'] * $result['verif_noprocessing'] * $result['verif_noentry'] * $result['verif_mois'] * $result['verif_missingcom'] == 1) {
+            if ($result['verif_totaux'] * $result['verif_noprocessing'] * $result['verif_noentry'] * $result['verif_mois'] * $result['verif_nomissingcom'] == 1) {
                 $result['display_button'] = true;
             } else {
                 $result['display_button'] = false;
@@ -567,6 +572,7 @@ class Billing
                 'sum_order_magento' => $result_data_magento['total_commande'],
                 'sum_shipping_magento' => $result_data_magento['frais_livraison'],
                 'sum_discount_magento' => $result_data_magento['discount'],
+                'sum_discount_coupon_magento' => $result_data_magento['discount_coupon'],
                 'sum_items_magento' => $result_data_magento['total_produit'] + $result_data_magento['discount'],
                 'diff_facturation_magento' => round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'] - $result_data_magento['discount'], FLOAT_NUMBER, PHP_ROUND_HALF_UP),
                 'status_ok_count' => $result_data_magento['status_ok_count'],

@@ -431,20 +431,26 @@ class Stats
 					1 => 'Pour les articles ...',
 					2 => 'Pour la livraison ...',
 			);
-			if ($order->getCouponCode() <> "") {
-				$coupondata	= "";
-				if(floatval($order->getBaseDiscountAmount())<>0){
-					$coupondata	.= "Réduction de ".(-floatval($order->getBaseDiscountAmount()))."€.";
-				}
+			
+			//Coupon Code
+			$coupondata	= $couponcode = "";
+			if (floatval($order->getBaseDiscountAmount())<>0) {
+				$coupondata	.= "Réduction de ".(-floatval($order->getBaseDiscountAmount()))."€.";
+			} else {
 				if($order->getBaseShippingAmount()==0){
 					$coupondata	.= "Livraison gratuite.";
 				}
-			} else {
-				$coupondata	= "";
 			}
+			if($order->getCouponCode()<>""){
+				$couponcode	= $order->getCouponCode();
+			} else {
+				if (floatval($order->getBaseDiscountAmount())<>0) {
+					$couponcode = "Discount sans coupon";
+				}
+			}
+
 			$incrementid		= $order->getIncrementId();
 			$nom_client			= $order->getCustomerName().' '.$order->getCustomerId();
-			$couponcode			= $order->getCouponCode();
 			$couponrule			= $coupondata;
 			$total_withship		= $order->getGrandTotal();
 			$frais_livraison	= $order->getShippingAmount() + $order->getShippingTaxAmount();
@@ -490,12 +496,16 @@ class Stats
 				'increment_id'	=> $order->getIncrementId(),
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
+				'Discount'		=> -floatval($order->getBaseDiscountAmount()),
 			]);
 			arsort($data);
 		}
 		$data_conso = [];
 		foreach ($data as $row) {
-			if ($row['Coupon Code']) {
+			if ($row['Discount']>0) {
+				if($row['Coupon Code']==""){
+					$row['Coupon Code']='Discount sans coupon';
+				}
 				$data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
 			}
 		}

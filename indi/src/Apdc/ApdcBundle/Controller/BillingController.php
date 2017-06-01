@@ -42,6 +42,7 @@ class BillingController extends Controller
                 'sum_order_magento' => 'NA',
                 'sum_shipping_magento' => 'NA',
                 'sum_discount_magento' => 'NA',
+                'sum_discount_coupon_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
                 'status_ok_count' => 'NA',
                 'status_nok_count' => 'NA',

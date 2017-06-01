@@ -106,7 +106,7 @@
 							<ul>
 								<li>Total commandes Magento: {{ verif.sum_order_magento }}</li>
 								<li>Total livraisons Magento: - {{ verif.sum_shipping_magento }}</li>
-								<li>Total discount Magento: - {{ verif.sum_discount_magento }}</li>
+								<li>Total discount Magento: - {{ verif.sum_discount_magento }} (dont {{verif.sum_discount_coupon_magento}} via code coupon)</li>
 							</ul>
 							<li {% if verif.diff_facturation_magento != 0 %} style="color:red;"{% endif %} >Différence facturée/Magento: {{verif.diff_facturation_magento}}€</li>
 						</ul>
