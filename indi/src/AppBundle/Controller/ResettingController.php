@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use FOS\UserBundle\Controller\ResettingController as BaseController;

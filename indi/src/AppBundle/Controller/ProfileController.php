@@ -1,7 +1,6 @@
 <?php
-namespace AppBundle\Controller;
 
-use AutoBundle\Controller\AbstractController;
+namespace AppBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\View as ViewTemplate;
 use FOS\RestBundle\Routing\ClassResourceInterface;

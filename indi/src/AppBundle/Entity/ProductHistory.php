@@ -3,7 +3,7 @@ namespace AppBundle\Entity;
 
 use Apdc\ApdcBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -45,8 +45,7 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank(message="The name cannot be empty")
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -55,7 +54,7 @@ class ProductHistory
      *
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     private $available = true;
 
@@ -64,7 +63,7 @@ class ProductHistory
      *
      * @var boolean
      *
-     * @ORM\Column(name="on_selection", type="boolean")
+     * @ORM\Column(name="on_selection", type="boolean", nullable=true)
      */
     private $selected = false;
 
@@ -73,8 +72,7 @@ class ProductHistory
      *
      * @var float
      *
-     * @ORM\Column(name="prix_public", type="float", length=255)
-     * @Assert\NotBlank(message="The price cannot be empty")
+     * @ORM\Column(name="prix_public", type="float", length=255, nullable=true)
      */
     private $price;
 
@@ -83,17 +81,9 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="unite_prix", type="integer", length=11)
+     * @ORM\Column(name="unite_prix", type="string", length=11, nullable=true)
      */
-    private $priceUnit = 1;
-
-    /**
-     * @var array
-     */
-    private $priceUnitValues = [
-        1 => 'Kg',
-        2 => 'Unit'
-    ];
+    private $priceUnit;
 
     /**
      * A short description of the product
@@ -109,7 +99,7 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="poids_portion", type="float", length=255)
+     * @ORM\Column(name="poids_portion", type="float", length=255, nullable=true)
      */
     private $portionWeight = 500;
 
@@ -118,7 +108,7 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="nbre_portion", type="integer", length=11)
+     * @ORM\Column(name="nbre_portion", type="integer", length=11, nullable=true)
      */
     private $portionNumber = 1;
 
@@ -127,7 +117,7 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="tax_class_id", type="integer", length=11)
+     * @ORM\Column(name="tax_class_id", type="integer", length=11, nullable=true)
      */
     private $tax = 5;
 
@@ -154,7 +144,7 @@ class ProductHistory
      *
      * @var string
      *
-     * @ORM\Column(name="produit_biologique", type="boolean")
+     * @ORM\Column(name="produit_biologique", type="boolean", nullable=true)
      */
     private $bio = false;
 
@@ -166,22 +156,6 @@ class ProductHistory
     private $photo;
 
     /**
-     * @Assert\File(
-     *      maxSize = "10M",
-     *      mimeTypes = {"image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"},
-     *      mimeTypesMessage = "Only images are accepted as photo.",
-     *      uploadIniSizeErrorMessage = "The photo image file is too big (10Mo max).",
-     *      uploadFormSizeErrorMessage = "The photo image file is too big (10Mo max).",
-     *      uploadErrorMessage = "The photo image file cannot be transfered.",
-     *      maxSizeMessage = "The photo image file is too big (10Mo max)."
-     * )
-     *
-     * @var UploadedFile $photoFile
-     */
-    public $photoFile;
-
-
-    /**
      * @var string
      *
      * @ORM\Column(name="shop_id", type="integer", length=11, nullable=true)
@@ -189,15 +163,21 @@ class ProductHistory
     private $shopId;
 
     /**
-     * The merchant user
+     * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createdOn", type="datetime")
+     */
+    private $createdOn;
+
+    /**
      * @var User
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="createdBy", referencedColumnName="id")
      */
-    private $user;
-
+    private $createdBy;
 
     /**
      * Object to Array, used for export
@@ -224,7 +204,7 @@ class ProductHistory
      *
      * @param string $sku
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setSku($sku)
     {
@@ -248,7 +228,7 @@ class ProductHistory
      *
      * @param string $ref
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setRef($ref)
     {
@@ -272,7 +252,7 @@ class ProductHistory
      *
      * @param string $name
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setName($name)
     {
@@ -296,7 +276,7 @@ class ProductHistory
      *
      * @param boolean $available
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setAvailable($available)
     {
@@ -320,7 +300,7 @@ class ProductHistory
      *
      * @param boolean $selected
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setSelected($selected)
     {
@@ -344,7 +324,7 @@ class ProductHistory
      *
      * @param float $price
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setPrice($price)
     {
@@ -368,7 +348,7 @@ class ProductHistory
      *
      * @param float $priceUnit
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setPriceUnit($priceUnit)
     {
@@ -406,7 +386,7 @@ class ProductHistory
      *
      * @param string $shortDescription
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setShortDescription($shortDescription)
     {
@@ -430,7 +410,7 @@ class ProductHistory
      *
      * @param float $portionWeight
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setPortionWeight($portionWeight)
     {
@@ -454,7 +434,7 @@ class ProductHistory
      *
      * @param integer $portionNumber
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setPortionNumber($portionNumber)
     {
@@ -478,7 +458,7 @@ class ProductHistory
      *
      * @param integer $tax
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setTax($tax)
     {
@@ -516,7 +496,7 @@ class ProductHistory
      *
      * @param string $origin
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setOrigin($origin)
     {
@@ -540,7 +520,7 @@ class ProductHistory
      *
      * @param boolean $bio
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setBio($bio)
     {
@@ -564,7 +544,7 @@ class ProductHistory
      *
      * @param string $photo
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setPhoto($photo)
     {
@@ -584,43 +564,15 @@ class ProductHistory
     }
 
     /**
-     * Sets photoFile.
-     *
-     * @param UploadedFile $file
-     */
-    public function setPhotoFile(UploadedFile $file = null)
-    {
-        $this->photoFile = $file;
-
-        if (isset($this->photo)) {
-            // store the old name to delete after the update
-            $this->tempPhoto = $this->photo;
-            $this->photo     = null;
-        } else {
-            $this->photo = 'initial';
-        }
-    }
-
-    /**
-     * Get logoFile.
-     *
-     * @return UploadedFile
-     */
-    public function getPhotoFile()
-    {
-        return $this->photoFile;
-    }
-
-    /**
      * Set bio
      *
      * @param integer $shopId
      *
-     * @return Product
+     * @return ProductHistory
      */
     public function setShopId($shopId)
     {
-        $this->shop_id = $shopId;
+        $this->shopId = $shopId;
 
         return $this;
     }
@@ -632,30 +584,54 @@ class ProductHistory
      */
     public function getShopId()
     {
-        return $this->shop_id;
+        return $this->shopId;
     }
 
     /**
-     * Set user
+     * Set createdOn
      *
-     * @param User $user
+     * @param \DateTime $createdOn
      *
-     * @return Product
+     * @return ProductHistory
      */
-    public function setUser(User $user = null)
+    public function setCreatedOn($createdOn)
     {
-        $this->user = $user;
+        $this->createdOn = $createdOn;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get createdOn
+     *
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param User $createdBy
+     *
+     * @return ProductHistory
+     */
+    public function setCreatedBy(User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
      *
      * @return User
      */
-    public function getUser()
+    public function getCreatedBy()
     {
-        return $this->user;
+        return $this->createdBy;
     }
 }

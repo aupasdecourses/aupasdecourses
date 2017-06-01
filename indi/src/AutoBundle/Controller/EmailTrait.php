@@ -1,4 +1,5 @@
 <?php
+
 namespace AutoBundle\Controller;
 
 trait EmailTrait
@@ -17,33 +18,27 @@ trait EmailTrait
     {
         $message = \Swift_Message::newInstance($subject, $body); // Use 'text/html' to enable HTML email
 
-        if (!is_array($from))
-        {
+        if (!is_array($from)) {
             $from = explode('|', $from);
         }
-        if (!is_array($to))
-        {
+        if (!is_array($to)) {
             $to = explode('|', $to);
         }
 
-        if (!isset($from[1]))
-        {
+        if (!isset($from[1])) {
             $from[1] = null;
         }
-        if (!isset($to[1]))
-        {
+        if (!isset($to[1])) {
             $to[1] = null;
         }
 
         $message->setFrom($from[0], $from[1]);
         $message->setTo($to[0], $to[1]);
 
-        if ($cc)
-        {
+        if ($cc) {
             $message->setCc($cc);
         }
-        if ($bcc)
-        {
+        if ($bcc) {
             $message->setBcc($bcc);
         }
 

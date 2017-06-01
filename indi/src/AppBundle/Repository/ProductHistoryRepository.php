@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\ProductHistory;
 use AutoBundle\Repository\AbstractRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -8,7 +9,7 @@ class ProductHistoryRepository extends AbstractRepository
 {
     public function addHistory($data)
     {
-        $this->entity = new \AppBundle\Entity\ProductHistory();
+        $this->entity = new ProductHistory();
 
         // TODO - Note: We only need those fields, maybe we should filter prior
         $fields = [

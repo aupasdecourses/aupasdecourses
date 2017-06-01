@@ -51,7 +51,6 @@ class ProductHistoryType extends AbstractType
             ->add('shop_id', null, [
                 'property_path' => 'shopId',
             ])  // TODO: ChoiceType, and get choice form Mage
-            ->add('photoFile');
         ;
     }
 

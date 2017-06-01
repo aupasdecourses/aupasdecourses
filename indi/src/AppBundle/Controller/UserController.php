@@ -1,8 +1,8 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AutoBundle\Controller\AbstractController;
-
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class UserController extends AbstractController

@@ -1,8 +1,8 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AutoBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends AbstractController
