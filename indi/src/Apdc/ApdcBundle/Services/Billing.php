@@ -464,6 +464,7 @@ class Billing
                 'status_ok_count' => 'NA',
                 'status_nok_count' => 'NA',
                 'status_processing_count' => 'NA',
+                'missing_com_att_count' => 0,
                 'order_total' => 'NA',
                 'id_max' => 'NA',
                 'id_min' => 'NA',

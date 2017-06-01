@@ -65,6 +65,7 @@ class BillingController extends Controller
                 'verif_noprocessing' => false,
                 'verif_totaux' => false,
                 'verif_nomissingcom' => false,
+                'missing_com_att_count' => 0,
                 'display_button' => false,
                 'sum_items_facturation' => 'NA',
                 'sum_items_magento' => 'NA',
