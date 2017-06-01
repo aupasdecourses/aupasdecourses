@@ -9,7 +9,12 @@ class MapController extends Controller
 {
     public function merchantsAction(Request $request)
     {
-        $session = $request->getSession();
+		   
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$session = $request->getSession();
 
         $stats = $this->container->get('apdc_apdc.stats');
         $mage = $this->container->get('apdc_apdc.magento');
@@ -63,7 +68,7 @@ class MapController extends Controller
 
     public function customersAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_COMMUNICATION')) {
             return $this->redirectToRoute('root');
         }
 

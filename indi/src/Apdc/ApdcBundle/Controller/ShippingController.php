@@ -11,6 +11,11 @@ class ShippingController extends Controller
 {
     public function indexAction(Request $request)
     {
+		
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+	
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_from	= new\Apdc\ApdcBundle\Entity\From();
@@ -31,6 +36,11 @@ class ShippingController extends Controller
 
     public function shippingAllAction(Request $request, $from)
     {
+		
+		if(!$this->isGranted('ROLE_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_from	= new \Apdc\ApdcBundle\Entity\From();

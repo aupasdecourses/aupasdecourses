@@ -19,7 +19,7 @@ class RefundController extends Controller
 
     public function indexAction(Request $request, $from)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -115,7 +115,7 @@ class RefundController extends Controller
 
     public function refundUploadAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -213,7 +213,7 @@ class RefundController extends Controller
 
     public function refundInputAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -300,7 +300,7 @@ class RefundController extends Controller
 
     public function refundDigestAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -387,7 +387,7 @@ class RefundController extends Controller
 
     public function refundFinalAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -430,7 +430,7 @@ class RefundController extends Controller
 
     public function refundAdyenIndexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -444,7 +444,7 @@ class RefundController extends Controller
 
     public function refundAdyenFormAction(Request $request, $psp)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 

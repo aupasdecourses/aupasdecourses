@@ -11,6 +11,35 @@ class BillingController extends Controller
 {
     public function indexAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_GESTION')) {
+            return $this->redirectToRoute('root');
+        }
+
+        $factu = $this->container->get('apdc_apdc.billing');
+
+        $result = [];
+        if (isset($_GET['date_debut'])) {
+            $date_debut     = $_GET['date_debut'];
+            $today          = date('Y-m-d H:i:s');
+            $date_fin       = date('Y-m-t', strtotime($today));
+            $summary        = $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
+
+
+            foreach ($summary as $sum) {
+
+                $result[$sum['shop']]['shop'] = $sum['shop'];
+                $result[$sum['shop']]['sum_items'] += $sum['sum_items'];
+                $result[$sum['shop']]['sum_due'] += $sum['sum_due'];
+                $result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
+            }
+
+        }
+
+        return $this->render('ApdcApdcBundle::billing/index.html.twig', [
+            'result'            => $result,
+            'date_debut'        => $date_debut,
+            'date_fin'          => $date_fin,
+        ]);
     }
 
     public function verifAction(Request $request)
@@ -326,3 +355,4 @@ class BillingController extends Controller
         ]);
     }
 }
+

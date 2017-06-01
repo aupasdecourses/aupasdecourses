@@ -10,6 +10,7 @@
 		<table class='table'>
 			<thead>
 				<tr>
+					<th>Client</th>
 					<th># Commande</th>
 					<th>Upload tickets</th>
 					<th>Saisie ticket</th>
@@ -19,6 +20,7 @@
 			</thead>
 			{% for order in orders %}
 				<tr>
+					<td>{{ order.first_name ~ " " ~ order.last_name }}</td>
 					<td>{{ order.id }}</td>
 					<td>
 						{% if order.upload == '' %}

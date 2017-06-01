@@ -1,47 +1,51 @@
 ///PROCESS JSON FOR SHOPS ///
 
- //Make getJSON asachrynous, to get elements from geocode1 function
- $.ajaxSetup({
-   async: false
- });
+//Make getJSON asachrynous, to get elements from geocode1 function
+$.ajaxSetup({
+  async: false
+});
 
 function getjson(url) {
-	var data=[];
-	$.getJSON(url,function(json){
-		$.each(json,function(index,entry){
-			data.push(entry);
-		});
-	});
-	return data;
+  var data = [];
+  $.getJSON(url, function(json) {
+    $.each(json, function(index, entry) {
+      data.push(entry);
+    });
+  });
+  return data;
 }
 
 var redMarker = L.AwesomeMarkers.icon({
-    icon: 'user',
-    prefix:'fa',
-    markerColor: 'red',
-  });
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'red',
+});
 
 var greenMarker = L.AwesomeMarkers.icon({
-    icon: 'user',
-    prefix:'fa',
-    markerColor: 'green',
-  });
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'green',
+});
 
 /* affiche infos sur pop up commercant */
-function setMarker(data){
-	var markers = [];
-	$.each(data,function(i,d){
-			if(d.lat!=="" && d.lon!=="" && d.lat!==null && d.lon!==null){
-				if(d.addr.substring(0, 3) == "750"){
-					var marker = L.marker([d.lat, d.lon], {icon: redMarker});
-				}else{
-					var marker = L.marker([d.lat, d.lon], {icon: greenMarker});
-				}
-				marker.bindPopup('<div>'+d.nom_commercant+'</div><div>'+d.addr+'</div><div>'+d.ville+'</div><div>'+d.telephone+'</div><div>Horaires ouvertures : '+d.timetable+'</div>');
-				markers.push(marker);
-			}
-		});
-	return markers;
+function setMarker(data) {
+  var markers = [];
+  $.each(data, function(i, d) {
+    if (d.lat !== "" && d.lon !== "" && d.lat !== null && d.lon !== null) {
+      if (d.addr.substring(0, 3) == "750") {
+        var marker = L.marker([d.lat, d.lon], {
+          icon: redMarker
+        });
+      } else {
+        var marker = L.marker([d.lat, d.lon], {
+          icon: greenMarker
+        });
+      }
+      marker.bindPopup('<div>' + d.nom_commercant + '</div><div>' + d.addr + '</div><div>' + d.ville + '</div><div>' + d.telephone + '</div><div>Horaires ouvertures : ' + d.timetable + '</div>');
+      markers.push(marker);
+    }
+  });
+  return markers;
 }
 
 //Tile
@@ -49,8 +53,8 @@ function setMarker(data){
 //     attribution: '© OpenStreetMap contributors'
 // });
 var city = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-     attribution: '© OpenStreetMap contributors'
- });
+  attribution: '© OpenStreetMap contributors'
+});
 
 ///Get and set markers
 
@@ -62,19 +66,19 @@ var lieu = setMarker(data);
 var group = new L.featureGroup(lieu);
 
 //map
-var map = L.map('mapShops',{
-	maxZoom: 18,
-    center: [48.8888208, 2.3194718],
-    zoom:10,
-    layers: city
+var map = L.map('mapShops', {
+  maxZoom: 18,
+  center: [48.8888208, 2.3194718],
+  zoom: 10,
+  layers: city
 });
 
 map.fitBounds(group.getBounds());
 
 //Add Cluster with markers
 // var layer_commercant = new L.layerGroup();
-$.each(lieu,function(i,d){
- 	d.addTo(map);
+$.each(lieu, function(i, d) {
+  d.addTo(map);
 });
 // var cluster = new L.MarkerClusterGroup();
 // $.each(lieu,function(i,d){
@@ -84,42 +88,50 @@ $.each(lieu,function(i,d){
 
 
 //Geolocalisation
-map.locate({setView: false});
-function onLocationFound(e) {L.marker(e.latlng).addTo(map).bindPopup("Vous êtes ici!").openPopup();}
+map.locate({
+  setView: false
+});
+
+function onLocationFound(e) {
+  L.marker(e.latlng).addTo(map).bindPopup("Vous êtes ici!").openPopup();
+}
 map.on('locationfound', onLocationFound);
-function onLocationError(e) {alert(e.message);}
+
+function onLocationError(e) {
+  alert(e.message);
+}
 map.on('locationerror', onLocationError);
 
 /* barre de recherche Google API */
 var geocoder = new google.maps.Geocoder(google_key);
-function googleGeocoding(text, callResponse)
-{
-	geocoder.geocode({address: text}, callResponse);
-}
-function formatJSON(rawjson)
-{
-	var json = {},
-	key, loc, disp = [];
-	for(var i in rawjson)
-	{
-		key = rawjson[i].formatted_address;
 
-		loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
-
-		json[ key ]= loc;	//key,value format
-	}
-	return json;
+function googleGeocoding(text, callResponse) {
+  geocoder.geocode({
+    address: text
+  }, callResponse);
 }
 
-var searchControl=new L.Control.Search({
-	sourceData: googleGeocoding,
-	formatData: formatJSON,
-	markerLocation: true,
-	autoType: false,
-	autoCollapse: true,
-	minLength: 2,
-	zoom:16,
+function formatJSON(rawjson) {
+  var json = {},
+    key, loc, disp = [];
+  for (var i in rawjson) {
+    key = rawjson[i].formatted_address;
+
+    loc = L.latLng(rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng());
+
+    json[key] = loc; //key,value format
+  }
+  return json;
+}
+
+var searchControl = new L.Control.Search({
+  sourceData: googleGeocoding,
+  formatData: formatJSON,
+  markerLocation: true,
+  autoType: false,
+  autoCollapse: true,
+  minLength: 2,
+  zoom: 16,
 });
 
 map.addControl(searchControl);
-
