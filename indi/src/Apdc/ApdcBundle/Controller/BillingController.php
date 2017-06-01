@@ -22,24 +22,34 @@ class BillingController extends Controller
 		if (isset($_GET['date_debut'])) {
 			$date_debut		= $_GET['date_debut'];
 			$today			= date('Y-m-d H:i:s');
-			$date_fin		= date('Y-m-t', strtotime($today));
+			$date_fin		= date('t-m-Y', strtotime($today));
 			$summary		= $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
 
 
 			foreach ($summary as $sum) {
-
+				
+				$result[$sum['shop']]['date_payout'] = $sum['date_payout'];
 				$result[$sum['shop']]['shop'] = $sum['shop'];
 				$result[$sum['shop']]['sum_items'] += $sum['sum_items'];
 				$result[$sum['shop']]['sum_due'] += $sum['sum_due'];
 				$result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
 			}
 
+
+			$debut = date_create(str_replace('/', '-', $date_debut));
+			$fin = date_create(str_replace('/', '-', $date_fin));
+			$intervalM = date_diff($fin, $debut)->m+1;
+			$intervalY = date_diff($fin, $debut)->y;
+			$interval = ($intervalY * 12) + ($intervalM);
+		} else {
+			$interval = 0;
 		}
 
 		return $this->render('ApdcApdcBundle::billing/index.html.twig', [
 			'result'			=> $result,
 			'date_debut'		=> $date_debut,
 			'date_fin'			=> $date_fin,
+			'months_diff'		=> $interval,
 		]);
 	}
 

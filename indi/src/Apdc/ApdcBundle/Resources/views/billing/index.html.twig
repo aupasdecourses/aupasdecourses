@@ -5,7 +5,7 @@
 
 <div class="container">
 	<div class="page-header">
-		<h2>Affichage des X derniers mois : du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		<h2>Affichage des {{ months_diff }} derniers mois : du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 	</div>
 
 	<div id="filter"><label>Selectionnez le commercant : &nbsp;</label></div>
@@ -15,13 +15,15 @@
 			<tr>
 				<th class="sort">Magasin</th>
 				<th class="float">Commande TTC</th>
-				<th class="float">Total Commercant TTC</th>
-				<th class="float">Virement TTC</th>
-				<th class="float">En cours (Total Comm - Virement)</th>
+				<th class="float">Somme due TTC</th>
+				<th class="float">Retrait TTC (prevu)</th>
+				<th class="float">Retrait TTC (regle)</th>
+				<th class="float">En cours (Prevu - Regle)</th>
 			</tr>
 		</thead>	
 		<tfoot style="display: table-row-group;">
 			<tr>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -35,8 +37,21 @@
 				<td>{{ order.shop }}</td>
 				<td>{{ order.sum_items }}</td>
 				<td>{{ order.sum_due }}</td>
+
 				<td>{{ order.sum_payout }}</td>
-				<td>{{ order.sum_due - order.sum_payout }}</td>
+
+			{% if order.date_payout is not null %}
+
+				{% set sum_payout_regle = order.sum_payout %}
+				<td>{{ sum_payout_regle }}</td>
+
+			{% else %}
+				{% set sum_payout_regle = 0 %}
+				<td>{{ sum_payout_regle }}</td>
+
+			{% endif %}
+
+				<td>{{ order.sum_payout - sum_payout_regle }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
@@ -66,6 +81,7 @@ $(function() {
 		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
 		weekHeader: 'Sem.',
 		dateFormat: 'dd/mm/yy',
+		defaultDate: new Date(2017, 00, 01),
 	});
 });
 
