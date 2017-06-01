@@ -48,6 +48,8 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
             ->addFieldToSelect('is_active')
             ->addFieldToSelect('name')
             ->addFieldToSelect('website_id')
+            ->addFieldToSelect('code_do')
+            ->addFieldToSelect('postcodes')
             ->addFieldToSelect('sort_order');
         $this->setCollection($collection);
 
@@ -96,6 +98,24 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
             'options'   => Mage::getSingleton('adminhtml/system_store')->getWebsiteOptionHash(true),
             'index'     => 'website_id',
         ));
+
+        $this->addColumn(
+            'code_do',
+            array(
+                'header'=> Mage::helper('catalog')->__('Code Do'),
+                'index' => 'code_do',
+            )
+        );
+        $this->addColumn(
+            'postcodes',
+            array(
+                'header'=> Mage::helper('catalog')->__('Postcodes'),
+                'index' => 'postcodes',
+                'filter' => false,
+                'sortable' => false,
+                'renderer' => 'Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid_Renderer_Postcodes'
+            )
+        );
 
         $this->addColumn(
             'sort_order',

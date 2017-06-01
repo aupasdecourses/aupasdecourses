@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <adminhtml>
     <menu>
-        <system>
+        <neighborhoods>
+            <title>Neighborhoods</title>
+            <sort_order>15</sort_order>
             <children>
                 <apdc_neighborhood>
                     <title>Manage Neighborhoods</title>
@@ -9,13 +11,13 @@
                     <action>adminhtml/neighborhood_index/index</action>
                 </apdc_neighborhood>
             </children>
-        </system>
+        </neighborhoods>
     </menu>
     <acl>
       <resources>
         <admin>
           <children>
-            <system>
+            <neighborhoods>
               <children>
                 <apdc_neighborhood translate="title" module="apdc_neighborhood">
                   <title>Neighborhood</title>
@@ -35,7 +37,7 @@
                   </children>
                 </apdc_neighborhood>
               </children>
-            </system>
+            </neighborhoods>
           </children>
         </admin>
       </resources>

@@ -60,11 +60,12 @@
                             <label for="customer_neighborhood" class="required"><em>*</em><?php echo $this->__('Neighborhood') ?></label>
                             <div class="input-box">
                                 <select name="customer_neighborhood" id="customer_neighborhood" class="validate-select required-entry">
-                                    <?php $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId(Mage::app()->getWebsite()->getId()); ?>
+                                    <?php $neighborhoods = Mage::helper('apdc_neighborhood')->getAllNeighborhoods(); ?>
+                                    <?php $neighborhoodVisiting = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting(); ?>
                                     <option value=""><?php echo $this->__('-- Please select your neighborhood --'); ?></option>
                                     <?php foreach ($neighborhoods as $neighborhood) : ?>
-                                        <?php $selected = ($neighborhoods->count() == 1 ? 'selected="selected"' : ''); ?>
-                                            <option value="<?php $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
+                                        <?php $selected = ($neighborhood->getId() == $neighborhoodVisiting->getId() ? 'selected="selected"' : ''); ?>
+                                        <option value="<?php $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

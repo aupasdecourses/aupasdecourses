@@ -29,7 +29,7 @@ class Apdc_Neighborhood_Adminhtml_Neighborhood_IndexController extends Mage_Admi
      */
     protected function initActions()
     {
-        $this->loadLayout()->_setActiveMenu('system/apdc_neighborhood');
+        $this->loadLayout()->_setActiveMenu('neighborhoods/apdc_neighborhood');
         $this->_addBreadcrumb(Mage::helper('adminhtml')->__('Catalog'), Mage::helper('adminhtml')->__('Catalog'));
         $this->_addBreadcrumb(Mage::helper('adminhtml')->__('Gestion des quartiers'), Mage::helper('adminhtml')->__('Gestion des quartiers'));
 

@@ -86,6 +86,18 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
         );
 
         $fieldset->addField(
+            'code_do',
+            'text',
+            array(
+                'name' => 'code_do',
+                'label' => $this->_helper()->__('Code Do'),
+                'title' => $this->_helper()->__('Code Do'),
+                'required' => true,
+                'disabled' => $isElementDisabled
+            )
+        );
+
+        $fieldset->addField(
             'postcodes',
             'text',
             array(
@@ -191,6 +203,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
      */
     protected function _isAllowedAction($action)
     {
-        return Mage::getSingleton('admin/session')->isAllowed('system/apdc_neighborhood/' . $action);
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/apdc_neighborhood/' . $action);
     }
 }

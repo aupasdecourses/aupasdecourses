@@ -1153,6 +1153,19 @@ label {
     position: relative;
     text-transform: uppercase;
 }
+#storename a {
+  padding:5px 15px;
+}
+#storename a img {
+  display:inline-block;
+  border-radius:50%;
+}
+#storename a span {
+  display:inline-block;
+  vertical-align:middle;
+}
+
+
 
 .logo a:hover {
     text-decoration: none;

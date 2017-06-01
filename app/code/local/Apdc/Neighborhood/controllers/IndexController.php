@@ -49,27 +49,6 @@ class Apdc_Neighborhood_IndexController extends Mage_Core_Controller_Front_Actio
     }
 
     /**
-     * visitAction 
-     * Store id of the visiting neighborhood before redirecting
-     * 
-     * @return void
-     */
-    public function visitAction()
-    {
-        $id = $this->getRequest()->getParam('id', null);
-        if ($id) {
-            $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$id);
-            if ($neighborhood && $neighborhood->getId()) {
-                $this->_getSession()->setNeighborhoodVisitingId($neighborhood->getId());
-                return $this->_redirectUrl($neighborhood->getStoreUrl());
-            }
-        }
-
-        $this->norouteAction();
-        return;
-    }
-
-    /**
      * ajaxIUnderstoodAction 
      * Used to set NeighborhoodIUnderstood flag to not display the new_neighborhood informations anymore
      * 
