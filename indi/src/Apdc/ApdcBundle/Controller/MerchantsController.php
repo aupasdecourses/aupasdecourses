@@ -16,9 +16,6 @@ class MerchantsController extends Controller
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
 
-		dump($mage->_attributeArraysLabels);
-		dump($mage->_attributeArraysIds);
-
 		$form_fromtoMerchant->handleRequest($request);
 
 		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
