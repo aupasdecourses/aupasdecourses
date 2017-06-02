@@ -43,7 +43,7 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     /**
      * getCurrentNeighborhood 
      * 
-     * @return Apdc_Neighborhood_Model_NeighborHood | null
+     * @return Apdc_Neighborhood_Model_Neighborhood | null
      */
     public function getCurrentNeighborhood()
     {
@@ -96,11 +96,11 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     /**
      * getSaveUrl 
      * 
-     * @param Apdc_Neighborhood_Model_NeighborHood $neighborhood neighborhood 
+     * @param Apdc_Neighborhood_Model_Neighborhood $neighborhood neighborhood 
      * 
      * @return string
      */
-    public function getSaveUrl(Apdc_Neighborhood_Model_NeighborHood $neighborhood)
+    public function getSaveUrl(Apdc_Neighborhood_Model_Neighborhood $neighborhood)
     {
         return $this->getUrl('apdc_neighborhood/index/save', array('id' => $neighborhood->getId()));
     }
@@ -121,7 +121,7 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     /**
      * getVisitingNeighborhood 
      * 
-     * @return Apdc_Neighborhood_Model_NeighborHood
+     * @return Apdc_Neighborhood_Model_Neighborhood
      */
     public function getVisitingNeighborhood()
     {

@@ -10,7 +10,7 @@
  * @link     http://www.garden-media.fr
  */
 /**
- * Apdc_Neighborhood_Model_NeighborHood 
+ * Apdc_Neighborhood_Model_Neighborhood 
  * 
  * @category Apdc
  * @package  Neighborhood
@@ -20,7 +20,7 @@
  * @license  All right reserved to Garden Media Studio VN Company Limited
  * @link     http://www.garden-media.fr
  */
-class Apdc_Neighborhood_Model_NeighborHood extends Mage_Core_Model_Abstract
+class Apdc_Neighborhood_Model_Neighborhood extends Mage_Core_Model_Abstract
 {
     public function _construct()
     {
