@@ -306,8 +306,16 @@ class Stats
 				'id_shop'			=> $merchant->getData('id_shop'),
 			]);	
 		}
+
+		$bad_chars	= ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
+		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
+
+
 		/* c'est comme la fonction addLatAndLong(), pour les commercants cette fois */
 		foreach ($data as &$content) {
+
+			$content['address'] = strtr($content['address'], array_combine($bad_chars, $good_chars));
+			
 			if ($content['address'] != "") {
 				$json = $this->geocodeAdress(htmlentities($content['address']));
 				$content['lat']		= floatval($json[0]['lat']);
@@ -325,29 +333,35 @@ class Stats
 	{
 		$shopIds = \Mage::getModel('apdc_commercant/shop')->getCollection();
 		$shops = [];
+		$sAddrs = [];
 
 		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
 		$geocodes = [];
+		$gAddrs = [];
 
 		foreach ($shopIds as $shopId) {
 			$shops[] = $shopId->getData('id_shop');
+			$sAddrs[] = $shopId->getData('street');
 		}
 
 		foreach ($geocodeIds as $geocodeId) {
 			$geocodes[] = $geocodeId->getData('whoami');
+			$gAddrs[] = $geocodeId->getData('former_address');
 		}
 
 		$countShops = array_count_values($geocodes);
 
 		if (count($shops) !== ($countShops['SHOP'])) {
 			return true;
+		} else if (!empty(array_diff($sAddrs, $gAddrs))) {
+			return true;
 		} else {
 			return false;
 		}
 	}
-	
 
-	/********************************************************/
+
+	
 	/********************************************************/
 	/* FIDELITE */
 	/*****************************/

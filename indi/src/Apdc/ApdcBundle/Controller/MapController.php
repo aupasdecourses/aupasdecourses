@@ -22,6 +22,7 @@ class MapController extends Controller
         $comparaisonMerchants = $stats->compareMerchants();
 
         $json_data_for_merchants = $stats->getMerchantsStatData();
+		$decoded_data = json_decode($json_data_for_merchants);
 
         $entity_submit_new_merchants = new \Apdc\ApdcBundle\Entity\Model();
         $form_new_merchants = $this->createFormBuilder($entity_submit_new_merchants);
@@ -33,22 +34,26 @@ class MapController extends Controller
 
             try {
                 foreach ($new_merchants_to_add as $content) {
-                    $mage->updateEntryToGeocode(
-                        ['id_shop' => $content['id_shop']],
+					foreach ($decoded_data as $data) {
+						if ($content['former_address'] != $data->addr) {
 
-                            ['address' => $content['address'],
-                            'postcode' => $content['postcode'],
-                            'city' => $content['city'],
-                            'lat' => $content['lat'],
-                            'long' => $content['long'],
-                            'former_address' => $content['former_address'],
-                            'whoami' => 'SHOP',
-                        ]
-                    );
-                }
-                $session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
+							$mage->updateEntryToGeocode(
+								['id_shop'			=> $content['id_shop']],
+								['address'			=> $content['address'],
+								'postcode'			=> $content['postcode'],
+								'city'				=> $content['city'],
+								'lat'				=> $content['lat'],
+								'long'				=> $content['long'],
+								'former_address'	=> $content['former_address'],
+								'whoami'			=> 'SHOP',
+                        ]);
+						}
+					}	
+				}
 
-                return $this->redirectToRoute('mapMerchants');
+            $session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
+            return $this->redirectToRoute('mapMerchants');
+
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des commercants sur la carte');
             }
