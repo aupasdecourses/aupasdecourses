@@ -25,7 +25,7 @@
 					<td>
 						{% if order.upload == '' %}
 							<a href='{{ path('refundUpload', {id: order.id}) }}' class='error' target="_blank">A faire</a>
-						{% elseif order.upload == 'joker' %}
+						{% else %}
 							<a href='{{ path('refundUpload', {id: order.id}) }}' class='success' target="_blank">OK</a>
 						{% endif %}
 					</td>
