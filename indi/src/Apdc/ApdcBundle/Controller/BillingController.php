@@ -90,7 +90,7 @@ class BillingController extends Controller
                 'order_total' => 'NA',
                 'id_max' => 'NA',
                 'id_min' => 'NA',
-                'orders' => 'NA',
+                'orders' => array(),
             ];
         }
 

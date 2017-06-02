@@ -47,8 +47,11 @@
 			</div>
 			<h3>6 - Facturation</h3>
 			<div class="button_accueil">
-				<a href="{{ path ('billingVerif')}}"><button type="button" class="btn btn-default btn-lg btn-block">Facturation</button></a>
-				<a href="{{ path ('billingPayoutIndex') }}"><button type="button" class=" btn btn-default btn-lg btn-block">Payout</button></a>
+				<a href="{{ path ('billingIndex') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir En-Cours</button></a>
+				<a href="{{ path ('billingVerif') }}"><button type="button" class="btn btn-default btn-lg btn-block">Calcul Facturation</button></a>
+				<a href="{{ path ('billingDetails') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir Commandes Facturées</button></a>
+				<a href="{{ path ('billingSummary') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir Factures Commerçant</button></a>
+				<!-- <a href="{{ path ('billingPayoutIndex') }}"><button type="button" class=" btn btn-default btn-lg btn-block">Payout</button></a> -->
 			</div>
 		{% endif %} {# end role gestion #}
 		

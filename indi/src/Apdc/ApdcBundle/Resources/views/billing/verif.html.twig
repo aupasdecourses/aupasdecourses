@@ -11,126 +11,127 @@
 		<div class="page-header">
 			<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
 		</div>
-
-	{{ form_start(form) }}
-		<div>
-			<h3>Commandes (complete) de la n°{{ verif.id_min }} à la n°{{ verif.id_max }}</h3>
-			<table class="table table-striped">
-				<thead>
-				    <tr>
-				      <th class="col-sm-4">Vérification</th>
-				      <th>Statut</th>
-				      <th>Détails</th>
-				    </tr>
-				</thead>
-				<tr>
-					<td>Facturation pas encore faites ?</td>
-					<td>
-					{% if verif.verif_noentry %}
-						<i class="fa fa-check fa-2" style="color:green"></i>
-					{% else %}
-						<i class="fa fa-times fa-2" style="color:red"></i>
-					{% endif %}
-					</td>
-					<td>
+	{% if date_debut %}
+		{{ form_start(form) }}
+			<div>
+				<h3>Commandes (complete) de la n°{{ verif.id_min }} à la n°{{ verif.id_max }}</h3>
+				<table class="table table-striped">
+					<thead>
+					    <tr>
+					      <th class="col-sm-4">Vérification</th>
+					      <th>Statut</th>
+					      <th>Détails</th>
+					    </tr>
+					</thead>
+					<tr>
+						<td>Facturation pas encore faites ?</td>
+						<td>
 						{% if verif.verif_noentry %}
-							<span>Le calcul de la facturation n'a pas encore été réalisé.</span>
-						{% else %}
-							<span style="color:red">Le calcul de la facturation a déjà été réalisé (entrées dans la base de données)!</span>
-						{% endif %}
-					</td>
-				</tr>
-				<tr>
-					<td>Mois actuel > Mois de facturation ?</td>
-					<td>
-					{% if verif.verif_mois %}
-						<i class="fa fa-check fa-2" style="color:green"></i>
-					{% else %}
-						<i class="fa fa-times fa-2" style="color:red"></i>
-					{% endif %}
-					</td>
-					<td>
-					{% if verif.verif_mois %}
-						<span>Le mois à facturer est bien écoulé.</span>
-					{% else %}
-						<span style="color:red">Vous ne pouvez facturer que les mois déjà écoulés!</span>
-					{% endif %}
-					</td>
-				</tr>
-				<tr>
-					<td>Pas de commande en processing ?</td>
-					<td>
-					{% if verif.verif_noprocessing %}
-						<i class="fa fa-check fa-2" style="color:green"></i>
-					{% else %}
-						<i class="fa fa-times fa-2" style="color:red"></i>
-					{% endif %}
-					</td>
-					<td>
-						<ul>
-							<li>Nombre totale de commande: {{ verif.order_total }}</li>
-							<li>Nombre de commandes traitées: {{ verif.status_ok_count }}</li>
-							<li>Nombre de commandes annulées: {{ verif.status_nok_count }}</li>
-							{% if verif.status_processing_count !=0 %}
-								<li style="color:red">Nombre de commandes en processing: {{ verif.status_processing_count }} - Merci de traiter ces commandes avant de facturer!</li>
-							{% else %}
-								<li>Nombre de commandes en processing: {{ verif.status_processing_count }}</li>
-							{% endif %}
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td>Pas d'attributs commerçants manquants dans les produits commandés ?</td>
-					<td>
-					{% if verif.verif_nomissingcom %}
-						<i class="fa fa-check fa-2" style="color:green"></i>
-					{% else %}
-						<i class="fa fa-times fa-2" style="color:red"></i>
-					{% endif %}
-					</td>
-					<td {% if verif.verif_nomissingcom == false %} style="color:red;"{% endif %} > Nombre d'attribut manquant: {{ verif.missing_com_att_count }}</td>
-				</tr>
-				<tr>
-					<td>Totaux facturation & Magento égaux ?</td>
-					<td>
-						{% if verif.verif_totaux %}
 							<i class="fa fa-check fa-2" style="color:green"></i>
 						{% else %}
 							<i class="fa fa-times fa-2" style="color:red"></i>
 						{% endif %}
-					</td>
-					<td>
-						<ul>
-							<li>Total produits facturées: {{ verif.sum_items_facturation }}€</li>
-							<li>Total produits Magento: {{ verif.sum_items_magento }}€</li>
+						</td>
+						<td>
+							{% if verif.verif_noentry %}
+								<span>Le calcul de la facturation n'a pas encore été réalisé.</span>
+							{% else %}
+								<span style="color:red">Le calcul de la facturation a déjà été réalisé (entrées dans la base de données)!</span>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td>Mois actuel > Mois de facturation ?</td>
+						<td>
+						{% if verif.verif_mois %}
+							<i class="fa fa-check fa-2" style="color:green"></i>
+						{% else %}
+							<i class="fa fa-times fa-2" style="color:red"></i>
+						{% endif %}
+						</td>
+						<td>
+						{% if verif.verif_mois %}
+							<span>Le mois à facturer est bien écoulé.</span>
+						{% else %}
+							<span style="color:red">Vous ne pouvez facturer que les mois déjà écoulés!</span>
+						{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td>Pas de commande en processing ?</td>
+						<td>
+						{% if verif.verif_noprocessing %}
+							<i class="fa fa-check fa-2" style="color:green"></i>
+						{% else %}
+							<i class="fa fa-times fa-2" style="color:red"></i>
+						{% endif %}
+						</td>
+						<td>
 							<ul>
-								<li>Total commandes Magento: {{ verif.sum_order_magento }}</li>
-								<li>Total livraisons Magento: - {{ verif.sum_shipping_magento }}</li>
-								<li>Total discount Magento: - {{ verif.sum_discount_magento }} (dont {{verif.sum_discount_coupon_magento}} via code coupon)</li>
+								<li>Nombre totale de commande: {{ verif.order_total }}</li>
+								<li>Nombre de commandes traitées: {{ verif.status_ok_count }}</li>
+								<li>Nombre de commandes annulées: {{ verif.status_nok_count }}</li>
+								{% if verif.status_processing_count !=0 %}
+									<li style="color:red">Nombre de commandes en processing: {{ verif.status_processing_count }} - Merci de traiter ces commandes avant de facturer!</li>
+								{% else %}
+									<li>Nombre de commandes en processing: {{ verif.status_processing_count }}</li>
+								{% endif %}
 							</ul>
-							<li {% if verif.diff_facturation_magento != 0 %} style="color:red;"{% endif %} >Différence facturée/Magento: {{verif.diff_facturation_magento}}€</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td>Commandes facturées pour ce mois</td>
-					<td></td>
-					<td>
-						{% for increment_id in verif.orders %}
-							{{ increment_id }} /
-						{% endfor %}
-					</td>
-				</tr>
-			</table>
-			<ul>
-		</div>
-		{% if verif.display_button %}
-			<div class="row">
-				<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Lancer Calcul</button>
+						</td>
+					</tr>
+					<tr>
+						<td>Pas d'attributs commerçants manquants dans les produits commandés ?</td>
+						<td>
+						{% if verif.verif_nomissingcom %}
+							<i class="fa fa-check fa-2" style="color:green"></i>
+						{% else %}
+							<i class="fa fa-times fa-2" style="color:red"></i>
+						{% endif %}
+						</td>
+						<td {% if verif.verif_nomissingcom == false %} style="color:red;"{% endif %} > Nombre d'attribut manquant: {{ verif.missing_com_att_count }}</td>
+					</tr>
+					<tr>
+						<td>Totaux facturation & Magento égaux ?</td>
+						<td>
+							{% if verif.verif_totaux %}
+								<i class="fa fa-check fa-2" style="color:green"></i>
+							{% else %}
+								<i class="fa fa-times fa-2" style="color:red"></i>
+							{% endif %}
+						</td>
+						<td>
+							<ul>
+								<li>Total produits facturées: {{ verif.sum_items_facturation }}€</li>
+								<li>Total produits Magento: {{ verif.sum_items_magento }}€</li>
+								<ul>
+									<li>Total commandes Magento: {{ verif.sum_order_magento }}</li>
+									<li>Total livraisons Magento: - {{ verif.sum_shipping_magento }}</li>
+									<li>Total discount Magento: - {{ verif.sum_discount_magento }} (dont {{verif.sum_discount_coupon_magento}} via code coupon)</li>
+								</ul>
+								<li {% if verif.diff_facturation_magento != 0 %} style="color:red;"{% endif %} >Différence facturée/Magento: {{verif.diff_facturation_magento}}€</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td>Commandes facturées pour ce mois</td>
+						<td></td>
+						<td>
+							{% for increment_id in verif.orders %}
+								{{ increment_id }} /
+							{% endfor %}
+						</td>
+					</tr>
+				</table>
+				<ul>
 			</div>
-		{% endif %}
-		
-	{{ form_end(form) }}
+			{% if verif.display_button %}
+				<div class="row">
+					<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Lancer Calcul</button>
+				</div>
+			{% endif %}
+			
+		{{ form_end(form) }}
+	{% endif %}
 
 	
 </div>
