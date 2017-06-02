@@ -143,10 +143,12 @@ class Stats
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
 			->columns('MAX(main_table.created_at) AS last_order')
-			->group('customer_id');
+			->group('sales_flat_order_address.customer_id');
 
 		// data[] n'a que les champs utiles pour l'update de la table geocode
 		foreach ($orders as $order) {
+			/* Corriger jointure sur customer id NULL*/
+			if($order->getCustomerId() != null) {	
 			array_push($data, [
 				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
 				'postcode'					=> $order->getPostcode(),
@@ -157,7 +159,7 @@ class Stats
 				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode et customer_entity
 			]);
 		}
-
+		}
 		return $data;
 	}
 
@@ -224,7 +226,7 @@ class Stats
 				$v['long']	= floatval($json[0]['lon']);
 			}
 		}
-
+	 
 		return $data;
 	}
 

@@ -22,7 +22,6 @@ class MapController extends Controller
         $comparaisonMerchants = $stats->compareMerchants();
 
         $json_data_for_merchants = $stats->getMerchantsStatData();
-		$decoded_data = json_decode($json_data_for_merchants);
 
         $entity_submit_new_merchants = new \Apdc\ApdcBundle\Entity\Model();
         $form_new_merchants = $this->createFormBuilder($entity_submit_new_merchants);
@@ -34,8 +33,6 @@ class MapController extends Controller
 
             try {
                 foreach ($new_merchants_to_add as $content) {
-					foreach ($decoded_data as $data) {
-						if ($content['former_address'] != $data->addr) {
 
 							$mage->updateEntryToGeocode(
 								['id_shop'			=> $content['id_shop']],
@@ -48,8 +45,6 @@ class MapController extends Controller
 								'whoami'			=> 'SHOP',
 							]);
 						}
-					}	
-				}
 
             $session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
             return $this->redirectToRoute('mapMerchants');
@@ -85,7 +80,6 @@ class MapController extends Controller
         $comparaisonCustomers = $stats->compareCustomers();
 
         $json_data_for_customers = $stats->getCustomerMapData();
-		$decoded_data = json_decode($json_data_for_customers);
 
         $entity_submit_new_customers = new \Apdc\ApdcBundle\Entity\Model();
         $form_new_customers = $this->createFormBuilder($entity_submit_new_customers);
@@ -97,8 +91,6 @@ class MapController extends Controller
 
             try {
                 foreach ($new_customers_to_add as $content) {
-					foreach ($decoded_data as $data) {
-						if ($content['former_address'] != $data->addr) {
 
 							$mage->updateEntryToGeocode(
 								['id_customer' => $content['id_customer']],
@@ -111,8 +103,6 @@ class MapController extends Controller
 								'whoami' => 'CUSTOMER',
 							]);
 						}
-					}
-                }
                 $session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
 				return $this->redirectToRoute('mapCustomers');
 
