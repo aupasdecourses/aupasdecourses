@@ -468,6 +468,7 @@ class Billing
                 'order_total' => 'NA',
                 'id_max' => 'NA',
                 'id_min' => 'NA',
+                'orders' => array(),
             ];
         } else {
 
@@ -495,6 +496,7 @@ class Billing
                 'id_max' => 0,
                 'id_min' => 999999999999999999999,
                 'diff_facturation_magento' => 0,
+                'orders' =>array(),
             );
             foreach ($data_magento as $row) {
                 if (in_array(strtolower($row['status']), [strtolower(\Mage_Sales_Model_Order::STATE_COMPLETE), strtolower(\Mage_Sales_Model_Order::STATE_CLOSED)])) {
@@ -510,6 +512,7 @@ class Billing
                     if ($result_data_magento['id_min'] > $row['increment_id']) {
                         $result_data_magento['id_min'] = $row['increment_id'];
                     }
+                    $result_data_magento['orders'][]=$row['increment_id'];
                 } elseif (strtolower($row['status']) == strtolower(\Mage_Sales_Model_Order::STATE_PROCESSING)) {
                     $result_data_magento['status_processing_count'] += 1;
                 } else {
@@ -583,9 +586,9 @@ class Billing
                 'order_total' => $result_data_magento['status_ok_count'] + $result_data_magento['status_nok_count'] + $result_data_magento['status_processing_count'],
                 'id_max' => $result_data_magento['id_max'],
                 'id_min' => $result_data_magento['id_min'],
+                'orders' => $result_data_magento['orders'],
             ]);
         }
-
         return $result;
     }
 

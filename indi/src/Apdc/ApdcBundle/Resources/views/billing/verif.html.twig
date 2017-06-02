@@ -18,7 +18,7 @@
 			<table class="table table-striped">
 				<thead>
 				    <tr>
-				      <th>Vérification</th>
+				      <th class="col-sm-4">Vérification</th>
 				      <th>Statut</th>
 				      <th>Détails</th>
 				    </tr>
@@ -110,6 +110,15 @@
 							</ul>
 							<li {% if verif.diff_facturation_magento != 0 %} style="color:red;"{% endif %} >Différence facturée/Magento: {{verif.diff_facturation_magento}}€</li>
 						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>Commandes facturées pour ce mois</td>
+					<td></td>
+					<td>
+						{% for increment_id in verif.orders %}
+							{{ increment_id }} /
+						{% endfor %}
 					</td>
 				</tr>
 			</table>
