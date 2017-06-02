@@ -65,7 +65,7 @@
                                     <option value=""><?php echo $this->__('-- Please select your neighborhood --'); ?></option>
                                     <?php foreach ($neighborhoods as $neighborhood) : ?>
                                         <?php $selected = ($neighborhood->getId() == $neighborhoodVisiting->getId() ? 'selected="selected"' : ''); ?>
-                                        <option value="<?php $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
+                                        <option value="<?php echo $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
