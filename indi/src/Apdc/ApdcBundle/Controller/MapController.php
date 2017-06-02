@@ -46,7 +46,7 @@ class MapController extends Controller
 								'long'				=> $content['long'],
 								'former_address'	=> $content['former_address'],
 								'whoami'			=> 'SHOP',
-                        ]);
+							]);
 						}
 					}	
 				}
@@ -82,14 +82,11 @@ class MapController extends Controller
         $stats = $this->container->get('apdc_apdc.stats');
         $mage = $this->container->get('apdc_apdc.magento');
 
-        /* Comparaison pour afficher ou non, le button de MAJ carte */
         $comparaisonCustomers = $stats->compareCustomers();
 
-        /* data json pour l'affichage des clients*/
         $json_data_for_customers = $stats->getCustomerMapData();
+		$decoded_data = json_decode($json_data_for_customers);
 
-        /* Ajout des new customers dans table geocode + sur la carte */
-        /* qd on clique sur le bouton MAJ clients */
         $entity_submit_new_customers = new \Apdc\ApdcBundle\Entity\Model();
         $form_new_customers = $this->createFormBuilder($entity_submit_new_customers);
         $form_new_customers = $form_new_customers->getForm();
@@ -100,22 +97,25 @@ class MapController extends Controller
 
             try {
                 foreach ($new_customers_to_add as $content) {
-                    $mage->updateEntryToGeocode(
-                        ['id_customer' => $content['id_customer']],
+					foreach ($decoded_data as $data) {
+						if ($content['former_address'] != $data->addr) {
 
-                            ['address' => $content['address'],
-                            'postcode' => $content['postcode'],
-                            'city' => $content['city'],
-                            'lat' => $content['lat'],
-                            'long' => $content['long'],
-                            'former_address' => $content['former_address'],
-                            'whoami' => 'CUSTOMER',
-                        ]
-                    );
+							$mage->updateEntryToGeocode(
+								['id_customer' => $content['id_customer']],
+								['address' => $content['address'],
+								'postcode' => $content['postcode'],
+								'city' => $content['city'],
+								'lat' => $content['lat'],
+								'long' => $content['long'],
+								'former_address' => $content['former_address'],
+								'whoami' => 'CUSTOMER',
+							]);
+						}
+					}
                 }
                 $session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
+				return $this->redirectToRoute('mapCustomers');
 
-                return $this->redirectToRoute('mapCustomers');
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des clients sur la carte');
             }

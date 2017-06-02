@@ -241,22 +241,30 @@ class Stats
 	   	$orderIds->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('customer_id')); 
 		$orderIds->getSelect()->group('sales_flat_order_address.customer_id');
 		$orders = [];
-
+		$oAddrs = [];
+		
 		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
 		$geocodes = [];
+		$gAddrs = [];
 
 		foreach ($orderIds as $orderId) {
 			$orders[] = $orderId->getData('customer_id');
+			$oAddrs[] = $orderId->getData('street');
 		}
 
+		$cpt = 0;
 		foreach ($geocodeIds as $geocodeId) {
 			$geocodes[] = $geocodeId->getData('whoami');
+			$gAddrs[$geocodeId->getData('whoami')][$cpt] = $geocodeId->getData('former_address');
+			$cpt++;
 		}
 
 		$countCustomers = array_count_values($geocodes);
 
 		if (count($orders) !== ($countCustomers['CUSTOMER'])) {
 			return true;
+		} else if (!empty(array_diff($oAddrs, $gAddrs['CUSTOMER']))) {
+			return true;	
 		} else {
 			return false;
 		}
