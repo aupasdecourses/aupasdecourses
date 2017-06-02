@@ -228,7 +228,7 @@ class Magento
         );
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
         $orders->addFilterToMap('dtime', 'mwdtime.interval')
-            ->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
+            ->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'canceled')))
             ->addAttributeToSort('main_table.increment_id', 'dsc');
         if ($orderId != -1) {
             $orders->addFieldToFilter('main_table.increment_id', ['eq' => $orderId]);
