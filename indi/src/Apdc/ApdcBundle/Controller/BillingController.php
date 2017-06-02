@@ -21,24 +21,34 @@ class BillingController extends Controller
         if (isset($_GET['date_debut'])) {
             $date_debut     = $_GET['date_debut'];
             $today          = date('Y-m-d H:i:s');
-            $date_fin       = date('Y-m-t', strtotime($today));
+            $date_fin       = date('t-m-Y', strtotime($today));
             $summary        = $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
 
 
             foreach ($summary as $sum) {
-
+                
+                $result[$sum['shop']]['date_payout'] = $sum['date_payout'];
                 $result[$sum['shop']]['shop'] = $sum['shop'];
                 $result[$sum['shop']]['sum_items'] += $sum['sum_items'];
                 $result[$sum['shop']]['sum_due'] += $sum['sum_due'];
                 $result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
             }
 
+
+            $debut = date_create(str_replace('/', '-', $date_debut));
+            $fin = date_create(str_replace('/', '-', $date_fin));
+            $intervalM = date_diff($fin, $debut)->m+1;
+            $intervalY = date_diff($fin, $debut)->y;
+            $interval = ($intervalY * 12) + ($intervalM);
+        } else {
+            $interval = 0;
         }
 
         return $this->render('ApdcApdcBundle::billing/index.html.twig', [
             'result'            => $result,
             'date_debut'        => $date_debut,
             'date_fin'          => $date_fin,
+            'months_diff'       => $interval,
         ]);
     }
 
@@ -218,7 +228,7 @@ class BillingController extends Controller
         $form_send = $form_send->getForm();
 
         $bill = $factu->getOneBilling($id);
-        $file_path=$billing_path.$id.'.pdf';
+        $file_path = $billing_path.$id.'.pdf';
 
         if (isset($_POST['submit'])) {
             switch ($_POST['submit']) {
@@ -247,14 +257,14 @@ class BillingController extends Controller
                     try {
                         $pdfbilling->printBillingShop($bill);
                         $pdfbilling->save($file_path);
-                        $data=$factu->sendBilling($bill,$file_path);
-                        $return=$pdfbilling->send($data);
-                        if($return){
+                        $data = $factu->sendBilling($bill, $file_path);
+                        $return = $pdfbilling->send($data);
+                        if ($return) {
                             $mage->updateEntryToBillingSummary(['increment_id' => $id], array('date_sent' => $data['date_sent']));
-                            foreach($data['mails'] as $m){
-                                $session->getFlashBag()->add('success', 'PDF envoyé avec succès à '.$data['mail_vars']['commercant'].": ".$m.' !');
+                            foreach ($data['mails'] as $m) {
+                                $session->getFlashBag()->add('success', 'PDF envoyé avec succès à '.$data['mail_vars']['commercant'].': '.$m.' !');
                             }
-                        }else{
+                        } else {
                             $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
                         }
 
@@ -356,4 +366,3 @@ class BillingController extends Controller
         ]);
     }
 }
-

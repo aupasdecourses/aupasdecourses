@@ -87,7 +87,7 @@ refundAdyenForm:
   requirements: { psp:"[0-9]+" }
 
 billingIndex:
-  path: /billing/index
+  path: /billing/
   defaults: { _controller: ApdcApdcBundle:Billing:index}
 
 billingVerif:
