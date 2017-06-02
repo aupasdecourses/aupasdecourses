@@ -344,16 +344,18 @@ class Stats
 			$sAddrs[] = $shopId->getData('street');
 		}
 
+		$cpt = 0;
 		foreach ($geocodeIds as $geocodeId) {
 			$geocodes[] = $geocodeId->getData('whoami');
-			$gAddrs[] = $geocodeId->getData('former_address');
+			$gAddrs[$geocodeId->getData('whoami')][$cpt] = $geocodeId->getData('former_address');
+			$cpt++;
 		}
 
 		$countShops = array_count_values($geocodes);
 
 		if (count($shops) !== ($countShops['SHOP'])) {
 			return true;
-		} else if (!empty(array_diff($sAddrs, $gAddrs))) {
+		} else if (!empty(array_diff($sAddrs, $gAddrs['SHOP']))) {
 			return true;
 		} else {
 			return false;
