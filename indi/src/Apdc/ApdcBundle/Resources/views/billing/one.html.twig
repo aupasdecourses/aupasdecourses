@@ -44,6 +44,7 @@
 					<th>Virement</th>
 					<th colspan="2">Frais bancaires</th>
 					<th>Retrait</th>
+					<th style="color:red;">En-cours</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -60,6 +61,7 @@
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
 					<th class="float">TTC</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -79,6 +81,7 @@
 						<td>{{ summary.processing_fees_HT }}</td>
 						<td>{{ summary.processing_fees }}</td>
 						<td style="font-weight:bold;text-decoration:underline;">{{ summary.sum_payout }}</td>
+						<td><a href="{{ path('billingIndex')}}?date_debut=01/01/2017" target="_blank" style="color:red;">Vérifier</a></td>
 					</tr>
 					{% endfor %}
 			</tbody>
