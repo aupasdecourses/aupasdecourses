@@ -516,13 +516,19 @@ class Stats
 				'increment_id'	=> $order->getIncrementId(),
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
+				'client'		=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
+				'created_at'	=> date('d-m-Y', strtotime($order->getData('created_at'))),
 			]);
 			arsort($data);
 		}
 		$data_conso = [];
 		foreach ($data as $row) {
 			if ($row['Coupon Code']) {
-				$data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
+				$data_conso[$row['Coupon Code']][] = [
+					'order'			=> $row['increment_id'].' '.$row['quartier'],
+					'customer'		=> $row['client'],
+					'created_at'	=> $row['created_at'],
+				];
 			}
 		}
 
