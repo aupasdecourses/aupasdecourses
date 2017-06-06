@@ -51,20 +51,18 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
                 );
  
-                if (!$cart->getQuote()->getHasError()){
-                    $message = $this->__('%s was added to your shopping cart.', Mage::helper('core')->escapeHtml($product->getName()));
-                    $result['status'] = 'SUCCESS';
-                    $result['message'] = $message;
-                    //New Code Here
-                    $this->loadLayout();
-                    $minicartContent = $this->getLayout()->getBlock('minicart_content');
-                    $minicartContent->setData('product_id', $product->getId());
-                    $result['content'] = $minicartContent->toHtml();
-                    $result['product_id'] = $product->getId();
-                    $result['qty'] = $cart->getSummaryQty();
+                $message = $this->__('%s was added to your shopping cart.', Mage::helper('core')->escapeHtml($product->getName()));
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $message;
+                //New Code Here
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $product->getId());
+                $result['content'] = $minicartContent->toHtml();
+                $result['product_id'] = $product->getId();
+                $result['qty'] = $cart->getSummaryQty();
 
-                    Mage::register('referrer_url', $this->_getRefererUrl());
-                }
+                Mage::register('referrer_url', $this->_getRefererUrl());
 
             } catch (Mage_Core_Exception $e) {
                 $msg = "";

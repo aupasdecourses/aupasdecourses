@@ -85,10 +85,11 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
 
                 if (!$quoteItem->getHasError()) {
                     $result['message'] = $this->__('Item was updated successfully.');
+                    $result['success'] = 1;
                 } else {
-                    $result['notice'] = $quoteItem->getMessage();
+                    $result['error'] = $quoteItem->getMessage();
+                    $result['success'] = 0;
                 }
-                $result['success'] = 1;
             } catch (Exception $e) {
                 $result['success'] = 0;
                 $result['error'] = $this->__('Can not save item.');
@@ -154,20 +155,20 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 Mage::dispatchEvent('checkout_cart_update_item_complete',
                     array('item' => $item, 'request' => $this->getRequest(), 'response' => $this->getResponse())
                 );
-                if (!$cart->getQuote()->getHasError()) {
-                    $message = $this->__('%s was updated in your shopping cart.', Mage::helper('core')->escapeHtml($item->getProduct()->getName()));
-                    $result['status'] = 'SUCCESS';
-                    $result['message'] = $message;
-                    //New Code Here
-                    $this->loadLayout();
-                    $minicartContent = $this->getLayout()->getBlock('minicart_content');
-                    $minicartContent->setData('product_id', $item->getProductId());
-                    $result['content'] = $minicartContent->toHtml();
-                    $result['product_id'] = $item->getProductId();
-                    $result['qty'] = $cart->getSummaryQty();
+                $message = $this->__('%s was updated in your shopping cart.', Mage::helper('core')->escapeHtml($item->getProduct()->getName()));
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $message;
+                $result['quote_item_id'] = $quoteItem->getId();
+                $result['item_id'] = $item->getId();
+                //New Code Here
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $item->getProductId());
+                $result['content'] = $minicartContent->toHtml();
+                $result['product_id'] = $item->getProductId();
+                $result['qty'] = $cart->getSummaryQty();
 
-                    Mage::register('referrer_url', $this->_getRefererUrl());
-                }
+                Mage::register('referrer_url', $this->_getRefererUrl());
             } catch (Mage_Core_Exception $e) {
                 $msg = '';
                 if ($this->_getSession()->getUseNotice(true)) {

@@ -73,6 +73,22 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
             })
             .done(function(result) {
               if (result.status === 'SUCCESS') {
+
+                // If item had an error (eg: item with required options from an old cart), it will probably be delete and a new item will be created.
+                // So we need to replace old item_id references 
+                if (result.item_id && result.quote_item_id && result.item_id !== result.quote_item_id) {
+                  form.find('[data-item-id="' + result.quote_item_id + '"]').each(function() {
+                    $(this).data('item-id', parseInt(result.item_id, 10));
+                  });
+                  form.find('[name="item_id"][value="' + result.quote_item_id + '"]').each(function() {
+                    $(this).val(parseInt(result.item_id, 10));
+                  });
+                  var formAction = form.data('ajax-action');
+                  var regexp = new RegExp('/id/' + result.quote_item_id + '/', 'g');
+                  formAction = formAction.replace(regexp, '/id/' + result.item_id + '/');
+                  form.data('ajax-action', formAction);
+                }
+
                 if($('.header-minicart').length > 0){
                   $(document).trigger('updateMiniCartContent', [result]);
                   var currentValues = getCurrentFormValues(form);

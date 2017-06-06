@@ -26,6 +26,7 @@
 ?>
 <?php
     $_item = $this->getItem();
+    $hasError = $_item->getHasError();
     $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
@@ -51,9 +52,9 @@
             <?php endif; ?>
         </div>
         <div class="item-cell item-qty">
-            <div class="qty-sub btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-minus"></i></div>
+            <div class="<?php echo ($hasError ? 'disabled' : 'qty-sub'); ?> btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-minus"></i></div>
             <div class="qty-text"><?php echo $this->getQty(); ?></div>
-            <div class="qty-add btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-plus"></i></div>
+            <div class="<?php echo ($hasError ? 'disabled' : 'qty-add'); ?> btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-plus"></i></div>
 
             <input
                 type="hidden"
@@ -116,6 +117,13 @@
 
         </div>
     </div>
+    <?php if ($messages = $this->getMessages()): ?>
+    <?php foreach ($messages as $message): ?>
+        <p class="item-msg-required-option <?php echo $message['type'] ?>">
+            * <?php echo $this->escapeHtml($message['text']) ?>
+        </p>
+    <?php endforeach; ?>
+    <?php endif; ?>
     <?php if ($this->getOptionList() || !empty($_item->getItemComment())):?>
     <div class="item-row item-details">
         <div class="truncated">
