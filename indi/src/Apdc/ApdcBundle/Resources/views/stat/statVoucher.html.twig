@@ -12,7 +12,13 @@
 			<tr>
 				<th>Coupon</th>
 				<th class="float">Nombre</th>
-				<th># Commande</th>
+				<th>
+					<div class="row">
+						<div class="col-md-6">#Commande</div>
+						<div class="col-md-3">Client</div>
+						<div class="col-md-3">Date d'utilisation</div>
+					</div>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,10 +26,18 @@
 				<tr>
 					<td>{{ coupon }}</td>
 					<td>{{ value|length }}</td>
-					<td>	
-						{% for content in value %}
-							{{ content|nl2br }}
-						{% endfor %}
+					<td>
+						<table>
+							{% for content in value %}
+								<tr>
+									<div class="row">
+										<div class="col-md-6">{{ content.order }}</div>
+										<div class="col-md-3">{{ content.customer }}</div>
+										<div class="col-md-3">{{ content.created_at }}</div>
+									</div>
+								</tr>
+							{% endfor %}
+						</table>
 					</td>
 				</tr>
 			{% endfor %}

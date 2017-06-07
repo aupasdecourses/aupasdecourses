@@ -523,6 +523,8 @@ class Stats
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
 				'Discount'		=> -floatval($order->getBaseDiscountAmount()),
+				'client'		=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
+				'created_at'	=> date('d-m-Y', strtotime($order->getData('created_at'))),
 			]);
 			arsort($data);
 		}
@@ -532,7 +534,11 @@ class Stats
 				if($row['Coupon Code']==""){
 					$row['Coupon Code']='Discount sans coupon';
 				}
-				$data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
+				$data_conso[$row['Coupon Code']][] = [
+					'order'			=> $row['increment_id'].' '.$row['quartier'],
+					'customer'		=> $row['client'],
+					'created_at'	=> $row['created_at'],
+				];
 			}
 		}
 
