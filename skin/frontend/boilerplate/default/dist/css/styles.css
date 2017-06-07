@@ -11473,6 +11473,42 @@ a:hover {
   background-color: #1e555a;
 }
 
+input[type=checkbox] {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+input[type=checkbox] + label {
+  font-size: .875rem;
+  line-height: 25px;
+  display: inline-block;
+  height: 25px;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  background-image: url(../images/checkbox.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+}
+
+input[type=checkbox]:checked + label {
+  background-position: 0 -25px;
+}
+
 .tooltip.bottom > .tooltip-arrow {
   top: -3px;
   margin-left: -8px;
@@ -13513,42 +13549,6 @@ footer .social-list .btn-social-icon {
   background-color: #f6f6f6;
 }
 
-.apdc-form input[type=checkbox] {
-  position: absolute;
-  z-index: -1000;
-  left: -1000px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-}
-
-.apdc-form input[type=checkbox] + label {
-  font-size: .875rem;
-  line-height: 25px;
-  display: inline-block;
-  height: 25px;
-  padding-left: 30px;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  vertical-align: middle;
-  background-image: url(../images/checkbox.png);
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  -webkit-touch-callout: none;
-  -khtml-user-select: none;
-}
-
-.apdc-form input[type=checkbox]:checked + label {
-  background-position: 0 -25px;
-}
-
 .apdc-form label.control-label {
   font-size: 1.125rem;
   font-weight: 700;
@@ -14936,19 +14936,147 @@ p.info {
   display: none;
 }
 
-.my-account h1 {
+h1.account-title {
   font-size: 2.25rem;
-  margin: 30px 0;
+  margin: 40px 20px;
   letter-spacing: normal;
   color: #3ab64b;
 }
 
-.my-account .box-account {
+.my-account {
   max-width: 1300px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 40px auto 0;
+  padding: 40px;
   border-radius: 5px;
   background-color: #fff;
+}
+
+.my-account .block-account .menu-account {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.my-account .block-account .menu-account li:first-child a {
+  border-radius: 5px 5px 0 0;
+}
+
+.my-account .block-account .menu-account li:last-child a {
+  border: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.my-account .block-account .menu-account li.current a,
+.my-account .block-account .menu-account li:hover a {
+  background-color: #1e555a;
+}
+
+.my-account .block-account .menu-account li a {
+  font-size: 1.125rem;
+  display: block;
+  padding: 30px 30px 30px 50px;
+  color: #fff;
+  border-bottom: 1px solid #59b26c;
+  background-color: #3ab64b;
+}
+
+.my-account .block-account .menu-account li a i {
+  margin-top: -7px;
+}
+
+.my-account .box-account.addresses-list .button {
+  font-size: .875rem;
+}
+
+.my-account .box-account h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 40px;
+  text-align: left;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #1e555a;
+}
+
+.my-account .box-account h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #333;
+}
+
+.my-account .box-account .field {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.my-account .box-account .field label,
+.my-account .box-account .field p {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.my-account .box-account .button {
+  font-weight: normal;
+}
+
+.my-account .box-account .form-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.my-account .box-account .form-list input[type=text],
+.my-account .box-account .form-list input[type=password],
+.my-account .box-account .form-list input[type=tel],
+.my-account .box-account .form-list select {
+  font-size: .875rem;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
+.my-account .box-account .form-list .field {
+  border-bottom: 0;
+}
+
+.my-account .box-account .form-list label {
+  font-size: .875rem;
+  font-weight: normal;
+  color: #999;
+}
+
+.my-account .box-account .form-list label em {
+  color: #3ab64b;
+}
+
+.my-account .box-account .form-list .change-password {
+  margin-top: 20px;
+}
+
+.my-account .box-account .form-list .change-password label {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.my-account .newsletter-wrapper {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.my-account .newsletter-wrapper h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: left;
+  text-transform: none;
+  color: #333;
 }
 
 @media screen and (min-width: 1200px) {

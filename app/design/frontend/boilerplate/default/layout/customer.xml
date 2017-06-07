@@ -203,7 +203,7 @@ Customer account pages, rendered for all tabs in dashboard
         <label>Customer My Account (All Pages)</label>
         <!-- Mage_Customer -->
         <reference name="root">
-            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+            <action method="setTemplate"><template>apdc_customer/template.phtml</template></action>
             <action method="addBodyClass"><class>customer-account</class></action>
         </reference>
 
@@ -211,15 +211,19 @@ Customer account pages, rendered for all tabs in dashboard
             <block type="page/html_wrapper" name="my.account.wrapper" translate="label">
                 <label>My Account Wrapper</label>
                 <action method="setElementClass"><value>my-account</value></action>
+                <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="apdc_customer/account/navigation.phtml">
+                    <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
+                    <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
+                </block>
             </block>
         </reference>
 
-        <reference name="left_first">
+        <!--<reference name="left_first">
             <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="apdc_customer/account/navigation.phtml">
                 <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
                 <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
             </block>
-        </reference>
+        </reference>-->
         <reference name="left">
             <remove name="tags_popular"/>
         </reference>
@@ -233,9 +237,9 @@ Customer account home dashboard layout
         <label>Customer My Account Dashboard</label>
         <update handle="customer_account"/>
         <!-- Mage_Customer -->
-        <reference name="root">
+        <!--<reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
-        </reference>
+        </reference>-->
         <reference name="my.account.wrapper">
             <block type="customer/account_dashboard" name="customer_account_dashboard" template="apdc_customer/account/dashboard.phtml">
                 <block type="customer/account_dashboard_hello" name="customer_account_dashboard_hello" as="hello" template="apdc_customer/account/dashboard/hello.phtml"/>
@@ -259,7 +263,7 @@ Customer account address book
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
-            <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>
+            <block type="customer/address_book" name="address_book" template="apdc_customer/address/book.phtml"/>
         </reference>
     </customer_address_index>
 

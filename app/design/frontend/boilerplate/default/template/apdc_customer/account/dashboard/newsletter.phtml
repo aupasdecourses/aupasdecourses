@@ -7,7 +7,7 @@ $canShowButton = $this->getCanShowButton();
 $canmodify = $this->getCanModify();
 
 ?>
-<div class="col-2">
+<div class="col-2 newsletter-wrapper">
     <h4><?php echo $this->__('Newsletters') ?></h4>
 
 	<div class="monkey-multisubscribe">
@@ -85,8 +85,8 @@ $canmodify = $this->getCanModify();
 
 			<?php if ($canShowButton): ?>
 				<div class="buttons-set" style="border:none;">
-					<button style="float:left;" type="submit" title="<?php echo $this->__('Sauvegarder') ?>" class="button">
-						<span><span><?php echo $this->__('Sauvegarder') ?></span></span></button>
+					<button type="submit" title="<?php echo $this->__('Sauvegarder') ?>" class="button button-green">
+						<i class="fa fa-envelope-o"></i> <?php echo $this->__('Sauvegarder') ?></button>
 				</div>
 			<?php endif; ?>
 			<?php if ($canShowButton): ?></form><?php endif; ?>

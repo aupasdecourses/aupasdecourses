@@ -28,17 +28,25 @@
     <div class="col-1">
         <div class="box">
             <div class="box-title">
-                <h3><?php echo $this->__('Contact Information') ?></h3>
+                <h2><?php echo $this->__('Contact Information') ?></h2>
 				<div class="edit_customer_show show">
-					Nom<br />
-					<?php echo $this->escapeHtml($this->getCustomer()->getLastname()) ?><br />
-					Prénom<br />
-					<?php echo $this->escapeHtml($this->getCustomer()->getFirstname()) ?><br />
-					Adresse email<br />
-					<?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?><br />
-					Mot de passe<br />
-					*****
-					<a href="javascript:toggleEditCustomerForm();">Modifier</a>
+                    <div class="field">
+                        <label>Nom</label>
+    					<p><?php echo $this->escapeHtml($this->getCustomer()->getLastname()) ?></p>
+                    </div>
+                    <div class="field">
+                        <label>Prénom</label>
+    					<p><?php echo $this->escapeHtml($this->getCustomer()->getFirstname()) ?></p>
+                    </div>
+                    <div class="field">
+                        <label>Adresse email</label>
+    					<p><?php echo $this->escapeHtml($this->getCustomer()->getEmail()) ?></p>
+                    </div>
+                    <div class="field">
+                        <label>Mot de passe</label>
+    					<p>*****</p>
+                    </div>
+					<a class="button button-green" href="javascript:toggleEditCustomerForm();"><i class="fa fa-pencil-square-o"></i> Modifier</a>
 				</div>
 				<div class="edit_customer_form hide">
 					<?php echo $this->getChildHtml('customer_edit')?>
@@ -48,13 +56,9 @@
         </div>
     </div>
     <?php if( $this->isNewsletterEnabled() ): ?>
-    <div class="col-2">
-        <div class="box">
-            <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
-        </div>
+        <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
         <?php /* Extensions placeholder */ ?>
         <?php echo $this->getChildHtml('customer.account.dashboard.info.extra')?>
-    </div>
     <?php endif; ?>
 </div>
 <script type="text/javascript">

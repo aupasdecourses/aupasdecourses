@@ -71,39 +71,6 @@
         width: 100%;
         outline: none;
     }
-    input[type=checkbox]{
-        position:absolute;
-        z-index:-1000;
-        left:-1000px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        height:1px;
-        width:1px;
-        margin:-1px;
-        padding:0;
-        border:0;
-    }
-    input[type=checkbox] + label{
-        padding-left:30px;
-        height:25px; 
-        display:inline-block;
-        line-height:25px;
-        background-repeat:no-repeat;
-        background-position: 0 0;
-        vertical-align:middle;
-        cursor:pointer;
-        background-image:url(../images/checkbox.png);
-        font-size: 0.875rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    input[type=checkbox]:checked + label{
-        background-position: 0 -25px;
-    }
     label{
         &.control-label{
             font-size: 1.125rem;
