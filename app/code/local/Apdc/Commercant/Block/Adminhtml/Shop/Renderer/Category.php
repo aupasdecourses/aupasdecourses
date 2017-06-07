@@ -15,7 +15,8 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminh
         $S = Mage::helper('apdc_commercant')->getStoresArray();
         foreach ($commercantCategories as $category) {
         	$storename=$S[explode('/', $category->getPath())[1]]['name'];
-            $values[$category->getId()] = $category->getName().' - '.$storename;
+            $parentcat=$category->getParentCategory()->getName();
+            $values[$category->getId()] = $category->getName().' - '.$parentcat.' - '.$storename;
         }
 
         $suppstr="";

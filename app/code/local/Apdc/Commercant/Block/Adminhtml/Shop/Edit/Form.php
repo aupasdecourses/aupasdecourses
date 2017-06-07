@@ -110,7 +110,8 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Form extends Mage_Adminhtml_Bloc
         $S = Mage::helper('apdc_commercant')->getStoresArray();
         foreach ($commercantCategories as $category) {
             $storename=$S[explode('/', $category->getPath())[1]]['name'];
-            $values[]=['value'=>$category->getId(), 'label' => $category->getName().' - '.$storename];
+            $parentcat=$category->getParentCategory()->getName();
+            $values[]=['value'=>$category->getId(), 'label' => $category->getName().' - '.$parentcat.' - '.$storename];
         }
 
         $fieldset->addField('id_category', 'multiselect', [
