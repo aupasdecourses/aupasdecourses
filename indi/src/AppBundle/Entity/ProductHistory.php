@@ -174,7 +174,7 @@ class ProductHistory
      * @var UserBase
      *
      * @Gedmo\Blameable(on="create")
-     * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\UserBase")
+     * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\User")
      * @ORM\JoinColumn(name="createdBy", referencedColumnName="id")
      */
     private $createdBy;
