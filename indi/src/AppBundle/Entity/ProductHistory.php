@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
-use Apdc\ApdcBundle\Entity\User;
+use Apdc\ApdcBundle\Entity\User as UserBase;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -171,10 +171,10 @@ class ProductHistory
     private $createdOn;
 
     /**
-     * @var User
+     * @var UserBase
      *
      * @Gedmo\Blameable(on="create")
-     * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Apdc\ApdcBundle\Entity\UserBase")
      * @ORM\JoinColumn(name="createdBy", referencedColumnName="id")
      */
     private $createdBy;
@@ -614,11 +614,11 @@ class ProductHistory
     /**
      * Set createdBy
      *
-     * @param User $createdBy
+     * @param UserBase $createdBy
      *
      * @return ProductHistory
      */
-    public function setCreatedBy(User $createdBy = null)
+    public function setCreatedBy(UserBase $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -628,7 +628,7 @@ class ProductHistory
     /**
      * Get createdBy
      *
-     * @return User
+     * @return UserBase
      */
     public function getCreatedBy()
     {
