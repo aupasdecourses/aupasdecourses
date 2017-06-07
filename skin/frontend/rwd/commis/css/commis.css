@@ -56,6 +56,10 @@ select {
     margin-bottom: 20px;
 }
 
+#header-cart .messages, #header-cart .messages li li {
+    margin-bottom: 0px;
+}
+
 
 /* ============================================ *
  * Typography
