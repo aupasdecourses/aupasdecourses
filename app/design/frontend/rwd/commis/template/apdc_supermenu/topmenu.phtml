@@ -32,7 +32,7 @@
  */
 ?>
 <?php $_menu = $this->getHtml('level-top') ?>
-<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting(); ?>
+<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
 <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 40, 'height' => 40)); ?>
 <?php if($_menu): ?>
     <nav id="supermenu" class="navbar navbar-default">

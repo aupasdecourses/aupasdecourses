@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="row">
-            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1); ?>
+            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
             <?php $nbQuartiers = $quartiers->count(); ?>
 
             <?php $mdNbFullLines = (floor($nbQuartiers / 4) * 4); ?>
