@@ -73,7 +73,7 @@ background: none repeat scroll 0% 0% #e94e19;
   top: 50%;
   transform: translate(0, -50%);
   padding-right: 15px;
-  max-width:165px;
+  /*max-width:165px;*/
   line-height:8px;
 }
 #my_neighborhood_menu_links li.neighborhood_list p i {

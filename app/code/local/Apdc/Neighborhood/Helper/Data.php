@@ -112,4 +112,15 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return null;
     }
+
+    public function UserName()
+    {
+        if (Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $name =  "Bonjour ".Mage::getSingleton('customer/session')->getCustomer()->getFirstname()."!";
+        } else {
+            $name = "Bonjour!";
+        }
+
+        return $name;
+    }
 }
