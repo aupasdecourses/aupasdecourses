@@ -46,9 +46,10 @@ class Apdc_Neighborhood_Shell_AssociateCustomer extends Mage_Shell_Abstract
                             echo '--- Setting neighborhood ' . $neighborhood->getName() . "\n";
                             $customer->setCustomerNeighborhood($neighborhood->getId())->save();
                             $nbCustomersOK++;
+                        } else {
+                            echo '--- Unable to retrieve neighborhood by postcode' . "\n";
+                            $error = true;
                         }
-                        echo '--- Unable to retreive neighborhood by postcode' . "\n";
-                        $error = true;
                     } else {
                         echo '--- No postcode found' . "\n";
                         $error = true;

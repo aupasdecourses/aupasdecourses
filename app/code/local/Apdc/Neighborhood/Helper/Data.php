@@ -106,7 +106,7 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
             $neighborhoods->addFieldToFilter('is_active', 1);
         }
         foreach ($neighborhoods as $neighborhood) {
-            if (in_array($postcode, $neighborhood->getPostcodes())) {
+            if (in_array($postcode, unserialize($neighborhood->getPostcodes()))) {
                 return $neighborhood;
             }
         }
