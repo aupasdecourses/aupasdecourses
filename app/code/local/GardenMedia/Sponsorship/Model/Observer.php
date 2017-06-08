@@ -172,7 +172,7 @@ class GardenMedia_Sponsorship_Model_Observer
                 }
             }
             if ($action->getFullActionName() == 'checkout_cart_couponPost') {
-                $couponCode = (string) $action->getRequest()->getParam('coupon_code');
+                $couponCode = (string) trim(preg_replace("/[\s\r\n]+/", '', $action->getRequest()->getParam('coupon_code')));
                 $customerId = (int) Mage::getSingleton('customer/session')->getId();
                 if (strlen($couponCode) && $customerId > 0) {
                     $coupons = Mage::getModel('salesrule/coupon')->getCollection()

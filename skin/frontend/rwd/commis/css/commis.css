@@ -1157,6 +1157,19 @@ label {
     position: relative;
     text-transform: uppercase;
 }
+#storename a {
+  padding:5px 15px;
+}
+#storename a img {
+  display:inline-block;
+  border-radius:50%;
+}
+#storename a span {
+  display:inline-block;
+  vertical-align:middle;
+}
+
+
 
 .logo a:hover {
     text-decoration: none;
@@ -1477,6 +1490,7 @@ label {
 .skip-cart i,
 .skip-help i,
 .skip-search i,
+.skip-neighborhood i,
 .skip-nav i,
 .skip-referral i{
     display: block;
@@ -1534,7 +1548,8 @@ label {
         padding-top: 5px;
         height: 50px;
     }
-    .dropdown.skip-help {
+    .dropdown.skip-help,
+    .dropdown.skip-neighborhood {
         padding: 0;
         position: static;
         display: table-cell;
@@ -1547,13 +1562,14 @@ label {
     }
     #header-account.skip-active,
     .dropdown-menu.links,
+    #my_neighborhood_menu_links,
     #header-help {
         z-index: 200000;
         text-transform: none;
         width: 320px;
     }
 
-    #header-account.skip-active, #header-help {
+    #header-account.skip-active, #header-help, #my_neighborhood_menu_links {
         right: 0px;
         top:60px;
         left: auto;
@@ -1580,7 +1596,8 @@ label {
         color: rgba(0, 0, 0, 0.87);
     }
     #header-account,
-    #header-help {
+    #header-help,
+    #my_neighborhood_menu_links {
         padding: 5px 0;
     }
     #header-account li a,
@@ -1616,6 +1633,11 @@ label {
         top: 100%;
         box-shadow: none;
     }
+    #my_neighborhood_menu_links {
+        width:100%;
+        top:100%;
+        box-shadow:none;
+    }
     #header-help > li > a {
         padding: 10px 0px 10px 10px;
     }
@@ -1623,6 +1645,7 @@ label {
     .skip-account i,
     .skip-cart i,
     .skip-help i,
+    .skip-neighborhood i,
     .skip-search i,
     .skip-nav i,
     .skip-referral i {
@@ -1764,7 +1787,7 @@ label {
 /* -------------------------------------------- *
  * Skip Cart Notifier
  */
-
+.skip-neighborhood .count,
 .skip-cart .count {
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
@@ -1788,6 +1811,7 @@ label {
 }
 
 @media screen and (max-width: 770px) {
+    .skip-neighborhood .count,
     .skip-cart .count {
         top: -45px;
         left: 30px;
@@ -1819,6 +1843,7 @@ label {
     .skip-cart:hover {
         text-decoration: none;
     }
+    .skip-neighborhood .count,
     .skip-cart .count {
         border-radius: 12px;
         display: inline-block;
@@ -1835,9 +1860,11 @@ label {
         font-weight: 600;
         right: 0;
     }
+    .skip-neighborhood .count:before,
     .skip-cart .count:before {
         content: '';
     }
+    .skip-neighborhood .count:after,
     .skip-cart .count:after {
         content: '';
     }
