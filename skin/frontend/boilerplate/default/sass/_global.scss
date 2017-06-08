@@ -200,3 +200,17 @@ input[type=checkbox]:checked + label{
         }
     }
 }
+
+.limiter{
+    select{
+        color: $color-main-grey;
+        font-size: 0.875rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #f6f6f6;
+        width: auto;
+        height: auto;
+        outline: none;
+    }
+}

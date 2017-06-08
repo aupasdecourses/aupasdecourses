@@ -5,8 +5,7 @@ $_refund=Mage::helper('pmainguet_delivery')->getRefunditemdata($_item);
 ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
     <td>
-    <h3 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h3>
-    <p><?php echo $this->escapeHtml($_item->getCommercantLabel()) ?></p>
+    <p class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></p>
         <?php if ($_item->getItemComment()):?>
             <dl class="item-options" id="checkout_cart_item_default">
             <dt><?php echo $this->__('Commentaires')?></dt>
@@ -162,7 +161,7 @@ $_refund=Mage::helper('pmainguet_delivery')->getRefunditemdata($_item);
     </td>
     <td class="a-right" data-rwd-label="<?php echo $this->__('Qty') ?>">
         <span class="nobr">
-            <strong><?= $this->getItem()->getQtyOrdered()*1 ?></strong><br />
+            <?= $this->getItem()->getQtyOrdered()*1 ?>
         </span>
     </td>
     <td class="a-right" data-rwd-label="<?php echo $this->__('Subtotal') ?>">

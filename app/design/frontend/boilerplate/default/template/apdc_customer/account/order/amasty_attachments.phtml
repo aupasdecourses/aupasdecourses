@@ -12,26 +12,42 @@ $content= Mage::getModel('amorderattach/order_field')->load($order->getId(), 'or
 
 if($field->getCustomerVisibility()=="view"):
 ?>
-<div class="row">
-    <div class="col-sm-12">
-        <?php
-        if (!is_array($content)) {
-            $val = explode(';', $content);
-        }
-        ?>
-        <ul>Voir les tickets commerçants:
-            <?php foreach ($val as $img): ?>
-                    <li>
-                        <?php if($img<>""):
-                            $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
-                            ?>
-                            <img class="ticket_commercant" src="<?= $url_src?>"/>
-                        <?php else:?>
-                            <span>Pas de tickets (pour l'instant)</span>
-                        <?php endif;?>
-                    </li>
-            <?php endforeach; ?>
-        </ul>
+<div class="col-md-7 col-md-offset-5 box-account">
+    <h3>Mes tickets</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <?php
+            if (!is_array($content)) {
+                $val = explode(';', $content);
+            }
+            ?>
+            <ul class="slide-tickets">
+                <?php foreach ($val as $img): ?>
+                        <li>
+                            <?php if($img<>""):
+                                $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
+                                ?>
+                                <img class="ticket_commercant" src="<?= $url_src?>"/>
+                            <?php else:?>
+                                <span>Pas de tickets (pour l'instant)</span>
+                            <?php endif;?>
+                        </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif;?>
     </div>
-<?php endif;?>
 </div>
+
+
+<script type="text/javascript">
+    $j(document).ready(function(){
+        $j(".slide-tickets").owlCarousel({
+            items:4,
+            pagination:false,
+            autoPlay : false,
+            nav : true,
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+      });
+    })
+</script>

@@ -49,8 +49,49 @@ h1.account-title{
     }
     .box-account{
         &.addresses-list{
+            section{
+                margin-bottom: 30px;
+            }
             .button{
                 font-size: 0.875rem;
+                margin-bottom: 10px;
+            }
+            .link-remove{
+                color: $color-main-grey;
+                font-size: 0.75rem;
+            }
+        }
+        &.detail-order{
+            h3{
+                margin-top: 0;
+            }
+            p{
+                font-size: 1rem;
+                strong{
+                    display: block;
+                    color: $color-main-green;
+                    font-weight: normal;
+                }
+            }
+        }
+        &.sponsorship{
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 40px;
+            &:last-of-type{
+                border: 0;
+                padding-bottom: 0;
+            }
+            h3{
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: $color-main-green;
+                text-transform: uppercase;
+            }
+            p{
+                font-size: 1rem;
+                color: #333;
+                opacity: 1;
             }
         }
         h2{
@@ -117,6 +158,65 @@ h1.account-title{
                 }
             }
         }
+        table{
+            width: 100%;
+            &#my-orders-table{
+                th{
+                    font-size: 0.875rem;
+                    width: 14.29%;
+                    padding: 20px 4px;
+                }
+                td{
+                    width: 14.29%;
+                    padding: 20px 4px;
+                    p, span{
+                        font-size: 0.75rem;
+                        margin-bottom: 0;
+                        line-height: normal;
+                    }
+                }
+            }
+            th{
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: #333;
+                padding: 20px 0;
+                border-bottom: 1px solid #eee;
+            }
+            td{
+                padding: 20px 0;
+                border-bottom: 1px solid #eee;
+                font-size: 0.875rem;
+                .button{
+                    font-size: 0.875rem;
+                    margin: 0 0 10px;
+                }
+                .view-order{
+                    color: $color-main-grey;
+                }
+            }
+        }
+        .total-order{
+            margin-top: 70px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            p{
+                font-size: 1rem;
+                span{
+                    color: $color-main-green;
+                }
+            }
+            .total{
+                p{
+                    font-size: 1.75rem;
+                    strong{
+                        color: $color-main-green;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
     }
     .newsletter-wrapper{
         border: 1px solid #eee;
@@ -129,6 +229,34 @@ h1.account-title{
             color: #333;
             text-align: left;
             text-transform: none;
+        }
+    }
+    .slide-tickets{
+        padding-left: 0;
+        list-style-type: none;
+        margin-bottom: 50px;
+        .owl-nav{
+            position: absolute;
+            width: 100%;
+            top: 49%;
+            .prev, .next,
+            .owl-prev, .owl-next{
+                background: none;
+                color: #ccc;
+                font-size: 3rem;
+                border-radius: 0;
+                margin: 0;
+                padding: 0;
+                opacity: 1;
+            }
+            .prev, .owl-prev{
+                float: left;
+                margin-left: -10px;
+            }
+            .next, .owl-next{
+                float: right;
+                margin-right: -10px;
+            }
         }
     }
 }

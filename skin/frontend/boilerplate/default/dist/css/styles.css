@@ -11534,6 +11534,18 @@ input[type=checkbox]:checked + label {
   color: #999;
 }
 
+.limiter select {
+  font-size: .875rem;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
 #html-body header {
   position: relative;
   margin-bottom: 200px;
@@ -14983,8 +14995,56 @@ h1.account-title {
   margin-top: -7px;
 }
 
+.my-account .box-account.addresses-list section {
+  margin-bottom: 30px;
+}
+
 .my-account .box-account.addresses-list .button {
   font-size: .875rem;
+  margin-bottom: 10px;
+}
+
+.my-account .box-account.addresses-list .link-remove {
+  font-size: .75rem;
+  color: #999;
+}
+
+.my-account .box-account.detail-order h3 {
+  margin-top: 0;
+}
+
+.my-account .box-account.detail-order p {
+  font-size: 1rem;
+}
+
+.my-account .box-account.detail-order p strong {
+  font-weight: normal;
+  display: block;
+  color: #3ab64b;
+}
+
+.my-account .box-account.sponsorship {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.my-account .box-account.sponsorship:last-of-type {
+  padding-bottom: 0;
+  border: 0;
+}
+
+.my-account .box-account.sponsorship h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #3ab64b;
+}
+
+.my-account .box-account.sponsorship p {
+  font-size: 1rem;
+  opacity: 1;
+  color: #333;
 }
 
 .my-account .box-account h2 {
@@ -15064,6 +15124,75 @@ h1.account-title {
   font-weight: normal;
 }
 
+.my-account .box-account table {
+  width: 100%;
+}
+
+.my-account .box-account table#my-orders-table th {
+  font-size: .875rem;
+  width: 14.29%;
+  padding: 20px 4px;
+}
+
+.my-account .box-account table#my-orders-table td {
+  width: 14.29%;
+  padding: 20px 4px;
+}
+
+.my-account .box-account table#my-orders-table td p,
+.my-account .box-account table#my-orders-table td span {
+  font-size: .75rem;
+  line-height: normal;
+  margin-bottom: 0;
+}
+
+.my-account .box-account table th {
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: 20px 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.my-account .box-account table td {
+  font-size: .875rem;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.my-account .box-account table td .button {
+  font-size: .875rem;
+  margin: 0 0 10px;
+}
+
+.my-account .box-account table td .view-order {
+  color: #999;
+}
+
+.my-account .box-account .total-order {
+  margin-top: 70px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.my-account .box-account .total-order p {
+  font-size: 1rem;
+}
+
+.my-account .box-account .total-order p span {
+  color: #3ab64b;
+}
+
+.my-account .box-account .total-order .total p {
+  font-size: 1.75rem;
+}
+
+.my-account .box-account .total-order .total p strong {
+  font-weight: normal;
+  color: #3ab64b;
+}
+
 .my-account .newsletter-wrapper {
   margin-top: 20px;
   padding: 20px;
@@ -15077,6 +15206,43 @@ h1.account-title {
   text-align: left;
   text-transform: none;
   color: #333;
+}
+
+.my-account .slide-tickets {
+  margin-bottom: 50px;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.my-account .slide-tickets .owl-nav {
+  position: absolute;
+  top: 49%;
+  width: 100%;
+}
+
+.my-account .slide-tickets .owl-nav .prev,
+.my-account .slide-tickets .owl-nav .next,
+.my-account .slide-tickets .owl-nav .owl-prev,
+.my-account .slide-tickets .owl-nav .owl-next {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  color: #ccc;
+  border-radius: 0;
+  background: none;
+}
+
+.my-account .slide-tickets .owl-nav .prev,
+.my-account .slide-tickets .owl-nav .owl-prev {
+  float: left;
+  margin-left: -10px;
+}
+
+.my-account .slide-tickets .owl-nav .next,
+.my-account .slide-tickets .owl-nav .owl-next {
+  float: right;
+  margin-right: -10px;
 }
 
 @media screen and (min-width: 1200px) {

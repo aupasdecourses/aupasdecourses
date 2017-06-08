@@ -63,9 +63,9 @@
 <?php endif; ?>
     <td <?php echo $this->getLabelProperties()?>>
         <?php if ($this->displayFullSummary() && !$this->getIsPlaneMode()): ?>
-            <div class="summary-collapse"><?php echo $this->__('Tax'); ?></div>
+            <div class="summary-collapse"><p><?php echo $this->__('Tax'); ?></p></div>
         <?php else: ?>
-            <?php echo $this->__('Dont TVA'); ?>
+            <p><?php echo $this->__('Dont TVA'); ?></p>
         <?php endif;?>
     </td>
     <td <?php echo $this->getValueProperties()?>><?php echo $_order->formatPrice($_source->getTaxAmount()) ?></td>
