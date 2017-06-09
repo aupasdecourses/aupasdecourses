@@ -66,6 +66,7 @@
 		</table>
 		<table class="table table-striped">
 			<tr>
+				<th>Commercant</th>
 				<th>Produit</th>
 				<th>Quantite</th>
 				<th>Description</th>
@@ -75,6 +76,7 @@
 			</tr>
 			{% for product in order.products %}
 			<tr>
+				<td>{{ product.nom_commercant }}</td>
 				<td>{{ product.nom }}</td>
 				<td>{{ product.quantite }}</td>
 				<td>{{ product.description }}</td>
@@ -85,6 +87,7 @@
 			{% endfor %}
 			<tr>
 				<td><b>TOTAL</b></td>
+				<td></td>
 				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
 				<td colspan="2"><b>{{ order.total_prix }}</b></td>
 			</tr>

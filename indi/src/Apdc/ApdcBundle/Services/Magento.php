@@ -319,6 +319,9 @@ class Magento
         }
         $prod_data['comment'] .= $product->getData('item_comment');
 
+		$prod_data['nom_commercant'] = $this->_attributeArraysLabels['commercant'][$prod_data['commercant_id']];
+				
+
         return $prod_data;
     }
 
