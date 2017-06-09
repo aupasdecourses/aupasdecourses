@@ -17,7 +17,9 @@
       <resources>
         <admin>
           <children>
-            <neighborhoods>
+            <neighborhoods module="apdc_neighborhood">
+              <title>Neighborhoods</title>
+              <sort_order>1</sort_order>
               <children>
                 <apdc_neighborhood translate="title" module="apdc_neighborhood">
                   <title>Neighborhood</title>
@@ -43,3 +45,4 @@
       </resources>
     </acl>
 </adminhtml>
+
