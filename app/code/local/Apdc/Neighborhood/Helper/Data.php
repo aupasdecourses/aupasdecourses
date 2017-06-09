@@ -123,4 +123,41 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $name;
     }
+
+    /**
+     * sendChangeNeighborhoodAdminNotification 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * @param Apdc_Neighborhood_Model_Neighborhood $oldNeighborhood oldNeighborhood 
+     * @param Apdc_Neighborhood_Model_Neighborhood $newNeighborhood newNeighborhood 
+     * 
+     * @return void
+     */
+    public function sendChangeNeighborhoodAdminNotification($customer, $oldNeighborhood, $newNeighborhood)
+    {
+        try {
+            $templateId = Mage::getStoreConfig('apdc_neighborhood/notifications/template_notification_change_neighborhood');
+            if (!$templateId) {
+                $templateId = 'apdc_neighborhood_notifications_template_notification_change_neighborhood';
+            }
+            $vars = array(
+                'customer' => $customer,
+                'oldNeighborhood' => $oldNeighborhood,
+                'newNeighborhood' => $newNeighborhood
+            );
+            $sender = array(
+                'name' => Mage::getStoreConfig('trans_email/ident_general/name'),
+                'email' => Mage::getStoreConfig('trans_email/ident_general/email')
+            );
+            $emailTo = Mage::getStoreConfig('apdc_neighborhood/notifications/sent_to_email');
+            $nameTo = Mage::getStoreConfig('apdc_neighborhood/notifications/sent_to_name');
+            $emailTemplate = Mage::getModel('core/email_template');
+            $emailTemplate->sendTransactional($templateId, $sender, $emailTo, $nameTo, $vars);
+            if (!$emailTemplate->getSentSuccess()) {
+                Mage::throwException('Impossible d\'envoyer la notification de changement de quartier pour le client : ' . $customer->getEmail());
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+    }
 }

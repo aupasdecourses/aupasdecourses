@@ -43,6 +43,15 @@
         </connection>
       </apdc_neighborhood_setup>
     </resources>
+    <template>
+      <email>
+        <apdc_neighborhood_notifications_template_notification_change_neighborhood translate="label" module="apdc_neighborhood">
+          <label>Neighborhood - Notification de changement de quartier</label>
+          <file>apdc/neighborhood/notification_change_neighborhood.html</file>
+          <type>html</type>
+        </apdc_neighborhood_notifications_template_notification_change_neighborhood>
+      </email>
+    </template>
   </global>
 
   <frontend>

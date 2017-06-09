@@ -40,6 +40,17 @@
                 </apdc_neighborhood>
               </children>
             </neighborhoods>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <apdc_neighborhood translate="title" module="apdc_neighborhood">
+                      <title>Neighborhoods configuration</title>
+                    </apdc_neighborhood>
+                  </children>
+                </config>
+              </children>
+            </system>
           </children>
         </admin>
       </resources>
