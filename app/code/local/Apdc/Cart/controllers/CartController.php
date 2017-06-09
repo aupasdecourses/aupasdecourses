@@ -23,6 +23,11 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $productId = $item->getProduct()->getId();
                 $this->_getCart()->removeItem($id)->save();
 
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
                 $result['qty'] = $this->_getCart()->getSummaryQty();
                 $result['product_id'] = $productId;
 
@@ -65,7 +70,7 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                     $qty = $filter->filter($qty);
                 }
 
-                $quoteItem = $cart->getQuote()->getItemById($id);
+                $quoteItem = $this->_getCart()->getQuote()->getItemById($id);
                 if (!$quoteItem) {
                     Mage::throwException($this->__('Quote item is not found.'));
                 }
@@ -76,10 +81,16 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 }
                 $this->_getCart()->save();
 
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
                 $this->loadLayout();
                 $minicartContent = $this->getLayout()->getBlock('minicart_content');
                 $minicartContent->setData('product_id', $quoteItem->getProductId());
                 $result['content'] = $minicartContent->toHtml();
+                Mage::log('adter gethaserror');
 
                 $result['qty'] = $this->_getCart()->getSummaryQty();
 
@@ -105,7 +116,6 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
      */
     public function ajaxUpdateItemOptionsAction()
     {
-        $cart   = $this->_getCart();
         $id = (int) $this->getRequest()->getParam('id');
         $params = $this->getRequest()->getParams();
         if ($params['isAjax'] == 1) {
@@ -118,6 +128,7 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $params['options'] = array();
             }
             try {
+                $cart   = $this->_getCart();
                 if (isset($params['qty'])) {
                     $filter = new Zend_Filter_LocalizedToNormalized(
                         array('locale' => Mage::app()->getLocale()->getLocaleCode())
@@ -125,7 +136,7 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                     $params['qty'] = $filter->filter($params['qty']);
                 }
 
-                $quoteItem = $cart->getQuote()->getItemById($id);
+                $quoteItem = $this->_getCart()->getQuote()->getItemById($id);
                 if (!$quoteItem) {
                     Mage::throwException($this->__('Quote item is not found.'));
                 }
@@ -145,6 +156,11 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
 
 
                 $cart->save();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
 
                 $comment = htmlentities($this->getRequest()->getParam('item_comment'), ENT_QUOTES, 'UTF-8');
                 $item->setItemComment($comment)
