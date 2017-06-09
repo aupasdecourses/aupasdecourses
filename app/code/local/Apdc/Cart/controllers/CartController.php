@@ -90,7 +90,6 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $minicartContent = $this->getLayout()->getBlock('minicart_content');
                 $minicartContent->setData('product_id', $quoteItem->getProductId());
                 $result['content'] = $minicartContent->toHtml();
-                Mage::log('adter gethaserror');
 
                 $result['qty'] = $this->_getCart()->getSummaryQty();
 

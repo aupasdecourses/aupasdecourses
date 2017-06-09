@@ -50,6 +50,8 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           }
         } else {
           var varienForm = new VarienForm(form.attr('id'));
+          varienForm.form = form[0];
+          varienForm.validator = new Validation(form[0]);
           varienForm.validator.options.focusOnError = false;
           if (varienForm.validator.validate()) {
             var ajaxUrl = form.data('ajax-action');
@@ -116,7 +118,6 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       var updateProductOptions = $(this).find('input[name="update_product_options"]');
       var optionKeyTab = [];
       var optionKey = '';
-      var formId = $(this).attr('id');
       var productId = parseInt($(this).data('product-id'));
       $(this).find('[name^="super_attribute["]').each(function() {
         var tabOptions = extractOptions(this, 'super_attribute');
