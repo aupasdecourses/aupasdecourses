@@ -11726,6 +11726,56 @@ section#districts .button {
   margin-top: 0;
 }
 
+section#districts #search_neighborhoods {
+  margin: 0 auto;
+  text-align: center;
+}
+
+section#districts #search_neighborhoods label {
+  color: rgba(0, 0, 0, .54);
+}
+
+section#districts #search_neighborhoods input {
+  font-size: 15px;
+  line-height: 1.5;
+  width: 300px;
+  height: 33px;
+  margin: 0 8px;
+  padding: 0 8px;
+  border: 1px solid silver;
+  border-radius: 2px;
+  background: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+section#districts #no_neighborhood {
+  display: none;
+  margin-bottom: -40px;
+}
+
+section#districts #no_neighborhood p {
+  font-size: 1rem;
+}
+
+section#districts #no_neighborhood i {
+  font-size: 60px;
+  animation: bounce 1.2s ease 0s infinite;
+  color: rgba(0, 0, 0, .54);
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-10px);
+  }
+
+  0%,
+    100% {
+    transform: translateY(10px);
+  }
+}
+
 section#concept {
   min-height: 520px;
   padding: 1px 60px 30px;
