@@ -11932,6 +11932,66 @@ section#cards .partners {
   background-color: #fff;
 }
 
+section#ils-parlent-de-nous .arrow_box {
+  position: relative;
+  border: 2px solid #3ab64b;
+  background: #3ab64b;
+}
+
+section#ils-parlent-de-nous .arrow_box:after,
+section#ils-parlent-de-nous .arrow_box:before {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  content: ' ';
+  pointer-events: none;
+  border: solid transparent;
+}
+
+section#ils-parlent-de-nous .arrow_box:after {
+  margin-left: -20px;
+  border-width: 20px;
+  border-color: rgba(58, 182, 75, 0);
+  border-top-color: #3ab64b;
+}
+
+section#ils-parlent-de-nous .arrow_box:before {
+  margin-left: -24px;
+  border-width: 24px;
+  border-color: rgba(58, 182, 75, 0);
+  border-top-color: #3ab64b;
+}
+
+section#ils-parlent-de-nous .container-fluid {
+  padding: 35px 0;
+  background-color: white;
+  box-shadow: 0 0 40px -20px black;
+}
+
+section#ils-parlent-de-nous .container-fluid h2 {
+  margin-bottom: 15px;
+  color: #3ab64b;
+}
+
+section#ils-parlent-de-nous .container-fluid ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+section#ils-parlent-de-nous .container-fluid ul li {
+  display: inline-block;
+  height: 50px;
+  padding: 0 10px;
+}
+
+section#ils-parlent-de-nous .container-fluid ul li img {
+  height: 100%;
+}
+
 section#advantages {
   padding: 20px 0;
   border-top: 1px solid #eee;
