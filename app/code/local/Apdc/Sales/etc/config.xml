@@ -5,7 +5,23 @@
             <version>0.0.1</version>
         </Apdc_Sales>
     </modules>
+	<frontend>
+        <routers>
+            <sales>
+                <args>
+					<modules>
+						<apdc_sales before="Mage_Sales">Apdc_Sales</apdc_sales>
+					</modules>
+				</args>
+            </sales>
+        </routers>
+	</frontend>
     <global>
+		<blocks>
+			<apdc_sales>
+				<class>Apdc_Sales_Block</class>
+			</apdc_sales>
+		</blocks>
         <models>
             <apdc_sales>
               <class>Apdc_Sales_Model</class>

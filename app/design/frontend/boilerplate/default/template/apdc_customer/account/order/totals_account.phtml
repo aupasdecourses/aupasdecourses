@@ -1,7 +1,12 @@
-<?php $_totals=$this->getTotals();?>
-<?php $refund_totals=Mage::helper('pmainguet_delivery')->getRefundorderdata($this->getOrder());
+<?php
+	$_totals=$this->getTotals();
+	$refund_totals = Mage::helper('pmainguet_delivery')->getRefundorderdata($this->getOrder());
 	$total=0;
 	$_order=$this->getOrder();
+	
+	foreach($refund_totals as $refund):
+		$total += $refund["del_amount_refunded"];
+	endforeach;
 ?>
 <!--    <table class="table data-table" id="my-orders-table">
          <tr>
@@ -52,7 +57,7 @@
                 <p>Total des produits commerçants</p>
             </div>
             <div class="col-md-6">
-                <p><?php echo $_order->formatPrice($total) ?></p>
+                <p><?php echo $_order->formatPrice($total) ?> @TODO</p>
             </div>
         </div>
         <div class="row">
@@ -62,10 +67,22 @@
             <div class="col-md-6">
                 <p>
                     <?php
-			        	if($total<0){
-			        		$total=0;
+			        	if($total < 0){
+			        		$total = 0;
 			        	}
 			        	echo $_order->formatPrice($total);
+			        ?>
+			     </p>
+            </div>
+        </div>
+		<div class="row">
+            <div class="col-md-6">
+                <p>Prix final payé par clients</p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <?php
+						echo $_order->formatPrice($_totals['grand_total_incl']->value-$total);
 			        ?>
 			     </p>
             </div>

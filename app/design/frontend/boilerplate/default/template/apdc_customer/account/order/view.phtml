@@ -1,6 +1,9 @@
 <div class="col-md-7 col-md-offset-1 box-account">
     <?php $_order = $this->getOrder(); ?>
     <h3><?php echo $this->__('Détails de la commande'); ?></h3>
+	<div id="infos">
+		<?php echo $this->getChildHtml('order_info'); ?>
+	</div>
     <?php echo $this->getChildHtml('order_items'); ?>
     <?php echo $this->getChildHtml('order_totals'); ?>
 </div>

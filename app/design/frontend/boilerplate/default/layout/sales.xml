@@ -50,7 +50,8 @@ Customer account pages, rendered for all tabs in dashboard
     <customer_account>
         <!-- Mage_Sales -->
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="sales"><name>orders</name><path>sales/order/history/</path><label>My Orders</label></action>
+			<action method="addLink" translate="label" module="sales"><name>ordersongoing</name><path>sales/order/ongoing/</path><label>Mes commandes en cours</label></action>
+			<action method="addLink" translate="label" module="sales"><name>orders</name><path>sales/order/history/</path><label>Mes commandes passées</label></action>
         </reference>
         <reference name="left">
             <block type="sales/reorder_sidebar" name="sale.reorder.sidebar" as="reorder" template="sales/reorder/sidebar.phtml"/>
@@ -75,14 +76,50 @@ Customer account home dashboard layout
         <label>Customer My Account Order History</label>
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
-            <block type="sales/order_history" name="sales.order.history">
+            <block type="apdc_sales/order_history" name="sales.order.history">
                 <block type="core/text_list" name="sales.order.history.info" as="info" translate="label">
                     <label>Order History Info</label>
                 </block>
             </block>
-            <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>
+            <!--<block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>-->
         </reference>
     </sales_order_history>
+	
+	<sales_order_ongoing translate="label">
+        <label>Customer My Account Order ongoing</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="apdc_sales/order_ongoing" name="sales.order.ongoing">
+                <block type="core/text_list" name="sales.order.ongoing.info" as="info" translate="label">
+                    <label>Order Ongoing Info</label>
+                </block>
+            </block>
+			<!--<block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>-->
+        </reference>
+    </sales_order_ongoing>
+
+	<sales_order_view translate="label">
+        <remove name="amorderattach.attachment"/>
+        <label>Customer My Account Order View</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
+				<block type="apdc_sales/order_info" name="order_info" template="apdc_customer/account/order/info.phtml"/>
+                <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
+                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
+                </block>
+                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
+                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
+                </block>
+            </block>
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" />
+                <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
+            </block>
+        </reference>
+    </sales_order_view>
 
     <sales_order_reorder>
         <update handle="customer_account"/>

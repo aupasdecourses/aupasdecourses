@@ -1,7 +1,7 @@
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <?php $_orders = $this->getOrders(); ?>
 <div class="col-md-7 col-md-offset-1 box-account">
-    <h2><?php echo $this->__('Mes commandes passées') ?></h2>
+    <h2><?php echo $this->__('Mes commandes en cours') ?></h2>
     <?php echo $this->getChildHtml('info');?>
     <?php if($_orders->getSize()): ?>
     <table class="data-table orders" id="my-orders-table">
@@ -28,9 +28,7 @@
                 <td class="total"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
                 <td class="status"><?php echo $_order->getStatusLabel() ?></td>
                 <td class="text-center view">
-					<?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
-						<a href="<?php echo $this->getReorderUrl($_order) ?>" class="button button-green"><i class="fa fa-arrow-right"></i> <?php echo $this->__('Commander à nouveau') ?></a>
-					<?php endif ?>
+                    <a href="<?php echo $this->getTrackUrl($_order) ?>" class="button button-green"><i class="fa fa-arrow-right"></i> <?php echo $this->__('Suivre le livreur') ?></a>
                     <a href="<?php echo $this->getViewUrl($_order) ?>" class="view-order"><i class="fa fa-eye"></i> <?php echo $this->__('Voir la commande') ?></a>
                 </td>
             </tr>

@@ -194,7 +194,7 @@
         </reference>
     </sales_order_history>
 
-    <sales_order_view translate="label">
+    <!--<sales_order_view translate="label">
         <remove name="amorderattach.attachment"/>
         <label>Customer My Account Order View</label>
         <update handle="customer_account"/>
@@ -215,7 +215,7 @@
                 <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
             </block>
         </reference>
-    </sales_order_view>
+    </sales_order_view>-->
 
     <cms_page translate="label">
         <label>CMS Pages (All)</label>
