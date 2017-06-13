@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+  <catalogsearch_result_index translate="label">
+    <label>Quick Search Form</label>
+    <remove name="search_result_list" />
+    <remove name="search.result" />
+    <reference name="head">
+      <action method="addItem">
+        <rel>skin_css</rel>
+        <href>owl-carrousel/owl.carousel.css</href>
+      </action>
+      <action method="addItem">
+        <rel>skin_css</rel>
+        <href>owl-carrousel/owl.theme.css</href>
+      </action>
+      <action method="addItem">
+        <rel>skin_js</rel>
+        <href>owl-carrousel/owl.carousel.min.js</href>
+      </action>
+    </reference>
+    <reference name="content">
+      <block type="apdc_search/result" name="apdc_search_result" template="catalogsearch/result.phtml">
+        <block type="apdc_search/result_list" name="apdc_search_result_list" as ="apdc_search_result_list" template="apdc_search/result/list.phtml">
+          <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+        </block>
+        <action method="setListOrders"/>
+        <action method="setListModes"/>
+        <action method="setListCollection"/>
+      </block>
+    </reference>
+  </catalogsearch_result_index>
+
+</layout>

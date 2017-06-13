@@ -1,0 +1,88 @@
+<?php $productsByCommercants = $this->getProductsByCommercant(); ?>
+<?php $tmpCommercantId = 0; ?>
+<?php if (count($productsByCommercants) > 0) : ?>
+<div class="row apdc_home_selection">
+	<div class="page-title col-xs-12">
+	    <div class="block-promos text-center">
+
+            <?php foreach ($productsByCommercants as $commercantId => $products): ?>
+	    	<div class="inner-box">
+                <div class="title-block"><?php echo $this->getCommercantName($products[0]); ?></div>
+			    <div class="colored-line"></div>
+                <ul class="owl-carousel apdc-products-grid">
+                <?php foreach ($products as $product): ?>
+                    <?php $productUrl = $product->getProductUrl(); ?>
+                    <?php $strippedName = $this->stripTags($product->getName(), null, true); ?>
+                    <?php $imageLabel = $this->stripTags($this->getImageLabel($product, 'small_image'), null, true); ?>
+                    <li class="product-info item">
+                        <form action="<?php echo $productUrl; ?>" 
+                              method="post" 
+                              class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product['product_id']; ?>" 
+                              id="product_addtocart_form_<?php echo $product->getId(); ?>" 
+                              data-product-id="<?php echo $product->getId(); ?>">
+
+                            <a href="<?php echo $productUrl; ?>" 
+                               title="<?php echo $strippedName; ?>" 
+                               class="show-product-popup product-image" 
+                               data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+
+                                <img src="<?= $this->helper('catalog/image')->init($product, 'small_image')->resize(250, 250)?>" width="250" height="250" alt="<?php echo $imageLabel; ?>" title="<?php echo $imageLabel; ?>" />
+                                <?php echo $this->getChild('product_labels')->setData('product', $product)->toHtml(); ?>
+                            </a>
+                            <div class="product-info row">
+                                <a href="<?php echo $productUrl; ?>" 
+                                   title="<?php echo $strippedName; ?>" 
+                                   class="show-product-popup" 
+                                   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
+                                    <h2 class="product-name"><?= $product->getName()?></h2>
+                                </a>
+                                <div class="product-info-left product-info-column">
+
+                                    <p class="product-commercant-name">
+                                        <?php echo Mage::getResourceSingleton('catalog/product')
+                                                ->getAttribute('commercant')
+                                                ->getSource()
+                                                ->getOptionText($product->getData('commercant')); ?>
+                                    </p>
+
+                                </div>
+                                <div class="product-info-right product-info-column">
+                                    <?php echo $this->getPriceHtml($product, true) ?>
+                                    <?php if($product->getData('prix_kilo_site')) :?>
+                                        <div class="product-short_desc">		            
+                                            <?php echo $product->getData('prix_kilo_site'); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="actions">
+                                    <div class="action-group pull-right">
+                                        <div>
+                                            <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button btn-cart show-product-popup" href="<?php echo $product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-cart-plus"></i> <?php echo $this->__('Ajouter') ?></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<script>
+    $j(document).ready(function() {
+      $j('.owl-carousel').owlCarousel({
+            items:5,
+            itemsScaleUp : true,
+            pagination:false,
+            autoPlay : false,
+            navigation : true,
+            afterInit:function() {
+                alignProductGridActions();
+            }
+      });     
+    });
+</script>
+<?php endif; ?>

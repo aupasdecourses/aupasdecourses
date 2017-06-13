@@ -127,5 +127,12 @@
             <Amasty_Shiprestriction />
           </depends>
         </Apdc_Shiprestriction>
+        <Apdc_Search>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_CatalogSearch />
+          </depends>
+        </Apdc_Search>
     </modules>
 </config>
