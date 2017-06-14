@@ -60,6 +60,7 @@
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/apdc_quickview.js</file></action>
             <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
             <!-- Social Connect -->
             <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
                 <type>skin_css</type>

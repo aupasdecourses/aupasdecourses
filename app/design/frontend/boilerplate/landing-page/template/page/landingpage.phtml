@@ -42,8 +42,14 @@
 			<div class="section-description">
 				 Les meilleurs commerçants de Paris livrés chez vous
 			</div>
+            <div id="search_neighborhoods">
+                <div class="input-box">
+                    <label><?php echo $this->__('Your postcode:'); ?></label>
+                    <input type="text" id="search_neighborhoods_postcode" class="input-text" placeholder="<?php echo $this->__('Search for your neighborhood'); ?>" />
+                </div>
+            </div>
 		</div>
-		<div class="row">
+		<div class="row" id="neighborhood-list">
             <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
             <?php $nbQuartiers = $quartiers->count(); ?>
 
@@ -92,7 +98,7 @@
                 ?>
 
 
-                <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>">
+                    <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>" data-postcodes="<?php echo implode(',', unserialize($quartier->getPostcodes())); ?>">
                     <a href="<?php echo $quartier->getStoreUrl();?>">
                         <img src="<?php echo Mage::helper('apdc_neighborhood/media')->getMediaUrl($quartier->getImage(), array('width' => 200, 'height' => 200));?>" alt="Au Pas De Courses - <?php echo $quartier->getName(); ?>" class="img-circle"/>
                         <span class="button"><?php echo $quartier->getName(); ?></span>
@@ -100,8 +106,10 @@
                 </div>
 
             <?php $cpt++; endforeach; ?>
-
-
+        </div>
+        <div class="row text-center" id="no_neighborhood">
+            <p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p>
+            <i class="fa fa-angle-down"></i>
         </div>
 		<div class="row text-center">
 		    <h2 class="soon">Envie de nous suivre ?</h2>
@@ -222,6 +230,11 @@
         </div>
     </div>
 </section>
+
+<?php $nous = $this->getLayout()->createBlock('cms/block')->setBlockId('ils-parlent-de-nous'); ?>
+<?php if ($nous) : ?>
+<?php echo $nous->toHtml(); ?>
+<?php endif; ?>
 
 <section id="advantages">
     <div class="container">
