@@ -53,6 +53,8 @@ gulp.task('css', function () {
         //'node_modules/bootstrap/dist/css/bootstrap.min.css',
 		//'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
 		//'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
+        'css/owl.carousel.min.css',
+        'css/lightbox.min.css',
         'node_modules/font-awesome/font-awesome.scss',
 		//'vendor/apdc_supermenu/css/supermenu.css',
 		//'vendor/apdc_popup/css/popup.css',
@@ -92,6 +94,7 @@ gulp.task('js', function() {
 	//'vendor/apdc_popup/js/popup.js',
 	//'vendor/apdc_popup/js/login-popup.js',
 	//'vendor/apdc_popup/js/newsletter-popup.js',
+    'js/lightbox.min.js',
     'js/script.js',
     'js/custom.js'
   ];

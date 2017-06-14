@@ -21,13 +21,15 @@ if($field->getCustomerVisibility()=="view"):
                 $val = explode(';', $content);
             }
             ?>
-            <ul class="slide-tickets">
+            <ul class="slide-tickets owl-carousel">
                 <?php foreach ($val as $img): ?>
                         <li>
                             <?php if($img<>""):
                                 $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
                                 ?>
-                                <img class="ticket_commercant" src="<?= $url_src?>"/>
+                                <a href="<?= $url_src?>" data-lightbox="tickets">
+                                    <img class="ticket_commercant" src="<?= $url_src?>"/>
+                                </a>
                             <?php else:?>
                                 <span>Pas de tickets (pour l'instant)</span>
                             <?php endif;?>
@@ -44,6 +46,7 @@ if($field->getCustomerVisibility()=="view"):
     $j(document).ready(function(){
         $j(".slide-tickets").owlCarousel({
             items:4,
+            itemsScaleUp : true,
             pagination:false,
             autoPlay : false,
             nav : true,

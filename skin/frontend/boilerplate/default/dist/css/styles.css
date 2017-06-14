@@ -14239,6 +14239,49 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+.response-payment {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 30px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.response-payment.success h1 {
+  color: #1e555a;
+}
+
+.response-payment.success p {
+  font-size: 1.125rem;
+  margin-bottom: 5px;
+}
+
+.response-payment h1 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #f00;
+}
+
+.response-payment h2 {
+  font-size: 1.125rem;
+  text-align: center;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.response-payment .link {
+  font-size: .875rem;
+  display: block;
+  margin-top: 20px;
+  text-decoration: underline;
+  color: #999;
+}
+
 .catalog-category-view h2 {
   font-size: 1.125rem;
   font-weight: 700;
@@ -15011,6 +15054,7 @@ h1.account-title {
 
 .my-account .box-account.detail-order h3 {
   margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .my-account .box-account.detail-order p {
@@ -15023,9 +15067,15 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.my-account .box-account.detail-order .reorder-link {
+  font-size: .875rem;
+  float: right;
+  margin-top: -80px;
+}
+
 .my-account .box-account.sponsorship {
-  margin-bottom: 40px;
-  padding-bottom: 30px;
+  margin-bottom: 60px;
+  padding-bottom: 60px;
   border-bottom: 1px solid #eee;
 }
 
@@ -15037,6 +15087,7 @@ h1.account-title {
 .my-account .box-account.sponsorship h3 {
   font-size: 1.125rem;
   font-weight: 700;
+  line-height: 1.5em;
   text-transform: uppercase;
   color: #3ab64b;
 }
@@ -15045,6 +15096,58 @@ h1.account-title {
   font-size: 1rem;
   opacity: 1;
   color: #333;
+}
+
+.my-account .box-account.sponsorship #sponsor-link {
+  display: inline-block;
+  margin: 30px 0;
+  padding: 25px 35px;
+  list-style-type: none;
+  border: 4px solid #3ab64b;
+  border-radius: 5px;
+}
+
+.my-account .box-account.sponsorship #sponsorship-share p,
+.my-account .box-account.sponsorship #sponsorship-share ul,
+.my-account .box-account.sponsorship #sponsorship-share li {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.my-account .box-account.sponsorship #sponsorship-share ul {
+  margin-bottom: 4px;
+  padding-left: 10px;
+  list-style-type: none;
+}
+
+.my-account .box-account.sponsorship #sponsorship-share button,
+.my-account .box-account.sponsorship #sponsorship-share a {
+  margin: 0 5px;
+  outline: none;
+  background: none;
+}
+
+.my-account .box-account.sponsorship #sponsorship-share button i,
+.my-account .box-account.sponsorship #sponsorship-share a i {
+  color: #3ab64b;
+}
+
+.my-account .box-account.sponsorship #send-email {
+  display: none;
+}
+
+.my-account .box-account.sponsorship #send-email .field {
+  padding: 10px 0;
+}
+
+.my-account .box-account.sponsorship #send-email .field p {
+  font-size: .875rem;
+  color: #3ab64b;
+}
+
+.my-account .box-account.sponsorship #send-email textarea {
+  height: 200px;
+  resize: none;
 }
 
 .my-account .box-account h2 {
@@ -15087,9 +15190,11 @@ h1.account-title {
 }
 
 .my-account .box-account .form-list input[type=text],
+.my-account .box-account .form-list input[type=email],
 .my-account .box-account .form-list input[type=password],
 .my-account .box-account .form-list input[type=tel],
-.my-account .box-account .form-list select {
+.my-account .box-account .form-list select,
+.my-account .box-account .form-list textarea {
   font-size: .875rem;
   width: 100%;
   height: auto;
@@ -15193,6 +15298,18 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.my-account .box-account .cancel-edit-customer {
+  position: relative;
+  top: -55px;
+  left: 190px;
+}
+
+.my-account .box-account #infos {
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #eee;
+}
+
 .my-account .newsletter-wrapper {
   margin-top: 20px;
   padding: 20px;
@@ -15208,15 +15325,29 @@ h1.account-title {
   color: #333;
 }
 
+.my-account .newsletter-wrapper ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
 .my-account .slide-tickets {
   margin-bottom: 50px;
   padding-left: 0;
   list-style-type: none;
 }
 
+.my-account .slide-tickets .owl-stage-outer {
+  height: 250px;
+}
+
+.my-account .slide-tickets .owl-stage-outer img {
+  width: auto;
+  max-height: 250px;
+}
+
 .my-account .slide-tickets .owl-nav {
   position: absolute;
-  top: 49%;
+  top: 38%;
   width: 100%;
 }
 

@@ -680,3 +680,43 @@
         }
     }
 }
+
+.response-payment{
+    max-width: 1200px;
+    margin: 60px auto;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 30px;
+    text-align: center;
+    &.success{
+        h1{
+            color: $color-second-green;
+        }
+        p{
+            font-size: 1.125rem;
+            margin-bottom: 5px;
+        }
+    }
+    h1{
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-align: center;
+        color: #ff0000;
+        text-transform: none;
+        margin-bottom: 20px;
+        letter-spacing: normal;
+    }
+    h2{
+        font-size: 1.125rem;
+        text-align: center;
+        text-transform: none;
+        letter-spacing: normal;
+    }
+    .link{
+        display: block;
+        margin-top: 20px;
+        font-size: 0.875rem;
+        color: $color-main-grey;
+        text-decoration: underline;
+    }
+}

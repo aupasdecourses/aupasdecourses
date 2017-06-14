@@ -222,5 +222,10 @@
             <action method="setTemplate"><template>apdc_checkout/checkout/success.phtml</template></action>
         </reference>
     </checkout_onepage_success>
+    <checkout_onepage_failure translate="label">
+        <reference name="checkout.failure">
+            <action method="setTemplate"><template>apdc_checkout/checkout/onepage/failure.phtml</template></action>
+        </reference>
+    </checkout_onepage_failure>
 
 </layout>
