@@ -9,7 +9,6 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
 
     public function addAction()
     {
-        $cart   = $this->_getCart();
         $params = $this->getRequest()->getPost();
         if ($params['isAjax'] == 1) {
             if (!$this->_validateFormKey()) {
@@ -17,6 +16,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 return;
             }
             $result = array();
+            $cart   = $this->_getCart();
             try {
                 if (isset($params['qty'])) {
                     $filter = new Zend_Filter_LocalizedToNormalized(
@@ -41,6 +41,11 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 }
  
                 $cart->save();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
 
                 $this->_getSession()->setCartWasUpdated(true);
 
@@ -92,7 +97,6 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
 
     public function addCommentAjaxAction()
     {
-        $cart   = $this->_getCart();
         $params = $this->getRequest()->getPost();
         if ($params['isAjax'] == 1) {
             if (!$this->_validateFormKey()) {
@@ -100,6 +104,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 return;
             }
             $itemId = (int) $this->getRequest()->getParam('item_id');
+            $cart   = $this->_getCart();
             $result = array();
             try {
                 $comment = htmlentities($this->getRequest()->getParam('item_comment'), ENT_QUOTES, 'UTF-8');
@@ -107,6 +112,12 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $item->setItemComment($comment)
                     ->save();
                 $productId = $item->getProduct()->getId();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
                 $result['status'] = 'SUCCESS';
                 $result['message'] = $this->__('Your comment has been saved successfully.');
 
