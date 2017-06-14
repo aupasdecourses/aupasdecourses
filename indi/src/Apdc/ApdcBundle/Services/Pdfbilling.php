@@ -138,7 +138,6 @@ class Pdfbilling
         $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
 
         $data=$this->_data["summary"][0];
-        dump($data);
         $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data['billing_month']))));
 
         $this->_currentpage->drawText("Calcul des sommes versées sur le compte de {$data['shop']},", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
