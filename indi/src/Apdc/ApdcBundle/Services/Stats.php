@@ -528,7 +528,6 @@ class Stats
 			]);
 			arsort($data);
 		}
-		dump($orders);
 		$data_conso = [];
 		foreach ($data as $row) {
 			if ($row['Discount']>0) {
