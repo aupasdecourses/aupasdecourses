@@ -510,12 +510,12 @@ class Stats
 	{
 		$data = [];
 		/* Format dates */
-		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
-		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		$debut	= date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$fin	= date('Y-m-d', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
 		$orders = \Mage::getModel('sales/order')->getCollection()
-			//->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
-			->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
+			//->addAttributeToFilter('status', array('eq' => \Mage_Sales_Model_Order::STATE_COMPLETE))
 			->addAttributeToSort('increment_id', 'DESC');
 		foreach ($orders as $order) {
 			array_push($data, [
