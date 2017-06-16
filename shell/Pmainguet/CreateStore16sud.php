@@ -17,6 +17,18 @@ class Pmainguet_CreateStore16sud extends Pmainguet_CreateStore
     protected $_country='FR';
     protected $_listmailchimp='Paris 16e';
 
+    protected $_magasin = [
+            'Boucher' => array(" Milo"),
+            'Boulanger' => array(""),
+            'Caviste' => array(""),
+            'Primeur' => array(""),
+            'Fromager' => array(""),
+            'Poissonnier' => array(""),
+            'Epicerie' => array(''),
+            'Traiteur' => array(''),
+            'Bio' => array(''),
+            ];
+
 }
 
 // Create a new instance of our class and run it.
