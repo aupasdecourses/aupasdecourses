@@ -44,6 +44,10 @@
                             </div>
                         <?php endif; ?>-->
 
+						<div class="header-neighborhood-container skip-container">
+		                    <?php echo $this->getChildHtml('neighborhood_menu'); ?>
+		                </div>
+
 						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
 							<div class="header-delivery-container skip-container">
 								 <a href="#" title="Livraison">
@@ -133,6 +137,17 @@
 			}
 			else{
 				$j(this).parent().find('.block-delivery').addClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
+			}
+		});
+
+		$j('.header-neighborhood-container a').click(function(evt){
+			if($j(this).parent().find('.block-neighborhood').hasClass('open') ){
+				$j(this).parent().find('.block-neighborhood').removeClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
+			}
+			else{
+				$j(this).parent().find('.block-neighborhood').addClass('open');
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});

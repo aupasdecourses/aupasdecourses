@@ -24,8 +24,8 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php if($_heading = $this->getContentHeading()): ?>
-    <div class="page-title" style="background-image: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).Mage::getBlockSingleton('cms/page')->getPage()->getImgBanner(); ?>');">
-        <h1><span><?php echo $_heading; ?></span></h1>
-    </div>
-<?php endif; ?>
+<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
+<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage()); ?>
+<div class="page-title" style="background-image: url('<?php echo $imageUrl; ?>');">
+    <h1><span><?php echo $neighborhood->getName();?></span></h1>
+</div>
