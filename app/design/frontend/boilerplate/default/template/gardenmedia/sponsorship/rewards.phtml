@@ -1,0 +1,61 @@
+<?php $rewards = $this->getRewards(); ?>
+<div class="col-md-7 col-md-offset-5 box-account sponsorship">
+    <h2><?php echo $this->__('My Rewards') ?></h2>
+    <div id="sponsorship-rewards">
+        <?php if ($rewards->count() > 0) : ?>
+            <p><?php echo $this->__('You have %s rewards', $rewards->count()); ?></p>
+            <table class="data-table orders" id="my-rewards-table">
+                <colgroup>
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                </colgroup>
+                <thead>
+                    <tr class="first last">
+
+                        <th class="owner_type"><?php echo $this->__('As'); ?></th>
+                        <th class="name"><?php echo $this->__('Name'); ?></th>
+                        <th class="coupon_name"><?php echo $this->__('Label'); ?></th>
+                        <th class="reward"><?php echo $this->__('Coupon Code'); ?></th>
+                        <th class="used"><?php echo $this->__('Coupon Used'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($rewards as $reward) : ?>
+                <tr class="<?php echo $reward->getIsUsed() ? 'coupon_used' : 'coupon_not_used'; ?>">
+                        <td class="owner_type">
+                            <?php if ($reward->getOwnerType() == 'sponsor') : ?>
+                                <?php echo $this->__('Sponsor'); ?>
+                            <?php else : ?>
+                                <?php echo $this->__('Godchild'); ?>
+                            <?php endif; ?>
+                        </td>
+                        <td class="name">
+                            <?php if ($reward->getOwnerType() == 'sponsor') : ?>
+                                <?php echo $this->__('Godchild:') . ' ' . $reward->getName(); ?>
+                            <?php else : ?>
+                                <?php echo $this->__('Sponsor:'). ' ' . $reward->getName(); ?>
+                            <?php endif; ?>
+                        </td>
+                        <td class="coupon_name"><?php echo $reward->getRuleLabel(); ?></td>
+                        <td class="reward"><span class="nobr"><?php echo $reward->getCouponCode(); ?></span></td>
+                        <td class="used">
+                            <?php if ($reward->getIsUsed()) : ?>
+                                <?php echo $this->__('Yes'); ?>
+                            <?php else : ?>
+                                <?php echo $this->__('No'); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <script type="text/javascript">decorateTable('my-rewards-table');</script>
+        <?php else : ?>
+            <?php echo $this->__('Actually you don\'t have any reward.'); ?>
+        <?php endif; ?>
+    </div>
+</div>

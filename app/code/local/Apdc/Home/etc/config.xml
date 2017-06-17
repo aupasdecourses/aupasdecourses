@@ -2,19 +2,19 @@
 <config>
     <modules>
         <Apdc_Home>
-            <version>0.2.0</version>
+            <version>0.2.1</version>
         </Apdc_Home>
     </modules>
     <frontend>
         <routers>
-                <customhome>
-                    <use>standard</use>
-                    <args>
-                        <module>Apdc_Home</module>
-                        <frontName>customhome</frontName>
-                    </args>
-                </customhome>
-            </routers>
+			<customhome>
+				<use>standard</use>
+				<args>
+					<module>Apdc_Home</module>
+					<frontName>customhome</frontName>
+				</args>
+			</customhome>
+		</routers>
     	<layout>
             <updates>
                 <apdc_home>

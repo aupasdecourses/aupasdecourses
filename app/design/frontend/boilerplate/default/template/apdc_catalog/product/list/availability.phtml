@@ -1,0 +1,34 @@
+<?php $header = ''; ?>
+<?php $body = ''; ?>
+<?php 
+$product = $this->getProduct();
+if($this->getRequest()->getControllerName()=='category'){
+    $availability = $this->getAvailability();
+} else if ($product && $product->getId()) {
+    $availability = $this->getProductAvailability($product);
+} else{
+    $availability = $this->getProductAvailability(Mage::registry('current_product'));
+}
+?>
+
+<div class="product-availability">
+    <div class="hover-title product-availability-title"><?php echo $this->__('Livraison possible le:'); ?></div>
+    <?php foreach($this->getWeekDays() as $weekDay): ?>
+        <?php if (is_null($weekDay['value']) || !in_array($weekDay['value'], $availability)) : ?>
+            <?php $body .= '<td class="unavailable">-</td>'; ?>
+            <?php $classHeader = 'unavailable'; ?>
+        <?php else : ?>
+            <?php $body .= '<td><i class="fa fa-check"></i></td>'; ?>
+            <?php $classHeader = 'available'; ?>
+        <?php endif; ?>
+        <?php $header .= '<th class="' . $classHeader . '">' . $weekDay['label'] . '</th>'; ?> 
+    <?php endforeach; ?>
+    <table class="table">
+        <thead>
+            <tr><?php echo $header; ?></tr>
+        </thead>
+        <tbody>
+            <tr><?php echo $body; ?></tr>
+        </tbody>
+    </table>
+</div>

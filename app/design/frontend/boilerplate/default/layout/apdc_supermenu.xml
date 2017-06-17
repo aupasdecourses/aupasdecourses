@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <default>
+    <reference name="head">
+      <action method="addItem"><type>skin_css</type><name>css/apdc_supermenu/supermenu.css</name><params/></action>
+      <action method="addItem"><type>skin_js</type><name>js/apdc_supermenu/supermenu.js</name><params/></action>
+    </reference>
+    <remove name="top.menu" />
+    <reference name="header">
+      <block type="core/text_list" name="top.supermenu" as="topMenu" translate="label">
+          <label>Navigation Bar</label>
+          <block type="apdc_supermenu/page_html_topmenu" name="supermenu_catalog.topnav" template="apdc_supermenu/topmenu.phtml">
+            <block type="apdc_supermenu/page_html_topmenu_renderer" name="supermenu_catalog.topnav.renderer" template="apdc_supermenu/topmenu/renderer.phtml"/>
+          </block>
+      </block>
+    </reference>
+  </default>
+</layout>

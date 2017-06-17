@@ -1,6 +1,7 @@
 $j.noConflict();
 $j(document).ready(function(){
-    $j('.addcoupon').on('click',function(){
+    $j('#discount-coupon-form').submit(function(evt){
+		evt.preventDefault();
         $j('.message-coupon').hide();
         $j('#coupon_code').removeClass('validation-failed');
         if($j('#coupon_code').val() == ''){
@@ -18,7 +19,7 @@ $j(document).ready(function(){
                 $j('.message-coupon').removeClass('error').removeClass('success');
                 if(data.status == 'SUCCESS'){
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('success');
@@ -30,7 +31,7 @@ $j(document).ready(function(){
                       }
                 }else{
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('error');
@@ -45,7 +46,8 @@ $j(document).ready(function(){
         });
     });
 
-    $j('.cancelcoupon').on('click',function(){
+    $j('.cancelcoupon').on('click',function(evt){
+		evt.preventDefault();
         var data1 = new Object();
         data1.remove = 1;
         $j('.message-coupon').hide();
@@ -62,7 +64,7 @@ $j(document).ready(function(){
                 $j('.message-coupon').removeClass('error').removeClass('success');
                 if(data.status == 'SUCCESS'){
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('success');
@@ -74,7 +76,7 @@ $j(document).ready(function(){
                       }
                 }else{
                     if($j('#discount-coupon-form')){
-                        $j('#checkout-review-table').find("tfoot").replaceWith(data.totals);
+                        $j('#checkout-step-payment').find(".refreshcoupon").replaceWith(data.totals);
                         $j('#shipping_method-progress-opcheckout').replaceWith(data.progress);
                         $j('#discount-coupon-form').replaceWith(data.review);
                         $j('.message-coupon').addClass('error');

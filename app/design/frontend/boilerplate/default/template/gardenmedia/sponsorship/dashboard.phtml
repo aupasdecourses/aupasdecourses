@@ -1,0 +1,88 @@
+<div class="col-md-7 col-md-offset-1 box-account sponsorship">
+    <h2><?php echo $this->__('Sponsor Your Friends') ?></h2>
+    <?php if ($this->customerIsSponsor()) : ?>
+        <div id="sponsorship-dashboard">
+            <?php echo $this->getBlockInfos(); ?>
+
+            <?php echo $this->__('You just have to share your unique web link or your sponsor code'); ?>
+            <ul id="sponsor-link">
+                <li><?php echo $this->__('Your sponsor code:') . ' <strong>' . $this->getSponsorCode() . '</strong>'; ?></li>
+                <?php $link = $this->getUniqueLink(); ?>
+                <?php if ($link) : ?>
+                    <li><?php echo $this->__('Your unique link:') . ' <strong>' . $link . '</strong>'; ?></li>
+                <?php endif; ?>
+            </ul>
+
+            <div id="sponsorship-share">
+                <p><?php echo $this->__('Or share via'); ?></p>
+                <ul id="sponsorship-share-buttons">
+                    <li id="sponsorship-share-email">
+                        <button type="button" class="button btn-social-icon btn-email"><i class="fa fa-envelope-o"></i></button>
+                    </li>
+                    <li id="sponsorship-share-facebook">
+                        <button type="button" onClick="window.open('<?php echo $this->getFacebookShareLink(); ?>','sharer','toolbar=0,status=0,width=548,height=325');" class="button btn-facebook btn-social-icon"><i class="fa fa-facebook"></i></button>
+                    </li>
+                    <li id="sponsorship-share-twitter">
+                        <a href="<?php echo $this->getTwitterShareLink(); ?>" target="_blank" class="button btn-twitter btn-social-icon"><i class="fa fa-twitter"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div id="send-email">
+            <div id="send-email-container">
+                <div id="send-email-content">
+                    <h3><?php echo $this->__('Send Email'); ?></h3>
+                    <form action="<?php echo $this->getUrl('gm_sponsorship/index/sendEmail'); ?>" method="POST" id="form-validate">
+                        <div class="fieldset">
+                            <ul class="form-list">
+                                <li class="field">
+                                    <label for="friendName" class="required"><em>*</em><?php echo $this->__('Friend Name'); ?></label>
+                                    <div class="input-box">
+                                        <input type="text" name="friendName" class="input-text required-entry" />
+                                    </div>
+                                </li>
+                                <li class="field">
+                                    <label for="sentTo" class="required"><em>*</em><?php echo $this->__('Send to'); ?></label>
+                                    <div class="input-box">
+                                        <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="sendTo" class="input-text validate-email required-entry" placeholder="friend@exemple.fr" />
+                                    </div>
+                                </li>
+                                <li class="field">
+                                    <label for="message"><?php echo $this->__('Your message'); ?></label>
+                                    <p class="form-instructions"><?php echo $this->__('Your unique link and your sponsor code will be automatically added to the email'); ?></p>
+                                    <div class="input-box">
+                                        <textarea name="emailMessage"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="buttons-set">
+                            <button type="submit" class="button button-green" title="<?php echo $this->__('Send') ?>" class="button"><?php echo $this->__('Send') ?></button>
+                            <p class="back-link" style="margin-left:20px;"><a href="#" class="back-link" id="send-email-cancel"><small>&laquo; </small><?php echo $this->__('Annuler') ?></a></p>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var dataForm = new VarienForm('form-validate', true);
+            jQuery('#sponsorship-share-email button').on('click', function() {
+                jQuery('#send-email').fadeIn(200);
+            });
+            jQuery('#send-email-cancel').on('click', function() {
+                jQuery('#send-email').fadeOut(200);
+            });
+        </script>
+    <?php else : ?>
+        <div id="sponsorship-dashboard">
+            <?php echo $this->getBlockInfos(); ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php echo $this->getChildHtml('gm_sponsorship_godchilds'); ?>
+<?php echo $this->getChildHtml('gm_sponsorship_rewards'); ?>

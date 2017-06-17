@@ -33,7 +33,7 @@ var
 
 const
   autoprefixer = require('gulp-autoprefixer'),
-  imagemin = require('gulp-imagemin'),
+  /*imagemin = require('gulp-imagemin'),*/
   csscomb      = require('gulp-csscomb'),
   cssbeautify  = require('gulp-cssbeautify');
 
@@ -50,14 +50,20 @@ var config = {
 
 gulp.task('css', function () {
     var styles = [
-        'node_module/bootstrap/dist/css/bootstrap.min.css'
-        //'node_modules/font-awesome/font-awesome.scss'
+        //'node_modules/bootstrap/dist/css/bootstrap.min.css',
+		//'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
+		//'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
+        'css/owl.carousel.min.css',
+        'css/lightbox.min.css',
+        'node_modules/font-awesome/font-awesome.scss',
+		//'vendor/apdc_supermenu/css/supermenu.css',
+		//'vendor/apdc_popup/css/popup.css',
+		//'css/main.css'
     ];
     
-    return gulp.src([
-        'node_module/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/font-awesome/font-awesome.scss'])
-    .pipe(concat('styles.css'))
+    return gulp
+	.src(styles)
+    .pipe(concat('stylesgulp.css'))
     .pipe(gulp.dest('dist/css'));
 });
  
@@ -70,6 +76,7 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions'],
             cascade: false
         }))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest('dist/css'));
 });
 
@@ -82,7 +89,14 @@ gulp.task('js', function() {
     'node_modules/bootstrap/js/carousel.js',
     'node_modules/bootstrap/js/dropdown.js',
     'node_modules/bootstrap/js/modal.js',
-    'js/script.js'
+	//'node_modules/owl.carousel/dist/owl.carousel.min.js',
+	//'vendor/apdc_supermenu/js/supermenu.js',
+	//'vendor/apdc_popup/js/popup.js',
+	//'vendor/apdc_popup/js/login-popup.js',
+	//'vendor/apdc_popup/js/newsletter-popup.js',
+    'js/lightbox.min.js',
+    'js/script.js',
+    'js/custom.js'
   ];
 
   var stream = gulp
@@ -101,7 +115,7 @@ gulp.task('js', function() {
 gulp.task('images', function() {
   return gulp
     .src('images/**/*.{png,jpg,jpeg,gif,svg}')
-    .pipe(imagemin())
+    //.pipe(imagemin())
     .pipe(gulp.dest('dist/images'));
 });
 
@@ -118,20 +132,20 @@ gulp.task('fonts', function() {
 // Watch
 gulp.task('watch', function() {
 
-  // // Watch .scss files
-  // gulp.watch('sass/**/*.scss', ['sass']);
+  // Watch .scss files
+  gulp.watch('sass/**/*.scss', ['sass'], ['css']);
 
-  // // Watch .js files
-  // gulp.watch('js/**/*.js', ['js']);
+  // Watch .js files
+  gulp.watch('js/**/*.js', ['js']);
 
-  // // Watch image files
-  // gulp.watch('images/**/*', ['images']);
+  // Watch image files
+  gulp.watch('images/**/*', ['images']);
 
-  // // Watch fonts
-  // gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
+  // Watch fonts
+  gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
 });
 
-gulp.task('process', [ 'css', 'sass', 'js', 'images', 'fonts' ] );
+gulp.task('process', [ 'sass', 'css', 'js', 'images', 'fonts' ] );
 
-gulp.task('default', [ 'css', 'sass', 'js', 'images', 'fonts', 'watch' ] );
+gulp.task('default', [ 'sass', 'css', 'js', 'images', 'fonts', 'watch' ] );

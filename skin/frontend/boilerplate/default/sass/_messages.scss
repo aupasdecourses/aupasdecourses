@@ -67,3 +67,11 @@ p.required,
     color: $c-danger;
     font-size: 0.875rem;
 }
+.block-subscribe .validation-advice{
+    position: absolute;
+    top: 50px;
+    left: 10px;
+}
+input.validation-failed{
+    border: 1px solid #df280a!important;
+}

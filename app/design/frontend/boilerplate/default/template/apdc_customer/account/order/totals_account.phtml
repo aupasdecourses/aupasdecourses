@@ -1,0 +1,91 @@
+<?php
+	$_totals=$this->getTotals();
+	$refund_totals = Mage::helper('pmainguet_delivery')->getRefundorderdata($this->getOrder());
+	$total=0;
+	$_order=$this->getOrder();
+	
+	foreach($refund_totals as $refund):
+		$total += $refund["del_amount_refunded"];
+	endforeach;
+?>
+<!--    <table class="table data-table" id="my-orders-table">
+         <tr>
+            <td><strong>Total des produits commandés</strong></td>
+            <td><strong><?php echo $this->formatValue($_totals['subtotal']) ?></strong></td>
+         </tr>
+         <tr>
+            <td><strong>Frais de livraison</strong></td>
+            <td><strong><?php echo $this->formatValue($_totals['shipping']) ?></strong></td>
+         </tr>
+         <tr>
+            <td><strong>TOTAL COMMANDE TTC</strong></td>
+            <td><strong><?php echo $this->formatValue($_totals['grand_total_incl']) ?></strong></td>
+         </tr>
+        <?php echo $this->getChildHtml('tax');?>
+    </table>-->
+<div class="total-order row">
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Total des produits</p>
+            </div>
+            <div class="col-md-6">
+                <p><?php echo $this->formatValue($_totals['subtotal']) ?></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Frais de livraison</p>
+            </div>
+            <div class="col-md-6">
+                <p><?php echo $this->formatValue($_totals['shipping']) ?></p>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('tax');?>
+        <div class="row total">
+            <div class="col-md-6">
+                <p>Total TTC</p>
+            </div>
+            <div class="col-md-6">
+                <p><?php echo $this->formatValue($_totals['grand_total_incl']) ?></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Total des produits commerçants</p>
+            </div>
+            <div class="col-md-6">
+                <p><?php echo $_order->formatPrice($total) ?> @TODO</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Total des remboursements</p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <?php
+			        	if($total < 0){
+			        		$total = 0;
+			        	}
+			        	echo $_order->formatPrice($total);
+			        ?>
+			     </p>
+            </div>
+        </div>
+		<div class="row">
+            <div class="col-md-6">
+                <p>Prix final payé par clients</p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <?php
+						echo $_order->formatPrice($_totals['grand_total_incl']->value-$total);
+			        ?>
+			     </p>
+            </div>
+        </div>
+    </div>
+</div>

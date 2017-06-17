@@ -49,4 +49,33 @@ class Apdc_Checkout_Model_Type_Onepage extends MW_Ddate_Model_Type_Onepage
 
         return array();
     }
+	
+	public function saveCheckcart($data)
+    {
+        $this->getQuote()->setData('produit_equivalent',$data['produit_equivalent']);
+        $this->getQuote()->save();
+        $this->getCheckout()
+            ->setStepData('checkcart', 'complete', true)
+            ->setStepData('payment', 'allow', true);
+
+        return array();
+    }
+	
+	public function cleanQuote($items) {
+		if(is_array($items) && count($items) > 0) {
+			foreach ($items as $item) {
+				$this->getQuote()->removeItem($item);
+			}
+			$this->getQuote()->save();
+		}
+		return array();
+	}
+	
+	public function saveComment($item, $comment) {
+		$comment = htmlentities($comment, ENT_QUOTES, 'UTF-8');
+		$item = $this->getQuote()->getItemById($item);
+		$item->setItemComment($comment)->save();
+		$this->getQuote()->save();
+		return array();
+	}
 }

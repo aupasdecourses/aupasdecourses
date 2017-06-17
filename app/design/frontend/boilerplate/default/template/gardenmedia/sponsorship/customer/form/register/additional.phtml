@@ -1,0 +1,61 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @var $this Mage_Customer_Block_Form_Register
+ */
+?>
+
+<li class="fields">
+    <div class="field">
+        <label for="sponsor_code"><?php echo $this->__('Sponsor Code') ?></label>
+        <p class="form-instructions"><?php echo $this->getInstruction(); ?></p>
+        <div class="input-box">
+        <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text validate-sponsor-code" placeholder="<?= $this->__("Si vous avez un code parrain, indiquez le ici.")?>" value="<?php echo $this->getSponsorCodeValue(); ?>" />
+        </div>
+    </div>
+    <script type="text/javascript">
+        Validation.add('validate-sponsor-code',"<?php echo $this->__('Sponsor Code is not valid'); ?>",function(v){
+            var value = v.trim();
+            document.getElementById('sponsor_code').value = value;
+            if (value !== '') {
+                var length = parseInt("<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_length'); ?>");
+                var start = "<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>";
+                var startReg = new RegExp("^<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>", "i");
+                console.log(value.replace(start, '').replace(/-/g, '').length === length);
+                if (value.replace(start, '').replace(/-/g, '').length === length && startReg.test(value)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        });
+    </script>
+</li>

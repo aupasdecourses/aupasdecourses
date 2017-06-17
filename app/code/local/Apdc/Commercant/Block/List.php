@@ -8,72 +8,127 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $storeid = Mage::app()->getStore()->getId();
         $rootId = Mage::app()->getStore($storeid)->getRootCategoryId();
         $filter = array();
-        $data = array();
+        $row1 = array();
+		$row2 = array();
+		$i = 1;
 
-        $filter=Mage::helper('apdc_commercant')->getCategoriesInfos($rootId);
+        $filter = Mage::helper('apdc_commercant')->getCategoriesInfos($rootId);
 
         $shops = Mage::getModel('apdc_commercant/shop')->getCollection()
             ->addFieldToFilter('stores', array('finset' =>$storeid))
             ->addFieldtoFilter('enabled',1);
 
-        $code_count=array();
-
+        //$code_count=array();
+		$nbShops = count($shops);
+		
         foreach ($shops as $shop) {
-            $shop = $shop->getData();
             foreach($shop['id_category'] as $id){
                 if(array_key_exists($id,$filter)){
 
-                    $shop["postcode"];
+                    //$shop["postcode"];
 
+					if($shop['id_category']) {
+						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+						if($category && $category->getParentCategory()) {
+							$color = $category->getParentCategory()->getData('menu_bg_color');
+						}
+					}
                     $sub = [
                         'name' => (isset($shop['name'])) ? $shop['name'] : '',
                         'src' => (isset($filter[$id]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$id]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
                         'postcode' => $shop['postcode'],
                         'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
                         'url' => (isset($filter[$id]['url_path'])) ? Mage::getUrl($filter[$id]['url_path']) : '',
+						'color' => $color
                     ];
-                    $data[$shop['postcode']][] = $sub;
-                    if(isset($code_count[$shop['postcode']])){
-                        $code_count[$shop['postcode']]+=1;
-                    }else{
-                        $code_count[$shop['postcode']]=1;
-                    }
+
+        //             $data[$shop['postcode']][] = $sub;
+        //             if(isset($code_count[$shop['postcode']])){
+        //                 $code_count[$shop['postcode']]+=1;
+        //             }else{
+        //                 $code_count[$shop['postcode']]=1;
+        //             }
+        //         }
+        //     }
+        // }
+
+        // arsort($code_count);
+        
+        // $result=array();
+
+        // foreach($code_count as $zip => $freq){
+        //     $result[$zip]=$data[$zip];
+        // }
+
+        //return $result;
+
+					if($i == 1) {
+						$row1[] = $sub;
+					}
+					else {
+						$row2[] = $sub;
+					}
+					if($i == 2) {
+						$i = 1;
+					}
+					else {
+						$i ++;
+					}
                 }
             }
         }
+		return array('row1' => $row1, 'row2' => $row2, 'count' => count($shops));
 
-        arsort($code_count);
-        
-        $result=array();
-
-        foreach($code_count as $zip => $freq){
-            $result[$zip]=$data[$zip];
-        }
-
-        return $result;
     }
 
     public function getInfoShop()
     {
-        $shop_info=array();
-        $current_cat=Mage::registry('current_category');
-        $data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$current_cat->getId()))->getFirstItem()->getData();
+        $shop_info = array();
+		$current_cat = Mage::registry('current_category');
+		$categoriesParent = $current_cat->getParentCategories();
+		foreach($categoriesParent as $categoryParent) {
+			if($categoryParent->getLevel() == 3) {
+				$categoryShop = $categoryParent;
+				break;
+			}
+		}
+		$categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
+		$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
 
         $shop_info["name"]=$data["name"];
         $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
         $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
         $shop_info["phone"]=$data["phone"];
         $shop_info["website"]=$data["website"];
-        $shop_info["closing_periods"]=$data["closing_periods"];;
-        $shop_info["description"]=$current_cat->getDescription();
-        $shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
-        $shop_info["image"]=$current_cat->getImageURL();
-
-        $html="";
-        $days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+        $shop_info["closing_periods"]=$data["closing_periods"];
+        $shop_info["description"]=$categoryShop->getDescription();
+        //$shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
+        $shop_info["image"]=$categoryShop->getImageURL();
+		$shop_info["thumbnail_image"] = Mage::getBaseUrl('media').'catalog/category/'.$categoryShop->getThumbnail();
+		
+        $html = "";
+		$delivery_daysAll = array();
+        $days = ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+		$delivery_days = Mage::helper('apdc_commercant')->formatDays($data["delivery_days"], false, true);
+		foreach($days as $day) {
+			if(in_array($day,$delivery_days)) {
+				$delivery_daysAll[$day] = 0;
+			}
+			else {
+				$delivery_daysAll[$day] = 1;
+			}
+		}
+		$shop_info["delivery_days"] = $delivery_daysAll;
+		
         foreach($data["timetable"] as $day=>$hours){
             $hours=($hours=="")?"Fermé":$hours;
-            $html.=$days[$day].": ".$hours."</br>";
+			$hoursExplode = explode('-', $hours);
+			if(count($hoursExplode) > 2) {
+				$hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
+				$hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
+				$hours = $hoursExplode1.' / '.$hoursExplode2;
+			}
+            $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
         }
         $shop_info["timetable"]=$html;
 

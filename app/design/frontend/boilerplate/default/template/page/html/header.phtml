@@ -1,49 +1,141 @@
-<?php
-/**
- * The MIT License (MIT)
- *
- * Copyright (c) 2011-2014 Webcomm Pty Ltd
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-?>
-<?php
-/**
- * @var Mage_Page_Block_Html_Header $this
- */
-?>
-<div class="container">
-    <header role="banner">
-        <?php if ($this->getIsHomePage()):?>
-        <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
-        <?php else:?>
-        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
-        <?php endif?>
-        <div class="quick-access">
-            <div class="clearfix">
-                <?php echo $this->getChildHtml('topLinks') ?>
-                <?php echo $this->getChildHtml('store_language') ?>
+<header id="header" class="container-fluid">
+    <!--<div id="logo_smalldisplay">
+        <a class="logo-link" href="<?php echo $this->getUrl('../') ?>">
+            <img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="small" />
+        </a>
+    </div>-->
+    <div class="page-header-container row">
+            <div class="logo col-md-1 col-sm-12">
+                <a class="logo-link" href="<?php echo Mage::getUrl('../');?>">
+                    <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+                </a>
             </div>
-            <?php echo $this->getChildHtml('topSearch') ?>
-            <p class="welcome-msg"><?php echo $this->getWelcome() ?> <?php echo $this->getAdditionalHtml() ?></p>
+	         <!-- Skip Links -->
+	         <div class="skip-links pull-right">
+                <div class="row">
+                    <div class="skip-container skip-container-header-nav hide">
+                        <a href="#header-nav" class="skip-link skip-nav">
+                            <i class="fa fa-bars"></i>
+                            <span class="label"><?php echo $this->__('Menu'); ?></span>
+                        </a>
+                    </div>
+
+					<?php echo $this->getChildHtml('topSearch') ?>
+					<?php echo $this->getChildHtml('checkout.progress') ?>
+					
+                    <!--<div class="skip-container skip-container-header-search col-md-4 col-sm-12">
+                        <input type="text" placeholder="<?php echo $this->__('Your research here'); ?>">
+                        <i class="fa fa-search"></i>
+
+                        <div id="header-search" class="dropdown-menu skip-content">
+                            
+                        </div>
+                    </div>-->
+
+                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2 col-md-6'; }?> col-md-2 col-sm-12 text-right link-header-right">
+                        
+                        <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
+                        <!--<?php if($session->isLoggedIn()) : ?>
+                            <div class="skip-container hidden-sm">
+                                <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
+                                    <i class="fa fa-bullhorn"></i>
+                                    <span class="label">Parrainez</span>
+                                </a>
+                            </div>
+                        <?php endif; ?>-->
+
+						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+							<div class="header-delivery-container skip-container">
+								 <a href="#" title="Livraison">
+									<i class="fa fa-list-ul"></i>
+									<span class="label"><?php echo $this->__('Delivery') ?> <i class="fa fa-angle-down"></i></span>
+
+								 </a>
+								<div class="block block-delivery" id="header-delivery">
+									<div class="apdc-popup-content">
+										<?php echo $this->getChildHtml('header.delivery') ?>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
+						
+                        <div class="skip-help skip-container">
+                            <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
+                                <span class="label">Aide</span>
+                            </a>
+                            <ul id="header-help" class="dropdown-menu skip-content links" aria-labelledby="dLabel">
+                                <li class="first"><a href="<?php echo Mage::getBaseUrl();?>besoin-d-aide">Besoin d'aide ?</a></li>
+                                <li><a href="<?php echo Mage::getBaseUrl();?>zone-et-horaire">Zone & horaires</a></li>
+                                <li><a href="<?php echo Mage::getBaseUrl();?>tarifs-livraison">Tarifs</a></li>
+                                <li><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/commercantsmanquants/">Commerce manquant</a></li>
+                                <li class="last"><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/produitsmanquants/">Produit manquant</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="header-account-container skip-container">
+                            <?php if($this->helper('customer')->isLoggedIn()) : ?>
+								<a href="#" title="Mon Compte">
+									<i class="fa fa-user account-connected"></i>
+									<span class="label"><?php echo $this->__('Account'); ?> <i class="fa fa-angle-down"></i></span>
+								</a>
+                            <?php else : ?>
+                                <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
+                            <?php endif; ?>
+                            <div class="block block-login" id="login-form-header_popup">
+								<div class="apdc-popup-content">
+									<?php if($this->helper('customer')->isLoggedIn()) : ?>
+										<?php echo $this->getChildHtml('topLinks') ?>
+									<?php else : ?>
+										<?php echo $this->getChildHtml('customer_login') ?>
+									<?php endif; ?>
+								</div>
+							</div>
+                        </div>
+
+                        <!-- Cart -->
+						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+							<div class="header-minicart skip-container">
+								<?php echo $this->getChildHtml('minicart_head'); ?>
+							</div>
+						<?php } ?>
+                    </div>
+                </div>
+	        </div>
+    </div>
+    <div id="topmenu" class="row">
+            <!-- Navigation -->
+
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
         </div>
-        <?php echo $this->getChildHtml('topContainer'); ?>
-    </header>
-</div>
-<?php echo $this->getChildHtml('topMenu') ?>
+	</div>
+</header>
+<?php echo $this->getChildHtml('topContainer'); ?>
+<?php echo $this->getChildHtml('page_content_heading'); ?>
+<script>
+	$j(document).ready(function(){
+		
+		$j('.header-account-container a').click(function(evt){
+			if($j(this).parent().find('.block-login').hasClass('open') ){
+				$j(this).parent().find('.block-login').removeClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
+			}
+			else{
+				$j(this).parent().find('.block-login').addClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
+			}
+		});
+		
+		$j('.header-delivery-container a').click(function(evt){
+			if($j(this).parent().find('.block-delivery').hasClass('open') ){
+				$j(this).parent().find('.block-delivery').removeClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
+			}
+			else{
+				$j(this).parent().find('.block-delivery').addClass('open');
+				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
+			}
+		});
+		
+	});
+</script>

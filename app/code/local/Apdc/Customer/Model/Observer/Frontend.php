@@ -39,7 +39,12 @@ class Apdc_Customer_Model_Observer_Frontend
             $url = Mage::getBaseUrl();
             $controller = $observer->getData('controller_action');
             Mage::getSingleton('core/session')->addSuccess('Votre compte a bien été créé. Bienvenue chez Au Pas De Courses !');
-            $controller->getResponse()->setRedirect($url);
+			if(Mage::app()->getRequest()->getPost('success_url') && Mage::app()->getRequest()->getPost('success_url') != '') {
+				$controller->getResponse()->setRedirect(Mage::app()->getRequest()->getPost('success_url'));
+			}
+			else {
+				$controller->getResponse()->setRedirect($url);
+			}
         }
     }
 

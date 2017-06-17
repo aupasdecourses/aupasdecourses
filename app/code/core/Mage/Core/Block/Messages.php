@@ -237,6 +237,8 @@ class Mage_Core_Block_Messages extends Mage_Core_Block_Template
         $html = '';
         foreach ($types as $type) {
             if ( $messages = $this->getMessages($type) ) {
+			var_dump($messages);
+			die();
                 if ( !$html ) {
                     $html .= '<' . $this->_messagesFirstLevelTagName . ' class="messages">';
                 }

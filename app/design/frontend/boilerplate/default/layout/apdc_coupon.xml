@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.payment">
+            <block type="core/template" name="ajaxcoupon" as="ajaxcoupon" template="apdc_coupon/ajaxcoupon.phtml"/>
+        </reference>
+    </checkout_onepage_index>
+    <ajaxcoupon_index_customcouponpost translate="label">
+        <label>One Page Checkout Overview</label>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="core/template" name="ajaxcoupon" template="apdc_coupon/ajaxcoupon.phtml"/>
+        <block type="checkout/cart_totals" after="deliverycheck_review" name="totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
+    </ajaxcoupon_index_customcouponpost>
+</layout> 

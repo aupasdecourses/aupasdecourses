@@ -42,7 +42,7 @@
 			<!-- =========================
 				 SCRIPTS   
 			============================== -->
-			<!--<action method="addJs"><script>script.js</script></action>-->
+			<action method="addItem"><type>skin_js</type><file>dist/js/script.js</file></action>
 			
 			<!-- JQUERY -->
 			<action method="addJs"><script>prototype/prototype.js</script></action>

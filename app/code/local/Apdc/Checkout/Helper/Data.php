@@ -72,7 +72,7 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($commercants as $com =>$id){
             $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();
             $delivery_days=$shop->getDeliveryDays();
-            if(count($delivery_days)<4 && $delivery_days<>NULL){
+			if(count($delivery_days)<4 && $delivery_days<>NULL){
                 if($number){
                     $data[$com]=$delivery_days;
                 }else{

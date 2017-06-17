@@ -1,0 +1,9 @@
+<?php if ($this->getCheckout()->getStepData('checkcart', 'complete') || $this->getCheckout()->getStepData('checkcart', 'allow') ): ?>
+		<dt class="complete">
+			<a href="#checkcart" onclick="checkout.changeSection('opc-checkcart'); return false;"><strong><?php echo $this->__('Vérification') ?></strong></a>
+		</dt>
+	<?php else: ?>
+		<dt>
+			<?php echo $this->__('Vérification') ?>
+		</dt>
+<?php endif; ?>
