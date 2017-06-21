@@ -26,7 +26,6 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 }
  
                 $product = $this->_initProduct();
-                $related = $this->getRequest()->getParam('related_product');
                 /**
                  * Check product availability
                  */
@@ -36,9 +35,6 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 }
  
                 $cart->addProduct($product, $params);
-                if (!empty($related)) {
-                    $cart->addProductsByIds(explode(',', $related));
-                }
  
                 $cart->save();
 
@@ -65,6 +61,69 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $minicartContent->setData('product_id', $product->getId());
                 $result['content'] = $minicartContent->toHtml();
                 $result['product_id'] = $product->getId();
+                $result['qty'] = $cart->getSummaryQty();
+
+                Mage::register('referrer_url', $this->_getRefererUrl());
+
+            } catch (Mage_Core_Exception $e) {
+                $msg = "";
+                if ($this->_getSession()->getUseNotice(true)) {
+                    $msg = $e->getMessage();
+                } else {
+                    $messages = array_unique(explode("\n", $e->getMessage()));
+                    foreach ($messages as $message) {
+                        $msg .= $message.'<br/>';
+                    }
+                }
+ 
+                $result['status'] = 'ERROR';
+                $result['message'] = $msg;
+            } catch (Exception $e) {
+                $result['status'] = 'ERROR';
+                $result['message'] = $this->__('Cannot add the item to shopping cart.');
+                Mage::logException($e);
+            }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            return;
+        } else {
+            return parent::addAction();
+        }
+    }
+
+    public function addRelatedToProductsAction()
+    {
+        $params = $this->getRequest()->getPost();
+        if ($params['isAjax'] == 1) {
+            if (!$this->_validateFormKey()) {
+                Mage::throwException('Invalid form key');
+                return;
+            }
+            $result = array();
+            $cart   = $this->_getCart();
+            try {
+ 
+                $related = $this->getRequest()->getParam('related_product');
+                if (!empty($related)) {
+                    $cart->addProductsByIds(explode(',', $related));
+                }
+ 
+                $cart->save();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
+                $this->_getSession()->setCartWasUpdated(true);
+ 
+                $message = $this->__('Les suggestions ont bien été ajoutées à votre panier');
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $message;
+                //New Code Here
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $result['content'] = $minicartContent->toHtml();
                 $result['qty'] = $cart->getSummaryQty();
 
                 Mage::register('referrer_url', $this->_getRefererUrl());
