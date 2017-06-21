@@ -181,4 +181,14 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
 
         return Mage::getSingleton('checkout/cart')->getCheckoutSession()->getMessages(true);
     }
+
+    /**
+     * Retrieve messages block
+     *
+     * @return Mage_Core_Block_Messages
+     */
+    public function getMessagesBlock()
+    {
+        return $this->getLayout()->createBlock('core/messages', 'minicart_messages');
+    }
 }

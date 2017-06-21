@@ -39,7 +39,7 @@ if(empty($_cartQty)) {
 $apdcAccordion = $this->getApdcCartAccordion();
 $cartMessages = $this->getMessages();
 if ($cartMessages) {
-    $this->getMessagesBlock()->setMessages($cartMessages);
+    $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
 }
 ?>
 
@@ -50,7 +50,7 @@ if ($cartMessages) {
         <a class="btn close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i>&nbsp;<?php echo $this->quoteEscape($this->__('Close')); ?></a>
     </p>
 
-    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php echo $messageBlock->getGroupedHtml() ?>
     <div id="minicart-error-message" class="minicart-message"></div>
     <div id="minicart-success-message" class="minicart-message"></div>
 

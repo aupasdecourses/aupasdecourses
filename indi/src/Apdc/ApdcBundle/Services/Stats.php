@@ -510,8 +510,8 @@ class Stats
 	{
 		$data = [];
 		/* Format dates */
-		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
-		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		$debut	= date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$fin	= date('Y-m-d', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
 		$orders = \Mage::getModel('sales/order')->getCollection()
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
@@ -525,14 +525,21 @@ class Stats
 				'Discount'		=> -floatval($order->getBaseDiscountAmount()),
 				'client'		=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
 				'created_at'	=> date('d-m-Y', strtotime($order->getData('created_at'))),
+				'shipping_amount' => floatval($order->getBaseShippingAmount()),
 			]);
 			arsort($data);
 		}
 		$data_conso = [];
 		foreach ($data as $row) {
-			if ($row['Discount']>0) {
-				if($row['Coupon Code']==""){
-					$row['Coupon Code']='Discount sans coupon';
+			if ($row['shipping_amount']==0 || floatval($row['Discount'])<>0 ) {
+				if(floatval($row['shipping_amount'])==0){
+					if($row['Coupon Code']==""){
+						$row['Coupon Code']='Livraison gratuite sans coupon';
+					}
+				} else{
+					if($row['Coupon Code']=="") {                                          
+						$row['Coupon Code']='Discount sans coupon';
+					}
 				}
 				$data_conso[$row['Coupon Code']][] = [
 					'order'			=> $row['increment_id'].' '.$row['quartier'],
