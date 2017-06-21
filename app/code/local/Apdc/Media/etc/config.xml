@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<config>
+
+  <modules>
+    <Apdc_Media>
+      <version>0.1.0</version>
+    </Apdc_Media>
+  </modules>
+
+  <global>
+    <blocks>
+      <apdc_media>
+        <class>Apdc_Media_Block</class>
+      </apdc_media>
+    </blocks>
+    <helpers>
+      <apdc_media>
+        <class>Apdc_Media_Helper</class>
+      </apdc_media>
+    </helpers>
+    <models>
+      <apdc_media>
+        <class>Apdc_Media_Model</class>
+        <resourceModel>apdc_media_resource</resourceModel>
+      </apdc_media>
+    </models>
+  </global>
+
+  <frontend>
+    <routers>
+      <apdc_media>
+        <use>standard</use>
+        <args>
+          <module>Apdc_Media</module>
+          <frontName>media</frontName>
+        </args>
+      </apdc_media>
+    </routers>
+    <layout>
+      <updates>
+        <apdc_media>
+          <file>apdc_media.xml</file>
+        </apdc_media>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <Apdc_Media>
+          <files>
+            <default>Apdc_Media.csv</default>
+          </files>
+        </Apdc_Media>
+      </modules>
+    </translate>
+  </frontend>
+
+  <adminhtml>
+    <layout>
+      <updates>
+        <apdc_media>
+          <file>apdc/apdc_media.xml</file>
+        </apdc_media>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <Apdc_Media>
+          <files>
+            <default>Apdc_Media.csv</default>
+          </files>
+        </Apdc_Media>
+      </modules>
+    </translate>
+
+  </adminhtml>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <Apdc_Media before="Mage_Adminhtml">Apdc_Media_Adminhtml</Apdc_Media>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+</config>

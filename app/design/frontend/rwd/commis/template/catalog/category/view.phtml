@@ -36,7 +36,7 @@
     $_category  = $this->getCurrentCategory();
     $apdc_helper = Mage::helper('apdc_front');
     $_imgHtml   = '<div class="page-title"><h1 class="subtitle category_name">';
-    if ($_imgUrl = $_category->getImageUrl()) {
+    if ($_imgUrl = Mage::helper('apdc_catalog/category')->getImageUrl($_category)) {
         $_imgHtml .= '<img class="thumb-menu" src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($apdc_helper->getCatTitle()).'" />';
     }
     $_imgHtml .= '<span class="commercant_name"> '.$apdc_helper->getCatTitle().'</span></h1>';
