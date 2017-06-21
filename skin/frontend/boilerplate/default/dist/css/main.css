@@ -11732,22 +11732,16 @@ section#districts #search_neighborhoods {
 }
 
 section#districts #search_neighborhoods label {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  width: auto;
   color: rgba(0, 0, 0, .54);
 }
 
 section#districts #search_neighborhoods input {
-  font-size: 15px;
-  line-height: 1.5;
   width: 300px;
-  height: 33px;
-  margin: 0 8px;
-  padding: 0 8px;
-  border: 1px solid silver;
-  border-radius: 2px;
-  background: #fff;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 
 section#districts #no_neighborhood {
@@ -12187,6 +12181,7 @@ footer .button {
   display: block;
   overflow: hidden;
   width: 500px;
+  height: 100px;
   min-height: 100px;
   max-height: 95%;
   padding: 20px;
@@ -12212,6 +12207,10 @@ footer .button {
 #login-form-popup-container .form-group:last-child,
 #newsletter-form-popup-container .form-group:last-child {
   margin-bottom: 0;
+}
+
+#newsletter-form-popup-container {
+  overflow: initial;
 }
 
 #login-form-popup[data-current-view='apdc_register_view'] #login-form-popup-container {

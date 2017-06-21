@@ -14,7 +14,7 @@
     border-radius: 10px;
     border: 1px solid lightgrey;
     width: 500px;
-    //height:auto;
+    height:100px;
     min-height: 100px;
     max-height:95%;
     padding: 20px;
@@ -30,6 +30,9 @@
     .form-group:last-child {
       margin-bottom:0px;
     }
+}
+#newsletter-form-popup-container {
+  overflow:initial;
 }
 
 
