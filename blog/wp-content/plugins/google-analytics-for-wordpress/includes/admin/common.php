@@ -36,10 +36,6 @@ function monsterinsights_admin_styles() {
 	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-style', plugins_url( 'assets/css/jvectormap/jquery-jvectormap-2.0.3.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-style' );
 
-	// FontAwesome (used for message boxes)
-	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-font-awesome', plugins_url( 'assets/css/font-awesome/font-awesome.min.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
-	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-font-awesome' );
-
 	 // Select300
 	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-style', plugins_url( 'assets/css/select300/select300.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-style' );
@@ -60,8 +56,8 @@ function monsterinsights_admin_styles() {
 		wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-style', plugins_url( 'pro/assets/css/admin.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 		wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-style' );
 	} else if ( file_exists( MONSTERINSIGHTS_PLUGIN_DIR . 'lite/assets/css/admin.css' ) ) {
-		wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-style', plugins_url( 'lite/assets/css/admin.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
-		wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-style' );
+		wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-lite-admin-style', plugins_url( 'lite/assets/css/admin.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
+		wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-lite-admin-style' );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'monsterinsights_admin_styles' );
@@ -89,25 +85,25 @@ function monsterinsights_admin_scripts() {
 
 	// Load necessary admin scripts
 		// Clipboard.js
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-clipboard-script', plugins_url( 'assets/js/clipboard/clipboard.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version(), true );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-clipboard-script', plugins_url( 'assets/js/clipboard/clipboard.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-clipboard-script' );
 
 		// List.js
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-list-script', plugins_url( 'assets/js/list/list.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version(), true );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-list-script', plugins_url( 'assets/js/list/list.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-list-script' );
 			
 		// Charts.js
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-chartjs-script', plugins_url( 'assets/js/chartjs/Chart.bundle.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version(), true );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-chartjs-script', plugins_url( 'assets/js/chartjs/Chart.bundle.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-chartjs-script' );
 
 		// Maps
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script', plugins_url( 'assets/js/jvectormap/jquery-jvectormap-2.0.3.min.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version(), true );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script', plugins_url( 'assets/js/jvectormap/jquery-jvectormap-2.0.3.min.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script' );
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-world-script', plugins_url( 'assets/js/jvectormap/jquery-jvectormap-world-mill.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery', MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script' ), monsterinsights_get_asset_version(), true );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-world-script', plugins_url( 'assets/js/jvectormap/jquery-jvectormap-world-mill.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery', MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-world-script' );
 
 		// Select300
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-script', plugins_url( 'assets/js/select300/select300.full.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), time() );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-script', plugins_url( 'assets/js/select300/select300.full.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-script' );
 
 		// Our Admin JS
@@ -124,7 +120,7 @@ function monsterinsights_admin_scripts() {
 				MONSTERINSIGHTS_PLUGIN_SLUG . '-list-script'
 			);
 
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script', plugins_url( 'assets/js/admin' . $suffix . '.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, time() );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script', plugins_url( 'assets/js/admin' . $suffix . '.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script' );
 			wp_localize_script(
 				MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script',
@@ -176,10 +172,10 @@ function monsterinsights_admin_scripts() {
 				)
 			);
 		} else if ( file_exists( MONSTERINSIGHTS_PLUGIN_DIR . 'lite/assets/js/admin.js' ) ) {
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script', plugins_url( 'only/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
-			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script' );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-lite-admin-script', plugins_url( 'lite/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
+			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-lite-admin-script' );
 			wp_localize_script(
-				MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script',
+				MONSTERINSIGHTS_PLUGIN_SLUG . '-lite-admin-script',
 				'monsterinsights_admin',
 				array(
 					'ajax'                  => admin_url( 'admin-ajax.php' )
@@ -227,6 +223,7 @@ function monsterinsights_remove_conflicting_asset_files() {
 	
 	$scripts = array(
 		'kad_admin_js', // Pinnacle theme
+		'dt-chart', // DesignThemes core features plugin
 	);
 
 	foreach ( $styles as $style ) {
@@ -312,7 +309,7 @@ function monsterinsights_get_upgrade_link() {
 		// Note: On the Addons screen, if the user has a license, we won't hit this function,
 		// as the API will tell us the direct URL to send the user to based on their license key,
 		// so they see pro-rata pricing.
-		return 'https://www.monsterinsights.com/pricing/?utm_source=proplugin&utm_medium=link&utm_campaign=WordPress';
+		return 'https://www.monsterinsights.com/lite/?utm_source=proplugin&utm_medium=link&utm_campaign=WordPress';
 	}
 
 	$shareasale_id = monsterinsights_get_shareasale_id();
@@ -320,7 +317,7 @@ function monsterinsights_get_upgrade_link() {
 	// If at this point we still don't have an ID, we really don't have one!
 	// Just return the standard upgrade URL.
 	if ( empty( $shareasale_id ) ) {
-		return 'https://www.monsterinsights.com/pricing/?utm_source=liteplugin&utm_medium=link&utm_campaign=WordPress';
+		return 'https://www.monsterinsights.com/lite/?utm_source=liteplugin&utm_medium=link&utm_campaign=WordPress';
 	}
 
 	// If here, we have a ShareASale ID

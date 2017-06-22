@@ -13,6 +13,18 @@
                 <action method="setText"><text><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />]]>&#10;</text></action>
             </block>
 			<block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+
+            <block type="core/text" name="suivi_hipay" before="-">
+              <action method="setText">
+                <text>
+                  <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                    try{
+                    window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                    } catch(e){
+                    }};</script>]]>
+                </text>
+              </action>
+            </block>
 					
 			
 			
@@ -55,13 +67,15 @@
             <action method="addJs"><script>prototype/validation.js</script></action>
             <action method="addJs"><script>varien/js.js</script></action>
             <action method="addJs"><script>varien/form.js</script></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/apdc_quickview.js</file></action>
             <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_customer/js/capitalize-name.js</file></action>
             <!-- Social Connect -->
+            <!--
             <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/google/css/button.css</name>
@@ -82,6 +96,7 @@
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/css/styles.css</name>
             </action>
+            -->
 
             <!-- =========================
              STYLESHEETS   
@@ -119,13 +134,41 @@
     <apdc_login_view>
       <reference name="content">
             <block type="customer/form_login" name="customer_login" template="page/loginmodal.phtml">
+              <!--
                 <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
                     <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
                     <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
                 </block>
+            -->
             </block>
         </reference>
     </apdc_login_view>
+
+    <apdc_register_view>
+      <reference name="head">
+        <block type="core/text" name="suivi_hipay" before="-">
+          <action method="setText">
+            <text>
+              <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                try{
+                window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                } catch(e){
+                }};</script>]]>
+            </text>
+          </action>
+        </block>
+      </reference>
+      <reference name="content">
+        <block type="customer/form_register" name="modal_register" template="page/registermodal.phtml">
+          <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+            <label>Form Fields Before</label>
+          </block>
+          <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+          <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+          <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+        </block>
+      </reference>
+    </apdc_register_view>
 
     <apdc_forgotpassword_view>
       <reference name="content">

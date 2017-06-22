@@ -1,12 +1,12 @@
 
-### 1.2.0 - 06/04/2017
-**Changes:** 
-- Update readme.txt
-
-### 1.2.0 - 06/04/2017
-**Changes:** 
-- Improved description
-
+ ### v1.2.5 - 2017-06-08 
+ **Changes:** 
+  
+ ### v1.2.5 - 2017-05-31 
+ **Changes:** 
+ - Added themeisle-sdk.
+- Added new deployment stack.
+ 
 ### 1.2.0 - 19/01/2017
 **Changes:** 
 - Fixed security error for file field.
