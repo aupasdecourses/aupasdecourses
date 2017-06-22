@@ -44,10 +44,10 @@ class Apdc_Catalog_Model_Adminhtml_Observer
                 }
             }
 
-            if ($thumbnailValue && !preg_match('/^wysiwyg\//', $thumbnailValue)) {
+            if ($thumbnailValue && !preg_match('/^wysiwyg\//', $thumbnailValue) && !preg_match('/^catalog\/category\//', $thumbnailValue)) {
                 $thumbnailValue = 'catalog/category/' . $thumbnailValue;
             }
-            if ($imageValue && !preg_match('/^wysiwyg\//', $imageValue)) {
+            if ($imageValue && !preg_match('/^wysiwyg\//', $imageValue) && !preg_match('/^catalog\/category\//', $imageValue)) {
                 $imageValue = 'catalog/category/' . $imageValue;
             }
             $fieldset->addType('image_browser', 'Apdc_Media_Model_Data_Form_Element_ImageBrowser');
