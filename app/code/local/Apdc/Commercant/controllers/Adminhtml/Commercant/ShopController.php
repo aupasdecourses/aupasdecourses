@@ -7,13 +7,13 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
 {
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/commercant/shop'); 
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/commercant/shop'); 
     }
 
     protected function _initAction()
     {
         $this->loadLayout()
-            ->_setActiveMenu('catalog/commercant')
+            ->_setActiveMenu('neighborhoods/commercant')
             ->_addBreadcrumb($this->__('Commercant'), $this->__('Commercant'));
 
         return $this;

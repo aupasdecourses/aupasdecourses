@@ -1,0 +1,176 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="page-header">
+		<h2> Liste des commandes (filtrable par clients) du <input type="text" class="form-control" id="datepickerLoyalty" placeholder="Cliquez pour selectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndLoyalty" placeholder="Cliquez ici pour selectionner la date" value="{{ date_fin }}"></h2>
+	</div>
+	<div id="filter"><label>Selectionnez le client :</label></div>
+
+
+	<table class="table table-striped" id="loyaltyTable">
+		<thead>
+			<tr>
+				<th class="sort">Statut</th>
+				<th>Date Commande</th>
+				<th>Date Livraison</th>
+				<th># Commande</th>
+				<th class="sort">Nom Client</th>
+				<th class="float">Total Produits</th>
+				<th class="float">Frais Livraisons</th>
+				<th class="float">TOTAL</th>
+				<th>Code coupon</th>
+				<th>Règle coupon</th>
+				<th>Commentaires</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for content in data_clients %}
+			<tr>
+				<td>{{ content.status }}</td>
+				<td>{{ content.date_commande }}</td>
+				<td>{{ content.date_livraison }}</td>
+				<td>{{ content.increment_id }}</td>
+				<td>{{ content.nom_client }}</td>
+				<td>{{ content['Total Produit'] }}</td>
+				<td>{{ content['Frais livraison'] }}</td>
+				<td>{{ content.Total }}</td>
+				<td>{{ content['Coupon Code'] }}</td>
+				<td>{{ content['Règle Coupon'] }}</td>
+				<td>{{ content.Commentaires }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="5">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_loyaltyCustomer %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_loyaltyCustomer %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+
+
+	<script>
+$(function() {
+	$( "#datepickerLoyalty" ).datepicker({
+		altField: "#datepickerLoyalty",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+	$( "#datepickerEndLoyalty" ).datepicker({
+		altField: "#datepickerEndLoyalty",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+$(function(){
+	$("#datepickerEndLoyalty").change(function(){
+		window.location='{{ path('loyaltyCustomer') }}?date_debut='+$("#datepickerLoyalty").val()+'&date_fin='+this.value;
+	});
+});
+/* Custom filtering function which will search data in column four between two values */
+$.fn.dataTable.ext.search.push(
+		function( settings, data, dataIndex ) {
+			var min = parseInt( $('#min').val(), 10 );
+			var max = parseInt( $('#max').val(), 10 );
+			var age = parseFloat( data[2] ) || 0; // use data for the age column
+
+			if ( ( isNaN( min ) && isNaN( max ) ) ||
+					( isNaN( min ) && age <= max ) ||
+					( min <= age   && isNaN( max ) ) ||
+					( min <= age   && age <= max ) )
+			{
+				return true;
+			}
+			return false;
+		}
+		);
+$(document).ready(function() {
+	var table=$('#loyaltyTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+	</script>
+
+
+
+
+{% endblock %}

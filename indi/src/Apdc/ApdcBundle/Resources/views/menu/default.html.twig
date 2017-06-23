@@ -14,6 +14,9 @@
 
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class ="nav navbar-nav">
+					
+					
+					{% if is_granted('ROLE_DISPATCH') %}
 					<li class="dropdown">	
 						<a class="dropdown-toggle" data-toggle="dropdown"href="">Liste Commandes<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -26,10 +29,12 @@
 						<ul class="dropdown-menu">
 							<li><a href="{{ path ('pickingIndex')}}">Enlevement</a></li>
 							<li><a href="{{ path ('shippingIndex')}}">Livraisons</a></li>
+							<li><a href="{{ path ('mapMerchants')}}">Carte Commercants</a></li>
 						</ul>
 					</li>
-				
-					{% if is_granted('ROLE_ADMIN') %}			
+					{% endif %} {# end role dispatch #}
+
+					{% if is_granted('ROLE_GESTION') %}
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Remboursement<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -40,17 +45,24 @@
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Facturation<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('billingIndex') }}">Facturation</a></li>
-							<li><a href="{{ path ('billingPayoutIndex') }}">Payout</a></li>
+							<li><a href="{{ path ('billingIndex') }}">Voir En-Cours</a></li>
+							<li><a href="{{ path ('billingVerif') }}">Calcul Facturation</a></li>
+							<li><a href="{{ path ('billingDetails') }}">Voir Commandes Facturées</a></li>
+							<li><a href="{{ path ('billingSummary') }}">Voir Factures Commerçant</a></li>
+							<!-- <li><a href="{{ path ('billingPayoutIndex') }}">Payout</a></li> -->
 						</ul>
 					</li>
+					{% endif %} {# end role gestion #}
+
+					{% if is_granted('ROLE_COMMUNICATION') %}
 					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="">Stats<span class="caret"></span></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="">Clients<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="">Fidelites Clients ???</a></li>
-							<li><a href="">Stats Clients ??? </a></li>
-							<li><a href="">Stats Coupons </a></li>
-							<li><a href="{{ path ('statNote')}}">Stats Notes Commandes </a></li>
+							<li><a href="{{ path ('statCustomer') }}">Stats Clients</a></li>
+							<li><a href="{{ path ('loyaltyCustomer')}}">Fidelites Clients</a></li>
+							<li><a href="{{ path ('statVoucher') }}">Stats Coupons</a></li>
+							<li><a href="{{ path ('noteOrder') }}">Notes Commande</a></li>
+							<li><a href="{{ path ('mapCustomers') }}">Carte Clients</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -61,7 +73,9 @@
 							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
 						</ul>
 					</li>
-					{% endif %}
+					{% endif %} {# end role communication #}
+
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">

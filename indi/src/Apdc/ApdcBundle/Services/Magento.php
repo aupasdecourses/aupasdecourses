@@ -2,17 +2,22 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-include '../../app/Mage.php';
+include_once '../../app/Mage.php';
 
 class Magento
 {
     use Credimemo;
+    use Products;
 
     const AUTHORIZED_GROUP = ['Administrators'];
+    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison','tax_class_id');
+    const CLASS_TAX_IDS = array(5 => '5.5%', 9 => '10%', 10 => '20%');
 
     public function __construct()
     {
         \Mage::app();
+        $this->_attributeArraysLabels = $this->getAttributesLabelFromId(self::ATTRIBUTE_CODES);
+        $this->_attributeArraysIds = $this->getAttributesIdFromLabel(self::ATTRIBUTE_CODES);
     }
 
     public function mediaPath()
@@ -25,40 +30,40 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-	/** Ancienne version de getMerchants. Ne prend pas en compte un marchand dans plusieurs shops
-	 *
-	 */
-	/*public function getShops($commercantId = -1)
-	{
-	
-	 	$commercants = [];
-		
-		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+    /** Ancienne version de getMerchants. Ne prend pas en compte un marchand dans plusieurs shops
+     *
+     */
+    /*public function getShops($commercantId = -1)
+    {
+    
+         $commercants = [];
+        
+        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
         if ($commercantId != -1) {
             $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
         }
-		$shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
-		$shops->addFilterToMap('path' , 'catalog_category_entity.path');
+        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+        $shops->addFilterToMap('path' , 'catalog_category_entity.path');
 
-		$S = [];
-		$app = \Mage::app();
-		$stores = $app->getStores();
-		foreach ($stores as $id => $idc) {
-			$S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
-			$S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
-		}
+        $S = [];
+        $app = \Mage::app();
+        $stores = $app->getStores();
+        foreach ($stores as $id => $idc) {
+            $S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
+            $S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
+        }
 
-		foreach ($shops as $shop) {
-			$commercants[$shop->getData('id_attribut_commercant')] = [
-				'active'			=> $shop->getData('enabled'),
-				'id'				=> $shop->getData('id_attribut_commercant'),
-				'store'				=> $S[explode('/', $shop->getPath())[1]]['name'],
-				'name'				=> $shop->getName(),
-				'addr'				=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
-				'phone'				=> $shop->getPhone(),
-				'mail3'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+        foreach ($shops as $shop) {
+            $commercants[$shop->getData('id_attribut_commercant')] = [
+                'active'			=> $shop->getData('enabled'),
+                'id'				=> $shop->getData('id_attribut_commercant'),
+                'store'				=> $S[explode('/', $shop->getPath())[1]]['name'],
+                'name'				=> $shop->getName(),
+                'addr'				=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+                'phone'				=> $shop->getPhone(),
+                'mail3'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
                 'mailc'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
-	            'mailp'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                'mailp'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
                 'orders'			=> [],
                 'timetable' => implode(',', $shop->getTimetable()),
                 'closing_periods'	=> $shop->getClosingPeriods(),
@@ -71,19 +76,40 @@ class Magento
             }
 
             return false;
-		});
-		asort($commercants);
-		return $commercants;
-	 
-	}
-	 */
+        });
+        asort($commercants);
+        return $commercants;
+     
+    }
+     */
 
+    public function getWarningDays($delivery_days, $closed_periods)
+    {
+        if ($closed_periods != array()) {
+            $tmp = '';
+            foreach ($closed_periods as $key => $period) {
+                $tmp = 'du '.$period['start'].' au '.$period['end'];
+                $closed_periods[$key] = $tmp;
+            }
+            $period_warning = 'Magasin fermé '.implode(', ', $closed_periods).'.';
+        }
 
+        $warning_days = array_diff([2, 3, 4, 5], $delivery_days);
+        if ($warning_days != array()) {
+            $tmp = \Mage::helper('apdc_commercant')->getDays();
+            foreach ($warning_days as $key => $day) {
+                $warning_days[$key] = $tmp[$day - 1];
+            }
+            $day_warning = 'Attention! Magasin fermé le '.implode(',', $warning_days).'.';
+        }
 
-	/**	Le nouveau getShops
-	 *	Prend en compte un marchand dans différents shops
-	 *	N'est PAS utilisé pour la facturation.
-	 */
+        return $day_warning.' '.$period_warning;
+    }
+
+    /**	Le nouveau getShops
+     *	Prend en compte un marchand dans différents shops
+     *	N'est PAS utilisé pour la facturation.
+     */
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -100,69 +126,80 @@ class Magento
             $cats = $shop->getIdCategory();
             foreach ($cats as $cat) {
                 $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
+
+                $delivery_days = $shop->getDeliveryDays();
+                $closed_periods = $shop->getClosingPeriods();
+
+                $shop_manager = \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem();
+
                 $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
+                        'code' => $shop->getData('code'),
+                        'shop_id' => $shop->getIdShop(),
                         'store' => $storeinfo['name'],
                         'store_id' => $storeinfo['store_id'],
                         'name' => $shop->getName(),
                         'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
                         'phone' => $shop->getPhone(),
-                        'mobile' => '',
                         'mail3' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
                         'mailc' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
                         'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                        'manager_name' => $shop_manager->getFirstname().' '.$shop_manager->getLastname(),
+                        'mobile' => $shop_manager->getPhone(),
+                        'manager_id' => $shop_manager->getIdContact(),
                         'orders' => [],
                         'timetable' => implode(',', $shop->getTimetable()),
-                        'closing_periods' => $shop->getClosingPeriods(),
-                        'delivery_days' => 'Du Mardi au Vendredi',
+                        'closing_periods' => $closed_periods,
+                        'delivery_days' => $delivery_days,
+                        'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
                     ];
             }
         }
         uasort($commercants, function ($lhs, $rhs) {
             if ($lhs['active'] < $rhs['active']) {
                 return true;
-			}
+            }
 
             return false;
-		});
-		/* Sort associative array in ascending order, according to the VALUE */
-		asort($commercants);
+        });
+        /* Sort associative array in ascending order, according to the VALUE */
+        asort($commercants);
 
         return $commercants;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     private function OrdersQuery($dfrom, $dto, $commercantId = -1, $orderId = -1)
     {
         $orders = \Mage::getModel('sales/order')->getCollection();
-		$orders->getSelect()->join(
-			'mwddate_store',
-		   	'main_table.entity_id=mwddate_store.sales_order_id',
+        $orders->getSelect()->join(
+            'mwddate_store',
+            'main_table.entity_id=mwddate_store.sales_order_id',
             array(
                 'mwddate_store.ddate_id',
-			)
-		);
-		$orders->getSelect()->join(
-			'mwddate',
-		   	'mwddate_store.ddate_id=mwddate.ddate_id',
+            )
+        );
+        $orders->getSelect()->join(
+            'mwddate',
+            'mwddate_store.ddate_id=mwddate.ddate_id',
             array(
                 'ddate' => 'mwddate.ddate',
-				'dtime' => 'mwddate.dtime',
-			)
-		);
-		$orders->getSelect()->join(
-			'mwdtime',
-			'mwddate.dtime = mwdtime.dtime_id',
+                'dtime' => 'mwddate.dtime',
+            )
+        );
+        $orders->getSelect()->join(
+            'mwdtime',
+            'mwddate.dtime = mwdtime.dtime_id',
             array(
                 'dtime' => 'mwdtime.interval',
-			)
-		);
-		$orders->getSelect()->join(
-			array(
-				'order_attribute' => 'amasty_amorderattr_order_attribute',
-			),
-		   	'order_attribute.order_id = main_table.entity_id',
+            )
+        );
+        $orders->getSelect()->join(
+            array(
+                'order_attribute' => 'amasty_amorderattr_order_attribute',
+            ),
+            'order_attribute.order_id = main_table.entity_id',
             array(
                 'produit_equivalent' => 'order_attribute.produit_equivalent',
                 'contactvoisin' => 'order_attribute.contactvoisin',
@@ -172,13 +209,13 @@ class Magento
                 'etage' => 'order_attribute.etage',
                 'telcontact' => 'order_attribute.telcontact',
                 'info' => 'order_attribute.infoscomplementaires',
-			)
-		);
-		$orders->getSelect()->joinLeft(
-			array(
-				'attachment' => 'amasty_amorderattach_order_field',
-			),
-			'attachment.order_id = main_table.entity_id',
+            )
+        );
+        $orders->getSelect()->joinLeft(
+            array(
+                'attachment' => 'amasty_amorderattach_order_field',
+            ),
+            'attachment.order_id = main_table.entity_id',
             array(
                 'upload' => 'attachment.upload',
                 'input' => 'attachment.input',
@@ -187,11 +224,11 @@ class Magento
                 'refund_shipping' => 'attachment.refund_shipping',
                 'commentaire_commercant' => 'attachment.commentaires_ticket',
                 'commentaire_client' => 'attachment.commentaires_fraislivraison',
-			)
-		);
+            )
+        );
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
         $orders->addFilterToMap('dtime', 'mwdtime.interval')
-            ->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled')))
+            ->addFieldToFilter('main_table.status', array('nin' => array('pending_payment', 'payment_review', 'holded', 'canceled')))
             ->addAttributeToSort('main_table.increment_id', 'dsc');
         if ($orderId != -1) {
             $orders->addFieldToFilter('main_table.increment_id', ['eq' => $orderId]);
@@ -202,9 +239,9 @@ class Magento
             ));
             if ($commercantId != -1) {
                 $orders->getSelect()->join(
-					array(
-						'order_item' => \Mage::getSingleton('core/resource')->getTableName('sales/order_item'),
-					),
+                    array(
+                        'order_item' => \Mage::getSingleton('core/resource')->getTableName('sales/order_item'),
+                    ),
                     'order_item.order_id = main_table.entity_id'
                 )->where("order_item.commercant={$commercantId}")->group('order_item.order_id');
             }
@@ -213,7 +250,7 @@ class Magento
         return $orders;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     private function OrderHeaderParsing($order)
     {
         $orderHeader = [];
@@ -255,25 +292,25 @@ class Magento
             $orderHeader['refund_shipping_amount'] = $order->getShippingAmount() + $order->getShippingTaxAmount();
         } else {
             $orderHeader['refund_shipping_amount'] = 0;
-		}
+        }
 
         return $orderHeader;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     private function ProductParsing($product, $order_id)
     {
         $prod_data = [
             'id' => $product->getItemId(),
-                'nom' => $product->getName(),
-                'order_id' => $order_id,
-                'prix_kilo' => $product->getPrixKiloSite(),
-                'quantite' => round($product->getQtyOrdered(), 0),
-                'description' => $product->getShortDescription(),
-                'prix_unitaire' => round($product->getPriceInclTax(), 2),
-                'prix_total' => round($product->getRowTotalInclTax(), 2),
-                'commercant_id' => $product->getCommercant(),
-                'refund_comment' => $product->getRefundComment(),
+            'nom' => $product->getName(),
+            'order_id' => $order_id,
+            'prix_kilo' => $product->getPrixKiloSite(),
+            'quantite' => round($product->getQtyOrdered(), 0),
+            'description' => $product->getShortDescription(),
+            'prix_unitaire' => round($product->getPriceInclTax(), 2),
+            'prix_total' => round($product->getRowTotalInclTax(), 2),
+            'commercant_id' => $product->getCommercant(),
+            'refund_comment' => $product->getRefundComment(),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
@@ -282,10 +319,13 @@ class Magento
         }
         $prod_data['comment'] .= $product->getData('item_comment');
 
+		$prod_data['nom_commercant'] = $this->_attributeArraysLabels['commercant'][$prod_data['commercant_id']];
+				
+
         return $prod_data;
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     private function checkEntryToModel($model, array $filters)
     {
         $entry = $model->getCollection();
@@ -299,7 +339,7 @@ class Magento
         }
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     private function addEntryToModel($model, $data, $updatedFields)
     {
         foreach ($data as $k => $v) {
@@ -311,7 +351,7 @@ class Magento
         $model->save();
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     private function updateEntryToModel($model, array $filters, array $updatedFields)
     {
         $entry = $model->getCollection();
@@ -329,7 +369,7 @@ class Magento
         }
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     public function addEntryToOrderField(array $data)
     {
         $this->addEntryToModel(
@@ -338,7 +378,7 @@ class Magento
         );
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     public function updateEntryToOrderField(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('amorderattach/order_field');
@@ -359,7 +399,7 @@ class Magento
         }
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     public function addEntryToRefundItem(array $data)
     {
         $this->addEntryToModel(
@@ -368,7 +408,7 @@ class Magento
         );
     }
 
-	/** Mettre dans trait Model **/
+    /** Mettre dans trait Model **/
     public function updateEntryToRefundItem(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/refund_items');
@@ -389,7 +429,93 @@ class Magento
         }
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Model **/
+    public function addEntryToBillingDetails(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_billingdetails')),
+            $data
+        );
+    }
+
+    /** Mettre dans trait Model **/
+    public function updateEntryToBillingDetails(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_billingdetails');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+    /** Mettre dans trait Model **/
+    public function addEntryToBillingSummary(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_billingsummary')),
+                $data
+        );
+    }
+
+    public function addEntryToGeocode(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel('pmainguet_delivery/geocode_customers'),
+            $data
+        );
+    }
+
+    /** Mettre dans trait Model **/
+    public function updateEntryToBillingSummary(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_billingsummary');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+    /** Mettre dans trait Model **/
+    public function updateEntryToGeocode(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+    /** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -417,7 +543,7 @@ class Magento
         return $rsl;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     public function getOrderByMerchants($orderId)
     {
         $merchants = $this->getMerchants();
@@ -442,7 +568,7 @@ class Magento
         return $rsl;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     public function getOrdersByStore($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -470,7 +596,7 @@ class Magento
         return $rsl;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     public function getMerchantsOrders($commercantId, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -500,18 +626,18 @@ class Magento
         }
 
         $rsl = [];
-        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
+        $S = \Mage::helper('apdc_commercant')->getStoresArray('storeid');
 
         foreach ($commercants as $storeid => $commercant) {
             foreach ($commercant as $com_id => $com) {
                 $rsl[$S[$storeid]['name']][$com_id] = $com;
             }
-		}
+        }
 
         return $rsl;
     }
 
-	/** Mettre dans trait Order **/
+    /** Mettre dans trait Order **/
     public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -544,13 +670,11 @@ class Magento
         }
 
         $rsl = [];
-        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
+        $S = \Mage::helper('apdc_commercant')->getStoresArray('storeid');
 
         foreach ($commercants as $storeid => $commercant) {
             $rsl[$S[$storeid]['name']] = $commercant;
         }
-
-
 
         return $rsl;
     }
@@ -570,6 +694,8 @@ class Magento
                     'total' => 0.0,
                     'refund_total' => 0.0,
                     'refund_prix' => 0.0,
+                    'refund_total_commercant' => 0.0,
+                    'refund_prix_commercant' => 0.0,
                 ],
             ],
         ];
@@ -583,58 +709,67 @@ class Magento
                 'refund_prix' => 'refund.prix_final',
                 'refund_diff' => 'refund.diffprixfinal',
                 'refund_comment' => 'refund.comment',
+                'refund_prix_commercant' => 'refund.prix_commercant',
+                'refund_diff_commercant' => 'refund.diffprixcommercant',
             ]);
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 $prod_data['refund_prix'] = $product->getData('refund_prix');
                 $prod_data['refund_diff'] = $product->getData('refund_diff');
+                $prod_data['refund_prix_commercant'] = $product->getData('refund_prix_commercant');
+                $prod_data['refund_diff_commercant'] = $product->getData('refund_diff_commercant');
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] = 0.0;
                     $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] = 0.0;
+                    $rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] = 0.0;
+                    $rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] = 0.0;
                 }
                 $rsl[$prod_data['commercant_id']]['products'][$prod_data['id']] = $prod_data;
                 $rsl[$prod_data['commercant_id']]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+                $rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+                $rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
                 $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+                $rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
+                $rsl[-1]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
             }
         }
 
         return $rsl;
     }
 
-	/**	Retourne le contenu de la table adyen/order_payment
-	 *	Trié par reference marchante ( ex : 2016000723 )
-	 *
-	 *	Utilisé dans RefundController, refundAdyenIndexAction
-	 *	pour la liste des commandes remboursables. (Remboursement Back-up )
-	 */
-	public function getAdyenOrderPaymentTable()
-	{
-		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
-		$ref = [];
-		$cpt = 1;
-		foreach ($collection as $fields) {
-			$ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
-			$ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
-			$ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
-			$ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
-			++$cpt;
-		}
+    /**	Retourne le contenu de la table adyen/order_payment
+     *	Trié par reference marchante ( ex : 2016000723 ).
+     *
+     *	Utilisé dans RefundController, refundAdyenIndexAction
+     *	pour la liste des commandes remboursables. (Remboursement Back-up )
+     */
+    public function getAdyenOrderPaymentTable()
+    {
+        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+        $ref = [];
+        $cpt = 1;
+        foreach ($collection as $fields) {
+            $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
+            $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
+            $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
+            $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
+            ++$cpt;
+        }
 
-		return $ref;
-	}
+        return $ref;
+    }
 
-	/**	Retourne le contenu de la table adyen/order_payment
-	 *
-	 *	Utilisé dans les deux formulaires de soumission de remboursement Adyen
-	 *	refundFinalAction & refundAdyenFormAction
-	 */
+    /**	Retourne le contenu de la table adyen/order_payment
+     *	Utilisé dans les deux formulaires de soumission de remboursement Adyen
+     *	refundFinalAction & refundAdyenFormAction.
+     */
     public function getAdyenPaymentByPsp()
     {
         $collection = \Mage::getModel('adyen/order_payment')->getCollection();
@@ -650,12 +785,11 @@ class Magento
         }
 
         return $ref;
-	}
+    }
 
-	/**	Retourne le contenu de la table adyen/event_queue
-	 *
-	 *	Utilisé dans les 2 formulaires de soumission de remboursement
-	 */
+    /**	Retourne le contenu de la table adyen/event_queue
+     *	Utilisé dans les 2 formulaires de soumission de remboursement.
+     */
     public function getAdyenQueueFields()
     {
         $collection = \Mage::getModel('adyen/event_queue')->getCollection();
@@ -672,5 +806,33 @@ class Magento
         }
 
         return $ref;
-	}
+    }
+
+    /** Pour les payouts */
+    public function getApdcBankFields()
+    {
+        $tab = [];
+
+        $merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
+
+        $merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
+
+        $merchants->getSelect()->join('apdc_commercant_contact', 'main_table.id_contact_billing = apdc_commercant_contact.id_contact');
+
+        $merchants->getSelect()->join('apdc_shop', 'main_table.id_commercant = apdc_shop.id_commercant')->group('main_table.id_commercant');
+
+        foreach ($merchants as $merchant) {
+            $tab[$merchant->getData('name')] = [
+                'id' => $merchant->getData('id_commercant'),
+                'reference' => 'PAY-'.date('Y-m').'-'.$merchant->getData('code').'-',
+                'name' => $merchant->getData('name'),
+                'ownerName' => $merchant->getData('owner_name'),
+                'iban' => $merchant->getData('account_iban'),
+                'shopperEmail' => $merchant->getData('email'),
+                'shopperReference' => $merchant->getData('firstname').' - '.$merchant->getData('lastname'),
+            ];
+        }
+
+        return $tab;
+    }
 }

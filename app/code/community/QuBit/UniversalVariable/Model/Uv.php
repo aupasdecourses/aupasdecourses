@@ -85,6 +85,8 @@ class QuBit_UniversalVariable_Model_Uv extends Varien_Object
             $type = 'home';
         } elseif ($this->helper()->isContentPage()) {
             $type = 'content';
+        } elseif ($this->helper()->isSignInPage()) {
+            $type = 'registration';
         } elseif ($this->helper()->isCategoryPage()) {
             $type = 'category';
         } elseif ($this->helper()->isSearchPage()) {
@@ -109,7 +111,7 @@ class QuBit_UniversalVariable_Model_Uv extends Varien_Object
         return $this;
     }
 
-    protected function _initUser()
+    protected function _initUser()  
     {
         /** @var Mage_Customer_Model_Customer $user */
         $user = Mage::helper('customer')->getCustomer();

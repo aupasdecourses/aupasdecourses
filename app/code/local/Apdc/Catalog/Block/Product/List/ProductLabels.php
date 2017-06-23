@@ -73,7 +73,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
     {
         if ($this->getProduct()->getData('produit_biologique')) {
             $labelBio = array();
-            $authorizedBio = ['AB','Bio Européen','AB,Bio Européen'];
+            $authorizedBio = ['Oui','AB','Bio Européen','AB,Bio Européen'];
             $attributeValue = $this->getAttributeValue('produit_biologique');
 
              if(in_array($attributeValue, $authorizedBio)) {

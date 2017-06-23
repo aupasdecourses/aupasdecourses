@@ -169,4 +169,35 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
         }
         return $productAdded;
     }
+
+    /**
+     * getMessages 
+     * 
+     * @return void
+     */
+    public function getMessages() 
+    {
+        // Compose array of messages to add
+        $messages = array();
+        foreach (Mage::getSingleton('checkout/cart')->getQuote()->getMessages() as $message) {
+            if ($message) {
+                // Escape HTML entities in quote message to prevent XSS
+                $message->setCode(Mage::helper('core')->escapeHtml($message->getCode()));
+                $messages[] = $message;
+            }
+        }
+        Mage::getSingleton('checkout/cart')->getCheckoutSession()->addUniqueMessages($messages);
+
+        return Mage::getSingleton('checkout/cart')->getCheckoutSession()->getMessages(true);
+    }
+
+    /**
+     * Retrieve messages block
+     *
+     * @return Mage_Core_Block_Messages
+     */
+    public function getMessagesBlock()
+    {
+        return $this->getLayout()->createBlock('core/messages', 'minicart_messages');
+    }
 }

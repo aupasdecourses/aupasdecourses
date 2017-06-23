@@ -49,7 +49,7 @@
 			</table>
 			<table class='table'>
 				<tr>
-					<th>MONTANT A REMBOURSER</th>
+					<th>MONTANT A REMBOURSER AU CLIENT</th>
 					<td>{% if refund_full > 0 %}
 							{{refund_full}}
 						{% else %}
@@ -77,9 +77,11 @@
 	{% endfor %}
 	{% for merchant_id, merchant_part in order %}
 		<h2>{{merchant_part.merchant.name}}</h2>
-		<div class='row'>
-			<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-sm-4' style='width: 350px; height: 400px;' value='{{merchant_part.merchant.ticket}}'></div>
-			<div class="col-sm-8">
+		<div class="row flex-input">
+			<div class="ticket-container">
+				<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
+			</div>
+			<div class="col-md-8">
 				<table id='{{merchant_id}}' class='merchant table'>
 					<thead>
 						<tr>
@@ -88,8 +90,10 @@
 							<th>Quantité</th>
 							<th>Prix Unitaire</th>
 							<th>Total Commande</th>
-							<th>Total Ticket</th>
-							<th>Différence</th>
+							<th>Total Client</th>
+							<th>Différence Client</th>
+							<th>Total Commercant</th>
+							<th>Différence Commercant</th>
 							<th>Commentaire</th>
 						</tr>
 					</thead>
@@ -109,6 +113,12 @@
 								<p>{{product.refund_diff | round(2,'floor')}}</p>
 							</td>
 							<td>
+								<span>{{product.refund_prix_commercant | round(2, 'floor')}}</span>
+							</td>
+							<td>
+								<p>{{product.refund_diff_commercant | round(2,'floor')}}</p>
+							</td>
+							<td>
 								<span>{{product.refund_comment}}</span>
 							</td>
 						</tr>
@@ -119,6 +129,8 @@
 							<td><p>{{merchant_part.merchant.total}}</p></td>
 							<td><p>{{merchant_part.merchant.refund_total}}</p></td>
 							<td><p>{{merchant_part.merchant.refund_diff}}</p></td>
+							<td><p>{{merchant_part.merchant.refund_total_commercant}}</p></td>
+							<td><p>{{merchant_part.merchant.refund_diff_commercant}}</p></td>
 							<td></td>
 						</tr>
 					</tfoot>
@@ -139,7 +151,7 @@
 	<!-- ScrollToFixed for refund input tickets : refund/input.twig -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var summaries = $('.merchant-ticket');
+			var summaries = $('.ticket-container');
 			summaries.each(function(i) {
 				var summary = $(summaries[i]);
 				var next = summaries[i + 1];

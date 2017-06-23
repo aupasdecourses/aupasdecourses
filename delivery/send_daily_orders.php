@@ -10,12 +10,15 @@ define('CHEMIN_MAGE', dirname(__FILE__).'/../');
 define('AMASTY_MW_DATE', date('Y-m-d', mktime(0, 0, 0, 1, 20, 2016)));
 define('TODAY_DATE', date('Y-m-d'));
 
-$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
+$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
 
 $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
+
+//important car Magento set par défaut la timezone à UTC quand on initialise Mage::app() !!!
+date_default_timezone_set ("Europe/Paris");
 
 //Sera a refactoriser avec la fonction liste_commercant_id() de magento.php
 function getCommercant()

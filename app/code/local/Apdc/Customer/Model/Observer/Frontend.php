@@ -60,8 +60,16 @@ class Apdc_Customer_Model_Observer_Frontend
         if (Mage::app()->getWebsite()->getCode() == 'apdc_main') {
             /** @var Mage_Customer_Model_Customer $customer */
             $customer = $observer->getCustomer();
-            $store = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore();
-            Mage::getSingleton('customer/session')->setBeforeAuthUrl($store->getBaseUrl());
+            $storeUrl = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore()->getBaseUrl();
+            if ($customer->getCustomerNeighborhood()) {
+                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                if ($neighborhood && $neighborhood->getId()) {
+                    $storeUrl = $neighborhood->getStoreUrl();
+                }
+            }
+        } else {
+            $storeUrl = Mage::app()->getWebsite()->getDefaultStore()->getBaseUrl();
         }
+        Mage::getSingleton('customer/session')->setBeforeAuthUrl($storeUrl);
     }
 }

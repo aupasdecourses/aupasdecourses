@@ -90,17 +90,31 @@ billingIndex:
   path: /billing/
   defaults: { _controller: ApdcApdcBundle:Billing:index}
 
+billingVerif:
+  path: /billing/verif
+  defaults: { _controller: ApdcApdcBundle:Billing:verif}
+
+billingDetails:
+  path: /billing/details
+  defaults: { _controller: ApdcApdcBundle:Billing:details}
+
+billingSummary:
+  path: /billing/summary
+  defaults: { _controller: ApdcApdcBundle:Billing:summary}
+
+billingOne:
+  path:    /billing/{id}
+  defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
+  requirements: { id:"COM-[0-9-]+" }
+
 billingPayoutIndex:
   path: /billing/payout/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
 
 billingPayoutSubmit:
-  path: /billing/payout/submit/
+  path: /billing/payout/{choice}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
-
-statNote:
-  path: /stat/note/
-  defaults: { _controller: ApdcApdcBundle:Stat:note}
+  requirements: { choice:"[0-9]+" }
 
 toolProduct:
   path: /tool/product/
@@ -113,6 +127,30 @@ toolMerchant:
 toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
+
+statCustomer:
+  path: /stat/customer/
+  defaults: { _controller: ApdcApdcBundle:Stat:statCustomer}
+
+loyaltyCustomer:
+  path: /stat/loyalty/
+  defaults: { _controller: ApdcApdcBundle:Stat:loyaltyCustomer}
+
+statVoucher:
+  path: /stat/voucher/
+  defaults: { _controller: ApdcApdcBundle:Stat:statVoucher}
+
+noteOrder:
+  path: /stat/noteOrder/
+  defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
+
+mapMerchants:
+    path: /map/merchants/
+    defaults: { _controller: ApdcApdcBundle:Map:merchants}
+
+mapCustomers:
+    path: /map/customers/
+    defaults: { _controller: ApdcApdcBundle:Map:customers}
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -132,3 +170,7 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+download_route:
+    path:  /download/{filename}
+    defaults: { _controller: ApdcApdcBundle:Default:download }

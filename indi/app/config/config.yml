@@ -7,6 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    server_root: "%kernel.root_dir%/../.."
+    billing_folder_root: "%kernel.root_dir%/../web/docs/billing"
 
 framework:
     #esi:             ~
@@ -41,8 +43,9 @@ twig:
     form_themes:
         - 'bootstrap_3_layout.html.twig'
     globals:
-        adyen_platform_first_part:  %adyen_platform_first_part%
-        adyen_platform_second_part: %adyen_platform_second_part%
+        adyen_platform_first_part:  "%adyen_platform_first_part%"
+        adyen_platform_second_part: "%adyen_platform_second_part%"
+        server_root: "%server_root%"
 
 # Doctrine Configuration
 doctrine:
@@ -97,5 +100,12 @@ fos_user:
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
+    # path of the node executable
+    node: /usr/bin/nodejs
     filters:
         cssrewrite: ~
+        uglifyjs2:
+        # path of uglifyjs executable
+            bin: /usr/local/bin/uglifyjs
+        uglifycss:
+            bin: /usr/local/bin/uglifycss

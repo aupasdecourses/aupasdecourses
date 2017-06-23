@@ -15,7 +15,7 @@ class Apdc_Coupon_IndexController extends Mage_Checkout_CartController
             return;
         }
    //echo $this->getRequest()->getParam('remove'); die;
-        $couponCode = (string) $this->getRequest()->getParam('coupon_code');
+        $couponCode = (string) trim(preg_replace("/[\s\r\n]+/", '', $this->getRequest()->getParam('coupon_code')));
 
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';

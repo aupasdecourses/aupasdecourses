@@ -1,6 +1,6 @@
 <?php
-	$i = mt_rand(1, 14); // generate random number size of the array
-	$url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+	$i = mt_rand(1, 10); // generate random number size of the array
+	$url = "dist/images/header_notation/".$i.".jpg"; // set variable equal to which random filename was chosen
     $_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -24,7 +24,7 @@
                 <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
                     <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
                 <?php else: ?>
-                    <li><a href="<?= $_helper->getCustomerWebsite()?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                    <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
                 <?php endif ?>
             </ul>
             <div class="intro-section">
@@ -44,72 +44,64 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris3e.jpg');?>" alt="Au Pas De Courses - 3e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 3<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../paris7e';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris7e.jpg');?>" alt="Au Pas De Courses - 7e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 7<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris9e.jpg');?>" alt="Au Pas De Courses - 9e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 9<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris10e.jpg');?>" alt="Au Pas De Courses - 10e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 10<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris11e.jpg');?>" alt="Au Pas De Courses - 11e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 11<sup>e</sup></span>
-                </a>
-            </div>
-			<div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../paris13e';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris13e.jpg');?>" alt="Au Pas De Courses - 13e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 13<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../paris14e';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris14e.jpg');?>" alt="Au Pas De Courses - 14e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 14<sup>e</sup></span>
-                </a>
-            </div>
-			<div class="button-district col-xs-6 col-sm-4 col-md-3">
-                <a href="<?php echo Mage::getBaseUrl().'../commerce';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris15e.jpg');?>" alt="Au Pas De Courses - 14e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 15<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4">
-                <a href="<?php echo Mage::getBaseUrl().'../paris16e';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris16e.jpg');?>" alt="Au Pas De Courses - 16e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 16<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-6 col-sm-4">
-                <a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris17e.jpg');?>" alt="Au Pas De Courses - 17e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 17<sup>e</sup></span>
-                </a>
-            </div>
-            <div class="button-district col-xs-12 col-sm-4">
-                <a href="<?php echo Mage::getBaseUrl().'../batignolles';?>">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/quartiers/paris18e.jpg');?>" alt="Au Pas De Courses - 18e arrondissement de Paris" class="img-circle"/>
-                    <span class="button">Paris 18<sup>e</sup></span>
-                </a>
-            </div>
+            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
+            <?php $nbQuartiers = $quartiers->count(); ?>
+
+            <?php $mdNbFullLines = (floor($nbQuartiers / 4) * 4); ?>
+            <?php $mdNbLeave = $nbQuartiers - $mdNbFullLines; ?>
+
+            <?php $smNbFullLines = (floor($nbQuartiers / 3) * 3); ?>
+            <?php $smNbLeave = $nbQuartiers - $smNbFullLines; ?>
+
+            <?php $xsNbFullLines = (floor($nbQuartiers / 2) * 2); ?>
+            <?php $xsNbLeave = $nbQuartiers - $xsNbFullLines; ?>
+
+            <?php $cpt = 1; foreach ($quartiers as $quartier) : ?>
+                <?php 
+                    if ($cpt <= $mdNbFullLines) {
+                        $classMd = 'col-md-3';
+                    } else {
+                        switch($mdNbLeave) {
+                        case 3:
+                            $classMd = 'col-md-4';
+                            break;
+                        case 2:
+                            $classMd = 'col-md-6';
+                            break;
+                        default:
+                            $classMd = 'col-md-12';
+                        }
+                    }
+
+                    if ($cpt <= $smNbFullLines) {
+                        $classSm = 'col-sm-4';
+                    } else {
+                        switch($smNbLeave) {
+                        case 2:
+                            $classSm = 'col-sm-6';
+                            break;
+                        default:
+                            $classSm = 'col-sm-12';
+                        }
+                    }
+                    if ($cpt <= $xsNbFullLines) {
+                        $classXs = 'col-xs-6';
+                    } else {
+                        $classXs = 'col-xs-12';
+                    }
+                ?>
+
+
+                <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>">
+                    <a href="<?php echo $quartier->getStoreUrl();?>">
+                        <img src="<?php echo Mage::helper('apdc_neighborhood/media')->getMediaUrl($quartier->getImage(), array('width' => 200, 'height' => 200));?>" alt="Au Pas De Courses - <?php echo $quartier->getName(); ?>" class="img-circle"/>
+                        <span class="button"><?php echo $quartier->getName(); ?></span>
+                    </a>
+                </div>
+
+            <?php $cpt++; endforeach; ?>
+
+
         </div>
 		<div class="row text-center">
 		    <h2 class="soon">Envie de nous suivre ?</h2>
@@ -154,12 +146,15 @@
         </section>
         <section class="packages col-sm-6" id="prices">
             <div class="section-header">
-                <h2>Combien cela coûte</h2>
-                <div class="row">
+                <h2>Combien ça coûte</h2>
+                <div class="section-description">
+                     Un service juste </br> au centime près !
+                </div>
+                <!-- <div class="row">
                     <div class="col-sm-4 price-tag"><span>9 €</span><br> Commande &#60;45 €</div>
                     <div class="col-sm-4 price-tag"><span>6 €</span><br> Commande &#60;90 €</div>
                     <div class="col-sm-4 price-tag"><span>3 €</span><br> Commande &#62;90 €</div>
-                </div>
+                </div> -->
             </div>
             <div class="item row">
                 <div class="col-md-3">

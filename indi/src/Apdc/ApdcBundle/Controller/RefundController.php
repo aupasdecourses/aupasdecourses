@@ -19,7 +19,7 @@ class RefundController extends Controller
 
     public function indexAction(Request $request, $from)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -115,7 +115,7 @@ class RefundController extends Controller
 
     public function refundUploadAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -163,7 +163,6 @@ class RefundController extends Controller
                             mkdir($folder, 0777, true);
                             umask($oldmask);
                         } catch (Exception $e) {
-                            dump($e);
                         }
                     }
                     if (file_exists($folder)) {
@@ -178,7 +177,6 @@ class RefundController extends Controller
                         try {
                             copy($tmp_file, $file);
                         } catch (Exception $e) {
-                            dump($e);
                         }
                     }
                 }
@@ -215,7 +213,7 @@ class RefundController extends Controller
 
     public function refundInputAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -253,15 +251,17 @@ class RefundController extends Controller
                 foreach ($o_data['products'] as $product_id => $p_data) {
                     if (isset($_POST['form'][$product_id])) {
                         $rsl_table[$product_id] = [
-                            'order_item_id' => $product_id,
-                            'item_name'		=> $p_data['nom'],
-                            'commercant'	=> $o_data['name'],
-                            'commercant_id' => $o_data['merchant']['id'],
-                            'order_id'		=> $p_data['order_id'],
-                            'prix_initial'	=> $p_data['prix_total'],
-                            'prix_final'	=> doubleval($_POST['form'][$product_id]['ticket']),
-                            'diffprixfinal' => $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
-                            'comment'		=> $_POST['form'][$product_id]['comment'],
+                            'order_item_id'			=> $product_id,
+                            'item_name'				=> $p_data['nom'],
+                            'commercant'			=> $o_data['name'],
+                            'commercant_id'			=> $o_data['merchant']['id'],
+                            'order_id'				=> $p_data['order_id'],
+                            'prix_initial'			=> $p_data['prix_total'],
+                            'prix_final'			=> doubleval($_POST['form'][$product_id]['ticket']),
+                            'diffprixfinal'			=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket']),
+							'prix_commercant'		=> doubleval($_POST['form'][$product_id]['ticket-commercant']),
+							'diffprixcommercant'	=> $p_data['prix_total'] - doubleval($_POST['form'][$product_id]['ticket-commercant']),
+                            'comment'				=> $_POST['form'][$product_id]['comment'],
                         ];
                         unset($_POST['form'][$product_id]);
                     }
@@ -300,7 +300,7 @@ class RefundController extends Controller
 
     public function refundDigestAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -387,7 +387,7 @@ class RefundController extends Controller
 
     public function refundFinalAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -430,7 +430,7 @@ class RefundController extends Controller
 
     public function refundAdyenIndexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -444,7 +444,7 @@ class RefundController extends Controller
 
     public function refundAdyenFormAction(Request $request, $psp)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -466,8 +466,8 @@ class RefundController extends Controller
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-            $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
 
+            $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
             return $this->redirectToRoute('refundAdyenIndex');
         }
 

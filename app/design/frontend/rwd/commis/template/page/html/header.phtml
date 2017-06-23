@@ -42,7 +42,7 @@
                 <?php endif; ?>
 
 
-                <div class="skip-help skip-container col-sm-2">
+                <div class="skip-help skip-container col-sm-2 hidden-sm">
                     <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
                         <i class="fa fa-question-circle"></i>
                         <span class="label">FAQ</span>
@@ -54,6 +54,10 @@
                         <li><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/commercantsmanquants/">Commerce manquant</a></li>
                         <li class="last"><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/produitsmanquants/">Produit manquant</a></li>
                     </ul>
+                </div>
+
+                <div class="skip-neighborhood skip-container col-sm-2">
+                    <?php echo $this->getChildHtml('neighborhood_menu'); ?>
                 </div>
 
                 <!-- <div class="skip-container col-sm-3">

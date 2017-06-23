@@ -65,35 +65,6 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 		parent::__construct( $args );
 	}
 
-	function is_metadata_public( $key ) {
-		if ( empty( $key ) )
-			return false;
-
-		// Default whitelisted meta keys.
-		$whitelisted_meta = array( '_thumbnail_id' );
-
-		/**
-		 * Filters the meta keys accessible by the REST API.
-		 * @see https://developer.wordpress.com/2013/04/26/custom-post-type-and-metadata-support-in-the-rest-api/
-		 *
-		 * @module json-api
-		 *
-		 * @since 2.2.3
-		 *
-		 * @param array $whitelisted_meta Array of metadata that is accessible by the REST API.
-		 */
- 		if ( in_array( $key, apply_filters( 'rest_api_allowed_public_metadata', $whitelisted_meta ) ) )
-			return true;
-
-		if ( 0 === strpos( $key, 'geo_' ) )
-			return true;
-
-		if ( 0 === strpos( $key, '_wpas_' ) )
-			return true;
-
- 		return false;
- 	}
-
 	function the_password_form() {
 		return __( 'This post is password protected.', 'jetpack' );
 	}
@@ -448,6 +419,11 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 					if ( current_user_can( 'edit_post_meta', $post_id , $meta['meta_key'] ) )
 						$show = true;
 
+					// Only business plan subscribers can view custom meta description.
+					if ( Jetpack_SEO_Posts::DESCRIPTION_META_KEY === $meta['meta_key'] && ! Jetpack_SEO_Utils::is_enabled_jetpack_seo() ) {
+						$show = false;
+					}
+
 					if ( !$show )
 						continue;
 
@@ -630,7 +606,6 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 			$result['duration'] = (int) $metadata['duration'];
 		}
 
-		/** This filter is documented in class.jetpack-sync.php */
 		return (object) apply_filters( 'get_attachment', $result );
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <adminhtml>
     <menu>
-        <catalog>
+        <neighborhoods>
             <children>
                 <commercant>
                     <title>Commerçants &amp; Magasins</title>
@@ -30,13 +30,13 @@
                     </children>
                 </commercant>
             </children>
-        </catalog>
+        </neighborhoods>
     </menu>
     <acl>
         <resources>
             <admin>
                 <children>
-                    <catalog>
+                    <neighborhoods>
                         <children>
                             <commercant>
                                 <title>Commerçants &amp; Magasins</title>
@@ -61,7 +61,7 @@
                                 </children>
                             </commercant>
                         </children>
-                    </catalog>
+                    </neighborhoods>
                 </children>
             </admin>
         </resources>
