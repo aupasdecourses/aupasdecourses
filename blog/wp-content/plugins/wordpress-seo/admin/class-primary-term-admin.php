@@ -76,18 +76,18 @@ class WPSEO_Primary_Term_Admin {
 	/**
 	 * Saves all selected primary terms
 	 *
-	 * @param int $post_id Post ID to save primary terms for.
+	 * @param int $post_ID Post ID to save primary terms for.
 	 */
-	public function save_primary_terms( $post_id ) {
+	public function save_primary_terms( $post_ID ) {
 		// Bail if this is a multisite installation and the site has been switched.
 		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
-		$taxonomies = $this->get_primary_term_taxonomies( $post_id );
+		$taxonomies = $this->get_primary_term_taxonomies( $post_ID );
 
 		foreach ( $taxonomies as $taxonomy ) {
-			$this->save_primary_term( $post_id, $taxonomy );
+			$this->save_primary_term( $post_ID, $taxonomy );
 		}
 	}
 
@@ -108,22 +108,22 @@ class WPSEO_Primary_Term_Admin {
 	/**
 	 * Returns all the taxonomies for which the primary term selection is enabled
 	 *
-	 * @param int $post_id Default current post ID.
+	 * @param int $post_ID Default current post ID.
 	 * @return array
 	 */
-	protected function get_primary_term_taxonomies( $post_id = null ) {
+	protected function get_primary_term_taxonomies( $post_ID = null ) {
 
-		if ( null === $post_id ) {
-			$post_id = $this->get_current_id();
+		if ( null === $post_ID ) {
+			$post_ID = $this->get_current_id();
 		}
 
-		if ( false !== ( $taxonomies = wp_cache_get( 'primary_term_taxonomies_' . $post_id, 'wpseo' ) ) ) {
+		if ( false !== ( $taxonomies = wp_cache_get( 'primary_term_taxonomies_' . $post_ID, 'wpseo' ) ) ) {
 			return $taxonomies;
 		}
 
-		$taxonomies = $this->generate_primary_term_taxonomies( $post_id );
+		$taxonomies = $this->generate_primary_term_taxonomies( $post_ID );
 
-		wp_cache_set( 'primary_term_taxonomies_' . $post_id, $taxonomies, 'wpseo' );
+		wp_cache_set( 'primary_term_taxonomies_' . $post_ID, $taxonomies, 'wpseo' );
 
 		return $taxonomies;
 	}
@@ -138,15 +138,15 @@ class WPSEO_Primary_Term_Admin {
 	/**
 	 * Save the primary term for a specific taxonomy
 	 *
-	 * @param int     $post_id  Post ID to save primary term for.
+	 * @param int     $post_ID  Post ID to save primary term for.
 	 * @param WP_Term $taxonomy Taxonomy to save primary term for.
 	 */
-	protected function save_primary_term( $post_id, $taxonomy ) {
+	protected function save_primary_term( $post_ID, $taxonomy ) {
 		$primary_term = filter_input( INPUT_POST, WPSEO_Meta::$form_prefix . 'primary_' . $taxonomy->name . '_term', FILTER_SANITIZE_NUMBER_INT );
 
 		// We accept an empty string here because we need to save that if no terms are selected.
 		if ( null !== $primary_term && check_admin_referer( 'save-primary-term', WPSEO_Meta::$form_prefix . 'primary_' . $taxonomy->name . '_nonce' ) ) {
-			$primary_term_object = new WPSEO_Primary_Term( $taxonomy->name, $post_id );
+			$primary_term_object = new WPSEO_Primary_Term( $taxonomy->name, $post_ID );
 			$primary_term_object->set_primary_term( $primary_term );
 		}
 	}
@@ -154,12 +154,12 @@ class WPSEO_Primary_Term_Admin {
 	/**
 	 * Generate the primary term taxonomies.
 	 *
-	 * @param int $post_id ID of the post.
+	 * @param int $post_ID ID of the post.
 	 *
 	 * @return array
 	 */
-	protected function generate_primary_term_taxonomies( $post_id ) {
-		$post_type      = get_post_type( $post_id );
+	protected function generate_primary_term_taxonomies( $post_ID ) {
+		$post_type      = get_post_type( $post_ID );
 		$all_taxonomies = get_object_taxonomies( $post_type, 'objects' );
 		$all_taxonomies = array_filter( $all_taxonomies, array( $this, 'filter_hierarchical_taxonomies' ) );
 

@@ -16,10 +16,7 @@ class pirate_forms_contact_widget extends WP_Widget {
 		parent::__construct(
 			'pirate_forms_contact_widget',
 			__( 'Pirate Forms', 'pirate-forms' ),
-			array(
-				'classname' => __FUNCTION__,
-				'description' => __( 'Pirate Forms', 'pirate-forms' ),
-			)
+			array( 'classname' => __FUNCTION__, 'description' => __( 'Pirate Forms', 'pirate-forms' ) )
 		);
 	}
 

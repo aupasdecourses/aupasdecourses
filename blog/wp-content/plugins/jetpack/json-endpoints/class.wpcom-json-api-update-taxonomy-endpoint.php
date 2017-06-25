@@ -47,8 +47,9 @@ class WPCOM_JSON_API_Update_Taxonomy_Endpoint extends WPCOM_JSON_API_Taxonomy_En
 			$input['parent'] = 0;
 
 		if ( $term = get_term_by( 'name', $input['name'], $taxonomy_type ) ) {
-			// the same name is allowed as long as the parents are different
-			if ( $input['parent'] === $term->parent ) {
+			// get_term_by is not case-sensitive, but a name with different casing is allowed
+			// also, the exact same name is allowed as long as the parents are different
+			if ( $input['name'] === $term->name && $input['parent'] === $term->parent ) {
 				return new WP_Error( 'duplicate', 'A taxonomy with that name already exists', 400 );
 			}
 		}

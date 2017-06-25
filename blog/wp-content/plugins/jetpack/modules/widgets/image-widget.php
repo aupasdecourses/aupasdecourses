@@ -9,11 +9,8 @@
 /**
 * Register the widget for use in Appearance -> Widgets
 */
-add_action( 'widgets_init', 'jetpack_image_widget_init', 11 );
+add_action( 'widgets_init', 'jetpack_image_widget_init' );
 function jetpack_image_widget_init() {
-	if ( class_exists( 'WP_Widget_Media_Image' ) && Jetpack_Options::get_option( 'image_widget_migration' ) ) {
-		return;
-	}
 	register_widget( 'Jetpack_Image_Widget' );
 }
 

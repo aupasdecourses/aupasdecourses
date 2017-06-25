@@ -148,7 +148,7 @@ final class WP_Theme implements ArrayAccess {
 	 * URL to the theme root, usually an absolute URL to wp-content/themes
 	 *
 	 * @access private
-	 * @var string
+	 * var string
 	 */
 	private $theme_root_uri;
 
@@ -192,8 +192,6 @@ final class WP_Theme implements ArrayAccess {
 
 	/**
 	 * Constructor for WP_Theme.
-	 *
-	 * @since  3.4.0
 	 *
 	 * @global array $wp_theme_directories
 	 *
@@ -335,8 +333,6 @@ final class WP_Theme implements ArrayAccess {
 	/**
 	 * When converting the object to a string, the theme name is returned.
 	 *
-	 * @since  3.4.0
-	 *
 	 * @return string Theme name, ready for display (translated)
 	 */
 	public function __toString() {
@@ -347,8 +343,6 @@ final class WP_Theme implements ArrayAccess {
 	 * __isset() magic method for properties formerly returned by current_theme_info()
 	 *
 	 * @staticvar array $properties
-	 *
-	 * @since  3.4.0
 	 *
 	 * @param string $offset Property to check if set.
 	 * @return bool Whether the given property is set.
@@ -364,8 +358,6 @@ final class WP_Theme implements ArrayAccess {
 
 	/**
 	 * __get() magic method for properties formerly returned by current_theme_info()
-	 *
-	 * @since  3.4.0
 	 *
 	 * @param string $offset Property to get.
 	 * @return mixed Property value.
@@ -409,8 +401,6 @@ final class WP_Theme implements ArrayAccess {
 	/**
 	 * Method to implement ArrayAccess for keys formerly returned by get_themes()
 	 *
-	 * @since  3.4.0
-	 *
 	 * @param mixed $offset
 	 * @param mixed $value
 	 */
@@ -418,8 +408,6 @@ final class WP_Theme implements ArrayAccess {
 
 	/**
 	 * Method to implement ArrayAccess for keys formerly returned by get_themes()
-	 *
-	 * @since  3.4.0
 	 *
 	 * @param mixed $offset
 	 */
@@ -429,8 +417,6 @@ final class WP_Theme implements ArrayAccess {
 	 * Method to implement ArrayAccess for keys formerly returned by get_themes()
 	 *
 	 * @staticvar array $keys
-	 *
-	 * @since  3.4.0
 	 *
 	 * @param mixed $offset
 	 * @return bool
@@ -454,8 +440,6 @@ final class WP_Theme implements ArrayAccess {
 	 * untranslated for back compatibility. This means that ['Name'] is not ideal,
 	 * and care should be taken to use `$theme::display( 'Name' )` to get a properly
 	 * translated header.
-	 *
-	 * @since  3.4.0
 	 *
 	 * @param mixed $offset
 	 * @return mixed
@@ -1155,21 +1139,11 @@ final class WP_Theme implements ArrayAccess {
 		$results = scandir( $path );
 		$files = array();
 
-		/**
-		 * Filters the array of excluded directories and files while scanning theme folder.
-		 *
- 		 * @since 4.7.4
-		 *
-		 * @param array $exclusions Array of excluded directories and files.
-		 */
-		$exclusions = (array) apply_filters( 'theme_scandir_exclusions', array( 'CVS', 'node_modules' ) );
-
 		foreach ( $results as $result ) {
-			if ( '.' == $result[0] || in_array( $result, $exclusions, true ) ) {
+			if ( '.' == $result[0] )
 				continue;
-			}
 			if ( is_dir( $path . '/' . $result ) ) {
-				if ( ! $depth )
+				if ( ! $depth || 'CVS' == $result )
 					continue;
 				$found = self::scandir( $path . '/' . $result, $extensions, $depth - 1 , $relative_path . $result );
 				$files = array_merge_recursive( $files, $found );
@@ -1252,8 +1226,6 @@ final class WP_Theme implements ArrayAccess {
 	 * Determines the latest WordPress default theme that is installed.
 	 *
 	 * This hits the filesystem.
-	 *
-	 * @since  4.4.0
 	 *
 	 * @return WP_Theme|false Object, or false if no theme is installed, which would be bad.
 	 */

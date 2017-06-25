@@ -1126,8 +1126,8 @@
 			/**
 			 * Tracking objects for models and collections.
 			 */
-			loadingObjects.models      = {};
-			loadingObjects.collections = {};
+			loadingObjects.models      = routeModel.get( 'models' );
+			loadingObjects.collections = routeModel.get( 'collections' );
 
 			_.each( routeModel.schemaModel.get( 'routes' ), function( route, index ) {
 
@@ -1310,9 +1310,7 @@
 					loadingObjects.collections[ collectionClassName ] = wp.api.WPApiBaseCollection.extend( {
 
 						// For the url of a root level collection, use a string.
-						url: function() {
-							return routeModel.get( 'apiRoot' ) + routeModel.get( 'versionString' ) + routeName;
-						},
+						url: routeModel.get( 'apiRoot' ) + routeModel.get( 'versionString' ) + routeName,
 
 						// Specify the model that this collection contains.
 						model: function( attrs, options ) {
@@ -1339,15 +1337,13 @@
 				loadingObjects.models[ index ] = wp.api.utils.addMixinsAndHelpers( model, index, loadingObjects );
 			} );
 
-			// Set the routeModel models and collections.
-			routeModel.set( 'models', loadingObjects.models );
-			routeModel.set( 'collections', loadingObjects.collections );
-
 		}
 
 	} );
 
-	wp.api.endpoints = new Backbone.Collection();
+	wp.api.endpoints = new Backbone.Collection( {
+		model: Endpoint
+	} );
 
 	/**
 	 * Initialize the wp-api, optionally passing the API root.
@@ -1361,30 +1357,28 @@
 		var endpoint, attributes = {}, deferred, promise;
 
 		args                     = args || {};
-		attributes.apiRoot       = args.apiRoot || wpApiSettings.root || '/wp-json';
-		attributes.versionString = args.versionString || wpApiSettings.versionString || 'wp/v2/';
+		attributes.apiRoot       = args.apiRoot || wpApiSettings.root;
+		attributes.versionString = args.versionString || wpApiSettings.versionString;
 		attributes.schema        = args.schema || null;
 		if ( ! attributes.schema && attributes.apiRoot === wpApiSettings.root && attributes.versionString === wpApiSettings.versionString ) {
 			attributes.schema = wpApiSettings.schema;
 		}
 
 		if ( ! initializedDeferreds[ attributes.apiRoot + attributes.versionString ] ) {
-
-			// Look for an existing copy of this endpoint
-			endpoint = wp.api.endpoints.findWhere( { 'apiRoot': attributes.apiRoot, 'versionString': attributes.versionString } );
+			endpoint = wp.api.endpoints.findWhere( { apiRoot: attributes.apiRoot, versionString: attributes.versionString } );
 			if ( ! endpoint ) {
 				endpoint = new Endpoint( attributes );
+				wp.api.endpoints.add( endpoint );
 			}
 			deferred = jQuery.Deferred();
 			promise = deferred.promise();
 
-			endpoint.schemaConstructed.done( function( resolvedEndpoint ) {
-				wp.api.endpoints.add( resolvedEndpoint );
+			endpoint.schemaConstructed.done( function( endpoint ) {
 
 				// Map the default endpoints, extending any already present items (including Schema model).
-				wp.api.models      = _.extend( wp.api.models, resolvedEndpoint.get( 'models' ) );
-				wp.api.collections = _.extend( wp.api.collections, resolvedEndpoint.get( 'collections' ) );
-				deferred.resolve( resolvedEndpoint );
+				wp.api.models      = _.extend( endpoint.get( 'models' ), wp.api.models );
+				wp.api.collections = _.extend( endpoint.get( 'collections' ), wp.api.collections );
+				deferred.resolveWith( wp.api, [ endpoint ] );
 			} );
 			initializedDeferreds[ attributes.apiRoot + attributes.versionString ] = promise;
 		}

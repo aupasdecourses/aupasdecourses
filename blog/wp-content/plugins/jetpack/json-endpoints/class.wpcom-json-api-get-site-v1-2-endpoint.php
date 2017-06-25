@@ -1,5 +1,4 @@
 <?php
-
 class WPCOM_JSON_API_GET_Site_V1_2_Endpoint extends WPCOM_JSON_API_GET_Site_Endpoint {
 
 	public static $site_format = array(
@@ -25,7 +24,6 @@ class WPCOM_JSON_API_GET_Site_V1_2_Endpoint extends WPCOM_JSON_API_GET_Site_Endp
 		'updates'           => '(array) An array of available updates for plugins, themes, wordpress, and languages.',
 		'jetpack_modules'   => '(array) A list of active Jetpack modules.',
 		'meta'              => '(object) Meta data',
-		'quota'             => '(array) An array describing how much space a user has left for uploads',
 	);
 
 

@@ -1,25 +1,25 @@
 <?php
 /* THIS IS A GENERATED FILE. DO NOT EDIT DIRECTLY. */
 $generated_i18n_strings = array(
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:286
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:275
 	__( 'Next step', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:285
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:274
 	__( 'Next', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:276
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:266
 	__( 'Previous step', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:275
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:265
 	__( 'Previous', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:245
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:238
 	__( 'Close the Wizard', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:244
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:237
 	__( 'Close', 'wordpress-seo' ),
 
-	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:170
+	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:163
 	__( 'A problem occurred when saving the current step, {{link}}please file a bug report{{/link}} describing what step you are on and which changes you want to make (if any).', 'wordpress-seo' ),
 
 	// Reference: yoast-components/composites/OnboardingWizard/StepIndicator.js:48
@@ -65,28 +65,28 @@ $generated_i18n_strings = array(
 	// Reference: yoast-components/composites/SearchResultPreview/SearchResultPreview.js:39
 	__( 'Search Result Preview', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:357
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:352
 	__( 'Get Google Authorization Code', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:350
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:345
 	__( 'To allow %s to fetch your Google Search Console information, please enter your Google Authorization Code. Clicking the button below will open a new window.', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:339
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:334
 	__( 'Reauthenticate with Google', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:314
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:311
 	__( 'Authenticate', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:310
-	__( 'Enter authorization code here...', 'wordpress-seo' ),
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:308
+	__( 'Authorization code', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:299
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:297
 	__( 'Enter your Google Authorization Code and press the Authenticate button.', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:274
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:273
 	__( 'Choose a profile', 'wordpress-seo' ),
 
-	// Reference: js/src/components/ConnectGoogleSearchConsole.js:268
+	// Reference: js/src/components/ConnectGoogleSearchConsole.js:267
 	__( 'Select profile', 'wordpress-seo' ),
 
 	// Reference: js/src/components/ConnectGoogleSearchConsole.js:256
@@ -95,17 +95,20 @@ $generated_i18n_strings = array(
 	// Reference: js/src/components/ConnectGoogleSearchConsole.js:110
 	__( 'There is an error with the request.', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:228
+	// Reference: js/src/components/MailchimpSignup.js:220
 	__( 'Email', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:214
+	// Reference: js/src/components/MailchimpSignup.js:206
 	__( 'Name', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:196
+	// Reference: js/src/components/MailchimpSignup.js:193
 	__( 'Sign Up!', 'wordpress-seo' ),
 
 	// Reference: js/src/components/MailchimpSignup.js:111
 	__( 'MailChimp signup failed:', 'wordpress-seo' ),
+
+	// Reference: js/src/components/MailchimpSignup.js:23
+	__( 'Sign up for our newsletter!', 'wordpress-seo' ),
 
 	// Reference: js/src/components/MediaUpload.js:106
 	__( 'Choose image', 'wordpress-seo' ),

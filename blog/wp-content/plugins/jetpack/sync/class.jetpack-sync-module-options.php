@@ -71,22 +71,16 @@ class Jetpack_Sync_Module_Options extends Jetpack_Sync_Module {
 	// Is public so that we don't have to store so much data all the options twice.
 	function get_all_options() {
 		$options = array();
-		$random_string = wp_generate_password();
 		foreach ( $this->options_whitelist as $option ) {
-			$option_value = get_option( $option, $random_string );
-			if ( $option_value !== $random_string ) {
-				$options[ $option ] = $option_value;
-			}
+			$options[ $option ] = get_option( $option );
 		}
 
 		// add theme mods
 		$theme_mods_option = 'theme_mods_'.get_option( 'stylesheet' );
-		$theme_mods_value  = get_option( $theme_mods_option, $random_string );
-		if ( $theme_mods_value === $random_string ) {
-			return $options;
-		}
+		$theme_mods_value  = get_option( $theme_mods_option );
 		$this->filter_theme_mods( $theme_mods_value );
 		$options[ $theme_mods_option ] = $theme_mods_value;
+
 		return $options;
 	}
 
@@ -115,6 +109,7 @@ class Jetpack_Sync_Module_Options extends Jetpack_Sync_Module {
 				$this->filter_theme_mods( $args[2] );
 			}
 		}
+
 		return $args;
 	}
 

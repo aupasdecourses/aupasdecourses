@@ -3,7 +3,7 @@
 Plugin Name: SB-RSS_feed-plus
 Plugin URI: http://git.ladasoukup.cz/sb-rss-feed-plus
 Description: This plugin will add post thumbnail to RSS feed items. Add signatur or simple ads. Create fulltext RSS (via special url).
-Version: 1.4.19
+Version: 1.4.18
 Author: Ladislav Soukup (ladislav.soukup@gmail.com)
 Author URI: http://www.ladasoukup.cz/
 Author Email: ladislav.soukup@gmail.com
@@ -274,12 +274,7 @@ class SB_RSS_feed_plus {
 					$image_copyright = strip_tags(get_bloginfo( 'name' ));
 					if (!empty($image_mediaContent['meta']['copyright'])) $image_copyright = $image_mediaContent['meta']['copyright'];
 					
-					if ( strpos( $image_mediaContent[0], 'http' ) !== false ) {
-						$image_mediaContent_URL = esc_url( $image_mediaContent[0] );
-					} else {
-						$image_mediaContent_URL = esc_url( home_url( $image_mediaContent[0] ) );
-					}
-					echo '<media:content xmlns:media="http://search.yahoo.com/mrss/" url="' . esc_url( $image_mediaContent_URL ) . '" width="' . $image_mediaContent[1] . '" height="' . $image_mediaContent[2] . '" medium="image" type="image/jpeg">' . "\n";
+					echo '<media:content xmlns:media="http://search.yahoo.com/mrss/" url="' . esc_url( $image_mediaContent[0] ) . '" width="' . $image_mediaContent[1] . '" height="' . $image_mediaContent[2] . '" medium="image" type="image/jpeg">' . "\n";
 					if ($this->CFG['sbrssfeedcfg_metaExtension_addMediaMetaCopyright'] != 1) {
 						echo '	<media:copyright>' . htmlspecialchars ($image_copyright) . '</media:copyright>' . "\n";
 						echo '	<media:title>' . htmlspecialchars ($image_mediaContent['meta_desc']['title']) . '</media:title>' . "\n";

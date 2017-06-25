@@ -43,8 +43,7 @@ function monsterinsights_get_section_settings( $section, $page = 'tracking' ) {
 				'field_class'   => '',
 				'multiple'      => false,
 				'allowclear'    => true,
-				'notice_type'   => 'info',
-				'no_label'      => false,
+				'notice_type'   => '',
 			) );
 			$output .= monsterinsights_render_field( $args );
 		}
@@ -134,7 +133,7 @@ function monsterinsights_save_settings() {
 			'field_class'   => '',
 			'multiple'      => false,
 			'allowclear'    => true,
-			'notice_type'   => 'info',
+			'notice_type'   => '',
 		) );
 
 		// Sanitize settings
@@ -143,24 +142,11 @@ function monsterinsights_save_settings() {
 		$value = apply_filters( 'monsterinsights_settings_sanitize'         , $value, $id, $args, $previous_value );
 
 		// Save
-		if ( ! has_action( 'monsterinsights_settings_save_' . $args['type'] ) ) {
-			monsterinsights_update_option( $id, $value );
-		} else {
-			do_action( 'monsterinsights_settings_save_' . $args['type'], $value, $id, $args, $previous_value );
-		}
+		monsterinsights_update_option( $id, $value );
 	}
 	add_action( 'monsterinsights_tracking_' . $tab . '_tab_notice', 'monsterinsights_updated_settings' );
 }
 add_action( 'current_screen', 'monsterinsights_save_settings' );
-
-function monsterinsights_is_settings_tab( $tab = '' ){
-	$tabs = monsterinsights_get_settings_tabs();
-	if ( empty( $tab ) || empty( $tabs ) || ! is_string( $tab ) || ! is_array( $tabs ) ) {
-		return false;
-	}
-
-	return !empty( $tabs[$tab]);
-}
 
 /**
  * Flattens the set of registered settings and their type so we can easily sanitize all the settings
@@ -528,18 +514,7 @@ function monsterinsights_checkbox_callback( $args ) {
 	$class = monsterinsights_sanitize_html_class( $args['field_class'] );
 
 	$checked  = ! empty( $monsterinsights_option ) ? checked( 1, $monsterinsights_option, false ) : '';
-
-	$disabled = '';
-
-	if ( isset( $args['faux'] ) && true === $args['faux'] ) {
-		// Disable class
-		$disabled = 'disabled="disabled"';
-		
-		// Checked
-		$checked  = isset( $args['std'] ) && true === $args['std'] ? checked( 1, 1, false ) : '';
-	}
-
-	$html     = '<input type="checkbox" id="monsterinsights_settings[' . monsterinsights_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '" ' . $disabled . ' />';
+	$html     = '<input type="checkbox" id="monsterinsights_settings[' . monsterinsights_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/>';
 	$html    .= '<p class="description">'  . wp_kses_post( $args['desc'] ) . '</p>';
 
 	return apply_filters( 'monsterinsights_after_setting_output', $html, $args );
@@ -892,24 +867,6 @@ function monsterinsights_notice_callback( $args ) {
 }
 
 /**
- * Upgrade Notice Callback
- *
- * Renders upgrade notice fields.
- *
- * @since 6.1.7
- * @param array $args Arguments passed by the setting
- *
- * @return void
- */
-function monsterinsights_upgrade_notice_callback( $args ) {
-	$html =   '<div class="monsterinsights-upsell-box"><h2>' . esc_html( $args['name' ] ) . '</h2>'
-			. '<p class="monsterinsights-upsell-lite-text">' . $args['desc'] . '</p>'
-			. '<p class="monsterinsights-upsell-button-par"><a href="https://www.monsterinsights.com/lite/" class="monsterinsights-upsell-box-button button button-primary">' . __( 'Click here to Upgrade', 'google-analytics-for-wordpress' ) . '</a></p>'
-			. '</div>';
-	return apply_filters( 'monsterinsights_after_setting_output', $html, $args ); 
-}
-
-/**
  * Hook Callback
  *
  * Adds a do_action() hook in place of the field
@@ -955,11 +912,9 @@ function monsterinsights_render_submit_field( $section, $page = 'tracking' ) {
 		$non_setting_types = monsterinsights_get_non_setting_types();
 		$submit_button     = false;
 		foreach ( $settings[$section] as $setting ) {
-			if ( ! empty( $non_setting_types ) && ! empty( $setting['type'] ) && ! in_array( $setting['type'], $non_setting_types ) ) {
-				if ( empty( $setting['faux'] ) ) {
-					$submit_button = true;
-					break;
-				}
+			if ( ! empty( $non_setting_types ) && !in_array( $setting['type'], $non_setting_types ) ) {
+				$submit_button = true;
+				break;
 			}
 		}
 		if ( $submit_button ) {
@@ -968,7 +923,6 @@ function monsterinsights_render_submit_field( $section, $page = 'tracking' ) {
 			$html .= wp_nonce_field( 'monsterinsights-settings-nonce', 'monsterinsights-settings-nonce', true, false );
 			$html .= get_submit_button( esc_html__( 'Save Changes', 'google-analytics-for-wordpress' ), 'primary', 'monsterinsights-settings-submit', false );
 		}
-		$html      = apply_filters( 'monsterinsights_html_after_submit_field', $html, $page, $section );
 	}
 	return $html;
 }
@@ -979,7 +933,7 @@ function monsterinsights_render_submit_field( $section, $page = 'tracking' ) {
 function monsterinsights_render_field( $args ) {
 	$output = '';
 	$output .='<tr id="monsterinsights-input-' . monsterinsights_sanitize_key( $args['id'] ) .'">';
-		if ( ! empty( $args['name'] ) && empty( $args['no_label'] ) ) {
+		if ( ! empty( $args['name'] ) ) {
 			$output .= '<th scope="row">';
 				$output .='<label for="monsterinsights_settings[' . monsterinsights_sanitize_key( $args['id'] ) . ']">' . esc_html( $args["name"] ) . '</label>';
 			$output .= '</th>';

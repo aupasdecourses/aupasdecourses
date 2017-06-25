@@ -665,19 +665,11 @@
 
 		// Opens the panel.
 		open: function( menuControl ) {
-			var panel = this, close;
-
 			this.currentMenuControl = menuControl;
 
 			this.itemSectionHeight();
 
 			$( 'body' ).addClass( 'adding-menu-items' );
-
-			close = function() {
-				panel.close();
-				$( this ).off( 'click', close );
-			};
-			$( '#customize-preview' ).on( 'click', close );
 
 			// Collapse all controls.
 			_( this.currentMenuControl.getMenuItemControls() ).each( function( control ) {
@@ -1331,14 +1323,7 @@
 			this.container.find( '.menu-item-handle' ).on( 'click', function( e ) {
 				e.preventDefault();
 				e.stopPropagation();
-				var menuControl = control.getMenuControl(),
-					isDeleteBtn = $( e.target ).is( '.item-delete, .item-delete *' ),
-					isAddNewBtn = $( e.target ).is( '.add-new-menu-item, .add-new-menu-item *' );
-
-				if ( $( 'body' ).hasClass( 'adding-menu-items' ) && ! isDeleteBtn && ! isAddNewBtn ) {
-					api.Menus.availableMenuItemsPanel.close();
-				}
-
+				var menuControl = control.getMenuControl();
 				if ( menuControl.isReordering || menuControl.isSorting ) {
 					return;
 				}
@@ -2229,7 +2214,7 @@
 				}
 			} );
 
-			control.container.find( '.menu-delete-item' ).on( 'click', function( event ) {
+			control.container.find( '.menu-delete' ).on( 'click', function( event ) {
 				event.stopPropagation();
 				event.preventDefault();
 				control.setting.set( false );

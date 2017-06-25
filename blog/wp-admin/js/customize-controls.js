@@ -528,11 +528,10 @@
 		 *
 		 * @since 4.1.0
 		 *
-		 * @param {boolean}  active - The active state to transiution to.
-		 * @param {Object}   [args] - Args.
-		 * @param {Object}   [args.duration] - The duration for the slideUp/slideDown animation.
-		 * @param {boolean}  [args.unchanged] - Whether the state is already known to not be changed, and so short-circuit with calling completeCallback early.
-		 * @param {Function} [args.completeCallback] - Function to call when the slideUp/slideDown has completed.
+		 * @param {Boolean} active
+		 * @param {Object}  args
+		 * @param {Object}  args.duration
+		 * @param {Object}  args.completeCallback
 		 */
 		onChangeActive: function( active, args ) {
 			var construct = this,
@@ -565,24 +564,24 @@
 				}
 			}
 
-			if ( ! $.contains( document, headContainer.get( 0 ) ) ) {
-				// If the element is not in the DOM, then jQuery.fn.slideUp() does nothing. In this case, a hard toggle is required instead.
+			if ( ! $.contains( document, headContainer ) ) {
+				// jQuery.fn.slideUp is not hiding an element if it is not in the DOM
 				headContainer.toggle( active );
 				if ( args.completeCallback ) {
 					args.completeCallback();
 				}
 			} else if ( active ) {
-				headContainer.slideDown( duration, args.completeCallback );
+				headContainer.stop( true, true ).slideDown( duration, args.completeCallback );
 			} else {
 				if ( construct.expanded() ) {
 					construct.collapse({
 						duration: duration,
 						completeCallback: function() {
-							headContainer.slideUp( duration, args.completeCallback );
+							headContainer.stop( true, true ).slideUp( duration, args.completeCallback );
 						}
 					});
 				} else {
-					headContainer.slideUp( duration, args.completeCallback );
+					headContainer.stop( true, true ).slideUp( duration, args.completeCallback );
 				}
 			}
 		},
@@ -711,19 +710,11 @@
 			var construct = this,
 				content = construct.contentContainer,
 				overlay = content.closest( '.wp-full-overlay' ),
-				elements, transitionEndCallback, transitionParentPane;
+				elements, transitionEndCallback;
 
 			// Determine set of elements that are affected by the animation.
 			elements = overlay.add( content );
-
-			if ( ! construct.panel || '' === construct.panel() ) {
-				transitionParentPane = true;
-			} else if ( api.panel( construct.panel() ).contentContainer.hasClass( 'skip-transition' ) ) {
-				transitionParentPane = true;
-			} else {
-				transitionParentPane = false;
-			}
-			if ( transitionParentPane ) {
+			if ( _.isUndefined( construct.panel ) || '' === construct.panel() ) {
 				elements = elements.add( '#customize-info, .customize-pane-parent' );
 			}
 
@@ -1004,7 +995,7 @@
 				overlay = section.headContainer.closest( '.wp-full-overlay' ),
 				backBtn = content.find( '.customize-section-back' ),
 				sectionTitle = section.headContainer.find( '.accordion-section-title' ).first(),
-				expand, panel;
+				expand;
 
 			if ( expanded && ! content.hasClass( 'open' ) ) {
 
@@ -1052,12 +1043,6 @@
 				}
 
 			} else if ( ! expanded && content.hasClass( 'open' ) ) {
-				if ( section.panel() ) {
-					panel = api.panel( section.panel() );
-					if ( panel.contentContainer.hasClass( 'skip-transition' ) ) {
-						panel.collapse();
-					}
-				}
 				section._animateChangeExpanded( function() {
 					backBtn.attr( 'tabindex', '-1' );
 					sectionTitle.attr( 'tabindex', '0' );
@@ -1736,9 +1721,7 @@
 				overlay = accordionSection.closest( '.wp-full-overlay' ),
 				container = accordionSection.closest( '.wp-full-overlay-sidebar-content' ),
 				topPanel = panel.headContainer.find( '.accordion-section-title' ),
-				backBtn = accordionSection.find( '.customize-panel-back' ),
-				childSections = panel.sections(),
-				skipTransition;
+				backBtn = accordionSection.find( '.customize-panel-back' );
 
 			if ( expanded && ! accordionSection.hasClass( 'current-panel' ) ) {
 				// Collapse any sibling sections/panels
@@ -1753,50 +1736,35 @@
 					}
 				});
 
-				if ( panel.params.autoExpandSoleSection && 1 === childSections.length && childSections[0].active.get() ) {
-					accordionSection.addClass( 'current-panel skip-transition' );
-					overlay.addClass( 'in-sub-panel' );
+				panel._animateChangeExpanded( function() {
+					topPanel.attr( 'tabindex', '-1' );
+					backBtn.attr( 'tabindex', '0' );
 
-					childSections[0].expand( {
-						completeCallback: args.completeCallback
-					} );
-				} else {
-					panel._animateChangeExpanded( function() {
-						topPanel.attr( 'tabindex', '-1' );
-						backBtn.attr( 'tabindex', '0' );
+					backBtn.focus();
+					accordionSection.css( 'top', '' );
+					container.scrollTop( 0 );
 
-						backBtn.focus();
-						accordionSection.css( 'top', '' );
-						container.scrollTop( 0 );
+					if ( args.completeCallback ) {
+						args.completeCallback();
+					}
+				} );
 
-						if ( args.completeCallback ) {
-							args.completeCallback();
-						}
-					} );
-
-					accordionSection.addClass( 'current-panel' );
-					overlay.addClass( 'in-sub-panel' );
-				}
-
+				overlay.addClass( 'in-sub-panel' );
+				accordionSection.addClass( 'current-panel' );
 				api.state( 'expandedPanel' ).set( panel );
 
 			} else if ( ! expanded && accordionSection.hasClass( 'current-panel' ) ) {
-				skipTransition = accordionSection.hasClass( 'skip-transition' );
-				if ( ! skipTransition ) {
-					panel._animateChangeExpanded( function() {
-						topPanel.attr( 'tabindex', '0' );
-						backBtn.attr( 'tabindex', '-1' );
+				panel._animateChangeExpanded( function() {
+					topPanel.attr( 'tabindex', '0' );
+					backBtn.attr( 'tabindex', '-1' );
 
-						topPanel.focus();
-						accordionSection.css( 'top', '' );
+					topPanel.focus();
+					accordionSection.css( 'top', '' );
 
-						if ( args.completeCallback ) {
-							args.completeCallback();
-						}
-					} );
-				} else {
-					accordionSection.removeClass( 'skip-transition' );
-				}
+					if ( args.completeCallback ) {
+						args.completeCallback();
+					}
+				} );
 
 				overlay.removeClass( 'in-sub-panel' );
 				accordionSection.removeClass( 'current-panel' );
@@ -2298,9 +2266,9 @@
 				availableItem = new api.Menus.AvailableItemModel( {
 					'id': 'post-' + data.post_id, // Used for available menu item Backbone models.
 					'title': title,
-					'type': 'post_type',
+					'type': 'page',
 					'type_label': api.Menus.data.l10n.page_label,
-					'object': 'page',
+					'object': 'post_type',
 					'object_id': data.post_id,
 					'url': data.url
 				} );
@@ -4154,7 +4122,7 @@
 
 				// Remove notification errors that are no longer valid.
 				setting.notifications.each( function( notification ) {
-					if ( notification.fromServer && 'error' === notification.type && ( true === validity || ! validity[ notification.code ] ) ) {
+					if ( 'error' === notification.type && ( true === validity || ! validity[ notification.code ] ) ) {
 						setting.notifications.remove( notification.code );
 					}
 				} );
@@ -4420,11 +4388,10 @@
 				function captureSettingModifiedDuringSave( setting ) {
 					modifiedWhileSaving[ setting.id ] = true;
 				}
+				api.bind( 'change', captureSettingModifiedDuringSave );
 
 				submit = function () {
 					var request, query, settingInvalidities = {}, latestRevision = api._latestRevision;
-
-					api.bind( 'change', captureSettingModifiedDuringSave );
 
 					/*
 					 * Block saving if there are any settings that are marked as
@@ -4578,16 +4545,6 @@
 
 				return deferred.promise();
 			}
-		});
-
-		// Ensure preview nonce is included with every customized request, to allow post data to be read.
-		$.ajaxPrefilter( function injectPreviewNonce( options ) {
-			if ( ! /wp_customize=on/.test( options.data ) ) {
-				return;
-			}
-			options.data += '&' + $.param({
-				customize_preview_nonce: api.settings.nonce.preview
-			});
 		});
 
 		// Refresh the nonces if the preview sends updated nonces over.
@@ -4773,12 +4730,6 @@
 			 */
 			populateChangesetUuidParam = function( isIncluded ) {
 				var urlParser, queryParams;
-
-				// Abort on IE9 which doesn't support history management.
-				if ( ! history.replaceState ) {
-					return;
-				}
-
 				urlParser = document.createElement( 'a' );
 				urlParser.href = location.href;
 				queryParams = api.utils.parseQueryString( urlParser.search.substr( 1 ) );
@@ -4797,9 +4748,11 @@
 				history.replaceState( {}, document.title, urlParser.href );
 			};
 
-			changesetStatus.bind( function( newStatus ) {
-				populateChangesetUuidParam( '' !== newStatus && 'publish' !== newStatus );
-			} );
+			if ( history.replaceState ) {
+				changesetStatus.bind( function( newStatus ) {
+					populateChangesetUuidParam( '' !== newStatus && 'publish' !== newStatus );
+				} );
+			}
 
 			// Expose states to the API.
 			api.state = state;

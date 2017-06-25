@@ -124,10 +124,6 @@
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_Notation>
-		<Apdc_CMS>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Apdc_CMS>
         <Apdc_Neighborhood>
           <active>true</active>
           <codePool>local</codePool>
@@ -139,12 +135,9 @@
             <Amasty_Shiprestriction />
           </depends>
         </Apdc_Shiprestriction>
-        <Apdc_Search>
-          <active>true</active>
-          <codePool>local</codePool>
-          <depends>
-            <Mage_CatalogSearch />
-          </depends>
-        </Apdc_Search>
+		<Apdc_CMS>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_CMS>
     </modules>
 </config>

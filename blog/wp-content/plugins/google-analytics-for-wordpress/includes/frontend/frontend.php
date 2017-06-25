@@ -34,7 +34,7 @@ function monsterinsights_tracking_script( ) {
 
     if ( is_preview() ) {
         $mode = 'preview';
-    } else if ( ! monsterinsights_track_user() ) {
+    } else if ( monsterinsights_disabled_user_group() ) {
         $mode = 'disabled';
     } else if ( $tracking_mode === 'analytics' ) {
         $mode = 'analytics';
@@ -96,14 +96,14 @@ add_action( 'wp_head', 'monsterinsights_tracking_script', 8 );
  * @return array Array of the options to use.
  */
 function monsterinsights_events_tracking( ) {
-    $events_mode   = monsterinsights_get_option( 'events_mode', false );
+    $events_mode = monsterinsights_get_option( 'events_mode', false );
     $tracking_mode = monsterinsights_get_option( 'tracking_mode', 'analytics' );
-    $track_user    = monsterinsights_track_user();
+    $disabled_user = monsterinsights_disabled_user_group();
 
-    if ( $track_user && $events_mode === 'php' && ( $tracking_mode === 'ga' || $tracking_mode === 'analytics' ) ) {
+    if ( ! $disabled_user && $events_mode === 'php' && ( $tracking_mode === 'ga' || $tracking_mode === 'analytics' ) ) {
         require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/events/class-events-php.php';
         new MonsterInsights_Events_PHP();
-    } else if ( $track_user && $events_mode === 'js' && $tracking_mode === 'analytics' ) {
+    } else if ( ! $disabled_user && $events_mode === 'js' && $tracking_mode === 'analytics' ) {
         require_once plugin_dir_path( MONSTERINSIGHTS_PLUGIN_FILE ) . 'includes/frontend/events/class-events-js.php';
         new MonsterInsights_Events_JS();
     } else {
@@ -111,6 +111,38 @@ function monsterinsights_events_tracking( ) {
     }
 }
 add_action( 'template_redirect', 'monsterinsights_events_tracking', 9 );
+//add_action( 'login_head', 'monsterinsights_events_tracking', 8 );
+
+function monsterinsights_disabled_user_group( ) {
+    $user      = wp_get_current_user();
+    $disabled  = false;
+
+    $roles     = monsterinsights_get_option( 'ignore_users', array() );
+
+    if ( ! empty( $roles ) && is_array( $roles ) ) {
+        foreach ( $roles as $role ) {
+            if ( is_string( $role ) ) {
+                if ( current_user_can( $role ) ) {
+                    $disabled = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    $track_super_admin = apply_filters( 'monsterinsights_track_super_admins', false );
+    if ( $track_super_admin === false && is_super_admin() ) {
+        $disabled = true;
+    }
+    
+    // or if UA code is not entered
+    $ua_code = monsterinsights_get_ua();
+    if ( empty( $ua_code ) ) {
+        $disabled = true;
+    }
+
+    return apply_filters( 'monsterinsights_disabled_user_group', $disabled, $user );
+}
 
 /**
  * Add the UTM source parameters in the RSS feeds to track traffic.

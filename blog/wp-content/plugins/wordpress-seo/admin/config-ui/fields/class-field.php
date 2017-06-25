@@ -20,7 +20,7 @@ class WPSEO_Config_Field {
 	protected $requires = array();
 
 	/** @var array|mixed Value of this field */
-	protected $data = array();
+	protected $data;
 
 	/**
 	 * WPSEO_Config_Field constructor.

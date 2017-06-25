@@ -1,6 +1,5 @@
 <?php
-    //$shop_info=$this->getInfoShop();
-	$shop_info = Mage::helper('apdc_commercant')->getInfoShop();	
+    $shop_info=$this->getInfoShop();
 	$delivery_days = $shop_info['delivery_days'];
  ?>
 <div class="container-fluid commercant-collapse">
@@ -47,6 +46,7 @@
 								?>
 							</tbody>
 						</table>
+						
 					</div>
                 </div>
                 <div class="col-md-1 text-right text-center">

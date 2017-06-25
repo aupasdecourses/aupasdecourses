@@ -14,7 +14,6 @@ class Jetpack_Sync_Defaults {
 		'permalink_structure',
 		'category_base',
 		'tag_base',
-		'sidebars_widgets',
 		'comment_moderation',
 		'default_comment_status',
 		'page_on_front',

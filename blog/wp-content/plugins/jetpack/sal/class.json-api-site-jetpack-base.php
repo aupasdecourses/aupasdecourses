@@ -1,5 +1,6 @@
 <?php
 
+
 require_once dirname( __FILE__ ) . '/class.json-api-site-base.php';
 
 abstract class Abstract_Jetpack_Site extends SAL_Site {
@@ -9,11 +10,9 @@ abstract class Abstract_Jetpack_Site extends SAL_Site {
 
 	abstract protected function get_theme_support( $feature_name );
 
-	abstract protected function get_mock_option( $name );
+	abstract protected function get_jetpack_version();
 
-	abstract public function get_jetpack_version();
-
-	abstract public function get_updates();
+	abstract protected function get_updates();
 
 	abstract protected function main_network_site();
 
@@ -22,6 +21,8 @@ abstract class Abstract_Jetpack_Site extends SAL_Site {
 	abstract protected function max_upload_size();
 
 	abstract protected function is_main_network();
+
+	abstract protected function is_multi_site();
 
 	abstract protected function is_version_controlled();
 
@@ -63,7 +64,7 @@ abstract class Abstract_Jetpack_Site extends SAL_Site {
 		// Sites have to prove that they are not main_network site.
 		// If the sync happends right then we should be able to see that we are not dealing with a network site
 		$options['is_multi_network'] = (bool) $this->is_main_network();
-		$options['is_multi_site']    = (bool) $this->is_multisite();
+		$options['is_multi_site']    = (bool) $this->is_multi_site();
 
 		$file_mod_disabled_reasons = array_keys( array_filter( array(
 			'automatic_updater_disabled'      => (bool) $this->get_constant( 'AUTOMATIC_UPDATER_DISABLED' ),
@@ -88,6 +89,14 @@ abstract class Abstract_Jetpack_Site extends SAL_Site {
 
 	function is_vip() {
 		return false; // this may change for VIP Go sites, which sync using Jetpack
+	}
+
+	function is_multisite() {
+		return (bool) is_multisite();
+	}
+
+	function is_single_user_site() {
+		return (bool) Jetpack::is_single_user_site();
 	}
 
 	function featured_images_enabled() {
@@ -149,11 +158,6 @@ abstract class Abstract_Jetpack_Site extends SAL_Site {
 			}
 		}
 
-		return false;
-	}
-
-	// For Jetpack sites this will always return false
-	protected function is_a8c_publication( $post_id ) {
 		return false;
 	}
 }

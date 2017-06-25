@@ -146,8 +146,7 @@ class WPSEO_Export {
 
 		foreach ( $options as $key => $elem ) {
 			if ( is_array( $elem ) ) {
-				$count = count( $elem );
-				for ( $i = 0; $i < $count; $i ++ ) {
+				for ( $i = 0; $i < count( $elem ); $i ++ ) {
 					$this->write_setting( $key . '[]', $elem[ $i ] );
 				}
 			}

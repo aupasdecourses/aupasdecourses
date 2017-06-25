@@ -366,15 +366,15 @@ class Jetpack_Media_Meta_Extractor {
 		// @todo Can we check width/height of these efficiently?  Could maybe use query args at least, before we strip them out
 		$image_list = Jetpack_Media_Meta_Extractor::get_images_from_html( $post->post_content, $image_list );
 
-		return Jetpack_Media_Meta_Extractor::build_image_struct( $image_list, $image_booleans );
+		return Jetpack_Media_Meta_Extractor::build_image_struct( $image_list );
 	}
 
 	public static function extract_images_from_content( $content, $image_list ) {
 		$image_list = Jetpack_Media_Meta_Extractor::get_images_from_html( $content, $image_list );
-		return Jetpack_Media_Meta_Extractor::build_image_struct( $image_list, array() );
+		return Jetpack_Media_Meta_Extractor::build_image_struct( $image_list );
 	}
 
-	public static function build_image_struct( $image_list, $image_booleans ) {
+	public static function build_image_struct( $image_list ) {
 		if ( ! empty( $image_list ) ) {
 			$retval = array( 'image' => array() );
 			$image_list = array_unique( $image_list );

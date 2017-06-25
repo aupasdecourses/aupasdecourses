@@ -250,7 +250,7 @@ class WPSEO_Admin_Asset_Manager {
 			),
 			array(
 				'name'   => 'select2',
-				'src'    => 'select2/select2.full',
+				'src'    => 'select2/select2',
 				'suffix' => '.min',
 				'deps'   => array(
 					'jquery',

@@ -349,7 +349,3 @@ function monsterinsights_yst_ga_filter_ga_config( $config ) {
 }
 add_filter( 'monsterinsights_lite_google_app_config', 'monsterinsights_yst_ga_filter_ga_config' );
 add_filter( 'monsterinsights_pro_google_app_config', 'monsterinsights_yst_ga_filter_ga_config' );
-
-function monsterinsights_disabled_user_group(){
-	return ! monsterinsights_track_user();
-}

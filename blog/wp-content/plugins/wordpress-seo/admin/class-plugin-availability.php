@@ -208,9 +208,9 @@ class WPSEO_Plugin_Availability {
 	public function get_installed_plugins() {
 		$installed = array();
 
-		foreach ( $this->plugins as $plugin_key => $plugin ) {
+		foreach ( $this->plugins as $pluginKey => $plugin ) {
 			if ( $this->is_installed( $plugin ) ) {
-				$installed[ $plugin_key ] = $plugin;
+				$installed[ $pluginKey ] = $plugin;
 			}
 		}
 

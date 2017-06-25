@@ -70,13 +70,13 @@ class MonsterInsights_Install {
 
 			$this->new_install();
 			// This is the version used for MI upgrade routines.
-			update_option( 'monsterinsights_db_version', '6.2.0' );
+			update_option( 'monsterinsights_db_version', '6.0.0' );
 			
 		} else if ( ! $version && $yoast ) { // if new install and has used Yoast previously
 
 			$this->upgrade_from_yoast();
 			// This is the version used for MI upgrade routines.
-			update_option( 'monsterinsights_db_version', '6.2.0' );
+			update_option( 'monsterinsights_db_version', '6.0.0' );
 
 			if ( ! $cachec ) {
 				wp_cache_flush();
@@ -87,7 +87,6 @@ class MonsterInsights_Install {
 			if ( version_compare( $version, '6.0.2', '<' ) ) {
 				$this->v602_upgrades();
 			}
-			
 			if ( version_compare( $version, '6.0.11', '<' ) ) {
 				$this->v6011_upgrades();
 
@@ -96,12 +95,6 @@ class MonsterInsights_Install {
 					$cachec = true;
 				}
 			}
-			if ( version_compare( $version, '6.2.0', '<' ) ) {
-				$this->v620_upgrades();
-			}
-
-			update_option( 'monsterinsights_db_version', '6.2.0' );
-			
 			// @todo: doc as nonpublic
 			
 			update_option( 'monsterinsights_version_upgraded_from', $version );
@@ -622,7 +615,7 @@ class MonsterInsights_Install {
 			'custom_code'                => '',
 			'debug_mode'                 => 0,
 			'anonymous_data'             => 0,
-			'save_settings'              => array(),
+			'save_setings'               => array(),
 			'view_reports'               => array(),
 		);
 	}
@@ -680,34 +673,17 @@ class MonsterInsights_Install {
 	}
 
 	/**
-	 * MonsterInsights Version 6.2.0 upgrades.
-	 *
-	 * Turns off debug mode if its on.
-	 *
-	 * @since 6.2.0
-	 * @access public
-	 * 
-	 * @return void
-	 */
-	public function v620_upgrades() {
-		// Turns off debug mode if its on.
-		if ( empty( $this->new_settings['debug_mode' ] ) ) {
-			$this->new_settings['debug_mode' ] = 0;
-		}
-	}
-
-	/**
-	 * MonsterInsights Version 6.3 upgrades.
+	 * MonsterInsights Version 6.1 upgrades.
 	 *
 	 * This function does the
-	 * upgrade routine from MonsterInsights 6.2->6.3.
+	 * upgrade routine from MonsterInsights 6.0->6.1.
 	 *
-	 * @since 6.3.0
+	 * @since 6.1.0
 	 * @access public
 	 * 
 	 * @return void
 	 */
-	public function v630_upgrades() {
+	public function v610_upgrades() {
 		// Not in use yet.
 		
 		/**

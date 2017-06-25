@@ -247,6 +247,13 @@ function jetpack_photon_parse_wpcom_query_args( $args, $image_url ) {
 	return $args;
 }
 
+
+/**
+ * Facebook
+ */
+add_filter( 'jetpack_photon_add_query_string_to_domain', 'jetpack_photon_allow_facebook_graph_domain', 10, 2 );
+add_filter( 'jetpack_photon_any_extension_for_domain',   'jetpack_photon_allow_facebook_graph_domain', 10, 2 );
+
 function jetpack_photon_url_scheme( $url, $scheme ) {
 	if ( ! in_array( $scheme, array( 'http', 'https', 'network_path' ) ) ) {
 		if ( preg_match( '#^(https?:)?//#', $url ) ) {
@@ -263,6 +270,15 @@ function jetpack_photon_url_scheme( $url, $scheme ) {
 	}
 
 	return preg_replace( '#^([a-z:]+)?//#i', $scheme_slashes, $url );
+}
+
+function jetpack_photon_allow_facebook_graph_domain( $allow = false, $domain ) {
+	switch ( $domain ) {
+	case 'graph.facebook.com' :
+		return true;
+	}
+
+	return $allow;
 }
 
 /**
@@ -283,21 +299,17 @@ function jetpack_photon_parse_url( $url, $component = -1 ) {
 	return parse_url( $url, $component );
 }
 
-add_filter( 'jetpack_photon_skip_for_url', 'jetpack_photon_banned_domains', 9, 2 );
-function jetpack_photon_banned_domains( $skip, $image_url ) {
-	$banned_host_patterns = array(
-		'/^chart\.googleapis\.com$/',
-		'/^chart\.apis\.google\.com$/',
-		'/^graph\.facebook\.com$/',
-		'/\.fbcdn\.net$/'
+add_filter( 'jetpack_photon_skip_for_url', 'jetpack_photon_banned_domains', 9, 4 );
+function jetpack_photon_banned_domains( $skip, $image_url, $args, $scheme ) {
+	$banned_domains = array(
+		'http://chart.googleapis.com/',
+		'https://chart.googleapis.com/',
+		'http://chart.apis.google.com/',
 	);
 
-	$host = jetpack_photon_parse_url( $image_url, PHP_URL_HOST );
-
-	foreach ( $banned_host_patterns as $banned_host_pattern ) {
-		if ( 1 === preg_match( $banned_host_pattern, $host ) ) {
+	foreach ( $banned_domains as $banned_domain ) {
+		if ( wp_startswith( $image_url, $banned_domain ) )
 			return true;
-		}
 	}
 
 	return $skip;
@@ -306,7 +318,7 @@ function jetpack_photon_banned_domains( $skip, $image_url ) {
 
 /**
  * Jetpack Photon - Support Text Widgets.
- *
+ * 
  * @access public
  * @param string $content Content from text widget.
  * @return string

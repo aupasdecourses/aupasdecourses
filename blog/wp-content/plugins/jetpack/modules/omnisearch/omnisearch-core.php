@@ -58,15 +58,18 @@ class Jetpack_Omnisearch {
 		if ( wp_style_is( 'genericons', 'registered' ) ) {
 			$deps = array( 'genericons' );
 		}
-		wp_register_style( 'omnisearch-admin', plugins_url( 'omnisearch.css', __FILE__ ), $deps );
-		wp_style_add_data( 'omnisearch-admin', 'rtl', 'replace' );
+		if( is_rtl() ) {
+			wp_register_style( 'omnisearch-admin', plugins_url( 'rtl/omnisearch-rtl.css', __FILE__ ), $deps );
+		} else {
+			wp_register_style( 'omnisearch-admin', plugins_url( 'omnisearch.css', __FILE__ ), $deps );
+		}
 
 	}
 
 	function jetpack_admin_menu() {
 		remove_submenu_page( 'index.php', 'omnisearch' );
 		$this->slug = add_submenu_page( null, __( 'Omnisearch', 'jetpack' ), __( 'Omnisearch', 'jetpack' ), 'edit_posts', 'omnisearch', array( $this, 'omnisearch_page' ) );
-		add_action( "admin_print_styles-{$this->slug}", array( $this, 'admin_print_styles' ) );
+		add_action( "admin_print_styles-{$this->slug}", array( $this, 'admin_print_styles_jetpack' ) );
 	}
 
 	function admin_menu() {
@@ -76,6 +79,11 @@ class Jetpack_Omnisearch {
 
 	function admin_print_styles() {
 		wp_enqueue_style( 'omnisearch-admin' );
+	}
+
+	function admin_print_styles_jetpack() {
+		wp_enqueue_style( 'omnisearch-admin' );
+		wp_enqueue_style( 'omnisearch-jetpack' );
 	}
 
 	function omnisearch_page() {
