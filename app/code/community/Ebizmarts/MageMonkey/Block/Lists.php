@@ -505,7 +505,7 @@ class Ebizmarts_MageMonkey_Block_Lists extends Mage_Core_Block_Template
         $checkbox->setClass('monkey-list-subscriber');
 
 
-        return $checkbox->getLabelHtml() . $checkbox->getElementHtml();
+        return  $checkbox->getElementHtml().$checkbox->getLabelHtml();
     }
 
     public function getCanModify()

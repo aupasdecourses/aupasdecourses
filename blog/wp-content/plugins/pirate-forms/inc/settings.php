@@ -490,7 +490,12 @@ function pirate_forms_admin() {
 
 							<h4><?php esc_html_e( 'Are you enjoying Pirate Forms?', 'pirate-forms' ); ?></h4>
 
-							<p class="review-link"><?php echo sprintf( esc_html__( 'Rate our plugin on %1$s WordPress.org %2$s. We\'d really appreciate it!', 'pirate-forms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/pirate-forms" target="_blank" rel="nofollow"> ', '</a>' ); ?></p>
+							<p class="review-link">
+								<?php
+								/* translators: link to WordPress.org repo for PirateForms */
+								echo sprintf( esc_html__( 'Rate our plugin on %1$s WordPress.org %2$s. We\'d really appreciate it!', 'pirate-forms' ), '<a href="https://wordpress.org/support/view/plugin-reviews/pirate-forms" target="_blank" rel="nofollow"> ', '</a>' );
+								?>
+							</p>
 
 							<p><span class="dashicons dashicons-star-filled"></span><span
 										class="dashicons dashicons-star-filled"></span><span
@@ -499,7 +504,12 @@ function pirate_forms_admin() {
 										class="dashicons dashicons-star-filled"></span></p>
 
 							<p>
-								<small><?php echo sprintf( esc_html__( 'If you want a more complex Contact Form Plugin please check %1$s this link %2$s.', 'pirate-forms' ), '<a href="http://www.codeinwp.com/blog/best-contact-form-plugins-wordpress/" target="_blank" >', '</a>' ); ?></small>
+								<small>
+									<?php
+									/* translators: link to blog article about contact form plugins */
+									echo sprintf( esc_html__( 'If you want a more complex Contact Form Plugin please check %1$s this link %2$s.', 'pirate-forms' ), '<a href="http://www.codeinwp.com/blog/best-contact-form-plugins-wordpress/" target="_blank" >', '</a>' );
+									?>
+								</small>
 							</p>
 						</div>
 
@@ -682,6 +692,42 @@ function pirate_forms_admin() {
 		</div><!-- .pirate-options -->
 	</div><!-- .pirate-options -->
 	<div id="pirate-forms-sidebar">
+		<?php
+		/* Upgrade to Hestia notification box */
+		$pirate_current_theme = '';
+
+		$theme = wp_get_theme();
+
+		if ( ! empty( $theme ) ) {
+			if ( is_child_theme() ) {
+				$pirate_current_theme = $theme->parent()->get( 'Name' );
+			} else {
+				$pirate_current_theme = $theme->get( 'Name' );
+			}
+		}
+
+		if ( ( $pirate_current_theme != 'Hestia' ) && ( $pirate_current_theme != 'Hestia Pro' ) ) {
+
+			$pirate_upgrade_hestia_box_text = 'Check-out our latest FREE multi-purpose theme: <strong>Hestia</strong>';
+
+			if ( $pirate_current_theme == 'Zerif Lite' ) {
+				$pirate_upgrade_hestia_box_text = 'Check-out our latest FREE multi-purpose theme: <strong>Hestia</strong>, your Zerif Lite content will be imported automatically! ';
+			}
+			?>
+			<div class="pirate-upgrade-hestia postbox card">
+				<div class="pirate-forms-upgrade-hestia-content">
+					<?php echo wp_kses_post( $pirate_upgrade_hestia_box_text ); ?><br>
+					<?php
+					$pirate_upgrade_hestia_url = add_query_arg( array(
+						'theme' => 'hestia',
+					), admin_url( 'theme-install.php' ) );
+					?>
+					<a href="<?php echo $pirate_upgrade_hestia_url; ?>" target="_blank">Preview Hestia</a>
+				</div>
+			</div>
+			<?php
+		}
+		?>
 		<div class="pirate-subscribe postbox card">
 			<h3 class="title"><?php esc_html_e( 'Get Our Free Email Course', 'pirate-forms' ) ?></h3>
 			<div class="pirate-forms-subscribe-content">

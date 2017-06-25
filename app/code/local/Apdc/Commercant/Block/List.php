@@ -1,5 +1,4 @@
 <?php
-
 class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 {
     public function getListShops()
@@ -18,14 +17,11 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             ->addFieldToFilter('stores', array('finset' =>$storeid))
             ->addFieldtoFilter('enabled',1);
 
-        //$code_count=array();
 		$nbShops = count($shops);
 		
         foreach ($shops as $shop) {
             foreach($shop['id_category'] as $id){
                 if(array_key_exists($id,$filter)){
-
-                    //$shop["postcode"];
 
 					if($shop['id_category']) {
 						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
@@ -36,31 +32,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     $sub = [
                         'name' => (isset($shop['name'])) ? $shop['name'] : '',
                         'src' => (isset($filter[$id]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$id]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
-                        'postcode' => $shop['postcode'],
                         'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
                         'url' => (isset($filter[$id]['url_path'])) ? Mage::getUrl($filter[$id]['url_path']) : '',
 						'color' => $color
                     ];
-
-        //             $data[$shop['postcode']][] = $sub;
-        //             if(isset($code_count[$shop['postcode']])){
-        //                 $code_count[$shop['postcode']]+=1;
-        //             }else{
-        //                 $code_count[$shop['postcode']]=1;
-        //             }
-        //         }
-        //     }
-        // }
-
-        // arsort($code_count);
-        
-        // $result=array();
-
-        // foreach($code_count as $zip => $freq){
-        //     $result[$zip]=$data[$zip];
-        // }
-
-        //return $result;
 
 					if($i == 1) {
 						$row1[] = $sub;
@@ -78,60 +53,6 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             }
         }
 		return array('row1' => $row1, 'row2' => $row2, 'count' => count($shops));
-
     }
 
-    public function getInfoShop()
-    {
-        $shop_info = array();
-		$current_cat = Mage::registry('current_category');
-		$categoriesParent = $current_cat->getParentCategories();
-		foreach($categoriesParent as $categoryParent) {
-			if($categoryParent->getLevel() == 3) {
-				$categoryShop = $categoryParent;
-				break;
-			}
-		}
-		$categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-		$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
-
-        $shop_info["name"]=$data["name"];
-        $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
-        $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
-        $shop_info["phone"]=$data["phone"];
-        $shop_info["website"]=$data["website"];
-        $shop_info["closing_periods"]=$data["closing_periods"];
-        $shop_info["description"]=$categoryShop->getDescription();
-        //$shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
-        $shop_info["image"]=$categoryShop->getImageURL();
-		$shop_info["thumbnail_image"] = Mage::getBaseUrl('media').'catalog/category/'.$categoryShop->getThumbnail();
-		
-        $html = "";
-		$delivery_daysAll = array();
-        $days = ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
-		$delivery_days = Mage::helper('apdc_commercant')->formatDays($data["delivery_days"], false, true);
-		foreach($days as $day) {
-			if(in_array($day,$delivery_days)) {
-				$delivery_daysAll[$day] = 0;
-			}
-			else {
-				$delivery_daysAll[$day] = 1;
-			}
-		}
-		$shop_info["delivery_days"] = $delivery_daysAll;
-		
-        foreach($data["timetable"] as $day=>$hours){
-            $hours=($hours=="")?"Fermé":$hours;
-			$hoursExplode = explode('-', $hours);
-			if(count($hoursExplode) > 2) {
-				$hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
-				$hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
-				$hours = $hoursExplode1.' / '.$hoursExplode2;
-			}
-            $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
-        }
-        $shop_info["timetable"]=$html;
-
-        return $shop_info;
-    }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+
+  <modules>
+    <Apdc_Search>
+      <version>0.2.2</version>
+    </Apdc_Search>
+  </modules>
+
+  <global>
+    <blocks>
+      <apdc_search>
+        <class>Apdc_Search_Block</class>
+      </apdc_search>
+      <!--<catalogsearch>-->
+        <!--<rewrite>-->
+          <!--<result>Apdc_Search_Block_CatalogSearch_Result</result>-->
+        <!--</rewrite>-->
+      <!--</catalogsearch>-->
+    </blocks>
+    <helpers>
+      <apdc_search>
+        <class>Apdc_Search_Helper</class>
+      </apdc_search>
+    </helpers>
+    <models>
+      <apdc_search>
+        <class>Apdc_Search_Model</class>
+        <resourceModel>apdc_search_resource</resourceModel>
+      </apdc_search>
+    </models>
+  </global>
+
+  <frontend>
+    <routers>
+      <apdc_search>
+        <use>standard</use>
+        <args>
+          <module>Apdc_Search</module>
+          <frontName>search</frontName>
+        </args>
+      </apdc_search>
+    </routers>
+    <layout>
+      <updates>
+        <apdc_search>
+          <file>apdc_search.xml</file>
+        </apdc_search>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <Apdc_Search>
+          <files>
+            <default>Apdc_Search.csv</default>
+          </files>
+        </Apdc_Search>
+      </modules>
+    </translate>
+  </frontend>
+</config>
