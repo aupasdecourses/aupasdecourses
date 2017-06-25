@@ -27,7 +27,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 
                     $sub = [
                         'name' => (isset($shop['name'])) ? $shop['name'] : '',
-                        'src' => (isset($filter[$id]['src'])) ? Mage::getBaseUrl('media').'catalog/category/'.$filter[$id]['src'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
+                        'src' => (isset($filter[$id]['src'])) ? Mage::helper('apdc_catalog/category')->getImage($filter[$id]['src']) : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
                         'postcode' => $shop['postcode'],
                         'adresse' => (isset($shop['street'])) ? $shop['street'].' '.$shop['postcode'].' '.$shop['city'] : '',
                         'url' => (isset($filter[$id]['url_path'])) ? Mage::getUrl($filter[$id]['url_path']) : '',
@@ -67,7 +67,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shop_info["closing_periods"]=$data["closing_periods"];;
         $shop_info["description"]=$current_cat->getDescription();
         $shop_info["delivery_days"]=Mage::helper('apdc_commercant')->formatDays($data["delivery_days"],true);
-        $shop_info["image"]=$current_cat->getImageURL();
+        $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($current_cat);
 
         $html="";
         $days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
