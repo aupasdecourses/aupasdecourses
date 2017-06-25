@@ -11724,16 +11724,17 @@ section#districts .button-district img {
 
 section#districts .button {
   margin-top: 0;
+  margin-bottom: 50px;
 }
 
 section#districts #search_neighborhoods {
-  margin: 0 auto;
+  margin: 0 auto -40px auto;
   text-align: center;
 }
 
 section#districts #search_neighborhoods label {
   font-family: inherit;
-  font-size: 16px;
+  font-size: 1.125rem;
   font-weight: bold;
   display: inline-block;
   width: auto;
@@ -11741,7 +11742,13 @@ section#districts #search_neighborhoods label {
 }
 
 section#districts #search_neighborhoods input {
-  width: 300px;
+  font-size: 1.125rem;
+  width: 200px;
+  padding: 20px 10px;
+}
+
+section#districts #search_neighborhoods input::-webkit-input-placeholder {
+  font-size: 1.125rem;
 }
 
 section#districts #no_neighborhood {
@@ -11979,6 +11986,7 @@ section#ils-parlent-de-nous .container-fluid ul {
 section#ils-parlent-de-nous .container-fluid ul li {
   display: inline-block;
   height: 50px;
+  margin: 10px 0;
   padding: 0 10px;
 }
 
