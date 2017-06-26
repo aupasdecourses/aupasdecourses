@@ -123,7 +123,7 @@
 				<block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
 			</block>
 		</reference> 
-
+		<remove name="breadcrumbs"/>
     </catalogsearch_result_index>
 
     <catalogsearch_advanced_index translate="label">
