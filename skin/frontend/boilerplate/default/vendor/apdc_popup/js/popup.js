@@ -1,6 +1,7 @@
 function ApdcPopup(options) {
   this.id = options.id; // eg : product-quick-view
   this.ajaxUrl = apdcPopupAjaxUrl; // see apdc_popup/popup_js.phtml
+  this.onReady = options.onReady || false;
 
   if (!(/-popup$/.test(this.id))) {
     this.id = this.id + '-popup';
@@ -26,6 +27,9 @@ ApdcPopup.prototype.getTemplate = function() {
       jQuery('body').append(response.html);
       window.setTimeout(function() {
         self.initActions();
+        if (self.onReady && typeof(self.onReady) === 'function') {
+          self.onReady();
+        }
       }, 0);
     }
   })
@@ -42,7 +46,7 @@ ApdcPopup.prototype.initActions = function() {
     self.close();
   });
   jQuery(document).keyup(function(e) {
-    if (e.keyCode == 27) {
+    if (e.keyCode === 27) {
       self.close();
     }
   });

@@ -56,7 +56,7 @@
             }
             return true;
         });
-        jQuery('#sponsor_code').on('change, blur', function() {
+        jQuery('#sponsor_code').on('change blur', function() {
             var value = jQuery(this).val().trim().replace(/\s+/g, '');
             jQuery(this).val(value);
         });
