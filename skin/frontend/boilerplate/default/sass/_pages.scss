@@ -924,3 +924,85 @@ section {
         }
     }
 }
+
+.searchresults{
+    background: #fff;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 30px;
+    .title-block{
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        .photo-commercant{
+            display: inline-block;
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        h3{
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 1.5rem;
+            color: #055A5F;
+            line-height: 20px;
+            text-align: left;
+            margin: 0;
+            text-transform: none;
+        }
+    }
+    .delivery-days{
+        padding: 15px 0;
+        span{
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-right: 10px;
+            &.yes{
+                i{
+                    color: $color-main-green;
+                }
+            }
+            &.no{
+                color: $color-main-grey;
+            }
+        }
+    }
+    .apdc-products-grid{
+        .product-info{
+            margin: 40px auto 10px;
+        }
+    }
+}
+.searchresults_title{
+    color: $color-main-green;
+    margin: 40px auto 20px;
+    span{
+        text-transform: none;
+    }
+}
+#search_autocomplete{
+    z-index: 10;
+    background: #fff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+    ul{
+        list-style-type: none;
+        li{
+            display: block;
+            color: $color-main-grey;
+            cursor: pointer;
+            margin: 3px;
+            &:hover{
+                color: $color-main-green;
+            }
+        }
+    }
+}

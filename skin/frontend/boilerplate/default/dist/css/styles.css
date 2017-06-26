@@ -13415,6 +13415,99 @@ section .section-description {
   color: #333;
 }
 
+.searchresults {
+  margin-bottom: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background: #fff;
+}
+
+.searchresults .title-block {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.searchresults .title-block .photo-commercant {
+  display: inline-block;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.searchresults .title-block .photo-commercant img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.searchresults .title-block h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 20px;
+  display: inline-block;
+  margin: 0;
+  text-align: left;
+  vertical-align: middle;
+  text-transform: none;
+  color: #055a5f;
+}
+
+.searchresults .delivery-days {
+  padding: 15px 0;
+}
+
+.searchresults .delivery-days span {
+  font-size: .875rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.searchresults .delivery-days span.yes i {
+  color: #3ab64b;
+}
+
+.searchresults .delivery-days span.no {
+  color: #999;
+}
+
+.searchresults .apdc-products-grid .product-info {
+  margin: 40px auto 10px;
+}
+
+.searchresults_title {
+  margin: 40px auto 20px;
+  color: #3ab64b;
+}
+
+.searchresults_title span {
+  text-transform: none;
+}
+
+#search_autocomplete {
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+}
+
+#search_autocomplete ul {
+  list-style-type: none;
+}
+
+#search_autocomplete ul li {
+  display: block;
+  margin: 3px;
+  cursor: pointer;
+  color: #999;
+}
+
+#search_autocomplete ul li:hover {
+  color: #3ab64b;
+}
+
 footer {
   padding: 20px 0;
   background-color: #3ab64b;
@@ -14280,6 +14373,19 @@ footer .social-list .btn-social-icon {
   margin-top: 20px;
   text-decoration: underline;
   color: #999;
+}
+
+.cart-checkout {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 40px;
+  background: #fff;
+}
+
+.cart-checkout h1 {
+  margin-top: 0;
+  margin-bottom: 50px;
+  color: #3ab64b;
 }
 
 .catalog-category-view h2 {
@@ -15376,6 +15482,63 @@ h1.account-title {
   margin-right: -10px;
 }
 
+.account-create {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 40px;
+  background: #fff;
+}
+
+.account-create h1 {
+  margin-bottom: 50px;
+  color: #3ab64b;
+}
+
+.account-create .form-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.account-create .form-list input[type=text],
+.account-create .form-list input[type=email],
+.account-create .form-list input[type=password],
+.account-create .form-list input[type=tel],
+.account-create .form-list select,
+.account-create .form-list textarea {
+  font-size: .875rem;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  color: #999;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  outline: none;
+  background-color: #f6f6f6;
+}
+
+.account-create .form-list .field {
+  margin-bottom: 15px;
+  border-bottom: 0;
+}
+
+.account-create .form-list label {
+  font-size: .875rem;
+  font-weight: normal;
+  color: #999;
+}
+
+.account-create .form-list label em {
+  color: #3ab64b;
+}
+
+.account-create button[type=submit] {
+  margin-top: 228px;
+}
+
+.account-create p.required {
+  color: #3ab64b;
+}
+
 @media screen and (min-width: 1200px) {
   .container {
     width: 1130px;
@@ -15488,6 +15651,20 @@ h1.account-title {
 
   #checkout-review-table .crop {
     display: none;
+  }
+
+  .searchresults .title-block > div {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .searchresults .title-block h3 {
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .searchresults .delivery-days {
+    padding: 0;
   }
 }
 
@@ -15731,6 +15908,10 @@ h1.account-title {
   }
 
   .catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant {
+    margin-top: 20px;
+  }
+
+  .account-create button[type=submit] {
     margin-top: 20px;
   }
 }

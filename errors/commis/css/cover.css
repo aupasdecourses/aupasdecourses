@@ -2,7 +2,9 @@
  * Globals
  */
 
-
+h1.maintenance-title{
+    font-family: 'Open Sans', sans-serif;
+}
 .maintenance-img{
   width:100px;
   margin-left: auto;
