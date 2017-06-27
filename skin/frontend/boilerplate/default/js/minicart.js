@@ -34,7 +34,7 @@ function Minicart(options) {
 
     this.selectors = {
         itemRemove:           '#cart-sidebar .remove',
-        container:            '#header-cart',
+        container:            '.minicart-wrapper:parent',
         inputQty:             '.cart-item-quantity',
         qty:                  'div.header-minicart span.count',
         overlay:              '.minicart-wrapper',

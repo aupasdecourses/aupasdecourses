@@ -8,7 +8,7 @@ if (typeof(apdcProductQuickViewPopup) === 'undefined') {
         id:'product-quick-view'
       });
     }
-    $('.page-header-container').on('click', '.header-minicart .mini-commercant-name', function() {
+    $('.minicart-wrapper').on('click', '.mini-commercant-name', function() {
       $(this).toggleClass('closed');
       if (cartSlideUpdateAccordionUrl) { // see template /apdc_cart/minicart/items.phtml
         var open = 1;
@@ -30,32 +30,32 @@ if (typeof(apdcProductQuickViewPopup) === 'undefined') {
         });
       }
     });
-    $('.page-header-container').on('click', '.header-minicart .qty-sub', function() {
+    $('.minicart-wrapper').on('click', '.qty-sub', function() {
       var itemId = $(this).data('item-id');
       var productId = $(this).data('product-id');
       $(document).trigger('minicartRemoveQty', [itemId, productId]);
     });
-    $('.page-header-container').on('click', '.header-minicart .qty-add', function() {
+    $('.minicart-wrapper').on('click', '.qty-add', function() {
       var itemId = $(this).data('item-id');
       var productId = $(this).data('product-id');
       $(document).trigger('minicartAddQty', [itemId, productId]);
     });
-    $('.page-header-container').on('click', '.header-minicart .remove', function() {
+    $('.minicart-wrapper').on('click', '.remove', function() {
       var itemId = $(this).data('item-id');
       var productId = $(this).data('product-id');
       $(document).trigger('minicartRemoveItem', [itemId, productId]);
     });
-    $('.page-header-container').on('mouseleave', '.header-minicart .details, .header-minicart .item-details', function() {
+    $('.minicart-wrapper').on('mouseleave', '.details, .item-details', function() {
       $(this).removeClass('display');
       $(this).parents('.item').find('.item-details').stop().slideUp('fast');
     });
-    $('.page-header-container').on('mouseenter', '.header-minicart .details, .header-minicart .item-details', function() {
+    $('.minicart-wrapper').on('mouseenter', '.details, .item-details', function() {
       $(this).addClass('display');
       $(this).parents('.item').find('.item-details').stop().slideDown('fast');
     });
 
     var itemShowedInPopup = {};
-    $('.page-header-container').on('click', '.show-item-popup', function(e) {
+    $('.minicart-wrapper').on('click', '.show-item-popup', function(e) {
       e.preventDefault();
       e.stopPropagation();
       var self = this;

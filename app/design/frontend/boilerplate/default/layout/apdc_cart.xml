@@ -4,19 +4,19 @@
     	<reference name="minicart_head">
     		<action method="setTemplate"><template>apdc_cart/cart/minicart.phtml</template></action>
     	</reference>
-      <reference name="head">
-        <action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
-        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>
-        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_item_comment.js</file></action>
-        <action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
-      </reference>
+		<reference name="head">
+			<action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_item_comment.js</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
+		</reference>
     	<reference name="minicart_content">
-          <action method="setTemplate"><template>apdc_cart/cart/minicart/items.phtml</template></action>
-          <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-          <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-          <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-          <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
-          <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="setTemplate"><template>apdc_cart/cart/minicart/items.phtml</template></action>
+			<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
         </reference>
     </default>
     <checkout_cart_index>
@@ -27,7 +27,7 @@
         <remove name="checkout.cart.methods.paypal_express.bottom"/>
         <remove name="checkout.cart.methods.paypaluk_express.bottom"/>
         <remove name="checkout.cart.crosssell"/>
-        <remove name="checkout.cart.coupon"/>
+        <!--<remove name="checkout.cart.coupon"/>
     	<reference name="head">
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
         </reference>
@@ -48,17 +48,34 @@
             <block type="page/html_head" name="js_footer" as="js_footer" after="-" template="apdc_base/jsfooter.phtml">
                 <action method="addItem"><type>js</type><name>apdc/cart.js</name></action>
             </block>
+        </reference>-->
+		<reference name="minicart_head">
+    		<action method="setTemplate"><template>apdc_cart/cart/minicart.phtml</template></action>
+    	</reference>
+		<reference name="head">
+			<action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_item_comment.js</file></action>
+			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/add_to_cart.js</file></action>
+		</reference>
+    	<reference name="checkout.cart">
+			<action method="setTemplate"><template>apdc_cart/cart/minicart/items.phtml</template></action>
+			<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
+			<action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>apdc_cart/cart/minicart/default.phtml</template></action>
         </reference>
     </checkout_cart_index>
 
     <catalog_product_view>
-      <reference name="product.info">
-        <block type="catalog/product_view" name="cart_item_comments" template="apdc_cart/catalog/product/item_comment.phtml" />
-      </reference>
+		<reference name="product.info">
+		  <block type="catalog/product_view" name="cart_item_comments" template="apdc_cart/catalog/product/item_comment.phtml" />
+		</reference>
 
-      <block type="catalog/product_view" name="cart_item_comments.options.bottom" template="apdc_cart/catalog/product/item_comment.phtml" />
-      <reference name="product.info.options.wrapper.bottom">
-        <action method="insert"><block>cart_item_comments.options.bottom</block></action>
-      </reference>
+		<block type="catalog/product_view" name="cart_item_comments.options.bottom" template="apdc_cart/catalog/product/item_comment.phtml" />
+		<reference name="product.info.options.wrapper.bottom">
+		  <action method="insert"><block>cart_item_comments.options.bottom</block></action>
+		</reference>
     </catalog_product_view>
 </layout>
