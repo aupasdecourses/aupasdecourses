@@ -1006,3 +1006,21 @@ section {
         }
     }
 }
+
+.page-404{
+    h1{
+        color: $color-main-green;
+        margin: 50px auto;
+    }
+    .container{
+        background: #fff;
+        padding: 40px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        ul{
+            li{
+                font-size: 0.875rem;
+            }
+        }
+    }
+}
