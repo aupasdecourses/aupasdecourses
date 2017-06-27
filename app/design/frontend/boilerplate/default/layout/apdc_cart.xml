@@ -27,6 +27,8 @@
         <remove name="checkout.cart.methods.paypal_express.bottom"/>
         <remove name="checkout.cart.methods.paypaluk_express.bottom"/>
         <remove name="checkout.cart.crosssell"/>
+		<remove name="minicart_head"/>
+		<remove name="minicart_content"/>
         <!--<remove name="checkout.cart.coupon"/>
     	<reference name="head">
             <action method="addJs"><script>scrolltofixed.min.js</script></action>
@@ -49,9 +51,9 @@
                 <action method="addItem"><type>js</type><name>apdc/cart.js</name></action>
             </block>
         </reference>-->
-		<reference name="minicart_head">
+		<!--<reference name="minicart_head">
     		<action method="setTemplate"><template>apdc_cart/cart/minicart.phtml</template></action>
-    	</reference>
+    	</reference>-->
 		<reference name="head">
 			<action method="addItem"><type>skin_css</type><file>css/apdc_cart/cart_slide.css</file></action>
 			<action method="addItem"><type>skin_js</type><file>js/apdc_cart/cart_slide.js</file></action>

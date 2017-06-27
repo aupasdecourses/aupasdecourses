@@ -34,7 +34,7 @@ function Minicart(options) {
 
     this.selectors = {
         itemRemove:           '#cart-sidebar .remove',
-        container:            '.minicart-wrapper:parent',
+        container:            '.minicart-wrapper',
         inputQty:             '.cart-item-quantity',
         qty:                  'div.header-minicart span.count',
         overlay:              '.minicart-wrapper',
@@ -62,6 +62,7 @@ function Minicart(options) {
 Minicart.prototype = {
 
     init: function() {
+		
         var cart = this;
 
         // bind remove event
@@ -185,14 +186,13 @@ Minicart.prototype = {
     updateContentOnRemove: function(result, el) {
         var cart = this;
         el.hide('slow', function() {
-            $j(cart.selectors.container).html(result.content);
+            $j(cart.selectors.container).parent().html(result.content);
             cart.showMessage(result);
-
         });
     },
 
     updateContentOnUpdate: function(result) {
-        $j(this.selectors.container).html(result.content);
+		$j(this.selectors.container).parent().html(result.content);
         this.showMessage(result);
     },
 
