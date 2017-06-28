@@ -9,6 +9,7 @@
 <layout>
 
   <adminhtml_commercant_shop_edit>
+    <update handle="editor" />
     <reference name="content">
       <block type="apdc_commercant/adminhtml_shop_edit" name="commercant_shop_edit" />
     </reference>
@@ -24,8 +25,14 @@
         <action method="addTab"><name>opeinghours_section</name><block>commercant_shop_edit_tabs_openinghours</block></action>
         <action method="addTab"><name>google_section</name><block>commercant_shop_edit_tabs_google</block></action>
         <action method="addTab"><name>categories_section</name><block>commercant_shop_edit_tabs_categories</block></action>
+        <action method="setActiveTab"><name>main_section</name></action>
       </block>
     </reference>
   </adminhtml_commercant_shop_edit>
 
+  <adminhtml_commercant_shop_categories>
+    <block type="core/text_list" name="root" output="toHtml">
+      <block type="apdc_commercant/adminhtml_shop_edit_tab_categoriesTreeView" name="shop.edit.tab.categoriesTreeView"/>
+    </block>
+  </adminhtml_commercant_shop_categories>
 </layout>

@@ -37,37 +37,111 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Categories
             ['legend' => $this->__('Informations sur les catégories')]
         );
 
-        $commercantCategories = Mage::getModel('catalog/category')
-            ->getCollection()
-            ->setOrder('name')
-            ->addAttributeToSelect('name')
-            ->addAttributeToFilter('estcom_commercant', 70);
-        $values = [];
-        $S = Mage::helper('apdc_commercant')->getStoresArray();
-        foreach ($commercantCategories as $category) {
-            $storename=$S[explode('/', $category->getPath())[1]]['name'];
-            $parentcat=$category->getParentCategory()->getName();
-            $values[]=['value'=>$category->getId(), 'label' => $category->getName().' - '.$parentcat.' - '.$storename];
-        }
+        $fieldset->addType('image_browser', 'Apdc_Media_Model_Data_Form_Element_ImageBrowser');
 
-        $fieldset->addField('id_category', 'multiselect', [
-            'name' => 'id_category',
-            'label' => $this->__('Categorie(s)'),
-            'required' => true,
-            'values' => $values,
-            'note' => $this->__('Catégorie(s) correspondante(s) aux produits du magasin'),
-            'disabled' => $isElementDisabled
-        ]);
+        $fieldset->addField(
+            'category_image',
+            'image_browser',
+            [
+                'name' => 'category_image',
+                'label' => $this->__('Image'),
+                'required' => false,
+                'style' => 'height:22px; width50%;',
+                'disabled' => $isElementDisabled
+            ]
+        );
+        $fieldset->addField(
+            'category_thumbnail',
+            'image_browser',
+            [
+                'name' => 'category_thumbnail',
+                'label' => $this->__('Thumbnail'),
+                'required' => false,
+                'style' => 'height:22px; width50%;',
+                'disabled' => $isElementDisabled
+            ]
+        );
+
+        $fieldset->addField(
+            'category_meta_title',
+            'text',
+            [
+                'name' => 'category_meta_title',
+                'label' => $this->__('Meta Title'),
+                'required' => false,
+                'disabled' => $isElementDisabled
+            ]
+        );
+        $fieldset->addField(
+            'category_meta_description',
+            'textarea',
+            [
+                'name' => 'category_meta_description',
+                'label' => $this->__('Meta Description'),
+                'required' => false,
+                'disabled' => $isElementDisabled
+            ]
+        );
+        $fieldset->addField(
+            'category_description',
+            'textarea',
+            [
+                'name' => 'category_description',
+                'label' => $this->__('Description'),
+                'required' => false,
+                'disabled' => $isElementDisabled
+            ]
+        );
 
 
         if (Mage::getSingleton('adminhtml/session')->getFormData()) {
             $form->setValues(Mage::getSingleton('adminhtml/session')->getFormData());
         } else {
+            if (!$model->getCategoryMetaTitle()) {
+                $model = $this->setDefaultCategoryValues($model);
+            }
             $form->setValues($model->getData());
         }
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * setDefaultCategoryValues 
+     * 
+     * @param Apdc_Commercant_Model_Shop $model model 
+     * 
+     * @return Apdc_Commercant_Model_Shop
+     */
+    protected function setDefaultCategoryValues(Apdc_Commercant_Model_Shop $model)
+    {
+        $categoryIds = $model->getIdCategory();
+        if (!empty($categoryIds)) {
+            $category = Mage::getModel('catalog/category')->load($categoryIds[0]);
+            if ($category && $category->getId()) {
+                $thumbnailValue = $category->getThumbnail();
+                $imageValue = $category->getImage();
+                if ($thumbnailValue && !preg_match('/^wysiwyg\//', $thumbnailValue) && !preg_match('/^catalog\/category\//', $thumbnailValue)) {
+                    $thumbnailValue = 'catalog/category/' . $thumbnailValue;
+                }
+                if ($imageValue && !preg_match('/^wysiwyg\//', $imageValue) && !preg_match('/^catalog\/category\//', $imageValue)) {
+                    $imageValue = 'catalog/category/' . $imageValue;
+                }
+
+                $model->setCategoryImage($imageValue)
+                    ->setCategoryThumbnail($thumbnailValue)
+                    ->setCategoryMetaTitle($category->getMetaTitle())
+                    ->setCategoryMetaDescription($category->getMetaDescription())
+                    ->setCategoryDescription($category->getDescription());
+
+                if (!$model->getCategoryMetaTitle()) {
+                    $model->setCategoryMetaTitle($model->getName());
+                }
+            }
+        }
+
+        return $model;
     }
 
     /**
@@ -77,7 +151,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Categories
      */
     public function getTabLabel()
     {
-        return $this->_helper()->__('Catégories');
+        return $this->_helper()->__('Informations de Catégories');
     }
 
     /**
@@ -87,7 +161,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Categories
      */
     public function getTabTitle()
     {
-        return $this->_helper()->__('Catégories');
+        return $this->_helper()->__('Informations de Catégories');
     }
 
     /**

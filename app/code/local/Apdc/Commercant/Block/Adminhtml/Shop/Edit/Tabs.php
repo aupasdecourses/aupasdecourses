@@ -34,4 +34,25 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tabs extends Mage_Adminhtml_Bloc
         $this->setDestElementId('edit_form');
         $this->setTitle(Mage::helper('apdc_commercant')->__('Informations sur le magasin'));
     }
+
+    /**
+     * _prepareLayout 
+     * 
+     * @return void
+     */
+    protected function _prepareLayout()
+    {
+        parent::_prepareLayout();
+
+        $this->addTabAfter(
+            'categories',
+            [
+                'label' => Mage::helper('apdc_commercant')->__('Categories associées'),
+                'url'   => $this->getUrl('*/*/categories', array('_current' => true)),
+                'class'    => 'ajax'
+            ],
+            'google_section'
+        );
+        return $this;
+    }
 }
