@@ -38,7 +38,7 @@ p{
         letter-spacing: normal;
         color: $color-second-green;
         text-align: left;
-        
+
     }
     .button{
         font-size: 0.875rem;
@@ -199,7 +199,7 @@ p{
         }
         input[type=checkbox] + label{
             padding-left:30px;
-            height:25px; 
+            height:25px;
             display:inline-block;
             line-height:25px;
             background-repeat:no-repeat;
@@ -224,8 +224,7 @@ p{
             display: none;
         }
         dt, dd{
-            display: inline-block;
-            vertical-align: middle;
+            display: block;
             label{
                 font-size: 1rem;
                 font-weight: 700;
@@ -244,6 +243,19 @@ p{
                 width: auto;
                 outline: none;
             }
+            ul{
+                list-style-type: none;
+                padding-left: 0;
+                li{
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        dt{
+            margin-bottom: 5px;
+        }
+        dd{
+            margin-bottom: 20px;
         }
     }
     .product-options-bottom{

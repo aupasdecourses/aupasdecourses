@@ -869,8 +869,14 @@ header{
     text-align:left;
 }*/
 
-.header-minicart #header-cart .mini-commercant-name.closed + .commercant-product-list {
+.header-minicart #header-cart .mini-commercant-name.closed + .commercant-product-list,
+.col-main .mini-commercant-name.closed + .commercant-product-list {
     max-height:0px;
+    -webkit-transition: all 300ms ease-in;
+    -moz-transition: all 300ms ease-in;
+    -ms-transition: all 300ms ease-in;
+    -o-transition: all 300ms ease-in;
+    transition: all 300ms ease-in;
 }
 .header-minicart #header-cart .commercant-product-list .item-details .item-options {margin: 0;}
 .header-minicart #header-cart .commercant-product-list .item-details .item-options li {margin: 0;padding: 4px 5px;}
