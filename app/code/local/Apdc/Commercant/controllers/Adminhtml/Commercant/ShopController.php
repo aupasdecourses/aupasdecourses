@@ -59,7 +59,6 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
         $this
             ->_initAction()
             ->_addBreadcrumb($crumb, $crumb)
-            ->_addContent($this->getLayout()->createBlock('apdc_commercant/adminhtml_shop_edit'))
             ->renderLayout();
     }
 

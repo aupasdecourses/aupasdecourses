@@ -13,6 +13,22 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit extends Mage_Adminhtml_Block_Wid
         $this->_headerText = $this->__('Magasins');
 
         parent::__construct();
+
+        if (!$this->_isAllowedAction('save')) {
+            $this->_removeButton('save');
+            $this->_removeButton('reset');
+        }
+
+        if (!$this->_isAllowedAction('delete')) {
+            $this->_removeButton('delete');
+        }
+        if ($this->_isAllowedAction('update_categories')) {
+            $this->_addButton('update_categories', array(
+                'label'     => Mage::helper('adminhtml')->__('Enregistrer et mettre à jour les catégories'),
+                'onclick'   => 'editForm.submit();',
+                'class'     => 'save',
+            ), 1);
+        }
     }
 
     /**
@@ -25,5 +41,10 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit extends Mage_Adminhtml_Block_Wid
         }
 
         return $this->getUrl('*/*/save');
+    }
+
+    protected function _isAllowedAction($action)
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/commercant/shop/' . $action);
     }
 }
