@@ -9,12 +9,13 @@
 	else {
 		$formAjaxUrl = $this->helper('apdccart')->getAjaxAddUrl($product);
 	}
+	$uniqidCard = uniqid('card-');
 ?>
 <div class="product-info row item">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="col-md-12 product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
-		  id="product_addtocart_form_<?php echo $product->getId(); ?>"
+		  id="product_addtocart_form_<?php echo $product->getId().$uniqidCard; ?>"
 		  data-product-id="<?php echo $product->getId(); ?>"
 		  data-ajax-action="<?php echo $formAjaxUrl; ?>">
 		<a href="<?php echo $productUrl; ?>"
@@ -84,14 +85,22 @@
 		<div class="display-hover">
 			<p class="advice-must-select-options"><?php echo $this->__('Veuillez choisir une option'); ?></p>
 			<?php
-			if ($this->getChild('name.after')) {
-				$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
-				foreach ($_nameAfterChildren as $_nameAfterChildName) {
-					$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
-					$_nameAfterChild->setProduct($product);
-					echo $_nameAfterChild->toHtml();
+				if ($this->getChild('name.after')) {
+					$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+					foreach ($_nameAfterChildren as $_nameAfterChildName) {
+						$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+						$_nameAfterChild->setProduct($product);
+						echo $_nameAfterChild->toHtml();
+					}
 				}
-			}
+				else if ($this->getChild('name.after2')) {
+					$_nameAfterChildren = $this->getChild('name.after2')->getSortedChildren();
+					foreach ($_nameAfterChildren as $_nameAfterChildName) {
+						$_nameAfterChild = $this->getChild('name.after2')->getChild($_nameAfterChildName);
+						$_nameAfterChild->setProduct($product);
+						echo $_nameAfterChild->toHtml();
+					}
+				}
 			?>
 		</div>
 	</form>

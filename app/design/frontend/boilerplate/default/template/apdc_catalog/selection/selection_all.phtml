@@ -289,7 +289,10 @@
             });
 
             $j('.block-promos .apdc-products-grid .owl-item').hover(function(){
-                $j(this).css({'margin-bottom' : -$j(' > .product-info .display-hover', this).outerHeight()+'px'});
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+            });
+			$j('.apdc-products-grid .product-info').hover(function(){
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
             });
         });
 		

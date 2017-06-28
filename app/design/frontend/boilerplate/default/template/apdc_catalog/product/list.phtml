@@ -54,7 +54,13 @@
         <?php endforeach ?>
     </ul>
     <script type="text/javascript">
-        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last']);
+		$j(document).ready(function() {
+			$j('.category-products .apdc-products-grid .product-info').hover(function(){
+				if($j('.display-hover', this).outerHeight() > 0) {
+					$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+				}
+			});
+		});
     </script>
 
 </div>
