@@ -131,7 +131,7 @@
                     letter-spacing: normal;
                 }
                 p{
-                    font-size: .75rem;
+                    font-size: .875rem;
                     color: $color-main-grey;
                 }
             }
@@ -424,7 +424,7 @@
     left: 0;
     width: 100%;
     background: #fff;
-    padding: 10px;
+    padding: 0 10px;
     z-index: 1000;
     &:before,
     &:after {

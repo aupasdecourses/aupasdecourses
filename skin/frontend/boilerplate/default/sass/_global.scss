@@ -48,18 +48,18 @@ a{
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #ddd;
+    color:    rgba(0,0,0,0.54);
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #ddd;
+   color:    rgba(0,0,0,0.54);
    opacity:  1;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #ddd;
+   color:    rgba(0,0,0,0.54);
    opacity:  1;
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #ddd;
+   color:    rgba(0,0,0,0.54);
 }
 
 .button{
@@ -132,6 +132,9 @@ a{
     &.button-pink{
         background-color: $color-main-pink;
     }
+    &.button-orange{
+        background-color: $color-dark-orange;
+    }
     &.button-white{
         color: $color-main-green;
         background-color: #fff;
@@ -157,7 +160,7 @@ input[type=checkbox]{
 }
 input[type=checkbox] + label{
     padding-left:30px;
-    height:25px; 
+    height:25px;
     display:inline-block;
     line-height:25px;
     background-repeat:no-repeat;
@@ -213,4 +216,8 @@ input[type=checkbox]:checked + label{
         height: auto;
         outline: none;
     }
+}
+
+.form-control{
+    color: $color-main-grey;
 }

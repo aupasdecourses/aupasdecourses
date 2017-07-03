@@ -16,7 +16,7 @@ p{
     }
     &.info{
         font-size: 0.75rem;
-        color: #ccc;
+        color: rgba(0,0,0,0.54);
         margin-top: 20px;
     }
 }
@@ -61,7 +61,7 @@ p{
     .long-description{
         margin: 20px 0;
         p{
-            font-size: 0.75rem;
+            font-size: 1rem;
             color: $color-main-grey;
         }
     }
@@ -114,9 +114,9 @@ p{
         position: relative;
         bottom: auto;
         text-align: right;
+        margin-top: 30px;
         .button{
             margin: 0;
-            margin-right: 20px;
         }
     }
     .product-availability{
