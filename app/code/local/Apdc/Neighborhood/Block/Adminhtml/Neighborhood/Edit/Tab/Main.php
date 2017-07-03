@@ -98,6 +98,20 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
         );
 
         $fieldset->addField(
+            'opening_days',
+            'multiselect',
+            array(
+                'name' => 'opening_days',
+                'label' => $this->_helper()->__('Jours d\'ouverture'),
+                'title' => $this->_helper()->__('Jours d\'ouverture'),
+                'values' => Mage::getSingleton('apdc_neighborhood/source_option_openingDays')->toOptionArray(),
+                'required' => false,
+                'disabled' => $isElementDisabled
+            )
+        );
+
+
+        $fieldset->addField(
             'postcodes',
             'text',
             array(
