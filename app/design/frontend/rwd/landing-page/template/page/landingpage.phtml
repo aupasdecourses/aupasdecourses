@@ -2,6 +2,7 @@
 	$i = rand(1, 17); // generate random number size of the array
 	$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
 	$angledown= $this->getSkinUrl("images/angle-down.png");
+	$_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
@@ -19,6 +20,11 @@
 				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
 			</video>
 			<div class="top-nav">
+				<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+				<a class="btn standard-button faq-button" style="float:right;" id="account-login" role="button">Se connecter</a>
+				<?php else: ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?= $_helper->getCustomerWebsite()?>" role="button">Mon quartier</button>
+				<?php endif ?>
 				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
 			</div>
 			<div class="intro-section">
@@ -53,33 +59,52 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">17e-18e-9e-8e</h3>
-				</a>
-			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">15e</h3>
-				</a>
-			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
+			<div class="hidden-sm col-md-2"></div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
 				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">10e-3e-11e</h3>
+					<h3 class="package-heading main-color">10e</h3>
 				</a>
 			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
+			<div class="bouton-quartier col-sm-12 col-md-2">
 				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
 					<h3 class="package-heading main-color">13e</h3>
 				</a>
 			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../paris14e';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/daguerre.jpg');?>" alt="14e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">14e</h3>
+				</a>
+			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">15e</h3>
+				</a>
+			</div>
+			<div class="hidden-sm col-md-2"></div>
 		</div>
 		<div class="row">
-			<a class="popup-gmaps" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401" style="display:block;width:100%">Voir nos zones de livraison</a>
+			<div class="hidden-sm col-md-4"></div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../paris16e';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/passy.jpg');?>" alt="16e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">16e</h3>
+				</a>
+			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">17e</h3>
+				</a>
+			</div>
+			<div class="hidden-sm col-md-4"></div>
+		</div>
+		<div class="hidden-sm col-md-1"></div>
+		<div class="row">
+			<a class="popup-gmaps col-sm-12" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401">Voir nos zones de livraison</a>
 		</div>
 	</div>
 </section>
@@ -286,9 +311,9 @@
 	<div class="container">
 		<ul class="social-icons">
 			<p>Suivez nous sur</p>
-			<li><a href="https://www.facebook.com/aupasdecourses"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
-			<li><a href="https://twitter.com/aupasdecourses"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
-			<li><a href="https://instagram.com/aupasdecourses/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+			<li><a href="https://www.facebook.com/aupasdecourses" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+			<li><a href="https://twitter.com/aupasdecourses" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+			<li><a href="https://instagram.com/aupasdecourses/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 		</ul>
 		<p class="copyright">
 			©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.<!-- </br> Crédit Photos: Pierre Mainguet, <a href="https://flic.kr/p/mJNxaB">David Fleg</a> et besopha <a href="https://commons.wikimedia.org/wiki/File%3ARue_de_Bretagne%2C_75003_Paris%2C_2015.jpg">Rue de Bretagne</a> / <a href="https://flic.kr/p/xifWho">Parc Georges Brassens</a> -->

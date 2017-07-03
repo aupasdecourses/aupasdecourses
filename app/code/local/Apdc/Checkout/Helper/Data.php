@@ -30,80 +30,6 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
             return $attributeValue;
         }
     }
-  
-   public function getCommercantname($object){
-        $name=$object->getProduct()->getAttributeText('commercant');
-
-        if($name==NULL || $name==""){
-            return "";
-        }else{
-            return $name;
-        }
-    }
-
-    public function getCommercantcat($com_name){
-        $categories = Mage::getModel('catalog/category')
-        ->getCollection()
-        ->addAttributeToSelect('*')
-        ->addIsActiveFilter();
-
-        foreach($categories as $cat){
-            $cat_attr=$cat->getAttributes();
-            $test=$cat_attr['att_com_id']->getFrontend()->getValue($cat);
-            if($test==$com_name){
-                return $cat_attr['delivery_days']->getFrontend()->getValue($cat);
-            }
-        }
-
-        return false;
-    }
-
-    public function getDaysCommercants(){
-        $items = Mage::getSingleton('checkout/session')->getQuote()->getAllItems(); // Get all items in the cart
-        $commercants=array();
-
-        //go through each item to build commerçants array
-        foreach ($items as $item) {
-                  //print out custom attribute value
-            $com=$this->getCommercantname($item);
-            if(!in_array($com,$commercants)){
-                array_push($commercants,$com);
-            }
-        }
-        $data=array();
-        foreach ($commercants as $com){
-            if($com){
-                $days=$this->getCommercantcat($com);
-                $days = str_replace(' ', '', $days);
-                $days=explode(",", $days);
-                $data[$com]=$days;
-            }
-        }
-
-        return $data;
-
-    }
-
-    public function convertdaysinnb(array $days){
-        $convert=[
-            'Dimanche'=>0,
-            'Lundi'=>1,
-            'Mardi'=>2,
-            'Mercredi'=>3,
-            'Jeudi'=>4,
-            'Vendredi'=>5,
-            'Samedi'=>6,
-        ];
-
-        $temp=array();
-        foreach($days as $day){
-            if($day<>''){
-                $temp[]=$convert[$day];
-            }
-        }
-
-        return($temp);
-    }
 
     /* Translation of Ddate */
     public function getFrdaytext($daytext)
@@ -121,25 +47,49 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         return $array[$daytext];
     }
 
-    /* Check closed commerçant */
-    public function getSpottyCom($number=false){
-        $data=$this->getDaysCommercants();
-        $temp=array();
-        if($number){
-            foreach($data as $com => $days){
-                if(count($days)<>4){
-                    $temp[$com]=$this->convertdaysinnb($days);
-                }
-            }
+    public function getCommercantname($object){
+        $name=$object->getProduct()->getAttributeText('commercant');
+
+        if($name==NULL || $name==""){
+            return "";
         }else{
-            foreach($data as $com => $days){
-                if(count($days)<>4){
-                    $temp[$com]=$days;
+            return $name;
+        }
+    }
+
+    public function getDaysCommercants($number){
+        $items = Mage::getSingleton('checkout/session')->getQuote()->getAllItems();
+        $commercants=array();
+
+        foreach ($items as $item) {
+            $com=$this->getCommercantname($item);
+            $id_attribut_commercant=$item->getCommercant();
+            if(empty($commercants[$com])){
+                $commercants[$com]=$id_attribut_commercant;
+            }
+        }
+        $data=array();
+        foreach ($commercants as $com =>$id){
+            $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();
+            $delivery_days=$shop->getDeliveryDays();
+            if(count($delivery_days)<4 && $delivery_days<>NULL){
+                if($number){
+                    $data[$com]=$delivery_days;
+                }else{
+                    $tmp=Mage::helper('apdc_commercant')->getDays();
+                    foreach($delivery_days as $key=>$day){
+                        $delivery_days[$key]=$tmp[$day-1];
+                    }
+                    $data[$com]=$delivery_days;
                 }
             }
         }
+        return $data;
+    }
 
-        return $temp;
+    public function getSpottyCom($number=false){
+        $data=$this->getDaysCommercants($number);
+        return $data;
     }
 
 }

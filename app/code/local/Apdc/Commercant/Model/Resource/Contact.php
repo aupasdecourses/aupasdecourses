@@ -97,4 +97,5 @@ class Apdc_Commercant_Model_Resource_Contact extends Mage_Core_Model_Resource_Db
 
         return $adapter->fetchCol($select);
     }
+
 }

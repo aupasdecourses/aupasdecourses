@@ -48,18 +48,16 @@ a:focus {
     }
 }
 
-@media screen and (min-width:992px) {
-    .col-main {
-        min-height: 600px;
-    }
-}
-
 select {
     background-color: white;
 }
 
 .messages {
     margin-bottom: 20px;
+}
+
+#header-cart .messages, #header-cart .messages li li {
+    margin-bottom: 0px;
 }
 
 
@@ -85,7 +83,8 @@ h2,
 .h2 {
     margin: 0;
     margin-bottom: 0.5em;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 24px;
     font-weight: 400;
@@ -99,7 +98,8 @@ h3,
 .h3 {
     margin: 0;
     margin-bottom: 10px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 18px;
     font-weight: 400;
@@ -127,7 +127,8 @@ h5,
 .h5 {
     margin: 0;
     margin-bottom: 10px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 13px;
     font-weight: bold;
@@ -141,7 +142,8 @@ h6,
 .h6 {
     margin: 0;
     margin-bottom: 5px;
-    color: #636363;
+    color: #000000;
+    opacity:0.84;
     font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 12px;
     font-weight: bold;
@@ -615,15 +617,16 @@ h6,
  * ============================================ */
 
 .truncated .truncated_full_value .item-options {
-    display: none;
-    position: absolute;
+    display: block;
+    position: static;
     z-index: 300;
-    width: 200px;
+    width: 100%;
     padding: 8px;
     border: 1px solid #339933;
     background-color: #F6F6F6;
-    top: 21px;
-    left: -100px;
+    top: initial;
+    left: initial;
+    height: auto;
 }
 
 .truncated .truncated_full_value .item-options:after {
@@ -642,7 +645,8 @@ h6,
 
 .product-options {
     border: none;
-    padding: 10px 0px 15px;
+    padding: 0;
+    margin:0;
 }
 
 .product-options .subtitle {
@@ -689,9 +693,7 @@ h6,
  * Product Image
  */
 
-.no-touch .product-image:hover {
-    border-color: #339933;
-}
+.no-touch .product-image:hover {border: 1px solid #ededed;}
 
 
 /* -------------------------------------------- *
@@ -729,7 +731,9 @@ h6,
 .limiter select {
     width: 60px;
 }
-
+.pages li {
+    padding-left:3px;
+}
 .pages a,
 .pages .current {
     display: inline-block;
@@ -740,9 +744,9 @@ h6,
     vertical-align: middle;
     white-space: nowrap;
     line-height: 30px;
-    width: 25px;
+    width: 30px;
     height: 30px;
-    padding: 0;
+    padding: 0!important;
     color: #339933;
     font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
 }
@@ -754,6 +758,7 @@ h6,
     width: 30px;
     background-color: #FFFFFF;
     cursor: default;
+    border-radius: 50%;
 }
 
 .pages .next,
@@ -1010,6 +1015,7 @@ label {
 
 .page-header-container {
     height: 60px;
+    width: 100%;
 }
 
 .page-header-container,
@@ -1024,8 +1030,6 @@ label {
     }
     .page-header-container {
         display: table;
-        width: 100%;
-        height: 65px;
         border-top: 1px solid #EDEDED;
         transition: width 0.3s ease 0s, height 0.3s ease 0s;
         margin-top: 60px;
@@ -1097,6 +1101,11 @@ label {
     background: white;
     border: none;
 }
+.main-container {
+    position: relative;
+    z-index: 1;
+}
+
 
 .header-language-background {
     padding-top: 0px;
@@ -1148,6 +1157,19 @@ label {
     position: relative;
     text-transform: uppercase;
 }
+#storename a {
+  padding:5px 15px;
+}
+#storename a img {
+  display:inline-block;
+  border-radius:50%;
+}
+#storename a span {
+  display:inline-block;
+  vertical-align:middle;
+}
+
+
 
 .logo a:hover {
     text-decoration: none;
@@ -1195,6 +1217,7 @@ label {
     height: 100%;
     padding: 8px 10px;
     width: 100%;
+    height: 60px;
 }
 
 .logo-link img {
@@ -1467,8 +1490,9 @@ label {
 .skip-cart i,
 .skip-help i,
 .skip-search i,
+.skip-neighborhood i,
 .skip-nav i,
-.skip-referral i {
+.skip-referral i{
     display: block;
     margin: auto;
     line-height: 20px;
@@ -1524,7 +1548,8 @@ label {
         padding-top: 5px;
         height: 50px;
     }
-    .dropdown.skip-help {
+    .dropdown.skip-help,
+    .dropdown.skip-neighborhood {
         padding: 0;
         position: static;
         display: table-cell;
@@ -1537,20 +1562,25 @@ label {
     }
     #header-account.skip-active,
     .dropdown-menu.links,
+    #my_neighborhood_menu_links,
     #header-help {
         z-index: 200000;
         text-transform: none;
         width: 320px;
     }
+
+    #header-account.skip-active, #header-help, #my_neighborhood_menu_links {
+        right: 0px;
+        top:60px;
+        left: auto;
+    }
+
     .skip-links .skip-content.skip-active {
-        right: 3px!important;
-        top: 67px!important;
-        left: initial!important;
         margin: 0;
         background-color: #ffffff;
     }
     .sticky-header .skip-links .skip-content.skip-active {
-        top: 45px!important;
+        /* top: 45px!important; */
     }
     #header-account.skip-active a:hover,
     #header-help a:hover {
@@ -1566,7 +1596,8 @@ label {
         color: rgba(0, 0, 0, 0.87);
     }
     #header-account,
-    #header-help {
+    #header-help,
+    #my_neighborhood_menu_links {
         padding: 5px 0;
     }
     #header-account li a,
@@ -1602,6 +1633,11 @@ label {
         top: 100%;
         box-shadow: none;
     }
+    #my_neighborhood_menu_links {
+        width:100%;
+        top:100%;
+        box-shadow:none;
+    }
     #header-help > li > a {
         padding: 10px 0px 10px 10px;
     }
@@ -1609,6 +1645,7 @@ label {
     .skip-account i,
     .skip-cart i,
     .skip-help i,
+    .skip-neighborhood i,
     .skip-search i,
     .skip-nav i,
     .skip-referral i {
@@ -1741,11 +1778,16 @@ label {
     font-size: 14px;
 }
 
+.message-coupon{
+    font-family:Raleway;
+    width:100%;
+    display:none;
+}
 
 /* -------------------------------------------- *
  * Skip Cart Notifier
  */
-
+.skip-neighborhood .count,
 .skip-cart .count {
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
@@ -1769,9 +1811,12 @@ label {
 }
 
 @media screen and (max-width: 770px) {
+    .skip-neighborhood .count,
     .skip-cart .count {
         top: -45px;
-        right: -30px;
+        left: 30px;
+        right: 0px;
+        margin:0;
     }
 }
 
@@ -1781,12 +1826,6 @@ label {
 
 .skip-cart.no-count .count {
     display: none;
-}
-
-@media only screen and (max-width: 499px) {
-    .skip-cart .count {
-        margin-left: -12px;
-    }
 }
 
 @media only screen and (min-width: 771px) {
@@ -1804,6 +1843,7 @@ label {
     .skip-cart:hover {
         text-decoration: none;
     }
+    .skip-neighborhood .count,
     .skip-cart .count {
         border-radius: 12px;
         display: inline-block;
@@ -1820,9 +1860,11 @@ label {
         font-weight: 600;
         right: 0;
     }
+    .skip-neighborhood .count:before,
     .skip-cart .count:before {
         content: '';
     }
+    .skip-neighborhood .count:after,
     .skip-cart .count:after {
         content: '';
     }
@@ -1912,8 +1954,11 @@ label {
     color: #339933;
 }
 
-.checkout-types.minicart {
-    float: right;
+.checkout-types.minicart .button {
+    float:none;
+    width:100%;
+    color:#ffffff;
+
 }
 
 .header-minicart .minicart-actions .cart-link {
@@ -1933,8 +1978,8 @@ a.action-mini-cart {
     font-family: Raleway, "Helvetica Neue";
     font-weight: 500;
     font-size: 14px;
-    float: right;
-    margin-left: 8px;
+    float: none;
+    margin: 0px;
 }
 
 a.action-mini-cart:hover {
@@ -2121,6 +2166,10 @@ p.product-name a:hover,
     font-weight: 500;
 }
 
+.product-commercant-name{
+    margin:0;
+}
+
 
 /* ============================================ *
  * Catalog Event
@@ -2172,10 +2221,11 @@ p.product-name a:hover,
 /*Name of commercant*/
 
 .product-view .product-shop .product-name .nom-commercant {
-    font-family: "Courgette", "Raleway", Verdana, Arial;
+    font-family: "Open Sans", "Raleway", Verdana, Arial;
     margin-top: 5px;
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(67, 41, 24);
+    font-weight: 600;
 }
 
 .product-view .product-shop .price-box .full-product-price .price {
@@ -2695,7 +2745,7 @@ p.product-name a:hover,
 
 
 /*
- * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
+ * Homepage - RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©assurance
  */
 
 .homepage-reassurance {
@@ -2894,8 +2944,9 @@ p.product-name a:hover,
 }
 
 .commercant-item .product-name {
-    font-size: 20px;
-    font-family: "Courgette";
+    font-size: 18px;
+    font-family: "Open Sans";
+    font-weight:600;
     text-transform: none;
 }
 
@@ -3166,8 +3217,9 @@ a.btn:hover {
  * ============================================ */
 
 .commercant_name {
-    font-family: "Courgette", Raleway, Verdana, Arial, sans-serif;
-    font-size: 40px;
+    font-family: "Open Sans", Raleway, Verdana, Arial, sans-serif;
+    font-size: 30px;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 770px) {
@@ -3313,14 +3365,11 @@ a.btn:hover {
 * - Add to Cart
 */
 
-#qty {
-    width: 40px;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    text-align: center;
-    text-align-last: center;
-    padding: 5px 0;
+.added-qty {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .label_qty {
@@ -3342,31 +3391,6 @@ a.btn:hover {
 
 .products-grid .actions {
     padding-top: 5px;
-}
-
-.pager li > a,
-.pager li > span {
-    padding: 4px 10px;
-    line-height: 20px;
-    width: auto;
-    height: auto;
-}
-
-.pages .next,
-.pages .previous {
-    width: auto;
-    height: auto;
-    padding: 12px;
-}
-
-.pages a,
-.pages .current {
-    width: auto;
-    height: auto;
-    border-radius: 15px;
-    padding: 4px 10px;
-    line-height: 20px;
-    vertical-align: bottom;
 }
 
 
@@ -3617,6 +3641,14 @@ a.btn:hover {
     margin-bottom: 20px;
 }
 
+/* ============================================ *
+ * Popup produit
+ * ============================================ */
+
+#product-quick-view-popup-content{
+    padding:15px;
+}
+
 
 /* ============================================ *
  * Cart
@@ -3662,7 +3694,7 @@ a.btn:hover {
 /*Qty & Comments column*/
 
 .cart-table .product-cart-actions .button {
-    margin: 10px 0 5px 5px;
+    margin: 0;
 }
 
 .product-cart-actions .qty {
@@ -3680,11 +3712,11 @@ a.btn:hover {
 }
 
 .product-cart-actions .loader {
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .product-cart-actions .ajax_loader_success i {
-    margin-top: 14px;
+    margin-top: 4px;
     margin-left: 0px;
 }
 
@@ -3793,6 +3825,10 @@ a.btn:hover {
     font-size: 20px;
 }
 
+.form-group {
+    margin-bottom: 10px;
+}
+
 
 /* Sections styling */
 
@@ -3877,6 +3913,20 @@ a.btn:hover {
     height: 20px;
 }
 
+/* -- Ddate -- */
+
+.remliv-icon {
+    margin-top: 4px !important;
+}
+
+.select_one ul li,.select_one ul li.disablerow {
+    height: 60px !important;
+}
+
+.deli_time p {
+    height: 60px !important;
+}
+
 .disablerow {
     background-color: #EEEEEE !important;
     color: #BDBDBD !important;
@@ -3934,7 +3984,6 @@ a.btn:hover {
     max-width: 1000px;
 }
 
-.form-list .field,
 .form-list .wide,
 .form-list .control {
     margin-bottom: 0px;
@@ -4046,6 +4095,10 @@ input[type=text] {
 
 /**Hipay**/
 
+#dt_method_hipay{
+    height:0px;
+}
+
 .hipay_infobox_bottom {
     width: 100% !important;
 }
@@ -4110,6 +4163,11 @@ input[type=text] {
     vertical-align: top;
 }
 
+#checkout-review-table-wrapper{
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 20px;
+}
+
 
 /* ============================================ *
  * CMS Page
@@ -4153,7 +4211,7 @@ input[type=text] {
 }
 
 .cms-page-view .std p,
-.cms-no-route .std p {
+.cms-no-route .std p, .seasonal-banner p {
     color: #636363;
     font-family: inherit;
     font-size: 1.2em;
@@ -4222,7 +4280,17 @@ p.required,
 
 
 /* ============================================ *
- * Customer Account - Frontend
+ * #Customer login
+ * ============================================ */
+
+
+.customer-account-create .scaffold-form label:first-child {
+    width: 100%;
+}
+
+
+/* ============================================ *
+ * #Customer Account - Frontend
  * ============================================ */
 
 
@@ -4254,8 +4322,8 @@ p.form-instructions,
 .opc #opc-login p:not(.required) {
     font-family: Raleway, Georgia, Times, "Times New Roman", serif;
     font-size: 15px;
-    color: #989898;
-    font-weight: 600;
+    color: rgba(0,0,0,0.54);
+    font-weight: normal;
 }
 
 .my-account .addresses-list,
@@ -4488,3 +4556,4 @@ ul.links li {
     padding-left: 40px;
     padding-right: 40px;
 }
+

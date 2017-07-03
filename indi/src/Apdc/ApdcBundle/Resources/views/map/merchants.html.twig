@@ -1,0 +1,46 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+	{% if comparaisonMerchants == true %}
+	<div>
+		{{ form_start(form_new_merchants) }}
+		{{ form_widget(form_new_merchants) }}
+		<input type="submit" id="buttonMap" value="Mettre à jour les magasins" class="btn btn-primary" />
+		{{ form_end(form_new_merchants) }}
+	</div>
+	{% endif %}
+
+	<div id="mapShops" class="map"></div>
+{% endblock %}
+
+{% block css_mapShops %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet.awesome-markers.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/jquery-ui-1.10.0.custom.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-routing-machine.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/MarkerCluster.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/MarkerCluster.Default.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-search.css" type="text/css" />
+	<link rel="stylesheet" href="{{ path ('root') }}css/map/leaflet-search.mobile.css" type="text/css" />
+{% endblock %}
+{% block javascript_mapShops %}
+	<script type="text/javascript">	
+		var google_key= '{{ google_key }}';
+		var json_data_for_shops = {{ json_data_for_shops|raw }};
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+	<script type="text/javascript" src="{{ path ('root') }}js/map/jquery-ui-1.10.4.min.js"></script>
+	<script type="text/javascript" src="{{ path ('root') }}js/map/underscore.js"></script>	
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.awesome-markers.js"></script>	
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-routing-machine.js"></script>	
+	<script type="text/javascript" src="{{ path ('root') }}js/map/Control.Geocoder.js"></script>	
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet.markercluster-src.js"></script>
+	<script type="text/javascript" src={{ url_google_maps }}></script>
+	<script type="text/javascript" src="{{ path ('root') }}js/map/leaflet-search.js"></script>
+	<script type="text/javascript" src="{{ path ('root') }}js/map/commercants.js"></script>	
+{% endblock %}

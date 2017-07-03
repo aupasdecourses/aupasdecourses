@@ -7,6 +7,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    server_root: "%kernel.root_dir%/../.."
+    billing_folder_root: "%kernel.root_dir%/../web/docs/billing"
 
 framework:
     #esi:             ~
@@ -16,7 +18,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: 
+        enabled: true
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
     templating:
@@ -37,6 +40,12 @@ twig:
     cache:            false
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
+    globals:
+        adyen_platform_first_part:  "%adyen_platform_first_part%"
+        adyen_platform_second_part: "%adyen_platform_second_part%"
+        server_root: "%server_root%"
 
 # Doctrine Configuration
 doctrine:
@@ -48,6 +57,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -67,3 +78,34 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#blueImp bundle which enables to load many files
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp
+            error_handler: oneup_uploader.error_handler.noop
+            storage:
+                directory: "%kernel.root_dir%/../web/uploads/gallery/"
+
+#bundle users
+fos_user:
+    db_driver: orm
+    firewall_name: apdc_firewall
+    user_class: Apdc\ApdcBundle\Entity\User
+    from_email:
+        address: pierre@aupasdecourses.com
+        sender_name: pierre-apdc
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    # path of the node executable
+    node: /usr/bin/nodejs
+    filters:
+        cssrewrite: ~
+        uglifyjs2:
+        # path of uglifyjs executable
+            bin: /usr/local/bin/uglifyjs
+        uglifycss:
+            bin: /usr/local/bin/uglifycss

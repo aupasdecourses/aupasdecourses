@@ -49,11 +49,6 @@ $helper = Mage::helper('apdc_checkout');
                 </li>
             <?php endif ?>
 
-            <?php if ($this->helper('wishlist')->isAllowInCart() && $isVisibleProduct) : ?>
-                <li>
-                    <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move to wishlist'); ?></a>
-                </li>
-            <?php endif ?>
         </ul>
     </td>
 
@@ -70,7 +65,7 @@ $helper = Mage::helper('apdc_checkout');
         </h2>
 
         <div class="product-cart-sku">
-            <a href="<?php echo $helper->getCommercantname($this)[1]; ?>" alt="commerçant"><?php echo $helper->getCommercantname($this)[0]; ?></a>
+            <?php echo $helper->getCommercantname($this); ?>
         </div>
 
         <?php if ($_options = $this->getOptionList()):?>
@@ -207,14 +202,12 @@ $helper = Mage::helper('apdc_checkout');
         </td>
         <?php endif; ?>
     <?php endif; ?>
-    <td class="product-cart-actions" id="product-cart-actions_<?php echo $_item->getId()?>" data-rwd-label="<?php echo $this->__('Qt& & Commentaires'); ?>">
+    <td class="product-cart-actions" id="product-cart-actions_<?php echo $_item->getId()?>" data-rwd-label="<?php echo $this->__('Qté'); ?>">
         <!--Qty input -->
         <label><?php echo $this->__('Quantité: '); ?></label><input type="text" pattern="\d*" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty validate-digits" maxlength="12" />
-        <!--Comment input -->
-        <textarea class="comment-cart" placeholder="Votre commentaire" name="cart[<?php echo $_item->getId() ?>][item_comment]"><?php echo $_item->getItemComment() ?></textarea>
         <!--Button input -->
         <div class="button-box">
-            <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update'); ?>" class="button btn-update-custom" onclick="event.preventDefault();setLocationAjax('<?php echo $this->getUrl('addajax/index/update/') ?>','<?php echo $_item->getId()?>')"><span><span><?php echo $this->__('Update'); ?></span></span>
+            <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update'); ?>" class="button btn-update-custom" onclick="event.preventDefault();setLocationAjax('<?php echo $this->getUrl('addajax/cart/ajaxUpdate/') ?>','<?php echo $_item->getId()?>')"><span><span><?php echo $this->__('Update'); ?></span></span>
             </button>
             <!--Ajax loaders -->
             <span id='ajax_loader_<?php echo $_item->getId()?>'style="display:none"><div class="loader"></div></span>

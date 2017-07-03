@@ -1,0 +1,33 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-xs-2">
+			<a href="{{ path('refundIndex') }}" type="submit" name="submit" value='previous' class="btn btn-default"><< Retour</a>
+		</div>
+		<div class="progress col-xs-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+		    	<span>Upload</span>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<a href="{{ path('refundInput', {id:id}) }}" type="submit" name="submit" value='next' class="btn btn-default right">Suivant >></a>
+		</div>
+	</div>
+	<div class="row">
+		<h1>#{{id}}<small> Upload des tickets</small></h1>
+		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	</div>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block javascript_refund %}
+	<script type="text/javascript" src="{{ path('root') }}js/input-compute.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/openseadragon.min.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
+{% endblock %}

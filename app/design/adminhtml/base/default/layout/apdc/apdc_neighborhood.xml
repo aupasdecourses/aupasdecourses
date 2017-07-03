@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  design
+ * @package   Apdc_Neighborhood
+ * @copyright Copyright (c) 2016 GardenMedia Studio VN
+ */
+-->
+<layout>
+    <adminhtml_neighborhood_index_index>
+        <reference name="content">
+            <block type="apdc_neighborhood/adminhtml_neighborhood" name="neighborhood" />
+        </reference>
+    </adminhtml_neighborhood_index_index>
+
+    <adminhtml_neighborhood_index_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="apdc_neighborhood/adminhtml_neighborhood_edit" name="neighborhood_edit" />
+        </reference>
+        <reference name="left">
+            <block type="apdc_neighborhood/adminhtml_neighborhood_edit_tabs" name="neighborhood_edit_tabs">
+                <block type="apdc_neighborhood/adminhtml_neighborhood_edit_tab_main" name="neighborhood_edit_tabs_main" />
+                <action method="addTab"><name>main_section</name><block>neighborhood_edit_tabs_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_neighborhood_index_edit>
+    
+</layout>

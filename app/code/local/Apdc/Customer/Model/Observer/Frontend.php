@@ -36,10 +36,44 @@ class Apdc_Customer_Model_Observer_Frontend
         if ($session->getData('customer_register_success')) {
             $session->unsetData('customer_register_success');
 
-            $url = Mage::getBaseUrl();
+            $customer = $session->getCustomer();
+            if ($customer->getCustomerNeighborhood() > 0) {
+                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                if ($neighborhood && $neighborhood->getId()) {
+                    $url = $neighborhood->getStoreUrl();
+                }
+            } else {
+                $url = Mage::getBaseUrl();
+            }
             $controller = $observer->getData('controller_action');
             Mage::getSingleton('core/session')->addSuccess('Votre compte a bien été créé. Bienvenue chez Au Pas De Courses !');
             $controller->getResponse()->setRedirect($url);
+
         }
+    }
+
+    public function customerRegistrationAllowed(Varien_Event_Observer $observer)
+    {
+        if (Mage::app()->getWebsite()->getCode() == 'apdc_main') {
+            $observer->getResult()->setIsAllowed(false);
+        }
+    }
+
+    public function customerLoggedIn(Varien_Event_Observer $observer)
+    {
+        if (Mage::app()->getWebsite()->getCode() == 'apdc_main') {
+            /** @var Mage_Customer_Model_Customer $customer */
+            $customer = $observer->getCustomer();
+            $storeUrl = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore()->getBaseUrl();
+            if ($customer->getCustomerNeighborhood()) {
+                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                if ($neighborhood && $neighborhood->getId()) {
+                    $storeUrl = $neighborhood->getStoreUrl();
+                }
+            }
+        } else {
+            $storeUrl = Mage::app()->getWebsite()->getDefaultStore()->getBaseUrl();
+        }
+        Mage::getSingleton('customer/session')->setBeforeAuthUrl($storeUrl);
     }
 }

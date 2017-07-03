@@ -1,0 +1,142 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<div class="page-header">
+		<h2>Affichage des {{ months_diff }} derniers mois : du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+	</div>
+
+	<div id="filter"><label>Selectionnez le commercant : &nbsp;</label></div>
+
+	<table id="billIndex" class="table table-striped">
+		<thead>
+			<tr>
+				<th class="sort">Magasin</th>
+				<th class="float">Commande TTC</th>
+				<th class="float">Somme due TTC</th>
+				<th class="float">Retrait TTC (prevu)</th>
+				<th class="float">Retrait TTC (regle)</th>
+				<th class="float">En cours (Prevu - Regle)</th>
+			</tr>
+		</thead>	
+		<tfoot style="display: table-row-group;">
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+		<tbody>
+			{% for order in result %}
+			<tr>
+				<td>{{ order.shop }}</td>
+				<td>{{ order.sum_items }}</td>
+				<td>{{ order.sum_due }}</td>
+
+				<td>{{ order.sum_payout }}</td>
+
+			{% if order.date_payout is not null %}
+
+				{% set sum_payout_regle = order.sum_payout %}
+				<td>{{ sum_payout_regle }}</td>
+
+			{% else %}
+				{% set sum_payout_regle = 0 %}
+				<td>{{ sum_payout_regle }}</td>
+
+			{% endif %}
+
+				<td>{{ order.sum_payout - sum_payout_regle }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_billing %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_billing %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(function() {
+	$( "#datepickerBill" ).datepicker({
+		altField: "#datepickerBill",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+		defaultDate: new Date(2017, 00, 01),
+	});
+});
+
+$(function(){
+	$("#datepickerBill").change(function(){
+		window.location='{{ path('billingIndex') }}?date_debut='+this.value;
+	});
+});
+
+$(document).ready(function() {
+	var table=$('#billIndex').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+</script>
+{% endblock %}

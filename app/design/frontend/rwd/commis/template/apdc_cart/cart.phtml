@@ -47,7 +47,7 @@
     </div>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <?php echo $this->getChildHtml('form_before') ?>
-    <form action="" method="post">
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <table id="shopping-cart-table" class="cart-table data-table">
             <col width="1" />

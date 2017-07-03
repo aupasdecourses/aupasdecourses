@@ -32,13 +32,16 @@
  */
 ?>
 <?php $_menu = $this->getHtml('level-top') ?>
+<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
+<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 40, 'height' => 40)); ?>
 <?php if($_menu): ?>
     <nav id="supermenu" class="navbar navbar-default">
         <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li class="level0" id="storename">
-                    <a href="<?php echo Mage::getBaseUrl();?>">
-                        <?php echo Mage::app()->getStore()->getName();?>
+                    <a href="<?php echo $neighborhood->getStoreUrl();?>">
+                        <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="40" height="40" />
+                        <span><?php echo $neighborhood->getName(); ?></span>
                     </a>
                 </li>
                 <?php echo $_menu ?>

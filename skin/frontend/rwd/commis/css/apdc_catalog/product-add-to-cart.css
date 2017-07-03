@@ -1,0 +1,81 @@
+
+.apdc-add-to-cart-form .actions.add-to-cart {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
+.apdc-add-to-cart-form .add-to-cart-wrapper .actions,
+.apdc-add-to-cart-form .product-shop .actions {
+  position: static;
+}
+.apdc-add-to-cart-form .add-to-cart-wrapper .actions .pull-right,
+.apdc-add-to-cart-form .product-shop .actions .pull-right {
+  float:none!important;
+}
+
+.apdc-add-to-cart-form .actions .action-group {
+  display:inline-block;
+  position:relative;
+}
+
+.apdc-cart-item-comment .input-box {
+  position:relative;
+  width:100%;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.apdc-cart-item-comment textarea {
+  width:80%;
+}
+.apdc-cart-item-comment .loading,
+.apdc-add-to-cart-form .actions .action-loading {
+  background-color: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  display: none;
+  z-index: 999;
+  width: 100%;
+  text-align: center;
+}
+.apdc-cart-item-comment .loading {
+  height:100%;
+}
+.apdc-cart-item-comment .loader {
+  position:absolute;
+  top: 50%;
+  left:50%;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+.apdc-add-to-cart-form .actions .action-group .show-product-popup {
+  float: left;
+}
+.apdc-add-to-cart-form .actions .action-group .btn.show-product-popup {
+  display:none;
+}
+
+.apdc-add-to-cart-form .actions button:disabled {opacity: 0.2;}
+#carrousel-selection-home .apdc-add-to-cart-form .actions .button:hover,
+.apdc-add-to-cart-form .actions .button:hover {
+  color: #fff;
+  background: none repeat scroll 0% 0% #e94e19;
+}
+.apdc-add-to-cart-form .actions .action-group .qty-buttons {
+  display:none;
+}
+
+.action.update-product-options {
+  opacity:1;
+  transition: opacity 0.5s ease;
+}
+.action.update-product-options.disabled {
+  opacity: 0.6;
+}
+
+.apdc-product-custom-options, .apdc-product-custom-options > dt{
+  margin:0;
+  padding:0;
+}
+
+.product-availability > table{
+  margin-bottom:5px;
+}

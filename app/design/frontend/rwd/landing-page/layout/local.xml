@@ -62,6 +62,42 @@
                 ============================== -->
         </reference>
 
+        <reference name="content">
+            <block type="customer/form_login" name="customer_login" template="persistent/customer/form/login.phtml" output="toHtml">
+                <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
+                    <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+                    <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+                </block>
+            </block>
+        </reference>
+
+        <reference name="head">
+            <action method="addItem"
+                ifconfig="customer/inchoo_socialconnect_google/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/google/css/button.css</name>
+            </action>
+            <action method="addItem"
+                ifconfig="customer/inchoo_socialconnect_facebook/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/facebook/css/button.css</name>
+            </action>
+            <action method="addItem"
+                ifconfig="customer/inchoo_socialconnect_twitter/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/twitter/css/button.css</name>
+            </action>
+            <action method="addItem"
+                ifconfig="customer/inchoo_socialconnect_linkedin/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/linkedin/css/button.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/css/styles.css</name>
+            </action>
+        </reference>
+
         <reference name="footer">
             <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
         </reference>
@@ -85,6 +121,7 @@
         <remove name="right"/>
         <remove name="global_cookie_notice"/>
         <remove name="custommenu-content"/>
+        <remove name="captcha"/>
         <!-- <reference name="head">
             <block type="core/text" name="hotjar">
                 <action method="setText">

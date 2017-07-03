@@ -106,7 +106,7 @@ class WPSEO_Meta {
 				'help-button'  => '', // Translation added later.
 			),
 			'focuskw_text_input' => array(
-				'type'          => 'text',
+				'type'          => 'focuskeyword',
 				'title'         => '', // Translation added later.
 				'default_value' => '',
 				'autocomplete'  => false,
@@ -147,7 +147,7 @@ class WPSEO_Meta {
 				'description'   => '',
 			),
 			'metakeywords'   => array(
-				'type'          => 'text',
+				'type'          => 'metakeywords',
 				'title'         => '', // Translation added later.
 				'default_value' => '',
 				'class'         => 'metakeywords',
@@ -188,7 +188,6 @@ class WPSEO_Meta {
 				'options'       => array(
 					'-'            => '', // Site-wide default - translation added later.
 					'none'         => '', // Translation added later.
-					'noodp'        => '', // Translation added later.
 					'noimageindex' => '', // Translation added later.
 					'noarchive'    => '', // Translation added later.
 					'nosnippet'    => '', // Translation added later.
@@ -404,17 +403,8 @@ class WPSEO_Meta {
 				$field_defs['meta-robots-noindex']['options']['0'] = sprintf( $field_defs['meta-robots-noindex']['options']['0'], ( ( isset( $options[ 'noindex-' . $post_type ] ) && $options[ 'noindex-' . $post_type ] === true ) ? 'noindex' : 'index' ) );
 
 				/* Adjust the robots advanced 'site-wide default' text string based on those settings */
-				if ( $options['noodp'] !== false ) {
-					$robots_adv = array();
-					if ( $options['noodp'] === true ) {
-						// Use translation from field def options - mind that $options and $field_def['options'] keys should be the same!
-						$robots_adv[] = $field_defs['meta-robots-adv']['options']['noodp'];
-					}
-					$robots_adv = implode( ', ', $robots_adv );
-				}
-				else {
-					$robots_adv = __( 'None', 'wordpress-seo' );
-				}
+				$robots_adv = __( 'None', 'wordpress-seo' );
+
 				$field_defs['meta-robots-adv']['options']['-'] = sprintf( $field_defs['meta-robots-adv']['options']['-'], $robots_adv );
 				unset( $robots_adv );
 
@@ -467,7 +457,6 @@ class WPSEO_Meta {
 					$clean = strval( $int ); // Convert to string to make sure default check works.
 				}
 				break;
-
 
 			case ( $field_def['type'] === 'checkbox' ):
 				// Only allow value if it's one of the predefined options.
@@ -527,6 +516,19 @@ class WPSEO_Meta {
 			default:
 				if ( is_string( $meta_value ) ) {
 					$clean = WPSEO_Utils::sanitize_text_field( trim( $meta_value ) );
+				}
+
+				if ( $meta_key === self::$meta_prefix . 'focuskw' ) {
+					$clean = str_replace( array(
+						'&lt;',
+						'&gt;',
+						'&quot',
+						'&#96',
+						'<',
+						'>',
+						'"',
+						'`',
+					), '', $clean );
 				}
 				break;
 		}
@@ -1043,6 +1045,11 @@ class WPSEO_Meta {
 	 * @return array
 	 */
 	public static function keyword_usage( $keyword, $post_id ) {
+
+		if ( empty( $keyword ) ) {
+			return array();
+		}
+
 		$get_posts = new WP_Query(
 			array(
 				'meta_key'       => '_yoast_wpseo_focuskw',

@@ -33,44 +33,40 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 		return $return;
 	}
 
-	#Renvoie la liste des id commerçants (les ids de l'attributs produits "commercant", le concernant)- présent dans magento.php dans delivery
-	public function liste_commercant_id()
+	#Renvoie la liste des id commerçants (les ids de l'attribut produit "commerçant", par store, avec leur nom (utilisé uniquement dans MAGMI)
+
+	public function liste_commercant_id($type="attcomid")
 	{
-		//Get all store ids
-		$storeIds=$this->liste_store_id();
+	    $return = [];
 
-	    $return=[];
+	    //with Apdc_Commercant module
+	    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
+        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
+        $shops->addFilterToMap('path', 'catalog_category_entity.path');
+        foreach ($shops as $shop) {
+            $rootCategoryId = explode('/', $shop->getPath())[1];
+            $rootCategoryName=Mage::getSingleton('catalog/category')->load($rootCategoryId)->getName();
+            if($type=="catid"){
+            	$return[$rootCategoryName][$shop->getIdCategory()] = $shop->getName();
+            } else {
+            	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
+            }
+        }
 
-	    //with active categories
-	   	foreach($storeIds as $id){
-	    	$categories = Mage::getModel('catalog/category')
-			->getCollection()
-	    	->addFieldToFilter('is_active', array('eq' => 1))
-	        ->addAttributeToSelect('*');
-	    	$rootCategoryId = Mage::app()->getStore($id)->getRootCategoryId();
-	    	$storename=Mage::app()->getStore($id)->getName();
-	    	$categories->addAttributeToFilter('path', array('like' => "1/".$rootCategoryId."/%"));
-		    foreach($categories as $cat){
-		        if($cat->getData('estcom_commercant')==true){
-		            $return[$storename][$cat->getData('att_com_id')]=$cat->getName();
-		        }
-		    }
-		}
+	    arsort($return);
 
-	    asort($return);
 	    return $return;
 	}
 
-	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - présent dans magento.php dans delivery
-	public function info_commercant($attcomid)
+	#Récupère les informations commerçants dans la catégorie lui correspondant en se basant sur l'id de l'attributs produits "commercant" le concernant, et non pas le numéro de catégorie - uniquement utilisé par getgooglecsv pour MAGMI
+	public function info_commercant($id,$type="attcomid")
 	{
-	        $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*');
-	        foreach ($categories as $category) {
-	            $categ = Mage::getModel("catalog/category")->load($category->getId());
-	            if ($categ->getAttComId()==$attcomid) {
-	                return $categ;
-	            }
-	        }
+	    	if($type=="catid") {
+	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', $id)->getFirstItem();   
+	    	} else {
+	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();   
+	    	}
+            return $shop;
 	}
 
 	public function getgooglecsv($comid){
@@ -78,8 +74,8 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 		$cat=$this->info_commercant($comid);
 		return [
 			"name"=>$cat->getName(),
-			"key"=>$cat->getData('gs_key'),
-			"gid"=>$cat->getData('gs_gid')
+			"key"=>$cat->getData('google_key'),
+			"gid"=>$cat->getData('google_id')
 			];
 			
 	}

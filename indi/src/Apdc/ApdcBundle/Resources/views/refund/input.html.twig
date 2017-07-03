@@ -1,0 +1,156 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="col-xs-2">
+		<a href="{{ path('refundUpload', {id:id}) }}" class="btn btn-default"><< Retour</a>
+	</div>
+	<div class="progress col-xs-8">
+		<div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+	    	<span>Saisie Tickets</span>
+		</div>
+	</div>
+	<div class="col-xs-2">
+		<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default right">Suivant >></a>
+	</div>
+	{{ form_start(form) }}
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>#{{id}}<small> Saisie des tickets</small></h1>
+		</div>
+	</div>
+<div class="row">
+		<div class="row">
+			<hr>
+			<div class="col-md-4">
+				<label class="checkbox-inline"><input type="checkbox" name="form[refund_shipping]" {% if refund_shipping %} checked="checked"{% endif %} value="true">Rembourser les frais de livraison ?</label>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="commentaire_client">Commentaires Client</label>
+					<textarea rows="3" cols="30" name="form[commentaire_client]">{{ commentaire_client }}</textarea>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="commentaire_commercant">Commentaires Commercant</label>
+					<textarea rows="3" cols="30" name="form[commentaire_commercant]">{{ commentaire_commercant }}</textarea>
+				</div>
+			</div>
+			<hr>
+		</div>
+		{% for merchant_id, merchant_part in order %}
+			<h2>{{merchant_part.merchant.name}}</h2>
+			<div class="row flex-input">
+				<div class="ticket-container">
+					<div id='{{merchant_id}}-ticket-img' class='merchant-ticket col-md-4' value='{{merchant_part.merchant.ticket}}'></div>
+				</div>
+				<div class="col-md-8">
+					<table id='{{merchant_id}}' class='merchant table'>
+						<thead>
+							<tr>
+								<th>Produit</th>
+								<th>Description</th>
+								<th>Quantité</th>
+								<th>Prix Unitaire</th>
+								<th>Total Commande</th>
+								<th>Total Client</th>
+								<th>Différence Client</th>
+								<th>Total Commercant</th>
+								<th>Différence Commercant</th>
+								<th>Commentaire</th>
+							</tr>
+						</thead>
+						{% for product_id, product in merchant_part.products %}
+							<tr>
+								<td>{{product.nom}}</td>
+								<td>{{product.description}}</br>{{product.comment}}</td>
+								<td>{{product.quantite}}</td>
+								<td>{{product.prix_kilo}}</td>
+								<td>
+									<span id='{{product_id}}-total'>{{product.prix_total }}</span>
+								</td>
+								<td>
+								{% if product.refund_prix is null %}
+										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{ product.prix_total }}' />
+								{% else %}
+										<input id='{{product_id}}-ticket-input' class='ticket-input' type='text' name='form[{{product_id}}][ticket]' value='{{ product.refund_prix | round(2,'common')}}' />
+								{% endif %}
+								</td>
+								<td>
+									<p id='{{product_id}}-diff' class='diff'>{{product.refund_diff | round(2,'common')}}</p>
+								</td>
+								<td>
+								{% if product.refund_prix_commercant is null %}
+									{% if product.refund_prix is null %}
+										<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.prix_total }}' />
+									{% else %}
+										<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix | round(2,'common')}}' />
+									{% endif %}
+								{% else %}
+									<input id='{{product_id}}-ticket-input-commercant' class='ticket-input-commercant' type='text' name='form[{{product_id}}][ticket-commercant]' value='{{ product.refund_prix_commercant | round(2, 'common')}}' />
+									{% endif %}	
+								</td>
+								<td>
+									<p id='{{product_id}}-diff-commercant' class='diff-commercant'>{{product.refund_diff_commercant | round(2, 'common')}}</p>
+								</td>
+								<td>
+									<textarea rows="1" cols="18" name="form[{{product_id}}][comment]"> {{product.refund_comment}}</textarea>
+								</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<th colspan='4'>TOTAL</th>
+							<td><p id='{{merchant_id}}-total'>{{merchant_part.merchant.total}}</p></td>
+							<td><p id='{{merchant_id}}-ticket-total'></p></td>
+							<td><p id='{{merchant_id}}-diff-total'></p></td>
+							<td><p id='{{merchant_id}}-ticket-total-commercant'></p></td>
+							<td><p id='{{merchant_id}}-diff-total-commercant'></p></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		{% endfor %}
+	<!--	<input type="hidden" name="_csrf_token"
+					   value="{#{ csrf_token('authenticate') }#}">
+	-->
+	</div>
+	<div class="row">
+		<button type="submit" name="submit" value='submit' class="btn btn-success btn-lg right">Enregistrer</button>
+	</div>
+
+			{{ form_end(form) }}
+</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block javascript_refund %}
+	<script type="text/javascript" src="{{ path('root') }}js/input-compute.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/openseadragon.min.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/jquery-scrolltofixed-min.js"></script>
+	<!-- ScrollToFixed for refund input tickets : refund/input.twig -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var summaries = $('.ticket-container');
+			summaries.each(function(i) {
+				var summary = $(summaries[i]);
+				var next = summaries[i + 1];
+					summary.scrollToFixed({
+					limit: function() {
+						var limit = 0;
+						if (next) {
+							limit = $(next).offset().top - $(this).outerHeight(true) - 100;
+						}
+						return limit;
+						},
+						zIndex: 999
+					});
+				});
+			});
+	</script>
+{% endblock %}

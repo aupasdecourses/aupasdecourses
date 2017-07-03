@@ -44,6 +44,9 @@
 ehthumbs.db
 Thumbs.db
 
+tags
+
+=======
 # Ignore config files #
 /.htaccess
 .htpasswrd
@@ -104,3 +107,5 @@ Thumbs.db
 /delivery/vendor/
 /skin/frontend/base/default/css/balloz/
 /skin/frontend/base/default/js/balloz/
+/nbproject
+/nbproject/private/

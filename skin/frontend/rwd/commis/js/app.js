@@ -699,7 +699,7 @@ $j(document).ready(function () {
     var skipContents = $j('.skip-content');
     var skipLinks = $j('.skip-link');
 
-    skipLinks.on('click', function (e) {
+    $j('.skip-links').on('click', '.skip-link', function (e) {
         e.preventDefault();
 
         var self = $j(this);
@@ -725,7 +725,7 @@ $j(document).ready(function () {
         }
     });
 
-    $j('#header-cart').on('click', '.skip-link-close', function(e) {
+    $j('.skip-links').on('click', '#header-cart .skip-link-close', function(e) {
         var parent = $j(this).parents('.skip-content');
         var link = parent.siblings('.skip-link');
 

@@ -7,36 +7,41 @@ require_once 'Mage/Checkout/controllers/CartController.php';
 
 class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
 
-        public function addAction()
+    public function addAction()
     {
-        $cart   = $this->_getCart();
-        $params = $this->getRequest()->getParams();
-        if($params['isAjax']==1){
-            $response = array();
+        $params = $this->getRequest()->getPost();
+        if ($params['isAjax'] == 1) {
+            if (!$this->_validateFormKey()) {
+                Mage::throwException('Invalid form key');
+                return;
+            }
+            $result = array();
+            $cart   = $this->_getCart();
             try {
                 if (isset($params['qty'])) {
                     $filter = new Zend_Filter_LocalizedToNormalized(
-                    array('locale' => Mage::app()->getLocale()->getLocaleCode())
+                        array('locale' => Mage::app()->getLocale()->getLocaleCode())
                     );
                     $params['qty'] = $filter->filter($params['qty']);
                 }
  
                 $product = $this->_initProduct();
-                $related = $this->getRequest()->getParam('related_product');
                 /**
                  * Check product availability
                  */
                 if (!$product) {
-                    $response['status'] = 'ERROR';
-                    $response['message'] = $this->__('Unable to find Product ID');
+                    $result['status'] = 'ERROR';
+                    $result['message'] = $this->__('Unable to find Product ID');
                 }
  
                 $cart->addProduct($product, $params);
-                if (!empty($related)) {
-                    $cart->addProductsByIds(explode(',', $related));
-                }
  
                 $cart->save();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
 
                 $this->_getSession()->setCartWasUpdated(true);
 
@@ -47,17 +52,18 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
                 );
  
-                if (!$cart->getQuote()->getHasError()){
-                    $message = $this->__('%s was added to your shopping cart.', Mage::helper('core')->escapeHtml($product->getName()));
-                    $response['status'] = 'SUCCESS';
-                    $response['message'] = $message;
-                    //New Code Here
-                    $this->loadLayout();
-                    $minicart_head = $this->getLayout()->getBlock('minicart_head')->toHtml();
-                    $minicart_head;
-                    Mage::register('referrer_url', $this->_getRefererUrl());
-                    $response['minicarthead'] = $minicart_head;
-                }
+                $message = $this->__('%s was added to your shopping cart.', Mage::helper('core')->escapeHtml($product->getName()));
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $message;
+                //New Code Here
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $product->getId());
+                $result['content'] = $minicartContent->toHtml();
+                $result['product_id'] = $product->getId();
+                $result['qty'] = $cart->getSummaryQty();
+
+                Mage::register('referrer_url', $this->_getRefererUrl());
 
             } catch (Mage_Core_Exception $e) {
                 $msg = "";
@@ -70,17 +76,138 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                     }
                 }
  
-                $response['status'] = 'ERROR';
-                $response['message'] = $msg;
+                $result['status'] = 'ERROR';
+                $result['message'] = $msg;
             } catch (Exception $e) {
-                $response['status'] = 'ERROR';
-                $response['message'] = $this->__('Cannot add the item to shopping cart.');
+                $result['status'] = 'ERROR';
+                $result['message'] = $this->__('Cannot add the item to shopping cart.');
                 Mage::logException($e);
             }
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
             return;
-        }else{
+        } else {
             return parent::addAction();
+        }
+    }
+
+    public function addRelatedToProductsAction()
+    {
+        $params = $this->getRequest()->getPost();
+        if ($params['isAjax'] == 1) {
+            if (!$this->_validateFormKey()) {
+                Mage::throwException('Invalid form key');
+                return;
+            }
+            $result = array();
+            $cart   = $this->_getCart();
+            try {
+ 
+                $related = $this->getRequest()->getParam('related_product');
+                if (!empty($related)) {
+                    $cart->addProductsByIds(explode(',', $related));
+                }
+ 
+                $cart->save();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
+                $this->_getSession()->setCartWasUpdated(true);
+ 
+                $message = $this->__('Les suggestions ont bien été ajoutées à votre panier');
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $message;
+                //New Code Here
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $result['content'] = $minicartContent->toHtml();
+                $result['qty'] = $cart->getSummaryQty();
+
+                Mage::register('referrer_url', $this->_getRefererUrl());
+
+            } catch (Mage_Core_Exception $e) {
+                $msg = "";
+                if ($this->_getSession()->getUseNotice(true)) {
+                    $msg = $e->getMessage();
+                } else {
+                    $messages = array_unique(explode("\n", $e->getMessage()));
+                    foreach ($messages as $message) {
+                        $msg .= $message.'<br/>';
+                    }
+                }
+ 
+                $result['status'] = 'ERROR';
+                $result['message'] = $msg;
+            } catch (Exception $e) {
+                $result['status'] = 'ERROR';
+                $result['message'] = $this->__('Cannot add the item to shopping cart.');
+                Mage::logException($e);
+            }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            return;
+        } else {
+            return parent::addAction();
+        }
+    }
+
+    public function addCommentAjaxAction()
+    {
+        $params = $this->getRequest()->getPost();
+        if ($params['isAjax'] == 1) {
+            if (!$this->_validateFormKey()) {
+                Mage::throwException('Invalid form key');
+                return;
+            }
+            $itemId = (int) $this->getRequest()->getParam('item_id');
+            $cart   = $this->_getCart();
+            $result = array();
+            try {
+                $comment = htmlentities($this->getRequest()->getParam('item_comment'), ENT_QUOTES, 'UTF-8');
+                $item = $this->_getCart()->getQuote()->getItemById($itemId);
+                $item->setItemComment($comment)
+                    ->save();
+                $productId = $item->getProduct()->getId();
+
+                // Reload quote to clean and fetch new error messages
+                $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+                $quote->getItemsCollection()->load();
+                $this->_getCart()->setQuote($quote);
+
+                $result['status'] = 'SUCCESS';
+                $result['message'] = $this->__('Your comment has been saved successfully.');
+
+                $this->loadLayout();
+                $minicartContent = $this->getLayout()->getBlock('minicart_content');
+                $minicartContent->setData('product_id', $productId);
+                $result['content'] = $minicartContent->toHtml();
+                $result['product_id'] = $productId;
+                $result['qty'] = $this->_getCart()->getSummaryQty();
+
+            } catch (Mage_Core_Exception $e) {
+                $msg = "";
+                if ($this->_getSession()->getUseNotice(true)) {
+                    $msg = $e->getMessage();
+                } else {
+                    $messages = array_unique(explode("\n", $e->getMessage()));
+                    foreach ($messages as $message) {
+                        $msg .= $message.'<br/>';
+                    }
+                }
+ 
+                $result['status'] = 'ERROR';
+                $result['message'] = $msg;
+            } catch (Exception $e) {
+                $result['status'] = 'ERROR';
+                $result['message'] = $this->__('Cannot add your comment to the item.');
+                Mage::logException($e);
+            }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            return;
         }
     }
     
@@ -109,55 +236,4 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
             }
         }
     }
-
-    //Adapted from app/code/local/Mage/Checkout/Model/Cart.php
-    public function updateAction(){
-        $cartData = $this->getRequest()->getParams();
-            try {
-                $filter = new Zend_Filter_LocalizedToNormalized(array('locale' => Mage::app()->getLocale()->getLocaleCode()));
-                //Normalize and sanitize cartData to fit Magento format for updateItems function
-                $data=array();
-                $data[$cartData['id']]['qty'] = $filter->filter(trim($cartData['qty']));
-                $data[$cartData['id']]['item_comment'] = filter_var($cartData['comments'], FILTER_SANITIZE_SPECIAL_CHARS);
-                $cart = $this->_getCart();
-                if (! $cart->getCustomerSession()->getCustomer()->getId() && $cart->getQuote()->getCustomerId()) {
-                    $cart->getQuote()->setCustomerId(null);
-                }
-                $data = $cart->suggestItemsQty($data);
-                //function in Pmainguet/QuoteItemComment/Model/Cart.php
-                $cart->updateItems($data)->save();
-                $this->_getSession()->setCartWasUpdated(true);
-                if (!$cart->getQuote()->getHasError()){
-                    $message = $this->__('%s a été mis à jour.', Mage::helper('core')->escapeHtml('Le produit'));
-                    $response['status'] = 'SUCCESS';
-                    $response['message'] = $message;
-                    //Update minicart and totals
-                    $this->loadLayout();
-                    $minicart_head = $this->getLayout()->getBlock('minicart_head')->toHtml();
-                    $totals = $this->getLayout()->getBlock('checkout.cart.totals')->toHtml();
-                    Mage::register('referrer_url', $this->_getRefererUrl());
-                    $response['minicarthead'] = $minicart_head;
-                    $response['totals'] = $totals;
-                }
-            } catch (Mage_Core_Exception $e) {
-                $msg = "";
-                if ($this->_getSession()->getUseNotice(true)) {
-                    $msg = $e->getMessage();
-                } else {
-                    $messages = array_unique(explode("\n", $e->getMessage()));
-                    foreach ($messages as $message) {
-                        $msg .= $message.'<br/>';
-                    }
-                }
-                $response['status'] = 'ERROR';
-                $response['message'] = $msg;
-            } catch (Exception $e) {
-                $response['status'] = 'ERROR';
-                $response['message'] = $this->__('Cannot update shopping cart.');
-                Mage::logException($e);
-            }
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-            return;
-    }
-
 }

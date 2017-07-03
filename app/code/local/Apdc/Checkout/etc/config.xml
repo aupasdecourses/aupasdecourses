@@ -22,6 +22,15 @@
                 </apdc_checkout>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Apdc_Checkout>
+                    <files>
+                        <default>Apdc_Checkout.csv</default>
+                    </files>
+                </Apdc_Checkout>
+            </modules>
+        </translate>
     </frontend>
     <global>
         <blocks>
@@ -33,11 +42,11 @@
                     <onepage>Apdc_Checkout_Block_Onepage</onepage>
                 </rewrite>
             </checkout>
-            <!--<hipaymod>
-		            <rewrite>
-		            	<form>Apdc_Checkout_Block_Hipay_Form</form>
-		            </rewrite>
-		        </hipaymod>-->
+            <hipaymod>
+	            <rewrite>
+	            	<form>Apdc_Checkout_Block_Hipay_Form</form>
+	            </rewrite>
+	        </hipaymod>
         </blocks>
         <helpers>
             <apdc_checkout>

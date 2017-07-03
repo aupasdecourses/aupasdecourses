@@ -14,8 +14,21 @@
 		        <?php $total+=$refund["del_amount_refunded"];?>
 		    <?php endforeach;?>
 		     <tr>
-		        <td><strong>TOTAL REMBOURSEMENTS</strong></td>
-		        <td><strong><?php echo $_order->formatPrice($total) ?></strong></td>
+		        <td><em>TOTAL</em></td>
+		        <td><em><?php echo $_order->formatPrice($total) ?></em></td>
+		     </tr>
+		     <tr>
+		        <td><strong>MONTANT REMBOURSÉ</strong></td>
+		        <td>
+		        	<strong>
+			        <?php
+			        	if($total<0){
+			        		$total=0;
+			        	}
+			        	echo $_order->formatPrice($total);
+			        ?>
+		           	</strong>
+		        </td>
 		     </tr>
 		</table>
 		<?php echo $this->getChildHtml('amorderattach.attachment2');?>

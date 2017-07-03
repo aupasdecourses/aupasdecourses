@@ -18,9 +18,28 @@
             <apdccustomer>
                 <class>Apdc_Customer_Model</class>
             </apdccustomer>
+            <customer>
+                <rewrite>
+                    <customer>Apdc_Customer_Model_Customer</customer>
+                </rewrite>
+            </customer>
         </models>
+        <helpers>
+            <apdccustomer>
+                <class>Apdc_Customer_Helper</class>
+            </apdccustomer>
+        </helpers>
     </global>
     <frontend>
+        <routers>
+            <apdc_customer>
+                <use>standard</use>
+                <args>
+                    <module>Apdc_Customer</module>
+                    <frontName>apdc-customer</frontName>
+                </args>
+            </apdc_customer>
+        </routers>
         <events>
             <controller_action_postdispatch_customer_account_createPost>
                 <observers>
@@ -40,6 +59,24 @@
                     </apdc_customer>
                 </observers>
             </customer_register_success>
+            <customer_registration_is_allowed>
+                <observers>
+                    <apdc_customer>
+                        <type>singleton</type>
+                        <class>apdccustomer/observer_frontend</class>
+                        <method>customerRegistrationAllowed</method>
+                    </apdc_customer>
+                </observers>
+            </customer_registration_is_allowed>
+            <customer_login>
+                <observers>
+                    <apdc_customer>
+                        <type>singleton</type>
+                        <class>apdccustomer/observer_frontend</class>
+                        <method>customerLoggedIn</method>
+                    </apdc_customer>
+                </observers>
+            </customer_login>
         </events>
     </frontend>
 </config>

@@ -1,0 +1,189 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<h2>Notes Commande par Clients</h2>
+
+		<div class="page-header">
+			<h2>Commandes du <input type="text" class="form-control" id="datepickerNote" placeholder="Cliquez pour sélectionner la date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		</div>
+	
+		<h2>Moyenne des notes des commandes (sur la période)</h2>	
+			<h4><i>Abscisse : Notes. Ordonnée : Nb commandes</i></h4>
+		<div id = "graph"></div>
+	
+		<hr>
+
+		<table id="noteTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th colspan="2">Date</th>
+					<th># Commande</th>
+					<th>Nom Client</th>
+					<th>Note</th>
+				</tr>
+				<tr>
+					<th>Création</th>
+					<th>Livraison</th>
+					<th class="sort"></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in notes %}
+					<tr>
+							<td>{{ order.date_creation }}</td>
+							<td>{{ order.date_livraison }}</td>
+							<td><a href={{ order_url ~ order.entity_id }} target="_blank">{{ order.increment_id }}</a></td>
+							<td><a href={{ customer_url ~ order.id_client }} target="_blank">{{ order.nom_client }}</a></td>
+
+						{% if order.note is null %}
+							<td>NULL</td>
+						{% else %}
+							<td><a href="https://docs.google.com/spreadsheets/d/1DEvRZt5nZPzj5zP4tOa-Gm96oQ4J2Xu8wX68TSIgt0U/edit#gid=772705954" target="_blank">{{ order.note }}</a></td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_noteOrder %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_noteOrder %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+$(function() {
+	$( "#datepickerNote" ).datepicker({
+		altField: "#datepickerNote",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+
+$(function(){
+	$("#datepickerNote").change(function(){
+		window.location='{{ path('noteOrder') }}?date_debut='+this.value;
+	});
+});
+$(document).ready(function() {
+	var table=$('#noteTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+	} );
+});
+</script>
+
+<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+
+
+<script>
+// set the dimensions of the canvas
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+	width = 600 - margin.left - margin.right,
+	height = 400 - margin.top - margin.bottom;
+
+
+// set the ranges
+var x = d3.scale.ordinal().rangeRoundBands([10, width], .20);
+
+var y = d3.scale.linear().range([height, 0]);
+
+// define the axis
+	var xAxis = d3.svg.axis()
+.scale(x)
+	.orient("bottom")
+
+
+	var yAxis = d3.svg.axis()
+.scale(y)
+	.orient("left")
+	.ticks(10)
+	.tickFormat(d3.format("d")); // Integer for number of orders
+
+
+	// add the SVG element
+	var svg = d3.select("#graph").append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	.attr("transform", 
+			"translate(" + margin.left + "," + margin.top + ")");
+
+
+// load the data
+var json_data = {{ json_data|raw }};
+data = JSON.parse(JSON.stringify(json_data));
+
+	data.forEach(function(d) {
+		d.notes = d.notes;
+		d.occurences = +d.occurences;
+	});
+
+	// scale the range of the data
+	x.domain(data.map(function(d) { return d.notes; }));
+	y.domain([0, d3.max(data, function(d) { return d.occurences; })]);
+
+	// add axis
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis)
+		.selectAll("text")
+		.style("text-anchor", "end")
+		.attr("dx", "-.8em")
+		.attr("dy", "-.55em")
+		.attr("transform", "rotate(-90)" );
+
+	svg.append("g")
+		.attr("class", "y axis")
+		.call(yAxis)
+		.append("text")
+		.attr("transform", "rotate(-90)")
+		.attr("y", 5)
+		.attr("dy", ".71em")
+		.style("text-anchor", "end")
+		.text("Nb commandes");
+
+
+	// Add bar chart
+	svg.selectAll("bar")
+		.data(data)
+		.enter().append("rect")
+		.attr("class", "bar")
+		.attr("x", function(d) { return x(d.notes); })
+		.attr("width", x.rangeBand())
+		.attr("y", function(d) { return y(d.occurences); })
+		.attr("height", function(d) { return height - y(d.occurences); });
+
+
+</script>
+
+
+
+{% endblock %}

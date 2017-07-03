@@ -1,6 +1,10 @@
 <?php
 	$current_cat_Id=Mage::registry('current_category')->getId();
-	$childrenCat = Mage::getModel('catalog/category')->getCategories($current_cat_Id);
+	$childrenCat = Mage::getResourceModel('catalog/category_collection')
+    ->addAttributeToSelect('*')
+    ->addAttributeToFilter('is_active', 1)
+    ->addAttributeToFilter('parent_id', $current_cat_Id)
+    ->addAttributeToSort('position');
 ?>
 <div class="commercant_product_cat commercant-selection">
 	<h2 class="title-block" style="width:300px">Les rayons</h2>
@@ -14,7 +18,7 @@
 							<div class="linkcat">
 								<a href="<?= $cat->getUrl()?>">
 								<div class="img-wrapper">
-								    <img class="img-responsive img-thumbnail" src="<?= $this->getThumbnailUrl($cat)?>" alt="<?=$cat_name?>" title="<?=$cat_name?>" />
+                                    <img class="img-responsive img-thumbnail" src="<?= Mage::helper('apdc_catalog/category')->getImageUrl($cat); ?>" alt="<?=$cat_name?>" title="<?=$cat_name?>" />
 								    <div class="description">
 								    		<span><?=$cat_name?></span>
 								    </div>

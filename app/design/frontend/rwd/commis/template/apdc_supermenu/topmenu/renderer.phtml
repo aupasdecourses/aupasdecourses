@@ -38,21 +38,34 @@ foreach ($children as $child) {
 
     $html .= '<li '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
-
     if($child->getLevel() <= 1) {
-        $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+        if($child->getLevel()==0 && $child->getIsClickable()){
+            $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" >';
+        }elseif($child->getLevel()==1 && $child->getIsCommercant()<>70){
+            $html.='<div class="' . $child->getLinkClasses() . '">';
+        }else{
+            $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+        }
         if ($child->getLevel() == 1 && $child->getThumbnail()) {
             $thumbnail = $this->getResizedImage($child->getThumbnail(), 50, 50);
             $html .= '<img class="thumbnail_commercant" src="' . $thumbnail . '" width="50" height="50" title="' . $this->escapeHtml($this->__($child->getName())) . '" />';
         }
+
         $html .= '<span>' . $this->escapeHtml($this->__($child->getName())) . '</span>';
-        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
-        $html .= '</a>';
+        
+        if(!($child->getLevel()==0 && $child->getIsClickable()) && !($child->getLevel()==1 && $child->getIsCommercant()<>70)){
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
+        if(!($child->getLevel()==1 && $child->getIsCommercant()<>70)){
+            $html .= '</a>';
+        }else{
+            $html.="</div>";
+        }
     } else {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">'. $this->escapeHtml($this->__($child->getName())) .'</a>';
     }
 
-    if ($child->hasChildren()) {
+    if ($child->hasChildren() && !($child->getLevel()==0 && $child->getIsClickable())) {
         if ($child->getLevel() == 0) {
             $html .= '<div class="' . $child->getSubMenuClasses() . '">';
             $html .= '<div class="close-menu fa fa-close"></div>';

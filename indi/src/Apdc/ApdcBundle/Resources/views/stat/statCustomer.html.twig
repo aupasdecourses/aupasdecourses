@@ -1,0 +1,126 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container-fluid">
+	<div class="page-header">
+		<h2>Stats Clients</h2>
+	</div>
+	<div id="filter"><label>Selectionnez le client</label></div>
+
+
+
+	<table class="table table-striped" id="statCustomerTable">
+		<thead>
+			<tr>
+				<th>Nom Client</th>
+				<th class="float">Nbe Commande</th>
+				<th class="float">Panier Moyen</th>
+				<th class="float">Panier Max</th>
+				<th>Ecart type</th>
+				<th>Inscription</th>
+				<th>Dernière commande</th>
+				<th class="sort">Code Postal</th>
+				<th>Email</th>
+				<th>Téléphone</th>
+				<th>Commentaire</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for content in stat %}
+			{% if content != 'Mail Client' %}
+			<tr>
+				<td><a href={{ customer_url ~ content['id_client'] }} target="_blank">{{ content['nom_client'] }}</a></td>
+				<td>{{ content['nb_commande'] }}</td>
+				<td>{{ content['panier_moyen'] }}</td>
+				<td>{{ content['panier_max'] }}</td>
+				<td>{{ content['ecart_type'] }}</td>
+				<td>{{ content['inscription'] }}</td>
+				<td>{{ content['derniere_commande'] }}</td>
+				<td>{{ content['code_postal'] }}</td>
+				<td><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></td>
+				<td><a href="tel:{{ content['telephone'] }}">{{ content['telephone'] }}</td>
+				<td>{{ content['commentaires'] }}</td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_statCustomer %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_statCustomer %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script>
+$(document).ready(function() {
+	var table=$('#statCustomerTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+	</script>
+{% endblock %}

@@ -2,11 +2,11 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.0.4</version>
+            <version>0.1.1</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
-    <routers>
+        <routers>
             <delivery>
                 <use>standard</use>
                 <args>
@@ -57,6 +57,15 @@
                     <refund_items>
                         <table>refund_items</table>
                     </refund_items>
+                    <indi_billingdetails>
+                        <table>indi_billing_details</table>
+                    </indi_billingdetails>
+                    <indi_billingsummary>
+                        <table>indi_billing_summary</table>
+                    </indi_billingsummary>
+					<geocode_customers>
+						<table>geocode</table>
+					</geocode_customers>
                 </entities>
             </delivery_resource>
         </models>
@@ -65,5 +74,34 @@
                 <class>Apdc_Delivery_Helper</class>
             </pmainguet_delivery>
         </helpers>
+        <template>
+            <email>
+                <delivery_emailcreditplus_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditplus_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditplus_template>
+                <delivery_emailcreditmoins_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditmoins_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditmoins_template>
+                <delivery_emailcreditnull_template translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses vient de traiter votre commande!</label>
+                    <file>delivery/creditnull_template.html</file>
+                    <type>html</type>
+                </delivery_emailcreditnull_template>
+                <notification_new_note translate="label" module="pmainguet_delivery">
+                    <label>Vous avez reçu une nouvelle note sur une commande client</label>
+                    <file>notification/new_note.html</file>
+                    <type>html</type>
+                </notification_new_note>
+                <billing_shop_mail translate="label" module="pmainguet_delivery">
+                    <label>Au Pas De Courses - Facture mensuelle</label>
+                    <file>delivery/billing/billing_shop.html</file>
+                    <type>html</type>
+                </billing_shop_mail>
+            </email>
+        </template>
 	</global>
 </config>

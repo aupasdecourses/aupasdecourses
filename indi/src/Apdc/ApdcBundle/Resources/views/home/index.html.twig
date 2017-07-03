@@ -1,0 +1,80 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="page-header">
+			<h1>Back office Au Pas De Courses</h1>
+			<div class="text_accueil">
+				<p>Bienvenue sur la plateforme de gestion des commandes et livraisons de Au Pas De Courses</p>
+			</div>
+		</div>
+		<div class="row">
+		<div class="col-md-4"></div>
+		
+		<div class="col-md-4">
+		{% if is_granted('ROLE_DISPATCH') %}
+			<h3>1 - Liste des commandes</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('ordersIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Liste globale</button></a>
+				<!-- <a href=""><button type="button" class="btn btn-primary btn-lg btn-block">Liste par quartier</button></a> -->
+				<a href="{{ path ('merchantsIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Liste par commercants</button></a>
+			</div>
+			<h3>2 - Dispatching</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('pickingIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Enlèvements</button></a>
+				<a href="{{ path ('shippingIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Livraisons</button></a>
+				<!-- <a href=""><button type="button" class="btn btn-primary btn-lg btn-block">Création tournées</button></a> -->
+				<a href="{{ path ('mapMerchants')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Carte Commercants</button></a>
+			</div>
+		{% endif %} {# end role dispatch #}
+
+		{% if is_granted('ROLE_GESTION') %}	
+			<h3>3 - Outils externes</h3>
+			<div class="button_accueil">
+				<a href="http://mistral.stars-services.com" target="_blank"><button type="button" class="btn btn-default btn-lg btn-block">Accès Mistral (TRACEO)</button></a>
+				<a href="https://mandrillapp.com/" target="_blank"><button type="button" class="btn btn-default btn-lg btn-block">Accès Mandrill (MAILS)</button></a>
+				<a href="https://dashboard.tawk.to/" target="_blank"><button type="button" class="btn btn-default btn-lg btn-block">Accès Tawk.to (CHAT)</button></a>
+			</div>	
+			<h3>4 - Infos Commerçants</h3>
+			<div class="button_accueil">
+				<a href=""><button type="button" class="btn btn-default btn-lg btn-block">Profil commerçants</button></a>
+			</div>
+			<h3>5 - Remboursements</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('refundIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Saisie Ticket</button></a>
+				<a href="{{ path ('refundAdyenIndex') }}"><button type="button" class="btn btn-default btn-lg btn-block">Formulaire Adyen</button></a>
+			</div>
+			<h3>6 - Facturation</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('billingIndex') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir En-Cours</button></a>
+				<a href="{{ path ('billingVerif') }}"><button type="button" class="btn btn-default btn-lg btn-block">Calcul Facturation</button></a>
+				<a href="{{ path ('billingDetails') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir Commandes Facturées</button></a>
+				<a href="{{ path ('billingSummary') }}"><button type="button" class="btn btn-default btn-lg btn-block">Voir Factures Commerçant</button></a>
+				<!-- <a href="{{ path ('billingPayoutIndex') }}"><button type="button" class=" btn btn-default btn-lg btn-block">Payout</button></a> -->
+			</div>
+		{% endif %} {# end role gestion #}
+		
+		{% if is_granted('ROLE_COMMUNICATION') %}
+			 <h3>7 - Infos Clients</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('statCustomer') }}"><button type="button" class="btn btn-primary btn-lg btn-block">Stats Clients</button></a>
+				<a href="{{ path ('loyaltyCustomer') }}"><button type="button" class="btn btn-primary btn-lg btn-block">Fidelité Clients</button></a>
+				<a href="{{ path ('statVoucher') }}"><button type="button" class="btn btn-primary btn-lg btn-block">Stats Coupons</button></a>
+				<a href="{{ path ('noteOrder') }}"><button type="button" class="btn btn-primary btn-lg btn-block">Notes commande</button></a>
+				<a href="{{ path ('mapCustomers') }}"><button type="button" class="btn btn-primary btn-lg btn-block">Carte Clients</button></a>
+			</div>
+			<h3>8 - Outils Photos</h3>
+			<div class="button_accueil">
+				<a href="{{ path ('toolProduct')}}"><button type="button" class="btn btn-default btn-lg btn-block">Photos Produits</button></a>
+				<a href="{{ path ('toolMerchant')}}"><button type="button" class="btn btn-default btn-lg btn-block">Photos Commerçants</button></a>
+				<a href="{{ path ('toolMerchant')}}"><button type="button" class="btn btn-default btn-lg btn-block">Photos Catégories</button></a>
+			</div>
+			{% endif %} {# end role communication #}
+		</div>
+
+		<div class="col-md-4"></div>
+		</div>
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

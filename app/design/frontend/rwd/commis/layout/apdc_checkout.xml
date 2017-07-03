@@ -1,6 +1,5 @@
 <layout version="0.1.0">
     <checkout_onepage_index>
-        <!-- Remove unnecessary JS from MW_Ddate -->
         <reference name="head">
             <action method="removeItem">
                 <type>js</type>
@@ -10,6 +9,7 @@
                 <type>js</type>
                 <file>mw_ddate/jquery-noconflict.js</file>
             </action>
+            <action method="addJs"><script>apdc/coupon.js</script></action>
         </reference>
         <!-- Merge Billing & Shipping -->
         <reference name="checkout.onepage.billing"> Change the template of billing block
@@ -23,15 +23,16 @@
             <!-- Add ddate -->
             <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
         </reference>
+        <remove name="header.delivery"/>
         <!-- Merge Payment & Review -->
         <remove name="checkout.onepage.review"/>
         <reference name="checkout.onepage.payment">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/payment.phtml</template></action>
             <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="apdc_checkout/checkout/onepage/agreements.phtml"/>
         </reference>
-        <reference name="checkout.payment.methods.child0">
+        <!-- <reference name="checkout.payment.methods.child0">
             <action method="setTemplate"><template>apdc_checkout/adyen/hpp.phtml</template></action>
-        </reference>
+        </reference> -->
         <!--update shipping totals template-->
         <reference name="shipping_total_renderer">
             <action method="setTemplate"><template>apdc_checkout/tax/checkout/shipping.phtml</template></action>

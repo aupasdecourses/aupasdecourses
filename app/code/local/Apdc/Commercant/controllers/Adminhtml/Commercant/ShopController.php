@@ -5,10 +5,15 @@
  */
 class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml_Controller_Action
 {
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('neighborhoods/commercant/shop'); 
+    }
+
     protected function _initAction()
     {
         $this->loadLayout()
-            ->_setActiveMenu('catalog/commercant')
+            ->_setActiveMenu('neighborhoods/commercant')
             ->_addBreadcrumb($this->__('Commercant'), $this->__('Commercant'));
 
         return $this;
@@ -86,6 +91,34 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
         } else {
             $data['closing_periods'] = serialize([]);
         }
+
+        if (!isset($data['delivery_days'])) {
+            $data['delivery_days'] = [];
+        }
+
+        if (!isset($data['id_category'])) {
+            $data['id_category'] = [];
+        }
+
+        foreach (['id_contact_manager', 'id_contact_employee', 'id_contact_employee_bis'] as $key) {
+            if (empty($data[$key])) {
+                // explicitely set the value to NULL to avoid foreign key issues
+                $data[$key] = null;
+            }
+        }
+
+        $data["stores"] = [];
+        $S = Mage::helper('apdc_commercant')->getStoresArray();
+        $categories=Mage::getModel ('catalog/category');
+        foreach ($data["id_category"] as $id) {
+            $cat=$categories->getCollection()->addAttributeToSelect("path")
+                ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
+            $storeid=$S[explode('/', $cat->getPath())[1]]['store_id'];
+            if(!in_array($storeid,$data["stores"])){
+                $data["stores"][]=$storeid;
+            }
+        }
+
 
         $model->setData($data);
         $model->save();

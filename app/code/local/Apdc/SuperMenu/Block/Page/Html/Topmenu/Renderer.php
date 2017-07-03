@@ -277,7 +277,11 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         }
         $baseDirMedia = Mage::getBaseDir('media') . DS . 'catalog' . DS;
      
-        $imageUrl = $baseDirMedia . 'category' . DS . $image;
+        if (preg_match('/^wysiwyg\//', $image)) {
+            $imageUrl = Mage::getBaseDir('media') . DS . $image;
+        } else {
+            $imageUrl = $baseDirMedia . 'category' . DS . $image;
+        }
         if (!is_file($imageUrl)) {
             return false;
         }
@@ -298,6 +302,8 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
      
         if(file_exists($imageResized)){
             return Mage::getBaseUrl('media' ) . 'catalog/product/cache/cat_resized/' . $image;
+        } else if (preg_match('/^wysiwyg\//', $image)) {
+            return Mage::getBaseUrl('media') . $image;
         } else {
             return Mage::getBaseUrl('media').'catalog/category/' . $image;
         }
