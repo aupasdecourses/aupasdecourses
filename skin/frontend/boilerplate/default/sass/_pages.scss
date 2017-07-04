@@ -290,6 +290,7 @@ section {
         width: calc( 100% + 30px);
         height: 56px;
         background: url(../images/border-pattern-height.png) repeat-x;
+        background-size: auto 49.4px;
     }
     .inner-box{
         padding-top: 50px;
@@ -343,7 +344,7 @@ section {
     }
     .product-item-info{
         .product-info{
-            height: 240px;
+            min-height: 190px;
             margin: 0;
         }
     }

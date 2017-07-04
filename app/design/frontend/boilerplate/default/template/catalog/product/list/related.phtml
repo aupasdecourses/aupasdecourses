@@ -27,10 +27,8 @@
 <?php if($this->getItems()->getSize()): ?>
 <div class="container-fluid">
     <div class="block block-related row">
-        <div class="block-title col-md-3">
+        <div class="block-content col-md-12">
             <h2><?php echo $this->__('Related Products') ?></h2>
-        </div>
-        <div class="block-content col-md-9">
             <!--<p class="block-subtitle"><?php echo $this->__('Check items to add to the cart or') ?>&nbsp;<a href="#" onclick="selectAllRelated(this); return false;"><?php echo $this->__('select all') ?></a></p>-->
             <ol class="related-products-list owl-carousel" id="block-related">
             <?php foreach($this->getItems() as $_item): ?>
