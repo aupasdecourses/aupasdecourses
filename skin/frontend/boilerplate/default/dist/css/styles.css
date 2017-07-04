@@ -13159,7 +13159,12 @@ section .section-description {
 }
 
 .apdc-products-grid .product-info.notavailable form .product-name {
-  color: #000;
+  color: #333;
+}
+
+.apdc-products-grid .product-info.notavailable .btn-cart:before,
+.apdc-products-grid .product-info.notavailable .btn-cart:after {
+  display: none;
 }
 
 .apdc-products-grid .product-info form {
@@ -13681,6 +13686,8 @@ section .section-description {
 
 .block-blog article .crop-img img {
   display: block;
+  width: 100%;
+  min-height: 100%;
   margin: 0 auto;
 }
 
@@ -13990,6 +13997,15 @@ section .section-description {
   background: url(../images/bg-cards.png);
   background-repeat: no-repeat;
   background-position: center bottom;
+}
+
+.apdc-popup-container {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  transform: translate3d(0, 0, 0);
 }
 
 footer {
@@ -15580,6 +15596,16 @@ p.info {
 
 #product_addtocart_form .actions .button {
   margin: 0;
+}
+
+#product_addtocart_form .actions .button.notavailable {
+  cursor: default;
+  background: #999;
+}
+
+#product_addtocart_form .actions .button.notavailable:before,
+#product_addtocart_form .actions .button.notavailable:after {
+  display: none;
 }
 
 #product_addtocart_form .product-availability {
