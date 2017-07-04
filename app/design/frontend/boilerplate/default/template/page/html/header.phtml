@@ -136,6 +136,9 @@
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
-
+		
+		if(getUrlParameter('opencart') == 1) {
+			$j('.header-minicart .skip-cart').trigger('click');
+		}
 	});
 </script>

@@ -27,7 +27,7 @@ class Apdc_Front_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getCatTitle(){
-        $name= $this->_category->getParentCategory()->getName()." - ".$this->_category->getName();
+        $name = Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName()." de ".$this->_category->getName();//$this->_category->getParentCategory()->getName()." - ".$this->_category->getName();
         return $name;
     }
 
