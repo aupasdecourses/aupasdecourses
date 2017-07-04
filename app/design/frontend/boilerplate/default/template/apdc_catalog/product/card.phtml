@@ -10,8 +10,25 @@
 		$formAjaxUrl = $this->helper('apdccart')->getAjaxAddUrl($product);
 	}
 	$uniqidCard = uniqid('card-');
+	
+	$dispo = true;
+	$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $product->getData('commercant'))->getFirstItem();
+	$delivery_days = $shop->getDeliveryDays();
+	if(count($delivery_days) < 4 && $delivery_days <> NULL){
+		$tmp = Mage::helper('apdc_commercant')->getDays();
+		foreach($delivery_days as $key => $day){
+			$delivery_days[$key] = $tmp[$day-1];
+		}
+	}
+	if(isset($_SESSION['ddate'])){
+		$timestamp = strtotime($_SESSION['ddate']);
+		$day = date('w', $timestamp);
+		if(!in_array($day,$delivery_days)){
+			$dispo = false;
+		}
+	}
 ?>
-<div class="product-info row item">
+<div class="product-info row item <?php if($dispo == false) echo 'notavailable'; ?>">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="col-md-12 product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
@@ -54,14 +71,18 @@
 								<div class="loader"><img src="<?php echo $this->getSkinUrl('dist/images/opc-ajax-loader.gif') ?>" alt=""></div>
 							</div>
 							<div class="pull-right">
-								<input type="hidden" class="selected-optionKey-<?php echo $product->getId(); ?>" />
-								<button type="submit" title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="button button-green btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Ajouter') ?></span></span></button>
-								<div class="qty-buttons">
-									<button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-green btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
-									<button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-orange btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
-									<span class="added-qty">0</span>
-									<button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button button-green btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
-								</div>
+								<?php if($dispo == true) { ?>
+									<input type="hidden" class="selected-optionKey-<?php echo $product->getId(); ?>" />
+									<button type="submit" title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="button button-green btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Ajouter') ?></span></span></button>
+									<div class="qty-buttons">
+										<button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-green btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
+										<button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-orange btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
+										<span class="added-qty">0</span>
+										<button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button button-green btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
+									</div>
+								<?php } else { ?>
+									<span class="button button-green btn-cart simple-add-to-cart-button notavailable"><?php echo $this->__('Non disponible') ?></span>
+								<?php } ?>
 							</div>
 						</div>
 					</div>

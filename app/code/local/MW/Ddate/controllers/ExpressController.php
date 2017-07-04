@@ -406,4 +406,15 @@ class MW_Ddate_ExpressController extends Mage_Core_Controller_Front_Action
 
         return $this->_quote;
     }
+	
+	public function saveDdateAjaxAction() {
+		$date = $this->getRequest()->getPost('date', '');
+		$dtime = $this->getRequest()->getPost('dtime', '');
+		$url = $this->getRequest()->getPost('url', Mage::getBaseUrl());
+		Mage::getSingleton('core/session')->setDdate($date);
+		$_SESSION['ddate'] = $date;
+        $_SESSION['dtime'] = $dtime;
+		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array('redirect' => $url)));
+		return;
+	}
 }

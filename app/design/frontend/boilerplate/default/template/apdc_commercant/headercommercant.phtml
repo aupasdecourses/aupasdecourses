@@ -13,7 +13,7 @@
                     </div>
                     <div class="commercant-name">
                         <h1 class="subtitle"><?= $shop_info['name'] ?></h1>
-                        <a href="$url_adresse" target="_blank"><i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?></a>
+                        <i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?>
                     </div>
                 </div>
                 <div class="col-md-5 text-right delivery-days">
@@ -77,14 +77,15 @@
 	<?php echo $this->getChildHtml("commercant-categories");?>
 </div>
 <div class="block_selection">
-    <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
+	<?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
 	<?php
-		$this->getChild("blockselection")->setData("shop_info", $shop_info);
-		echo $this->getChildHtml('blockselection', false);
+		$currentcat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+		if($currentcat->getLevel()== 3){
+			$this->getChild("blockselection")->setData("shop_info", $shop_info);
+			echo $this->getChildHtml('blockselection', false);
+		}
 	?>
 </div>
-
-
 <script type="text/javascript">
     $j(window).ready(function(){
 

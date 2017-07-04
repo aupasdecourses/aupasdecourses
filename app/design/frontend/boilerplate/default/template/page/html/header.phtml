@@ -137,5 +137,9 @@
 			}
 		});
 		
+		if(getUrlParameter('opencart') == 1) {
+			$j('.header-minicart .skip-cart').trigger('click');
+		}
+		
 	});
 </script>

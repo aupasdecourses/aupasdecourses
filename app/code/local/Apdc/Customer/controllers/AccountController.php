@@ -173,7 +173,8 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 if ($response['status'] == 'ERROR') {
                     $response['html'] = $this->_getLayout('apdc_login_view');
                 } else {
-                    $response['redirect'] = $this->_loginPostRedirect();
+					$session->addSuccess('Bienvenue '.Mage::helper('customer')->getCustomer()->getFirstname());
+                    $response['redirect'] = Mage::getBaseUrl();//$this->_loginPostRedirect();
                 }
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             }
@@ -236,7 +237,8 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
         } else {
             $session->setBeforeAuthUrl($this->_getRefererUrl());
         }
-		$this->_getSession()->addSuccess('Vous avez bien été déconnecté');
-        $this->_redirect('');
+		Mage::getSingleton('customer/session')->addSuccess('Vous avez bien été déconnecté');
+        return $this->getResponse()->setRedirect(Mage::getBaseUrl());
+		//$this->_redirect(Mage::getBaseUrl());
     }
 }
