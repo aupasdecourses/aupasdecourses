@@ -344,13 +344,22 @@ section {
     }
     .product-item-info{
         .product-info{
-            min-height: 190px;
+            min-height: 200px;
             margin: 0;
         }
     }
     .product-info{
         /*height: 240px;*/
         margin: 0;
+        &.notavailable{
+            form{
+                -webkit-filter: grayscale(100%);
+                filter: grayscale(100%);
+                .product-name{
+                    color: #000;
+                }
+            }
+        }
         form{
             position: relative;
             max-height: 600px;
@@ -374,7 +383,7 @@ section {
             &::-webkit-scrollbar-thumb{
                 border-radius: 10px;
                 -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.3);
-                background-color: $color-main-grey;
+                background-color: #999;
             }
         }
         .action-loading{
@@ -430,6 +439,7 @@ section {
     .product-portion{
         color: $color-main-grey;
         font-size: 0.75rem;
+        margin-bottom: 0;
     }
     .price-box{
         .price{
@@ -757,6 +767,9 @@ section {
     border: 0;
     max-width: 600px;
     text-align: left;
+    &.active{
+        background: #fff;
+    }
     h3{
         font-size: 1rem;
         font-weight: normal;
@@ -1104,4 +1117,13 @@ section {
             }
         }
     }
+}
+
+.main-container{
+    padding-bottom: 100px;
+    background: url(../images/bg-cards.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    margin: 50px 0 70px;
+    border-bottom: 1px solid #ddd;
 }
