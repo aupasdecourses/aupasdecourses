@@ -28,10 +28,6 @@
 				<block type="apdc_customer/lastorder" name="lastorder" as="lastorder" template="apdc_home/lastorder.phtml" />
 				<block type="apdc_blog/template" name="blog" as="blog" template="apdc_home/blog.phtml" />
             </block>
-            <block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>
-            <block type="cms/block" name="block_advantages" as="block_advantages">
-				<action method="setBlockId"><block_id>block_advantages</block_id></action>
-            </block>
         </reference>
 		
 		
