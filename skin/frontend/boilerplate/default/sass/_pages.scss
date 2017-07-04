@@ -757,6 +757,9 @@ section {
     border: 0;
     max-width: 600px;
     text-align: left;
+    &.active{
+        background: #fff;
+    }
     h3{
         font-size: 1rem;
         font-weight: normal;
@@ -1104,4 +1107,13 @@ section {
             }
         }
     }
+}
+
+.main-container{
+    padding-bottom: 100px;
+    background: url(../images/bg-cards.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    margin: 50px 0 70px;
+    border-bottom: 1px solid #ddd;
 }

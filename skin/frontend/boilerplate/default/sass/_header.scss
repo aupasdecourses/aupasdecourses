@@ -273,17 +273,17 @@ header{
         padding-left: 25px;
         .count{
             background: #F25150;
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             display: inline-block;
             border-radius: 50%;
             color: #fff;
-            font-size: 8px;
+            font-size: 10px;
             text-align: center;
             position: relative;
             top: -10px;
             left: -10px;
-            line-height: 13px;
+            line-height: 18px;
         }
     }
 }
@@ -366,12 +366,12 @@ header{
                 padding: 10px 5px;
                 text-align: center;
                 .label{
-                    font-size: 1.125rem;
+                    font-size: 1rem;
                     text-transform: uppercase;
                     color: $color-second-green;
                 }
                 .price{
-                    font-size: 2rem;
+                    font-size: 1.5rem;
                     color: $color-main-green;
                 }
             }
@@ -379,6 +379,9 @@ header{
                 list-style-type: none;
                 padding-left: 0;
                 background: #fff;
+                .checkout-button{
+                    margin-top: 10px;
+                }
             }
         }
         .minicart-wrapper {
@@ -387,6 +390,15 @@ header{
             overflow: auto;
             padding: 70px 10px 155px;
             width: 100%;
+            .minicart-message{
+                margin-bottom: 10px;
+                &#minicart-error-message{
+                    color: $c-danger;
+                }
+                &#minicart-success-message{
+                    color: $c-success;
+                }
+            }
         }
         .mini-products-list {
             padding:0;

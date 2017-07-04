@@ -22,18 +22,18 @@
 
 					<?php echo $this->getChildHtml('topSearch') ?>
 					<?php echo $this->getChildHtml('checkout.progress') ?>
-					
+
                     <!--<div class="skip-container skip-container-header-search col-md-4 col-sm-12">
                         <input type="text" placeholder="<?php echo $this->__('Your research here'); ?>">
                         <i class="fa fa-search"></i>
 
                         <div id="header-search" class="dropdown-menu skip-content">
-                            
+
                         </div>
                     </div>-->
 
                     <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2 col-md-6'; }?> col-md-2 col-sm-12 text-right link-header-right">
-                        
+
                         <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
                         <!--<?php if($session->isLoggedIn()) : ?>
                             <div class="skip-container hidden-sm">
@@ -48,7 +48,7 @@
 							<div class="header-delivery-container skip-container">
 								 <a href="#" title="Livraison">
 									<i class="fa fa-list-ul"></i>
-									<span class="label"><?php echo $this->__('Delivery') ?> <i class="fa fa-angle-down"></i></span>
+									<span class="label"><?php echo $this->__('Créneaux') ?> <i class="fa fa-angle-down"></i></span>
 
 								 </a>
 								<div class="block block-delivery" id="header-delivery">
@@ -58,7 +58,7 @@
 								</div>
 							</div>
 						<?php } ?>
-						
+
                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
                                 <span class="label">Aide</span>
@@ -114,7 +114,7 @@
 <?php echo $this->getChildHtml('page_content_heading'); ?>
 <script>
 	$j(document).ready(function(){
-		
+
 		$j('.header-account-container a').click(function(evt){
 			if($j(this).parent().find('.block-login').hasClass('open') ){
 				$j(this).parent().find('.block-login').removeClass('open');
@@ -125,7 +125,7 @@
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
-		
+
 		$j('.header-delivery-container a').click(function(evt){
 			if($j(this).parent().find('.block-delivery').hasClass('open') ){
 				$j(this).parent().find('.block-delivery').removeClass('open');
@@ -136,6 +136,6 @@
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
-		
+
 	});
 </script>

@@ -11850,14 +11850,14 @@ header .top-nav li a a:visited {
 }
 
 .header-minicart .skip-link .count {
-  font-size: 8px;
-  line-height: 13px;
+  font-size: 10px;
+  line-height: 18px;
   position: relative;
   top: -10px;
   left: -10px;
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   text-align: center;
   color: #fff;
   border-radius: 50%;
@@ -11953,13 +11953,13 @@ header .top-nav li a a:visited {
 }
 
 .header-minicart #header-cart .mini-cart-bottom .subtotal .label {
-  font-size: 1.125rem;
+  font-size: 1rem;
   text-transform: uppercase;
   color: #1e555a;
 }
 
 .header-minicart #header-cart .mini-cart-bottom .subtotal .price {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #3ab64b;
 }
 
@@ -11969,11 +11969,27 @@ header .top-nav li a a:visited {
   background: #fff;
 }
 
+.header-minicart #header-cart .mini-cart-bottom .checkout-types .checkout-button {
+  margin-top: 10px;
+}
+
 .header-minicart #header-cart .minicart-wrapper {
   overflow: auto;
   width: 100%;
   height: 100%;
   padding: 70px 10px 155px;
+}
+
+.header-minicart #header-cart .minicart-wrapper .minicart-message {
+  margin-bottom: 10px;
+}
+
+.header-minicart #header-cart .minicart-wrapper .minicart-message#minicart-error-message {
+  color: #df280a;
+}
+
+.header-minicart #header-cart .minicart-wrapper .minicart-message#minicart-success-message {
+  color: #11b400;
 }
 
 .header-minicart #header-cart .mini-products-list {
@@ -13566,6 +13582,10 @@ section .section-description {
   background: none;
 }
 
+.block-lastorder.active {
+  background: #fff;
+}
+
 .block-lastorder h3 {
   font-size: 1rem;
   font-weight: normal;
@@ -13945,6 +13965,15 @@ section .section-description {
 
 .page-404 .container ul li {
   font-size: .875rem;
+}
+
+.main-container {
+  margin: 50px 0 70px;
+  padding-bottom: 100px;
+  border-bottom: 1px solid #ddd;
+  background: url(../images/bg-cards.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
 }
 
 footer {
