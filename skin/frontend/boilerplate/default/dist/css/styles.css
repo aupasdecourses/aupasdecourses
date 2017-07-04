@@ -12220,6 +12220,13 @@ header .top-nav li a a:visited {
   display: block;
 }
 
+.dropdown-menu .template-column .cat-thumbnail {
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .col-main .block-subtitle {
   font-size: 2.25rem;
   font-weight: 700;
@@ -13138,7 +13145,7 @@ section .section-description {
 }
 
 .apdc-products-grid .product-item-info .product-info {
-  min-height: 190px;
+  min-height: 200px;
   margin: 0;
 }
 
@@ -13174,7 +13181,7 @@ section .section-description {
 
 .apdc-products-grid .product-info form::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, .84);
+  background-color: #999;
   -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .3);
 }
 
@@ -13230,6 +13237,7 @@ section .section-description {
 
 .apdc-products-grid .product-portion {
   font-size: .75rem;
+  margin-bottom: 0;
   color: rgba(0, 0, 0, .84);
 }
 
@@ -15052,9 +15060,8 @@ footer .social-list .btn-social-icon {
   position: relative;
   overflow: hidden !important;
   width: calc(100% + 31px);
-  margin-bottom: 60px;
   margin-left: -15px;
-  padding: 0 30px;
+  padding: 0 30px 45px;
 }
 
 .catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant:before {
@@ -15063,7 +15070,7 @@ footer .social-list .btn-social-icon {
   top: 0;
   left: 0;
   display: block;
-  width: 30px;
+  width: 20px;
   height: 100%;
   content: '';
   background: #fff;
@@ -15075,7 +15082,7 @@ footer .social-list .btn-social-icon {
   top: 0;
   right: 0;
   display: block;
-  width: 30px;
+  width: 20px;
   height: 100%;
   content: '';
   background: #fff;
@@ -15106,6 +15113,25 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item form {
   max-height: 470px;
+}
+
+.catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item form::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .3);
+}
+
+.catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item form::-webkit-scrollbar {
+  position: relative;
+  z-index: 10;
+  width: 5px;
+  background-color: #f5f5f5;
+}
+
+.catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item form::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #999;
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, .3);
 }
 
 .catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item .display-hover {
@@ -15167,6 +15193,7 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .block-promos .owl-nav {
   top: 40%;
+  height: 0;
 }
 
 .catalog-category-view .block-promos .owl-nav.owl-nav-apdc-all-products-slider-by-commercant .owl-prev {

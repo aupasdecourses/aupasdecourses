@@ -12,7 +12,7 @@
 			    <div class="colored-line"></div>
 			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid apdc-all-products-slider-by-commercant">
 				    	<?php foreach($collection as $selection):?>
-							<?php 
+							<?php
 								$this->getChild("card-product")->setData("product", $selection);
 								echo $this->getChildHtml('card-product', false);
 							?>
@@ -70,7 +70,7 @@
 										</div>
 									</form>
 								</li>
-								 * 
+								 *
 								 */
 							?>
 				    	<?php endforeach;?>
@@ -81,7 +81,7 @@
 </div>
 <script>
     $j(document).ready(function() {
-		
+
 		$j("#carrousel-selection-home").owlCarousel({
 			  items:5,
 			  itemsScaleUp : true,
@@ -111,15 +111,15 @@
 					  items:5,
 					  slideBy: 5,
 				  }
-			  }	
+			  }
 		});
-	  
+
 		$j('.block-promos .apdc-products-grid .owl-item').hover(function(){
 			if($j('.display-hover', this).outerHeight() > 0) {
 				$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
 			}
 		});
-		
+
     });
 </script>
 <?php endif;?>

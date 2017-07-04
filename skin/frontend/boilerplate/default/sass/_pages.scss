@@ -344,7 +344,7 @@ section {
     }
     .product-item-info{
         .product-info{
-            min-height: 190px;
+            min-height: 200px;
             margin: 0;
         }
     }
@@ -374,7 +374,7 @@ section {
             &::-webkit-scrollbar-thumb{
                 border-radius: 10px;
                 -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.3);
-                background-color: $color-main-grey;
+                background-color: #999;
             }
         }
         .action-loading{
@@ -430,6 +430,7 @@ section {
     .product-portion{
         color: $color-main-grey;
         font-size: 0.75rem;
+        margin-bottom: 0;
     }
     .price-box{
         .price{

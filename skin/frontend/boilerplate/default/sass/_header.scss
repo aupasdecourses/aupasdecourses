@@ -593,6 +593,15 @@ header{
     }
 }
 
+.dropdown-menu{
+    .template-column .cat-thumbnail{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+}
+
 .col-main{
     .block-subtitle{
         font-size: 2.25rem;
