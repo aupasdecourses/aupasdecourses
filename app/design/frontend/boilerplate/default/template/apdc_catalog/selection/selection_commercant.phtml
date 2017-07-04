@@ -10,7 +10,7 @@
 	    	<div class="inner-box">
                 <div class="title-block"><?php echo sprintf($this->__('En ce moment chez %s'), $shop_info['name']); ?></div>
 			    <div class="colored-line"></div>
-			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid">
+			    	<ul id="carrousel-selection-home" class="owl-carousel apdc-products-grid apdc-all-products-slider-by-commercant">
 				    	<?php foreach($collection as $selection):?>
 							<?php 
 								$this->getChild("card-product")->setData("product", $selection);
@@ -81,36 +81,45 @@
 </div>
 <script>
     $j(document).ready(function() {
-      $j("#carrousel-selection-home").owlCarousel({
-            items:5,
-            itemsScaleUp : true,
-            pagination:false,
-            autoPlay : false,
-            autoHeight: false,
-            nav : true,
-            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'], 
-            afterInit:function() {
-                alignProductGridActions();
-            },
-            responsive: {
-				0:{
-					items:1,
-					slideBy: 1,
-				},
-                480:{
-					items:2,
-					slideBy: 2,
-				},
-                640:{
-					items:4,
-					slideBy: 4,
-				},
-				980:{
-					items:5,
-					slideBy: 5,
-				}
-			}	
-      });
+		
+		$j("#carrousel-selection-home").owlCarousel({
+			  items:5,
+			  itemsScaleUp : true,
+			  pagination:false,
+			  autoPlay : false,
+			  autoHeight: false,
+			  nav : true,
+			  navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+			  navContainerClass: 'owl-nav owl-nav-apdc-all-products-slider-by-commercant',
+			  afterInit:function() {
+				  alignProductGridActions();
+			  },
+			  responsive: {
+				  0:{
+					  items:1,
+					  slideBy: 1,
+				  },
+				  480:{
+					  items:2,
+					  slideBy: 2,
+				  },
+				  640:{
+					  items:4,
+					  slideBy: 4,
+				  },
+				  980:{
+					  items:5,
+					  slideBy: 5,
+				  }
+			  }	
+		});
+	  
+		$j('.block-promos .apdc-products-grid .owl-item').hover(function(){
+			if($j('.display-hover', this).outerHeight() > 0) {
+				$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+			}
+		});
+		
     });
 </script>
 <?php endif;?>

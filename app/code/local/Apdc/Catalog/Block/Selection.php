@@ -96,7 +96,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
                 ->addAttributeToFilter('category_id', $categoryId);
         $collection = $this->prepareProductCollection($collection);
         $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
-        $collection->setPageSize(10);
+        $collection->setPageSize(50);
         
         return $collection;
     }

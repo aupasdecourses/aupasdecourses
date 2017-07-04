@@ -42,6 +42,13 @@
                     <frontName>apdc-customer</frontName>
                 </args>
             </apdc_customer>
+			<customer>
+				<args>
+					<modules>
+						<apdc_customer before="Mage_Customer">Apdc_Customer</apdc_customer>
+					</modules>
+				</args>
+			</customer>
         </routers>
         <events>
             <controller_action_postdispatch_customer_account_createPost>

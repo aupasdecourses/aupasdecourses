@@ -76,7 +76,7 @@
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>
 								<a href="#" title="Mon Compte">
 									<i class="fa fa-user account-connected"></i>
-									<span class="label"><?php echo $this->__('Account'); ?> <i class="fa fa-angle-down"></i></span>
+									<span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
 								</a>
                             <?php else : ?>
                                 <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>

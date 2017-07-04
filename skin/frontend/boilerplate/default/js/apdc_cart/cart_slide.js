@@ -1,6 +1,8 @@
 if (typeof(apdcProductQuickViewPopup) === 'undefined') {
   var apdcProductQuickViewPopup = null;
 }
+var itemShowedInPopup = {};
+
 (function($) {
 	$(document).ready(function() {
 		if (apdcProductQuickViewPopup === null) {
@@ -79,7 +81,6 @@ function cartSlide() {
 		  $(this).parents('.item').find('.item-details').stop().slideDown('fast');
 		});
 
-		var itemShowedInPopup = {};
 		$('.minicart-wrapper').on('click', '.show-item-popup', function(e) {
 		  e.preventDefault();
 		  e.stopPropagation();
