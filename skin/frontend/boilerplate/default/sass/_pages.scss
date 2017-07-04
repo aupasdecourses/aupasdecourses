@@ -351,6 +351,15 @@ section {
     .product-info{
         /*height: 240px;*/
         margin: 0;
+        &.notavailable{
+            form{
+                -webkit-filter: grayscale(100%);
+                filter: grayscale(100%);
+                .product-name{
+                    color: #000;
+                }
+            }
+        }
         form{
             position: relative;
             max-height: 600px;

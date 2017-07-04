@@ -13154,6 +13154,14 @@ section .section-description {
   margin: 0;
 }
 
+.apdc-products-grid .product-info.notavailable form {
+  filter: grayscale(100%);
+}
+
+.apdc-products-grid .product-info.notavailable form .product-name {
+  color: #000;
+}
+
 .apdc-products-grid .product-info form {
   position: relative;
   max-height: 600px;
