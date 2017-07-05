@@ -118,7 +118,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'meta_title'=>$line[10],
                         'description'=>$line[11],
                         'meta_description'=>$line[12],
-                        'is_clickable'=>$line[13],
+                        'is_clickable'=>(int) $line[13],
                         'include_in_menu'=>$line[14],
                         'show_age_popup'=>$line[15],
                         'display_mode'=>$line[16],
