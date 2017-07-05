@@ -112,7 +112,7 @@
 							</ul>
 						</td>
 					</tr>
-					<tr>
+					<!--<tr>
 						<td>Commandes facturées pour ce mois</td>
 						<td></td>
 						<td>
@@ -120,7 +120,33 @@
 								{{ increment_id }} /
 							{% endfor %}
 						</td>
+					</tr>-->
+				</table>
+				<table class="table table-striped">
+					<thead>
+					    <tr>
+					      <th>#Commande</th>
+					      <th>Total Commande</th>
+					      <th>Frais Livraison</th>
+					      <th>Discount</th>
+					      <th>Discount Coupon</th>
+					      <th>Total Produits</th>
+					      <th>Sum Items</th>
+					      <th>Diff</th>
+					    </tr>
+					</thead>
+					{% for row in details %}
+					<tr>
+						<td>{{row.increment_id}}</td>
+						<td>{{row.total_commande}}</td>
+						<td>{{row.frais_livraison}}</td>
+						<td>{{row.discount}}</td>
+						<td>{{row.discount_coupon}}</td>
+						<td>{{row.total_produit}}</td>
+						<td>{{row.sum_items}}</td>
+						<td>{{row.diff}}</td>
 					</tr>
+					{% endfor %}
 				</table>
 				<ul>
 			</div>
