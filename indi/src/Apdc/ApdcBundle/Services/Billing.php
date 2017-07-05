@@ -394,7 +394,11 @@ class Billing
             }
             $incrementid = $order->getIncrementId();
             $total_withship = $order->getGrandTotal();
-            $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
+            if($total_withship>0){
+                $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
+            }else{
+                $frais_livraison = $order->getShippingAmount() + $order->getHiddenShippingTaxAmount();
+            }
             $total_withoutship = $total_withship - $frais_livraison;
             $ordered_items = $order->getAllItems();
 
