@@ -60,6 +60,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'estcom_commercant'=>$category->getEstcomCommercant(),
                         'is_active'=>$category->getIsActive(),
                         'meta_title'=>$category->getMetaTitle(),
+                        'description'=>$category->getDescription(),
                         'meta_description'=>$category->getMetaDescription(),
                         'is_clickable'=>$category->getIsClickable(),
                         'include_in_menu'=>$category->getIncludeInMenu(),
@@ -71,6 +72,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'menu_template'=>$category->getMenuTemplate(),
                         'menu_main_static_block'=>$category->getMenuMainStaticBlock(),
                         'menu_static_block1'=>$category->getMenuStaticBlock1(),
+                        'product_count'=>$category->getProductCount(),
                     );
                 }
             }
@@ -114,17 +116,18 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'estcom_commercant'=>$line[8],
                         'is_active'=>$line[9],
                         'meta_title'=>$line[10],
-                        'meta_description'=>$line[11],
-                        'is_clickable'=>$line[12],
-                        'include_in_menu'=>$line[13],
-                        'show_age_popup'=>$line[14],
-                        'display_mode'=>$line[15],
-                        'landing_page'=>$line[16],
-                        'menu_bg_color'=>$line[17],
-                        'menu_text_color'=>$line[18],
-                        'menu_template'=>$line[19],
-                        'menu_main_static_block'=>$line[20],
-                        'menu_static_block1'=>$line[21],
+                        'description'=>$line[11],
+                        'meta_description'=>$line[12],
+                        'is_clickable'=>$line[13],
+                        'include_in_menu'=>$line[14],
+                        'show_age_popup'=>$line[15],
+                        'display_mode'=>$line[16],
+                        'landing_page'=>$line[17],
+                        'menu_bg_color'=>$line[18],
+                        'menu_text_color'=>$line[19],
+                        'menu_template'=>$line[20],
+                        'menu_main_static_block'=>$line[21],
+                        'menu_static_block1'=>$line[22],
                     ];
                     $cat=Mage::getModel('catalog/category')->load($id);
 

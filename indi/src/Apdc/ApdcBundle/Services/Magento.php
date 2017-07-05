@@ -614,6 +614,7 @@ class Magento
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')])
                      ->addFieldToFilter('commercant', ['eq' => $commercantId]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
@@ -654,6 +655,7 @@ class Magento
             $orderHeader = $this->OrderHeaderParsing($order);
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             if ($commercantId != -1) {
                 $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
             }
