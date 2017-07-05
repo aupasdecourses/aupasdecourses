@@ -49,6 +49,10 @@
         <Apdc_Customer>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Apdc_Neighborhood />
+              <Inchoo_SocialConnect />
+            </depends>
         </Apdc_Customer>
     	<Apdc_Checkout>
     	    <codePool>local</codePool>

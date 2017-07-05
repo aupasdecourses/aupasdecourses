@@ -1,0 +1,23 @@
+<?php $neighborhoods = $this->getNeighborhoods(); ?>
+<ul id="my_neighborhood_choose_links" class="skip-content links">
+    <li class="neighborhood_informations">
+            <div class="neighborhood_informations_title"><?php echo $this->__('Bienvenue sur Au Pas de Courses !'); ?></div>
+            <p><?php echo $this->__('You have not set your neighborhood yet. Please choose one.'); ?></p>
+    </li>
+
+    <li class="neighborhood_title">
+        <?php echo $this->__('Choose Your Neighborhood'); ?>
+    </li>
+    <?php foreach ($neighborhoods as $neighborhood) : ?>
+        <li class="neighborhood_list choose">
+            <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
+            <a href="<?php echo $this->getSaveUrl($neighborhood); ?>" title="<?php echo $this->__('Choose this neighborhood'); ?>">
+                <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="50" height="50" />
+                <p>
+                    <span><?php echo $neighborhood->getName(); ?></span>
+                    <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', unserialize($neighborhood->getPostcodes()))); ?></i>
+                </p>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>

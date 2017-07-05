@@ -81,12 +81,7 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customer = Mage::getSingleton('customer/session')->getCustomer();
-            if ($customer->getCustomerNeighborhood()) {
-                return Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getStoreUrl();
-            } else {
-                $store = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore();
-                return $store->getBaseUrl();
-            }
+            return $customer->getNeighborhoodUrl();
         }
         return $this->getVisitingNeighborhood()->getStoreUrl();
     }

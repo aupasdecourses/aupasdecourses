@@ -12,7 +12,8 @@
             <block type="core/text" name="head.viewport">
                 <action method="setText"><text><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />]]>&#10;</text></action>
             </block>
-			<block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+			      <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+            <block type="core/template" name="facebook_app_id" template="inchoo/socialconnect/facebook/appid.phtml" />
 
             <block type="core/text" name="suivi_hipay" before="-">
               <action method="setText">
@@ -71,15 +72,15 @@
             <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-facebook.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_customer/js/capitalize-name.js</file></action>
             <!-- Social Connect -->
-            <!--
-            <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
-                <type>skin_css</type>
-                <name>inchoo_socialconnect/google/css/button.css</name>
-            </action>
+            <!--<action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">-->
+                <!--<type>skin_css</type>-->
+                <!--<name>inchoo_socialconnect/google/css/button.css</name>-->
+            <!--</action>-->
             <action method="addItem" ifconfig="customer/inchoo_socialconnect_facebook/enabled">
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/facebook/css/button.css</name>
@@ -96,12 +97,12 @@
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/css/styles.css</name>
             </action>
-            -->
 
             <!-- =========================
              STYLESHEETS   
             ============================== -->
             <action method="addItem"><rel>skin_css</rel><href>dist/css/main.css</href></action>
+            <action method="addItem"><type>skin_css</type><name>vendor/apdc_neighborhood/css/neighborhood.css</name><params/></action>
         </reference>
         <reference name="before_body_end">
           <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
@@ -134,12 +135,10 @@
     <apdc_login_view>
       <reference name="content">
             <block type="customer/form_login" name="customer_login" template="page/loginmodal.phtml">
-              <!--
                 <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-                    <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+                    <!--<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>-->
                     <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
                 </block>
-            -->
             </block>
         </reference>
     </apdc_login_view>
@@ -175,6 +174,12 @@
             <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
         </reference>
     </apdc_forgotpassword_view>
+
+    <apdc_choose_neighborhood>
+      <reference name="content">
+        <block type="apdc_neighborhood/header_menu" name="neighborhood_choose" template="apdc_neighborhood/choose.phtml" />
+      </reference>
+    </apdc_choose_neighborhood>
 
     <apdc_newsletter_view>
       <reference name="content">

@@ -30,10 +30,21 @@ function initLoginPopup() {
       showLoginForm(this, 'apdc_register_view');
   });
 
+  jQuery(document).on('click', '#choose-my-district',function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'apdc_choose_neighborhood');
+  });
+
   jQuery(document).on('click','#forgot-password', function(e) {
       e.preventDefault();
       e.stopPropagation();
       showLoginForm(this, 'apdc_forgotpassword_view');
+  });
+  jQuery(document).on('click','#connect-with-google', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'connect_with_google');
   });
 
   jQuery(document).on('submit','#password-form', function(e) {
