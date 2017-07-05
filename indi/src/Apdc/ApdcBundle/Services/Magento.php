@@ -705,6 +705,7 @@ class Magento
 //			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('main_table.order_id', ['eq' => $orderHeader['mid']]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             $products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
                 'refund_prix' => 'refund.prix_final',
                 'refund_diff' => 'refund.diffprixfinal',
