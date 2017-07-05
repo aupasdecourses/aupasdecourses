@@ -397,7 +397,7 @@ class Billing
             if($total_withship>0){
                 $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
             }else{
-                $frais_livraison = $order->getShippingAmount() + $order->getHiddenShippingTaxAmount();
+                $frais_livraison = $order->getShippingAmount() + $order->getShippingHiddenTaxAmount();
             }
             $total_withoutship = $total_withship - $frais_livraison;
             $ordered_items = $order->getAllItems();
