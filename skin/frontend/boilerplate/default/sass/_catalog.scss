@@ -406,9 +406,9 @@
                 form{
                     border-bottom: 1px solid #eee;
                     margin-top: 10px;
-                    margin-bottom: 40px;
-                    padding-bottom: 20px;
-                    max-height: 520px;
+                    /*margin-bottom: 40px;*/
+                    /*padding-bottom: 20px;*/
+                    max-height: 580px;
                 }
                 .product-image{
                     img{
@@ -492,6 +492,7 @@
     }
     .sort-by, .limiter{
         label{
+            width: auto;
             font-size: 1rem;
             color: $color-second-green;
         }

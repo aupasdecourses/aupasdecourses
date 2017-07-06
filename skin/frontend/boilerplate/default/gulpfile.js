@@ -70,7 +70,7 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions'],
             cascade: false
         }))
-    //.pipe(concat('styles.css'))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest('dist/css'));
 });
 
@@ -130,13 +130,13 @@ gulp.task('watch', function() {
   gulp.watch('sass/**/*.scss', ['sass']);
 
   // // Watch .js files
-  // gulp.watch('js/**/*.js', ['js']);
+  gulp.watch('js/**/*.js', ['js']);
 
   // // Watch image files
-  // gulp.watch('images/**/*', ['images']);
+  gulp.watch('images/**/*', ['images']);
 
   // // Watch fonts
-  // gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
+  gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
 });
 

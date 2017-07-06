@@ -247,7 +247,7 @@ Customer account home dashboard layout
                 <block type="customer/account_dashboard_info" name="customer_account_dashboard_info" as="info" template="apdc_customer/account/dashboard/info.phtml">
 					<block type="customer/form_edit" name="customer_edit" as="customer_edit" template="apdc_customer/form/edit.phtml"/>
 				</block>
-                <block type="monkey/customer_account_lists" name="customer_account_dashboard_newsletter" as="newsletter" template="apdc_customer/account/dashboard/newsletter.phtml"/>
+                <!-- <block type="monkey/customer_account_lists" name="customer_account_dashboard_newsletter" as="newsletter" template="apdc_customer/account/dashboard/newsletter.phtml"/> -->
                 <block type="customer/account_dashboard_address" name="customer_account_dashboard_address" as="address" template="apdc_customer/account/dashboard/address.phtml"/>
             </block>
         </reference>
