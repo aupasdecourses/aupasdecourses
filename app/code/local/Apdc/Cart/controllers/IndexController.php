@@ -26,6 +26,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 }
  
                 $product = $this->_initProduct();
+                $related = $this->getRequest()->getParam('related_product');
                 /**
                  * Check product availability
                  */
@@ -35,6 +36,9 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 }
  
                 $cart->addProduct($product, $params);
+                if (!empty($related)) {
+                    $cart->addProductsByIds(explode(',', $related));
+                }
  
                 $cart->save();
 

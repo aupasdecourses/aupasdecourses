@@ -189,6 +189,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             } else {
                 $response['status'] = 'ERROR';
                 $response['message'] = $this->__('Login and password are required.');
+		$session->addError($this->__('Login and password are required.'));
             }
 
             if (!empty($response)) {
@@ -199,7 +200,8 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                     $response['html'] = $this->_getLayout('apdc_login_view');
                 } else {
                     if (!isset($response['redirect'])) {
-                        $response['redirect'] = $this->_loginPostRedirect();
+                        $session->addSuccess('Bienvenue '.Mage::helper('customer')->getCustomer()->getFirstname());
+                    	$response['redirect'] = Mage::getBaseUrl();//$this->_loginPostRedirect();
                     }
                 }
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));

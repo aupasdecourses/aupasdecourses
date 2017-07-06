@@ -52,7 +52,19 @@
         </reference>
 
         <reference name="content">
-            <block type="catalogsearch/result" name="search.result" template="catalogsearch/result.phtml">
+			<block type="apdc_search/result" name="apdc_search_result" template="catalogsearch/result.phtml">
+				<block type="apdc_search/result_list" name="apdc_search_result_list" as="apdc_search_result_list" template="apdc_search/result/list.phtml">
+					<!--<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />-->
+					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+						<block type="core/text_list" name="product_list.name.after" as="name.after" />
+						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+					</block>
+				</block>
+				<action method="setListOrders"/>
+				<action method="setListModes"/>
+				<action method="setListCollection"/>
+			</block>
+            <!--<block type="apdc_search/result" name="search.result" template="catalogsearch/result.phtml">
                 <block type="catalog/product_list" name="search_result_list" template="apdc_catalog/product/list.phtml">
                     <block type="core/text_list" name="product_list.name.after" as="name.after" />
                     <block type="core/text_list" name="product_list.after" as="after" />
@@ -72,10 +84,15 @@
                 <action method="setListOrders"/>
                 <action method="setListModes"/>
                 <action method="setListCollection"/>
-            </block>
+					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+						<block type="core/text_list" name="product_list.name.after" as="name.after" />
+						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+					</block>
+				</block>
+            </block>-->
         </reference>
 
-        <reference name="product_list.name.after">
+        <!--<reference name="product_list.name.after">
           <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml" />
           <block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
             <block type="catalog/product_view_type_configurable" name="product_options.configurable" template="apdc_catalog/product/list/options/configurable.phtml" />
@@ -89,7 +106,7 @@
             </block>
             <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
           </block>
-        </reference>
+        </reference>-->
 		
 		<reference name="product_list.name.after">
 			<block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
@@ -105,7 +122,6 @@
 			</block>
 		</reference> 
 		<remove name="breadcrumbs"/>
->>>>>>> b8c402849064013afbaab5c9a6809b04e322d3e4
     </catalogsearch_result_index>
 
     <catalogsearch_advanced_index translate="label">
