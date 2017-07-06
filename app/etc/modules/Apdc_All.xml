@@ -42,6 +42,7 @@
               <Mage_Catalog />
               <Apdc_Popup />
               <Cybage_Swatches />
+              <Apdc_Media />
             </depends>
         </Apdc_Catalog>
         <Apdc_Cart>
@@ -135,7 +136,11 @@
             <Amasty_Shiprestriction />
           </depends>
         </Apdc_Shiprestriction>
-		<Apdc_CMS>
+        <Apdc_Media>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Media>
+	<Apdc_CMS>
             <active>true</active>
             <codePool>local</codePool>
         </Apdc_CMS>

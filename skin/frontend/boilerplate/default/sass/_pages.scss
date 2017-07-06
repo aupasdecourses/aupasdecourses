@@ -88,6 +88,48 @@ section {
         }
         .button {
             margin-top: 0;
+            margin-bottom: 50px;
+        }
+        #search_neighborhoods {
+          text-align:center;
+          margin:0 auto -40px auto;
+          label {
+            color: rgba(0, 0, 0, 0.54);
+            font-weight:bold;
+            font-family:inherit;
+            font-size:1.125rem;
+            width:auto;
+            display:inline-block;
+          }
+
+          input {
+            width:200px;
+            font-size:1.125rem;
+            padding:20px 10px;
+            &::-webkit-input-placeholder{
+                font-size: 1.125rem;
+            }
+          }
+        }
+        #no_neighborhood {
+          display:none;
+          margin-bottom:-40px;
+          p {
+            font-size:1rem;
+          }
+          i {
+            font-size:60px;
+            color: rgba(0, 0, 0, 0.54);
+            animation: bounce 1.2s ease 0s infinite;
+          }
+        }
+        @keyframes bounce {
+          50% {
+            transform: translateY(-10px);
+          }
+          0%, 100% {
+            transform: translateY(10px);
+          }
         }
     }
     &#concept {
@@ -223,6 +265,61 @@ section {
             background-color: #fff;
             padding: 0 0 30px;
         }
+    }
+    &#ils-parlent-de-nous {
+      .arrow_box {
+        position: relative;
+        background: #3ab64b;
+        border: 2px solid #3ab64b;
+      }
+      .arrow_box:after, .arrow_box:before {
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .arrow_box:after {
+        border-color: rgba(58, 182, 75, 0);
+        border-top-color: #3ab64b;
+        border-width: 20px;
+        margin-left: -20px;
+      }
+      .arrow_box:before {
+        border-color: rgba(58, 182, 75, 0);
+        border-top-color: #3ab64b;
+        border-width: 24px;
+        margin-left: -24px;
+      }
+
+      .container-fluid {
+        background-color: white;
+        padding: 35px 0;
+        box-shadow: 0px 0px 40px -20px rgb(0, 0, 0);
+        h2 {
+          color:#3ab64b;
+          margin-bottom:15px;
+        }
+        ul {
+          list-style:none;
+          padding:0px;
+          margin:0px;
+          text-align:center;
+          li {
+            display:inline-block;
+            margin: 10px 0;
+            padding:0 10px;
+            height:50px;
+            img {
+              height:100%;
+            }
+          }
+        }
+      }
     }
     &#advantages {
         border-top: 1px solid #eee;

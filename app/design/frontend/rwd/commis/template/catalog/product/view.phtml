@@ -51,7 +51,7 @@
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-                <input type="hidden" name="related_product" id="related-products-field" value="" />
+                <input type="hidden" name="related_product" class="related-products-field" value="" />
                 <?php if ($_product->getCartItemId() > 0): ?>
                     <input type="hidden" name="item_id" value="<?php echo $_product->getCartItemId(); ?>" />
                 <?php endif; ?>

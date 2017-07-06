@@ -22,6 +22,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 		$nbShops = count($shops);
 		
         foreach ($shops as $shop) {
+            $shop = $shop->getData();
             foreach($shop['id_category'] as $id){
                 if(array_key_exists($id,$filter)){
 
@@ -78,7 +79,6 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             }
         }
 		return array('row1' => $row1, 'row2' => $row2, 'count' => count($shops));
-
     }
 
     public function getInfoShop()

@@ -124,7 +124,8 @@ class BillingController extends Controller
 
         return $this->render('ApdcApdcBundle::billing/verif.html.twig', [
             'form' => $form_input->createView(),
-            'verif' => $verif,
+            'verif' => $verif['result'],
+            'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
         ]);

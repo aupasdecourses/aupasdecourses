@@ -50,66 +50,76 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           }
         } else {
           var varienForm = new VarienForm(form.attr('id'));
+          var addRelatedProducts = (this.value == 'btn-add-related-products' ? true : false);
           varienForm.form = form[0];
           varienForm.validator = new Validation(form[0]);
           varienForm.validator.options.focusOnError = false;
-          if (varienForm.validator.validate()) {
-            var ajaxUrl = form.data('ajax-action');
-            var data = new FormData(form[0]);
-            data.append('isAjax', 1);
-
-            if (isConfigureMode) {
-              data.append('qty', parseInt(form.find('.added-qty').html(), 10));
-            }
-            var actions = $(form).find('.actions');
-            $.ajax({
-              url: ajaxUrl,
-              data: data,
-              processData: false,
-              contentType: false,
-              type: 'POST',
-              beforeSend: function() {
-                startLoading(productId);
-                $(document).trigger('startUpdateMiniCartContent');
-              }
-            })
-            .done(function(result) {
-              if (result.status === 'SUCCESS') {
-
-                // If item had an error (eg: item with required options from an old cart), it will probably be delete and a new item will be created.
-                // So we need to replace old item_id references 
-                if (result.item_id && result.quote_item_id && result.item_id !== result.quote_item_id) {
-                  form.find('[data-item-id="' + result.quote_item_id + '"]').each(function() {
-                    $(this).data('item-id', parseInt(result.item_id, 10));
-                  });
-                  form.find('[name="item_id"][value="' + result.quote_item_id + '"]').each(function() {
-                    $(this).val(parseInt(result.item_id, 10));
-                  });
-                  var formAction = form.data('ajax-action');
-                  var regexp = new RegExp('/id/' + result.quote_item_id + '/', 'g');
-                  formAction = formAction.replace(regexp, '/id/' + result.item_id + '/');
-                  form.data('ajax-action', formAction);
-                }
-
-                if($('.header-minicart').length > 0){
-                  $(document).trigger('updateMiniCartContent', [result]);
-                  var currentValues = getCurrentFormValues(form);
-                  form.find('input[name="update_product_options_initial_values"]').val(currentValues);
-                  checkNeedUpdate(form);
-                }
-              }
-            })
-            .fail(function() {
-              console.log('failed');
-            })
-            .always(function() {
-              finishLoading(productId);
-            });
-          } else {
+          if (!addRelatedProducts && !varienForm.validator.validate()) {
             form.find('.advice-must-select-options').show();
+            return false;
+          } else if (addRelatedProducts && 
+            (form.find('.related-products-field').length === 0 || form.find('.related-products-field').val() === '')
+          ) {
+            return false;
           }
+          var ajaxUrl = '';
+          if (addRelatedProducts) {
+            ajaxUrl = form.find('.add-related-products-to-cart').data('ajax-action');
+          } else {
+            ajaxUrl = form.data('ajax-action');
+          }
+          var data = new FormData(form[0]);
+          data.append('isAjax', 1);
+
+          if (isConfigureMode) {
+            data.append('qty', parseInt(form.find('.added-qty').html(), 10));
+          }
+          var actions = $(form).find('.actions');
+          $.ajax({
+            url: ajaxUrl,
+            data: data,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            beforeSend: function() {
+              startLoading(productId);
+              $(document).trigger('startUpdateMiniCartContent');
+            }
+          })
+          .done(function(result) {
+            if (result.status === 'SUCCESS') {
+
+              // If item had an error (eg: item with required options from an old cart), it will probably be delete and a new item will be created.
+              // So we need to replace old item_id references 
+              if (result.item_id && result.quote_item_id && result.item_id !== result.quote_item_id) {
+                form.find('[data-item-id="' + result.quote_item_id + '"]').each(function() {
+                  $(this).data('item-id', parseInt(result.item_id, 10));
+                });
+                form.find('[name="item_id"][value="' + result.quote_item_id + '"]').each(function() {
+                  $(this).val(parseInt(result.item_id, 10));
+                });
+                var formAction = form.data('ajax-action');
+                var regexp = new RegExp('/id/' + result.quote_item_id + '/', 'g');
+                formAction = formAction.replace(regexp, '/id/' + result.item_id + '/');
+                form.data('ajax-action', formAction);
+              }
+
+              if($('.header-minicart').length > 0){
+                $(document).trigger('updateMiniCartContent', [result]);
+                var currentValues = getCurrentFormValues(form);
+                form.find('input[name="update_product_options_initial_values"]').val(currentValues);
+                checkNeedUpdate(form);
+              }
+            }
+          })
+          .fail(function() {
+            console.log('failed');
+          })
+          .always(function() {
+            finishLoading(productId);
+          });
+          return false;
         }
-        return false;
       }
     });
 

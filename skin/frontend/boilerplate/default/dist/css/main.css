@@ -5905,7 +5905,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 
 .breadcrumb > li + li:before {
   padding: 0 5px;
-  content: '/ ';
+  content: '/ ';
   color: #ccc;
 }
 
@@ -11522,12 +11522,12 @@ header .top-nav li a:hover {
   color: #1e555a;
 }
 
-header .top-nav li a:not(.button):hover:after {
+header .top-nav li a:hover:after {
   bottom: -5px;
   background: #1e555a;
 }
 
-header .top-nav li a:not(.button):after {
+header .top-nav li a:after {
   position: absolute;
   bottom: -15px;
   left: 0;
@@ -11537,18 +11537,6 @@ header .top-nav li a:not(.button):after {
   content: '';
   transition: all 100ms ease-in;
   background: transparent;
-}
-
-.logo {
-  float: left;
-}
-
-.block-login {
-  display: none;
-}
-
-.notice-cookie-block {
-  display: none;
 }
 
 /* -------------------------------------------- *
@@ -12088,11 +12076,13 @@ footer .button {
   top: 50%;
   left: 50%;
   display: block;
-  overflow: none;
+  overflow: hidden;
   width: 500px;
-  height: auto;
+  height: 100px;
   min-height: 100px;
+  max-height: 95%;
   padding: 20px;
+  transition: height .3s ease;
   text-align: center;
   opacity: 1;
   border: 1px solid lightgrey;
@@ -12101,6 +12091,429 @@ footer .button {
   filter: alpha(opacity=100);
 }
 
+#login-form-popup-container .back-link,
+#newsletter-form-popup-container .back-link {
+  text-align: left;
+}
+
+#login-form-popup-container h1,
+#newsletter-form-popup-container h1 {
+  margin-top: 0;
+}
+
+#login-form-popup-container .form-group:last-child,
+#newsletter-form-popup-container .form-group:last-child {
+  margin-bottom: 0;
+}
+
+#newsletter-form-popup-container {
+  overflow: initial;
+}
+
+#login-form-popup[data-current-view='apdc_register_view'] #login-form-popup-container {
+  height: inherit;
+}
+
+#login-form-popup[data-current-view='apdc_register_view'] .apdc-popup-content {
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#login-form-popup[data-current-view='apdc_register_view'] .account-create .form-list {
+  padding: 0 10px 0 0;
+}
+
+#login-form-popup[data-current-view='apdc_register_view'] .account-create .form-list select {
+  width: 100%;
+}
+
 #login-form-popup-close {
   display: none;
+}
+
+/* ============================================ *
+ * FORMS - COMMON
+ * ============================================ */
+/* -------------------------------------------- *
+ * Fieldsets
+ */
+.fieldset p {
+  margin-bottom: 7px;
+}
+
+.fieldset p.required {
+  font-size: 12px;
+  float: right;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.fieldset + .fieldset {
+  margin-top: 5px;
+}
+
+form .legend {
+  font-family: 'Raleway', 'Helvetica Neue', Verdana, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 7px;
+  text-transform: uppercase;
+  color: #636363;
+  border-bottom: 1px solid #ededed;
+  text-rendering: optimizeSpeed;
+}
+
+/* -------------------------------------------- *
+ * Input Box
+ */
+.input-box {
+  padding-top: 2px;
+}
+
+.input-box:after {
+  display: table;
+  clear: both;
+  content: '';
+}
+
+li.centinel-logos div.input-box img {
+  display: inline;
+  vertical-align: middle;
+}
+
+/* For adjacent select inputs. */
+/* Example: credit card expiration month and year. */
+.input-box .v-fix {
+  float: left;
+  max-width: 100%;
+  margin-right: 5px;
+}
+
+/* -------------------------------------------- *
+ * Labels
+ */
+label {
+  font-family: 'Raleway', 'Helvetica Neue', Verdana, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: left;
+  -o-user-select: none;
+}
+
+label.required:after,
+span.required:after {
+  font-family: 'Helvetica Neue', Verdana, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  content: ' *';
+  color: #df280a;
+}
+
+label.required em,
+span.required em {
+  display: none;
+}
+
+/* -------------------------------------------- *
+ * Hints
+ */
+.input-hint {
+  font-size: 12px;
+  color: #a0a0a0;
+}
+
+/* -------------------------------------------- *
+ * Select
+ */
+select {
+  font-size: 14px;
+}
+
+select + select {
+  margin-left: 5px;
+}
+
+select[multiple] {
+  font-size: 15px;
+  width: 270px;
+  padding: 5px;
+  border: 1px solid silver;
+}
+
+/* -------------------------------------------- *
+ * Textarea
+ */
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 450px;
+  padding: 5px;
+}
+
+/* -------------------------------------------- *
+ * Inputs
+ */
+.input-text {
+  font-size: 15px;
+  border: 1px solid silver;
+  border-radius: 2px;
+  background: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+.input-text:focus {
+  border: 1px solid #39c;
+}
+
+.input-text.validation-failed {
+  border-color: #df280a;
+}
+
+.input-text.validation-failed:focus {
+  outline-color: #ef9384;
+}
+
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text] {
+  height: 30px;
+  padding: 0 8px;
+}
+
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text] {
+  width: 365px;
+  max-width: 100%;
+}
+
+/* Only show on iPhones (not iPads or any other device) */
+@media only screen and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 0) {
+  input[type=email],
+    input[type=search],
+    input[type=number],
+    input[type=password],
+    input[type=tel],
+    input[type=text],
+    select {
+    font-size: 16px;
+        /* Prevent from zooming on focus */
+  }
+}
+
+.ie8 .input-text {
+  max-width: none;
+}
+
+/* -------------------------------------------- *
+ * Inputs - Quantity
+ */
+input[type=number].qty,
+input[type=text].qty {
+  width: 3em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* -------------------------------------------- *
+ * Placeholder
+ */
+::-webkit-input-placeholder {
+  color: #a0a0a0;
+}
+
+input:-moz-placeholder {
+  color: #a0a0a0;
+}
+
+/* -------------------------------------------- *
+ * Checkbox And Radio
+ */
+.checkbox,
+.radio {
+  position: relative;
+  top: -1px;
+  display: inline-block;
+}
+
+.checkbox + label,
+.radio + label {
+  font-size: 14px;
+  font-weight: normal;
+  width: auto;
+  max-width: 85%;
+  padding: 0 0 0 8px;
+  vertical-align: top;
+}
+
+/* -------------------------------------------- *
+ * Validation
+ */
+p.required,
+.validation-advice {
+  font-size: 13px;
+  margin: 5px 0 0;
+  color: #df280a;
+}
+
+/* ============================================ *
+ * Form List
+ * ============================================ */
+.form-list > li {
+  margin-bottom: 10px;
+}
+
+.form-list select {
+  width: 365px;
+  max-width: 100%;
+  margin-top: 4px;
+}
+
+.form-list .input-range .input-text {
+  width: 74px;
+}
+
+.form-list .field,
+.form-list .wide,
+.form-list .control {
+  margin-bottom: 10px;
+}
+
+.form-list .control div.input-box:after {
+  display: none;
+}
+
+.form-list .control input.radio,
+.form-list .control input.checkbox {
+  margin-top: 10px;
+  margin-right: -40px;
+  margin-left: 15px;
+}
+
+.form-list .control label {
+  display: inline-block;
+  float: none;
+  width: auto;
+  min-width: 250px;
+  max-width: none;
+  padding: 5px 10px;
+  padding: 6px 10px 6px 40px;
+  color: #636363;
+  background-color: #f4f4f4;
+}
+
+.form-list .control label:hover {
+  background-color: #ececec;
+}
+
+.form-list .control .no-display + label {
+  padding-left: 10px;
+  background-color: transparent;
+}
+
+.form-list .control .no-display + label:hover {
+  background-color: transparent;
+}
+
+.product-options ul.options-list label,
+.col2-set .form-list .control label {
+  width: 250px;
+  min-width: inherit;
+  max-width: 100%;
+}
+
+.form-list .control.remember-me-box label {
+  width: auto;
+  min-width: inherit;
+  max-width: none;
+}
+
+.form-list .control {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.form-list .control label {
+  float: none;
+}
+
+.form-list .control .radio,
+.form-list .control .checkbox {
+  margin-right: 6px;
+}
+
+.form-list .control .input-box {
+  display: inline-block;
+  clear: none;
+  width: auto;
+  padding: 0;
+}
+
+form .form-instructions {
+  font-family: Georgia, Times, 'Times New Roman', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #a0a0a0;
+}
+
+.form-list {
+  list-style: none;
+}
+
+.form-list .fields {
+  margin-bottom: 10px;
+}
+
+.form-list .field {
+  margin-bottom: 10px;
+}
+
+.form-list li.wide .input-box {
+  width: auto;
+}
+
+.form-list li.wide .form-list li.wide select {
+  width: 100%;
+  max-width: 1000px;
+  height: 33px;
+}
+
+.form-list .wide,
+.form-list .control {
+  margin-bottom: 0;
+}
+
+input[type=email],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=tel],
+input[type=text] {
+  width: 100%;
+  max-width: 100%;
+  height: 33px;
 }

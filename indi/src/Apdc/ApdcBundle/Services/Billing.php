@@ -394,7 +394,11 @@ class Billing
             }
             $incrementid = $order->getIncrementId();
             $total_withship = $order->getGrandTotal();
-            $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
+            if($total_withship>0){
+                $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
+            }else{
+                $frais_livraison = $order->getShippingAmount() + $order->getShippingHiddenTaxAmount();
+            }
             $total_withoutship = $total_withship - $frais_livraison;
             $ordered_items = $order->getAllItems();
 
@@ -407,7 +411,7 @@ class Billing
                 }
             }
 
-            array_push($data, [
+            $data[$incrementid]=[
                 'status' => $status,
                 'increment_id' => $incrementid,
                 'total_commande' => $total_withship,
@@ -416,7 +420,7 @@ class Billing
                 'discount' => $discount,
                 'discount_coupon' => $discount_coupon,
                 'missing_com_att_count' => $missing_com_att_count
-            ]);
+            ];
         }
 
         return $data;
@@ -498,13 +502,22 @@ class Billing
                 'diff_facturation_magento' => 0,
                 'orders' =>array(),
             );
-            foreach ($data_magento as $row) {
+            foreach ($data_magento as $id => $row) {
                 if (in_array(strtolower($row['status']), [strtolower(\Mage_Sales_Model_Order::STATE_COMPLETE), strtolower(\Mage_Sales_Model_Order::STATE_CLOSED)])) {
-                    $result_data_magento['total_commande'] += floatval($row['total_commande']);
-                    $result_data_magento['frais_livraison'] += floatval($row['frais_livraison']);
-                    $result_data_magento['total_produit'] += floatval($row['total_produit']);
-                    $result_data_magento['discount'] += floatval($row['discount']);
-                    $result_data_magento['discount_coupon'] += floatval($row['discount_coupon']);
+                    
+                    //add detailled table for debugging
+                    $data_consolidated[$id]['increment_id']=$id;
+                    $data_consolidated[$id]['total_commande']=floatval($row['total_commande']);
+                    $data_consolidated[$id]['total_produit']=floatval($row['total_produit']);
+                    $data_consolidated[$id]['frais_livraison']=floatval($row['frais_livraison']);
+                    $data_consolidated[$id]['discount']=floatval($row['discount']);
+                    $data_consolidated[$id]['discount_coupon']=floatval($row['discount_coupon']);
+
+                    $result_data_magento['total_commande'] += $data_consolidated[$id]['total_commande'];
+                    $result_data_magento['total_produit'] += $data_consolidated[$id]['total_produit'];
+                    $result_data_magento['frais_livraison'] += $data_consolidated[$id]['frais_livraison'];
+                    $result_data_magento['discount'] += $data_consolidated[$id]['discount'];
+                    $result_data_magento['discount_coupon'] += $data_consolidated[$id]['discount_coupon'];
                     $result_data_magento['status_ok_count'] += 1;
                     if ($result_data_magento['id_max'] < $row['increment_id']) {
                         $result_data_magento['id_max'] = $row['increment_id'];
@@ -541,6 +554,15 @@ class Billing
                 foreach ($result_data_facturation as $key => $value) {
                     $result_data_facturation[$key] += floatval($row[$key]);
                 }
+                //add detailled table for debugging - see above
+                if(!isset($data_consolidated[$row['increment_id']]['sum_items'])){
+                    $data_consolidated[$row['increment_id']]['sum_items']=$row['sum_items'];
+                }else{
+                    $data_consolidated[$row['increment_id']]['sum_items']+=$row['sum_items'];
+                }
+
+                $data_consolidated[$row['increment_id']]['diff']=round($data_consolidated[$row['increment_id']]['total_commande']-$data_consolidated[$row['increment_id']]['frais_livraison']+$data_consolidated[$row['increment_id']]['discount']-$data_consolidated[$row['increment_id']]['sum_items'], FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+                
             }
 
             // 3 - Vérification aucune commande en processing
@@ -589,7 +611,7 @@ class Billing
                 'orders' => $result_data_magento['orders'],
             ]);
         }
-        return $result;
+        return array('result'=>$result,'details'=>$data_consolidated);
     }
 
     public function updateDataBillingId($debut)

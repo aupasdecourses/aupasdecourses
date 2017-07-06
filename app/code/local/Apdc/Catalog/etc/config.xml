@@ -87,4 +87,17 @@
             </modules>
         </translate>
     </frontend>
+    <adminhtml>
+      <events>
+        <adminhtml_catalog_category_edit_prepare_form>
+          <observers>
+            <apdc_catalog>
+              <type>singleton</type>
+              <class>apdc_catalog/adminhtml_observer</class>
+              <method>setImageBrowserTypeForCategoryImages</method>
+            </apdc_catalog>
+          </observers>
+        </adminhtml_catalog_category_edit_prepare_form>
+      </events>
+    </adminhtml>
 </config>

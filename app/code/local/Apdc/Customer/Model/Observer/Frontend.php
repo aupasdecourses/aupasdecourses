@@ -36,7 +36,15 @@ class Apdc_Customer_Model_Observer_Frontend
         if ($session->getData('customer_register_success')) {
             $session->unsetData('customer_register_success');
 
-            $url = Mage::getBaseUrl();
+            $customer = $session->getCustomer();
+            if ($customer->getCustomerNeighborhood() > 0) {
+                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                if ($neighborhood && $neighborhood->getId()) {
+                    $url = $neighborhood->getStoreUrl();
+                }
+            } else {
+                $url = Mage::getBaseUrl();
+            }
             $controller = $observer->getData('controller_action');
             Mage::getSingleton('core/session')->addSuccess('Votre compte a bien été créé. Bienvenue chez Au Pas De Courses !');
 			if(Mage::app()->getRequest()->getPost('success_url') && Mage::app()->getRequest()->getPost('success_url') != '') {
