@@ -1,0 +1,50 @@
+<?php $productsByCommercants = $this->getProductsByCommercant(); ?>
+<?php $tmpCommercantId = 0; ?>
+<?php if (count($productsByCommercants) > 0) : ?>
+<div class="searchresults container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="text-center">
+                <?php foreach ($productsByCommercants as $commercantId => $products) { ?>
+                <?php
+                    $shop_info = Mage::helper('apdc_commercant')->getInfoShop($commercantId);//$this->getInfoShop();
+                    $delivery_days = $shop_info['delivery_days'];
+                ?>
+                <div class="title-block row">
+                    <div class="col-lg-6 col-md-12 text-left">
+                        <div class="photo-commercant">
+                            <img class="img-responsive" src="<?= $shop_info["thumbnail_image"] ?>">
+                        </div>
+                        <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-right delivery-days">
+                        <?php
+                            foreach($delivery_days as $key => $value) {
+                                $class = '';
+                                if($value == 1) {
+                                    echo '<span class="no"><i class="fa fa-close"></i> '.$key.'</span>';
+                                }
+                                else {
+                                    $class = 'yes';
+                                    echo '<span class="yes"><i class="fa fa-check"></i> '.$key.'</span>';
+                                }
+                            }
+                        ?>
+                    </div>
+                </div>
+                <ul class="apdc-products-grid row">
+                    <?php
+                        foreach ($products as $product) { 
+                            echo '<div class="col-md-3 col-sm-6 col-xs-12">';
+                                $this->getChild("card-product")->setData("product", $product);
+                                echo $this->getChildHtml('card-product', false);
+                            echo '</div>';
+                        }
+                    ?>
+                </ul>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
