@@ -14,6 +14,7 @@
             </block>
 			      <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
             <block type="core/template" name="facebook_app_id" template="inchoo/socialconnect/facebook/appid.phtml" />
+            <block type="core/template" name="google_app_id" template="inchoo/socialconnect/google/appid.phtml" />
 
             <block type="core/text" name="suivi_hipay" before="-">
               <action method="setText">
@@ -73,14 +74,15 @@
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-facebook.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-google.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
             <action method="addItem"><type>skin_js</type><file>vendor/apdc_customer/js/capitalize-name.js</file></action>
             <!-- Social Connect -->
-            <!--<action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">-->
-                <!--<type>skin_css</type>-->
-                <!--<name>inchoo_socialconnect/google/css/button.css</name>-->
-            <!--</action>-->
+            <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/google/css/button.css</name>
+            </action>
             <action method="addItem" ifconfig="customer/inchoo_socialconnect_facebook/enabled">
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/facebook/css/button.css</name>
@@ -136,7 +138,7 @@
       <reference name="content">
             <block type="customer/form_login" name="customer_login" template="page/loginmodal.phtml">
                 <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-                    <!--<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>-->
+                    <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
                     <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
                 </block>
             </block>

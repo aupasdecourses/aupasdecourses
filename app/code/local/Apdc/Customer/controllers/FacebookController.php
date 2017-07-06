@@ -34,15 +34,12 @@ class Apdc_Customer_FacebookController extends Mage_Core_Controller_Front_Action
 
                         $helper = Mage::helper('inchoo_socialconnect/facebook');
 
-                        $token = new stdClass();
-                        $token->access_token = $params['access_token'];
-                        $token->expires_in = $params['expires_in'];
+                        $token = json_decode(json_encode($params['token']), FALSE);
 
                         $info = new Varien_Object();
                         $info->setData($params['fields']);
                         $customersByFacebookId = $helper->getCustomersByFacebookId($info->getId());
-
-                        $customer = Mage::getModel('customer/customer')->load(567);
+                        $customersByFacebookId->addAttributeToSelect('customer_neighborhood');
 
                         if($customersByFacebookId->getSize()) {
                             // Existing connected user - login
@@ -64,6 +61,7 @@ class Apdc_Customer_FacebookController extends Mage_Core_Controller_Front_Action
                         } else {
 
                             $customersByEmail = $helper->getCustomersByEmail($info->getEmail());
+                            $customersByEmail->addAttributeToSelect('customer_neighborhood');
 
                             if($customersByEmail->getSize()) {
                                 // Email account already exists - attach, login

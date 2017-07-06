@@ -22,12 +22,13 @@
   {
     FB.getLoginStatus(function(response) {
       var data = {};
-      console.log(response);
       data.status = response.status;
       if (response.status === 'connected') {
         data.uid = response.authResponse.userID;
-        data.access_token = response.authResponse.accessToken;
-        data.expires_in = response.authResponse.expiresIn;
+        data.token = {
+          access_token: response.authResponse.accessToken,
+          expires_in: response.authResponse.expiresIn
+        };
         FB.api(
           '/me',
           'GET',
@@ -38,10 +39,6 @@
           }
 
         );
-
-      } else {
-      //} else if (response.status === 'not_authorized') {
-        ajaxLogin(data);
       }
     });
   }
@@ -57,7 +54,11 @@
       type: 'POST'
     })
       .done(function(response) {
-        apdcLoginPopup.updateContent(response.html);
+        if (typeof(response.redirect) !== 'undefined' && response.redirect !== '') {
+          window.location.href = response.redirect;
+        } else if (typeof(response.html) !== 'undefined' && response.html !== '') {  
+          apdcLoginPopup.updateContent(response.html);
+        }
       })
       .fail(function() {
         console.log('failed');
