@@ -42,7 +42,7 @@
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
-    <h2 class="title-block"><?php echo $this->__('Les produits du commerçant') ?></h2>
+    <h2 class="title-block"><?php /*echo $this->__('Les produits du commerçant')*/ echo $apdc_helper->getCatTitle(); ?></h2>
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
     <ul class="apdc-products-grid row">
@@ -54,7 +54,13 @@
         <?php endforeach ?>
     </ul>
     <script type="text/javascript">
-        decorateGeneric($$('ul.apdc-products-grid'), ['odd','even','first','last']);
+		$j(document).ready(function() {
+			$j('.category-products .apdc-products-grid .product-info').hover(function(){
+				if($j('.display-hover', this).outerHeight() > 0) {
+					$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+				}
+			});
+		});
     </script>
 
 </div>

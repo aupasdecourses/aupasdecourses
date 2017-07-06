@@ -31,7 +31,31 @@
                             <div id="slideshow-scroller">
                                 <div id="slideshow-holder">
                                     <script>
+										
+										var initSelectDdate = true;
+										
                                         function selectDdate(date, dtime){
+											
+											if(initSelectDdate == false && (date != document.getElementById('ddate:date').value || dtime != document.getElementById('ddate:dtime').value)) {
+												jQuery.ajax( {
+													url : '<?php echo $this->getUrl('ddate/express/saveDdateAjax') ?>',
+													type: 'post',
+													dataType : 'json',
+													data:{
+														'date':date,
+														'dtime':dtime,
+														'url':'<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>'
+													},
+													success : function(data) {
+														window.location = data.redirect;
+													}
+												});
+											}
+											else {
+												initSelectDdate = false;
+											}
+											
+											
                                             document.getElementById('ddate:date').value = date;
                                             document.getElementById('ddate:dtime').value = dtime;
 

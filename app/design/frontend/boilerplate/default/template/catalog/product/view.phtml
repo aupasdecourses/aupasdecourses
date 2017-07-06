@@ -75,17 +75,17 @@
 
                                                 <?php }elseif($tag=='origine'){?>
                                                     <?php if (substr($attributeValue, 0, 6) == "France"){?>
-                                                        <div class="value-tag tag_<?php echo $label;?>"><img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
+                                                        <div class="value-tag tag_<?php echo $label;?>"><span>Origine : </span> <img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
                                                     <?php }else{?>
-                                                        <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                                        <div class="value-tag tag_<?php echo $tag;?>"><span>Produit de saison : <?php echo $attributeValue;?></span></div>
                                                     <?php } ?>
                                             <?php }elseif($tag=='produit_biologique'){?>
                                                     <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
                                             <?php } else{?>
-                                                    <div class="value-tag tag_<?php echo $tag;?>"><span><?php echo $attributeValue;?></span></div> 
+                                                    <div class="value-tag tag_<?php echo $tag;?>"><span>Labels : <?php echo $attributeValue;?></span></div>
                                             <?php } ?>
                                             </div>
-                                    <?php }} 
+                                    <?php }}
                                 ?>
                             </div>
                         </div>
@@ -125,6 +125,14 @@
                                     </div>
                                     <?php echo $this->getChildHtml('other');?>
                                 </div>
+                                <?php if (!$this->hasOptions()):?>
+                                    <div class="add-to-box">
+                                        <?php if($_product->isSaleable()): ?>
+                                            <?php echo $this->getChildHtml('addtocart') ?>
+                                        <?php endif;?>
+                                    </div>
+                                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="add-to-cart-wrapper">
@@ -140,22 +148,14 @@
             </div>
 
             <?php echo $this->getChildHtml('related_products') ?>
-            
+
             <hr>
-            
+
             <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
                 <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
             <?php endif;?>
-            
-            <?php if (!$this->hasOptions()):?>
-                <div class="add-to-box">
-                    <?php if($_product->isSaleable()): ?>
-                        <?php echo $this->getChildHtml('addtocart') ?>
-                    <?php endif;?>
-                </div>
-                <?php echo $this->getChildHtml('extra_buttons') ?>
-            <?php endif; ?>
+
         </form>
         <?php //echo $this->getChildHtml('upsell_products') ?>
         <?php echo $this->getChildHtml('product_additional_data') ?>
@@ -168,7 +168,7 @@
 <script type="text/javascript">
     $j(window).ready(function(){
         $j('.related-products-list').owlCarousel({
-            items:4,
+            items:5,
             margin:10,
 			autoPlay : false,
 			loop: false,
@@ -181,8 +181,8 @@
 					slideBy: 2,
 				},
                 540:{
-					items:4,
-					slideBy: 4,
+					items:5,
+					slideBy: 5,
 				},
             }
         });

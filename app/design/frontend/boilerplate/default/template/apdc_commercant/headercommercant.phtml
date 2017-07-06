@@ -1,5 +1,6 @@
 <?php
     $shop_info=$this->getInfoShop();
+	//$shop_info = Mage::helper('apdc_commercant')->getInfoShop();	
 	$delivery_days = $shop_info['delivery_days'];
  ?>
 <div class="container-fluid commercant-collapse">
@@ -12,7 +13,7 @@
                     </div>
                     <div class="commercant-name">
                         <h1 class="subtitle"><?= $shop_info['name'] ?></h1>
-                        <a href="$url_adresse" target="_blank"><i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?></a>
+                        <i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?>
                     </div>
                 </div>
                 <div class="col-md-5 text-right delivery-days">
@@ -46,7 +47,6 @@
 								?>
 							</tbody>
 						</table>
-						
 					</div>
                 </div>
                 <div class="col-md-1 text-right text-center">
@@ -62,10 +62,10 @@
                     <h2>Horaires de la boutique</h2>
                     <div><?= $shop_info['timetable']?></div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-md-offset-1 commercant-img">
+                <div class="col-md-4 col-sm-4 commercant-img">
                     <img class="img-responsive" src="<?= $shop_info["image"] ?>">
                 </div>
-                <div class="col-md-3 col-sm-4 col-md-offset-1 desc-commercant">
+                <div class="col-md-4 col-sm-4 col-md-offset-1 desc-commercant">
                     <h2 class="title-block">La petite histoire</h2>
                     <p><?= $shop_info['description'] ?></p>
                 </div>
@@ -79,8 +79,11 @@
 <div class="block_selection">
     <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
 	<?php
-		$this->getChild("blockselection")->setData("shop_info", $shop_info);
-		echo $this->getChildHtml('blockselection', false);
+		$currentcat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+		if($currentcat->getLevel()== 3){
+			$this->getChild("blockselection")->setData("shop_info", $shop_info);
+			echo $this->getChildHtml('blockselection', false);
+		}
 	?>
 </div>
 

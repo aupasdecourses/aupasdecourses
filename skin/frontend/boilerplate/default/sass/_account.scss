@@ -331,3 +331,52 @@ h1.account-title{
         }
     }
 }
+
+.account-create{
+    background: #fff;
+    padding: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    h1{
+        color: $color-main-green;
+        margin-bottom: 50px;
+    }
+    .form-list{
+        list-style-type: none;
+        padding-left: 0;
+        input[type=text],
+        input[type=email],
+        input[type=password],
+        input[type=tel],
+        select,
+        textarea{
+            color: $color-main-grey;
+            font-size: 0.875rem;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            background-color: #f6f6f6;
+            width: 100%;
+            height: auto;
+            outline: none;
+        }
+        .field{
+            border-bottom: 0;
+            margin-bottom: 15px;
+        }
+        label{
+            font-size: 0.875rem;
+            color: $color-main-grey;
+            font-weight: normal;
+            em{
+                color: $color-main-green;
+            }
+        }
+    }
+    button[type=submit]{
+        margin-top: 228px;
+    }
+    p.required{
+        color: $color-main-green;
+    }
+}

@@ -42,7 +42,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
 <div class="minicart-wrapper">
 
     <p class="block-subtitle">
-        <?php echo $this->__('Your Cart') ?>
+        <?php echo $this->__('Mon panier') ?>
         <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i></a>
     </p>
 
@@ -115,6 +115,7 @@ var apdcProductAddedToCart = <?php echo json_encode($this->getApdcProductAddedTo
 var apdcProductAddedToCart = {};
 <?php endif; ?>
 <?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
+var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
 jQuery(document).ready(function() {
     <?php if ($productId) : ?>
         jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
@@ -123,9 +124,8 @@ jQuery(document).ready(function() {
         jQuery('.apdc-add-to-cart-form').trigger('change', [true]);
         jQuery(document).trigger('minicartLoaded');
     <?php endif; ?>
+	cartSlide();
 });
-var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
-
 
 truncateOptions();
 decorateList('cart-sidebar', 'none-recursive');

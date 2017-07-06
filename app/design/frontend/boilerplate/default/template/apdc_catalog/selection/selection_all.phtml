@@ -7,7 +7,7 @@
 	    <div class="block-promos text-center container">
 	        <div class="border-container"></div>
 	    	<div class="inner-box" id="carrousel-selection-home">
-                <h2 class="title-block"><?php echo $this->__('En ce moment chez vos commerçants'); ?></h2>
+                <h2 class="title-block"><?php echo $this->__('En ce moment chez mes commerçants'); ?></h2>
 			    <div class="colored-line"></div>
 				<div id="carrousel-selection-home-row1" class="owl-carousel apdc-products-grid">
 					<?php
@@ -245,7 +245,7 @@
 </div>
 <script>
     $j(document).ready(function() {
-		
+
 		var optionsOwlCarouselSelectionHome = {
 			slideBy: 'page',
 			items:8,
@@ -269,13 +269,13 @@
 					items:5,
 					slideBy: 5,
 				}
-			}	
+			}
 		};
-		
+
         $j(window).load(function(){
             var owlCarouselSelectionHomeRow1 = $j("#carrousel-selection-home-row1").owlCarousel(optionsOwlCarouselSelectionHome);
             var owlCarouselSelectionHomeRow2 = $j("#carrousel-selection-home-row2").owlCarousel(optionsOwlCarouselSelectionHome);
-            
+
             $j("#carrousel-selection-home .prev").click(function (evt) {
                 evt.preventDefault();
                 owlCarouselSelectionHomeRow1.trigger('prev.owl.carousel');
@@ -289,10 +289,13 @@
             });
 
             $j('.block-promos .apdc-products-grid .owl-item').hover(function(){
-                $j(this).css({'margin-bottom' : -$j(' > .product-info .display-hover', this).outerHeight()+'px'});
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+            });
+			$j('.apdc-products-grid .product-info').hover(function(){
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
             });
         });
-		
+
     });
 </script>
 <?php endif;?>

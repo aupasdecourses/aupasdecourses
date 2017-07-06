@@ -1,7 +1,7 @@
 <?php
 	$orders = $this->getLastOrdersByCustomer();
 ?>
-<div class="block-lastorder">
+<div class="block-lastorder <?php if(count($orders) > 0) { echo 'active'; }?>">
 	<?php if(count($orders) > 0) { ?>
 		<h2>Mes dernières commandes</h2>
 		<div class="row">

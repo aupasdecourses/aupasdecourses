@@ -72,4 +72,11 @@ class Apdc_Customer_Model_Observer_Frontend
         }
         Mage::getSingleton('customer/session')->setBeforeAuthUrl($storeUrl);
     }
+	
+	public function customerLogout(Varien_Event_Observer $observer)
+	{
+		$observer->getControllerAction()
+			->setRedirectWithCookieCheck('http://apdc.touchfordiffusion.com/');
+	}
+	
 }
