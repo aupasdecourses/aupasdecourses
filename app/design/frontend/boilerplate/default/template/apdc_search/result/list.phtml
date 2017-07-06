@@ -7,8 +7,9 @@
             <div class="text-center">
                 <?php foreach ($productsByCommercants as $commercantId => $products) { ?>
                 <?php
-                    $shop_info = Mage::helper('apdc_commercant')->getInfoShop($commercantId);//$this->getInfoShop();
-                    $delivery_days = $shop_info['delivery_days'];
+                    if($commercantId!=null){
+                        $shop_info = Mage::helper('apdc_commercant')->getInfoShop($commercantId);
+                        $delivery_days = $shop_info['delivery_days'];
                 ?>
                 <div class="title-block row">
                     <div class="col-lg-6 col-md-12 text-left">
@@ -42,7 +43,7 @@
                         }
                     ?>
                 </ul>
-                <?php } ?>
+                <?php }} ?>
             </div>
         </div>
     </div>

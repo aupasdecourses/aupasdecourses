@@ -12,7 +12,7 @@
       <apdc_search>
         <class>Apdc_Search_Block</class>
       </apdc_search>
-      <catalogsearch>
+      <!--<catalogsearch>-->
         <!--<rewrite>-->
           <!--<result>Apdc_Search_Block_CatalogSearch_Result</result>-->
         <!--</rewrite>-->

@@ -99,7 +99,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		else {
 			$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', array('finset' => $shopId))->getFirstItem()->getData();
-			$categoryShop = Mage::getModel('catalog/category')->load($data['id_category']);
+			$categoryShop = Mage::getModel('catalog/category')->load($data['id_category'][0]);
 		}
 		
         $shop_info["name"]=$data["name"];

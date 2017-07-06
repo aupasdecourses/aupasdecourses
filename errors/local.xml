@@ -29,7 +29,7 @@
     <skin>commis</skin>
     <report>
         <action>email</action>
-        <subject>Information d'erreur sur le site Petit Commis</subject>
+        <subject>Information d'erreur sur le site Au Pas De Courses</subject>
         <email_address>pierre@aupasdecourses.com</email_address>
         <trash>leave</trash>
     </report>
