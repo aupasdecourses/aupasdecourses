@@ -70,7 +70,7 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions'],
             cascade: false
         }))
-    .pipe(concat('styles.css'))
+    //.pipe(concat('styles.css'))
     .pipe(gulp.dest('dist/css'));
 });
 
@@ -127,7 +127,7 @@ gulp.task('fonts', function() {
 gulp.task('watch', function() {
 
   // // Watch .scss files
-  // gulp.watch('sass/**/*.scss', ['sass']);
+  gulp.watch('sass/**/*.scss', ['sass']);
 
   // // Watch .js files
   // gulp.watch('js/**/*.js', ['js']);
