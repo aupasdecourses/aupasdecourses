@@ -33,7 +33,7 @@ var
 
 const
   autoprefixer = require('gulp-autoprefixer'),
-  imagemin = require('gulp-imagemin'),
+  /*imagemin = require('gulp-imagemin'),*/
   csscomb      = require('gulp-csscomb'),
   cssbeautify  = require('gulp-cssbeautify');
 
@@ -50,14 +50,20 @@ var config = {
 
 gulp.task('css', function () {
     var styles = [
-        'node_module/bootstrap/dist/css/bootstrap.min.css'
-        //'node_modules/font-awesome/font-awesome.scss'
+        //'node_modules/bootstrap/dist/css/bootstrap.min.css',
+		//'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
+		//'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
+        'css/owl.carousel.min.css',
+        'css/lightbox.min.css',
+        'node_modules/font-awesome/font-awesome.scss',
+		//'vendor/apdc_supermenu/css/supermenu.css',
+		//'vendor/apdc_popup/css/popup.css',
+		//'css/main.css'
     ];
     
-    return gulp.src([
-        'node_module/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/font-awesome/font-awesome.scss'])
-    .pipe(concat('styles.css'))
+    return gulp
+	.src(styles)
+    .pipe(concat('stylesgulp.css'))
     .pipe(gulp.dest('dist/css'));
 });
  
@@ -109,7 +115,7 @@ gulp.task('js', function() {
 gulp.task('images', function() {
   return gulp
     .src('images/**/*.{png,jpg,jpeg,gif,svg}')
-    .pipe(imagemin())
+    //.pipe(imagemin())
     .pipe(gulp.dest('dist/images'));
 });
 
@@ -126,20 +132,20 @@ gulp.task('fonts', function() {
 // Watch
 gulp.task('watch', function() {
 
-  // // Watch .scss files
-  gulp.watch('sass/**/*.scss', ['sass']);
+  // Watch .scss files
+  gulp.watch('sass/**/*.scss', ['sass'], ['css']);
 
-  // // Watch .js files
+  // Watch .js files
   gulp.watch('js/**/*.js', ['js']);
 
-  // // Watch image files
+  // Watch image files
   gulp.watch('images/**/*', ['images']);
 
-  // // Watch fonts
+  // Watch fonts
   gulp.watch('bower_components/bootstrap/fonts/**/*', ['fonts']);
 
 });
 
-gulp.task('process', [ 'css', 'sass', 'js', 'images', 'fonts' ] );
+gulp.task('process', [ 'sass', 'css', 'js', 'images', 'fonts' ] );
 
-gulp.task('default', [ 'css', 'sass', 'js', 'images', 'fonts', 'watch' ] );
+gulp.task('default', [ 'sass', 'css', 'js', 'images', 'fonts', 'watch' ] );

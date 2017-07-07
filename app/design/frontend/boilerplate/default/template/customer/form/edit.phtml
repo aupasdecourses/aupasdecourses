@@ -26,7 +26,7 @@
 ?>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <div class="box-account">
-    <form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" id="form-validate" autocomplete="off">
+    <form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" class="apdc-form" id="form-validate" autocomplete="off">
         <div class="fieldset">
             <?php echo $this->getBlockHtml('formkey')?>
             <h2 class="legend"><?php echo $this->__('Account Information') ?></h2>

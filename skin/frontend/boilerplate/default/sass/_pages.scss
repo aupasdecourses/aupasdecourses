@@ -32,6 +32,7 @@ section {
             width: calc( 100% + 30px);
             height: 56px;
             background: url(../images/border-pattern-height.png) repeat-x;
+            background-size: auto 49.4px;
         }
         .button-district {
             position: relative;
@@ -103,9 +104,10 @@ section {
           }
 
           input {
-            width:200px;
-            font-size:1.125rem;
-            padding:20px 10px;
+                font-size: 1.25rem;
+                width: 120px;
+                padding: 10px 10px;
+                text-align: center;
             &::-webkit-input-placeholder{
                 font-size: 1.125rem;
             }
@@ -839,6 +841,7 @@ section {
     vertical-align: top;
     background-color: #fff;
     max-width: 550px;
+    min-height: 531px;
     padding: 50px;
     border-radius: 5px;
     border: 1px solid #eee;
@@ -868,7 +871,6 @@ section {
     background: none;
     border: 0;
     max-width: 600px;
-    min-height: 531px;
     text-align: left;
     &.active{
         background: #fff;

@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <config>
 	<modules>
-		<Apdc_Cms>
-			<version>0.1.2</version>
-		</Apdc_Cms>
+		<Apdc_CMS>
+			<version>0.1.4</version>
+		</Apdc_CMS>
 	</modules>
     <global>
 		<resources>
 			<apdc_cms_setup>
 				<setup>
-					<module>Apdc_Cms</module>
+					<module>Apdc_CMS</module>
 					<class>Mage_Catalog_Model_Resource_Setup</class>
 				</setup>
 				<connection>

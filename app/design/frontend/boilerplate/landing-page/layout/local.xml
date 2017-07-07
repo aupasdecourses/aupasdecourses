@@ -101,7 +101,7 @@
             <!-- =========================
              STYLESHEETS   
             ============================== -->
-            <action method="addItem"><rel>skin_css</rel><href>dist/css/main.css</href></action>
+            <action method="addItem"><rel>skin_css</rel><href>dist/css/styles.css</href></action>
         </reference>
         <reference name="before_body_end">
           <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
