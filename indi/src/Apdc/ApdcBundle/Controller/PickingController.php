@@ -12,7 +12,7 @@ class PickingController extends Controller
     public function indexAction(Request $request)
     {
 		
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		
@@ -37,7 +37,7 @@ class PickingController extends Controller
     public function pickingAllAction(Request $request, $from)
     {
 		
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		

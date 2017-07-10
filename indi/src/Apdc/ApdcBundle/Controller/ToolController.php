@@ -11,7 +11,7 @@ class ToolController extends Controller
 {
 	public function productAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -22,7 +22,7 @@ class ToolController extends Controller
 
 	public function merchantAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 		$mage = $this->container->get('apdc_apdc.magento');
@@ -32,7 +32,7 @@ class ToolController extends Controller
 
 	public function categoryAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 		$mage = $this->container->get('apdc_apdc.magento');
