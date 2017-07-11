@@ -29,8 +29,11 @@
 				<td style="width:9%">
 					<label>Nombre d'articles</label>
 				</td>
-				<td style="width:25%">
+				<td style="width:10%">
 					<label>Total</label>
+				</td>
+				<td style="width:15%">
+					<label>Quartier</label>
 				</td>
 			</tr>
 		</table>
@@ -55,12 +58,15 @@
 				<td style="width:9%">
 					{{ order.total_quantite }}
 				</td>
-				<td style="width:25%">
+				<td style="width:10%">
 					{{ order.total_prix ~ "€" }}
+				</td>
+				<td style="width:15%">
+					{{ order.store }}
 				</td>
 			</tr>
 			<tr >
-				<td colspan="7" style="padding:0px;">
+				<td colspan="8" style="padding:0px;">
 					<div id="{{ order_id }}" class="order collapse">
 						<table class="table">
 							<tr>
