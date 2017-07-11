@@ -1,0 +1,28 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	
+	<h1> Marge arriere des commercants </h1>
+
+	{#{ dump() }#}
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Commercant</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for merch in margin %}
+				<tr>
+					<td>{{ merch }}</td>
+				</tr>	
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

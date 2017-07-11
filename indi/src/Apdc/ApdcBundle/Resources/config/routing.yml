@@ -144,6 +144,10 @@ noteOrder:
   path: /stat/noteOrder/
   defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
 
+margin:
+  path: /stat/margin/
+  defaults: { _controller: ApdcApdcBundle:Stat:margin }
+
 mapMerchants:
     path: /map/merchants/
     defaults: { _controller: ApdcApdcBundle:Map:merchants}

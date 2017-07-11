@@ -617,4 +617,17 @@ class Stats
 
 
 	}
+
+
+	public function getMargin()
+	{
+		$data = [];
+		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+		foreach ($shops as $shop) {
+			$data[] = $shop->getName();
+		}
+
+
+		return $data;
+	}
 }

@@ -91,4 +91,17 @@ class StatController extends Controller
 			'customer_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'
 		]);
 	}
+
+	public function marginAction(Request $request) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+		$margin = $stats->getMargin();
+
+		return $this->render('ApdcApdcBundle::stat/margin.html.twig', [
+			'margin' => $margin,
+		]);
+	}
 }
