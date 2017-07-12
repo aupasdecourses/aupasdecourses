@@ -3,7 +3,7 @@
 
   <modules>
     <Apdc_Dataflow>
-      <version>0.1.0</version>
+      <version>0.1.1</version>
     </Apdc_Dataflow>
   </modules>
 
@@ -29,6 +29,17 @@
         <resourceModel>apdc_dataflow_resource</resourceModel>
       </apdc_dataflow>
     </models>
+    <resources>
+      <apdc_dataflow_setup>
+        <setup>
+          <module>Apdc_Dataflow</module>
+          <class>Mage_Catalog_Model_Resource_Setup</class>
+        </setup>
+        <connection>
+          <use>core_setup</use>
+        </connection>
+      </apdc_dataflow_setup>
+    </resources>
   </global>
 
 </config>
