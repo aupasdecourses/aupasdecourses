@@ -136,5 +136,13 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Media>
+        <Apdc_Dataflow>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_Dataflow />
+            <Mage_Catalog />
+          </depends>
+        </Apdc_Dataflow>
     </modules>
 </config>

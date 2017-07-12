@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+
+  <modules>
+    <Apdc_Dataflow>
+      <version>0.1.0</version>
+    </Apdc_Dataflow>
+  </modules>
+
+  <global>
+    <blocks>
+      <apdc_dataflow>
+        <class>Apdc_Dataflow_Block</class>
+      </apdc_dataflow>
+      <adminhtml>
+        <rewrite>
+          <system_convert_profile_edit_tab_run>Apdc_Dataflow_Block_Adminhtml_System_Convert_Profile_Edit_Tab_Run</system_convert_profile_edit_tab_run>
+        </rewrite>
+      </adminhtml>
+    </blocks>
+    <helpers>
+      <apdc_dataflow>
+        <class>Apdc_Dataflow_Helper</class>
+      </apdc_dataflow>
+    </helpers>
+    <models>
+      <apdc_dataflow>
+        <class>Apdc_Dataflow_Model</class>
+        <resourceModel>apdc_dataflow_resource</resourceModel>
+      </apdc_dataflow>
+    </models>
+  </global>
+
+</config>
