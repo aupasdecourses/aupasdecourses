@@ -614,6 +614,7 @@ class Magento
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')])
                      ->addFieldToFilter('commercant', ['eq' => $commercantId]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
@@ -654,6 +655,7 @@ class Magento
             $orderHeader = $this->OrderHeaderParsing($order);
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             if ($commercantId != -1) {
                 $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
             }
@@ -705,6 +707,7 @@ class Magento
 //			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('main_table.order_id', ['eq' => $orderHeader['mid']]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             $products->getSelect()->joinLeft(['refund' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_items')], 'refund.order_item_id=main_table.item_id', [
                 'refund_prix' => 'refund.prix_final',
                 'refund_diff' => 'refund.diffprixfinal',
