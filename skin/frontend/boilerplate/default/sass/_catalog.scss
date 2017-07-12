@@ -1,4 +1,8 @@
 .catalog-category-view{
+    .main-container{
+        background: none;
+        padding-bottom: 0;
+    }
     h2{
         font-size: 1.125rem;
         font-weight: 700;
@@ -331,10 +335,11 @@
             text-align: center;
             margin: 0 10px;
             .item{
+                display: inline-block;
+                vertical-align: top;
                 position: relative;
                 height: auto;
-                float: left;
-                width: 25%;
+                width: 24%;
                 padding-left: 15px;
                 padding-right: 15px;
                 margin-bottom: 10px;

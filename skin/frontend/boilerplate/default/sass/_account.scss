@@ -62,12 +62,21 @@ h1.account-title{
             }
         }
         &.detail-order{
+            h2{
+                margin-bottom: 0;
+            }
             h3{
                 margin-top: 0;
                 margin-bottom: 20px;
             }
             p{
                 font-size: 1rem;
+                &.order-ref{
+                    font-weight: 700;
+                    color: $color-main-green;
+                    margin-top: 5px;
+                    margin-bottom: 50px;
+                }
                 strong{
                     display: block;
                     color: $color-main-green;
@@ -76,7 +85,7 @@ h1.account-title{
             }
             .reorder-link{
                 float: right;
-                margin-top: -80px;
+                margin-top: -110px;
                 font-size: 0.875rem;
             }
         }
@@ -218,11 +227,14 @@ h1.account-title{
                 }
                 td{
                     width: 14.29%;
-                    padding: 20px 4px;
+                    padding: 10px 4px;
                     p, span{
-                        font-size: 0.75rem;
+                        font-size: 0.875rem;
                         margin-bottom: 0;
-                        line-height: normal;
+                        line-height: 1.5em;
+                    }
+                    .product-name{
+                        font-weight: 700;
                     }
                 }
             }
@@ -258,12 +270,19 @@ h1.account-title{
                 }
             }
             .total{
+                margin-top: 138px;
                 p{
                     font-size: 1.75rem;
                     strong{
                         color: $color-main-green;
                         font-weight: normal;
                     }
+                }
+            }
+            .customer-price{
+                p{
+                    font-size: 1.75rem;
+                    line-height: normal;
                 }
             }
         }

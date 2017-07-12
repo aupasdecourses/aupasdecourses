@@ -3,7 +3,7 @@
 	$refund_totals = Mage::helper('pmainguet_delivery')->getRefundorderdata($this->getOrder());
 	$total=0;
 	$_order=$this->getOrder();
-	
+
 	foreach($refund_totals as $refund):
 		$total += $refund["del_amount_refunded"];
 	endforeach;
@@ -27,13 +27,13 @@
     <div class="col-md-5">
         <div class="row">
             <div class="col-md-6">
-                <p>Total des produits</p>
+                <p>Total des produits commandés</p>
             </div>
             <div class="col-md-6">
                 <p><?php echo $this->formatValue($_totals['subtotal']) ?></p>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6">
                 <p>Frais de livraison</p>
             </div>
@@ -41,10 +41,10 @@
                 <p><?php echo $this->formatValue($_totals['shipping']) ?></p>
             </div>
         </div>
-        <?php echo $this->getChildHtml('tax');?>
+        <?php echo $this->getChildHtml('tax');?> -->
         <div class="row total">
             <div class="col-md-6">
-                <p>Total TTC</p>
+                <p>Total commande TTC</p>
             </div>
             <div class="col-md-6">
                 <p><?php echo $this->formatValue($_totals['grand_total_incl']) ?></p>
@@ -52,9 +52,17 @@
         </div>
     </div>
     <div class="col-md-5 col-md-offset-1">
+		<div class="row">
+			<div class="col-md-6">
+				<p>Total des produits commandés</p>
+			</div>
+			<div class="col-md-6">
+				<p><?php echo $this->formatValue($_totals['grand_total_incl']) ?></p>
+			</div>
+		</div>
         <div class="row">
             <div class="col-md-6">
-                <p>Total des produits commerçants</p>
+                <p>Total des produits préparés par commerçants</p>
             </div>
             <div class="col-md-6">
                 <p><?php echo $_order->formatPrice($total) ?> @TODO</p>
@@ -62,7 +70,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <p>Total des remboursements</p>
+                <p>Remboursements</p>
             </div>
             <div class="col-md-6">
                 <p>
@@ -75,9 +83,9 @@
 			     </p>
             </div>
         </div>
-		<div class="row">
+		<div class="row customer-price">
             <div class="col-md-6">
-                <p>Prix final payé par clients</p>
+                <p>Total livré TTC</p>
             </div>
             <div class="col-md-6">
                 <p>

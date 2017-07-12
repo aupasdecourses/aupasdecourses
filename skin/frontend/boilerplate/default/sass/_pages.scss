@@ -836,7 +836,7 @@ section {
     }
 }
 
-.block-sponsor, .block-lastorder{
+.block-sponsor-apdc, .block-lastorder{
     display: inline-block;
     vertical-align: top;
     background-color: #fff;
@@ -870,7 +870,7 @@ section {
 .block-lastorder{
     background: none;
     border: 0;
-    max-width: 600px;
+    max-width: 550px;
     text-align: left;
     &.active{
         background: #fff;

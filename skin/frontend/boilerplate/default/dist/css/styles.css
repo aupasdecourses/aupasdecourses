@@ -11416,12 +11416,12 @@ a:hover {
   transition: all 300ms ease-in;
 }
 
-.button:hover {
+.button:not(.btn-cart):hover {
   text-decoration: none;
 }
 
-.button:hover:before,
-.button:hover:after {
+.button:not(.btn-cart):hover:before,
+.button:not(.btn-cart):hover:after {
   width: 100%;
 }
 
@@ -11992,6 +11992,12 @@ header .top-nav li a a:visited {
 
 .header-minicart #header-cart .minicart-wrapper .minicart-message#minicart-success-message {
   color: #11b400;
+}
+
+.header-minicart #header-cart .minicart-wrapper p.empty {
+  font-size: 13px;
+  margin: 5px 0 0;
+  color: #df280a;
 }
 
 .header-minicart #header-cart .mini-products-list {
@@ -13839,7 +13845,7 @@ section .section-description {
   margin-right: 40px;
 }
 
-.block-sponsor,
+.block-sponsor-apdc,
 .block-lastorder {
   display: inline-block;
   max-width: 550px;
@@ -13852,7 +13858,7 @@ section .section-description {
   background-color: #fff;
 }
 
-.block-sponsor h2,
+.block-sponsor-apdc h2,
 .block-lastorder h2 {
   font-size: 2rem;
   font-weight: 700;
@@ -13862,7 +13868,7 @@ section .section-description {
   color: #ff7d73;
 }
 
-.block-sponsor p,
+.block-sponsor-apdc p,
 .block-lastorder p {
   font-size: 1.5rem;
   font-weight: 200;
@@ -13871,7 +13877,7 @@ section .section-description {
   color: rgba(0, 0, 0, .84);
 }
 
-.block-sponsor img,
+.block-sponsor-apdc img,
 .block-lastorder img {
   display: block;
   width: 100%;
@@ -13879,7 +13885,7 @@ section .section-description {
 }
 
 .block-lastorder {
-  max-width: 600px;
+  max-width: 550px;
   text-align: left;
   border: 0;
   background: none;
@@ -15171,6 +15177,11 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+.catalog-category-view .main-container {
+  padding-bottom: 0;
+  background: none;
+}
+
 .catalog-category-view h2 {
   font-size: 1.125rem;
   font-weight: 700;
@@ -15550,12 +15561,13 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .category-products .apdc-products-grid .item {
   position: relative;
-  float: left;
-  width: 25%;
+  display: inline-block;
+  width: 24%;
   height: auto;
   margin-bottom: 10px;
   padding-right: 15px;
   padding-left: 15px;
+  vertical-align: top;
 }
 
 .catalog-category-view .category-products .apdc-products-grid .item:hover {
@@ -16123,6 +16135,10 @@ h1.account-title {
   color: rgba(0, 0, 0, .84);
 }
 
+.my-account .box-account.detail-order h2 {
+  margin-bottom: 0;
+}
+
 .my-account .box-account.detail-order h3 {
   margin-top: 0;
   margin-bottom: 20px;
@@ -16130,6 +16146,13 @@ h1.account-title {
 
 .my-account .box-account.detail-order p {
   font-size: 1rem;
+}
+
+.my-account .box-account.detail-order p.order-ref {
+  font-weight: 700;
+  margin-top: 5px;
+  margin-bottom: 50px;
+  color: #3ab64b;
 }
 
 .my-account .box-account.detail-order p strong {
@@ -16141,7 +16164,7 @@ h1.account-title {
 .my-account .box-account.detail-order .reorder-link {
   font-size: .875rem;
   float: right;
-  margin-top: -80px;
+  margin-top: -110px;
 }
 
 .my-account .box-account.sponsorship {
@@ -16312,14 +16335,18 @@ h1.account-title {
 
 .my-account .box-account table#my-orders-table td {
   width: 14.29%;
-  padding: 20px 4px;
+  padding: 10px 4px;
 }
 
 .my-account .box-account table#my-orders-table td p,
 .my-account .box-account table#my-orders-table td span {
-  font-size: .75rem;
-  line-height: normal;
+  font-size: .875rem;
+  line-height: 1.5em;
   margin-bottom: 0;
+}
+
+.my-account .box-account table#my-orders-table td .product-name {
+  font-weight: 700;
 }
 
 .my-account .box-account table th {
@@ -16360,6 +16387,10 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.my-account .box-account .total-order .total {
+  margin-top: 138px;
+}
+
 .my-account .box-account .total-order .total p {
   font-size: 1.75rem;
 }
@@ -16367,6 +16398,11 @@ h1.account-title {
 .my-account .box-account .total-order .total p strong {
   font-weight: normal;
   color: #3ab64b;
+}
+
+.my-account .box-account .total-order .customer-price p {
+  font-size: 1.75rem;
+  line-height: normal;
 }
 
 .my-account .box-account .cancel-edit-customer {
@@ -16879,6 +16915,15 @@ h1.account-title {
   .account-create button[type=submit] {
     margin-top: 20px;
   }
+
+  .header-minicart #header-cart {
+    right: -100% !important;
+    width: 100%;
+  }
+
+  .header-minicart #header-cart.skip-active {
+    transform: translateX(-100%);
+  }
 }
 
 @media screen and (max-width: 740px) {
@@ -16981,15 +17026,15 @@ h1.account-title {
     font-size: 1.5rem;
   }
 
-  .block-sponsor {
+  .block-sponsor-apdc {
     padding: 20px;
   }
 
-  .block-sponsor h2 {
+  .block-sponsor-apdc h2 {
     font-size: 1.75rem;
   }
 
-  .block-sponsor img {
+  .block-sponsor-apdc img {
     margin-bottom: 20px;
   }
 
@@ -16999,7 +17044,7 @@ h1.account-title {
   }
 
   .block-blog,
-    .block-sponsor {
+    .block-sponsor-apdc {
     margin: 30px 0;
   }
 

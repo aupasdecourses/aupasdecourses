@@ -2,6 +2,7 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <h2 class="table-caption"><?php echo $this->__('Ma commande') ?></h2>
+<p class="order-ref">#<?php echo $_order->getRealOrderId() ?></p>
 <a href="#" class="button button-green reorder-link"><i class="fa fa-credit-card"></i> Commander à nouveau</a>
 <h3><?php echo $this->__('Mes informations générales') ?></h3>
 <div class="row">

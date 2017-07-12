@@ -241,7 +241,7 @@ header{
             #forgot-password{
                 font-size: 0.75rem;
                 text-decoration: underline;
-                
+
             }
         }
         #show-login-form{
@@ -404,6 +404,11 @@ header{
                 &#minicart-success-message{
                     color: $c-success;
                 }
+            }
+            p.empty {
+              margin: 5px 0 0;
+              color: #df280a;
+              font-size: 13px;
             }
         }
         .mini-products-list {
