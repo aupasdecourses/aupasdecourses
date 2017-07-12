@@ -25,29 +25,48 @@ class Apdc_Dataflow_Block_Adminhtml_System_Convert_Profile_Edit_Tab_Run extends 
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplate('apdc/apdc_dataflow/system/convert/profile/run.phtml');
+        if ($this->isAdvancedProfile()) {
+            $this->setTemplate('apdc/apdc_dataflow/system/convert/profile/run.phtml');
+        }
     }
     public function getRunButtonHtml()
     {
         $html = parent::getRunButtonHtml();
 
-        $form = new Varien_Data_Form();
-        $fieldset = $form->addFieldset('base_fieldset', array('legend' => $this->_helper()->__('Filtrage')));
-        $this->getCommercantsOptions();
-        $fieldset->addField(
-            'commercant',
-            'select',
-            array(
-                'name' => 'filters[commercant]',
-                'label' => $this->_helper()->__('Commercant'),
-                'title' => $this->_helper()->__('Commercant'),
-                'class' => 'profile_filter',
-                'values' => $this->getCommercantsOptions(),
-                'required' => false
-            )
-        );
+        if ($this->isAdvancedProfile()) {
 
-        return $form->toHtml() . $html;
+            $form = new Varien_Data_Form();
+            $fieldset = $form->addFieldset('base_fieldset', array('legend' => $this->_helper()->__('Filtrage')));
+            $this->getCommercantsOptions();
+            $fieldset->addField(
+                'commercant',
+                'select',
+                array(
+                    'name' => 'filters[commercant]',
+                    'label' => $this->_helper()->__('Commercant'),
+                    'title' => $this->_helper()->__('Commercant'),
+                    'class' => 'profile_filter',
+                    'values' => $this->getCommercantsOptions(),
+                    'required' => false
+                )
+            );
+            $html = $form->toHtml() . $html;
+        }
+
+        return $html;
+    }
+
+    /**
+     * isAdvancedProfile 
+     * 
+     * @return boolean
+     */
+    protected function isAdvancedProfile()
+    {
+        if (Mage::app()->getRequest()->getControllerName() == 'system_convert_profile') {
+            return true;
+        }
+        return false;
     }
 
     protected function getCommercantsOptions()
