@@ -177,9 +177,8 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
         
         foreach ($ids as $i => $name) {
             $current=Mage::getModel('catalog/category')->load($i);
-            $current->setIsClickable('Non');
-            $current->setIncludeInMenu('Non');
-            echo 'Catégorie '.$i."/".$name." non cliquable.\n";
+            $current->setIsActive(false);
+            echo 'Catégorie '.$i."/".$name." désactivée.\n";
             $current->save();
         }
         echo "Catégorie ".$id."/".$maincat_name." et ses filles désactivées!\n\n";
