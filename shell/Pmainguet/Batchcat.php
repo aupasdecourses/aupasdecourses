@@ -115,9 +115,9 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'image'=>$line[7],
                         'estcom_commercant'=>$line[8],
                         'is_active'=>$line[9],
-                        'meta_title'=>$line[10],
-                        'description'=>$line[11],
-                        'meta_description'=>$line[12],
+                        'meta_title'=>htmlentities ($line[10]),
+                        'description'=>htmlentities ($line[11]),
+                        'meta_description'=>htmlentities ($line[12]),
                         'is_clickable'=>(int) $line[13],
                         'include_in_menu'=>$line[14],
                         'show_age_popup'=>$line[15],
@@ -167,6 +167,25 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
 
     }
 
+    //Activation d'une catégorie et des catégories filles
+    public function deactivatecat($id)
+    {
+        $maincat_name = Mage::getModel('catalog/category')->load($id)->getName();
+        $ids = $this->_getTreeIdsCategories($id);
+
+        echo "//// Désactiver la catégorie ".$id."/".$maincat_name." et ses filles ////\n\n";
+        
+        foreach ($ids as $i => $name) {
+            $current=Mage::getModel('catalog/category')->load($i);
+            $current->setIsClickable('Non');
+            $current->setIncludeInMenu('Non');
+            echo 'Catégorie '.$i."/".$name." non cliquable.\n";
+            $current->save();
+        }
+        echo "Catégorie ".$id."/".$maincat_name." et ses filles désactivées!\n\n";
+
+    }
+
     //Activation de la popup Age d'une catégorie et des catégories filles
     public function activateagegate($id)
     {
@@ -182,6 +201,24 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
             $current->save();
         }
         echo "Popup Agegate activée pour catégorie ".$id."/".$maincat_name." et ses filles!\n\n";
+
+    }
+
+    //Activation de la popup Age d'une catégorie et des catégories filles
+    public function deactivateagegate($id)
+    {
+        $maincat_name = Mage::getModel('catalog/category')->load($id)->getName();
+        $ids = $this->_getTreeIdsCategories($id);
+
+        echo "//// Désactiver la popup agegate sur catégorie ".$id."/".$maincat_name." et ses filles ////\n\n";
+        
+        foreach ($ids as $i => $name) {
+            $current=Mage::getModel('catalog/category')->load($i);
+                $current->setShowAgePopup(false);
+                echo 'Popup activée sur '.$i."/".$name."\n";
+            $current->save();
+        }
+        echo "Popup Agegate désactivée pour catégorie ".$id."/".$maincat_name." et ses filles!\n\n";
 
     }
 
