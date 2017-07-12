@@ -153,10 +153,12 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
         foreach ($ids as $i => $name) {
             $current=Mage::getModel('catalog/category')->load($i);
             if (strtolower($current->getName())<>"tous les produits") {
+                $current->setIsActive(true);
                 $current->setIsClickable(true);
                 $current->setIncludeInMenu(true);
                 echo 'Catégorie '.$i."/".$name." cliquable.\n";
             } else {
+                $current->setIsActive(true);
                 $current->setIsClickable('Non');
                 $current->setIncludeInMenu('Non');
                 echo 'Catégorie '.$i."/".$name." cliquable.\n";

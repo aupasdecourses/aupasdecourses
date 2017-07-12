@@ -4,6 +4,9 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 {
     public function getListShops()
     {
+        
+        $neighborhood = unserialize(Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting()->getPostcodes());
+
         //Fonction peut être trop complexe: suffit de filter les catégories de la boutique à afficher, pas besoin de vérifier si le commerçant est activé ou non.
         $storeid = Mage::app()->getStore()->getId();
         $rootId = Mage::app()->getStore($storeid)->getRootCategoryId();
@@ -45,6 +48,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         arsort($code_count);
         
         $result=array();
+
+        foreach($neighborhood as $post){
+            $result[$post]="";
+        }
 
         foreach($code_count as $zip => $freq){
             $result[$zip]=$data[$zip];
