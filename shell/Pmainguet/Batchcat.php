@@ -225,7 +225,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
     // Implement abstract function Mage_Shell_Abstract::run();
     public function run()
     {
-        $steps = ['activatecat','activateagegate','getcomcatinfo','setcomcatinfo'];
+        $steps = ['activatecat','activateagegate','getcomcatinfo','setcomcatinfo','deactivateagegate','deactivatecat'];
         //get argument passed to shell script
         $step = $this->getArg('step');
         $id = $this->getArg('id');
