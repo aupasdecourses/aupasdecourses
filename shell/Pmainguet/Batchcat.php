@@ -61,7 +61,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'is_active'=>$category->getIsActive(),
                         'meta_title'=>$category->getMetaTitle(),
                         'description'=>$category->getDescription(),
-                        'meta_description'=>$category->getMetaDescription(),
+                        'meta_description'=>'"'.$category->getMetaDescription().'"',
                         'is_clickable'=>$category->getIsClickable(),
                         'include_in_menu'=>$category->getIncludeInMenu(),
                         'show_age_popup'=>$category->getShowAgePopup(),
