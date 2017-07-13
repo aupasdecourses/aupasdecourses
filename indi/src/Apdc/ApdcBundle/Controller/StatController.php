@@ -97,8 +97,8 @@ class StatController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
-		$stats = $this->container->get('apdc_apdc.stats');
-		$margin = $stats->getMargin();
+		$mage = $this->container->get('apdc_apdc.magento');
+		$margin = $mage->getMargin();
 
 		return $this->render('ApdcApdcBundle::stat/margin.html.twig', [
 			'margin' => $margin,
