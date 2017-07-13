@@ -60,7 +60,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'estcom_commercant'=>$category->getEstcomCommercant(),
                         'is_active'=>$category->getIsActive(),
                         'meta_title'=>$category->getMetaTitle(),
-                        'description'=>$category->getDescription(),
+                        'description'=>html_entity_decode($category->getDescription()),
                         'meta_description'=>'"'.$category->getMetaDescription().'"',
                         'is_clickable'=>$category->getIsClickable(),
                         'include_in_menu'=>$category->getIncludeInMenu(),
