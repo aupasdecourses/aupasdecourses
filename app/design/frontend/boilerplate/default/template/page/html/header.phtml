@@ -32,7 +32,7 @@
                         </div>
                     </div>-->
 
-                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-offset-2 col-md-6'; }?> col-md-3 col-sm-12 text-right link-header-right">
+                    <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-9'; } else{ echo 'col-md-4'; }?> col-sm-9 text-right link-header-right">
 
                         <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
                         <!--<?php if($session->isLoggedIn()) : ?>
@@ -46,6 +46,7 @@
 
                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="#" href="#header-help" class="skip-link skip-help">
+                                <i class="fa fa-info-circle"></i>
                                 <span class="label">Aide</span>
                             </a>
                             <ul id="header-help" class="dropdown-menu skip-content links" aria-labelledby="dLabel">
@@ -151,7 +152,7 @@
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
-		
+
 		if(getUrlParameter('opencart') == 1) {
 			$j('.header-minicart .skip-cart').trigger('click');
 		}

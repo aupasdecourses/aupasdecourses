@@ -243,7 +243,7 @@ a.level3:hover {
     text-decoration: underline !important;
 }
 
-@media (min-width: 772px) {
+@media (min-width: 1200px) {
   #supermenu > .container-fluid {
     padding:0;
   }
@@ -437,7 +437,7 @@ a.level3:hover {
     clear:left;
   }
 }
-@media screen and (max-width: 771px) {
+@media screen and (max-width: 1200px) {
       a.level2:link,
     a.level2:visited {
         margin-bottom: 0px;

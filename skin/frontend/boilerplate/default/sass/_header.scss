@@ -604,6 +604,18 @@ header{
     }
 }
 
+.navbar-default{
+    .navbar-toggle{
+        &:hover,
+        &:focus{
+            background: none;
+        }
+        .icon-bar{
+            background: $color-main-green;
+        }
+    }
+}
+
 .dropdown-menu{
     .template-column .cat-thumbnail{
         width: 30px;
@@ -935,6 +947,7 @@ header{
         }
     }
 }
+
 #header-neighborhood{
     overflow-y:scroll;
     display: none;

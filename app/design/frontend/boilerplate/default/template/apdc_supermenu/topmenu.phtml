@@ -37,15 +37,25 @@
 <?php if($_menu): ?>
     <nav id="supermenu" class="navbar navbar-default">
         <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li class="level0" id="storename">
-                    <a href="<?php echo $neighborhood->getStoreUrl();?>">
-                        <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="40" height="40" />
-                        <span><?php echo $neighborhood->getName(); ?></span>
-                    </a>
-                </li>
-                <?php echo $_menu ?>
-            </ul>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="main-menu-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="level0" id="storename">
+                        <a href="<?php echo $neighborhood->getStoreUrl();?>">
+                            <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="40" height="40" />
+                            <span><?php echo $neighborhood->getName(); ?></span>
+                        </a>
+                    </li>
+                    <?php echo $_menu ?>
+                </ul>
+            </div>
         </div>
     </nav>
 <?php endif ?>

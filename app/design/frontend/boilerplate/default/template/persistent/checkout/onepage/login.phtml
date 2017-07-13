@@ -33,11 +33,10 @@
 /** @var $this Mage_Checkout_Block_Onepage_Login */
 ?>
 <?php echo $this->getChildHtml('login_before') ?>
-<div class="col1-set<?php if (!$this->helper('customer')->isRegistrationAllowed() && !$this->getQuote()->isAllowedGuestCheckout()) echo ' login-only' ?>">
+<div class="container col1-set<?php if (!$this->helper('customer')->isRegistrationAllowed() && !$this->getQuote()->isAllowedGuestCheckout()) echo ' login-only' ?>">
     <div class="row">
         <form id="login-form-checkout" class="apdc-form" action="<?php echo $this->getPostAction() ?>" method="post">
-        <div class="col-sm-2"></div>
-        <div class="fieldset col-sm-8">
+        <div class="fieldset col-sm-12">
             <?php echo $this->getMessagesBlock()->toHtml() ?>
             <?php echo $this->getBlockHtml('formkey'); ?>
             <p class="required"><?php echo $this->__('* Required Fields') ?></p>
@@ -64,7 +63,6 @@
             </ul>
             <input name="context" type="hidden" value="checkout" />
         </div>
-        <div class="col-sm-2"></div>
         </form>
     </div>
     <div class="row">

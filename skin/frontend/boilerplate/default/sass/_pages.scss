@@ -369,9 +369,10 @@ section {
         text-transform: none;
         margin-top: 0;
         text-align: center;
+        display: flex;
+        align-items: center;
         span{
-            margin-top: 75px;
-            display: block;
+            margin: auto;
         }
     }
 }
