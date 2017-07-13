@@ -81,7 +81,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
             $myFileLink = fopen($myFile, 'w+') or die("Can't open file.");
             header('Content-type: application/octet-stream');  
             header('Content-disposition: attachment; filename="download.csv"'); 
-            fputcsv($myFileLink, array_keys($result[0]));
+            fputcsv($myFileLink, array_keys($result[0]),",",'"');
             foreach($result as $line){
                 fputcsv($myFileLink, $line);
             }
