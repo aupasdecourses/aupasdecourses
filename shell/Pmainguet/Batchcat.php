@@ -59,9 +59,9 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'full'=>$category->getImage(),
                         'estcom_commercant'=>$category->getEstcomCommercant(),
                         'is_active'=>$category->getIsActive(),
-                        'meta_title'=>$category->getMetaTitle(),
-                        'description'=>html_entity_decode(utf8_decode($category->getDescription())),
-                        'meta_description'=>'"'.$category->getMetaDescription().'"',
+                        'meta_title'=>html_entity_decode(str_replace('"','',$category->getMetaTitle())),
+                        'description'=>html_entity_decode(str_replace('"','',$category->getDescription())),
+                        'meta_description'=>html_entity_decode(str_replace('"','',$category->getMetaDescription())),
                         'is_clickable'=>$category->getIsClickable(),
                         'include_in_menu'=>$category->getIncludeInMenu(),
                         'show_age_popup'=>$category->getShowAgePopup(),
@@ -81,7 +81,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
             $myFileLink = fopen($myFile, 'w+') or die("Can't open file.");
             header('Content-type: application/octet-stream');  
             header('Content-disposition: attachment; filename="download.csv"'); 
-            fputcsv($myFileLink, array_keys($result[0]),",",'"');
+            fputcsv($myFileLink, array_keys($result[0]),",",'""');
             foreach($result as $line){
                 fputcsv($myFileLink, $line);
             }
@@ -115,9 +115,9 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'image'=>$line[7],
                         'estcom_commercant'=>$line[8],
                         'is_active'=>$line[9],
-                        'meta_title'=>$line[10],
-                        'description'=>$line[11],
-                        'meta_description'=>$line[12],
+                        'meta_title'=>str_replace('"','',$line[10]),
+                        'description'=>str_replace('"','',$line[11]),
+                        'meta_description'=>str_replace('"','',$line[12]),
                         'is_clickable'=>(int) $line[13],
                         'include_in_menu'=>$line[14],
                         'show_age_popup'=>$line[15],
