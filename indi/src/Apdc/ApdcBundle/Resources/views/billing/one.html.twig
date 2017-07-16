@@ -81,7 +81,14 @@
 						<td>{{ summary.processing_fees_HT }}</td>
 						<td>{{ summary.processing_fees }}</td>
 						<td style="font-weight:bold;text-decoration:underline;">{{ summary.sum_payout }}</td>
-						<td><a href="{{ path('billingIndex')}}?date_debut=01/01/2017" target="_blank" style="color:red;">Vérifier</a></td>
+
+						{% if summary.date_payout is not null %}
+							{% set sum_payout_regle = summary.sum_payout %}
+						{% else %}
+							{% set sum_payout_regle = 0 %}
+						{% endif %}
+
+						<td style="color:red">{{ summary.sum_payout - sum_payout_regle }}</td>
 					</tr>
 					{% endfor %}
 			</tbody>

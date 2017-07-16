@@ -16,7 +16,7 @@
 				<ul class ="nav navbar-nav">
 					
 					
-					{% if is_granted('ROLE_DISPATCH') %}
+					{% if is_granted('ROLE_INDI_DISPATCH') %}
 					<li class="dropdown">	
 						<a class="dropdown-toggle" data-toggle="dropdown"href="">Liste Commandes<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -34,7 +34,7 @@
 					</li>
 					{% endif %} {# end role dispatch #}
 
-					{% if is_granted('ROLE_GESTION') %}
+					{% if is_granted('ROLE_INDI_GESTION') %}
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Remboursement<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -50,11 +50,12 @@
 							<li><a href="{{ path ('billingDetails') }}">Voir Commandes Facturées</a></li>
 							<li><a href="{{ path ('billingSummary') }}">Voir Factures Commerçant</a></li>
 							<!-- <li><a href="{{ path ('billingPayoutIndex') }}">Payout</a></li> -->
+							<li><a href="{{ path ('margin') }}">Marge arriere commercants</a></li>
 						</ul>
 					</li>
 					{% endif %} {# end role gestion #}
 
-					{% if is_granted('ROLE_COMMUNICATION') %}
+					{% if is_granted('ROLE_INDI_COMMUNICATION') %}
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Clients<span class="caret"></span></a>
 						<ul class="dropdown-menu">

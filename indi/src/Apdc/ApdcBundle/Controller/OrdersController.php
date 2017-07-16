@@ -12,7 +12,7 @@ class OrdersController extends Controller
 	public function indexAction(Request $request)
 	{
 
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -49,7 +49,7 @@ class OrdersController extends Controller
 	{
 
 
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		
@@ -77,7 +77,7 @@ class OrdersController extends Controller
 	public function ordersAllAction(Request $request, $from, $to)
 	{
 		
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		
