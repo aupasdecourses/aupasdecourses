@@ -12630,21 +12630,19 @@ header .top-nav li a a:visited {
 }
 
 #header-neighborhood {
-  position: absolute;
-  z-index: 100;
-  top: 60px;
-  display: none;
-  display: none;
-  overflow-y: scroll;
-  max-height: 300px;
-  padding: 10px;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+  padding-left: 0;
+  list-style-type: none;
 }
 
 #header-neighborhood.open {
   display: block;
+}
+
+#header-neighborhood h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: none;
+  color: #1e555a;
 }
 
 #header-neighborhood .neighborhood_informations {
@@ -12654,6 +12652,7 @@ header .top-nav li a a:visited {
 #header-neighborhood .neighborhood_informations .neighborhood_informations_title {
   font-size: 18px;
   font-weight: bold;
+  color: #3ab64b;
 }
 
 #header-neighborhood .neighborhood_informations i {
@@ -12661,11 +12660,11 @@ header .top-nav li a a:visited {
   margin: 0 5px;
 }
 
-#header-neighborhood .neighborhood_informations ul li {
+#header-neighborhood .neighborhood_informations li {
   display: table;
 }
 
-#header-neighborhood .neighborhood_informations ul li i {
+#header-neighborhood .neighborhood_informations li i {
   font-size: 18px;
   display: table-cell;
   padding-right: 10px;
@@ -12688,18 +12687,17 @@ header .top-nav li a a:visited {
 #header-neighborhood li.neighborhood_title {
   margin-top: 5px;
   padding: 3px 10px;
-  border-bottom: 2px solid #faae37;
+  border-bottom: 2px solid #3ab64b;
 }
 
 #header-neighborhood li.neighborhood_list.selected,
 #header-neighborhood li.neighborhood_list.choose {
   position: relative;
   display: block;
-  height: 60px;
-  text-align: left;
+  height: auto;
+  padding: 6px 0;
   white-space: normal;
   border-bottom: solid 1px #e4e4e4;
-  background-color: #f5f5f5;
 }
 
 #header-neighborhood li.neighborhood_list.selected {
@@ -12712,22 +12710,23 @@ header .top-nav li a a:visited {
   padding: 0;
 }
 
+#header-neighborhood li.neighborhood_list {
+  text-align: center;
+}
+
 #header-neighborhood li.neighborhood_list img {
   display: inline-block;
-  margin-left: 10px;
-  transform: translate(5px, 4px);
+  width: 50px;
+  height: 50px;
   vertical-align: middle;
   border-radius: 50px;
 }
 
 #header-neighborhood li.neighborhood_list p {
-    /*max-width:165px;*/
-  line-height: 8px;
-  position: absolute;
-  top: 50%;
-  left: 85px;
-  padding-right: 15px;
-  transform: translate(0, -50%);
+  display: inline-block;
+  margin: 0;
+  margin-left: 20px;
+  vertical-align: middle;
 }
 
 #header-neighborhood li.neighborhood_list p i {
@@ -12776,6 +12775,20 @@ header .top-nav li a a:visited {
 
 #header-neighborhood li.neighborhood_list :hover ul.neighborhood_actions {
   display: inline-block;
+}
+
+#delivery-popup-content #co-ddate-form h3 {
+  text-align: center;
+}
+
+#delivery-popup-content #co-ddate-form ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+#delivery-popup-content #co-ddate-form .delivery {
+  max-width: 650px;
+  margin: auto;
 }
 
 .no-touch #header-neighborhood li.neighborhood_list ul.neighborhood_actions {
@@ -12834,6 +12847,12 @@ header .top-nav li a a:visited {
   list-style: none;
 }
 
+.message-coupon {
+  position: relative;
+  top: 15px;
+  padding: 5px;
+}
+
 .messages ul {
   padding: 0;
   list-style: none;
@@ -12853,13 +12872,15 @@ header .top-nav li a a:visited {
   margin-top: -6px;
 }
 
-.messages .error-msg li {
+.messages .error-msg li,
+.message-coupon.error {
   color: #000;
   border-left: 5px solid #df280a;
   background-color: #faebe7;
 }
 
-.messages .error-msg li:before {
+.messages .error-msg li:before,
+.message-coupon.error:before {
   position: absolute;
   display: block;
   width: 0;
@@ -14548,10 +14569,23 @@ footer .social-list .btn-social-icon {
   background-color: #3ab64b;
 }
 
-.block-progress dl > div dt a,
-.block-progress dl > div dt strong {
-  font-weight: normal;
+.block-progress dl > div dt.complete a,
+.block-progress dl > div dt.complete strong,
+.block-progress dl > div dt.complete span,
+.block-progress dl > div dt.active a,
+.block-progress dl > div dt.active strong,
+.block-progress dl > div dt.active span {
   color: #fff;
+}
+
+.block-progress dl > div dt a,
+.block-progress dl > div dt strong,
+.block-progress dl > div dt span {
+  font-weight: normal;
+}
+
+.block-progress dl > div dt span {
+  display: none;
 }
 
 .delivery {
@@ -15228,6 +15262,10 @@ footer .social-list .btn-social-icon {
   font-weight: 700;
   margin: 0 0 5px;
   text-transform: none;
+  color: #3ab64b;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .commercant-name h1 a {
   color: #3ab64b;
 }
 
@@ -16650,7 +16688,14 @@ h1.account-title {
   }
 
   #supermenu .nav {
-    margin: 80px 0 0;
+    position: fixed;
+    z-index: 20;
+    top: 75px;
+    right: 0;
+    left: 0;
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
   }
 
   #supermenu .nav > li {
@@ -16780,6 +16825,10 @@ h1.account-title {
     .customer-account #topmenu {
     margin-bottom: -74px;
   }
+
+  .customer-account .main-container {
+    margin-top: 115px;
+  }
 }
 
 @media screen and (max-width: 1130px) {
@@ -16834,6 +16883,10 @@ h1.account-title {
     margin: 10px auto 0;
   }
 
+  .customer-account .main-container {
+    margin-top: 195px;
+  }
+
   .navbar-header {
     top: 80px;
   }
@@ -16861,7 +16914,7 @@ h1.account-title {
   }
 
   #supermenu .nav {
-    margin-top: 150px;
+    top: 143px;
   }
 
   .skip-links .text-right {
@@ -16939,6 +16992,18 @@ h1.account-title {
   .apdc-popup-container {
     border-radius: 0;
   }
+
+  .apdc-popup-container #co-ddate-form .delivery .deli_date_time {
+    min-width: 0;
+  }
+
+  .apdc-popup-container #co-ddate-form .delivery .deli_time {
+    width: 17%;
+  }
+
+  .apdc-popup-container #co-ddate-form .delivery .deli_date {
+    width: auto;
+  }
 }
 
 @media screen and (max-width: 840px) {
@@ -17000,6 +17065,10 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-help,
     .customer-account .page-header-container .skip-links .skip-help {
     margin-right: 7px;
+  }
+
+  .customer-account .main-container {
+    margin-top: 185px;
   }
 
   #product-quick-view_popup-container {
@@ -17116,8 +17185,17 @@ h1.account-title {
     transform: translateX(-100%);
   }
 
-  #supermenu .nav {
-    margin-top: 200px;
+  #opc-shipping_method #co-ddate-form .delivery {
+    overflow-x: visible;
+  }
+
+  #opc-shipping_method #co-ddate-form .delivery .deli_date {
+    overflow: auto;
+    width: 25%;
+  }
+
+  #opc-shipping_method #co-ddate-form .delivery .deli_date #slideshow-area {
+    width: 800px;
   }
 }
 
@@ -17248,8 +17326,53 @@ h1.account-title {
     font-size: 1rem;
   }
 
+  .my-account .block-account .menu-account li a {
+    padding: 15px 30px 15px 20px;
+  }
+
   .my-account .block-account .menu-account li a i {
     margin-right: -15px;
+  }
+
+  .my-account .box-account {
+    overflow: auto;
+  }
+
+  .my-account .box-account table {
+    min-width: 535px;
+  }
+
+  .my-account .box-account table td .button {
+    width: 140px;
+    padding: 10px;
+  }
+
+  .cms-index-index .page-header-container .skip-links .link-header-right,
+    .customer-account .page-header-container .skip-links .link-header-right {
+    right: auto;
+    float: none;
+    margin: 10px auto 0;
+    text-align: center;
+  }
+
+  .cms-index-index .main-container {
+    margin-top: 173px;
+  }
+
+  .customer-account .main-container {
+    margin-top: 215px;
+  }
+
+  #supermenu .nav {
+    top: 173px;
+  }
+
+  .block-progress dl > div dt strong {
+    display: none;
+  }
+
+  .block-progress dl > div dt span {
+    display: block;
   }
 }
 

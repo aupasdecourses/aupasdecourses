@@ -8,6 +8,12 @@
     padding: 0;
 }
 
+.message-coupon{
+    padding: 5px;
+    position: relative;
+    top: 15px;
+}
+
 .messages ul{
     list-style: none;
     padding: 0;
@@ -27,14 +33,14 @@
     margin-top: -6px;
 }
 
-.messages .error-msg li {
+.messages .error-msg li,
+.message-coupon.error {
     color: $color-black;
     border-left: 5px solid $c-danger;
     background-color: $c-danger-background;
-}
-
-.messages .error-msg li:before {
-    @include triangle(right, 6px, $c-danger);
+    &:before {
+        @include triangle(right, 6px, $c-danger);
+    }
 }
 
 .messages .notice-msg li {

@@ -949,31 +949,29 @@ header{
 }
 
 #header-neighborhood{
-    overflow-y:scroll;
-    display: none;
-    position: absolute;
-    top: 60px;
-    z-index: 100;
-    max-height:300px;
-    display: none;
-    padding: 10px;
-    border-radius: 5px;
-    background: #fff;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+    list-style-type: none;
+    padding-left: 0;
     &.open{
         display: block;
+    }
+    h3{
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-transform: none;
+        color: $color-second-green;
     }
     .neighborhood_informations {
         padding:10px;
         .neighborhood_informations_title {
             font-weight:bold;
             font-size:18px;
+            color: $color-main-green;
         }
         i {
             display:inline-block;
             margin:0 5px
         }
-        ul li {
+        li {
             display:table;
             i {
                 display:table-cell;
@@ -995,17 +993,16 @@ header{
     }
     li.neighborhood_title {
         margin-top: 5px;
-        border-bottom: 2px solid #faae37;
+        border-bottom: 2px solid $color-main-green;
         padding: 3px 10px;
     }
     li.neighborhood_list.selected, li.neighborhood_list.choose{
-        background-color: #f5f5f5;
         border-bottom: solid 1px #e4e4e4;
-        height: 60px;
+        height: auto;
         white-space: normal;
         position: relative;
         display: block;
-        text-align:left;
+        padding: 6px 0;
     }
     li.neighborhood_list.selected {
         background-color:#fff;
@@ -1016,21 +1013,19 @@ header{
         }
     }
     li.neighborhood_list{
+        text-align: center;
         img {
+            width: 50px;
+            height: 50px;
             border-radius: 50px;
-            transform: translate(5px, 4px);
             display: inline-block;
             vertical-align: middle;
-            margin-left:10px;
         }
         p {
-            left: 85px;
-            position: absolute;
-            top: 50%;
-            transform: translate(0, -50%);
-            padding-right: 15px;
-            /*max-width:165px;*/
-            line-height:8px;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+            margin-left: 20px;
             i {
                 font-size:10px;
                 width:100%;
@@ -1072,6 +1067,22 @@ header{
         }
         :hover ul.neighborhood_actions {
             display:inline-block;
+        }
+    }
+}
+
+#delivery-popup-content{
+    #co-ddate-form{
+        h3{
+            text-align: center;
+        }
+        ul{
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .delivery{
+            max-width: 650px;
+            margin: auto;
         }
     }
 }

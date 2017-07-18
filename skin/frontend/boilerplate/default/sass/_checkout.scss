@@ -152,10 +152,15 @@
                     &:before{
                         background-color: $color-main-green;
                     }
+                    a, strong, span{
+                        color: #fff;
+                    }
                 }
-                a, strong{
-                    color: #fff;
+                a, strong, span{
                     font-weight: normal;
+                }
+                span{
+                    display: none;
                 }
             }
         }
