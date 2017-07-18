@@ -1,14 +1,15 @@
 function ApdcPopup(options) {
-  this.id = options.id; // eg : product-quick-view
-  this.ajaxUrl = apdcPopupAjaxUrl; // see apdc_popup/popup_js.phtml
+	this.id = options.id; // eg : product-quick-view
+	this.ajaxUrl = apdcPopupAjaxUrl; // see apdc_popup/popup_js.phtml
+	this.onReady = options.onReady || false;
 
-  if (!(/_popup$/.test(this.id))) {
-    this.id = this.id + '_popup';
-  }
-  if (typeof(options.ajaxUrl) !== 'undefined') {
-    this.ajaxUrl = options.ajaxUrl;
-  }
-  this.init();
+	if (!(/-popup$/.test(this.id))) {
+		this.id = this.id + '-popup';
+	}
+	if (typeof(options.ajaxUrl) !== 'undefined') {
+		this.ajaxUrl = options.ajaxUrl;
+	}
+	this.init();
 }
 ApdcPopup.prototype.init = function() {
   this.getTemplate();
@@ -26,7 +27,9 @@ ApdcPopup.prototype.getTemplate = function() {
       jQuery('body').append(response.html);
       window.setTimeout(function() {
         self.initActions();
-        jQuery(document).trigger(self.id + '_apdc_popup_template_received', [self, response]);
+        if (self.onReady && typeof(self.onReady) === 'function') {
+          self.onReady();
+        }
       }, 0);
     }
   })
@@ -43,7 +46,7 @@ ApdcPopup.prototype.initActions = function() {
     self.close();
   });
   jQuery(document).keyup(function(e) {
-    if (e.keyCode == 27) {
+    if (e.keyCode === 27) {
       self.close();
     }
   });
@@ -71,3 +74,8 @@ ApdcPopup.prototype.showLoading = function() {
 ApdcPopup.prototype.hideLoading = function() {
   jQuery('#' + this.id + ' .apdc-popup-loading').hide();
 };
+
+//Remove validation advice that prevents form to be submitted
+jQuery(document).on('click','input',function(e){
+    jQuery('.validation-advice').remove();
+});

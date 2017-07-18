@@ -59,32 +59,35 @@
                         </div>
 
 						<div class="header-neighborhood-container skip-container">
-		                    <?php echo $this->getChildHtml('neighborhood_menu'); ?>
+							<a href="#" title="Quartier" id="header-neighborhood-link" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>">
+								<i class="fa fa-home"></i>
+								<span class="label"><?php echo $this->__('Quartier') ?></span>
+							</a><!--<?php //echo $this->getChildHtml('neighborhood_menu'); ?>-->
 		                </div>
 
 						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
 							<div class="header-delivery-container skip-container">
-								 <a href="#" title="Livraison">
+								<a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
 									<i class="fa fa-list-ul"></i>
-									<span class="label"><?php echo $this->__('Créneaux') ?> <i class="fa fa-angle-down"></i></span>
-
-								 </a>
-								<div class="block block-delivery" id="header-delivery">
+									<span class="label"><?php echo $this->__('Créneaux') ?></span>
+								</a>
+								<!--<div class="block block-delivery" id="header-delivery">
 									<div class="apdc-popup-content">
-										<?php echo $this->getChildHtml('header.delivery') ?>
+										<?php //echo $this->getChildHtml('header.delivery') ?>
 									</div>
-								</div>
+								</div>-->
 							</div>
 						<?php } ?>
 
                         <div class="header-account-container skip-container">
                             <?php if($this->helper('customer')->isLoggedIn()) : ?>
-								<a href="#" title="Mon Compte">
+								<a href="#" id="my-account-menu" title="Mon Compte">
 									<i class="fa fa-user account-connected"></i>
 									<span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
 								</a>
                             <?php else : ?>
-                                <a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>
+                                <!--<a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>-->
+								<a href="#" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
                             <?php endif; ?>
                             <div class="block block-login" id="login-form-header_popup">
 								<div class="apdc-popup-content">
@@ -120,29 +123,16 @@
 <script>
 	$j(document).ready(function(){
 
-		$j('.header-account-container a').click(function(evt){
+		$j('#my-account-menu').click(function(evt){
 			if($j(this).parent().find('.block-login').hasClass('open') ){
 				$j(this).parent().find('.block-login').removeClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
 			}
 			else{
 				$j(this).parent().find('.block-login').addClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
 		});
-
-		$j('.header-delivery-container a').click(function(evt){
-			if($j(this).parent().find('.block-delivery').hasClass('open') ){
-				$j(this).parent().find('.block-delivery').removeClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
-			}
-			else{
-				$j(this).parent().find('.block-delivery').addClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
-			}
-		});
-
-		$j('.header-neighborhood-container a').click(function(evt){
+		
+		/*$j('.header-neighborhood-container a').click(function(evt){
 			if($j(this).parent().find('.block-neighborhood').hasClass('open') ){
 				$j(this).parent().find('.block-neighborhood').removeClass('open');
 				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
@@ -151,7 +141,7 @@
 				$j(this).parent().find('.block-neighborhood').addClass('open');
 				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
 			}
-		});
+		});*/
 
 		if(getUrlParameter('opencart') == 1) {
 			$j('.header-minicart .skip-cart').trigger('click');

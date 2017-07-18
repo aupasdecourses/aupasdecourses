@@ -53,7 +53,7 @@
         </reference>
         <reference name="header">
             <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
-            <block type="checkout/onepage_ddate" name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
+            <!--<block type="checkout/onepage_ddate" name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml"/>-->
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
@@ -337,28 +337,77 @@
         <remove name="customer.account.link.back"/>
     </monkey_customer_account_index>
 
-		<apdc_login_view>
-			<reference name="content">
-				  <block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
-					  <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-						  <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
-						  <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
-					  </block>
-				  </block>
-			  </reference>
-		  </apdc_login_view>
+	<!--<apdc_login_view>
+		<reference name="content">
+			<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
+				<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
+					<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+					<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+				</block>
+			</block>
+		</reference>
+	</apdc_login_view>
 
-		  <apdc_forgotpassword_view>
-			<reference name="content">
-				  <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
-			  </reference>
-		  </apdc_forgotpassword_view>
+	  <apdc_forgotpassword_view>
+		<reference name="content">
+			  <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+		  </reference>
+	  </apdc_forgotpassword_view>-->
+	  
+	<apdc_login_view>
+		<reference name="content">
+            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml"></block>
+        </reference>
+    </apdc_login_view>
 
-		  <apdc_newsletter_view>
-			<reference name="content">
-				  <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml">
-				  </block>
-			  </reference>
-		  </apdc_newsletter_view>
+    <apdc_register_view>
+		<reference name="head">
+			<block type="core/text" name="suivi_hipay" before="-">
+				<action method="setText">
+					<text>
+						<![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+						try{
+						window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+						} catch(e){
+						}};</script>]]>
+					</text>
+				</action>
+			</block>
+		</reference>
+		<reference name="content">
+			<block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
+				<block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+					<label>Form Fields Before</label>
+				</block>
+				<block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+				<block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+				<block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+			</block>
+		</reference>
+    </apdc_register_view>
+
+    <apdc_forgotpassword_view>
+		<reference name="content">
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+        </reference>
+    </apdc_forgotpassword_view>  
+	  
+	<apdc_headerdelivery_view>
+		<reference name="content">
+            <block type="checkout/onepage_ddate"  name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />
+        </reference>
+    </apdc_headerdelivery_view>   
+	 
+	<apdc_neighborhood_view>
+		<reference name="content">
+            <block type="apdc_neighborhood/header_menu" name="neighborhood_menu" template="apdc_neighborhood/header/menu.phtml" />
+        </reference>
+    </apdc_neighborhood_view>  
+	    
+	<!--<apdc_newsletter_view>
+		<reference name="content">
+			  <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml"></block>
+		  </reference>
+	</apdc_newsletter_view>-->
 
 </layout>

@@ -112,6 +112,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         $shop_info["delivery_days"]=$this->formatDays($data["delivery_days"],true);
         $shop_info["image"]=$categoryShop->getImageURL();
 		$shop_info["thumbnail_image"] = Mage::getBaseUrl('media').'catalog/category/'.$categoryShop->getThumbnail();
+		$shop_info["url"] = $categoryShop->getUrl();
 		
         $html = "";
 		$delivery_daysAll = array();

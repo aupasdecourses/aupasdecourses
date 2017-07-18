@@ -1,0 +1,90 @@
+<section class="account-create">
+    <div class="back-link">
+        <a href="#" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" class="to-login-form">
+            <small>« </small>
+            <?php echo $this->__('Back'); ?>
+        </a>
+    </div>
+    <h1><?php echo $this->__('Create an Account') ?></h1>
+
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <form action="<?php echo $this->getUrl('apdc-customer/account/ajaxRegisterProcess');?>" method="post" id="register-form" class="form-validate scaffold-form" enctype="multipart/form-data">
+        <div class="fieldset">
+            <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+            <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+            <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+            <ul class="form-list">
+                <li class="fields">
+                    <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
+                </li>
+                <li>
+                    <label for="email_address" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+                    <div class="input-box">
+                        <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
+                    </div>
+                </li>
+                <li>
+                    <label for="customer_neighborhood" class="required"><em>*</em><?php echo $this->__('Neighborhood') ?></label>
+                    <div class="input-box">
+                        <select name="customer_neighborhood" id="customer_neighborhood" class="validate-select required-entry">
+                            <?php $neighborhoods = Mage::helper('apdc_neighborhood')->getAllNeighborhoods(); ?>
+                            <?php $neighborhoodVisiting = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting(); ?>
+                            <?php $currentNeighborHood = ($this->getFormData()->getCustomerNeighborhood() ? $this->getFormData()->getCustomerNeighborhood() : $neighborhoodVisiting->getId()); ?>
+                            <option value=""><?php echo $this->__('-- Please select your neighborhood --'); ?></option>
+                            <?php foreach ($neighborhoods as $neighborhood) : ?>
+                                <?php $selected = ($neighborhood->getId() == $currentNeighborHood ? 'selected="selected"' : ''); ?>
+                                <option value="<?php echo $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </li>
+
+                <li class="fields">
+                    <div class="field">
+                        <label for="password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
+                        <div class="input-box">
+                            <input type="password" name="password" id="password" title="<?php echo $this->__('Password') ?>" class="input-text required-entry validate-password" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm Password') ?></label>
+                        <div class="input-box">
+                            <input type="password" name="confirmation" title="<?php echo $this->__('Confirm Password') ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
+                        </div>
+                    </div>
+                </li>
+                <?php echo $this->getChildHtml('form.additional.info'); ?>
+                <!-- <?php if ($this->isNewsletterEnabled()): ?>
+                    <li class="control">
+                        <div class="input-box">
+                            <input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
+                        </div>
+                        <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
+                    </li>
+                <?php endif ?>
+                <?php echo $this->getChildHtml('persistent.remember.me'); ?> -->
+            </ul>
+        </div>
+        <div class="buttons-set">
+            <button type="submit" onclick="button_onclick()" title="<?php echo $this->__('Register') ?>" class="button button-green"><span><span><?php echo $this->__('Register') ?></span></span></button>
+            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        </div>
+        <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
+            <input name="context" type="hidden" value="checkout" />
+        <?php endif; ?>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('register-form', true);
+    //]]>
+    </script>
+    <script>
+        function button_onclick(){
+            try {
+                tagmanager_event('validationInscription',{});
+            } catch(e) {
+                console.log(e);
+            }
+        }
+    </script>
+</section>

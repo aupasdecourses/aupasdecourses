@@ -39,14 +39,13 @@ jQuery(document).ready(function() {
         var data = new FormData();
         data.append('isAjax', 1);
         data.append('handle', handle);
-
+		data.append('referer', window.location.href);
         jQuery.ajax({
             url: ajaxUrl,
             data: data,
             processData: false,
             contentType: false,
             type: 'POST'
-
         })
         .done(function(response) {
             if (response.status === 'SUCCESS') {
@@ -60,11 +59,9 @@ jQuery(document).ready(function() {
         .fail(function() {
             console.log('failed');
         });
-
     }
 
     function processLoginFormModal(elt) {
-		console.log('processLoginFormModal');
         var ajaxUrl = jQuery(elt).attr('action');
         var data = new FormData(jQuery(elt)[0]);
         data.append("isAjax", 1);
@@ -76,7 +73,6 @@ jQuery(document).ready(function() {
 			processData: false,
 			contentType: false,
 			type: 'POST'
-
 		})
 		.done(function(response) {
 			if (response.status === 'SUCCESS') {

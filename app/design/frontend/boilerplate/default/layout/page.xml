@@ -81,6 +81,7 @@
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
 				
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>
 				<action method="addItem"><type>skin_js</type><file>js/login-form.js</file></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->

@@ -27,8 +27,14 @@ class Apdc_Front_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getCatTitle(){
-        $name = Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName()." de ".$this->_category->getName();//$this->_category->getParentCategory()->getName()." - ".$this->_category->getName();
-        return $name;
+		$catCurrent = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+		if($catCurrent->getLevel() == 3) {
+			$name = "Tous les produits de ".$catCurrent->getName();
+		}
+		else {
+			$name = $catCurrent->getName()." chez ".$this->_category->getName();//$this->_category->getParentCategory()->getName()." - ".$this->_category->getName();
+		}
+		return $name;
     }
 
 }

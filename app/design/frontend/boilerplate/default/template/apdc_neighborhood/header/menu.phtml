@@ -1,13 +1,6 @@
 <?php $neighborhoods = $this->getNeighborhoods();?>
 <?php $currentNeighborhood = $this->getCurrentNeighborhood(); ?>
 <?php $informationType = $this->getInformationsType(); ?>
-<a id="my_neighborhood_menu" data-target="#" href="#" title="Quartier" class="skip-link skip-help">
-    <i class="fa fa-home"></i>
-    <span class="label"><?php echo $this->__('Neighborhood'); ?></span>
-    <?php if ($informationType) : ?>
-        <span class="count">1</span>
-    <?php endif; ?>
-</a>
 <ul id="header-neighborhood" class="block block-neighborhood" aria-labelledby="my_neighborhood_menu">
     <?php if ($informationType) : ?>
         <li class="neighborhood_informations apdc-popup-content">

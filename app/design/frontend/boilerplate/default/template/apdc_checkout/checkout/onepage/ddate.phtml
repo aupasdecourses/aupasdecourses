@@ -47,7 +47,7 @@
 														'url':'<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>'
 													},
 													success : function(data) {
-														window.location = data.redirect;
+														window.location.reload();
 													}
 												});
 											}
@@ -89,10 +89,16 @@
 
                                                 document.getElementById('showddate:date').innerHTML = showddate;
                                                 document.getElementById('showddate:dtime').innerHTML = showdtimetext;
+												jQuery('.header-delivery-container .label').html(showddate+' '+showdtimetext+'<i class="fa fa-angle-up"></i>');
+												
                                                 jQuery('.ddate_selected').show();
                                                 jQuery(option_responsive).parent().hide();
 
                                                 Mage.Cookies.set('delivery_slot', ddatei);
+												
+												if(jQuery('.block-delivery').hasClass('open')) {
+													jQuery('.block-delivery').removeClass('open');
+												}
                                             } else {
                                                 jQuery(option_responsive).parent().hide();
                                             }

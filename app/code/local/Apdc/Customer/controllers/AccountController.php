@@ -64,7 +64,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     {
         $session = $this->_getSession();
 
-        if (!$session->getBeforeAuthUrl() || $session->getBeforeAuthUrl() == Mage::getBaseUrl()) {
+        /*if (!$session->getBeforeAuthUrl() || $session->getBeforeAuthUrl() == Mage::getBaseUrl()) {
             // Set default URL to redirect customer to
             $session->setBeforeAuthUrl($this->_getHelper('customer')->getAccountUrl());
             // Redirect customer to the last page visited after logging in
@@ -96,7 +96,17 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             if ($session->isLoggedIn()) {
                 $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
             }
-        }
+        }*/
+		
+		/* ---  @TODO : a finir --- */
+		$referer = $this->getRequest()->getParam(Mage_Customer_Helper_Data::REFERER_QUERY_PARAM_NAME);
+		if ($referer) {
+			// Rebuild referer URL to handle the case when SID was changed
+			$referer = $this->_getModel('core/url')->getRebuiltUrl($this->_getHelper('core')->urlDecodeAndEscape($referer));
+			if ($this->_isUrlInternal($referer)) {
+				$session->setBeforeAuthUrl($referer);
+			}
+		}
 
         return $session->getBeforeAuthUrl(true);
     }
@@ -201,7 +211,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 } else {
                     if (!isset($response['redirect'])) {
                         $session->addSuccess('Bienvenue '.Mage::helper('customer')->getCustomer()->getFirstname());
-                    	$response['redirect'] = Mage::getBaseUrl();//$this->_loginPostRedirect();
+                    	$response['redirect'] = $this->_loginPostRedirect();//Mage::getBaseUrl();//$this->_loginPostRedirect();
                     }
                 }
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));

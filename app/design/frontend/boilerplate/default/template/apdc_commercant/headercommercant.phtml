@@ -12,7 +12,7 @@
                         <img class="img-responsive" src="<?= $shop_info["thumbnail_image"] ?>">
                     </div>
                     <div class="commercant-name">
-                        <h1 class="subtitle"><?= $shop_info['name'] ?></h1>
+                        <h1 class="subtitle"><a href="<?php echo $shop_info['url']; ?>" title="<?= $shop_info['name'] ?>"><?= $shop_info['name'] ?></a></h1>
                         <i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?>
                     </div>
                 </div>
