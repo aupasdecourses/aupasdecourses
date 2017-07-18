@@ -98,11 +98,8 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             }
         }*/
 		
-		/* ---  @TODO : a finir --- */
 		$referer = $this->getRequest()->getParam(Mage_Customer_Helper_Data::REFERER_QUERY_PARAM_NAME);
 		if ($referer) {
-			// Rebuild referer URL to handle the case when SID was changed
-			$referer = $this->_getModel('core/url')->getRebuiltUrl($this->_getHelper('core')->urlDecodeAndEscape($referer));
 			if ($this->_isUrlInternal($referer)) {
 				$session->setBeforeAuthUrl($referer);
 			}
@@ -110,6 +107,54 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
 
         return $session->getBeforeAuthUrl(true);
     }
+	
+	public function loginPostAction()
+    {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+
+        if ($this->_getSession()->isLoggedIn()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+        $session = $this->_getSession();
+
+        if ($this->getRequest()->isPost()) {
+            $login = $this->getRequest()->getPost('login');
+            if (!empty($login['username']) && !empty($login['password'])) {
+                try {
+                    $session->login($login['username'], $login['password']);
+                    if ($session->getCustomer()->getIsJustConfirmed()) {
+                        $this->_welcomeCustomer($session->getCustomer(), true);
+                    }
+                } catch (Mage_Core_Exception $e) {
+                    switch ($e->getCode()) {
+                        case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
+                            $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
+                            $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
+                            break;
+                        case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
+                            $message = $e->getMessage();
+                            break;
+                        default:
+                            $message = $e->getMessage();
+                    }
+                    $session->addError($message);
+                    $session->setUsername($login['username']);
+                } catch (Exception $e) {
+                    // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
+                }
+            } else {
+                $session->addError($this->__('Login and password are required.'));
+            }
+        }
+
+        $this->getResponse()->setRedirect($this->_loginPostRedirect());
+		return;
+    }
+	
 
     public function ajaxPopupViewAction()
     {
@@ -156,7 +201,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             return;
         }
 
-        $session = $this->_getSession();
+		$session = $this->_getSession();
 
         $params = $this->getRequest()->getPost();
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -199,7 +244,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             } else {
                 $response['status'] = 'ERROR';
                 $response['message'] = $this->__('Login and password are required.');
-		$session->addError($this->__('Login and password are required.'));
+				$session->addError($this->__('Login and password are required.'));
             }
 
             if (!empty($response)) {
@@ -211,7 +256,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 } else {
                     if (!isset($response['redirect'])) {
                         $session->addSuccess('Bienvenue '.Mage::helper('customer')->getCustomer()->getFirstname());
-                    	$response['redirect'] = $this->_loginPostRedirect();//Mage::getBaseUrl();//$this->_loginPostRedirect();
+                    	$response['redirect'] = $this->_loginPostRedirect();
                     }
                 }
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));

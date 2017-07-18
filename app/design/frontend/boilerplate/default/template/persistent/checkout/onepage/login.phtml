@@ -61,6 +61,7 @@
                     <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" style="margin-left:20px;"><?php echo $this->__('Forgot your password?') ?></a>
                 </div>
             </ul>
+			<input name="referer" type="hidden" value="<?php echo Mage::helper('checkout/url')->getCheckoutUrl();; ?>" />
             <input name="context" type="hidden" value="checkout" />
         </div>
         </form>
