@@ -21,6 +21,7 @@ var itemShowedInPopup = {};
 		inputQty.val(qty);
 		$('button#qbutton-' + itemId).click();
 	});
+	
 	$(document).on('minicartRemoveQty', function(event, itemId, productId, qty) {
 		var inputQty = $('input.cart-item-quantity[data-item-id="' + itemId + '"]');
 		if (typeof(qty) === 'undefined') {
