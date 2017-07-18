@@ -12,9 +12,9 @@
                     <li><i class="fa fa-save"></i> <?php echo $this->__('Clicking this icon you set the neighborhood as your new neighborhood'); ?></li>
                 </ul> -->
                 <div class="neighborhood_ok">
-                    <button id="neighborhood_ok" class="button"><span><?php echo $this->__('I Understood'); ?></span></button>
+                    <button id="neighborhood_ok" class="button button-green"><span><?php echo $this->__('I Understood'); ?></span></button>
                 </div>
-                
+
             <?php elseif ($informationType == 'no_neighborhood') : ?>
                 <div class="neighborhood_informations_title"><?php echo $this->__('Warning!'); ?></div>
                 <p><?php echo $this->__('You have not set your neighborhood yet. Please choose your neighborhood by clicking on %s icon', '<i class="fa fa-save"></i>'); ?></p>
@@ -30,9 +30,9 @@
         </li>
     <?php endif; ?>
     <?php if ($currentNeighborhood && $currentNeighborhood->getId()) :  ?>
-        <li class="neighborhood_title">
+        <h3 class="neighborhood_title">
             <?php echo $this->__('Your Neighborhood'); ?>
-        </li>
+        </h3>
         <?php if ($this->getVisitingNeighborhood() && $this->getVisitingNeighborhood()->getId() != $currentNeighborhood->getId()): ?>
             <li class="neighborhood_list selected">
                 <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($currentNeighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
@@ -59,13 +59,13 @@
         <?php endif; ?>
     <?php endif; ?>
 
-    <li class="neighborhood_title">
+    <h3 class="neighborhood_title">
         <?php if ($informationType && ($informationType == 'no_neighborhood' || $informationType == 'new_neighborhood')) : ?>
             <?php echo $this->__('Choose Your Neighborhood'); ?>
         <?php else : ?>
             <?php echo $this->__('Choose Another Neighborhood'); ?>
         <?php endif; ?>
-    </li>
+    </h3>
     <?php foreach ($neighborhoods as $neighborhood) : ?>
         <?php if ($currentNeighborhood && $currentNeighborhood->getId() == $neighborhood->getId()) : ?>
             <?php continue; ?>
