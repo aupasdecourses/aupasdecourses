@@ -18,12 +18,12 @@
 		});
 
 		$('#supermenu [data-toggle=dropdown]').on('click', function(event) {
-			if (screenWidth > mobileWidth){
+			//if (screenWidth > mobileWidth){
 				superMenuManageClick(this, event);
-			} else {
+			/*} else {
 				event.preventDefault();
 				event.stopPropagation();
-			}
+			}*/
 		});
 
 		$(window).scroll(checkStickyHeader);

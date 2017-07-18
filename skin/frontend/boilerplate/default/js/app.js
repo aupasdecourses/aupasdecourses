@@ -722,6 +722,7 @@ $j(document).ready(function () {
         } else {
             self.addClass('skip-active');
             elem.addClass('skip-active');
+			$j('.navbar-header button').hide();
         }
     });
 
@@ -731,6 +732,13 @@ $j(document).ready(function () {
 
         parent.removeClass('skip-active');
         link.removeClass('skip-active');
+
+		if($j(window).width() < 1200) {
+			$j('.navbar-header button').show();
+		}
+		else {
+			$j('.navbar-header button').hide();
+		}
 
         e.preventDefault();
     });
