@@ -65,7 +65,10 @@ class MerchantsController extends Controller
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
-			'merchants' => $mage->getMerchantsByMerchants(),
+			'merchants' => $mage->getMerchantsOrdersByMerchants(-1, $from, $to),
+			'shop_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_shop/edit/id_shop/',
+			'manager_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_contact/edit/id_contact/',
+
 		]);
     }
 

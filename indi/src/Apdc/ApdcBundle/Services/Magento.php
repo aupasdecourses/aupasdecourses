@@ -693,12 +693,53 @@ class Magento
         });
        
         asort($commercants);
-
-        echo '<pre>';
-        print_R($commercants);
-        echo '<pre>';
-
         return $commercants;
+    }
+
+
+    /** Similaire à getMerchantsOrdersByStore 
+        Mais affiche commandes par COMMERCANTS. Et pas par quartiers */
+    public function getMerchantsOrdersByMerchants($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
+    {
+        if (!isset($dfrom)) {
+            $dfrom = date('Y-m-d');
+        }
+        if (!isset($dto)) {
+            $dto = $dfrom;
+        }
+        $dfrom .=  ' 00:00:00';
+        $dto .=  ' 00:00:00';
+        $commercants = $this->getMerchantsByMerchants($commercantId);
+
+        $rsl = [];
+
+        $orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
+        foreach ($orders as $order) {
+            $orderHeader = $this->OrderHeaderParsing($order);
+            $products = \Mage::getModel('sales/order_item')->getCollection();
+            $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
+            if ($commercantId != -1) {
+                $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
+            }
+
+            foreach ($products as $product) {
+                $prod_data = $this->ProductParsing($product, $orderId);
+                if (!isset($commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']])) {
+                    $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']] = $orderHeader;
+                }
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
+            }
+        }
+
+        foreach ($commercants as $storeid => $commercant) {
+            $rsl[$storeid] = $commercant;
+        }
+
+        ksort($rsl);
+        return $rsl;
     }
 
 
