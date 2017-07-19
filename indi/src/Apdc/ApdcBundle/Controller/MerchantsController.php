@@ -54,7 +54,7 @@ class MerchantsController extends Controller
 
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
-			'action' => $this->generateUrl('storesIndex')
+			'action' => $this->generateUrl('merchantsIndex')
 		]);
 
 		$form_fromtoMerchant->get('from')->setData($from);

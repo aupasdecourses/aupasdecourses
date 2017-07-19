@@ -17,21 +17,21 @@ class StoresController extends Controller
 		
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
 
-		$form_fromtoMerchant->handleRequest($request);
+		$form_fromto->handleRequest($request);
 
-		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
+		if ($form_fromto->isSubmitted() && $form_fromto->isValid()) {
 			return $this->redirectToRoute('storesAll', [
-				'from'	=> $entity_fromtoMerchant->from,
-				'to'	=> $entity_fromtoMerchant->to
+				'from'	=> $entity_fromto->from,
+				'to'	=> $entity_fromto->to
 			]);
 		}
 
 		return $this->render('ApdcApdcBundle::stores/index.html.twig', [
 			'forms' => [
-				$form_fromtoMerchant->createView(),
+				$form_fromto->createView(),
 			]
 		]);
     }
@@ -45,17 +45,17 @@ class StoresController extends Controller
 		
 		$mage = $this->container->get('apdc_apdc.magento');
 
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
+		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
 			'action' => $this->generateUrl('storesIndex')
 		]);
 
-		$form_fromtoMerchant->get('from')->setData($from);
-		$form_fromtoMerchant->get('to')->setData($to);
+		$form_fromto->get('from')->setData($from);
+		$form_fromto->get('to')->setData($to);
 
 		return $this->render('ApdcApdcBundle::stores/all.html.twig', [
 			'forms' => [
-				$form_fromtoMerchant->createView(),
+				$form_fromto->createView(),
 			],
 			'stores' 		=> $mage->getMerchantsOrdersByStore(-1, $from, $to),
 			'shop_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_shop/edit/id_shop/',
