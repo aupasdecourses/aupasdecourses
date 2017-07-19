@@ -63,6 +63,33 @@
     @include triangle(right, 6px, $c-success);
 }
 
+.minicart-message{
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    &:before {
+        top: 50%;
+        left: 0;
+        margin-top: -6px;
+    }
+    &#minicart-error-message{
+        color: $color-black;
+        border-left: 5px solid $c-danger;
+        background-color: $c-danger-background;
+        &:before {
+            @include triangle(right, 6px, $c-danger);
+        }
+    }
+    &#minicart-success-message{
+        color: $color-black;
+        border-left: 5px solid $c-success;
+        background-color: $c-success-background;
+        &:before {
+            @include triangle(right, 6px, $c-success);
+        }
+    }
+}
+
 /* -------------------------------------------- *
  * Validation
  */

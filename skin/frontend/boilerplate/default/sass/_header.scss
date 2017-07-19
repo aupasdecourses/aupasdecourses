@@ -312,6 +312,9 @@ header{
         &.skip-active {
             transform: translateX(-360px);
         }
+        .minicart-items{
+            margin-top: 10px;
+        }
         .block-subtitle{
             color: $color-second-green;
             font-size: 1.125rem;
@@ -396,15 +399,6 @@ header{
             overflow: auto;
             padding: 70px 10px 155px;
             width: 100%;
-            .minicart-message{
-                margin-bottom: 10px;
-                &#minicart-error-message{
-                    color: $c-danger;
-                }
-                &#minicart-success-message{
-                    color: $c-success;
-                }
-            }
             p.empty {
               margin: 5px 0 0;
               color: #df280a;

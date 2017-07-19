@@ -198,7 +198,9 @@
         }
     }
     .cms-index-index,
-    .customer-account{
+    .customer-account,
+    .catalog-category-view,
+    .cms-index-noroute{
         .main-container{
             margin-top: 74px;
         }
@@ -221,7 +223,8 @@
             margin-bottom: -74px;
         }
     }
-    .customer-account{
+    .customer-account,
+    .cms-index-noroute{
         .main-container{
             margin-top: 115px;
         }
@@ -247,6 +250,19 @@
             margin-left: 0;
         }
     }
+    #opc-shipping_method{
+        #co-ddate-form{
+            .delivery{
+                .deli_date{
+                    width: 85%;
+                    overflow: auto;
+                }
+                .deli_time{
+                    width: 15%;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 992px){
@@ -254,7 +270,9 @@
         width: auto;
     }
     .cms-index-index,
-    .customer-account{
+    .customer-account,
+    .catalog-category-view,
+    .cms-index-noroute{
         .main-container{
             margin-top: 154px;
         }
@@ -275,7 +293,8 @@
             }
         }
     }
-    .customer-account{
+    .customer-account,
+    .cms-index-noroute{
         .main-container{
             margin-top: 195px;
         }
@@ -321,16 +340,6 @@
     #discount-coupon-form{
         .button{
             padding: 10px;
-        }
-    }
-
-    #co-ddate-form{
-        padding-bottom: 20px;
-        .delivery{
-            overflow-x: auto;
-            .deli_date_time{
-                min-width: 944px;
-            }
         }
     }
 
@@ -400,6 +409,23 @@
             }
         }
     }
+    #opc-shipping_method{
+        #co-ddate-form{
+            .delivery{
+                overflow-x: visible;
+                .deli_date{
+                    width: calc(100% - 120px);
+                    overflow: auto;
+                    #slideshow-area{
+                        width: 800px;
+                    }
+                }
+                .deli_time{
+                    width: 120px;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 840px){
@@ -422,7 +448,9 @@
         width: auto;
     }
     .cms-index-index,
-    .customer-account{
+    .customer-account,
+    .catalog-category-view,
+    .cms-index-noroute{
         .main-container{
             margin-top: 146px;
         }
@@ -446,17 +474,25 @@
                     top: 0;
                     right: 70px;
                     z-index: 1;
+                    i{
+                        font-size: 24px;
+                        margin: 0 10px;
+                    }
+                }
+                .header-delivery-container{
+                    margin-right: 0;
                 }
                 .label{
                     display: none;
                 }
                 .skip-help{
-                    margin-right: 7px;
+                    margin-right: 0px;
                 }
             }
         }
     }
-    .customer-account{
+    .customer-account,
+    .cms-index-noroute{
         .main-container{
             margin-top: 185px;
         }
@@ -530,6 +566,11 @@
                 }
             }
         }
+        #discount-coupon-form{
+            h3{
+                margin-left: 0;
+            }
+        }
     }
     #discount-coupon-form{
         input{
@@ -568,20 +609,6 @@
             right: -100% !important;
             &.skip-active{
                 transform: translateX(-100%);
-            }
-        }
-    }
-    #opc-shipping_method{
-        #co-ddate-form{
-            .delivery{
-                overflow-x: visible;
-                .deli_date{
-                    width: 25%;
-                    overflow: auto;
-                    #slideshow-area{
-                        width: 800px;
-                    }
-                }
             }
         }
     }
@@ -757,7 +784,9 @@
         }
     }
     .cms-index-index,
-    .customer-account{
+    .customer-account,
+    .catalog-category-view,
+    .cms-index-noroute{
         .page-header-container{
             .skip-links{
                 .link-header-right{
@@ -769,12 +798,14 @@
             }
         }
     }
-    .cms-index-index{
+    .cms-index-index,
+    .catalog-category-view{
         .main-container{
             margin-top: 173px;
         }
     }
-    .customer-account{
+    .customer-account,
+    .cms-index-noroute{
         .main-container{
             margin-top: 215px;
         }
@@ -793,6 +824,21 @@
                         display: block;
                     }
                 }
+            }
+        }
+    }
+    .page-404{
+        .container{
+            section{
+                padding-bottom: 15px;
+            }
+            p.oops{
+                font-size: 90px;
+                text-align: center;
+            }
+            h1{
+                text-align: center;
+                font-size: 25px;
             }
         }
     }
@@ -880,12 +926,16 @@
         }
     }
     #discount-coupon-form input{
-        margin-left: 0;
+        margin-left: 15px;
         margin-bottom: 10px;
-        width: 100%;
+        width: calc(100% - 15px);
         & + div{
             float: none;
         }
+    }
+    #co-payment-form{
+        margin-left: 15px;
+        width: calc(100% - 15px);
     }
     .catalog-category-view{
         .category-products{
@@ -922,6 +972,22 @@
             .link-header-right{
                 .label{
                     display: none;
+                }
+            }
+        }
+    }
+    #opc-shipping_method{
+        #co-ddate-form{
+            .delivery{
+                .deli_date{
+                    width: calc(100% - 90px);
+                }
+                .deli_time{
+                    width: 90px;
+                    p{
+                        font-size: 0.875rem;
+                        padding: 29px 0;
+                    }
                 }
             }
         }

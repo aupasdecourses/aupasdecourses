@@ -256,12 +256,16 @@
         #slideshow-holder{
             width: 100%!important;
         }
+        .first_column_header{
+            height: 49px;
+        }
         .select_one{
             ul{
                 li{
                     padding: 10px;
                     border-bottom: 1px solid #eee;
                     a, & > span{
+                        display: block;
                         font-size: 0.75rem;
                         padding: 5px 10px;
                     }
@@ -279,6 +283,7 @@
                 padding-bottom: 10px;
                 border-bottom: 1px solid #eee;
                 span{
+                    display: block;
                     font-size: 0.875rem;
                     margin-top: 5px;
                 }
@@ -289,7 +294,7 @@
                 border-bottom: 1px solid #eee;
                 font-size: 1.125rem;
                 margin: 0;
-                padding: 27px 0;
+                padding: 26px 0;
             }
         }
     }
@@ -635,6 +640,11 @@
     .message-coupon{
         color: $color-main-grey;
         margin-top: 5px;
+    }
+    #discount-coupon-form{
+        h3{
+            margin-left: -15px;
+        }
     }
 }
 
