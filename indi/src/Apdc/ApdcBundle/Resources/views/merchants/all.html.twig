@@ -1,0 +1,13 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	<div class="container">
+	<h1> Liste des commandes par commercants </h1><br>
+	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+		<hr>
+
+
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

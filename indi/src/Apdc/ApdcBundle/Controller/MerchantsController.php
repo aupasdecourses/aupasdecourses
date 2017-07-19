@@ -1,0 +1,72 @@
+<?php
+
+namespace Apdc\ApdcBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class MerchantsController extends Controller
+{
+    public function indexAction(Request $request)
+    {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant);
+
+		$form_fromtoMerchant->handleRequest($request);
+
+		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
+			if ($entity_fromtoMerchant->merchant <> -1) {
+				return $this->redirectToRoute('merchantsOne', [
+					'id'	=> $entity_fromtoMerchant->merchant,
+					'from'	=> $entity_fromtoMerchant->from,
+					'to'	=> $entity_fromtoMerchant->to
+				]);
+			} else {
+				return $this->redirectToRoute('merchantsAll', [
+					'from'	=> $entity_fromtoMerchant->from,
+					'to'	=> $entity_fromtoMerchant->to
+				]);
+			}
+		}
+
+		return $this->render('ApdcApdcBundle::merchants/index.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			]
+		]);
+    }
+
+    public function merchantsAllAction(Request $request, $from, $to)
+    {
+	
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
+		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
+			'action' => $this->generateUrl('merchantsIndex')
+		]);
+
+		$form_fromtoMerchant->get('from')->setData($from);
+		$form_fromtoMerchant->get('to')->setData($to);
+
+		return $this->render('ApdcApdcBundle::merchants/all.html.twig', [
+			'forms' => [
+				$form_fromtoMerchant->createView(),
+			],
+			'merchants' => $mage->getMerchantsByMerchants(),
+		]);
+    }
+
+}
