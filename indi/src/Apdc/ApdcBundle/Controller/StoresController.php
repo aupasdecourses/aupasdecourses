@@ -23,49 +23,16 @@ class StoresController extends Controller
 		$form_fromtoMerchant->handleRequest($request);
 
 		if ($form_fromtoMerchant->isSubmitted() && $form_fromtoMerchant->isValid()) {
-			if ($entity_fromtoMerchant->merchant <> -1) {
-				return $this->redirectToRoute('storesOne', [
-					'id'	=> $entity_fromtoMerchant->merchant,
-					'from'	=> $entity_fromtoMerchant->from,
-					'to'	=> $entity_fromtoMerchant->to
-				]);
-			} else {
-				return $this->redirectToRoute('storesAll', [
-					'from'	=> $entity_fromtoMerchant->from,
-					'to'	=> $entity_fromtoMerchant->to
-				]);
-			}
+			return $this->redirectToRoute('storesAll', [
+				'from'	=> $entity_fromtoMerchant->from,
+				'to'	=> $entity_fromtoMerchant->to
+			]);
 		}
 
 		return $this->render('ApdcApdcBundle::stores/index.html.twig', [
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			]
-		]);
-    }
-
-    public function storesOneAction(Request $request, $id, $from, $to)
-	{
-		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
-			return $this->redirectToRoute('root');
-		}
-
-		$mage = $this->container->get('apdc_apdc.magento');
-
-		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
-		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
-			'action' => $this->generateUrl('storesIndex')
-		]);
-
-		$form_fromtoMerchant->get('from')->setData($from);
-		$form_fromtoMerchant->get('to')->setData($to);
-		$form_fromtoMerchant->get('merchant')->setData($id);
-
-		return $this->render('ApdcApdcBundle::stores/one.html.twig', [
-			'forms' => [
-				$form_fromtoMerchant->createView(),
-			],
-			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
 		]);
     }
 

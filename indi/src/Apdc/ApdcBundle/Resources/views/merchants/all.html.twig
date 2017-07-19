@@ -9,7 +9,6 @@
 
 		{% for merchant_name, merchant in merchants %}
 			<table style="width:100%">
-			<thead>
 				<tr>
 					<th>
 						<a href="#{{ merchant_name|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse"><h2>{{ merchant_name }}</h2></a>
@@ -22,14 +21,12 @@
 						{% endif %}
 					</th>
 				</tr>
-			</thead>
-			<tbody>
 				<tr>
 					<td>
 						<div id="{{ merchant_name|replace({' ': '_', "'": '_', '&': '_'}) }}" class="store collapse">
 							<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
 									<label>
-										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ merchant.name }}</a></h3>
+										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ "Fiche commercant Magento" }}</a></h3>
 										<h4><a href={{ manager_url ~ merchant.manager_id }} target="_blank">{{ merchant.manager_name }}: <a href="tel:{{ merchant.phone }}">{{ merchant.phone }}</a> / <a href="tel:{{ merchant.mobile }}">{{ merchant.mobile }}</a></h4>
 									<h4 style="color:red;">{{ merchant.warning_days }}</h4></label><br/>
 									{% for order_id, order in merchant.orders %}
@@ -144,7 +141,6 @@
 						</div>
 					</td>
 				</tr>
-			</tbody>
 			</table>
 		{% endfor %}
 

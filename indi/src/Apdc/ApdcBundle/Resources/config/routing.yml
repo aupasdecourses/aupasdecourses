@@ -24,11 +24,6 @@ storesIndex:
   path:    /stores/
   defaults:   { _controller: ApdcApdcBundle:Stores:index}
 
-storesOne:
-  path:    /stores/{id}/{from}/{to}
-  defaults:   { _controller: ApdcApdcBundle:Stores:storesOne, to: null, from: null}
-  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
 storesAll:
   path:    /stores/{from}/{to}
   defaults:   { _controller: ApdcApdcBundle:Stores:storesAll, to: null}
@@ -37,6 +32,11 @@ storesAll:
 merchantsIndex:
   path:   /merchants/
   defaults:   { _controller: ApdcApdcBundle:Merchants:index}
+
+merchantsOne:
+  path:   /merchants/{id}/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Merchants:merchantsOne, to: null, from: null}
+  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 merchantsAll:
   path:   /merchants/{from}/{to}
