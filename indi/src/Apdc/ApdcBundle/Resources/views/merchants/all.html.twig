@@ -12,6 +12,8 @@
 				<tr>
 					<th>
 						<a href="#{{ merchant_name|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse"><h2>{{ merchant_name }}</h2></a>
+
+						{# Nb commandes/commercant == taille du tableau 'orders' #}
 						{% if merchant.orders|length == 0 %}
 							{% set nb_commandes = "Pas de commande " %}
 							<div style="color:red">{{ nb_commandes }}</div>
@@ -19,6 +21,7 @@
 							{% set nb_commandes = merchant.orders|length ~ " commande(s) " %}
 							<div>{{ nb_commandes }}</div>
 						{% endif %}
+
 					</th>
 				</tr>
 				<tr>
