@@ -96,13 +96,6 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                 $data['delivery_days'] = [];
             }
 
-            if (!isset($data['id_category'])) {
-                $data['id_category'] = [];
-            } else if ($data['id_category'] != -1) {
-                $data['id_category'] = explode(',', $data['id_category']);
-                $data['id_category'] = array_unique($data['id_category']);
-            }
-
             foreach (['id_contact_manager', 'id_contact_employee', 'id_contact_employee_bis'] as $key) {
                 if (empty($data[$key])) {
                     // explicitely set the value to NULL to avoid foreign key issues
@@ -110,15 +103,22 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                 }
             }
 
-            $data["stores"] = [];
-            $S = Mage::helper('apdc_commercant')->getStoresArray();
-            $categories=Mage::getModel ('catalog/category');
-            foreach ($data["id_category"] as $id) {
-                $cat=$categories->getCollection()->addAttributeToSelect("path")
-                    ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
-                $storeid=$S[explode('/', $cat->getPath())[1]]['store_id'];
-                if(!in_array($storeid,$data["stores"])){
-                    $data["stores"][]=$storeid;
+            if (isset($data['id_category'])) {
+                if ($data['id_category'] != -1) {
+                    $data['id_category'] = explode(',', $data['id_category']);
+                    $data['id_category'] = array_unique($data['id_category']);
+                }
+
+                $data["stores"] = [];
+                $S = Mage::helper('apdc_commercant')->getStoresArray();
+                $categories=Mage::getModel ('catalog/category');
+                foreach ($data["id_category"] as $id) {
+                    $cat=$categories->getCollection()->addAttributeToSelect("path")
+                        ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
+                    $storeid=$S[explode('/', $cat->getPath())[1]]['store_id'];
+                    if(!in_array($storeid,$data["stores"])){
+                        $data["stores"][]=$storeid;
+                    }
                 }
             }
 
