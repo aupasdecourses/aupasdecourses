@@ -116,7 +116,7 @@ p{
         text-align: right;
         margin-top: 30px;
         .button{
-            margin: 0;
+            margin-top: 20px 0 0;
             &.notavailable{
                 background: #999;
                 cursor: default;
@@ -124,6 +124,9 @@ p{
                     display: none;
                 }
             }
+        }
+        .action-loading{
+            margin-top: -10px;
         }
     }
     .product-availability{

@@ -16024,7 +16024,7 @@ p.info {
 }
 
 #product_addtocart_form .actions .button {
-  margin: 0;
+  margin-top: 20px 0 0;
 }
 
 #product_addtocart_form .actions .button.notavailable {
@@ -16035,6 +16035,10 @@ p.info {
 #product_addtocart_form .actions .button.notavailable:before,
 #product_addtocart_form .actions .button.notavailable:after {
   display: none;
+}
+
+#product_addtocart_form .actions .action-loading {
+  margin-top: -10px;
 }
 
 #product_addtocart_form .product-availability {
@@ -16962,14 +16966,16 @@ h1.account-title {
   .cms-index-index .main-container,
     .customer-account .main-container,
     .catalog-category-view .main-container,
-    .cms-index-noroute .main-container {
+    .cms-index-noroute .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 154px;
   }
 
   .cms-index-index .page-header-container .skip-links,
     .customer-account .page-header-container .skip-links,
     .catalog-category-view .page-header-container .skip-links,
-    .cms-index-noroute .page-header-container .skip-links {
+    .cms-index-noroute .page-header-container .skip-links,
+    .catalogsearch-result-index .page-header-container .skip-links {
     width: 100%;
     padding-left: 15px;
   }
@@ -16977,27 +16983,31 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search,
     .customer-account .page-header-container .skip-links .skip-container-header-search,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search {
     text-align: center;
   }
 
   .cms-index-index .page-header-container .skip-links .skip-container-header-search form,
     .customer-account .page-header-container .skip-links .skip-container-header-search form,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search form,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form {
     margin-top: 23px;
   }
 
   .cms-index-index .page-header-container .skip-links .skip-container-header-search input[type=text],
     .customer-account .page-header-container .skip-links .skip-container-header-search input[type=text],
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search input[type=text],
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search input[type=text] {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search input[type=text],
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search input[type=text] {
     max-width: 500px;
     margin: 10px auto 0;
   }
 
   .customer-account .main-container,
-    .cms-index-noroute .main-container {
+    .cms-index-noroute .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 195px;
   }
 
@@ -17148,28 +17158,32 @@ h1.account-title {
   .cms-index-index .main-container,
     .customer-account .main-container,
     .catalog-category-view .main-container,
-    .cms-index-noroute .main-container {
+    .cms-index-noroute .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 80px;
   }
 
   .cms-index-index #topmenu,
     .customer-account #topmenu,
     .catalog-category-view #topmenu,
-    .cms-index-noroute #topmenu {
+    .cms-index-noroute #topmenu,
+    .catalogsearch-result-index #topmenu {
     margin-top: -61px;
   }
 
   .cms-index-index .page-header-container,
     .customer-account .page-header-container,
     .catalog-category-view .page-header-container,
-    .cms-index-noroute .page-header-container {
+    .cms-index-noroute .page-header-container,
+    .catalogsearch-result-index .page-header-container {
     padding: 10px 0 14px;
   }
 
   .cms-index-index .page-header-container .skip-links,
     .customer-account .page-header-container .skip-links,
     .catalog-category-view .page-header-container .skip-links,
-    .cms-index-noroute .page-header-container .skip-links {
+    .cms-index-noroute .page-header-container .skip-links,
+    .catalogsearch-result-index .page-header-container .skip-links {
     width: auto;
     margin-top: -12px;
     margin-bottom: -5px;
@@ -17178,7 +17192,8 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search,
     .customer-account .page-header-container .skip-links .skip-container-header-search,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search {
     position: relative;
     z-index: 1;
     top: 8px;
@@ -17187,22 +17202,25 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search form,
     .customer-account .page-header-container .skip-links .skip-container-header-search form,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search form,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form {
     margin-top: 15px;
     margin-left: -90px;
   }
 
-  .cms-index-index .page-header-container .skip-links .skip-container-header-search form input[type=search],
-    .customer-account .page-header-container .skip-links .skip-container-header-search form input[type=search],
-    .catalog-category-view .page-header-container .skip-links .skip-container-header-search form input[type=search],
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form input[type=search] {
-    display: none;
+  .cms-index-index .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .customer-account .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalog-category-view .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form.show-input {
+    margin: 9px 30px 0 -270px;
   }
 
   .cms-index-index .page-header-container .skip-links .link-header-right,
     .customer-account .page-header-container .skip-links .link-header-right,
     .catalog-category-view .page-header-container .skip-links .link-header-right,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right {
     position: relative;
     z-index: 1;
     top: 0;
@@ -17213,7 +17231,8 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .link-header-right i,
     .customer-account .page-header-container .skip-links .link-header-right i,
     .catalog-category-view .page-header-container .skip-links .link-header-right i,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right i {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right i,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right i {
     font-size: 24px;
     margin: 0 10px;
   }
@@ -17221,27 +17240,35 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .header-delivery-container,
     .customer-account .page-header-container .skip-links .header-delivery-container,
     .catalog-category-view .page-header-container .skip-links .header-delivery-container,
-    .cms-index-noroute .page-header-container .skip-links .header-delivery-container {
+    .cms-index-noroute .page-header-container .skip-links .header-delivery-container,
+    .catalogsearch-result-index .page-header-container .skip-links .header-delivery-container {
     margin-right: 0;
   }
 
   .cms-index-index .page-header-container .skip-links .label,
     .customer-account .page-header-container .skip-links .label,
     .catalog-category-view .page-header-container .skip-links .label,
-    .cms-index-noroute .page-header-container .skip-links .label {
+    .cms-index-noroute .page-header-container .skip-links .label,
+    .catalogsearch-result-index .page-header-container .skip-links .label {
     display: none;
   }
 
   .cms-index-index .page-header-container .skip-links .skip-help,
     .customer-account .page-header-container .skip-links .skip-help,
     .catalog-category-view .page-header-container .skip-links .skip-help,
-    .cms-index-noroute .page-header-container .skip-links .skip-help {
+    .cms-index-noroute .page-header-container .skip-links .skip-help,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-help {
     margin-right: 0;
   }
 
   .customer-account .main-container,
-    .cms-index-noroute .main-container {
+    .cms-index-noroute .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 115px;
+  }
+
+  .catalogsearch-result-index #topmenu {
+    margin-top: 0;
   }
 
   #supermenu .nav {
@@ -17419,7 +17446,9 @@ h1.account-title {
     margin-bottom: 20px;
   }
 
-  #login-form-popup-container {
+  #login-form-popup-container,
+    #neighborhood-popup-container,
+    #delivery-popup-container {
     width: 90% !important;
   }
 
@@ -17536,7 +17565,8 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .link-header-right,
     .customer-account .page-header-container .skip-links .link-header-right,
     .catalog-category-view .page-header-container .skip-links .link-header-right,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right {
     right: auto;
     float: none;
     margin: 8px 60px 0 0;
@@ -17546,7 +17576,8 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .link-header-right i,
     .customer-account .page-header-container .skip-links .link-header-right i,
     .catalog-category-view .page-header-container .skip-links .link-header-right i,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right i {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right i,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right i {
     font-size: 20px;
     margin: 0 8px;
   }
@@ -17554,7 +17585,10 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search,
     .customer-account .page-header-container .skip-links .skip-container-header-search,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search {
+    position: relative;
+    z-index: 10;
     float: left;
     margin-right: -150px;
   }
@@ -17562,13 +17596,23 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search form,
     .customer-account .page-header-container .skip-links .skip-container-header-search form,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search form,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form {
     margin-top: 6px;
     margin-left: 0;
   }
 
+  .cms-index-index .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .customer-account .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalog-category-view .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form.show-input {
+    margin: -3px -210px 0 -140px;
+  }
+
   .cms-index-index .main-container,
-    .catalog-category-view .main-container {
+    .catalog-category-view .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 61px;
   }
 
@@ -17793,14 +17837,16 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .link-header-right,
     .customer-account .page-header-container .skip-links .link-header-right,
     .catalog-category-view .page-header-container .skip-links .link-header-right,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right {
     margin-right: 40px;
   }
 
   .cms-index-index .page-header-container .skip-links .link-header-right i,
     .customer-account .page-header-container .skip-links .link-header-right i,
     .catalog-category-view .page-header-container .skip-links .link-header-right i,
-    .cms-index-noroute .page-header-container .skip-links .link-header-right i {
+    .cms-index-noroute .page-header-container .skip-links .link-header-right i,
+    .catalogsearch-result-index .page-header-container .skip-links .link-header-right i {
     font-size: 15px;
     margin: 0 5px;
   }
@@ -17808,42 +17854,56 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container,
     .customer-account .page-header-container .skip-links .skip-container,
     .catalog-category-view .page-header-container .skip-links .skip-container,
-    .cms-index-noroute .page-header-container .skip-links .skip-container {
+    .cms-index-noroute .page-header-container .skip-links .skip-container,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container {
     margin-top: 15px;
   }
 
   .cms-index-index .page-header-container .skip-links .header-minicart,
     .customer-account .page-header-container .skip-links .header-minicart,
     .catalog-category-view .page-header-container .skip-links .header-minicart,
-    .cms-index-noroute .page-header-container .skip-links .header-minicart {
+    .cms-index-noroute .page-header-container .skip-links .header-minicart,
+    .catalogsearch-result-index .page-header-container .skip-links .header-minicart {
     vertical-align: -13px;
   }
 
   .cms-index-index .page-header-container .skip-links .header-minicart .skip-link,
     .customer-account .page-header-container .skip-links .header-minicart .skip-link,
     .catalog-category-view .page-header-container .skip-links .header-minicart .skip-link,
-    .cms-index-noroute .page-header-container .skip-links .header-minicart .skip-link {
+    .cms-index-noroute .page-header-container .skip-links .header-minicart .skip-link,
+    .catalogsearch-result-index .page-header-container .skip-links .header-minicart .skip-link {
     background-size: 18px 15px;
   }
 
   .cms-index-index .page-header-container .skip-links .header-account-container,
     .customer-account .page-header-container .skip-links .header-account-container,
     .catalog-category-view .page-header-container .skip-links .header-account-container,
-    .cms-index-noroute .page-header-container .skip-links .header-account-container {
+    .cms-index-noroute .page-header-container .skip-links .header-account-container,
+    .catalogsearch-result-index .page-header-container .skip-links .header-account-container {
     margin-right: 3px;
   }
 
   .cms-index-index .page-header-container .skip-links .skip-container-header-search form,
     .customer-account .page-header-container .skip-links .skip-container-header-search form,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search form,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form {
     margin-top: 0;
+  }
+
+  .cms-index-index .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .customer-account .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalog-category-view .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search form.show-input,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search form.show-input {
+    margin: -13px -140px 0 -150px;
   }
 
   .cms-index-index .page-header-container .skip-links .skip-container-header-search .search-button,
     .customer-account .page-header-container .skip-links .skip-container-header-search .search-button,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search .search-button,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search .search-button {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search .search-button,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search .search-button {
     margin-top: -2px;
     margin-left: -40px;
   }
@@ -17851,12 +17911,14 @@ h1.account-title {
   .cms-index-index .page-header-container .skip-links .skip-container-header-search .search-button i,
     .customer-account .page-header-container .skip-links .skip-container-header-search .search-button i,
     .catalog-category-view .page-header-container .skip-links .skip-container-header-search .search-button i,
-    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search .search-button i {
+    .cms-index-noroute .page-header-container .skip-links .skip-container-header-search .search-button i,
+    .catalogsearch-result-index .page-header-container .skip-links .skip-container-header-search .search-button i {
     font-size: 14px;
   }
 
   .cms-index-index .main-container,
-    .catalog-category-view .main-container {
+    .catalog-category-view .main-container,
+    .catalogsearch-result-index .main-container {
     margin-top: 55px;
   }
 
@@ -17915,14 +17977,13 @@ h1.account-title {
   overflow: initial;
 }
 
-#delivery-popup-container,
-#neighborhood-popup-container {
-  height: auto;
-}
-
 #delivery-popup-container .apdc-popup-content,
 #neighborhood-popup-container .apdc-popup-content {
   height: auto;
+}
+
+#neighborhood-popup-container {
+  overflow: auto;
 }
 
 #login-form-popup[data-current-view='apdc_register_view'] #login-form-popup-container {
