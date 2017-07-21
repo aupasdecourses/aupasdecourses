@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.5.4</version>
+            <version>0.6.1</version>
         </Apdc_Commercant>
     </modules>
     <global>
@@ -68,4 +68,23 @@
             </adminhtml>
         </routers>
     </admin>
+    <adminhtml>
+      <layout>
+        <updates>
+          <apdc_commercant>
+            <file>apdc/apdc_commercant.xml</file>
+          </apdc_commercant>
+        </updates>
+      </layout>
+      <translate>
+        <modules>
+          <Apdc_Commercant>
+            <files>
+              <default>Apdc_Commercant.csv</default>
+            </files>
+          </Apdc_Commercant>
+        </modules>
+      </translate>
+
+    </adminhtml>
 </config>
