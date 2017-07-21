@@ -4,8 +4,15 @@
 
 {% block body %}
 <div class="container">
-<h1> Liste des commandes par quartiers </h1><br>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<h1> Liste des commandes par quartiers </h1><br>
+	<div class="row">
+		<div class="col-md-6">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-5" style="border-style:ridge">
+			<h4><p><b>Standard La Petite Reine ( Parking Louvres )</b></p>
+			<p>01 42 96 59 44 / 01 42 96 98 93</p></h4>
+		</div>
+	</div>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
