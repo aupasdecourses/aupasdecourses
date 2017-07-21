@@ -55,7 +55,7 @@ $j(document).ready(function() {
     for (var k in color_menu){
         $j("#custommenu .parentMenu span:contains('"+k+"')").parent().css("background",color_menu[k]);
     }
-    
+
     msieversion();
 });
 
@@ -75,3 +75,17 @@ function msieversion() {
 
     return false;
 }
+
+$j(document).ready(function(){
+    if( $j(window).innerWidth() < 767 ){
+        $j('.page-header-container .skip-links .skip-container-header-search .search-button').attr('disabled', true).addClass('disabled-search');
+
+        $j('.page-header-container .skip-links .skip-container-header-search .search-button').click(function(){
+            if( $j(this).hasClass('disabled-search') ){
+                alert('test');
+                $j('.page-header-container .skip-links .skip-container-header-search form input[type=search]').show();
+                $j(this).removeClass('disabled-search');
+            }
+        })
+    }
+});

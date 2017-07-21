@@ -447,12 +447,16 @@
     .container{
         width: auto;
     }
+    .logo{
+        float: left;
+        width: auto;
+    }
     .cms-index-index,
     .customer-account,
     .catalog-category-view,
     .cms-index-noroute{
         .main-container{
-            margin-top: 146px;
+            margin-top: 80px;
         }
         #topmenu{
             margin-top: -61px;
@@ -460,12 +464,19 @@
         .page-header-container{
             padding: 10px 0 14px;
             .skip-links{
+                width: auto;
+                margin-top: -12px;
+                margin-bottom: -5px;
                 .skip-container-header-search{
                     position: relative;
                     top: 8px;
                     z-index: 1;
                     form{
-                        margin-top: 0;
+                        margin-top: 15px;
+                        margin-left: -90px;
+                        input[type=search]{
+                            display: none;
+                        }
                     }
                 }
                 .link-header-right{
@@ -494,7 +505,12 @@
     .customer-account,
     .cms-index-noroute{
         .main-container{
-            margin-top: 185px;
+            margin-top: 115px;
+        }
+    }
+    #supermenu{
+        .nav{
+            top: 80px;
         }
     }
     #product-quick-view_popup-container{
@@ -538,11 +554,11 @@
         margin: 15px 0;
     }
     .navbar-header{
-        top: 120px;
+        top: 25px;
         right: 20px;
     }
     .navbar-toggle{
-        margin-top: -36px;
+        margin-top: 0;
         margin-bottom: 9px;
     }
     .block-lastorder{
@@ -610,6 +626,17 @@
             &.skip-active{
                 transform: translateX(-100%);
             }
+            .mini-commercant-name{
+                .count{
+                    margin-right: 25px;
+                }
+            }
+            .mini-cart-bottom{
+                bottom: 60px;
+                .subtotal .label{
+                    display: block;
+                }
+            }
         }
     }
 }
@@ -653,6 +680,11 @@
 }
 
 @media screen and (max-width: 620px){
+    .logo{
+        img{
+            max-width: 70px;
+        }
+    }
     section{
         &#prices, &#concept{
             min-height:0;
@@ -710,11 +742,13 @@
         }
     }
     .toolbar-bottom{
-        .sorter,
         .pager{
             float: none;
             width: 100%;
             text-align: center;
+        }
+        .sorter{
+            display: none;
         }
         select{
             padding: 5px 30px 5px 5px;
@@ -742,8 +776,7 @@
         }
         .skip-links{
             .link-header-right{
-                top: 50px;
-                width: 100%;
+                top: -17px;
                 text-align: center;
             }
         }
@@ -793,7 +826,19 @@
                     right: auto;
                     float: none;
                     text-align: center;
-                    margin: 10px auto 0;
+                    margin: 8px 60px 0 0;
+                    i{
+                        font-size: 20px;
+                        margin: 0 8px;
+                    }
+                }
+                .skip-container-header-search{
+                    float: left;
+                    margin-right: -150px;
+                    form{
+                        margin-top: 6px;
+                        margin-left: 0;
+                    }
                 }
             }
         }
@@ -801,17 +846,20 @@
     .cms-index-index,
     .catalog-category-view{
         .main-container{
-            margin-top: 173px;
+            margin-top: 61px;
         }
     }
     .customer-account,
     .cms-index-noroute{
         .main-container{
-            margin-top: 215px;
+            margin-top: 100px;
         }
     }
+    .navbar-header{
+        top: 15px;
+    }
     #supermenu .nav{
-        top: 173px;
+        top: 61px;
     }
     .block-progress{
         dl{
@@ -845,6 +893,21 @@
 }
 
 @media screen and (max-width: 420px){
+    .logo{
+        img{
+            max-width: 55px;
+        }
+    }
+    .navbar-toggle{
+        margin-top: -6px;
+        margin-right: 5px;
+        padding: 10px 5px;
+    }
+    .intro-section{
+        #logo{
+            width: 100%;
+        }
+    }
     #html-body{
         header{
             margin-bottom: 70px;
@@ -858,17 +921,27 @@
         &#prices, &#concept{
             min-height:0;
         }
+        &#districts{
+            .button-district{
+                span.button{
+                    top: 34%;
+                }
+            }
+        }
     }
     .page-title h1{
         font-size: 1.5rem;
     }
     h2,
     .commercants-block .title-block,
-    .block-promos .inner-box h2{
+    .block-promos .inner-box h2,
+    .block-reduction-apdc h2,
+    .block-lastorder h2{
         font-size: 1.5rem;
     }
-    .block-sponsor-apdc{
+    .block-reduction-apdc{
         padding: 20px;
+        margin: 30px 0;
         h2{
             font-size: 1.75rem;
         }
@@ -876,12 +949,15 @@
             margin-bottom: 20px;
         }
     }
+    .block-lastorder{
+        margin: 30px 0;
+    }
     .block-promos{
         .owl-buttons, .owl-nav{
             width: 99%;
         }
     }
-    .block-blog, .block-sponsor-apdc{
+    .block-blog, .block-reduction-apdc{
         margin: 30px 0;
     }
     .skip-links .text-right{
@@ -973,6 +1049,10 @@
                 .label{
                     display: none;
                 }
+                i{
+                    font-size: 24px;
+                    margin: 0 10px;
+                }
             }
         }
     }
@@ -991,5 +1071,54 @@
                 }
             }
         }
+    }
+    .cms-index-index,
+    .customer-account,
+    .catalog-category-view,
+    .cms-index-noroute{
+        .page-header-container{
+            .skip-links{
+                .link-header-right{
+                    margin-right: 40px;
+                    i{
+                        font-size: 15px;
+                        margin: 0 5px;
+                    }
+                }
+                .skip-container{
+                    margin-top: 15px;
+                }
+                .header-minicart{
+                    vertical-align: -13px;
+                    .skip-link{
+                        background-size: 18px 15px;
+                    }
+                }
+                .header-account-container{
+                    margin-right: 3px;
+                }
+                .skip-container-header-search{
+                    form{
+                        margin-top: 0;
+                    }
+                    .search-button{
+                        margin-left: -40px;
+                        margin-top: -2px;
+                        i{
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .cms-index-index,
+    .catalog-category-view{
+        .main-container{
+            margin-top: 55px;
+        }
+    }
+    #supermenu .nav{
+        top: 55px;
     }
 }

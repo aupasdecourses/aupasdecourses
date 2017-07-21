@@ -561,18 +561,6 @@ section {
         list-style-type: none;
         padding: 0;
     }
-    .btn-cart{
-        font-size: 0.875rem;
-        font-weight: normal;
-        margin: 10px auto 0;
-        img{
-            display: inline-block!important;
-            vertical-align: top;
-            width: 21px!important;
-            height: auto;
-            margin-right: 3px;
-        }
-    }
     .owl-item, & > .item{
         -webkit-border-radius: 10px;
         border-radius: 10px;
@@ -653,6 +641,19 @@ section {
                 }
             }
         }
+    }
+}
+
+.btn-cart{
+    font-size: 0.875rem;
+    font-weight: normal;
+    margin: 10px auto 0;
+    img{
+        display: inline-block!important;
+        vertical-align: top;
+        width: 21px!important;
+        height: auto;
+        margin-right: 3px;
     }
 }
 
@@ -837,7 +838,7 @@ section {
     }
 }
 
-.block-sponsor-apdc, .block-lastorder{
+.block-reduction-apdc, .block-lastorder{
     display: inline-block;
     vertical-align: top;
     background-color: #fff;
