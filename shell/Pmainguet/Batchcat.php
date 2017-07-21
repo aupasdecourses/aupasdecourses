@@ -64,6 +64,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'meta_description'=>html_entity_decode(str_replace('"','',$category->getMetaDescription())),
                         'is_clickable'=>$category->getIsClickable(),
                         'include_in_menu'=>$category->getIncludeInMenu(),
+                        'show_in_navigation'=>$category->getShowInNavigation(),
                         'show_age_popup'=>$category->getShowAgePopup(),
                         'display_mode'=>$category->getDisplayMode(),
                         'landing_page'=>$category->getLandingPage(),
@@ -120,15 +121,17 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'meta_description'=>str_replace('"','',$line[12]),
                         'is_clickable'=>(int) $line[13],
                         'include_in_menu'=>$line[14],
-                        'show_age_popup'=>$line[15],
-                        'display_mode'=>$line[16],
-                        'landing_page'=>$line[17],
-                        'menu_bg_color'=>$line[18],
-                        'menu_text_color'=>$line[19],
-                        'menu_template'=>$line[20],
-                        'menu_main_static_block'=>$line[21],
-                        'menu_static_block1'=>$line[22],
+                        'show_in_navigation'=>$line[15],
+                        'show_age_popup'=>$line[16],
+                        'display_mode'=>$line[17],
+                        'landing_page'=>$line[18],
+                        'menu_bg_color'=>$line[19],
+                        'menu_text_color'=>$line[20],
+                        'menu_template'=>$line[21],
+                        'menu_main_static_block'=>$line[22],
+                        'menu_static_block1'=>$line[23],
                     ];
+
                     $cat=Mage::getModel('catalog/category')->load($id);
 
                     foreach($keys as $key =>$value){
