@@ -722,7 +722,7 @@ $j(document).ready(function () {
         } else {
             self.addClass('skip-active');
             elem.addClass('skip-active');
-			$j('.navbar-header button').hide();
+			//$j('.navbar-header button').hide();
         }
     });
 
@@ -742,7 +742,6 @@ $j(document).ready(function () {
 
         e.preventDefault();
     });
-
 
     // ==============================================
     // Header Menus

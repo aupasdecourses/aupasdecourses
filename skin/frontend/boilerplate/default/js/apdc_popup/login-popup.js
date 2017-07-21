@@ -65,7 +65,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcNeighborhoodPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(neighborhoodPopup[handle]) !== 'undefined') {
 		  apdcNeighborhoodPopup.updateContent(neighborhoodPopup[handle]);
-		  setPopupHeight();
+		  setPopupHeight(apdcNeighborhoodPopup);
 		} else {
 			//var ajaxUrl = jQuery(elt).data('login-view');
 			var ajaxUrl = jQuery(elt).data('url');
@@ -89,7 +89,7 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcNeighborhoodPopup.updateContent(message);
 				}
-			  setPopupHeight();
+			  setPopupHeight(apdcNeighborhoodPopup);
 			})
 			.fail(function() {
 				console.log('failed');
@@ -103,7 +103,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcDeliveryPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(deliveryPopup[handle]) !== 'undefined') {
 		  apdcDeliveryPopup.updateContent(deliveryPopup[handle]);
-		  setPopupHeight();
+		  setPopupHeight(apdcDeliveryPopup);
 		} else {
 			//var ajaxUrl = jQuery(elt).data('login-view');
 			var ajaxUrl = jQuery(elt).data('url');
@@ -127,7 +127,7 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcDeliveryPopup.updateContent(message);
 				}
-			  setPopupHeight();
+			  setPopupHeight(apdcDeliveryPopup);
 			})
 			.fail(function() {
 				console.log('failed');
@@ -141,7 +141,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcLoginPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(accountPopup[handle]) !== 'undefined') {
 		  apdcLoginPopup.updateContent(accountPopup[handle]);
-		  setPopupHeight();
+		  setPopupHeight(apdcLoginPopup);
 		} else {
 			var ajaxUrl = jQuery(elt).data('login-view');
 			var data = new FormData();
@@ -164,7 +164,7 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcLoginPopup.updateContent(message);
 				}
-			  setPopupHeight();
+			  setPopupHeight(apdcLoginPopup);
 			})
 			.fail(function() {
 				console.log('failed');
@@ -172,8 +172,8 @@ function initLoginPopup() {
 		}
 	}
 
-	function setPopupHeight() {
-		var popupContainer = jQuery('#' + apdcLoginPopup.id + ' .apdc-popup-container');
+	function setPopupHeight(apdcPopup) {
+		var popupContainer = jQuery('#' + apdcPopup.id + ' .apdc-popup-container');
 		var height = popupContainer.find('.apdc-popup-content').children().outerHeight(true);
 		var padding = parseFloat(popupContainer.css('padding-top')) + parseFloat(popupContainer.css('padding-bottom'));
 		var border = parseFloat(popupContainer.css('border-top')) + parseFloat(popupContainer.css('border-bottom'));
