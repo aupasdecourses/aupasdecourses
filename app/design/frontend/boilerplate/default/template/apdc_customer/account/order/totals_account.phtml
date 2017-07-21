@@ -65,7 +65,7 @@
                 <p>Total des produits préparés par commerçants</p>
             </div>
             <div class="col-md-6">
-                <p><?php echo $_order->formatPrice($total) ?> @TODO</p>
+                <p><?php echo $_order->formatPrice(floatval($_totals['grand_total_incl']->value)-$total) ?></p>
             </div>
         </div>
         <div class="row">
