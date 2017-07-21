@@ -6,17 +6,19 @@ $html = '';
 $nbCategoryColumns = 4;
 $children = $menuTree->getChildren();
 $menuTree->setCounter(1);
+$mainStaticBlock = false;
 if ($menuTree->getMenuMainStaticBlock()) {
     $html .= '<li class="template-column block-static-menu">';
     $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
     $html .= '</li>';
+    $mainStaticBlock = true;
 }
 $cpt = 1;
 foreach ($children as $child) {
 
     $this->initChild($child, $menuTree);
 
-    $html .= '<li class="template-column">';
+    $html .= '<li class="template-column ' . $this->getTemplateColumnClasses($child, $cpt, $mainStaticBlock) . '">';
 
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
@@ -25,12 +27,16 @@ foreach ($children as $child) {
             $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
         }
         $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';
-        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
         $html .= '</a>';
     } else {
         $html .= '<span class="template-column-title" style="' . $child->getLinkStyle() . '" class="'. $child->getLinkClasses() .'">';
         $html .= $this->escapeHtml($this->__($child->getName()));
-        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
         $html .= '</span>';
     }
 
@@ -53,7 +59,9 @@ foreach ($children as $child) {
     $counter = $menuTree->getCounter();
     $counter++;
     $menuTree->setCounter($counter);
-    $cpt++;
+    if ($child->getShowInNavigation() != 3) {
+        $cpt++;
+    }
     if ($cpt > $nbCategoryColumns) {
         break;
     }

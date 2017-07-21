@@ -38,7 +38,7 @@ class Apdc_SuperMenu_Model_Observer
         $select->columns('menu_static_block1');
         $select->columns('thumbnail');
         $select->columns('is_clickable');
-
+        $select->columns('show_in_navigation');
     }
 
     /**
@@ -92,6 +92,7 @@ class Apdc_SuperMenu_Model_Observer
                 'thumbnail' => $category->getThumbnail(),
                 'is_clickable' => $category->getIsClickable(),
                 'is_commercant' => $category->getData('estcom_commercant'),
+                'show_in_navigation' => $category->getData('show_in_navigation')
             );
 
             $categoryNode = new Varien_Data_Tree_Node($categoryData, 'id', $tree, $parentCategoryNode);
