@@ -34,7 +34,7 @@ class ProductController extends AbstractController
     protected $orderable = ['status', 'name', 'origine', 'produit_biologique'];
 
     /** @var array */
-    protected $filterable = ['shop_id'];
+    protected $filterable = ['shop'];
 
     /** @var null|array The name of the changed fields */
     private $original = null;
@@ -58,16 +58,25 @@ class ProductController extends AbstractController
                     return;
                 }
 
-                // TODO: Get the shop code, get the increment ID
-                $sku =  '000'.'-'.strtoupper(substr($request->get('name'), 3)).'-'.(1000 + round(100 * rand(), 0));
-
-                $request->request->add(['sku' => $sku]);
-
                 if ($this->isGranted('ROLE_ADMIN')) {
-                    return;
+                    $user = $this->getDoctrine()->getManager()
+                        ->getRepository('ApdcApdcBundle:User')->findOneBy(['shop' => $request->get('shop')]);
+                } else {
+                    $user = $this->getUser();
+
+                    $request->request->add(['shop_id' => $user->getShop()->getId()]);
                 }
 
-                $request->request->add(['shop_id' => $this->getUser()->getShopId()]);
+                $sku = $user->getShop()->getCode()
+                    .'-'.strtoupper(substr($request->get('name'), 0, 3))
+                    .'-'.($user->getShop()->getIncremental() + 1);
+
+                $request->request->add([
+                    'sku'              => $sku,
+                    // Default attribute
+                    'attribute_set_id' => '4',
+                    'type_id'          => 'simple',
+                ]);
             }
         );
 
@@ -78,6 +87,14 @@ class ProductController extends AbstractController
             'Product.onCreateAfterSave',
             function (GenericEvent $event) {
                 if (!$entity = $event->getArgument('entity')) {
+                    return;
+                }
+
+                /** @var \AppBundle\Repository\ShopRepository $shopModel */
+                $shopModel = $this->getModel('Shop', false);
+                $shopModel->load($entity['shop'])->increment();
+
+                if (!$this->getParameter('enabled_email')) {
                     return;
                 }
 
@@ -140,6 +157,10 @@ class ProductController extends AbstractController
                 $changes = array_diff($this->original, $entity);
 
                 $this->getModel('ProductHistory')->addHistory($entity);
+
+                if (!$this->getParameter('enabled_email')) {
+                    return;
+                }
 
                 $photo = null;
 

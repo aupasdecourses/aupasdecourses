@@ -94,6 +94,14 @@ class User extends BaseUser
     private $mobile;
 
     /**
+     * @var Shop
+     *
+     * @ORM\ManyToOne(targetEntity="Shop")
+     * @ORM\JoinColumn(name="shop_id", referencedColumnName="id_shop")
+     */
+    private $shop;
+
+    /**
      * Set firstName
      *
      * @param string $firstName
@@ -283,5 +291,29 @@ class User extends BaseUser
     public function getMobile()
     {
         return $this->mobile;
+    }
+
+    /**
+     * Set shop
+     *
+     * @param \AppBundle\Entity\Shop $shop
+     *
+     * @return User
+     */
+    public function setShop(\AppBundle\Entity\Shop $shop = null)
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    /**
+     * Get shop
+     *
+     * @return \AppBundle\Entity\Shop
+     */
+    public function getShop()
+    {
+        return $this->shop;
     }
 }

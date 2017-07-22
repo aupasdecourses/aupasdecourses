@@ -18,7 +18,7 @@ class UserController extends AbstractController
         'default' => 'ROLE_ADMIN'
     ];
 
-    protected $filterable = ['shopId', 'type'];
+    protected $filterable = ['shop', 'type'];
 
     /**
      * @inheritdoc

@@ -13,19 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractMageRepository
 {
-    /**
-     * @var Magento
-     */
+    /** @var Magento */
     protected $mage;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     protected $model;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $modelName;
 
     protected $entity;
@@ -102,6 +96,16 @@ abstract class AbstractMageRepository
         }
 
         $this->entity = $qb->addAttributeToSelect('*')->getFirstItem();
+
+        return $this->entity->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function create()
+    {
+        $this->entity = $this->mage->getModel($this->modelName);
 
         return $this->entity->toArray();
     }

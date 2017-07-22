@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -13,9 +14,14 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'constraints' =>  [
+                    new NotBlank(), // Note: It is not working...
+                ]
+            ])
             ->add('sku')
-            ->add('reference_interne_magasin')
+            ->add('ref')
+            ->add('notes_com')
             ->add('status')  // TODO: ChoiceType, 0 / 1
             ->add('on_selection')  // TODO: ChoiceType, 0 / 1
             ->add('price')
@@ -34,8 +40,14 @@ class ProductType extends AbstractType
             ]) // TODO: ChoiceType, and get choice form Mage
             ->add('origine')  // TODO: ChoiceType, and get choice form Mage
             ->add('produit_biologique')  // TODO: ChoiceType, and get choice form Mage
-            ->add('user')  // TODO: ChoiceType, and get choice form Mage
-            ->add('photoFile');
+            ->add('shop')  // TODO: ChoiceType, and get choice form Mage
+            ->add('photoFile')
+            ->add('attribute_set_id', null, [
+                'data' => '4',
+            ])
+            ->add('type_id', null, [
+                'data' => 'simple'
+            ])
         ;
     }
 
