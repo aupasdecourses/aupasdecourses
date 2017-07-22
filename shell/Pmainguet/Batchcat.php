@@ -115,7 +115,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'thumbnail'=>$line[6],
                         'image'=>$line[7],
                         'estcom_commercant'=>$line[8],
-                        'is_active'=>$line[9],
+                        'is_active'=>(int) $line[9],
                         'meta_title'=>str_replace('"','',$line[10]),
                         'description'=>str_replace('"','',$line[11]),
                         'meta_description'=>str_replace('"','',$line[12]),
