@@ -838,4 +838,34 @@ class Magento
 
         return $tab;
     }
+
+
+    /* Retourne la marge arriere par commercant */
+    public function getMargin()
+    {
+
+        $data = [];
+        $products = \Mage::getModel('catalog/product')->getCollection();
+        $products->addAttributeToSelect('commercant')
+                 ->addAttributeToSelect('name')
+                 ->addAttributeToSelect('marge_arriere');
+
+        foreach ($products as $product) {
+
+            if (($product->getData('commercant') != null) && ($product->getData('marge_arriere') != '#DIV/0!')) {
+
+                $data[$product->getAttributeText('commercant')]['nb_products']   = count($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['total_marge']   = array_sum($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['max_marge']     = 100 * max($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['min_marge']     = 100 * min($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['marge_moyenne'] = 100 * ($data[$product->getAttributeText('commercant')]['total_marge'] / $data[$product->getAttributeText('commercant')]['nb_products']);
+
+                $data[$product->getAttributeText('commercant')]['products'][$product->getData('name')] = $product->getData('marge_arriere');
+            }
+        }
+
+        ksort($data);
+        return $data;
+    }
+
 }

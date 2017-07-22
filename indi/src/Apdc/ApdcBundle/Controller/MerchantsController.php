@@ -11,7 +11,7 @@ class MerchantsController extends Controller
 {
     public function indexAction(Request $request)
     {
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		
@@ -46,7 +46,7 @@ class MerchantsController extends Controller
 
     public function merchantsOneAction(Request $request, $id, $from, $to)
 	{
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -72,7 +72,7 @@ class MerchantsController extends Controller
     public function merchantsAllAction(Request $request, $from, $to)
     {
 	
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 		
