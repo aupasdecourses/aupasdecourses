@@ -37,7 +37,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
     public function getcomcatinfo(){
             $allCats = Mage::getModel('catalog/category')->getCollection()
                 ->addAttributeToSelect('*')
-                ->addAttributeToFilter('level',array('in'=>array(3,4)));
+                ->addAttributeToFilter('level',array('in'=>array(2,3,4)));
 
             $result=array();
                 
