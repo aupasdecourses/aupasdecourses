@@ -30,59 +30,6 @@ class Magento
         return \Mage::getBaseUrl('media');
     }
 
-    /** Ancienne version de getMerchants. Ne prend pas en compte un marchand dans plusieurs shops
-     *
-     */
-    /*public function getShops($commercantId = -1)
-    {
-    
-         $commercants = [];
-        
-        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
-        if ($commercantId != -1) {
-            $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
-        }
-        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
-        $shops->addFilterToMap('path' , 'catalog_category_entity.path');
-
-        $S = [];
-        $app = \Mage::app();
-        $stores = $app->getStores();
-        foreach ($stores as $id => $idc) {
-            $S[$app->getStore($id)->getRootCategoryId()]['id']		= $app->getStore($id)->getRootCategoryId();
-            $S[$app->getStore($id)->getRootCategoryId()]['name']	= $app->getStore($id)->getName();
-        }
-
-        foreach ($shops as $shop) {
-            $commercants[$shop->getData('id_attribut_commercant')] = [
-                'active'			=> $shop->getData('enabled'),
-                'id'				=> $shop->getData('id_attribut_commercant'),
-                'store'				=> $S[explode('/', $shop->getPath())[1]]['name'],
-                'name'				=> $shop->getName(),
-                'addr'				=> $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
-                'phone'				=> $shop->getPhone(),
-                'mail3'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
-                'mailc'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
-                'mailp'				=> \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
-                'orders'			=> [],
-                'timetable' => implode(',', $shop->getTimetable()),
-                'closing_periods'	=> $shop->getClosingPeriods(),
-                'delivery_days'		=> 'Du Mardi au Vendredi',
-                ];
-        }
-        uasort($commercants, function ($lhs, $rhs) {
-            if ($lhs['active'] < $rhs['active']) {
-                return true;
-            }
-
-            return false;
-        });
-        asort($commercants);
-        return $commercants;
-     
-    }
-     */
-
     public function getWarningDays($delivery_days, $closed_periods)
     {
         if ($closed_periods != array()) {
@@ -680,6 +627,128 @@ class Magento
 
         return $rsl;
     }
+
+
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+
+
+    /*  Similaire à la fonction getMerchants() 
+        SAUF QUE getMerchants() affiche par quartier
+        et getMerchantsByMerchants() affiche par commercant
+
+        Il faudrait peut etre renommer la fonction getMerchants() en getMerchantsByStores() ?? */
+    public function getMerchantsByMerchants($commercantId = -1)
+    {
+
+        $commercants = [];
+
+        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        if ($commercantId != -1) {
+            $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
+        }
+
+        $cat_array = \Mage::helper('apdc_commercant')->getCategoriesArray();
+
+        foreach ($shops as $shop) {
+            $cats = $shop->getIdCategory();
+            foreach ($cats as $cat) {
+
+                $delivery_days = $shop->getDeliveryDays();
+                $closed_periods = $shop->getClosingPeriods();
+
+                $shop_manager = \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem();
+
+                $commercants[$shop->getData('name')] = [
+                        'active' => $shop->getData('enabled'),
+                        'id' => $shop->getData('id_attribut_commercant'),
+                        'code' => $shop->getData('code'),
+                        'shop_id' => $shop->getIdShop(),
+                        'name' => $shop->getName(),
+                        'addr' => $shop->getStreet().' '.$shop->getPostCode().' '.$shop->getCity(),
+                        'phone' => $shop->getPhone(),
+                        'mail3' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+                        'mailc' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+                        'mailp' => \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+                        'manager_name' => $shop_manager->getFirstname().' '.$shop_manager->getLastname(),
+                        'mobile' => $shop_manager->getPhone(),
+                        'manager_id' => $shop_manager->getIdContact(),
+                        'orders' => [],
+                        'timetable' => implode(',', $shop->getTimetable()),
+                        'closing_periods' => $closed_periods,
+                        'delivery_days' => $delivery_days,
+                        'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
+                    ];
+            }
+        }
+
+        uasort($commercants, function ($lhs, $rhs) {
+            if ($lhs['active'] < $rhs['active']) {
+                return true;
+            }
+
+            return false;
+        });
+       
+        asort($commercants);
+        return $commercants;
+    }
+
+
+    /** Similaire à getMerchantsOrdersByStore 
+        Mais affiche commandes par COMMERCANTS. Et pas par quartiers */
+    public function getMerchantsOrdersByMerchants($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
+    {
+        if (!isset($dfrom)) {
+            $dfrom = date('Y-m-d');
+        }
+        if (!isset($dto)) {
+            $dto = $dfrom;
+        }
+        $dfrom .=  ' 00:00:00';
+        $dto .=  ' 00:00:00';
+        $commercants = $this->getMerchantsByMerchants($commercantId);
+
+        $rsl = [];
+
+        $orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $order_id);
+        foreach ($orders as $order) {
+            $orderHeader = $this->OrderHeaderParsing($order);
+            $products = \Mage::getModel('sales/order_item')->getCollection();
+            $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
+            if ($commercantId != -1) {
+                $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
+            }
+
+            foreach ($products as $product) {
+                $prod_data = $this->ProductParsing($product, $orderId);
+                if (!isset($commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']])) {
+                    $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']] = $orderHeader;
+                }
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
+            }
+        }
+
+        foreach ($commercants as $storeid => $commercant) {
+            $rsl[$storeid] = $commercant;
+        }
+
+        ksort($rsl);
+        return $rsl;
+    }
+
+
+
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+
 
     public function getRefunds($orderId)
     {
