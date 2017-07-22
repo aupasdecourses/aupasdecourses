@@ -145,7 +145,7 @@ class BillingController extends Controller
 
         $defaultDataCSV = array('message' => 'Export');
         $formCSV = $this->createFormBuilder($defaultDataCSV)
-            ->add("Exporter", SubmitType::class)
+            ->add("Exporter", SubmitType::class,array('label'=>'Exporter CSV','attr'=>array('class'=>'btn btn-lg btn-success','style'=>'float:right')))
             ->getForm();
         $formCSV->handleRequest($request);
 

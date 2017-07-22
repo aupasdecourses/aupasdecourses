@@ -5,14 +5,15 @@
 <div class="container-fluid">
 	<h1> Facturation INDI </h1>
 	
-		<div class="page-header">
-			<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+		<div class="row">
+			<div class="page-header col-md-6">
+				<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+			</div>
+			<div class="col-md-6">{{ form(formCSV) }}</div>
 		</div>
 		{% if check_date  %}
 			<div class="alert alert-warning">Attention, pour les mois antérieurs à Janvier 2017, les factures présentées ici diffèrent des factures envoyées aux commerçants (prise en compte de la date de livraison et non plus de la date de commande) - se référer au Google Drive pour les factures correctes.</div>
 		{% endif %}
-
-		<div>{{ form(formCSV) }}</div>
 
 		<div id="filter"><label>Selectionnez le commercant : &nbsp; </label></div>
 	<table id="billIndex" class="table table-striped">

@@ -266,8 +266,7 @@ class Magento
         }
         $prod_data['comment'] .= $product->getData('item_comment');
 
-		$prod_data['nom_commercant'] = $this->_attributeArraysLabels['commercant'][$prod_data['commercant_id']];
-				
+		$prod_data['nom_commercant'] = $this->_attributeArraysLabels['commercant'][$prod_data['commercant_id']];	
 
         return $prod_data;
     }
@@ -661,7 +660,7 @@ class Magento
 
                 $shop_manager = \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem();
 
-                $commercants[$shop->getData('name')] = [
+                $commercants[$shop->getData('id_attribut_commercant')] = [
                         'active' => $shop->getData('enabled'),
                         'id' => $shop->getData('id_attribut_commercant'),
                         'code' => $shop->getData('code'),
@@ -725,12 +724,12 @@ class Magento
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
-                if (!isset($commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']])) {
-                    $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']] = $orderHeader;
+                if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
+                    $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }
-                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
-                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
-                $commercants[$prod_data['nom_commercant']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
+                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['products'][] = $prod_data;
+                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_quantite'] += $prod_data['quantite'];
+                $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']]['total_prix'] += $prod_data['prix_total'];
             }
         }
 

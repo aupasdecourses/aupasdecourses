@@ -7,11 +7,11 @@
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 		<hr>
 
-		{% for merchant_name, merchant in merchants %}
+		{% for merchant_id, merchant in merchants %}
 			<table style="width:100%">
 				<tr>
 					<th>
-						<a href="#{{ merchant_name|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse"><h2>{{ merchant_name }}</h2></a>
+						<a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse"><h2>{{ merchant.name }}</h2></a>
 
 						{# Nb commandes/commercant == taille du tableau 'orders' #}
 						{% if merchant.orders|length == 0 %}
@@ -26,7 +26,7 @@
 				</tr>
 				<tr>
 					<td>
-						<div id="{{ merchant_name|replace({' ': '_', "'": '_', '&': '_'}) }}" class="store collapse">
+						<div id="{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" class="store collapse">
 							<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
 									<label>
 										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ "Fiche commercant Magento" }}</a></h3>
