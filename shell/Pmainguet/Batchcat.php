@@ -94,7 +94,7 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
             $myFile = "upload.csv";
             $myFileLink = fopen($myFile, 'r') or die("Can't open file ".$myFile);
             while (!feof($myFileLink) ) {
-                $data[] = fgetcsv($myFileLink, 1024);
+                $data[] = fgetcsv($myFileLink, 0);
             }
             fclose($myFileLink);
             unset($data[0]);
