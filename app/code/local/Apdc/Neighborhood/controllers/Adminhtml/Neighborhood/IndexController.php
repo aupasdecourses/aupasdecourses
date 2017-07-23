@@ -89,6 +89,11 @@ class Apdc_Neighborhood_Adminhtml_Neighborhood_IndexController extends Mage_Admi
                     Mage::helper('apdc_neighborhood/media')->deleteMedia($oldImage);
                 }
 
+                $oldBanner = $model->getImageBanner();
+                if (!empty($oldBanner)) {
+                    Mage::helper('apdc_neighborhood/media')->deleteMedia($oldBanner);
+                }
+
                 $model->delete();
                 $this->_getSession()->addSuccess($this->__('Le quartier a été supprimé'));
                 $this->_redirect('*/*/');
@@ -134,6 +139,24 @@ class Apdc_Neighborhood_Adminhtml_Neighborhood_IndexController extends Mage_Admi
                 $data['image'] = $image['file'];
             } else {
             	unset($data['image']);
+            }
+
+            // get file upload (Banner)
+            if (isset($data['image_banner']['delete'])) {
+                $oldImage = $model->getImageBanner();
+                if (!empty($oldImage)) {
+                    Mage::helper('apdc_neighborhood/media')->deleteMedia($oldImage);
+                }
+                $data['image_banner'] = '';
+            } elseif ($_FILES['image_banner']['name']) {
+                $oldImage = $model->getImageBannerName();
+                if (!empty($oldImage)) {
+                    Mage::helper('apdc_neighborhood/media')->deleteMedia($oldImage);
+                }
+                $image = Mage::helper('apdc_neighborhood/media')->uploadMedia('image_banner');
+                $data['image_banner'] = $image['file'];
+            } else {
+                unset($data['image_banner']);
             }
 
             $model->setData($data);

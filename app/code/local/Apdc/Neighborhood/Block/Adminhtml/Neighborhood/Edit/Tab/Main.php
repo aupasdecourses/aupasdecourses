@@ -98,6 +98,18 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
         );
 
         $fieldset->addField(
+            'mistral_guid',
+            'text',
+            array(
+                'name' => 'mistral_guid',
+                'label' => $this->_helper()->__('Mistral GUID'),
+                'title' => $this->_helper()->__('Mistral GUID'),
+                'required' => false,
+                'disabled' => $isElementDisabled
+            )
+        );
+
+        $fieldset->addField(
             'opening_days',
             'multiselect',
             array(
@@ -132,6 +144,18 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
                 'name' => 'image',
                 'label' => $this->_helper()->__('Image du quartier'),
                 'title' => $this->_helper()->__('Image du quartier'),
+                'required' => true,
+                'disabled' => $isElementDisabled
+            )
+        );
+
+        $fieldset->addField(
+            'image_banner',
+            'image',
+            array(
+                'name' => 'image_banner',
+                'label' => $this->_helper()->__('Bannière du quartier'),
+                'title' => $this->_helper()->__('Bannière du quartier'),
                 'required' => true,
                 'disabled' => $isElementDisabled
             )
