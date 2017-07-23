@@ -8,10 +8,10 @@ Apdc\ApdcBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        shopId:
-            type: integer
-            length: 11
-            nullable: true
-            column: shop_id
+    manyToOne:
+        shop:
+            targetEntity: AppBundle\Entity\Shop
+            joinColumn:
+                name: shop_id
+                referencedColumnName: id_shop
     lifecycleCallbacks: {  }

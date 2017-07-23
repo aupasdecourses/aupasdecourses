@@ -348,7 +348,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      *
      * @param Request $request The Request
      *
-     * @return array
+     * @return object|\Symfony\Component\Form\Form|JsonResponse
      *
      * @ViewTemplate(statusCode=Response::HTTP_CREATED)
      * @ApiDoc(
@@ -362,14 +362,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
     {
         $this->init('post');
 
-        $entityName = 'AppBundle\Entity\\'.$this->entityName;
-        $formName   = 'AppBundle\Form\\'.$this->entityName.'Type';
-
-        $entity = new $entityName();
-        $form   = $this->createForm(
-            $formName,
-            $entity
-        );
+        if (null === $entity = $this->getModel()->create()) {
+            return $this->notFound();
+        }
 
         $this->triggerEvent(
             'onCreateBeforeSubmit',
@@ -379,31 +374,26 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             ]
         );
 
-        $form->submit($request->request->all());
-
-        if ($form->isValid()) {
+        if ($this->getModel()->isValid($request)) {
             $this->triggerEvent(
                 'onCreateBeforeSave',
                 [
-                    'entity' => $entity,
+                    'entity' => $this->getModel()->getEntity()->toArray(),
                 ]
             );
 
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($entity);
-            $em->flush();
+            $this->getModel()->save();
 
             $this->triggerEvent(
                 'onCreateAfterSave',
                 [
-                    'entity' => $entity,
+                    'entity' => $this->getModel()->getEntity()->toArray(),
                 ]
             );
 
-            return $entity;
+            return $this->getModel()->getEntity()->toArray(['entity_id'] + $request->request->keys());
         } else {
-            return $form;
+            return $this->getForm();
         }
     }
 
@@ -466,7 +456,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             ]
         );
 
-        if ($this->getModel()->isValid($request, $clearMissing)) {
+        if ($this->getModel()->isValid($request, $clearMissing, false)) {
             $this->triggerEvent(
                 'onUpdateBeforeSave',
                 [
@@ -495,7 +485,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      * @param integer $id      The entity id
      * @param Request $request The Request
      *
-     * @return array
+     * @return void
      *
      * @ViewTemplate(statusCode=Response::HTTP_NO_CONTENT)
      * @ApiDoc()
@@ -586,7 +576,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
 
         $options = null;
 
-        $response = new StreamedResponse(function() use($container, $request) {
+        $response = new StreamedResponse(function () use ($container, $request) {
             $em = $this->getDoctrine()->getManager();
 
             $search  = $this->getSearch($request);
@@ -616,7 +606,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         });
 
         $response->headers->set('Content-Type', 'application/force-download');
-        $response->headers->set('Content-Disposition','attachment; filename="'.$this->entityName.'.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$this->entityName.'.csv"');
 
         return $response;
     }
@@ -672,7 +662,7 @@ abstract class AbstractController extends Controller implements ClassResourceInt
     /**
      * @return string
      */
-    public function getNSEntity ()
+    public function getNSEntity()
     {
         return 'AppBundle\Entity\\'.$this->entityName;
     }

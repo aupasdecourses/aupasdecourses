@@ -19,12 +19,8 @@ class User extends BaseUser
     /** @Accessor(getter="getMainRole") */
     protected $role;
 
-    /**
-     * User first name
-     *
-     * @var integer
-     */
-    private $shopId;
+    /** @var  \AppBundle\Entity\Shop */
+    protected $shop;
 
     public function getMainRole()
     {
@@ -36,26 +32,26 @@ class User extends BaseUser
     }
 
     /**
-     * Set shopId
+     * Set shop
      *
-     * @param integer $shopId
+     * @param \AppBundle\Entity\Shop $shop
      *
      * @return User
      */
-    public function setShopId($shopId)
+    public function setShop(\AppBundle\Entity\Shop $shop = null)
     {
-        $this->shopId = $shopId;
+        $this->shop = $shop;
 
         return $this;
     }
 
     /**
-     * Get shopId
+     * Get shop
      *
-     * @return integer
+     * @return \AppBundle\Entity\Shop
      */
-    public function getShopId()
+    public function getShop()
     {
-        return $this->shopId;
+        return $this->shop;
     }
 }

@@ -7,6 +7,9 @@ class ProductRepository extends AbstractMageRepository
 {
     protected $modelName = 'catalog/product';
 
+    /** @var  \Mage_Catalog_Model_Product */
+    protected $entity;
+
     /**
      * @inheritdoc
      *

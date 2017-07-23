@@ -14,7 +14,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('shopId')
+            ->add('shop')
             ->add('roles')
             ->add('enabled', null, [
                 'empty_data' => '1'

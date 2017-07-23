@@ -84,6 +84,17 @@ abstract class AbstractRepository extends EntityRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function create()
+    {
+        $entityName = $this->getEntityName();
+        $this->entity = new $entityName();
+
+        return $this->entity;
+    }
+
+    /**
      * @return void
      */
     public function save()

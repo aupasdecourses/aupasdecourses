@@ -15,7 +15,7 @@ class UserRepository extends AbstractRepository
     protected function filtersQuery($filters, $qb)
     {
         if (isset($filters['type'])) {
-            $qb->andWhere('magic.shopId != 0');
+            $qb->andWhere('magic.shop IS NOT NULL');
 
             unset($filters['type']);
         }
