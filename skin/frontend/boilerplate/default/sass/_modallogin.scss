@@ -1,23 +1,63 @@
 /* LOGIN FORM */
 
-#login-form-popup-container, #newsletter-form-popup-container{
+#login-form-popup-container,
+#newsletter-form-popup-container {
     display: block;
     position: absolute;
     background: white;
     opacity: 1;
     filter: alpha(opacity=100);
-    position: fixed;
     top: 50%;
     z-index: 10000;
     left: 50%;
-    min-height: 100px;
     text-align: center;
     border-radius: 10px;
     border: 1px solid lightgrey;
     width: 500px;
+    height:100px;
+    min-height: 100px;
+    max-height:95%;
     padding: 20px;
-    height:auto;
-    overflow:none;
+    overflow:hidden;
+    transition:height 0.3s ease;
+
+    .back-link {
+      text-align:left;
+    }
+    h1 {
+      margin-top:0px;
+    }
+    .form-group:last-child {
+      margin-bottom:0px;
+    }
+}
+#newsletter-form-popup-container {
+  overflow:initial;
+}
+
+
+#login-form-popup[data-current-view="apdc_login_view"] {
+}
+#login-form-popup[data-current-view="apdc_register_view"] {
+  #login-form-popup-container {
+    height:inherit;
+  }
+  .apdc-popup-content {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+  }
+
+    .account-create {
+      .form-list {
+        padding:0 10px 0 0;
+        select {
+          width:100%;
+        }
+      }
+    }
 }
 
 #login-form-popup-close{

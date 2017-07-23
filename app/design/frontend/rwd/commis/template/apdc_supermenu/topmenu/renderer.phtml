@@ -53,7 +53,7 @@ foreach ($children as $child) {
 
         $html .= '<span>' . $this->escapeHtml($this->__($child->getName())) . '</span>';
         
-        if(!($child->getLevel()==0 && $child->getIsClickable()) && !($child->getLevel()==1 && $child->getIsCommercant()<>70)){
+        if(!($child->getLevel()==0 && $child->getIsClickable()) && !($child->getLevel()==1 && $child->getIsCommercant()<>70) && $child->hasChildren()){
             $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
         }
         if(!($child->getLevel()==1 && $child->getIsCommercant()<>70)){

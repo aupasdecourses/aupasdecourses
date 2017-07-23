@@ -11,7 +11,7 @@ class StatController extends Controller
 {
 	public function statCustomerAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -26,7 +26,7 @@ class StatController extends Controller
 
 	public function loyaltyCustomerAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -46,7 +46,7 @@ class StatController extends Controller
 
 	public function statVoucherAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -69,7 +69,7 @@ class StatController extends Controller
 
 	public function noteOrderAction(Request $request)
 	{
-		if (!$this->isGranted('ROLE_COMMUNICATION')) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
 			return $this->redirectToRoute('root');
 		}
 		
@@ -89,6 +89,19 @@ class StatController extends Controller
 			'json_data'		=> $json_data,
 			'order_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/sales_order/view/order_id/',
 			'customer_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'
+		]);
+	}
+
+	public function marginAction(Request $request) {
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$mage = $this->container->get('apdc_apdc.magento');
+		$margin = $mage->getMargin();
+
+		return $this->render('ApdcApdcBundle::stat/margin.html.twig', [
+			'margin' => $margin,
 		]);
 	}
 }

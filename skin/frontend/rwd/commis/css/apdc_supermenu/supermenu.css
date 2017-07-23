@@ -386,7 +386,7 @@ a.level3:hover {
   #supermenu .template-column:nth-child(1n+0) {
     clear:none;
   }
-  #supermenu .template-column:nth-child(3n+1) {
+  #supermenu .template-column.template-3-cols {
     clear:left;
   }
 }
@@ -398,7 +398,7 @@ a.level3:hover {
   #supermenu .template-column:nth-child(1n+0) {
     clear:none;
   }
-  #supermenu .template-column:nth-child(4n+1) {
+  #supermenu .template-column.template-4-cols {
     clear:left;
   }
 }
@@ -409,7 +409,7 @@ a.level3:hover {
   #supermenu .template-column:nth-child(1n+0) {
     clear:none;
   }
-  #supermenu .template-column:nth-child(5n+1) {
+  #supermenu .template-column.template-5-cols {
     clear:left;
   }
 }

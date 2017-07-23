@@ -6,12 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Apdc\ApdcBundle\Entity\Payout;
 use Apdc\ApdcBundle\Form\PayoutType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BillingController extends Controller
 {
     public function indexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_GESTION')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -54,7 +56,7 @@ class BillingController extends Controller
 
     public function verifAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -124,7 +126,8 @@ class BillingController extends Controller
 
         return $this->render('ApdcApdcBundle::billing/verif.html.twig', [
             'form' => $form_input->createView(),
-            'verif' => $verif,
+            'verif' => $verif['result'],
+            'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
         ]);
@@ -132,7 +135,7 @@ class BillingController extends Controller
 
     public function detailsAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -140,11 +143,70 @@ class BillingController extends Controller
 
         $session = $request->getSession();
 
+        $defaultDataCSV = array('message' => 'Export');
+        $formCSV = $this->createFormBuilder($defaultDataCSV)
+            ->add("Exporter", SubmitType::class,array('label'=>'Exporter CSV','attr'=>array('class'=>'btn btn-lg btn-success','style'=>'float:right')))
+            ->getForm();
+        $formCSV->handleRequest($request);
+
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
             $bill = $factu->getDataFacturation('indi_billingdetails', $date_debut);
+
+            /***** EXPORT FACTU EN CSV *****/
+            if ($formCSV->isSubmitted() && $formCSV->isValid()) {
+                $response = new StreamedResponse();
+                $response->setCallback(function() use($bill) {
+                    $handle = fopen('php://output', 'w+');
+
+                    fputcsv($handle, array(
+                        'Date creation',
+                        'Date livraison',
+                        '#Commande',
+                        '#Facture',
+                        'Nom client',
+                        'Commercant',
+                        'Commande Client HT',
+                        'Commande Client TTC',
+                        'Avoir HT',
+                        'Avoir TTC',
+                        'Valeur Ticket HT',
+                        'Valeur Ticket TTC',
+                        'Commission APDC (HT)',
+                        'Versement Commercant (HT)'
+                    ),';');
+
+                    foreach ($bill as $order) {
+                        fputcsv($handle, array(
+                            $order['creation_date'],
+                            $order['delivery_date'],
+                            $order['increment_id'],
+                            $order['id_billing'],
+                            $order['customer_name'],
+                            $order['shop'],
+                            $order['sum_items_HT'],
+                            $order['sum_items'],
+                            $order['sum_items_credit_HT'],
+                            $order['sum_items_credit'],
+                            $order['sum_ticket_HT'],
+                            $order['sum_ticket'],
+                            $order['sum_commission_HT'],
+                            $order['sum_due_HT']
+                        ),';');
+                    }
+
+                    fclose($handle);
+                });
+
+                $response->setStatusCode(200);
+                $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+                $response->headers->set('Content-Disposition','attachment; filename="facturation"'.$date_debut.'".csv"');
+      
+                return $response;
+            } // Fin export CSV 
         }
+
 
         $check_date = (strtotime(str_replace('/', '-', $date_debut)) < strtotime('2017/01/01')) ? 1 : 0;
 
@@ -153,12 +215,13 @@ class BillingController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'check_date' => $check_date,
+            'formCSV' => $formCSV->createView(),
         ]);
     }
 
     public function summaryAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -295,7 +358,7 @@ class BillingController extends Controller
 
     public function payoutIndexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -324,7 +387,7 @@ class BillingController extends Controller
 
     public function payoutSubmitAction(Request $request, $choice)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 

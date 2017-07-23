@@ -119,7 +119,7 @@ gulp.task('fonts', function() {
 gulp.task('watch', function() {
 
   // // Watch .scss files
-  // gulp.watch('sass/**/*.scss', ['sass']);
+   gulp.watch('sass/**/*.scss', ['sass']);
 
   // // Watch .js files
   // gulp.watch('js/**/*.js', ['js']);

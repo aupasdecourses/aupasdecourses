@@ -110,7 +110,7 @@ class Pmainguet_CreateStore12 extends Pmainguet_CreateStore
             ),
             "Le Verger d'Aligre"=>array(
                 'google_id'=>'2030347927',
-                'google_key'=>'1T6nm1UHVA1DVBx2OpEep8p9f5c3rlmPoIRZ12W1KbAk',
+                'google_key'=>'12DMROtLpeH-tmo9NL7KljNK4t6cw8D_WN9bTP3br-eY',
                 'street'=>'7 Place d\'Aligre',
                 'postcode'=>'75012',
                 'phone'=>'',

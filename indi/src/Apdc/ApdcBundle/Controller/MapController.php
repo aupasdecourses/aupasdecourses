@@ -10,7 +10,7 @@ class MapController extends Controller
     public function merchantsAction(Request $request)
     {
 		   
-		if(!$this->isGranted('ROLE_DISPATCH')) {
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -68,7 +68,7 @@ class MapController extends Controller
 
     public function customersAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_COMMUNICATION')) {
+        if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
             return $this->redirectToRoute('root');
         }
 

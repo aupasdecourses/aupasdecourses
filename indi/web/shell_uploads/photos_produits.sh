@@ -37,7 +37,8 @@ echo "Done!"
 #optimize
 echo "Optimize jpg ..."
 for f in "$dir"/*.jpg; do
-jpegoptim "$f" --max=90 --all-progressive --strip-all --strip-com --strip-exif --strip-iptc --strip-icc
+jpegoptim "$f" --max=90 --all-progressive --strip-all --strip-com --strip-exif --strip-iptc --strip-icc;
+mv -i "$f" `echo $f | tr 'A-Z' 'a-z'`;
 done
 echo "Done!"
 
