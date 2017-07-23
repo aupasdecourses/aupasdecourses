@@ -8,4 +8,10 @@ Apdc\ApdcBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        shopId:
+            type: integer
+            length: 11
+            nullable: true
+            column: shop_id
     lifecycleCallbacks: {  }

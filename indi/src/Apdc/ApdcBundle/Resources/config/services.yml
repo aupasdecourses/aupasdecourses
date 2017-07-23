@@ -22,3 +22,13 @@ services:
 
     apdc_apdc.stats:
         class: Apdc\ApdcBundle\Services\Stats
+
+    apdc_apdc.repository.products:
+        class: AppBundle\Repository\ProductRepository
+        arguments:
+            - '@apdc_apdc.magento'
+
+    apdc_apdc.repository.orders:
+        class: AppBundle\Repository\OrderRepository
+        arguments:
+            - '@apdc_apdc.magento'
