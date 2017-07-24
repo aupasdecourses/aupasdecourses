@@ -30,8 +30,12 @@ class Apdc_Dataflow_Model_Catalog_Convert_Adapter_Product extends Mage_Catalog_M
         if (is_array($filters) && !empty($filters)) {
             foreach ($filters as $attributeCode => $value) {
                 if ($value && $value != '') {
-                    $attrFilterArray[$attributeCode] = 'eq';
-                    $this->setVar('filter/' . $attributeCode, $value);
+                    if ($attributeCode == 'store') {
+                        $this->setVar($attributeCode, $value);
+                    } else {
+                        $attrFilterArray[$attributeCode] = 'eq';
+                        $this->setVar('filter/' . $attributeCode, $value);
+                    }
                 }
             }
         }
@@ -40,7 +44,7 @@ class Apdc_Dataflow_Model_Catalog_Convert_Adapter_Product extends Mage_Catalog_M
                 'type'          => 'type_id',
                 'attribute_set' => 'attribute_set_id'
             );
+            parent::setFilter($attrFilterArray, $attrToDb);
         }
-        parent::setFilter($attrFilterArray, $attrToDb);
     }
 }

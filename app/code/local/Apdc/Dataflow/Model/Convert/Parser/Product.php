@@ -102,8 +102,9 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
                 if (!$attribute) {
                     continue;
                 }
-
-                if ($attribute->usesSource()) {
+                if ($field == 'tax_class_id' || $field == 'status') {
+                    $row[$field] = $value;
+                } else if ($attribute->usesSource()) {
                     $option = $attribute->getSource()->getOptionText($value);
                     if ($value && empty($option) && $option != '0') {
                         $this->addException(

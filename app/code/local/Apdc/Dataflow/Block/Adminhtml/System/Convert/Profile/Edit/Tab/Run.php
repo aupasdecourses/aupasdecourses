@@ -37,7 +37,18 @@ class Apdc_Dataflow_Block_Adminhtml_System_Convert_Profile_Edit_Tab_Run extends 
 
             $form = new Varien_Data_Form();
             $fieldset = $form->addFieldset('base_fieldset', array('legend' => $this->_helper()->__('Filtrage')));
-            $this->getCommercantsOptions();
+            $fieldset->addField(
+                'store',
+                'select',
+                array(
+                    'name' => 'filters[store]',
+                    'label' => $this->_helper()->__('Store'),
+                    'title' => $this->_helper()->__('Store'),
+                    'class' => 'profile_filter',
+                    'values' => $this->getStoresOptions(),
+                    'required' => false
+                )
+            );
             $fieldset->addField(
                 'commercant',
                 'select',
@@ -69,6 +80,11 @@ class Apdc_Dataflow_Block_Adminhtml_System_Convert_Profile_Edit_Tab_Run extends 
         return false;
     }
 
+    /**
+     * getCommercantsOptions
+     * 
+     * @return array
+     */
     protected function getCommercantsOptions()
     {
         $attributeId = Mage::getResourceModel('eav/entity_attribute')
@@ -77,6 +93,29 @@ class Apdc_Dataflow_Block_Adminhtml_System_Convert_Profile_Edit_Tab_Run extends 
         $options = $attribute ->getSource()->getAllOptions(false);
         array_unshift($options, array('label' => $this->_helper()->__('-- Tous les commerçants --'), 'value' => ''));
         return $options;
+    }
+
+    /**
+     * getStoresOptions
+     * 
+     * @return array
+     */
+    protected function getStoresOptions()
+    {
+        $storesOptions = [
+            [
+                'label' => $this->_helper()->__('-- Tous les stores --'),
+                'value' => ''
+            ]
+        ];
+        $stores = Mage::app()->getStores();
+        foreach ($stores as $store) {
+            $storesOptions[] = [
+                'label' => $store->getName(),
+                'value' => $store->getId()
+            ];
+        }
+        return $storesOptions;
     }
 
     /**

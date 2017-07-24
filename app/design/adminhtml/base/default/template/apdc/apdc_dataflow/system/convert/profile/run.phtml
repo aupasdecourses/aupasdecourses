@@ -32,9 +32,9 @@ function addFiltersToUrl(url)
         params.push(filters[i].name + '=' + filters[i].value);
     }
     if (params.length > 0) {
-        url += '?' + params.join('&amp;');
+        url += '?' + params.join('&');
     }
-    return url;
+    return encodeURI(url);
 }
 
 function getDirection()
