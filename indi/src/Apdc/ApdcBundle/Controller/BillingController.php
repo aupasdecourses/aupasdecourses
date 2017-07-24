@@ -154,7 +154,7 @@ class BillingController extends Controller
             $date_fin = $factu->end_month($date_debut);
             $bill = $factu->getDataFacturation('indi_billingdetails', $date_debut);
 
-            /***** EXPORT FACTU EN CSV *****/
+            /***** Export CSV des commandes facturées *****/
             if ($formCSV->isSubmitted() && $formCSV->isValid()) {
                 $response = new StreamedResponse();
                 $response->setCallback(function() use($bill) {
@@ -201,7 +201,7 @@ class BillingController extends Controller
 
                 $response->setStatusCode(200);
                 $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-                $response->headers->set('Content-Disposition','attachment; filename="facturation"'.$date_debut.'".csv"');
+                $response->headers->set('Content-Disposition','attachment; filename="commandes-facturees"'.$date_debut.'".csv"');
       
                 return $response;
             } // Fin export CSV 
@@ -229,10 +229,71 @@ class BillingController extends Controller
 
         $session = $request->getSession();
 
+        $defaultDataCSV = array('message' => 'Export');
+        $formCSV = $this->createFormBuilder($defaultDataCSV)
+            ->add("Exporter", SubmitType::class,array('label'=>'Exporter CSV','attr'=>array('class'=>'btn btn-lg btn-success','style'=>'float:right')))
+            ->getForm();
+        $formCSV->handleRequest($request);
+
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
             $summary = $factu->getDataFacturation('indi_billingsummary', $date_debut);
+
+
+      
+
+            /***** Export CSV des factures commercants *****/
+            if ($formCSV->isSubmitted() && $formCSV->isValid()) {
+                $response = new StreamedResponse();
+                $response->setCallback(function() use($summary) {
+                    $handle = fopen('php://output', 'w+');
+
+                    fputcsv($handle, array(
+                        '#Facture',
+                        'Magasins',
+                        'Commande (TTC)',
+                        'Ticket TTC',
+                        'Ticket HT',
+                        'Commission TTC',
+                        'Commission HT',
+                        'Total Commercant TTC',
+                        'Total Commercant HT',
+                        'Remise TTC',
+                        'Remise HT',
+                        'Frais bancaires TTC',
+                        'Frais bancaires HT',
+                        'Virement (TTC)'
+                    ),';');
+
+                    foreach ($summary as $order) {
+                        fputcsv($handle, array(
+                            $order['increment_id'],
+                            $order['shop'],
+                            $order['sum_items'],
+                            $order['sum_ticket'],
+                            $order['sum_ticket_HT'],
+                            $order['sum_commission'],
+                            $order['sum_commission_HT'],
+                            $order['sum_due'],
+                            $order['sum_due_HT'],
+                            $order['discount_shop'],
+                            $order['discount_shop_HT'],
+                            $order['processing_fees'],
+                            $order['processing_fees_HT'],
+                            $order['sum_payout']
+                        ),';');
+                    }
+
+                    fclose($handle);
+                });
+
+                $response->setStatusCode(200);
+                $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+                $response->headers->set('Content-Disposition','attachment; filename="facturation"'.$date_debut.'".csv"');
+      
+                return $response;
+            } // Fin export CSV 
         }
 
         $check_date = (strtotime(str_replace('/', '-', $date_debut)) < strtotime('2017/01/01')) ? 1 : 0;
@@ -242,6 +303,7 @@ class BillingController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'check_date' => $check_date,
+            'formCSV'   => $formCSV->createView(),
         ]);
     }
 
