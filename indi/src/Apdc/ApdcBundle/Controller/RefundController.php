@@ -237,6 +237,7 @@ class RefundController extends Controller
         $total					= $order[-1]['merchant']['total'];
         $order_mid				= $order[-1]['order']['mid'];
         $input_status			= $order[-1]['order']['input'];
+        $customer_name          = $order[-1]['order']['first_name'].' '.$order[-1]['order']['last_name'];
         unset($order[-1]);
 
         $entity_input	= new \Apdc\ApdcBundle\Entity\Input();
@@ -295,6 +296,7 @@ class RefundController extends Controller
             'refund_shipping'			=> $mage->checkRefundShipping($order_mid),
             'commentaire_client'		=> $commentaire_client,
             'commentaire_commercant'	=> $commentaire_commercant,
+            'customer_name'             => $customer_name,
         ]);
     }
 
