@@ -16,10 +16,10 @@
 						{# Nb commandes/commercant == taille du tableau 'orders' #}
 						{% if merchant.orders|length == 0 %}
 							{% set nb_commandes = "Pas de commande " %}
-							<div style="color:red">{{ nb_commandes }}</div>
+							<div>{{ nb_commandes }}</div>
 						{% else %}
 							{% set nb_commandes = merchant.orders|length ~ " commande(s) " %}
-							<div>{{ nb_commandes }}</div>
+							<div style="color:red">{{ nb_commandes }}</div>
 						{% endif %}
 
 					</th>
