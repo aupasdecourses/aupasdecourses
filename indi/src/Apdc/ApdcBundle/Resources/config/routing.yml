@@ -95,6 +95,10 @@ refundAdyenForm:
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
   requirements: { psp:"[0-9]+" }
 
+mistralTicketImg:
+  path: /refund/mistralTicketImg/
+  defaults: { _controller: ApdcApdcBundle:Refund:mistralTicketImg}
+
 billingIndex:
   path: /billing/
   defaults: { _controller: ApdcApdcBundle:Billing:index}

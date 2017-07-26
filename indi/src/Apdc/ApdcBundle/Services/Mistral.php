@@ -30,13 +30,14 @@ class Mistral
 
 	public function getPictures()
 	{
-		/*
+		
+		/* exemple avec pascal bassard */
 		$array = array(
 			'Token' 		=> '6AA0A660A6B647C39F4CE6CED09621A2',
-			'PartnerRef' 	=> 'APDC-5535',
+			'PartnerRef' 	=> 'APDC5535',
 			'OrderRef' 		=> '2017000293-272',
 		 );
-		*/
+		
 
 		$jsonArray = json_encode($array);
 
@@ -50,6 +51,11 @@ class Mistral
 
 		$jsonResult = json_decode($result, true);
 
-		return $jsonResult[];
+		echo '<pre>';
+		var_dump($jsonArray);
+		var_dump($jsonResult);
+		echo '<pre>';
+
+		return $jsonResult;
 	}
 }

@@ -25,3 +25,4 @@ services:
 
     apdc_apdc.mistral:
         class: Apdc\ApdcBundle\Services\Mistral
+        arguments: ['%stars_services_api_url%']
