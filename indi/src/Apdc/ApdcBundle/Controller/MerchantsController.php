@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class MerchantsController extends Controller
 {
     public function indexAction(Request $request)
@@ -52,6 +55,9 @@ class MerchantsController extends Controller
 
 		$mage = $this->container->get('apdc_apdc.magento');
 
+		$session	= $request->getSession();
+		$pdforder	= $this->container->get('apdc_apdc.pdforder');
+		
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
 		$form_fromtoMerchant	= $this->createForm(\Apdc\ApdcBundle\Form\FromToMerchant::class, $entity_fromtoMerchant, [
 			'action' => $this->generateUrl('merchantsIndex')
@@ -61,11 +67,55 @@ class MerchantsController extends Controller
 		$form_fromtoMerchant->get('to')->setData($to);
 		$form_fromtoMerchant->get('merchant')->setData($id);
 
+		$merchants = $mage->getMerchantsOrders($id, $from, $to);
+
+
+		/* Generation PDF commercant */
+		$defaultDataPDF = array('message' => 'Send');
+		$formPDF = $this->createFormBuilder($defaultDataPDF)
+				->add("Send", SubmitType::class,array('label'=>'Envoyer PDF','attr'=>array('class'=>'btn btn-lg btn-info')))
+				->getForm();
+		$formPDF->handleRequest($request);
+		$datePDF = date('Y-m-d');
+
+		if ($formPDF->isSubmitted() && $formPDF->isValid()) {
+			foreach ($merchants as $store_name => $mercs) {
+				foreach ($mercs as $merchant_id => $merchant) {
+					
+					$pdforder->setOrderTemplate();
+					$pdforder->setDate($datePDF);
+					$pdforder->setName($merchant['name']);
+
+					// !! $pdforder->setMails($merchant['mail']); //
+
+					if(!empty ($merchant['orders'])) {
+						foreach ($merchant['orders'] as $order) {
+							$pdforder->addOrder($order);
+						}
+					}
+
+					$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
+				}
+			}
+
+	//		$pdforder->send();
+
+	//		$session->getFlashBag()->add('success', 'PDF bien envoyé');
+	//		return $this->redirectToRoute('merchantsOne', [
+	//				'id'	=> $id,
+	//				'from'	=> $from,
+	//				'to'	=> $to
+	//			]);
+		}
+		/* FIN PDF */
+
+
 		return $this->render('ApdcApdcBundle::merchants/one.html.twig', [
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
-			'merchants' => $mage->getMerchantsOrders($id, $from, $to)
+			'merchants' => $merchants,
+			'formPDF' 	=> $formPDF->createView(),
 		]);
     }
 

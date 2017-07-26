@@ -19,6 +19,7 @@ services:
 
     apdc_apdc.pdforder:
         class: Apdc\ApdcBundle\Services\Pdforder
+        arguments: [ '%kernel.root_dir%', '@router' ]
 
     apdc_apdc.stats:
         class: Apdc\ApdcBundle\Services\Stats
