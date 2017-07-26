@@ -932,9 +932,6 @@ header{
     position: fixed !important;
 }
 
-.header-neighborhood-container{
-}
-
 .header-delivery-container{
     margin-right: 10px;
     .skip-links{
@@ -1074,20 +1071,35 @@ header{
     }
 }
 
-#delivery-popup-content{
-    #co-ddate-form{
-        h3{
-            text-align: center;
-        }
-        ul{
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .delivery{
-            max-width: 650px;
-            margin: auto;
-        }
-    }
+#delivery-popup-container {
+  #delivery-popup-content{
+      #co-ddate-form{
+          h3{
+              text-align: center;
+              margin-top:0;
+          }
+          ul{
+              list-style-type: none;
+              padding-left: 0;
+          }
+          .delivery{
+              margin: auto;
+              .deli_time {
+                width:90px;
+                  p {
+                      white-space:nowrap;
+                  }
+              }
+              .deli_date {
+                width:calc(100% - 90px);
+                overflow:auto;
+                #slideshow-area {
+                  width:530px;
+                }
+              }
+          }
+      }
+  }
 }
 
 .no-touch{

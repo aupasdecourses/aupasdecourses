@@ -33,16 +33,14 @@
       margin-bottom:0px;
     }
 }
+#delivery-popup-container {
+    max-width:630px;
+    width:100%;
+}
 #newsletter-form-popup-container {
   overflow:initial;
 }
 
-#delivery-popup-container,
-#neighborhood-popup-container{
-    .apdc-popup-content{
-        height: auto;
-    }
-}
 #neighborhood-popup-container{
     overflow: auto;
 }

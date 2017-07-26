@@ -37,7 +37,11 @@
 
 											function selectDdate(date, dtime){
 
+
 												if(initSelectDdate == false && (date != document.getElementById('ddate:date').value || dtime != document.getElementById('ddate:dtime').value)) {
+                                                    if (typeof(apdcDeliveryPopup) !== 'undefined') {
+                                                        apdcDeliveryPopup.showLoading();
+                                                    }
 													jQuery.ajax( {
 														url : '<?php echo $this->getUrl('ddate/express/saveDdateAjax') ?>',
 														type: 'post',

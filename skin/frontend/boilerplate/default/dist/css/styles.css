@@ -12779,18 +12779,35 @@ header .top-nav li a a:visited {
   display: inline-block;
 }
 
-#delivery-popup-content #co-ddate-form h3 {
+#delivery-popup-container #delivery-popup-content #co-ddate-form h3 {
+  margin-top: 0;
   text-align: center;
 }
 
-#delivery-popup-content #co-ddate-form ul {
+#delivery-popup-container #delivery-popup-content #co-ddate-form ul {
   padding-left: 0;
   list-style-type: none;
 }
 
-#delivery-popup-content #co-ddate-form .delivery {
-  max-width: 650px;
+#delivery-popup-container #delivery-popup-content #co-ddate-form .delivery {
   margin: auto;
+}
+
+#delivery-popup-container #delivery-popup-content #co-ddate-form .delivery .deli_time {
+  width: 90px;
+}
+
+#delivery-popup-container #delivery-popup-content #co-ddate-form .delivery .deli_time p {
+  white-space: nowrap;
+}
+
+#delivery-popup-container #delivery-popup-content #co-ddate-form .delivery .deli_date {
+  overflow: auto;
+  width: calc(100% - 90px);
+}
+
+#delivery-popup-container #delivery-popup-content #co-ddate-form .delivery .deli_date #slideshow-area {
+  width: 530px;
 }
 
 .no-touch #header-neighborhood li.neighborhood_list ul.neighborhood_actions {
@@ -17995,13 +18012,13 @@ h1.account-title {
   margin-bottom: 0;
 }
 
-#newsletter-form-popup-container {
-  overflow: initial;
+#delivery-popup-container {
+  width: 100%;
+  max-width: 630px;
 }
 
-#delivery-popup-container .apdc-popup-content,
-#neighborhood-popup-container .apdc-popup-content {
-  height: auto;
+#newsletter-form-popup-container {
+  overflow: initial;
 }
 
 #neighborhood-popup-container {
