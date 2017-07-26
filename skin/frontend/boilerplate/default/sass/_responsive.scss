@@ -924,6 +924,20 @@
         margin-right: 5px;
         padding: 10px 5px;
     }
+    #header-neighborhood {
+        li.neighborhood_list.choose > a {
+            display:block;
+            text-align:center;
+        }
+        li.neighborhood_list{
+
+            p {
+                text-align:center;
+                display:block;
+                margin:0;
+            }
+        }
+    }
     .intro-section{
         #logo{
             width: 100%;

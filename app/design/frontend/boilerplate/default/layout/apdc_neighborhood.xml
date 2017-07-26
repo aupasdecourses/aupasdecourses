@@ -2,7 +2,6 @@
 <layout version="0.1.0">
   <default>
     <reference name="head">
-      <action method="addItem"><type>skin_css</type><name>css/apdc_neighborhood/neighborhood.css</name><params/></action>
       <action method="addItem"><type>skin_js</type><name>js/apdc_neighborhood/neighborhood.js</name><params/></action>
     </reference>
     <reference name="header">

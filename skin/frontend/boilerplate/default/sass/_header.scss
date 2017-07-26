@@ -947,6 +947,8 @@ header{
 #header-neighborhood{
     list-style-type: none;
     padding-left: 0;
+    display:table;
+    margin:0 auto;
     &.open{
         display: block;
     }
@@ -1008,6 +1010,9 @@ header{
             height:100%;
         }
     }
+    li.neighborhood_list.choose > a {
+      display:table-row;
+    }
     li.neighborhood_list{
         text-align: center;
         img {
@@ -1022,11 +1027,13 @@ header{
             vertical-align: middle;
             margin: 0;
             margin-left: 20px;
+            text-align:left;
             i {
                 font-size:10px;
                 width:100%;
                 line-height:12px;
                 white-space:normal;
+                display:block;
             }
         }
         ul.neighborhood_actions {

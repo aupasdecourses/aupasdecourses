@@ -12624,6 +12624,8 @@ header .top-nav li a a:visited {
 }
 
 #header-neighborhood {
+  display: table;
+  margin: 0 auto;
   padding-left: 0;
   list-style-type: none;
 }
@@ -12704,6 +12706,10 @@ header .top-nav li a a:visited {
   padding: 0;
 }
 
+#header-neighborhood li.neighborhood_list.choose > a {
+  display: table-row;
+}
+
 #header-neighborhood li.neighborhood_list {
   text-align: center;
 }
@@ -12720,12 +12726,14 @@ header .top-nav li a a:visited {
   display: inline-block;
   margin: 0;
   margin-left: 20px;
+  text-align: left;
   vertical-align: middle;
 }
 
 #header-neighborhood li.neighborhood_list p i {
   font-size: 10px;
   line-height: 12px;
+  display: block;
   width: 100%;
   white-space: normal;
 }
@@ -17663,6 +17671,17 @@ h1.account-title {
     margin-top: -6px;
     margin-right: 5px;
     padding: 10px 5px;
+  }
+
+  #header-neighborhood li.neighborhood_list.choose > a {
+    display: block;
+    text-align: center;
+  }
+
+  #header-neighborhood li.neighborhood_list p {
+    display: block;
+    margin: 0;
+    text-align: center;
   }
 
   .intro-section #logo {
