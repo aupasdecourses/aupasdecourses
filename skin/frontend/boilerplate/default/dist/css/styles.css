@@ -16709,6 +16709,7 @@ h1.account-title {
     display: inline-block;
     float: none;
     width: auto;
+    min-width: initial;
     margin-bottom: 10px;
     vertical-align: top;
   }
