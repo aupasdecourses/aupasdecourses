@@ -131,7 +131,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         foreach($data["timetable"] as $day=>$hours){
             $hours=($hours=="")?"Fermé":$hours;
 			$hoursExplode = explode('-', $hours);
-			if(count($hoursExplode) > 2) {
+			if(count($hoursExplode) > 3) {
 				$hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
 				$hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
 				$hours = $hoursExplode1.' / '.$hoursExplode2;
