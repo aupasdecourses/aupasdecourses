@@ -141,10 +141,10 @@
                 <block type="page/html_welcome" name="welcome" as="welcome"/>
 				<!--<block type="customer/form_login" name="customer_form_login" template="apdc_customer/form/mini.login.phtml" />-->
 				<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
-					<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-						<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
-						<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
-					</block>
+					<!--<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">-->
+						<!--<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>-->
+						<!--<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />-->
+					<!--</block>-->
 				</block>
 				
 				

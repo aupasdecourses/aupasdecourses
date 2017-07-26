@@ -22,12 +22,27 @@
  */
 class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_Block_Product_View_Options_Type_Select
 {
+    protected $uniqIdProduct = '';
+
+    /**
+     * getValuesHtmlByUniqIdProduct 
+     * 
+     * @param string $uniqIdProduct uniqIdProduct 
+     * 
+     * @return string
+     */
+    public function getValuesHtmlByUniqIdProduct($uniqIdProduct)
+    {
+        $this->uniqIdProduct = $uniqIdProduct;
+        return $this->getValuesHtml();
+    }
+
     /**
      * Return html for control element
      *
      * @return string
      */
-    public function getValuesHtml($uniqIdProduct)
+    public function getValuesHtml()
     {
         $_option = $this->getOption();
         $configValue = $this->getProduct()->getPreconfiguredValues()->getData('options/' . $_option->getId());
@@ -126,7 +141,7 @@ class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_B
                     . $this->escapeHtml($_value->getTitle()) . ' ' . $priceStr . '</label>';
                 if ($_option->getIsRequire()) {
                     $selectHtml .= '<script type="text/javascript">' . '$(\'options_' . $_option->getId() . '_'
-                    . $count . '_'.$uniqId.'\').advaiceContainer = \'options-' . $_option->getId() . '-'.$uniqIdProduct.'-container\';'
+                    . $count . '_'.$uniqId.'\').advaiceContainer = \'options-' . $_option->getId() . '-'.$this->uniqIdProduct.'-container\';'
                     . '$(\'options_' . $_option->getId() . '_' . $count . '_'.$uniqId
                     . '\').callbackFunction = \'validateOptionsCallback\';' . '</script>';
                 }

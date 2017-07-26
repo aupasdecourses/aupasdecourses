@@ -31,7 +31,7 @@
 <dd<?php if ($_option->decoratedIsLast){?> class="last"<?php }?>>
     <div class="input-box">
 		<?php $uniqIdProduct = uniqid('product'); ?>
-        <?php echo $this->getValuesHtml($uniqIdProduct); ?>
+        <?php echo $this->getValuesHtmlByUniqIdProduct($uniqIdProduct); ?>
         <?php if ($_option->getIsRequire()): ?>
             <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX): ?>
                 <span id="options-<?php echo $_option->getId() ?>-<?php echo $uniqIdProduct; ?>-container"></span>
