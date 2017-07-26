@@ -17,7 +17,10 @@ class Apdc_Catalog_Block_Category_CategoryCommercant extends Mage_Adminhtml_Bloc
         $layer = Mage::getSingleton('catalog/layer');
         $layer->setCurrentCategory($cur_category);
         $image = $layer->getCurrentCategory()->getThumbnail();
-        $url = Mage::getBaseUrl('media') . 'catalog/category/' . $image;
-        return $url;
+        if (preg_match('/^wysiwyg\//', $image) || preg_match('/^catalog\/category\//', $image)) {
+            return Mage::getBaseUrl('media') . DS . $image;
+        } else {
+            return Mage::getBaseUrl('media') . 'catalog/category/' . $image;
+        }
     }
 }
