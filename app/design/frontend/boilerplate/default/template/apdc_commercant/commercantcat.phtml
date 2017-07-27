@@ -18,7 +18,7 @@
 							<div class="linkcat">
 								<a href="<?= $cat->getUrl()?>">
 								<div class="img-wrapper">
-								    <img class="img-responsive img-thumbnail" src="<?= $cat->getImageUrl()?>" alt="<?=$cat_name?>" title="<?=$cat_name?>" />
+								    <img class="img-responsive img-thumbnail" src="<?php echo Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($cat); ?>" alt="<?=$cat_name?>" title="<?=$cat_name?>" />
 								    <div class="description">
 								    		<span><?=$cat_name?></span>
 								    </div>

@@ -75,7 +75,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $filter[$cat->getId()] = [
                 'store_id' => $cat->getStoreId(),
                 'url_path' => $cat->getUrlPath(),
-                'src' => $cat->getImage(),
+                'src' => Mage::helper('apdc_catalog/category')->getImageUrl($cat),
             ];
         }
 
@@ -110,8 +110,8 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         $shop_info["closing_periods"]=$data["closing_periods"];
         $shop_info["description"]=$categoryShop->getDescription();
         $shop_info["delivery_days"]=$this->formatDays($data["delivery_days"],true);
-        $shop_info["image"]=$categoryShop->getImageURL();
-		$shop_info["thumbnail_image"] = Mage::getBaseUrl('media').'catalog/category/'.$categoryShop->getThumbnail();
+        $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
+		$shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
 		$shop_info["url"] = $categoryShop->getUrl();
 		
         $html = "";

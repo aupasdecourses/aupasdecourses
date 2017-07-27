@@ -1,6 +1,5 @@
 <?php
-    //$shop_info=$this->getInfoShop();
-	$shop_info = Mage::helper('apdc_commercant')->getInfoShop();
+    $shop_info = $this->getInfoShop();
 	$delivery_days = $shop_info['delivery_days'];
  ?>
 <div class="container-fluid commercant-collapse">
@@ -72,9 +71,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-	<?php echo $this->getChildHtml("commercant-categories");?>
 </div>
 <div class="block_selection">
     <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>

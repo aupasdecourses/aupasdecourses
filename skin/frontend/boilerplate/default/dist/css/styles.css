@@ -13442,6 +13442,100 @@ section .section-description {
   margin: auto;
 }
 
+.owl-buttons,
+.owl-nav {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  padding: 0 10px;
+  transform: translate(0, -50%);
+}
+
+.owl-buttons .prev,
+.owl-buttons .next,
+.owl-buttons .owl-prev,
+.owl-buttons .owl-next,
+.owl-nav .prev,
+.owl-nav .next,
+.owl-nav .owl-prev,
+.owl-nav .owl-next {
+  font-size: 3rem;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  opacity: 1;
+  color: #ccc;
+  border-radius: 50%;
+  background: none;
+}
+
+.owl-buttons .prev:after,
+.owl-buttons .next:after,
+.owl-buttons .owl-prev:after,
+.owl-buttons .owl-next:after,
+.owl-nav .prev:after,
+.owl-nav .next:after,
+.owl-nav .owl-prev:after,
+.owl-nav .owl-next:after {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  transition: opacity .2s ease;
+  opacity: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 30px -3px rgba(204, 204, 204, .65);
+}
+
+.owl-buttons .prev i,
+.owl-buttons .next i,
+.owl-buttons .owl-prev i,
+.owl-buttons .owl-next i,
+.owl-nav .prev i,
+.owl-nav .next i,
+.owl-nav .owl-prev i,
+.owl-nav .owl-next i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.owl-buttons .prev,
+.owl-buttons .owl-prev,
+.owl-nav .prev,
+.owl-nav .owl-prev {
+  float: left;
+}
+
+.owl-buttons .next,
+.owl-buttons .owl-next,
+.owl-nav .next,
+.owl-nav .owl-next {
+  float: right;
+}
+
+.owl-buttons:hover .prev:after,
+.owl-buttons:hover .next:after,
+.owl-buttons:hover .owl-prev:after,
+.owl-buttons:hover .owl-next:after,
+.owl-nav:hover .prev:after,
+.owl-nav:hover .next:after,
+.owl-nav:hover .owl-prev:after,
+.owl-nav:hover .owl-next:after {
+  opacity: 1;
+}
+
 .block-promos {
   position: relative;
   margin-top: 70px;
@@ -13481,46 +13575,6 @@ section .section-description {
 
 .block-promos #carrousel-selection-home-row1 .display-hover {
   background: #fff;
-}
-
-.block-promos .owl-buttons,
-.block-promos .owl-nav {
-  position: absolute;
-  top: 49%;
-  width: 100%;
-}
-
-.block-promos .owl-buttons .prev,
-.block-promos .owl-buttons .next,
-.block-promos .owl-buttons .owl-prev,
-.block-promos .owl-buttons .owl-next,
-.block-promos .owl-nav .prev,
-.block-promos .owl-nav .next,
-.block-promos .owl-nav .owl-prev,
-.block-promos .owl-nav .owl-next {
-  font-size: 3rem;
-  margin: 0;
-  padding: 0;
-  opacity: 1;
-  color: #ccc;
-  border-radius: 0;
-  background: none;
-}
-
-.block-promos .owl-buttons .prev,
-.block-promos .owl-buttons .owl-prev,
-.block-promos .owl-nav .prev,
-.block-promos .owl-nav .owl-prev {
-  float: left;
-  margin-left: -50px;
-}
-
-.block-promos .owl-buttons .next,
-.block-promos .owl-buttons .owl-next,
-.block-promos .owl-nav .next,
-.block-promos .owl-nav .owl-next {
-  float: right;
-  margin-right: -20px;
 }
 
 .apdc-products-grid {
@@ -13919,32 +13973,15 @@ section .section-description {
   color: #fff;
 }
 
-.commercants-block .products-grid .owl-buttons {
-  position: absolute;
-  z-index: 10;
-  top: 43%;
-  width: 100%;
-}
-
 .commercants-block .products-grid .owl-buttons .prev,
 .commercants-block .products-grid .owl-buttons .next {
-  font-size: 3rem;
-  margin: 0;
-  padding: 0;
-  opacity: 1;
-  color: rgba(0, 0, 0, .6);
-  border-radius: 0;
-  background: none;
+  color: #fff;
+  text-shadow: 0 0 1px black;
 }
 
-.commercants-block .products-grid .owl-buttons .prev {
-  float: left;
-  margin-left: 10px;
-}
-
-.commercants-block .products-grid .owl-buttons .next {
-  float: right;
-  margin-right: 40px;
+.commercants-block .products-grid .owl-buttons:hover .prev:after,
+.commercants-block .products-grid .owl-buttons:hover .next:after {
+  background-color: rgba(255, 255, 255, .3);
 }
 
 .block-reduction-apdc,
@@ -16738,14 +16775,6 @@ h1.account-title {
   #supermenu div.level0 {
     top: 108px;
   }
-
-  .catalog-category-view .block-promos .owl-nav .owl-next {
-    margin-right: -10px;
-  }
-
-  .catalog-category-view .block-promos .owl-nav .owl-prev {
-    margin-left: -10px;
-  }
 }
 
 @media screen and (max-width: 1316px) {
@@ -16778,16 +16807,6 @@ h1.account-title {
     width: auto;
     margin-top: 20px;
     text-align: right;
-  }
-}
-
-@media screen and (max-width: 1260px) {
-  .block-promos .owl-buttons .next {
-    margin-right: 18px;
-  }
-
-  .block-promos .owl-buttons .prev {
-    margin-left: -15px;
   }
 }
 

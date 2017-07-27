@@ -34,10 +34,10 @@
         .block-promos{
             .owl-nav{
                 .owl-next{
-                    margin-right: -10px;
+                    //margin-right: -10px;
                 }
                 .owl-prev{
-                    margin-left: -10px;
+                    //margin-left: -10px;
                 }
             }
         }
@@ -71,15 +71,6 @@
                 right: 0;
             }
         }
-    }
-}
-
-@media screen and (max-width: 1260px){
-    .block-promos .owl-buttons .next{
-        margin-right: 18px;
-    }
-    .block-promos .owl-buttons .prev{
-        margin-left: -15px;
     }
 }
 

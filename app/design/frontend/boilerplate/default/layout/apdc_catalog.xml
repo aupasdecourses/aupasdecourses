@@ -34,7 +34,7 @@
 						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
 					</block>
 				</block>
-				<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />
+				<!--<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />-->
 			</block>
             <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
                 <block type="catalog/product_list" name="product_list" template="apdc_catalog/product/list.phtml">
