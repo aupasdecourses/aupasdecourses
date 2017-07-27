@@ -14,8 +14,6 @@
 			<table style="width: 100%">
 				<tr>
 					<th>
-						<a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse"><h2>{{ store }}</h2></a>
-
 						{# Nb commandes/quartier == maximum de la taille du tableau 'orders' #}
 						{% set max_nb_commandes_quartier = 0 %}
 						{% set commandes_msg = "" %}
@@ -24,14 +22,13 @@
 							{% for com_id, merchant in merchants %}
 								{% set max_nb_commandes_quartier = max(merchant.orders|length, max_nb_commandes_quartier) %}
 								{% if max_nb_commandes_quartier == 0 %}
-									{% set commandes_msg %}<div>Pas de commande</div>{% endset %}
+									{% set commandes_msg %}<div></div>{% endset %}
 								{% else %}
 									{% set commandes_msg %}<div style="color:red">{{ max_nb_commandes_quartier ~ " commande(s) "}}</div>{% endset %}
 								{% endif %}
 							{% endfor %}
-								{{ commandes_msg }}
+							<h2><a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse">{{ store }}<h4>{{ commandes_msg }}</h4></a></h2>
 						{% endif %}
-
 					</th>
 				</tr>
 				<tr>
