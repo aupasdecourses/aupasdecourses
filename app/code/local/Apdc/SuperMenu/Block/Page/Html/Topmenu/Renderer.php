@@ -23,6 +23,7 @@
 class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Block_Page_Html_Topmenu
 {
     protected $_templateFile;
+    protected $allowedTemplates = null;
 
     /**
      * Renders block html
@@ -64,10 +65,24 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         if (!$this->getTemplate() || is_null($menuTree) || is_null($childrenWrapClass)) {
             throw new Exception("Top-menu renderer isn't fully configured.");
         }
-        if ($menuTree->getMenuTemplate()) {
+        $menuTemplate = $menuTree->getMenuTemplate();
+        $includeFilePath = null;
+        $templateName = null;
+        if ($menuTree->getMenuTemplate() && in_array($menuTree->getMenuTemplate(), $this->getAllowedTemplates())) {
+            $templateName = $menuTree->getMenuTemplate();
+        } else if($menuTree->getMenuTemplate() && $menuTree->getLevel() == 1) {
+            $allowedTemplates = $this->getAllowedTemplates();
+            $templateName = $allowedTemplates[0];
+        }
+
+        if (!is_null($templateName)) {
             $package = Mage::getSingleton('core/design_package');
-            $includeFilePath = $package->getTemplateFilename('apdc_supermenu/topmenu/' . $menuTree->getMenuTemplate() . '.phtml');
-        } else {
+            $templatePath = $package->getTemplateFilename('apdc_supermenu/topmenu/' . $templateName . '.phtml');
+            if (file_exists($templatePath)) {
+                $includeFilePath = $templatePath;
+            }
+        }
+        if (is_null($includeFilePath)) {
             $includeFilePath = realpath(Mage::getBaseDir('design') . DS . $this->getTemplateFile());
         }
         if (strpos($includeFilePath, realpath(Mage::getBaseDir('design'))) === 0 || $this->_getAllowSymlinks()) {
@@ -355,5 +370,22 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             $classes = 'visible-xs';
         }
         return $classes;
+    }
+
+    /**
+     * getAllowedTemplates 
+     * 
+     * @return array
+     */
+    protected function getAllowedTemplates()
+    {
+        if (is_null($this->allowedTemplates)) {
+            $this->allowedTemplates = array_keys(
+                Mage::getModel('apdc_supermenu/adminhtml_system_config_source_template')
+                ->getAllOptions()
+            );
+            array_shift($this->allowedTemplates);
+        }
+        return $this->allowedTemplates;
     }
 }
