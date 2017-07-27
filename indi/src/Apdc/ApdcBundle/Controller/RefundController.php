@@ -480,4 +480,29 @@ class RefundController extends Controller
             'event_data'	=> $event_data,
         ]);
     }
+
+
+    /* Pour l'instant, simple var_dump. A integrer à refund upload images */
+    public function mistralTicketImgAction(Request $request)
+    {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
+            return $this->redirectToRoute('root');
+        }
+
+        $mistral = $this->container->get('apdc_apdc.mistral');
+
+        $dataMistral = array('message' => 'Dump img ticket');        
+        $formMistral = $this->createFormBuilder($dataMistral)
+            ->add("Dump", SubmitType::class,array('label'=>'Dump img ticket','attr'=>array('class'=>'btn btn-lg btn-danger','style'=>'float:right')))
+            ->getForm();
+        $formMistral->handleRequest($request);
+
+        if ($formMistral->isSubmitted() && $formMistral->isValid()) {
+            $mistral->getPictures();
+        }
+
+        return $this->render('ApdcApdcBundle::refund/mistralTicketImg.html.twig', [
+            'formMistral' => $formMistral->createView(),
+        ]);
+    }
 }
