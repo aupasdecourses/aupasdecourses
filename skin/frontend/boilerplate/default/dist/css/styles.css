@@ -14313,87 +14313,10 @@ section .section-description {
 }
 
 .searchresults .apdc-products-grid {
-  margin: 50px 0;
-}
-
-.searchresults .apdc-products-grid .item {
-  border-radius: 10px;
-  background-color: #fff;
-}
-
-.searchresults .apdc-products-grid .item:after {
-  display: block;
-  clear: both;
-  content: '';
-}
-
-.searchresults .apdc-products-grid .item:hover {
-  z-index: 1000;
-  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, .4);
-}
-
-.searchresults .apdc-products-grid .item:hover > form .display-hover {
-  visibility: visible;
-  height: auto;
-}
-
-.searchresults .apdc-products-grid .item:hover form {
-  z-index: 1000;
-  overflow: auto;
-}
-
-.searchresults .apdc-products-grid .item form {
-  max-height: 500px;
-  padding-top: 30px;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover {
-  position: relative;
-  visibility: hidden;
-  height: 0;
-  margin: 0;
-  padding: 0 9px;
-  text-align: left;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options {
-  padding-bottom: 15px;
-  background: #fff;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options label {
-  font-size: 1rem;
-  color: #1e555a;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options .checkbox {
-  display: inline-block;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options input[type=text],
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options select {
-  font-size: .875rem;
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  color: rgba(0, 0, 0, .84);
-  border: 1px solid #eee;
-  border-radius: 5px;
-  outline: none;
-  background-color: #f6f6f6;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options ul {
-  padding-left: 0;
-  list-style-type: none;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options .validation-advice {
-  display: none !important;
-}
-
-.searchresults .apdc-products-grid .item form .display-hover .product-options dd {
-  margin-bottom: 10px;
+  overflow: hidden;
+  width: calc(100% + 6px);
+  margin: 20px 0;
+  padding: 3px 3px;
 }
 
 .searchresults_title {
@@ -18042,7 +17965,7 @@ h1.account-title {
 
 #delivery-popup-container {
   width: 100%;
-  max-width: 630px;
+  max-width: 670px;
 }
 
 #newsletter-form-popup-container {

@@ -11,41 +11,55 @@
                         $shop_info = Mage::helper('apdc_commercant')->getInfoShop($commercantId);
                         $delivery_days = $shop_info['delivery_days'];
                 ?>
-                <div class="title-block row">
-                    <div class="col-lg-6 col-md-12 text-left">
-                        <div class="photo-commercant">
-                            <img class="img-responsive" src="<?= $shop_info["thumbnail_image"] ?>">
+                <div class="commercant-search-result">
+                    <div class="title-block row">
+                        <div class="col-lg-6 col-md-12 text-left">
+                            <div class="photo-commercant">
+                                <img class="img-responsive" src="<?= $shop_info["thumbnail_image"] ?>">
+                            </div>
+                            <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
                         </div>
-                        <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
+                        <div class="col-lg-6 col-md-12 text-right delivery-days">
+                            <?php
+                                foreach($delivery_days as $key => $value) {
+                                    $class = '';
+                                    if($value == 1) {
+                                        echo '<span class="no"><i class="fa fa-close"></i> '.$key.'</span>';
+                                    }
+                                    else {
+                                        $class = 'yes';
+                                        echo '<span class="yes"><i class="fa fa-check"></i> '.$key.'</span>';
+                                    }
+                                }
+                            ?>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 text-right delivery-days">
+                    <ul class="owl-carousel apdc-products-grid row">
                         <?php
-                            foreach($delivery_days as $key => $value) {
-                                $class = '';
-                                if($value == 1) {
-                                    echo '<span class="no"><i class="fa fa-close"></i> '.$key.'</span>';
-                                }
-                                else {
-                                    $class = 'yes';
-                                    echo '<span class="yes"><i class="fa fa-check"></i> '.$key.'</span>';
-                                }
-                            }
-                        ?>
-                    </div>
-                </div>
-                <ul class="apdc-products-grid row">
-                    <?php
-                        foreach ($products as $product) { 
-                            echo '<div class="col-md-3 col-sm-6 col-xs-12">';
+                            foreach ($products as $product) { 
                                 $this->getChild("card-product")->setData("product", $product);
                                 echo $this->getChildHtml('card-product', false);
-                            echo '</div>';
-                        }
-                    ?>
-                </ul>
+                            }
+                        ?>
+                    </ul>
+                </div>
                 <?php }} ?>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $j(document).ready(function() {
+      $j('.owl-carousel').owlCarousel({
+            items:5,
+            itemsScaleUp : false,
+            pagination:false,
+            autoPlay : false,
+            navigation : true,
+            afterInit:function() {
+                alignProductGridActions();
+            }
+      });     
+    });
+</script>
 <?php endif; ?>

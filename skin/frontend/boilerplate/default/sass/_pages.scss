@@ -1132,77 +1132,10 @@ section {
         }
     }
     .apdc-products-grid{
-        margin: 50px 0;
-        .item{
-            border-radius: 10px;
-            background-color:#fff;
-            &:after{
-                content: "";
-                display: block;
-                clear: both;
-            }
-            &:hover{
-                -webkit-box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
-                box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.4);
-                z-index: 1000;
-                //margin-bottom: -85px;
-                & > form .display-hover{
-                    visibility: visible;
-                    height: auto;
-                }
-                form{
-                    z-index: 1000;
-                    overflow: auto;
-                }
-            }
-            form{
-                padding-top: 30px;
-                max-height: 500px;
-                .display-hover{
-                    position: relative;
-                    visibility: hidden;
-                    height: 0;
-                    margin: 0;
-                    padding: 0 9px;
-                    text-align: left;
-                    .apdc-product-custom-options{
-                        padding-bottom: 15px;
-                        background: #fff;
-                        label{
-                            font-size: 1rem;
-                            color: $color-second-green;
-                        }
-                        .checkbox{
-                            display: inline-block;
-                        }
-                        input[type=text],
-                        select{
-                            color: $color-main-grey;
-                            font-size: 0.875rem;
-                            padding: 10px;
-                            border-radius: 5px;
-                            border: 1px solid #eee;
-                            background-color: #f6f6f6;
-                            width: 100%;
-                            height: auto;
-                            outline: none;
-                        }
-                        ul{
-                            padding-left: 0;
-                            list-style-type: none;
-                        }
-                        .validation-advice{
-                            display: none!important;
-                        }
-                    }
-                    .product-options{
-                        dd{
-                            margin-bottom: 10px;
-                        }
-                    }
-                }
-            }
-        }
+        margin: 20px 0;
+        overflow:hidden;
+        width:calc(100% + 6px);
+        padding:3px 3px;
     }
 }
 .searchresults_title{

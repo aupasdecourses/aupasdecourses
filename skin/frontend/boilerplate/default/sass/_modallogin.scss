@@ -34,7 +34,7 @@
     }
 }
 #delivery-popup-container {
-    max-width:630px;
+    max-width:670px;
     width:100%;
 }
 #newsletter-form-popup-container {
@@ -46,8 +46,6 @@
 }
 
 
-#login-form-popup[data-current-view="apdc_login_view"] {
-}
 #login-form-popup[data-current-view="apdc_register_view"] {
   #login-form-popup-container {
     height:inherit;
