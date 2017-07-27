@@ -356,7 +356,8 @@
 	  
 	<apdc_login_view>
 		<reference name="content">
-            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml"></block>
+        <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
+        </block>
         </reference>
     </apdc_login_view>
 

@@ -16433,6 +16433,10 @@ h1.account-title {
   background-color: #f6f6f6;
 }
 
+.my-account .box-account .form-list select {
+  height: 39px;
+}
+
 .my-account .box-account .form-list .field {
   border-bottom: 0;
 }
@@ -16633,12 +16637,16 @@ h1.account-title {
   list-style-type: none;
 }
 
-.account-create .form-list input[type=text],
-.account-create .form-list input[type=email],
-.account-create .form-list input[type=password],
-.account-create .form-list input[type=tel],
-.account-create .form-list select,
-.account-create .form-list textarea {
+.account-create .form-list li {
+  text-align: left;
+}
+
+.account-create .form-list li input[type=text],
+.account-create .form-list li input[type=email],
+.account-create .form-list li input[type=password],
+.account-create .form-list li input[type=tel],
+.account-create .form-list li select,
+.account-create .form-list li textarea {
   font-size: .875rem;
   width: 100%;
   height: auto;
@@ -16650,18 +16658,29 @@ h1.account-title {
   background-color: #f6f6f6;
 }
 
-.account-create .form-list .field {
+.account-create .form-list li select {
+  height: 39px;
+}
+
+.account-create .form-list li .field {
   margin-bottom: 15px;
   border-bottom: 0;
 }
 
-.account-create .form-list label {
+.account-create .form-list li label {
   font-size: .875rem;
   font-weight: normal;
   color: rgba(0, 0, 0, .84);
 }
 
-.account-create .form-list label em {
+.account-create .form-list li label em {
+  display: none;
+}
+
+.account-create .form-list li label.required:after {
+  font-size: 12px;
+  font-weight: normal;
+  content: ' *';
   color: #3ab64b;
 }
 
