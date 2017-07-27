@@ -13559,11 +13559,7 @@ section .section-description {
 .block-promos {
   position: relative;
   margin-top: 70px;
-  padding-bottom: 70px;
-  background: url(../images/picto/bandeau.png), #fff;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: auto;
+  background-color: #fff;
 }
 
 .block-promos .border-container {
@@ -13590,11 +13586,31 @@ section .section-description {
 }
 
 .block-promos #carrousel-selection-home-row1 {
-  z-index: 2;
+  z-index: 22;
 }
 
 .block-promos #carrousel-selection-home-row1 .display-hover {
   background: #fff;
+}
+
+.block-promos #carrousel-selection-home-row2 {
+  z-index: 21;
+  margin-bottom: 0;
+  padding-bottom: 120px;
+  background: url(../images/picto/bandeau.png), #fff;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: auto;
+}
+
+.block-promos .owl-buttons,
+.block-promos .owl-nav {
+  top: 52.3%;
+}
+
+.block-promos .owl-buttons:hover,
+.block-promos .owl-nav:hover {
+  z-index: 30;
 }
 
 .apdc-products-grid {
@@ -13735,7 +13751,9 @@ section .section-description {
 
 .apdc-products-grid .owl-item,
 .apdc-products-grid > .item {
+  z-index: 15;
   border-radius: 10px;
+  background-color: #fff;
 }
 
 .apdc-products-grid .owl-item:after,
@@ -13771,19 +13789,13 @@ section .section-description {
 .apdc-products-grid .owl-item > .product-info .display-hover,
 .apdc-products-grid > .item > .product-info .display-hover {
   position: relative;
-  right: auto;
-  left: auto;
   visibility: hidden;
   height: 0;
   margin: 0;
   padding: 0 9px;
   text-align: left;
-  border: 0;
-  border-radius: 0 0 10px 10px;
+  border: none;
   box-shadow: none;
-    /*&:hover{
-                    z-index: 1001;
-                }*/
 }
 
 .apdc-products-grid .owl-item > .product-info .display-hover .apdc-product-custom-options,
@@ -14306,6 +14318,7 @@ section .section-description {
 
 .searchresults .apdc-products-grid .item {
   border-radius: 10px;
+  background-color: #fff;
 }
 
 .searchresults .apdc-products-grid .item:after {
@@ -14336,19 +14349,11 @@ section .section-description {
 
 .searchresults .apdc-products-grid .item form .display-hover {
   position: relative;
-  right: auto;
-  left: auto;
   visibility: hidden;
   height: 0;
   margin: 0;
   padding: 0 9px;
   text-align: left;
-  border: 0;
-  border-radius: 0 0 10px 10px;
-  box-shadow: none;
-    /*&:hover{
-                        z-index: 1001;
-                    }*/
 }
 
 .searchresults .apdc-products-grid .item form .display-hover .apdc-product-custom-options {
@@ -15671,19 +15676,11 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item .display-hover {
   position: relative;
-  right: auto;
-  left: auto;
   visibility: hidden;
   height: 0;
   margin: 0;
   padding: 0 9px;
   text-align: left;
-  border: 0;
-  border-radius: 0 0 10px 10px;
-  box-shadow: none;
-    /*&:hover{
-                                z-index: 1001;
-                            }*/
 }
 
 .catalog-category-view .block-promos #carrousel-selection-home.apdc-all-products-slider-by-commercant .owl-stage-outer .owl-item .display-hover .apdc-product-custom-options {
@@ -15803,19 +15800,11 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .category-products .apdc-products-grid .item .display-hover {
   position: relative;
-  right: auto;
-  left: auto;
   visibility: hidden;
   height: 0;
   margin: 0;
   padding: 0 9px;
   text-align: left;
-  border: 0;
-  border-radius: 0 0 10px 10px;
-  box-shadow: none;
-    /*&:hover{
-                        z-index: 1001;
-                    }*/
 }
 
 .catalog-category-view .category-products .apdc-products-grid .item .display-hover .apdc-product-custom-options {
@@ -15884,7 +15873,7 @@ footer .social-list .btn-social-icon {
   position: fixed;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 1000;
+  z-index: 999;
   bottom: 0;
   left: 0;
   width: 100%;
