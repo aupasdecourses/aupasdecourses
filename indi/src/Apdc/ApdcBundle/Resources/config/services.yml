@@ -22,3 +22,7 @@ services:
 
     apdc_apdc.stats:
         class: Apdc\ApdcBundle\Services\Stats
+
+    apdc_apdc.mistral:
+        class: Apdc\ApdcBundle\Services\Mistral
+        arguments: ['%stars_services_api_url%']
