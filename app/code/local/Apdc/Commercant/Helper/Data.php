@@ -102,43 +102,46 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 			$categoryShop = Mage::getModel('catalog/category')->load($data['id_category'][0]);
 		}
 		
-        $shop_info["name"]=$data["name"];
-        $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
-        $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
-        $shop_info["phone"]=$data["phone"];
-        $shop_info["website"]=$data["website"];
-        $shop_info["closing_periods"]=$data["closing_periods"];
-        $shop_info["description"]=$categoryShop->getDescription();
-        $shop_info["delivery_days"]=$this->formatDays($data["delivery_days"],true);
-        $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
-		$shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
-		$shop_info["url"] = $categoryShop->getUrl();
-		
-        $html = "";
-		$delivery_daysAll = array();
-        $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
-		$delivery_days = $this->formatDays($data["delivery_days"], false, true);
-		foreach($days as $day) {
-			if(in_array($day,$delivery_days)) {
-				$delivery_daysAll[$day] = 0;
-			}
-			else {
-				$delivery_daysAll[$day] = 1;
-			}
-		}
-		$shop_info["delivery_days"] = $delivery_daysAll;
-		
-        foreach($data["timetable"] as $day=>$hours){
-            $hours=($hours=="")?"Fermé":$hours;
-			$hoursExplode = explode('-', $hours);
-			if(count($hoursExplode) > 3) {
-				$hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
-				$hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
-				$hours = $hoursExplode1.' / '.$hoursExplode2;
-			}
-            $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
+        $shop_info = [];
+        if (!empty($data)) {
+            $shop_info["name"]=$data["name"];
+            $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
+            $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
+            $shop_info["phone"]=$data["phone"];
+            $shop_info["website"]=$data["website"];
+            $shop_info["closing_periods"]=$data["closing_periods"];
+            $shop_info["description"]=$categoryShop->getDescription();
+            $shop_info["delivery_days"]=$this->formatDays($data["delivery_days"],true);
+            $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
+            $shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+            $shop_info["url"] = $categoryShop->getUrl();
+            
+            $html = "";
+            $delivery_daysAll = array();
+            $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+            $delivery_days = $this->formatDays($data["delivery_days"], false, true);
+            foreach($days as $day) {
+                if(in_array($day,$delivery_days)) {
+                    $delivery_daysAll[$day] = 0;
+                }
+                else {
+                    $delivery_daysAll[$day] = 1;
+                }
+            }
+            $shop_info["delivery_days"] = $delivery_daysAll;
+            
+            foreach($data["timetable"] as $day=>$hours){
+                $hours=($hours=="")?"Fermé":$hours;
+                $hoursExplode = explode('-', $hours);
+                if(count($hoursExplode) > 3) {
+                    $hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
+                    $hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
+                    $hours = $hoursExplode1.' / '.$hoursExplode2;
+                }
+                $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
+            }
+            $shop_info["timetable"]=$html;
         }
-        $shop_info["timetable"]=$html;
 
         return $shop_info;
     }

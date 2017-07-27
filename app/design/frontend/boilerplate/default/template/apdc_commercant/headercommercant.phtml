@@ -1,7 +1,6 @@
-<?php
-    $shop_info = $this->getInfoShop();
-	$delivery_days = $shop_info['delivery_days'];
- ?>
+<?php $shop_info = $this->getInfoShop(); ?>
+<?php if (!empty($shop_info)) : ?>
+<?php $delivery_days = $shop_info['delivery_days']; ?>
 <div class="container-fluid commercant-collapse">
     <div class="row">
         <div class="col-md-12 commercant-info">
@@ -72,6 +71,7 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
 <div class="block_selection">
     <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
 	<?php
