@@ -7,10 +7,6 @@
             <?php if ($informationType == 'new_neighborhood'): ?>
                 <div class="neighborhood_informations_title"><?php echo $this->__('New!'); ?></div>
                 <p><?php echo $this->__('You can now switch between neighborhoods. So it\'s easier if you move or want to delivery at work or to your friends.'); ?></p>
-                <!-- <ul>
-                    <li><i class="fa fa-eye"></i> <?php echo $this->__('Clicking this icon you can visit the neighborhood and check the shopkeeper and the products of the neighborhood'); ?></li>
-                    <li><i class="fa fa-save"></i> <?php echo $this->__('Clicking this icon you set the neighborhood as your new neighborhood'); ?></li>
-                </ul> -->
                 <div class="neighborhood_ok">
                     <button id="neighborhood_ok" class="button button-green"><span><?php echo $this->__('I Understood'); ?></span></button>
                 </div>
@@ -23,7 +19,7 @@
                 <p>
                     <?php echo $this->__('%s n\'est pas votre quartier par défaut. Voulez vous changer cela ?',$this->getVisitingNeighborhood()->getName()); ?>
                     <div class="neighborhood_ok">
-                        <a href="<?php echo $this->getSaveVisitUrl(); ?>" class="button"><i class="fa fa-save"></i> <?php echo $this->__('Switch to %s', $this->getVisitingNeighborhood()->getName()); ?></a>
+                        <a href="<?php echo $this->getSaveVisitUrl(); ?>" class="button button-green"><i class="fa fa-save"></i> <?php echo $this->__('Switch to %s', $this->getVisitingNeighborhood()->getName()); ?></a>
                     </div>
                 </p>
             <?php endif; ?>
@@ -43,9 +39,6 @@
                         <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', $currentNeighborhood->getPostcodes())); ?></i>
                     </p>
                 </a>
-                <!-- <ul class="neighborhood_actions">
-                    <li><a href="<?php echo $currentNeighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>"><i class="fa fa-eye"></i></a></li>
-                </ul> -->
             </li>
         <?php else : ?>
             <li class="neighborhood_list selected">
@@ -82,7 +75,6 @@
             <?php if ($informationType == 'no_neighborhood') :?>
                 <?php if ($this->getSession()->isLoggedIn()) : ?>
                     <ul class="neighborhood_actions">
-                        <!-- <li><a href="<?php echo $neighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>"><i class="fa fa-eye"></i></a></li> -->
                         <li><a href="<?php echo $this->getSaveUrl($neighborhood); ?>" title="<?php echo $this->__('Set % as my new neighborhood',$neighborhood->getName()); ?>"><i class="fa fa-save"></i></a></li>
                     </ul>
                 <?php endif; ?>
