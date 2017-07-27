@@ -484,7 +484,7 @@ class Pdforder
             }
         }
         //test $tmp="pierre@aupasdecourses.com";
-        $tmp = "simon@aupasdecourses.com";
+        //$tmp = "simon@aupasdecourses.com";
         $mail->addTo($tmp);
         $mail->addCc(\Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(\Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");

@@ -82,27 +82,29 @@ class MerchantsController extends Controller
 			foreach ($merchants as $store_name => $mercs) {
 				foreach ($mercs as $merchant_id => $merchant) {
 
+					$pdforder->setOrderTemplate();
+
 					$pdforder->setDate($datePDF);
 					$pdforder->setName($merchant['name']);
-					$pdforder->setOrderTemplate();
-				//	$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
-					
-					foreach ($merchant['orders'] as $order) {
+					$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
+
+					foreach ($merchant['orders'] as $order_id => $order) {
 						$pdforder->addOrder($order);
+				
 					}
 
 					$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
 				}
 			}
 
-	//		$pdforder->send();
+			//$pdforder->send();
 
-	//		$session->getFlashBag()->add('success', 'PDF bien envoyé');
-	//		return $this->redirectToRoute('merchantsOne', [
-	//				'id'	=> $id,
-	//				'from'	=> $from,
-	//				'to'	=> $to
-	//			]);
+			$session->getFlashBag()->add('success', 'PDF bien envoyé');
+			return $this->redirectToRoute('merchantsOne', [
+					'id'	=> $id,
+					'from'	=> $from,
+					'to'	=> $to
+			]);
 		}
 		/* FIN PDF */
 
