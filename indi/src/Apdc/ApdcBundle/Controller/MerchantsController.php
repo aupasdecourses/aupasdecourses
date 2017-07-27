@@ -81,17 +81,14 @@ class MerchantsController extends Controller
 		if ($formPDF->isSubmitted() && $formPDF->isValid()) {
 			foreach ($merchants as $store_name => $mercs) {
 				foreach ($mercs as $merchant_id => $merchant) {
-					
-					$pdforder->setOrderTemplate();
+
 					$pdforder->setDate($datePDF);
 					$pdforder->setName($merchant['name']);
-
-					// !! $pdforder->setMails($merchant['mail']); //
-
-					if(!empty ($merchant['orders'])) {
-						foreach ($merchant['orders'] as $order) {
-							$pdforder->addOrder($order);
-						}
+					$pdforder->setOrderTemplate();
+				//	$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
+					
+					foreach ($merchant['orders'] as $order) {
+						$pdforder->addOrder($order);
 					}
 
 					$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
