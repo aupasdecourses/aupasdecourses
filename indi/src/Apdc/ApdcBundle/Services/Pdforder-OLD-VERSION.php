@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * ANCIENNE VERSION DU SERVICE PDFORDER
+ * MADE BY @PMAINGUET
+ * NE PAS EDITER
+**/
+
+
 namespace Apdc\ApdcBundle\Services;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -99,6 +106,128 @@ class Pdforder
     public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->_router->generate($route, $parameters, $referenceType);
+    }
+
+    private function _printBillingSummaryHeader()
+    {
+        $increment_id = $this->_data['increment_id'];
+        $data_s = $this->_data['summary'][0];
+        $created_at = date('d/m/Y', strtotime($data_s['created_at']));
+        $month = ucfirst(strftime('%B %G', strtotime(str_replace('/', '-', $data_s['billing_month']))));
+
+        $standart_lh = $this->_lineHeight;
+        $this->_lineHeight = 20;
+
+        $this->_offset = $this->_drawLogo($this->_currentpage, $this->_logo_h, $this->_logo_w);
+
+        $this->_currentpage->drawText('Facture n° '.$increment_id, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Date d'émission: ".$created_at, $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText("Commerçant {$data_s['shop']}", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_offset -= $this->_lineHeight * 7;
+
+        $this->_currentpage->setFont($this->_font_bold, 12);
+
+        $this->_currentpage->drawText("Facture de {$month} pour la prestation d'Au Pas De Courses", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $this->_offset -= $this->_lineHeight * 3;
+        $this->_lineHeight = $standart_lh;
+    }
+
+    private function _printBillingDetailsTemplate()
+    {
+        $this->_currentpage->drawText("Au Pas De Courses - Facture n° xxx pour {$this->_name} pour le {$this->_date}", $this->_margin_horizontal, $this->_height - $this->_margin_vertical / 1.5);
+        $this->_currentpage->setLineWidth(0.5);
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_height - $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_height - $this->_margin_vertical);
+
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_margin_vertical, $this->_width - $this->_margin_horizontal, $this->_margin_vertical);
+        $this->_currentpage->setFont($this->_font, 8);
+        $this->_currentpage->drawText('Généré le: ', $this->_margin_horizontal, $this->_margin_vertical / 2);
+    }
+
+    public function printBillingShop($data)
+    {
+        $this->_data = $data;
+        $data_s = $this->_data['summary'][0];
+        $data_d = $this->_data['details'];
+
+        //Table
+        $table_s = [
+            'config' => [
+                'font_size_header' => 12,
+                'font_size_body' => 12,
+                'font_size_total' => 12,
+                'fill_color_header' => '#188071',
+                'line_color_header' => '#188071',
+            ],
+            'column_set' => [0.46, 0.135, 0.135, 0.135, 0.135],
+            'header_type' => ['string', 'float', 'percent', 'float', 'float'],
+            'header' => ['Prestation', 'Prix HT', '%TVA', 'TVA', 'Prix TTC'],
+            'rows' => [
+                ['Commission sur les ventes', $data_s['sum_commission_HT'], 1 - $data_s['sum_commission_HT'] / $data_s['sum_commission'], $data_s['sum_commission'] - $data_s['sum_commission_HT'], $data_s['sum_commission']],
+                ['Discount commerçants', $data_s['discount_shop_HT'], 1 - $data_s['discount_shop_HT'] / $data_s['discount_shop'], $data_s['discount_shop'] - $data_s['discount_shop_HT'], $data_s['discount_shop']],
+                ['Frais HiPay', $data_s['processing_fees_HT'], 1 - $data_s['processing_fees_HT'] / $data_s['processing_fees'], $data_s['processing_fees'] - $data_s['processing_fees_HT'], $data_s['processing_fees']],
+                ],
+            'total' => ['TOTAL', 0, '', 0, 0],
+        ];
+
+        //Create Billing Summary
+        $this->_setPortraitTemplate();
+        $this->_currentpage = $this->_page[0] = $this->_pdf->newPage($this->_format);
+        $this->_currentpage->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+
+        $this->_printBillingSummaryHeader();
+        $this->_table_column_set = $this->_computeColumnSet($table_s['column_set']);
+        $table_s = $this->_computeTotals($table_s);
+        $this->_printTable($table_s);
+
+        $this->_offset -= $this->_lineHeight * 4;
+
+        $this->_currentpage->drawText('Tous les prix sont en euros', $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
+
+        $footer_text = 'Au Pas De Courses - SAS au capital de 12000€ - 17 rue Henry Monnier, 75009 Paris - RCS Paris 810 707 000 - Numéro de TVA Intracommunautaire - FR48810707000';
+
+        $this->_printFooter($footer_text, 8);
+
+        // create billing details pages
+        $this->_setLandscapeTemplate();
+        $this->_currentpage = $this->_page[1] = $this->_pdf->newPage($this->_format);
+        $this->_currentpage->setFont($this->_font, 8);
+        $this->_offset = $this->_height - 2 * $this->_margin_vertical;
+
+        $this->_printBillingDetailsTemplate();
+
+        //Table
+        $table_d = [
+            'config' => [
+                'font_size_header' => 8,
+                'font_size_body' => 8,
+                'font_size_total' => 8,
+                'fill_color_header' => '#188071',
+                'line_color_header' => '#188071',
+            ],
+            'column_set' => [0.07, 0.07, 0.07, 0.08, 0.11, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06],
+            'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
+            'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Sum_Items', 'Sum_Items_HT', 'Sum_Credit', 'Sum_Credit_HT', 'Sum_Ticket', 'Sum_Ticket_HT', 'Sum_Com', 'Sum_Com_HT', 'Sum_Versement', 'Sum_Versement_HT'],
+            'rows' => [],
+            'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+
+        foreach ($data_d as $id => $row) {
+            unset($row['order_shop_id']);
+            unset($row['id_billing']);
+            unset($row['id']);
+            unset($row['shop_id']);
+            unset($row['shop']);
+            $data_d[$id] = $row;
+        }
+
+        $table_d['rows'] = $data_d;
+
+        $this->_table_column_set = $this->_computeColumnSet($table_d['column_set']);
+        $table_d = $this->_computeTotals($table_d);
+        $this->_printTable($table_d);
     }
 
     public function setOrderTemplate()

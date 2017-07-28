@@ -86,18 +86,16 @@ class MerchantsController extends Controller
 
 					$pdforder->setDate($datePDF);
 					$pdforder->setName($merchant['name']);
-					$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
+				//	$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
 
 					foreach ($merchant['orders'] as $order_id => $order) {
 						$pdforder->addOrder($order);
-				
 					}
-
-					$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
+			//		$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
 				}
 			}
 
-			//$pdforder->send();
+		//	$pdforder->send();
 
 			$session->getFlashBag()->add('success', 'PDF bien envoyé');
 			return $this->redirectToRoute('merchantsOne', [
@@ -114,7 +112,7 @@ class MerchantsController extends Controller
 				$form_fromtoMerchant->createView(),
 			],
 			'merchants' => $merchants,
-			'formPDF' 	=> $formPDF->createView(),
+			//'formPDF' 	=> $formPDF->createView(),
 		]);
     }
 
