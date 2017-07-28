@@ -1,15 +1,7 @@
 <layout version="0.1.0">
     <checkout_onepage_index>
         <reference name="head">
-            <action method="removeItem">
-                <type>js</type>
-                <file>mw_ddate/jquery-1.7.2.min.js</file>
-            </action>
-            <action method="removeItem">
-                <type>js</type>
-                <file>mw_ddate/jquery-noconflict.js</file>
-            </action>
-			<action method="addItem"><type>skin_js</type><file>js/coupon.js</file></action>
+			      <action method="addItem"><type>skin_js</type><file>js/coupon.js</file></action>
         </reference>
 		<reference name="header">
 			<action method="unsetChild"><name>topMenu</name></action>
@@ -21,7 +13,6 @@
 			<remove name="header.delivery"/>
 			
 			<block type="checkout/onepage_progress" name="checkout.progress" as="checkout.progress" template="apdc_checkout/checkout/onepage/progress.phtml">
-				<!--<block type="checkout/onepage_progress" name="shipping.progress" template="apdc_checkout/checkout/onepage/progress/shipping.phtml"></block>-->
 				<block type="checkout/onepage_progress" name="shippingmethod.progress" template="apdc_checkout/checkout/onepage/progress/shipping_method.phtml"></block>
 				<block type="checkout/onepage_progress" name="billing.progress" template="apdc_checkout/checkout/onepage/progress/billing.phtml"></block>
 				<block type="checkout/onepage_progress" name="payment.progress" template="apdc_checkout/checkout/onepage/progress/payment.phtml"></block>
@@ -42,13 +33,10 @@
         <reference name="checkout.onepage.billing"> Change the template of billing block
           <action method="setTemplate"><template>apdc_checkout/persistent/checkout/onepage/billing.phtml</template></action>
         </reference>
-        <!-- Merge Shipping Method & Ddate -->
-        <reference name="checkout.onepage.shipping_method"> <!-- Change the template of billing block  -->
+
+        <reference name="checkout.onepage.shipping_method">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method.phtml</template></action>
-            <!-- Add delivery check -->
             <block type="apdc_checkout/deliverycheck_check" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
-            <!-- Add ddate -->
-            <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
         </reference>
         <remove name="header.delivery"/>
         

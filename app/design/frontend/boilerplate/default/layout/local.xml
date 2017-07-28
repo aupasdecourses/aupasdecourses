@@ -46,14 +46,10 @@
                 <rel>skin_js</rel>
                 <href>js/custom.js</href>
             </action>
-            <action method="addCss">
-                <stylesheet>css/ddate.css</stylesheet>
-            </action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
         </reference>
         <reference name="header">
             <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
-            <!--<block type="checkout/onepage_ddate" name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml"/>-->
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
@@ -393,22 +389,10 @@
         </reference>
     </apdc_forgotpassword_view>  
 	  
-	<apdc_headerdelivery_view>
-		<reference name="content">
-            <block type="checkout/onepage_ddate"  name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />
-        </reference>
-    </apdc_headerdelivery_view>   
-	 
 	<apdc_neighborhood_view>
 		<reference name="content">
             <block type="apdc_neighborhood/header_menu" name="neighborhood_menu" template="apdc_neighborhood/header/menu.phtml" />
         </reference>
     </apdc_neighborhood_view>  
 	    
-	<!--<apdc_newsletter_view>
-		<reference name="content">
-			  <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml"></block>
-		  </reference>
-	</apdc_newsletter_view>-->
-
 </layout>

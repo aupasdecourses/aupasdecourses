@@ -1,0 +1,139 @@
+<layout version="0.1.0">
+  <default>
+    <reference name="head">
+      <action method="addCss">
+        <stylesheet>ddate/css/ddate.css</stylesheet>
+      </action>
+      <action method="addItem"><type>skin_js</type><file>js/ddate/opcheckout.js</file></action>
+      <action method="addItem"><type>skin_js</type><file>js/ddate/opcheckout_rwd.js</file></action>
+      <action method="addItem"><type>skin_js</type><file>js/ddate/jscal2.js</file></action>
+      <action method="addItem"><type>skin_js</type><file>js/ddate/lang/en.js</file></action>
+    </reference>
+    <reference name="header">
+		  <block type="checkout/onepage_ddate" name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />
+    </reference>
+  </default>
+
+  <ddate_checkout_onepage_index>
+    <update handle="checkout_onepage_index"/>
+  </ddate_checkout_onepage_index>
+
+  <ddate_checkout_onepage_success>
+    <update handle="checkout_onepage_success"/>
+  </ddate_checkout_onepage_success> 
+
+  <ddate_checkout_onepage_progress>
+    <update handle="checkout_onepage_progress"/>
+  </ddate_checkout_onepage_progress>
+
+  <ddate_checkout_onepage_review>
+    <update handle="checkout_onepage_review"/>
+  </ddate_checkout_onepage_review>
+
+  <checkout_onepage_index>
+    <reference name="head">
+      <action method="addItem">
+        <type>js_css</type>
+        <name>calendar/calendar-win2k-1.css</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addItem">
+        <type>js</type>
+        <name>calendar/calendar.js</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addItem">
+        <type>js</type>
+        <name>calendar/calendar-setup.js</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addItem">
+        <type>js</type>
+        <name>calendar/lang/calendar-en.js</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+    </reference>
+
+    <reference name="checkout.onepage.shipping_method">
+      <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml"/>
+    </reference>
+
+  </checkout_onepage_index>
+
+  <checkout_onepage_progress_ddate>
+    <remove name="right"/>
+    <remove name="left"/>
+
+    <block type="checkout/onepage_ddate" name="root" output="toHtml" template="ddate/checkout/onepage/progress/progress.phtml">
+      <action method="setInfoTemplate"><method></method><template></template></action>
+    </block>
+  </checkout_onepage_progress_ddate>
+
+  <checkout_onepage_ddate>
+    <remove name="right"/>
+    <remove name="left"/>
+
+    <block type="checkout/onepage_ddate" name="root" output="toHtml" template="ddate/checkout/onepage/ddate.phtml" />
+  </checkout_onepage_ddate>
+
+  <paypal_express_review>
+    <reference name="head">
+      <action method="addItem">
+        <type>js_css</type>
+        <name>calendar/calendar-win2k-1.css</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addItem">
+        <type>js</type>
+        <name>calendar/calendar.js</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addItem">
+        <type>js</type>
+        <name>calendar/lang/calendar-en.js</name>
+        <params/>
+        <if/>
+        <condition>can_load_calendar_js</condition>
+      </action>
+      <action method="addJs">
+        <script>mw_ddate/jquery-1.7.2.min.js</script>
+      </action>
+      <action method="addJs">
+        <script>mw_ddate/jquery-noconflict.js</script>
+      </action>
+    </reference>
+
+    <reference name="paypal.express.review">
+      <action method="setTemplate">
+        <template>ddate/paypal/express/review.phtml</template>
+      </action>
+    </reference>
+  </paypal_express_review>
+
+  <sales_order_print>
+    <reference name="sales.order.print">
+      <action method="setTemplate">
+        <template>ddate/sales/order/print.phtml</template>
+      </action>
+    </reference>
+  </sales_order_print>
+
+  <apdc_headerdelivery_view>
+    <reference name="content">
+      <block type="checkout/onepage_ddate"  name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />
+    </reference>
+  </apdc_headerdelivery_view>   
+
+</layout>

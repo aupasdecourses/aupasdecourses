@@ -273,7 +273,7 @@ class MW_Ddate_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $currentPackageName = Mage::getSingleton('core/design_package')->getPackageName();
         $currentTemplateName = Mage::getSingleton('core/design_package')->getTheme('frontend');
-        $message = '';//$this->__('Advance Delivery Schedule: Missing layout file or template folder of this module. You can submit a ticket at <a href="http://www.mage-world.com/contacts/" target="_blank">here</a> for us about this.');
+        $message = $this->__('Advance Delivery Schedule: Missing layout file or template folder of this module. You can submit a ticket at <a href="http://www.mage-world.com/contacts/" target="_blank">here</a> for us about this.');
 
         // Get directory path to current theme
         $dirPath = Mage::getBaseDir('design') . DS . 'frontend' . DS;
