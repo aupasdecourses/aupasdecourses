@@ -14,7 +14,7 @@ class MerchantsController extends Controller
 		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
-		
+
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_fromtoMerchant	= new \Apdc\ApdcBundle\Entity\FromToMerchant();
@@ -45,8 +45,8 @@ class MerchantsController extends Controller
     }
 
     public function merchantsOneAction(Request $request, $id, $from, $to)
-	{
-		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
+    {
+   		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
 		}
 
@@ -90,10 +90,11 @@ class MerchantsController extends Controller
 			'forms' => [
 				$form_fromtoMerchant->createView(),
 			],
-			'stores' 		=> $mage->getMerchantsOrdersByStore(-1, $from, $to),
+			'merchants' => $mage->getMerchantsOrdersByMerchants(-1, $from, $to),
 			'shop_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_shop/edit/id_shop/',
 			'manager_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_contact/edit/id_contact/',
 
 		]);
     }
+
 }

@@ -3,18 +3,28 @@
 class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
  
-	public function render(Varien_Object $row)
-	{
-		$input =  $row->getData($this->getColumn()->getIndex());
+    protected $_commercantCategories;
+    protected $_ShopsArray;
 
-		$commercantCategories = Mage::getModel('catalog/category')
+    protected function _construct()
+    {
+        parent::_construct();
+
+        $this->_commercantCategories = Mage::getModel('catalog/category')
             ->getCollection()
             ->setOrder('name')
             ->addAttributeToSelect('name')
             ->addAttributeToFilter('estcom_commercant', 70);
-        $S = Mage::helper('apdc_commercant')->getStoresArray();
-        foreach ($commercantCategories as $category) {
-        	$storename=$S[explode('/', $category->getPath())[1]]['name'];
+        $this->_ShopsArray = Mage::helper('apdc_commercant')->getStoresArray();
+
+    }
+
+	public function render(Varien_Object $row)
+	{
+		$input =  $row->getData($this->getColumn()->getIndex());
+
+        foreach ($this->_commercantCategories as $category) {
+        	$storename=$this->_ShopsArray[explode('/', $category->getPath())[1]]['name'];
             $parentcat=$category->getParentCategory()->getName();
             $values[$category->getId()] = $category->getName().' - '.$parentcat.' - '.$storename;
         }
@@ -24,7 +34,9 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminh
         {
             $suppstr="<ul>";
 			foreach($input as $id){
-				 $suppstr.= "<li>".$values[$id]."</li>";
+                if(isset($values[$id])){
+                    $suppstr.= "<li>".$values[$id]."</li>";   
+                }
 			}
 			$suppstr   .= "</ul>";
 		}
