@@ -61,7 +61,7 @@
   transition: opacity 0.5s ease;
 }
 .action.update-product-options.disabled {
-  opacity: 0.6;
+  opacity: 0;
 }
 
 .apdc-product-custom-options, .apdc-product-custom-options > dt{

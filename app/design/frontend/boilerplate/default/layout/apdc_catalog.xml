@@ -28,12 +28,13 @@
     <apdc_catalog_product_list>
 		<reference name="content">
 			<block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
+        <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability.phtml"/>
 				<block type="apdc_catalog/selection" name="blockselection" as="blockselection" template="apdc_catalog/selection/selection_commercant.phtml">
-					<block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
-						<block type="core/text_list" name="product_list.name.after" as="name.after" />
-						<block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
-					</block>
-				</block>
+            <block type="apdc_catalog/selection" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+              <block type="core/text_list" name="product_list.name.after" as="name.after" />
+              <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+            </block>
+        </block>
 				<!--<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />-->
 			</block>
             <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
@@ -156,7 +157,7 @@
       <remove name="product.info.simple.extra" />
       <remove name="product.info.availability" />
       <reference name="product.info">
-          <block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml"/>
+          <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability.phtml"/>
       </reference>
     </PRODUCT_TYPE_simple>
 

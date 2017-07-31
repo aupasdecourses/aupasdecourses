@@ -380,15 +380,14 @@ section {
 }
 
 .owl-buttons, .owl-nav{
-    position: absolute;
-    z-index:10;
     width: 100%;
-    top: 50%;
-    transform:translate(0, -50%);
-    left:0;
-    padding:0 10px;
     .prev, .next,
     .owl-prev, .owl-next{
+        position: absolute;
+        z-index:30;
+        top: 50%;
+        transform:translate(0, -50%);
+        left:0;
         background: none;
         color: #ccc;
         font-size: 3rem;
@@ -399,7 +398,8 @@ section {
         width:60px;
         height:60px;
         text-align:center;
-        position:relative;
+        color:#fff;
+        text-shadow: 0px 0px 1px black;
         &:after {
           content:'';
           position:absolute;
@@ -412,8 +412,10 @@ section {
           bottom:0;
           box-shadow:0 0 30px -3px rgba(204, 204, 204, 0.65);
           opacity:0;
+          animation: iamhere 4s infinite;
           transition:opacity 0.2s ease;
           z-index:-1;
+          background-color:rgba(255,255,255, 0.3);
         }
         i {
           position:absolute;
@@ -423,21 +425,41 @@ section {
         }
     }
     .prev, .owl-prev{
-        float: left;
+      left:20px;
+      right:initial;
     }
     .next, .owl-next{
-        float: right;
+      right:20px;
+      left:initial;
     }
-}
-.owl-buttons, .owl-nav {
+
     &:hover {
         .prev, .next,
         .owl-prev, .owl-next{
           &:after {
+            animation:none;
             opacity:1;
           }
         }
     }
+}
+
+@keyframes iamhere {
+  0% {
+    opacity: 1;
+  }
+  5% {
+    opacity:1;
+  }
+  75% {
+    opacity:0;
+  }
+  90% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }
 
 .block-promos{
@@ -464,7 +486,7 @@ section {
         padding-bottom: 0px;
     }
     #carrousel-selection-home-row1 {
-        z-index: 22;
+        z-index: 32;
         .display-hover{
             background: #fff;
         }
@@ -479,7 +501,10 @@ section {
       margin-bottom:0px;
     }
     .owl-buttons, .owl-nav{
-        top:52.3%;
+        .prev, .next,
+        .owl-prev, .owl-next{
+            top:52.3%;
+        }
         &:hover {
             z-index:30;
         }
@@ -851,19 +876,6 @@ section {
                     font-size: 0.875rem;
                     color: #fff;
                     text-align: center;
-                }
-            }
-        }
-        .owl-buttons{
-            .prev, .next{
-              color:#fff;
-              text-shadow: 0px 0px 1px black;
-            }
-            &:hover {
-                .prev, .next {
-                  &:after {
-                      background-color:rgba(255,255,255, 0.3);
-                  }
                 }
             }
         }

@@ -1,6 +1,5 @@
 <?php $shop_info = $this->getInfoShop(); ?>
 <?php if (!empty($shop_info)) : ?>
-<?php $delivery_days = $shop_info['delivery_days']; ?>
 <div class="container-fluid commercant-collapse">
     <div class="row">
         <div class="col-md-12 commercant-info">
@@ -14,38 +13,8 @@
                         <i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?>
                     </div>
                 </div>
-                <div class="col-md-5 text-right delivery-days">
-                    <h2>Livraison disponible le</h2>
-					<div>
-						<table>
-							<thead>
-								<?php
-									foreach($delivery_days as $key => $value) {
-										$class = '';
-										if($value == 1) {
-											$class = 'no';
-										}
-										else {
-											$class = 'yes';
-										}
-										echo '<th class="'.$class.'">'.$key.'</th>';
-									}
-								?>
-							</thead>
-							<tbody>
-								<?php
-									foreach($delivery_days as $key => $value) {
-										if($value == 1) {
-											echo '<td><i class="fa fa-close"></i></td>';
-										}
-										else {
-											echo '<td><i class="fa fa-check"></i></td>';
-										}
-									}
-								?>
-							</tbody>
-						</table>
-					</div>
+                <div class="col-md-5 text-right">
+                    <?php echo $this->getChildHtml('product_availability'); ?>
                 </div>
                 <div class="col-md-1 text-right text-center">
                     <div class="open-collapse">

@@ -20,18 +20,11 @@
                             <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
                         </div>
                         <div class="col-lg-6 col-md-12 text-right delivery-days">
-                            <?php
-                                foreach($delivery_days as $key => $value) {
-                                    $class = '';
-                                    if($value == 1) {
-                                        echo '<span class="no"><i class="fa fa-close"></i> '.$key.'</span>';
-                                    }
-                                    else {
-                                        $class = 'yes';
-                                        echo '<span class="yes"><i class="fa fa-check"></i> '.$key.'</span>';
-                                    }
-                                }
-                            ?>
+                            <?php $availability = $this->getChild('product_availability'); ?>
+                            <?php if ($availability) : ?>
+                                <?php echo $availability->setAvailability($delivery_days)
+                                        ->toHtml(); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <ul class="owl-carousel apdc-products-grid row">

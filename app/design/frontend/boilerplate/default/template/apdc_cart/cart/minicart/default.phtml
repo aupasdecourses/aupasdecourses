@@ -26,20 +26,29 @@
 ?>
 <?php
     $_item = $this->getItem();
+    $hasError = $_item->getHasError();
     $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
 <li class="item" xmlns="http://www.w3.org/1999/html">
     <div class="item-row">
         <div class="item-cell item-image">
-        <?php if ($this->hasProductUrl()): ?>
-            <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></a>
+        <?php if ($hasError) : ?>
+            <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
+            <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+            </a>
+        <?php elseif ($this->hasProductUrl()) : ?>
+            <a href="<?php echo $this->getProductUrl()?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image">
+                <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+            </a>
         <?php else: ?>
             <span class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /></span>
         <?php endif; ?>
         </div>
         <div class="item-cell item-name">
-            <?php if ($this->hasProductUrl()): ?>
+            <?php if ($hasError) : ?>
+                <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
+            <?php elseif ($this->hasProductUrl()) : ?>
                 <a href="<?php echo $this->getProductUrl() ?>">
             <?php endif; ?>
             <?php echo $this->escapeHtml($this->getProductName()) ?>
@@ -69,9 +78,9 @@
             <?php endif; ?>
         </div>
         <div class="item-cell item-qty">
-            <div class="qty-sub btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-minus"></i></div>
+            <div class="<?php echo ($hasError ? 'disabled' : 'qty-sub'); ?> btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-minus"></i></div>
             <div class="qty-text"><?php echo $this->getQty(); ?></div>
-            <div class="qty-add btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-plus"></i></div>
+            <div class="<?php echo ($hasError ? 'disabled' : 'qty-add'); ?> btn-icon-qty" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>"><i class="fa fa-plus"></i></div>
 
             <input
                 type="hidden"
@@ -134,37 +143,13 @@
 
         </div>
     </div>
-    <!--<?php if ($this->getOptionList() || !empty($_item->getItemComment())):?>
-    <div class="item-row item-details">
-        <div class="truncated">
-            <div class="truncated_full_value">
-                <ul class="item-options">
-                    <?php if (!empty($_item->getItemComment())) : ?>
-                        <li>
-                            <label><?php echo $this->__('Your comment'); ?></label>
-                            <span><?php echo $_item->getItemComment(); ?></span>
-                        </li>
-                    <?php endif; ?>
-                    <?php if ($_options = $this->getOptionList()) : ?>
-                        <?php foreach ($_options as $_option) : ?>
-                        <li>
-                            <label><?php echo $this->escapeHtml($_option['label']) ?></label>
-                            <span>
-                            <?php if (is_array($_option['value'])): ?>
-                            <?php echo nl2br(implode("\n", $_option['value'])) ?>
-                            <?php else: ?>
-                            <?php echo $_option['value'] ?>
-                            <?php endif; ?>
-                            </span>
-                        </li>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </dl>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>-->
-
+    <?php if ($messages = $this->getMessages()): ?>
+    <?php foreach ($messages as $message): ?>
+        <p class="item-msg-required-option <?php echo $message['type'] ?>">
+            * <?php echo $this->escapeHtml($message['text']) ?>
+        </p>
+    <?php endforeach; ?>
+    <?php endif; ?>
 </li>
 
 <script type="text/javascript">

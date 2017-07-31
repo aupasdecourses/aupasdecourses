@@ -4,7 +4,8 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
 (function($) {
   $(document).ready(function() {
     $(document).on('click', ':submit', function(e) {
-      var form = $(this).parents('form');
+      var $clickedButton = $(this);
+      var form = $clickedButton.parents('form');
       $('.advice-must-select-options').hide();
       if (form.hasClass('apdc-add-to-cart-form')) {
         e.preventDefault();
@@ -16,9 +17,9 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
         var $qty = null;
         var qty = 0;
 
-        if (this.value == 'btn-cart-qty-plus') {
-          itemId = parseInt($(this).data('item-id'));
-          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+        if ($clickedButton.val() === 'btn-cart-qty-plus') {
+          itemId = parseInt($clickedButton.data('item-id'));
+          $qty = $clickedButton.parent('.qty-buttons').find('.added-qty');
           qty = parseInt($qty.html(), 10);
           $qty.html(++qty);
           updateRemoveAndMinusBtn(form, qty);
@@ -27,9 +28,9 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           } else {
             checkNeedUpdate(form);
           }
-        } else if (this.value == 'btn-cart-qty-minus') {
-          itemId = parseInt($(this).data('item-id'));
-          $qty = $(this).parent('.qty-buttons').find('.added-qty');
+        } else if ($clickedButton.val() === 'btn-cart-qty-minus') {
+          itemId = parseInt($clickedButton.data('item-id'));
+          $qty = $clickedButton.parent('.qty-buttons').find('.added-qty');
           qty = parseInt($qty.html(), 10);
           if (qty > 1) {
             $qty.html(--qty);
@@ -42,60 +43,88 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           } else {
             $('#btn-minicart-remove-' + itemId).click();
           }
-        } else if (this.value == 'btn-cart-remove') {
-          itemId = parseInt($(this).data('item-id'));
+        } else if ($clickedButton === 'btn-cart-remove') {
+          itemId = parseInt($clickedButton.data('item-id'));
           $('#btn-minicart-remove-' + itemId).click();
           if (isConfigureMode && typeof(apdcProductQuickViewPopup) !== 'undefined') {
             apdcProductQuickViewPopup.close();
           }
         } else {
           var varienForm = new VarienForm(form.attr('id'));
+          var addRelatedProducts = ($clickedButton.val() === 'btn-add-related-products' ? true : false);
+          varienForm.form = form[0];
+          varienForm.validator = new Validation(form[0]);
           varienForm.validator.options.focusOnError = false;
-          if (varienForm.validator.validate()) {
-            var ajaxUrl = form.data('ajax-action');
-            var data = new FormData(form[0]);
-            data.append('isAjax', 1);
-
-            if (isConfigureMode) {
-              data.append('qty', parseInt(form.find('.added-qty').html(), 10));
-            }
-            var actions = $(form).find('.actions');
-            $.ajax({
-              url: ajaxUrl,
-              data: data,
-              processData: false,
-              contentType: false,
-              type: 'POST',
-              beforeSend: function() {
-                startLoading(productId);
-                $(document).trigger('startUpdateMiniCartContent');
-              }
-            })
-            .done(function(result) {
-              if (result.status === 'SUCCESS') {
-                if($('.header-minicart').length > 0){
-                  $(document).trigger('updateMiniCartContent', [result]);
-                  var currentValues = getCurrentFormValues(form);
-                  form.find('input[name="update_product_options_initial_values"]').val(currentValues);
-                  checkNeedUpdate(form);
-                }
-              }
-            })
-            .fail(function() {
-              console.log('failed');
-            })
-            .always(function() {
-              finishLoading(productId);
-            });
-          } else {
+          if (!addRelatedProducts && !varienForm.validator.validate()) {
             form.find('.advice-must-select-options').show();
-            //$('.block-promos .apdc-products-grid .owl-item button[type=submit]').click(function(){
-                var $element = form.parents('.owl-item') ;
-                $($element).css({'margin-bottom' : -$(' > .product-info .display-hover', $element).outerHeight()+'px'});
-            //});
+            return false;
+          } else if (addRelatedProducts && 
+            (form.find('.related-products-field').length === 0 || form.find('.related-products-field').val() === '')
+          ) {
+            return false;
           }
+          var ajaxUrl = '';
+          if (addRelatedProducts) {
+            ajaxUrl = form.find('.add-related-products-to-cart').data('ajax-action');
+          } else {
+            ajaxUrl = form.data('ajax-action');
+          }
+          var data = new FormData(form[0]);
+          data.append('isAjax', 1);
+
+          if (isConfigureMode) {
+            data.append('qty', parseInt(form.find('.added-qty').html(), 10));
+          }
+          var actions = $(form).find('.actions');
+          $.ajax({
+            url: ajaxUrl,
+            data: data,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            beforeSend: function() {
+              startLoading(productId);
+              $(document).trigger('startUpdateMiniCartContent');
+            }
+          })
+          .done(function(result) {
+            if (result.status === 'SUCCESS') {
+              $clickedButton.addClass('action-success');
+              window.setTimeout(function() {
+                $clickedButton.removeClass('action-success');
+              }, 2000);
+
+              // If item had an error (eg: item with required options from an old cart), it will probably be delete and a new item will be created.
+              // So we need to replace old item_id references 
+              if (result.item_id && result.quote_item_id && result.item_id !== result.quote_item_id) {
+                form.find('[data-item-id="' + result.quote_item_id + '"]').each(function() {
+                  $(this).data('item-id', parseInt(result.item_id, 10));
+                });
+                form.find('[name="item_id"][value="' + result.quote_item_id + '"]').each(function() {
+                  $(this).val(parseInt(result.item_id, 10));
+                });
+                var formAction = form.data('ajax-action');
+                var regexp = new RegExp('/id/' + result.quote_item_id + '/', 'g');
+                formAction = formAction.replace(regexp, '/id/' + result.item_id + '/');
+                form.data('ajax-action', formAction);
+              }
+
+              if($('.header-minicart').length > 0){
+                $(document).trigger('updateMiniCartContent', [result]);
+                var currentValues = getCurrentFormValues(form);
+                form.find('input[name="update_product_options_initial_values"]').val(currentValues);
+                checkNeedUpdate(form);
+              }
+            }
+          })
+          .fail(function() {
+            console.log('failed');
+          })
+          .always(function() {
+            finishLoading(productId);
+          });
+          return false;
         }
-        return false;
       }
     });
 
@@ -104,7 +133,6 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       var updateProductOptions = $(this).find('input[name="update_product_options"]');
       var optionKeyTab = [];
       var optionKey = '';
-      var formId = $(this).attr('id');
       var productId = parseInt($(this).data('product-id'));
       $(this).find('[name^="super_attribute["]').each(function() {
         var tabOptions = extractOptions(this, 'super_attribute');
@@ -159,7 +187,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
   {
     var currentFormValues = getCurrentFormValues(form);
     var initialFormValues = form.find('input[name="update_product_options_initial_values"]').val();
-    if (currentFormValues != initialFormValues) {
+    if (currentFormValues !== initialFormValues) {
       form.find('.action.update-product-options').removeClass('disabled');
       form.find('.action.update-product-options button').prop('disabled', false);
     } else {

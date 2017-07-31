@@ -75,9 +75,5 @@
 		  <block type="catalog/product_view" name="cart_item_comments" template="apdc_cart/catalog/product/item_comment.phtml" />
 		</reference>
 
-		<block type="catalog/product_view" name="cart_item_comments.options.bottom" template="apdc_cart/catalog/product/item_comment.phtml" />
-		<reference name="product.info.options.wrapper.bottom">
-		  <action method="insert"><block>cart_item_comments.options.bottom</block></action>
-		</reference>
     </catalog_product_view>
 </layout>

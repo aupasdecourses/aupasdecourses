@@ -37,6 +37,10 @@ if(empty($_cartQty)) {
     $_cartQty = 0;
 }
 $apdcAccordion = $this->getApdcCartAccordion();
+$cartMessages = $this->getMessages();
+if ($cartMessages) {
+    $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
+}
 ?>
 
 <div class="minicart-wrapper">
@@ -48,6 +52,7 @@ $apdcAccordion = $this->getApdcCartAccordion();
 
     <hr>
 
+    <?php echo $messageBlock->getGroupedHtml() ?>
     <div id="minicart-error-message" class="minicart-message"></div>
     <div id="minicart-success-message" class="minicart-message"></div>
 

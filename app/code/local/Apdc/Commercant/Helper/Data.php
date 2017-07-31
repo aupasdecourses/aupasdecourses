@@ -15,6 +15,23 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
     }
 
+    public function getWeekDays($short=true)
+    {
+        $weekDays = [];
+        if ($short) {
+            $labels = $this->getShortDays();
+        } else {
+            $labels = $this->getDays();
+        }
+        for ($i=1; $i <= 7; ++$i) {
+            $weekDays[$i] = [
+                'value' => $i,
+                'label' => $labels[$i-1]
+            ];
+        }
+        return $weekDays;
+    }
+
     public function formatDays($days, $string = false, $short = false){
     	$labeldays = $this->getDays();
 		if($short == true) {
@@ -111,25 +128,13 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $shop_info["website"]=$data["website"];
             $shop_info["closing_periods"]=$data["closing_periods"];
             $shop_info["description"]=$categoryShop->getDescription();
-            $shop_info["delivery_days"]=$this->formatDays($data["delivery_days"],true);
+            $shop_info["delivery_days"] = $data["delivery_days"];
             $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
             $shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
             $shop_info["url"] = $categoryShop->getUrl();
             
             $html = "";
-            $delivery_daysAll = array();
             $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
-            $delivery_days = $this->formatDays($data["delivery_days"], false, true);
-            foreach($days as $day) {
-                if(in_array($day,$delivery_days)) {
-                    $delivery_daysAll[$day] = 0;
-                }
-                else {
-                    $delivery_daysAll[$day] = 1;
-                }
-            }
-            $shop_info["delivery_days"] = $delivery_daysAll;
-            
             foreach($data["timetable"] as $day=>$hours){
                 $hours=($hours=="")?"Fermé":$hours;
                 $hoursExplode = explode('-', $hours);
@@ -145,5 +150,4 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $shop_info;
     }
-
 }

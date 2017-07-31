@@ -72,7 +72,7 @@ if(isset($_SESSION['ddate'])){
 <?php if ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0) : ?>
     <?php $item = Mage::getModel('sales/quote_item')->load($_product->getCartItemId()); ?>
     <?php if ($item && $item->getId()) : ?>
-    <div class="action update-product-options disabled">
+    <div class="action update-product-options disabled text-right">
         <input type="hidden" name="update_product_options" value="1" />
         <input type="hidden" name="update_product_options_initial_values" value="<?php echo (int)$item->getQty() . '-' . $item->getItemComment(); ?>" />
         <button type="submit" class="button button-green btn-sm apdc-catalog-update-product-options" data-item-id="<?php echo $_product->getCartItemId(); ?>" data-product-id="<?php echo $_product->getId(); ?>" title="<?php echo $this->__('Update product'); ?>" value="update_product_options" disabled="true">

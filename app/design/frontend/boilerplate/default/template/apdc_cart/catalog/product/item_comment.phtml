@@ -1,18 +1,23 @@
 <?php $product = $this->getProduct(); ?>
 <?php $containerId = ($product->getConfigurableContainerId() ? $product->getConfigurableContainerId() . '_' : ''); ?>
+<?php $editMode = ($product->getConfigureMode() == true && $product->getCartItemId() && $product->getCartItemId() > 0); ?>
 <div class="input-box hide apdc-cart-item-comment apdc-cart-item-comment-<?php echo $product->getId(); ?>" id="apdc-cart-item-comment-<?php echo $containerId . $product->getId(); ?>" data-ajax-url="<?php echo $this->getUrl('checkout/index/addCommentAjax', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
     <label><?php echo $this->__('Commentaire pour ce produit :'); ?></label>
     <div class="apdc-cart-item-comment-messages"></div>
-    <div class="input-box">
+    <div class="input-box row">
         <div class="loading"><div class="loader"></div></div>
         <input type="hidden" class="apdc-cart-item-comment-item-id" name="item_id" />
-        <textarea class="input-text form-control col-xs-12" name="item_comment"></textarea>
-        <?php if (!($product->getConfigureMode() == true && $product->getCartItemId() && $product->getCartItemId() > 0)) : ?>
-        <button type="button" class="pull-right button button-green btn-sm apdc-cart-item-comment-save" title="<?php $this->__('Ajout mon commentaire'); ?>">
-            <span><span>
-                <i class="fa fa-save"></i> <?php echo $this->__('Enregistrer');  ?>
-            </span></span>
-        </button>
+        <div class="col-xs-12<?php echo (!$editMode ? ' col-md-6' : ''); ?>">
+            <textarea class="input-text form-control col-xs-12" name="item_comment"></textarea>
+        </div>
+        <?php if (!$editMode) : ?>
+        <div class="col-xs-12 col-md-6">
+            <button type="button" class="pull-right button button-green btn-sm apdc-cart-item-comment-save" title="<?php $this->__('Ajouter mon commentaire'); ?>">
+                <span><span>
+                    <i class="fa fa-save"></i> <?php echo $this->__('Enregistrer le commentaire');  ?>
+                </span></span>
+            </button>
+        </div>
         <?php endif; ?>
     </div>
 </div>

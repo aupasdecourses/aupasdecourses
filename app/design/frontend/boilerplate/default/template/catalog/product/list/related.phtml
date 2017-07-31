@@ -51,40 +51,55 @@
                 </li>
             <?php endforeach ?>
             </ol>
+            <div class="actions">
+                <div class="action-group">
+                    <div class="action-loading">
+                        <div class="loader"></div>
+                    </div>
+                    <button value="btn-add-related-products" type="submit" disabled="true" data-ajax-action="<?php echo $this->getUrl('addajax/index/addRelatedToProducts', array(Mage_Core_Model_Url::FORM_KEY => Mage::getSingleton('core/session')->getFormKey())); ?>" class="button button-green btn-cart add-related-products-to-cart"><span><?php echo $this->__('Ajouter les suggestions à mon panier'); ?></span></button> 
+                </div>
+            </div>
             <script type="text/javascript">decorateList('block-related', 'none-recursive')</script>
         </div>
         <script type="text/javascript">
         //<![CDATA[
-        $$('.related-checkbox').each(function(elem){
-            Event.observe(elem, 'click', addRelatedToProduct)
+        jQuery('.related-checkbox').on('click', function() {
+            var form = jQuery(this).parents('form');
+            addRelatedToProduct(form);
         });
 
         var relatedProductsCheckFlag = false;
         function selectAllRelated(txt){
+            var form = jQuery(txt).parents('form');
             if (relatedProductsCheckFlag == false) {
-                $$('.related-checkbox').each(function(elem){
-                    elem.checked = true;
+                form.find('.related-checkbox').each(function(){
+                    jQuery(this)[0].checked = true;
                 });
                 relatedProductsCheckFlag = true;
                 txt.innerHTML="<?php echo Mage::helper('core')->jsQuoteEscape($this->__('unselect all')) ?>";
             } else {
-                $$('.related-checkbox').each(function(elem){
-                    elem.checked = false;
+                form.find('.related-checkbox').each(function(){
+                    jQuery(this)[0].checked = false;
                 });
                 relatedProductsCheckFlag = false;
                 txt.innerHTML="<?php echo Mage::helper('core')->jsQuoteEscape($this->__('select all')) ?>";
             }
-            addRelatedToProduct();
+            addRelatedToProduct(form);
         }
 
-        function addRelatedToProduct(){
-            var checkboxes = $$('.related-checkbox');
+        function addRelatedToProduct(form){
+            var checkboxes = form.find('.related-checkbox');
             var values = [];
             for(var i=0;i<checkboxes.length;i++){
                 if(checkboxes[i].checked) values.push(checkboxes[i].value);
             }
-            if($('related-products-field')){
-                $('related-products-field').value = values.join(',');
+            if(form.find('.related-products-field')){
+                form.find('.related-products-field').val(values.join(','));
+                if (form.find('.related-products-field').val() !== '') {
+                    form.find('.add-related-products-to-cart').attr('disabled', false);
+                } else {
+                    form.find('.add-related-products-to-cart').attr('disabled', true);
+                }
             }
         }
         //]]>

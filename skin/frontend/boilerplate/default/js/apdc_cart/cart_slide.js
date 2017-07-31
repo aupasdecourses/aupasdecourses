@@ -73,14 +73,6 @@ function cartSlide() {
 		  var productId = $(this).data('product-id');
 		  $(document).trigger('minicartRemoveItem', [itemId, productId]);
 		});
-		$('.minicart-wrapper').on('mouseleave', '.details, .item-details', function() {
-		  $(this).removeClass('display');
-		  $(this).parents('.item').find('.item-details').stop().slideUp('fast');
-		});
-		$('.minicart-wrapper').on('mouseenter', '.details, .item-details', function() {
-		  $(this).addClass('display');
-		  $(this).parents('.item').find('.item-details').stop().slideDown('fast');
-		});
 
 		$('.minicart-wrapper').on('click', '.show-item-popup', function(e) {
 		  e.preventDefault();

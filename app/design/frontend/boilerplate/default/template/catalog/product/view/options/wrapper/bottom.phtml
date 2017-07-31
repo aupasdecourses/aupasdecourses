@@ -24,8 +24,6 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="product-options col-xs-12 col-sm-6" id="product-options-wrapper">
-    <h3>Options du produit <?php if ($this->hasRequiredOptions()):?><span class="subtitle"><?php echo $this->__("*option requise");?></subtitle><?php endif;?></span></h3>
+<div class="product-options-bottom col-xs-12 col-sm-6">
     <?php echo $this->getChildHtml('', true, true);?>
-    <script type="text/javascript">decorateGeneric($$('#product-options-wrapper dl'), ['last']);</script>
 </div>
