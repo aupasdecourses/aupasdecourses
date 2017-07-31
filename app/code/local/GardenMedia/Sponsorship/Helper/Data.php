@@ -154,12 +154,18 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
                 'godchild' => $customer,
                 'couponCode' => $sponsorCode
             );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsor);
+            Mage::getDesign()->setStore($sponsorStore);
             $this->sendRewardEmail($templateSponsorId, $sponsor->getEmail(), $sponsor->getName(), $vars);
 
             $vars['couponCode'] = $godchildCode;
+            $customerStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($customerStore);
+            Mage::getDesign()->setStore($customerStore);
             $this->sendRewardEmail($templateGodchildId, $customer->getEmail(), $customer->getName(), $vars);
 
-
+            Mage::getDesign()->setStore($origStore);
         } catch (Exception $e) {
             Mage::logException($e);
         }
@@ -191,7 +197,13 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
                 'godchild' => $customer,
                 'couponCode' => $sponsorCode
             );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsor);
+            Mage::getDesign()->setStore($sponsorStore);
             $this->sendRewardEmail($templateSponsorId, $sponsor->getEmail(), $sponsor->getName(), $vars);
+
+            Mage::getDesign()->setStore($origStore);
         } catch (Exception $e) {
             Mage::logException($e);
         }
@@ -221,6 +233,10 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
                 'godchild' => $customer,
                 'couponCode' => $godchildCode
             );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $customerStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($customer);
+            Mage::getDesign()->setStore($customerStore);
             $this->sendRewardEmail($templateGodchildId, $customer->getEmail(), $customer->getName(), $vars);
 
             // Send new godchild email to sponsor
@@ -233,7 +249,11 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
                 'sponsor' => $sponsorCustomer,
                 'godchild' => $customer
             );
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsorCustomer);
+            Mage::getDesign()->setStore($sponsorStore);
             $this->sendRewardEmail($templateId, $sponsorCustomer->getEmail(), $sponsorCustomer->getName(), $vars);
+
+            Mage::getDesign()->setStore($origStore);
         } catch (Exception $e) {
             Mage::logException($e);
         }

@@ -92,6 +92,37 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * getCustomerNeighborhoodStoreId 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return int
+     */
+    public function getCustomerNeighborhoodStoreId($customer)
+    {
+        if ($customer->getCustomerNeighborhood()) {
+            $websiteId = Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getWebsiteId();
+        } else {
+            $websiteId = $customer->getWebsiteId();
+        }
+        return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
+    }
+
+    /**
+     * getCustomerNeighborhoodStore 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getCustomerNeighborhoodStore($customer)
+    {
+        $storeId = $this->getCustomerNeighborhoodStoreId($customer);
+        return Mage::getModel('core/store')->load($storeId);
+    }
+
+
+    /**
      * getNeighborhoodByPostcode 
      * 
      * @param string       $postcode : postcode 
