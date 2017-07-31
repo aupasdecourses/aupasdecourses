@@ -25,7 +25,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Contact extends Mage_Adminht
 		  $attributeArray[$option['value']] = $option['label'];
 		} 
 
-		if(!is_null($input) && !empty($input)){
+		if(!is_null($input) && !empty($input) && isset($attributeArray[$input])){
 			return $attributeArray[$input];
 		} else {
 			return $input;
