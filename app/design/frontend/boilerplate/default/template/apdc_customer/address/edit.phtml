@@ -100,20 +100,6 @@
                             <input type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
                         </div>
                     </div>
-                    <!-- <div class="field">
-                        <label for="region_id"><?php echo $this->__('State/Province') ?></label>
-                        <div class="input-box">
-                            <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
-                               <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
-                            </select>
-                            <script type="text/javascript">
-                            //<![CDATA[
-                                $('region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
-                            //]]>
-                            </script>
-                            <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
-                        </div>
-                    </div> -->
                 </li>
                 <li class="fields">
                     <div class="field">
@@ -158,7 +144,6 @@
 <script type="text/javascript">
 //<![CDATA[
     var dataForm = new VarienForm('form-validate', true);
-    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
 //]]>
 </script>
 <!-- Google Auto Complete -->

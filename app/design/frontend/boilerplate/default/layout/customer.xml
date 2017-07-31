@@ -41,6 +41,11 @@ Supported layout update handles (special):
 
 -->
 <layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><file>js/apdc_customer/capitalize-name.js</file></action>
+        </reference>
+    </default>
 
 <!--
 Load this update on every page when customer is logged in

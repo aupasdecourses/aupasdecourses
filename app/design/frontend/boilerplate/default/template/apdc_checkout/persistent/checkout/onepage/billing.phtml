@@ -11,10 +11,6 @@
     Validation.addAllThese([
         ['validate-checkboxgroup-required', 'Please select an option.', function(v, elm) {
             id = elm.id.slice(0, elm.id.lastIndexOf("_"));
-            /*if (h.get(id)) {
-                return true;
-            }*/
-            //h.set(id, true);
             checkboxGroupChecked = false;
             $$('input[id^=' + id + ']').each(function(checkbox){
                 if (checkbox.checked || jQuery(checkbox).hasClass('validation-failed'))
@@ -343,90 +339,6 @@
 			</fieldset>
 		</div>
 	</div>
-	<!--<div class="row">
-		<div class="col-md-12">
-			<label class="control-label"><?php echo $this->__('Informations complémentaires')?></label>
-			<div id="amorderattr" class="apdc-form">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="batiment">Bâtiment</label>
-										<div class="col-sm-5">
-											<input id="batiment" name="amorderattr[batiment]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('batiment');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_batiment"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label required" for="etage">Etage <em>*</em></label>
-										<div class="col-sm-5">
-											<input id="etage" name="amorderattr[etage]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('etage');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_etage"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>                    
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="codeporte1">Code porte n°1</label>
-										<div class="col-sm-6">
-											<input id="codeporte1" name="amorderattr[codeporte1]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte1');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_codeporte1"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-horizontal">
-									<div class="form-group fields">
-										<label class="col-sm-6 control-label" for="codeporte2">Code porte n°2</label>
-										<div class="col-sm-6">
-											<input id="codeporte2" name="amorderattr[codeporte2]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('codeporte2');?>" class="input-text" type="text"/>
-											<div type="anchor" id="anchor_codeporte2"></div><div style="padding: 4px;"></div>
-										</div>
-									</div>
-								</div>                    
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="form-horizontal">
-							<div class="form-group fields">
-								<label class="col-sm-5 control-label required" for="contactvoisin">Contact en cas d'absence <em>*</em></label>
-								<div class="col-sm-7">
-									<input id="contactvoisin" name="amorderattr[contactvoisin]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('contactvoisin');?>" class=" input-text" type="text"/>
-									<div type="anchor" id="anchor_contactvoisin"></div><div style="padding: 4px;"></div>
-								</div>
-							</div>
-							<div class="form-group fields">
-								<label class="col-sm-5 control-label required" for="telcontact">Téléphone du contact <em>*</em></label>
-								<div class="col-sm-7">
-									<input id="telcontact" name="amorderattr[telcontact]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('telcontact');?>" class="input-text" type="text"/>
-									<div type="anchor" id="anchor_telcontact"></div><div style="padding: 4px;"></div>
-								</div>
-							</div>
-						</div>                    
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-12">
-			<span class="field-row">
-				<label class="control-label" for="infoscomplementaires">Autres informations importantes</label>
-				<input id="infoscomplementaires" name="amorderattr[infoscomplementaires]" value="<?php echo Mage::helper('apdc_checkout')->getSavedAttrValue('infoscomplementaires');?>" class=" input-text" type="text"/>
-				<div type="anchor" id="anchor_infoscomplementaires"></div><div style="padding: 4px;"></div>
-			</span>
-		</div>
-	</div>-->
     <div class="buttons-set clearfix" id="billing-buttons-container">
         <button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="billing.save()"><?php echo $this->__('Continue') ?> <i class="fa fa-angle-right"></i></button>
         <div class="please-wait" id="billing-please-wait" style="display:none;">
@@ -440,7 +352,6 @@
     var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
     var billingForm = new VarienForm('co-billing-form');
 
-    //billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select State/Province...') ?>');
     $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
 
     var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
@@ -461,7 +372,6 @@
         '<?php echo $this->getUrl('checkout/onepage/shippingMethod') ?>');
 	var shippingForm = new VarienForm('co-billing-form');
 	shippingForm.extraChildParams = ' onchange="shipping.setSameAsBilling(false);"';
-	//shippingForm.setElementsRelation('shipping:country_id', 'shipping:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select State/Province...') ?>');
 	$('shipping-address-select') && shipping.newAddress(!$('shipping-address-select').value);
 
 	var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
