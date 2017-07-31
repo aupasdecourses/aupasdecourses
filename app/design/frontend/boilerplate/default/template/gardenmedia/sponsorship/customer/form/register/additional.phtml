@@ -35,7 +35,6 @@
 <li class="fields">
     <div class="field">
         <label for="sponsor_code"><?php echo $this->__('Sponsor Code') ?></label>
-        <!-- <p class="form-instructions"><?php echo $this->getInstruction(); ?></p> -->
         <div class="input-box">
         <input type="text" name="sponsor_code" id="sponsor_code" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sponsor Code')) ?>" class="input-text validate-sponsor-code" placeholder="<?= $this->__("Si vous avez un code parrain, indiquez le ici.")?>" value="<?php echo $this->getSponsorCodeValue(); ?>" />
         </div>
@@ -56,6 +55,10 @@
                 }
             }
             return true;
+        });
+        jQuery('#sponsor_code').on('change blur', function() {
+            var value = jQuery(this).val().trim().replace(/\s+/g, '');
+            jQuery(this).val(value);
         });
     </script>
 </li>
