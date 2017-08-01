@@ -2,6 +2,9 @@
 	$product = $this->getProduct();
 	$productUrl = $product->getProductUrl();
 	$strippedName = $this->stripTags($product->getName(), null, true);
+    if (strlen($strippedName) > 35) {
+        $strippedName = substr($strippedName, 0, 47) . '...';
+    }
 	$imageLabel = $this->stripTags($this->getImageLabel($product, 'small_image'), null, true);
 	if ($product->getConfigureMode() == true && $product->getCartItemId() && $product->getCartItemId() > 0) {
 		$formAjaxUrl = $this->helper('apdccart')->getAjaxUpdateItemOptionsUrl($product);
@@ -32,7 +35,7 @@
 			   title="<?php echo $strippedName; ?>"
 			   class="show-product-popup"
 			   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
-				<h3 class="product-name"><?= $product->getName()?></h3>
+				<h3 class="product-name"><?php echo $strippedName; ?></h3>
 			</a>
 			<p class="product-portion"><?php echo $product->getData('short_description'); ?></p>
 			<!--<p class="product-commercant-name">
