@@ -33,9 +33,9 @@ class Mistral
 		
 		/* exemple avec pascal bassard */
 		$array = array(
-			'Token' 		=> '6AA0A660A6B647C39F4CE6CED09621A2',
-			'PartnerRef' 	=> 'APDC5535',
-			'OrderRef' 		=> '2017000293-272',
+			// 'Token' 		=> 'APDC2712A9B6',
+			// 'PartnerRef' 	=> 'APDC5535',
+			// 'OrderRef' 		=> '2017000293-272',
 		 );
 		
 
@@ -55,6 +55,9 @@ class Mistral
 		var_dump($jsonArray);
 		var_dump($jsonResult);
 		echo '<pre>';
+
+		dump($jsonArray);
+		dump($jsonResult);
 
 		return $jsonResult;
 	}
