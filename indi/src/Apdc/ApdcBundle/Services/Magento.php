@@ -691,7 +691,6 @@ class Magento
             return false;
         });
        
-        asort($commercants);
         return $commercants;
     }
 
@@ -737,7 +736,10 @@ class Magento
             $rsl[$storeid] = $commercant;
         }
 
-        ksort($rsl);
+        usort($rsl, function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+
         return $rsl;
     }
 
