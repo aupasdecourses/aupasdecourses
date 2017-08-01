@@ -47,6 +47,30 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         return $array[$daytext];
     }
 
+    /**
+     * saveDdate 
+     * 
+     * @param string $ddate ddate 
+     * @param string $dtime dtime 
+     * @param string $ddatei ddatei 
+     * 
+     * @return void
+     */
+    public function saveDdate($ddate, $dtime, $ddatei)
+    {
+        $dtime = Mage::getModel('ddate/dtime')->load($dtime)->getDtime();
+
+        Mage::getSingleton('core/session')->setDdate($ddate);
+        Mage::getSingleton('core/session')->setDtime($dtime);
+        Mage::getSingleton('core/session')->setDdatei($ddatei);
+
+        setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
+        $formatedDate = strftime('%a%e/%m', strtotime($ddate));
+        Mage::getSingleton('core/session')->setHeaderDdate($formatedDate . ' ' . $dtime);
+        $_SESSION['ddate'] = $ddate;
+        $_SESSION['dtime'] = $dtime;
+    }
+
     public function getCommercantname($object){
         $name=$object->getProduct()->getAttributeText('commercant');
 

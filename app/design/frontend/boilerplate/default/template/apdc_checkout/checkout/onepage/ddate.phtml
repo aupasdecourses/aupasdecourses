@@ -1,22 +1,14 @@
 <div id="apdc-child">
-	<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('ddate/css/jscal2.css') ?>" />
-	<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('ddate/css/border-radius.css') ?>" />
-	<script src="<?php echo $this->getSkinUrl('ddate/js/slideshow.js') ?>" type='text/javascript'></script>
 	<div id="co-ddate-form">
 		<h3><?php echo $this->__('Choisissez votre créneau de livraison');?></h3>
 		<fieldset class="group-select">
-			<ul>
-				<li><div class="input-box">
-						<input type="hidden" id="ddate:date" name="ddate[date]" value="" title="<?php echo $this->__('Delivery Date') ?>" class="input-text" />
-						<input type="hidden" id="ddate:dtime" name="ddate[dtime]" value="" title="<?php echo $this->__('Delivery Time') ?>" class="input-text" />
-					</div>
-				</li>
-			</ul>
+			<div class="input-box">
+                <input type="hidden" id="ddate:date" name="ddate[date]" value="" title="<?php echo $this->__('Delivery Date') ?>" class="input-text" />
+                <input type="hidden" id="ddate:dtime" name="ddate[dtime]" value="" title="<?php echo $this->__('Delivery Time') ?>" class="input-text" />
+                <input type="hidden" id="ddate:ddatei" name="ddate[ddatei]" value="<?php echo Mage::getSingleton('core/session')->getDdatei(); ?>" class="input-text" />
+            </div>
 			<?php if (!Mage::getStoreConfig("ddate/info/calender_display")) { ?>
 				<div class="delivery">
-					<div class="deli_title">
-						<h6><a id="slideshow-previous" href="#previous"><?php echo Mage::helper('ddate')->__('Previous 7 days') ?></a><a id="slideshow-next" ><?php echo Mage::helper('ddate')->__('Next 7 days') ?></a></h6>
-					</div>
 					<div class="deli_date_time">
 						<div class="deli_time">
 							<h6 class="first_column_header"><strong><?php echo Mage::getStoreConfig("ddate/info/first_column_header") ?></strong></h6>
@@ -33,26 +25,32 @@
 									<div id="slideshow-holder">
 										<script>
 
-											var initSelectDdate = true;
+											var initSelectDdate = false;
 
-											function selectDdate(date, dtime){
+											function selectDdate(date, dtime, elt){
+                                                var ddatei = jQuery(elt).attr('data-ddatei');
+                                                var isInPopup = (jQuery(elt).parents('.apdc-popup').length > 0);
+                                                var needToSave = (initSelectDdate == false && (date != document.getElementById('ddate:date').value || dtime != document.getElementById('ddate:dtime').value));
 
 
-												if(initSelectDdate == false && (date != document.getElementById('ddate:date').value || dtime != document.getElementById('ddate:dtime').value)) {
-                                                    if (typeof(apdcDeliveryPopup) !== 'undefined') {
+												if(needToSave) {
+                                                    if (isInPopup && typeof(apdcDeliveryPopup) !== 'undefined') {
                                                         apdcDeliveryPopup.showLoading();
                                                     }
 													jQuery.ajax( {
-														url : '<?php echo $this->getUrl('ddate/express/saveDdateAjax') ?>',
+														url : '<?php echo $this->getUrl('checkout/onepage/saveDdateAjax') ?>',
 														type: 'post',
 														dataType : 'json',
 														data:{
 															'date':date,
 															'dtime':dtime,
+															'ddatei':ddatei,
 															'url':'<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>'
 														},
 														success : function(data) {
-															window.location.reload();
+                                                            if (isInPopup) {
+                                                                window.location.reload();
+                                                            }
 														}
 													});
 												}
@@ -60,7 +58,7 @@
 													initSelectDdate = false;
 												}
 
-
+												document.getElementById('ddate:ddatei').value = ddatei;
 												document.getElementById('ddate:date').value = date;
 												document.getElementById('ddate:dtime').value = dtime;
 
@@ -71,7 +69,6 @@
 											function selectDdateAct(current_select){
 												if (!jQuery(current_select).hasClass('disablerow')) {
 													var ddatei = current_select.attr('data-ddatei');
-													// nguoc lai
 													var option_responsive = jQuery('#slideshow-holder').find('.ddate_day_option').find("a[data-ddatei='"+ddatei+"']");
 													option_responsive.addClass('ddate_day_active');
 													jQuery('> i', option_responsive).removeClass('fa-check').addClass('fa-thumbs-up');
@@ -87,19 +84,15 @@
 														.end()  //again go back to selected element
 														.text();
 
-													//showddate = showddate.replace(/\s/g, '').replace(")", ", ").replace("(", "");
 
 													jQuery('.deli_date').find('.ddate_day_selected').text('Sélectionner');
 													jQuery(option_responsive).closest('.option_slot_select').find('.ddate_day_selected').text(showdtimetext);
 
 													document.getElementById('showddate:date').innerHTML = showddate;
 													document.getElementById('showddate:dtime').innerHTML = showdtimetext;
-													jQuery('.header-delivery-container .label').html(showddate+' '+showdtimetext+'<i class="fa fa-angle-up"></i>');
 
 													jQuery('.ddate_selected').show();
 													jQuery(option_responsive).parent().hide();
-
-													Mage.Cookies.set('delivery_slot', ddatei);
 
 													if(jQuery('.block-delivery').hasClass('open')) {
 														jQuery('.block-delivery').removeClass('open');
@@ -124,14 +117,15 @@
 
 															<li <?php if ($i % 2 != 0) echo 'class="oddrow"' ?>>
 																<?php 
-																$daytext=$this->__( date('D', strtotime('+' . $i . ' day', $currentTime)) );
-																echo Mage::helper('apdc_checkout')->getFrdaytext($daytext);?>
+                                                                setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
+																echo strftime('%a', strtotime('+' . $i . ' day', $currentTime));
+                                                                ?>
 																<div class="option_slot_select">
 																	<p class="ddate_day_selected">Sélectionner</p>
 																	<p class="ddate_day_option">
 																		<?php foreach ($slots as $slot) :
 																			if($this->isEnabled($slot->getId(), $strDate)) :?>
-																				<a onclick="selectDdate('<?php echo date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)) ?>','<?php echo $slot->getDtimeId(); ?>'); selectDdateAct(jQuery(this));" data-ddatei="dd_<?php echo $slot->getId().'_'.$i; ?>"><?php echo $slot->getDtime(); ?></a>
+																				<a onclick="selectDdate('<?php echo date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)) ?>','<?php echo $slot->getDtimeId(); ?>', this); selectDdateAct(jQuery(this));" data-ddatei="dd_<?php echo $slot->getId().'_'.$i; ?>"><?php echo $slot->getDtime(); ?></a>
 																		<?php else: ?>
 																				<a class="disablerow"><?php echo $slot->getDtime(); ?></a>
 																		<?php endif; endforeach; ?>
@@ -142,10 +136,8 @@
 
 															</li>
 													<?php } ?>
-														<!-- <div class="clear"><span></span></div> -->
 													</ul>
 												</div>
-												<!--Mode Calendrier-->
 												<div class="deli_date_top select_one">
 													<?php 
 													foreach ($slots as $slot) :
@@ -159,9 +151,7 @@
 																		$remliv=$this->getRemainingnumberofOrders($slot->getId(), $strDate);
 																		?>
 																		<li>
-																			<a href="#select" onclick="selectDdate('<?php echo date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)) ?>','<?php echo $slot->getDtimeId(); ?>'); selectDdateAct(jQuery(this));" data-ddatei="dd_<?php echo $slot->getId().'_'.$i; ?>">
-																			<!-- <span class="remliv"><?php
-																			echo $remliv;?> </span> -->
+																			<a href="#select" onclick="selectDdate('<?php echo date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)) ?>','<?php echo $slot->getDtimeId(); ?>', this); selectDdateAct(jQuery(this));" data-ddatei="dd_<?php echo $slot->getId().'_'.$i; ?>">
 																				<i class="fa fa-check remliv-icon"></i><br>
 																				Créneau Dispo</a>
 																		</li>
@@ -198,16 +188,13 @@
 				</div>
 				<script type="text/javascript">
 					jQuery(function ($) {
-						var slot = Mage.Cookies.get('delivery_slot');
+						var slot = document.getElementById('ddate:ddatei').value;
 						if (slot) {
+							initSelectDdate = true;
 							$('#slideshow-holder').find("a[data-ddatei='"+slot+"']").click();
 						}
 					});
 				</script>
-				<!--<div style="margin-top:10px;">
-					<span id="availablepic"></span>Horaire disponible
-					<span id="unavailablepic"></span>Horaire non disponible
-				</div> -->
 			<?php }else { ?>
 				<div style="margin-top:10px;">
 					<table>

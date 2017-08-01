@@ -66,7 +66,6 @@ ApdcPopup.prototype.updateContent = function(contentHtml) {
 };
 
 ApdcPopup.prototype.showLoading = function() {
-  jQuery('#' + this.id + ' .apdc-popup-content').html('');
   jQuery('#' + this.id + ' .apdc-popup-loading').show();
   this.show();
 };

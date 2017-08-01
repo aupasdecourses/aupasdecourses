@@ -12294,6 +12294,10 @@ header .top-nav li a a:visited {
   padding: 0;
 }
 
+.header-delivery-container .skip-links .label i {
+  color: #3ab64b;
+}
+
 #header-neighborhood {
   display: table;
   margin: 0 auto;

@@ -72,15 +72,23 @@
             </apdc_checkout_checkout_onepage>
         </rewrite>
         <events>
-	    	<controller_action_postdispatch_checkout_onepage_savePayment>
+	    	    <controller_action_postdispatch_checkout_onepage_savePayment>
                 <observers>
                     <apdc_checkout>
                         <class>apdc_checkout/observer</class>
                         <method>saveOrder</method>
                     </apdc_checkout>
                 </observers>
-        	</controller_action_postdispatch_checkout_onepage_savePayment>
-	    </events>
+        	  </controller_action_postdispatch_checkout_onepage_savePayment>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <apdc_checkout>
+                        <class>apdc_checkout/observer</class>
+                        <method>cleanDdateSessionData</method>
+                    </apdc_checkout>
+                </observers>
+            </checkout_onepage_controller_success_action>
+	      </events>
         <sales>
             <quote>
                 <totals>

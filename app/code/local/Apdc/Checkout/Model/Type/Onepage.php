@@ -36,9 +36,7 @@ class Apdc_Checkout_Model_Type_Onepage extends MW_Ddate_Model_Type_Onepage
         $this->getQuote()->setDdateComment($data['ddate_comment']);
         $this->getQuote()->save();
 
-        //Pierre Mainguet - added for compatibility Pmainguet_Attributeqtoi_Model_Observer.php
-        Mage::getSingleton('core/session')->setDdate($data['date']);
-
+        Mage::helper('apdc_checkout')->saveDdate($data['date'], $data['dtime'], $data['ddatei']);
         $_SESSION['ddate'] = $data['date'];
         $_SESSION['dtime'] = $data['dtime'];
         $_SESSION['ddate_comment'] = $data['ddate_comment'];

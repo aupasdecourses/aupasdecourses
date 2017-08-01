@@ -227,5 +227,26 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         $output = $layout->getOutput();
         return $output;
     }
+
+    public function saveDdateAjaxAction()
+    {
+        $date = $this->getRequest()->getPost('date', '');
+        $dtime = $this->getRequest()->getPost('dtime', '');
+        $ddatei = $this->getRequest()->getPost('ddatei', '');
+        $url = $this->getRequest()->getPost('url', Mage::getBaseUrl());
+        Mage::helper('apdc_checkout')->saveDdate($date, $dtime, $ddatei);
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array('redirect' => $url)));
+        return;
+    }
 	
+
+    /**
+     * Check can page show for unregistered users
+     *
+     * @return boolean
+     */
+    protected function _canShowForUnregisteredUsers()
+    {
+        return parent::_canShowForUnregisteredUsers() || $this->getRequest()->getActionName() == 'saveDdateAjax';
+    }
 }

@@ -23,26 +23,9 @@
 					<?php echo $this->getChildHtml('topSearch') ?>
 					<?php echo $this->getChildHtml('checkout.progress') ?>
 
-                    <!--<div class="skip-container skip-container-header-search col-md-4 col-sm-12">
-                        <input type="text" placeholder="<?php echo $this->__('Your research here'); ?>">
-                        <i class="fa fa-search"></i>
-
-                        <div id="header-search" class="dropdown-menu skip-content">
-
-                        </div>
-                    </div>-->
-
                     <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-9'; } else{ echo 'col-md-4'; }?> col-sm-9 text-right link-header-right">
 
                         <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
-                        <!--<?php if($session->isLoggedIn()) : ?>
-                            <div class="skip-container hidden-sm">
-                                <a href="" onclick="location.href='<?php echo Mage::getBaseUrl();?>sponsorship/';" class="skip-link skip-referral">
-                                    <i class="fa fa-bullhorn"></i>
-                                    <span class="label">Parrainez</span>
-                                </a>
-                            </div>
-                        <?php endif; ?>-->
 
                         <div class="skip-help skip-container">
                             <a id="dLabel" data-target="header-help" href="#header-help" class="skip-link skip-help">
@@ -62,20 +45,19 @@
 							<a href="#" title="Quartier" id="header-neighborhood-link" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>">
 								<i class="fa fa-home"></i>
 								<span class="label"><?php echo $this->__('Quartier') ?></span>
-							</a><!--<?php //echo $this->getChildHtml('neighborhood_menu'); ?>-->
+							</a>
 		                </div>
 
 						<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
 							<div class="header-delivery-container skip-container">
 								<a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
 									<i class="fa fa-list-ul"></i>
-									<span class="label"><?php echo $this->__('Créneaux') ?></span>
+                                    <?php if (Mage::getSingleton('core/session')->getHeaderDdate()) : ?>
+									    <span class="label"><?php echo Mage::getSingleton('core/session')->getHeaderDdate(); ?> <i class="fa fa-angle-down"></i></span>
+                                    <?php else : ?>
+									    <span class="label"><?php echo $this->__('Créneaux') ?></span>
+                                    <?php endif; ?>
 								</a>
-								<!--<div class="block block-delivery" id="header-delivery">
-									<div class="apdc-popup-content">
-										<?php //echo $this->getChildHtml('header.delivery') ?>
-									</div>
-								</div>-->
 							</div>
 						<?php } ?>
 
@@ -86,7 +68,6 @@
 									<span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
 								</a>
                             <?php else : ?>
-                                <!--<a href="#" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion <i class="fa fa-angle-down"></i></span></a>-->
 								<a href="#" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
                             <?php endif; ?>
                             <div class="block block-login" id="login-form-header_popup">
@@ -131,17 +112,6 @@
 				$j(this).parent().find('.block-login').addClass('open');
 			}
 		});
-
-		/*$j('.header-neighborhood-container a').click(function(evt){
-			if($j(this).parent().find('.block-neighborhood').hasClass('open') ){
-				$j(this).parent().find('.block-neighborhood').removeClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-up').addClass('fa-angle-down');
-			}
-			else{
-				$j(this).parent().find('.block-neighborhood').addClass('open');
-				$j(this).parent().find('.label i').removeClass('fa-angle-down').addClass('fa-angle-up');
-			}
-		});*/
 
 		if(getUrlParameter('opencart') == 1) {
 			$j('.header-minicart .skip-cart').trigger('click');

@@ -474,7 +474,9 @@ Billing.prototype = {
     },
 	
 	setSameAsShipping: function(flag, rowBillingAddress) {
+      if ($('billing:same_as_shipping')) {
         $('billing:same_as_shipping').checked = flag;
+      }
         // #5599. Also it hangs up, if the flag is not false
         if (flag) {
             this.syncWithShipping();
@@ -498,7 +500,9 @@ Billing.prototype = {
                     }
                 }
             }
-            shippingRegionUpdater.update();
+            if (window.shippingRegionUpdater) {
+              shippingRegionUpdater.update();
+            }
             $('billing:region_id').value = $('shipping:region_id').value;
             $('billing:region').value = $('shipping:region').value;
         /*} else {
@@ -579,7 +583,9 @@ Shipping.prototype = {
     },
 
     setSameAsBilling: function(flag) {
-        $('shipping:same_as_billing').checked = flag;
+        if ($('shipping:same_as_billing')) {
+          $('shipping:same_as_billing').checked = flag;
+        }
         // #5599. Also it hangs up, if the flag is not false
         if (flag) {
             this.syncWithBilling();
