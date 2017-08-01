@@ -13422,6 +13422,28 @@ section .section-description {
   color: #3ab64b;
 }
 
+.apdc-products-grid ul.price-box {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.apdc-products-grid ul.price-box li {
+  font-size: 14px;
+  font-style: italic;
+  display: inline-block;
+  padding: 0 8px;
+  color: #272b32;
+}
+
+.apdc-products-grid ul.price-box li:last-child {
+  padding-right: 0;
+}
+
+.apdc-products-grid ul.price-box li .price {
+  font-size: inherit;
+}
+
 .apdc-products-grid .product-short_desc {
   font-size: .75rem;
   color: #3ab64b;
@@ -13529,12 +13551,14 @@ section .section-description {
   margin-bottom: 10px;
 }
 
+.btn-cart-edit,
 .btn-cart {
   font-size: .875rem;
   font-weight: normal;
   margin: 10px auto 0;
 }
 
+.btn-cart-edit img,
 .btn-cart img {
   display: inline-block !important;
   width: 21px !important;
@@ -15620,6 +15644,24 @@ footer .social-list .btn-social-icon {
   font-size: 2rem;
   font-weight: 300;
   color: #3ab64b;
+}
+
+#product_addtocart_form ul.price-box {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#product_addtocart_form ul.price-box li {
+  font-size: 14px;
+  font-style: italic;
+  display: inline-block;
+  padding: 0 8px;
+  color: #272b32;
+}
+
+#product_addtocart_form ul.price-box li:last-child {
+  padding-right: 0;
 }
 
 #product_addtocart_form .prix-kilo {

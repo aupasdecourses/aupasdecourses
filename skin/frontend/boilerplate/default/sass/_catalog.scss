@@ -557,6 +557,21 @@
             color: $color-main-green;
         }
     }
+    ul.price-box {
+      margin:0;
+      padding:0;
+      list-style:none;
+      li {
+        display: inline-block;
+        padding: 0 8px;
+        font-style: italic;
+        font-size: 14px;
+        color: $color-dark-grey;
+        &:last-child {
+          padding-right:0;
+        }
+      }
+    }
     .prix-kilo{
         font-size: 0.75rem;
         font-weight: 300;

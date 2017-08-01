@@ -66,9 +66,9 @@
                         <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
                         <dd>
                             <?php if (is_array($_option['value'])): ?>
-                            <?php echo nl2br(implode("\n", $_option['value'])) ?>
+                            <?php echo $this->escapeHtml(nl2br(implode("\n", $_option['value']))); ?>
                             <?php else: ?>
-                            <?php echo $_option['value'] ?>
+                            <?php echo $this->escapeHtml($_option['value']); ?>
                             <?php endif; ?>
                         </dd>
                         <?php endforeach; ?>

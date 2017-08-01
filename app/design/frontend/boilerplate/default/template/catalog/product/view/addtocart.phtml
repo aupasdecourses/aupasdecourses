@@ -24,27 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php
-
-$_product = $this->getProduct();
-$dispo = true;
-$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $_product->getData('commercant'))->getFirstItem();
-$delivery_days = $shop->getDeliveryDays();
-if(count($delivery_days) < 4 && $delivery_days <> NULL){
-	$tmp = Mage::helper('apdc_commercant')->getDays();
-	foreach($delivery_days as $key => $day){
-		$delivery_days[$key] = $tmp[$day-1];
-	}
-}
-if(isset($_SESSION['ddate'])){
-	$timestamp = strtotime($_SESSION['ddate']);
-	$day = date('w', $timestamp);
-	if(!in_array($day,$delivery_days)){
-		$dispo = false;
-	}
-}
-
-?>
+<?php $_product = $this->getProduct(); ?>
 <?php if($_product->isSaleable()): ?>
 <div class="actions add-to-cart">
     <div class="action-group">
@@ -53,7 +33,7 @@ if(isset($_SESSION['ddate'])){
         </div>
 
         <div class="pull-right">
-			<?php if($dispo == true) { ?>
+			<?php if($this->helper('apdc_catalog/product_available')->isAvailable($_product)) { ?>
 				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
 				<button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
 				<div class="qty-buttons">

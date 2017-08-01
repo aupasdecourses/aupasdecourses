@@ -65,6 +65,7 @@
             <collection>
                  <attributes>
                     <has_options />                                            
+                    <commercant />
                  </attributes>
             </collection>
         </product>

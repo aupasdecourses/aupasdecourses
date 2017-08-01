@@ -41,11 +41,9 @@
 <?php $formAjaxUrl = $this->helper('apdccart')->getAjaxAddUrl($_product); ?>
 <?php endif; ?>
 
-<?php /*
 <script type="text/javascript">
     var optionsPrice<?php echo str_replace('-', '_', $containerId) . $_product->getId(); ?> = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
- */?>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view" itemscope itemtype="http://schema.org/Product">
     <div class="product-essential">
@@ -141,6 +139,7 @@
                                     <p class="col-xs-12" style="font-size:13px;margin-top:10px;font-style:italic;">Nota: Si l'option que vous avez choisi n'est plus disponible au moment de la commande, le commerçant se réserve le droit de proposer une autre option pour le même produit, ou un produit équivalent.</p>
                                 <?php endif;?>
 
+                                <?php echo $this->getChildHtml('product_type_data') ?>
                                 <?php if (!$this->hasOptions()):?>
                                     <div class="add-to-box">
                                         <?php if($_product->isSaleable()): ?>
@@ -157,12 +156,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="long-description">
-                    <?php if ($_description = $this->getProduct()->getDescription()):?>
+                <?php if ($_product->getDescription() != '' && $_product->getDescription() != $_product->getShortDescription()):?>
+                    <div class="long-description">
                         <h2>Description</h2>
-                        <p><?php echo $_description;?></p>
-                    <?php endif; ?>
-                </div>
+                        <p><?php echo $_product->getDescription();?></p>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <?php echo $this->getChildHtml('related_products') ?>

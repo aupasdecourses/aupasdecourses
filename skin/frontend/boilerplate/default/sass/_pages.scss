@@ -629,6 +629,24 @@ section {
             color: $color-main-green;
         }
     }
+    ul.price-box {
+      margin:0;
+      padding:0;
+      list-style:none;
+      li {
+        display: inline-block;
+        padding: 0 8px;
+        font-style: italic;
+        font-size: 14px;
+        color: $color-dark-grey;
+        &:last-child {
+          padding-right:0;
+        }
+        .price {
+          font-size:inherit;
+        }
+      }
+    }
     .product-short_desc{
         font-size: 0.75rem;
         color: $color-main-green;
@@ -711,6 +729,7 @@ section {
     }
 }
 
+.btn-cart-edit,
 .btn-cart{
     font-size: 0.875rem;
     font-weight: normal;

@@ -1,28 +1,31 @@
 <?php $_product = $this->getProduct(); ?>
-<div class="actions">
-    <div class="action-group pull-right">
+<?php $isAvailable = Mage::helper('apdc_catalog/product_available')->isAvailable($_product); ?>
+<div class="actions add-to-cart">
+    <div class="action-group">
         <div class="action-loading">
             <div class="loader"></div>
         </div>
-        <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
-            <div>
-                <a title="<?php echo $this->quoteEscape($this->__('Edit Options')) ?>" class="col-xs-12 button btn show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Edit Options') ?></a>
-                <a title="<?php echo $this->quoteEscape($this->__('Add to cart')) ?>" class="col-xs-12 button btn-cart show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to cart') ?></a>
-            </div>
-        <?php else : ?>
-
-            <?php if ($_product->isSaleable()): ?>
-            <div>
-                <input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
-                <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to cart')) ?>" class="button btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to cart') ?></span></span></button>
-                <div class="qty-buttons">
-                    <button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
-                    <button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
-                    <span class="added-qty">0</span>
-                    <button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
+        <?php if ($isAvailable) : ?>
+            <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
+                <div class="pull-right">
+                    <a title="<?php echo $this->quoteEscape($this->__('Modifier')) ?>" class="col-xs-12 button button-green btn btn-cart-edit show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Modifier') ?></a>
+                    <a title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="col-xs-12 button button-green btn-cart show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Ajouter') ?></a>
                 </div>
-            </div>
+
+            <?php elseif ($_product->isSaleable()): ?>
+                <div class="pull-right">
+                    <input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
+                    <button type="submit" title="<?php echo $this->quoteEscape($this->__('Ajouter')) ?>" class="button button-green btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Ajouter') ?></span></span></button>
+                    <div class="qty-buttons">
+                        <button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-green btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
+                        <button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-orange btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
+                        <span class="added-qty">0</span>
+                        <button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button button-green btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
+                    </div>
+                </div>
             <?php endif; ?>
+        <?php else : ?>
+			<span class="button button-green btn-cart simple-add-to-cart-button notavailable"><?php echo $this->__('Non disponible') ?></span>
         <?php endif; ?>
     </div>
 </div>
