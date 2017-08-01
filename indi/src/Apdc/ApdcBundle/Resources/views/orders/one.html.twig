@@ -78,7 +78,7 @@
 				<th>Total</th>
 				<th>Commentaire</th>
 			</tr>
-			{% for product in order.products %}
+			{% for product in order.products | sortbyfield('nom_commercant') %}
 			<tr>
 				<td>{{ product.nom_commercant }}</td>
 				<td>{{ product.nom }}</td>

@@ -6,6 +6,8 @@
 	<div class="container">
 	<h1> Liste des commandes par magasins </h1><br>
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	{#{ form(formPDF) }#}
+
 		{% for store_name, mercs in merchants %}
 			{% for merchant_id, merchant in mercs %}
 				<div class="merchant">
