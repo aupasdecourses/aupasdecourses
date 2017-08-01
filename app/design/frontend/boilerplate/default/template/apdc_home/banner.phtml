@@ -25,7 +25,8 @@
  */
 ?>
 <?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
-<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage()); ?>
+<?php $image = ($neighborhood->getImageBanner() ? $neighborhood->getImageBanner() : $neighborhood->getImage()); ?>
+<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($image); ?>
 <div class="page-title" style="background-image: url('<?php echo $imageUrl; ?>');">
     <h1><span><?php echo $neighborhood->getName();?></span></h1>
 </div>
