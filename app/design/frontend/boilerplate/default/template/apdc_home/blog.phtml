@@ -1,6 +1,7 @@
 <?php
 	$articles = $this->getArticlesBlog();
 ?>
+<?php if (!empty($articles)) : ?>
 <div class="block-blog">
 	<h2>Le blog - Avec ceci ?</h2>
 	<?php foreach($articles as $article) { ?>
@@ -19,3 +20,4 @@
 		</article>
 	<?php } ?>
 </div>
+<?php endif; ?>

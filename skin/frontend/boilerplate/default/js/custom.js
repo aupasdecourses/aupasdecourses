@@ -36,26 +36,8 @@
     });
 })();
 
-//Color for custom top menu
-
-var color_menu={
-    "Primeur":"#3ab64b",
-    "Boucher":"#f14556",
-    "Fromager":"#f8a564",
-    "Poissonnier":"#5496d7",
-    "Caviste":"#e83632",
-    "Boulanger":"#f3a71c",
-    "Epicerie Fine":"#2f4da8",
-    "Epicier":"#2f4da8",
-    "Café & Thé":"#f36520",
-    "Traiteur":"#f36520"
-};
 
 $j(document).ready(function() {
-    for (var k in color_menu){
-        $j("#custommenu .parentMenu span:contains('"+k+"')").parent().css("background",color_menu[k]);
-    }
-
     msieversion();
 });
 
@@ -77,18 +59,25 @@ function msieversion() {
 }
 
 $j(document).ready(function(){
-    if( $j(window).innerWidth() < 767 ){
-        $j('.page-header-container .skip-links .skip-container-header-search .search-button').attr('disabled', true).addClass('disabled-search');
-		$j('#search_mini_form input').hide();
-        $j('.fa-search').click(function(){
-			if($j('#search_mini_form input').css('display') == 'none') {
-				$j('#search_mini_form input').show();
-				$j('#search_mini_form').addClass('show-input');
-			}
-			else {
-				$j('#search_mini_form input').hide();
-				$j('#search_mini_form').removeClass('show-input');
-			}
-        })
+  $j('#toggle-search').on('click', function(e){
+    if( $j(window).innerWidth() < 767 ) {
+      var $form = $j('#search_mini_form');
+      e.preventDefault();
+      e.stopPropagation();
+
+      if ($form.hasClass('show-input')) {
+        $form.removeClass('show-input');
+      } else {
+        $form.addClass('show-input');
+      }
     }
+  });
+  $j(document).on('mouseup', function(e) {
+    var $form = $j('#search_mini_form');
+    if ((!$form.is(e.target) && $form.has(e.target).length === 0) &&
+      (!$j('#toggle-search').is(e.target) && $j('#toggle-search').has(e.target).length === 0)
+    )  {
+      $form.removeClass('show-input');
+    }
+  });
 });

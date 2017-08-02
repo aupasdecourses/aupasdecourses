@@ -42,10 +42,6 @@
                     </text>
                 </action>
             </block>
-            <action method="addItem">
-                <rel>skin_js</rel>
-                <href>js/custom.js</href>
-            </action>
             <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
         </reference>
         <reference name="header">

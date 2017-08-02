@@ -5,6 +5,7 @@
   background-color: #ffffff;
   border: none;
   border-radius: 0;
+  padding:67px 10px 10px 10px;
 }
 
 #supermenu .menu-template-content {
@@ -18,10 +19,6 @@
 
 #supermenu a {
  color:rgba(0,0,0,0.87);
-}
-
-#topmenu {
-    border-top: 1px solid rgb(233, 233, 233);
 }
 
 #supermenu #storename{
