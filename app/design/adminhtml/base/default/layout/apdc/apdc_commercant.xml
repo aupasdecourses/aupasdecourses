@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  design
+ * @package   Apdc_Commercant
+ * @copyright Copyright (c) 2016 GardenMedia Studio VN
+ */
+-->
+<layout>
+
+  <adminhtml_commercant_shop_edit>
+    <update handle="editor" />
+    <reference name="content">
+      <block type="apdc_commercant/adminhtml_shop_edit" name="commercant_shop_edit" />
+    </reference>
+    <reference name="left">
+      <block type="apdc_commercant/adminhtml_shop_edit_tabs" name="commercant_shop_edit_tabs">
+        <block type="apdc_commercant/adminhtml_shop_edit_tab_main" name="commercant_shop_edit_tabs_main" />
+        <block type="apdc_commercant/adminhtml_shop_edit_tab_address" name="commercant_shop_edit_tabs_address" />
+        <block type="apdc_commercant/adminhtml_shop_edit_tab_openingHours" name="commercant_shop_edit_tabs_openinghours" />
+        <block type="apdc_commercant/adminhtml_shop_edit_tab_google" name="commercant_shop_edit_tabs_google" />
+        <block type="apdc_commercant/adminhtml_shop_edit_tab_categories" name="commercant_shop_edit_tabs_categories" />
+        <action method="addTab"><name>main_section</name><block>commercant_shop_edit_tabs_main</block></action>
+        <action method="addTab"><name>address_section</name><block>commercant_shop_edit_tabs_address</block></action>
+        <action method="addTab"><name>opeinghours_section</name><block>commercant_shop_edit_tabs_openinghours</block></action>
+        <action method="addTab"><name>google_section</name><block>commercant_shop_edit_tabs_google</block></action>
+        <action method="addTab"><name>categories_section</name><block>commercant_shop_edit_tabs_categories</block></action>
+        <action method="setActiveTab"><name>main_section</name></action>
+      </block>
+    </reference>
+  </adminhtml_commercant_shop_edit>
+
+  <adminhtml_commercant_shop_categories>
+    <block type="core/text_list" name="root" output="toHtml">
+      <block type="apdc_commercant/adminhtml_shop_edit_tab_categoriesTreeView" name="shop.edit.tab.categoriesTreeView"/>
+    </block>
+  </adminhtml_commercant_shop_categories>
+</layout>

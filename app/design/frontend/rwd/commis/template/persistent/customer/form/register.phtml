@@ -56,6 +56,21 @@
                                 <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
                             </div>
                         </li>
+                        <li>
+                            <label for="customer_neighborhood" class="required"><em>*</em><?php echo $this->__('Neighborhood') ?></label>
+                            <div class="input-box">
+                                <select name="customer_neighborhood" id="customer_neighborhood" class="validate-select required-entry">
+                                    <?php $neighborhoods = Mage::helper('apdc_neighborhood')->getAllNeighborhoods(); ?>
+                                    <?php $neighborhoodVisiting = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting(); ?>
+                                    <?php $currentNeighborHood = ($this->getFormData()->getCustomerNeighborhood() ? $this->getFormData()->getCustomerNeighborhood() : $neighborhoodVisiting->getId()); ?>
+                                    <option value=""><?php echo $this->__('-- Please select your neighborhood --'); ?></option>
+                                    <?php foreach ($neighborhoods as $neighborhood) : ?>
+                                        <?php $selected = ($neighborhood->getId() == $currentNeighborHood ? 'selected="selected"' : ''); ?>
+                                        <option value="<?php echo $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </li>
                     <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
                     <?php if ($_dob->isEnabled()): ?>
                         <li><?php echo $_dob->setDate($this->getFormData()->getDob())->toHtml() ?></li>

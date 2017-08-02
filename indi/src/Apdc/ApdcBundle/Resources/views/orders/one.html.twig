@@ -60,12 +60,17 @@
 							<td><b>Infos Complémentaires</b></td>
 							<td>{{ order.info }}</td>
 						</tr>
+						<tr>
+							<td><b>Quartier</b></td>
+							<td>{{ order.store }}</td>
+						</tr>
 					</table>
 				</td>
 			</tr>
 		</table>
 		<table class="table table-striped">
 			<tr>
+				<th>Commercant</th>
 				<th>Produit</th>
 				<th>Quantite</th>
 				<th>Description</th>
@@ -73,8 +78,9 @@
 				<th>Total</th>
 				<th>Commentaire</th>
 			</tr>
-			{% for product in order.products %}
+			{% for product in order.products | sortbyfield('nom_commercant') %}
 			<tr>
+				<td>{{ product.nom_commercant }}</td>
 				<td>{{ product.nom }}</td>
 				<td>{{ product.quantite }}</td>
 				<td>{{ product.description }}</td>
@@ -85,6 +91,7 @@
 			{% endfor %}
 			<tr>
 				<td><b>TOTAL</b></td>
+				<td></td>
 				<td colspan="3"><b>{{ order.total_quantite }}</b></td>
 				<td colspan="2"><b>{{ order.total_prix }}</b></td>
 			</tr>

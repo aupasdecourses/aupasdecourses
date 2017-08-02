@@ -6,16 +6,57 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Apdc\ApdcBundle\Entity\Payout;
 use Apdc\ApdcBundle\Form\PayoutType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BillingController extends Controller
 {
     public function indexAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
+            return $this->redirectToRoute('root');
+        }
+
+        $factu = $this->container->get('apdc_apdc.billing');
+
+        $result = [];
+        if (isset($_GET['date_debut'])) {
+            $date_debut     = $_GET['date_debut'];
+            $today          = date('Y-m-d H:i:s');
+            $date_fin       = date('t-m-Y', strtotime($today));
+            $summary        = $factu->getDataFactu('indi_billingsummary', $date_debut, $date_fin);
+
+
+            foreach ($summary as $sum) {
+                
+                $result[$sum['shop']]['date_payout'] = $sum['date_payout'];
+                $result[$sum['shop']]['shop'] = $sum['shop'];
+                $result[$sum['shop']]['sum_items'] += $sum['sum_items'];
+                $result[$sum['shop']]['sum_due'] += $sum['sum_due'];
+                $result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
+            }
+
+
+            $debut = date_create(str_replace('/', '-', $date_debut));
+            $fin = date_create(str_replace('/', '-', $date_fin));
+            $intervalM = date_diff($fin, $debut)->m+1;
+            $intervalY = date_diff($fin, $debut)->y;
+            $interval = ($intervalY * 12) + ($intervalM);
+        } else {
+            $interval = 0;
+        }
+
+        return $this->render('ApdcApdcBundle::billing/index.html.twig', [
+            'result'            => $result,
+            'date_debut'        => $date_debut,
+            'date_fin'          => $date_fin,
+            'months_diff'       => $interval,
+        ]);
     }
 
     public function verifAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -35,12 +76,15 @@ class BillingController extends Controller
                 'verif_noentry' => false,
                 'verif_noprocessing' => false,
                 'verif_totaux' => false,
+                'verif_nomissingcom' => false,
+                'missing_com_att_count' => 0,
                 'display_button' => false,
                 'sum_items_facturation' => 'NA',
                 'sum_items_magento' => 'NA',
                 'sum_order_magento' => 'NA',
                 'sum_shipping_magento' => 'NA',
                 'sum_discount_magento' => 'NA',
+                'sum_discount_coupon_magento' => 'NA',
                 'diff_facturation_magento' => 'NA',
                 'status_ok_count' => 'NA',
                 'status_nok_count' => 'NA',
@@ -48,6 +92,7 @@ class BillingController extends Controller
                 'order_total' => 'NA',
                 'id_max' => 'NA',
                 'id_min' => 'NA',
+                'orders' => array(),
             ];
         }
 
@@ -81,7 +126,8 @@ class BillingController extends Controller
 
         return $this->render('ApdcApdcBundle::billing/verif.html.twig', [
             'form' => $form_input->createView(),
-            'verif' => $verif,
+            'verif' => $verif['result'],
+            'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
         ]);
@@ -89,7 +135,7 @@ class BillingController extends Controller
 
     public function detailsAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -97,11 +143,70 @@ class BillingController extends Controller
 
         $session = $request->getSession();
 
+        $defaultDataCSV = array('message' => 'Export');
+        $formCSV = $this->createFormBuilder($defaultDataCSV)
+            ->add("Exporter", SubmitType::class,array('label'=>'Exporter CSV','attr'=>array('class'=>'btn btn-lg btn-success','style'=>'float:right')))
+            ->getForm();
+        $formCSV->handleRequest($request);
+
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
             $bill = $factu->getDataFacturation('indi_billingdetails', $date_debut);
+
+            /***** Export CSV des commandes facturées *****/
+            if ($formCSV->isSubmitted() && $formCSV->isValid()) {
+                $response = new StreamedResponse();
+                $response->setCallback(function() use($bill) {
+                    $handle = fopen('php://output', 'w+');
+
+                    fputcsv($handle, array(
+                        'Date creation',
+                        'Date livraison',
+                        '#Commande',
+                        '#Facture',
+                        'Nom client',
+                        'Commercant',
+                        'Commande Client HT',
+                        'Commande Client TTC',
+                        'Avoir HT',
+                        'Avoir TTC',
+                        'Valeur Ticket HT',
+                        'Valeur Ticket TTC',
+                        'Commission APDC (HT)',
+                        'Versement Commercant (HT)'
+                    ),';');
+
+                    foreach ($bill as $order) {
+                        fputcsv($handle, array(
+                            $order['creation_date'],
+                            $order['delivery_date'],
+                            $order['increment_id'],
+                            $order['id_billing'],
+                            $order['customer_name'],
+                            $order['shop'],
+                            $order['sum_items_HT'],
+                            $order['sum_items'],
+                            $order['sum_items_credit_HT'],
+                            $order['sum_items_credit'],
+                            $order['sum_ticket_HT'],
+                            $order['sum_ticket'],
+                            $order['sum_commission_HT'],
+                            $order['sum_due_HT']
+                        ),';');
+                    }
+
+                    fclose($handle);
+                });
+
+                $response->setStatusCode(200);
+                $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+                $response->headers->set('Content-Disposition','attachment; filename="commandes-facturees"'.$date_debut.'".csv"');
+      
+                return $response;
+            } // Fin export CSV 
         }
+
 
         $check_date = (strtotime(str_replace('/', '-', $date_debut)) < strtotime('2017/01/01')) ? 1 : 0;
 
@@ -110,12 +215,13 @@ class BillingController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'check_date' => $check_date,
+            'formCSV' => $formCSV->createView(),
         ]);
     }
 
     public function summaryAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -123,10 +229,71 @@ class BillingController extends Controller
 
         $session = $request->getSession();
 
+        $defaultDataCSV = array('message' => 'Export');
+        $formCSV = $this->createFormBuilder($defaultDataCSV)
+            ->add("Exporter", SubmitType::class,array('label'=>'Exporter CSV','attr'=>array('class'=>'btn btn-lg btn-success','style'=>'float:right')))
+            ->getForm();
+        $formCSV->handleRequest($request);
+
         if (isset($_GET['date_debut'])) {
             $date_debut = $_GET['date_debut'];
             $date_fin = $factu->end_month($date_debut);
             $summary = $factu->getDataFacturation('indi_billingsummary', $date_debut);
+
+
+      
+
+            /***** Export CSV des factures commercants *****/
+            if ($formCSV->isSubmitted() && $formCSV->isValid()) {
+                $response = new StreamedResponse();
+                $response->setCallback(function() use($summary) {
+                    $handle = fopen('php://output', 'w+');
+
+                    fputcsv($handle, array(
+                        '#Facture',
+                        'Magasins',
+                        'Commande (TTC)',
+                        'Ticket TTC',
+                        'Ticket HT',
+                        'Commission TTC',
+                        'Commission HT',
+                        'Total Commercant TTC',
+                        'Total Commercant HT',
+                        'Remise TTC',
+                        'Remise HT',
+                        'Frais bancaires TTC',
+                        'Frais bancaires HT',
+                        'Virement (TTC)'
+                    ),';');
+
+                    foreach ($summary as $order) {
+                        fputcsv($handle, array(
+                            $order['increment_id'],
+                            $order['shop'],
+                            $order['sum_items'],
+                            $order['sum_ticket'],
+                            $order['sum_ticket_HT'],
+                            $order['sum_commission'],
+                            $order['sum_commission_HT'],
+                            $order['sum_due'],
+                            $order['sum_due_HT'],
+                            $order['discount_shop'],
+                            $order['discount_shop_HT'],
+                            $order['processing_fees'],
+                            $order['processing_fees_HT'],
+                            $order['sum_payout']
+                        ),';');
+                    }
+
+                    fclose($handle);
+                });
+
+                $response->setStatusCode(200);
+                $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+                $response->headers->set('Content-Disposition','attachment; filename="facturation"'.$date_debut.'".csv"');
+      
+                return $response;
+            } // Fin export CSV 
         }
 
         $check_date = (strtotime(str_replace('/', '-', $date_debut)) < strtotime('2017/01/01')) ? 1 : 0;
@@ -136,6 +303,7 @@ class BillingController extends Controller
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
             'check_date' => $check_date,
+            'formCSV'   => $formCSV->createView(),
         ]);
     }
 
@@ -186,7 +354,7 @@ class BillingController extends Controller
         $form_send = $form_send->getForm();
 
         $bill = $factu->getOneBilling($id);
-        $file_path=$billing_path.$id.'.pdf';
+        $file_path = $billing_path.$id.'.pdf';
 
         if (isset($_POST['submit'])) {
             switch ($_POST['submit']) {
@@ -215,14 +383,14 @@ class BillingController extends Controller
                     try {
                         $pdfbilling->printBillingShop($bill);
                         $pdfbilling->save($file_path);
-                        $data=$factu->sendBilling($bill,$file_path);
-                        $return=$pdfbilling->send($data);
-                        if($return){
+                        $data = $factu->sendBilling($bill, $file_path);
+                        $return = $pdfbilling->send($data);
+                        if ($return) {
                             $mage->updateEntryToBillingSummary(['increment_id' => $id], array('date_sent' => $data['date_sent']));
-                            foreach($data['mails'] as $m){
-                                $session->getFlashBag()->add('success', 'PDF envoyé avec succès à '.$data['mail_vars']['commercant'].": ".$m.' !');
+                            foreach ($data['mails'] as $m) {
+                                $session->getFlashBag()->add('success', 'PDF envoyé avec succès à '.$data['mail_vars']['commercant'].': '.$m.' !');
                             }
-                        }else{
+                        } else {
                             $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
                         }
 
@@ -252,7 +420,7 @@ class BillingController extends Controller
 
     public function payoutIndexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
@@ -281,7 +449,7 @@ class BillingController extends Controller
 
     public function payoutSubmitAction(Request $request, $choice)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 

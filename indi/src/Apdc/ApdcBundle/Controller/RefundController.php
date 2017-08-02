@@ -19,7 +19,7 @@ class RefundController extends Controller
 
     public function indexAction(Request $request, $from)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -115,7 +115,7 @@ class RefundController extends Controller
 
     public function refundUploadAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -213,7 +213,7 @@ class RefundController extends Controller
 
     public function refundInputAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -237,6 +237,7 @@ class RefundController extends Controller
         $total					= $order[-1]['merchant']['total'];
         $order_mid				= $order[-1]['order']['mid'];
         $input_status			= $order[-1]['order']['input'];
+        $customer_name          = $order[-1]['order']['first_name'].' '.$order[-1]['order']['last_name'];
         unset($order[-1]);
 
         $entity_input	= new \Apdc\ApdcBundle\Entity\Input();
@@ -295,12 +296,13 @@ class RefundController extends Controller
             'refund_shipping'			=> $mage->checkRefundShipping($order_mid),
             'commentaire_client'		=> $commentaire_client,
             'commentaire_commercant'	=> $commentaire_commercant,
+            'customer_name'             => $customer_name,
         ]);
     }
 
     public function refundDigestAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -387,7 +389,7 @@ class RefundController extends Controller
 
     public function refundFinalAction(Request $request, $id)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -430,7 +432,7 @@ class RefundController extends Controller
 
     public function refundAdyenIndexAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -444,7 +446,7 @@ class RefundController extends Controller
 
     public function refundAdyenFormAction(Request $request, $psp)
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
@@ -476,6 +478,31 @@ class RefundController extends Controller
             'psp'			=> $psp,
             'orders'		=> $orders,
             'event_data'	=> $event_data,
+        ]);
+    }
+
+
+    /* Pour l'instant, simple var_dump. A integrer à refund upload images */
+    public function mistralTicketImgAction(Request $request)
+    {
+        if (!$this->isGranted('ROLE_INDI_GESTION')) {
+            return $this->redirectToRoute('root');
+        }
+
+        $mistral = $this->container->get('apdc_apdc.mistral');
+
+        $dataMistral = array('message' => 'Dump img ticket');        
+        $formMistral = $this->createFormBuilder($dataMistral)
+            ->add("Dump", SubmitType::class,array('label'=>'Dump img ticket','attr'=>array('class'=>'btn btn-lg btn-danger','style'=>'float:right')))
+            ->getForm();
+        $formMistral->handleRequest($request);
+
+        if ($formMistral->isSubmitted() && $formMistral->isValid()) {
+            $mistral->getPictures();
+        }
+
+        return $this->render('ApdcApdcBundle::refund/mistralTicketImg.html.twig', [
+            'formMistral' => $formMistral->createView(),
         ]);
     }
 }

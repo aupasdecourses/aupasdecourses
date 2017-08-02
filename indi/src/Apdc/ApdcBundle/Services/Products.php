@@ -5,30 +5,29 @@ namespace Apdc\ApdcBundle\Services;
 trait Products
 {
     public $_attributeArraysLabels;
-
     public $_attributeArraysIds;
 
     /**
-     * Return an array Id => Label for the specified attributes.
-     *
-     * @param array attributeCodes
-     *              list of attributes codes to process
-     *
-     * @return array
-     */
+     *      * Return an array Id => Label for the specified attributes.
+     *           *
+     *                * @param array attributeCodes
+     *                     * list of attributes codes to process
+     *                          *
+     *                               * @return array
+     *                                    */
     public function getAttributesLabelFromId($attributeCodes)
     {
-        $attributeArray = [];
+        $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            if ($code == 'tva_class_id') {
-                $taxes = \Mage::getModel('tax/class')->getCollection();
-                foreach ($taxes as $tax) {
-                    if ($tax['class_name'] <> "") {
-                        $attributeArray['tva_class_id'][$tax['class_id']] = $tax['class_name'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_name']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_id']]=$tax['class_name'];
                     }
                 }
-            } else {
+            }else{
                 $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
                 foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
                     $attributeArray[$code][$option['value']] = $option['label'];
@@ -40,26 +39,26 @@ trait Products
     }
 
     /**
-     * Return an array Label => Id for the specified attributes.
-     *
-     * @param array attributeCodes
-     *              list of attributes codes to process
-     *
-     * @return array
-     */
+     *      * Return an array Label => Id for the specified attributes.
+     *           *
+     *                * @param array attributeCodes
+     *                     * list of attributes codes to process
+     *                          *
+     *                               * @return array
+     *                                    */
     public function getAttributesIdFromLabel($attributeCodes)
     {
-        $attributeArray = [];
+        $attributeArray = array();
 
         foreach ($attributeCodes as $code) {
-            if ($code == 'tva_class_id') {
-                $taxes = \Mage::getModel('tax/class')->getCollection();
-                foreach ($taxes as $tax) {
-                    if ($tax['class_id'] <> "") {
-                        $attributeArray['tva_class_id'][$tax['class_name']] = $tax['class_id'];
+            if($code=='tva_class_id'){
+                $taxes=\Mage::getModel('tax/class')->getCollection();
+                foreach($taxes as $tax){
+                    if($tax['class_id']<>""){
+                        $attributeArray['tva_class_id'][$tax['class_name']]=$tax['class_id'];
                     }
                 }
-            } else {
+            }else{
                 $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
                 foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
                     $attributeArray[$code][$option['label']] = $option['value'];
@@ -71,28 +70,22 @@ trait Products
     }
 
     /*
-    * 	@param int $size
-    *   Taille de la page de la collection d'objet (limite)
-    * 	@param int $page
-    *   Indique le numéro de la page de la collection que l'on souhaite afficher (offset)
-    * 	@param string $order_param
-    *   Paramètre utilisé pour le tri. "name" par défaut
-    * 	@param string $order
-    *   Sens du tri. Deux valeurs possibles:  ASC ou DESC
-    * 	@param string $commercant
-    *   Correspond au nom de l'attribut commercant_value (ce sera mieux d'utiliser l'id commercant utilisé dans les tables)
-    * 	@param string $name
-    *   Nom du produit
-    *	@return Mage_Collection
-    */
-    public function getProductsList(
-        $size = 20,
-        $page = 1,
-        $order_param = 'name',
-        $order = 'ASC',
-        $commercant = null,
-        $name = null
-    ) {
+     *     *		@param int $size
+     *         *   Taille de la page de la collection d'objet (limite)
+     *             *	@param int $page
+     *                 *   Indique le numéro de la page de la collection que l'on souhaite afficher (offset)
+     *                     *	@param string $order_param
+     *                         *   Paramètre utilisé pour le tri. "name" par défaut
+     *                             *	@param string $order
+     *                                 *   Sens du tri. Deux valeurs possibles:  ASC ou DESC
+     *                                     *	@param string $commercant
+     *                                         *   Correspond au nom de l'attribut commercant_value (ce sera mieux d'utiliser l'id commercant utilisé dans les tables)
+     *                                             *	@param string $name
+     *                                                 *   Nom du produit
+     *                                                     *	@return Mage_Collection
+     *                                                         */
+    public function getProductsList($size = 20, $page = 1, $order_param = 'name', $order = 'ASC', $commercant = null, $name = null)
+    {
         $collection = \Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*');
         $collection->addAttributeToSort($order_param, $order);
 
@@ -101,11 +94,11 @@ trait Products
             // $alias = 'commercant'.'_table';
             // $attribute = \Mage::getSingleton('eav/config')->getAttribute(\Mage_Catalog_Model_Product::ENTITY, 'commercant');
             // $collection->getSelect()
-            // 	->join(
-            // 		array($alias => $attribute->getBackendTable()),
-            // 		"e.entity_id = $alias.entity_id AND $alias.attribute_id={$attribute->getId()}",
-            // 		array($attributeCode => 'value')
-            // 	)
+            //	->join(
+            //		array($alias => $attribute->getBackendTable()),
+            //		"e.entity_id = $alias.entity_id AND $alias.attribute_id={$attribute->getId()}",
+            //		array($attributeCode => 'value')
+            //	)
             // ->join(array('shop_id'=> 'apdc_shop'),$alias.'.value = shop_id.id_attribut_commercant', array('name_commercant'=>"shop_id.name"));
             // $collection->addFilterToMap('name_commercant', 'shop_id.name');
             //$collection->addFieldToFilter('name_commercant', "Boucherie des Moines");
@@ -137,7 +130,7 @@ trait Products
         $product = \Mage::getModel('catalog/product')->load($entity_id)->toArray();
 
         $product['produit_biologique'] = $this->_attributeArraysLabels['produit_biologique'][$product['produit_biologique']];
-        $product['produit_de_saison']  = $this->_attributeArraysLabels['produit_de_saison'][$product['produit_de_saison']];
+        $product['produit_de_saison'] = $this->_attributeArraysLabels['produit_de_saison'][$product['produit_de_saison']];
 
         return $product;
     }
@@ -185,12 +178,12 @@ trait Products
             } else {
                 $data['price'] = $data['prix_public'] * $data['nbre_portion'];
             }
-            $data['prix_kilo_site'] = $data['prix_public'] . '€/' . $data['unite_prix'];
+            $data['prix_kilo_site'] = $data['prix_public'].'€/'.$data['unite_prix'];
 
             //meta_title
-            $data['meta_title']       = $data['name'] . ' - Au Pas De Courses';
-            $data['meta_description'] = $data['name'] . ' - Au Pas De Courses - ' . $data['short_description'];
-            $data['image_label']      = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
+            $data['meta_title'] = $data['name'].' - Au Pas De Courses';
+            $data['meta_description'] = $data['name'].' - Au Pas De Courses - '.$data['short_description'];
+            $data['image_label'] = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
 
             //poids
             $data['weight'] = $data['poids_portion'] * $data['nbre_portion'];
@@ -239,20 +232,20 @@ trait Products
 
             //find websiteId
             $data_commercant = $this->getMerchants($data['commercant']);
-            $websiteIds      = [];
-            $datas           = [];
+            $websiteIds = array();
+            $datas = array();
             foreach ($data_commercant as $store_id => $data) {
                 array_push($websiteIds, $store_id);
                 array_push($datas, $data);
             }
-            $data['website_ids']      = $websiteIds;
-            $data['attribute_set_id'] = 4;
-            $data['type_id']          = 'simple';
-            $data['created_at']       = strtotime('now');
-            $data['visibility']       = \Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH;
+            $data['website_ids']=$websiteIds;
+            $data['attribute_set_id']=4;
+            $data['type_id']='simple';
+            $data['created_at']=strtotime('now');
+            $data['visibility']=\Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH;
 
             //Calculate SKU
-            $data['sku'] = $datas[0]['code'] . '-' . $data['name'] . '-' . (1000 + round(100 * rand(), 0));
+            $data['sku'] = $datas[0]['code'].'-'.$data['name'].'-'.(1000 + round(100 * rand(), 0));
 
             //Convert specific attribute codes value to EAV id
             foreach (self::ATTRIBUTE_CODES as $code) {
@@ -267,12 +260,12 @@ trait Products
             } else {
                 $data['price'] = $data['prix_public'] * $data['nbre_portion'];
             }
-            $data['prix_kilo_site'] = $data['prix_public'] . '€/' . $data['unite_prix'];
+            $data['prix_kilo_site'] = $data['prix_public'].'€/'.$data['unite_prix'];
 
             //meta_title
-            $data['meta_title']       = $data['name'] . ' - Au Pas De Courses';
-            $data['meta_description'] = $data['name'] . ' - Au Pas De Courses - ' . $data['short_description'];
-            $data['image_label']      = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
+            $data['meta_title'] = $data['name'].' - Au Pas De Courses';
+            $data['meta_description'] = $data['name'].' - Au Pas De Courses - '.$data['short_description'];
+            $data['image_label'] = $data['small_image_label'] = $data['thumbnail_label'] = $data['name'];
 
             //poids
             $data['weight'] = $data['poids_portion'] * $data['nbre_portion'];
@@ -289,6 +282,7 @@ trait Products
             }
 
             $product->save();
+
         } catch (Exception $e) {
             Mage::log($e->getMessage());
         }

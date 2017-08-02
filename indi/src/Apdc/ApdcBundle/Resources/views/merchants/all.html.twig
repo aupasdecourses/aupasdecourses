@@ -3,30 +3,40 @@
 
 {% block body %}
 	<div class="container">
-	<h1> Liste des commandes par magasin </h1><br>
+	<h1> Liste des commandes par magasins </h1><br>
 	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 		<hr>
-		{% for store, merchants in stores %}
-			<table style="width: 100%">
+
+		{% for merchant_id, merchant in merchants %}
+			<table style="width:100%">
 				<tr>
 					<th>
-						<a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse"><h2>{{ store }}</h2></a>
+						{# Nb commandes/commercant == taille du tableau 'orders' #}
+						{% set nb_commandes_commercant = merchant.orders|length %}
+						{% set commandes_msg = "" %} 
+											
+						{% if nb_commandes_commercant == 0 %}
+							{% set commandes_msg %}<div></div>{% endset %}
+						{% else %}
+							{% set commandes_msg %}<div style="color:red">{{ nb_commandes_commercant ~ " commande(s) "}}</div>{% endset %}
+						{% endif %}
+
+						<h2><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}<h4>{{ commandes_msg }}</h4></a></h2>
 					</th>
 				</tr>
 				<tr>
 					<td>
-						<div id="{{ store|replace({' ': '_'}) }}" class="store collapse">
-							{% for com_id, merchant in merchants %}
-								<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
+						<div id="{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" class="store collapse">
+							<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
 									<label>
-										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ merchant.name }}</a></h3>
+										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ "Fiche commercant Magento" }}</a></h3>
 										<h4><a href={{ manager_url ~ merchant.manager_id }} target="_blank">{{ merchant.manager_name }}: <a href="tel:{{ merchant.phone }}">{{ merchant.phone }}</a> / <a href="tel:{{ merchant.mobile }}">{{ merchant.mobile }}</a></h4>
 									<h4 style="color:red;">{{ merchant.warning_days }}</h4></label><br/>
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>
 												<td style="width:40%">
-													<a href="#{{ order_id ~ "-" ~ com_id }}" data-toggle="collapse">
+													<a href="#{{ order_id ~ "-" ~ loop.parent.merchant.shop_id }}" data-toggle="collapse">
 														<label>{{ order_id ~" "~ order.first_name ~" "~ order.last_name }}</label>
 													</a>
 												</td>
@@ -39,7 +49,7 @@
 											</tr>
 											<tr>
 												<td colspan="3">
-													<div id="{{ order_id ~ "-" ~ com_id }}" class="order collapse">
+													<div id="{{ order_id ~ "-" ~ loop.parent.merchant.shop_id }}" class="order collapse">
 														<table class="table">
 															<tr>
 																<td style="width: 50%">
@@ -92,6 +102,10 @@
 																			<td><b>Infos Complémentaires</b></td>
 																			<td>{{ order.info }}</td>
 																		</tr>
+																		<tr>
+																			<td><b>Quartier</b></td>
+																			<td>{{ order.store }}</td>
+																		</tr>
 																	</table>
 																</td>
 															</tr>
@@ -126,13 +140,13 @@
 											</tr>
 										</table>
 									{% endfor %}
-								</div>
-							{% endfor %}
+							</div>
 						</div>
 					</td>
 				</tr>
 			</table>
 		{% endfor %}
+
 	</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

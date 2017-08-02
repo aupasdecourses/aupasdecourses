@@ -20,17 +20,26 @@ ordersAll:
   defaults:  { _controller: ApdcApdcBundle:Orders:ordersAll, to: null}
   requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
+storesIndex:
+  path:    /stores/
+  defaults:   { _controller: ApdcApdcBundle:Stores:index}
+
+storesAll:
+  path:    /stores/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Stores:storesAll, to: null}
+  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+
 merchantsIndex:
-  path:    /merchants/
+  path:   /merchants/
   defaults:   { _controller: ApdcApdcBundle:Merchants:index}
 
 merchantsOne:
-  path:    /merchants/{id}/{from}/{to}
+  path:   /merchants/{id}/{from}/{to}
   defaults:   { _controller: ApdcApdcBundle:Merchants:merchantsOne, to: null, from: null}
   requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 merchantsAll:
-  path:    /merchants/{from}/{to}
+  path:   /merchants/{from}/{to}
   defaults:   { _controller: ApdcApdcBundle:Merchants:merchantsAll, to: null}
   requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
@@ -86,6 +95,14 @@ refundAdyenForm:
   defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
   requirements: { psp:"[0-9]+" }
 
+mistralTicketImg:
+  path: /refund/mistralTicketImg/
+  defaults: { _controller: ApdcApdcBundle:Refund:mistralTicketImg}
+
+billingIndex:
+  path: /billing/
+  defaults: { _controller: ApdcApdcBundle:Billing:index}
+
 billingVerif:
   path: /billing/verif
   defaults: { _controller: ApdcApdcBundle:Billing:verif}
@@ -139,6 +156,10 @@ statVoucher:
 noteOrder:
   path: /stat/noteOrder/
   defaults: { _controller: ApdcApdcBundle:Stat:noteOrder}
+
+margin:
+  path: /stat/margin/
+  defaults: { _controller: ApdcApdcBundle:Stat:margin }
 
 mapMerchants:
     path: /map/merchants/

@@ -1,0 +1,78 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+
+	<div class="page-header">
+		<h2>Marge arriere commercants</h2>
+	</div>
+	<div id="filter"><label>Selectionnez le commercant : &nbsp; </label></div>
+
+
+	<table id="marginMerchantTable" class="table table-striped">
+		<thead>
+			<tr>
+				<th class="sort">Commercant</th>
+				<th class="float">Nb produits</th>
+				<th class="float">Marge arriere moyenne</th>
+				<th class="float">Marge arriere max</th>
+				<th class="float">Marge arriere min</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for merchant_name, data in margin %}
+				<tr>
+					<td>{{ merchant_name }}</td>
+					<td>{{ data.nb_products }}</td>
+					<td>{{ data.marge_moyenne|round(1, 'floor') ~ '%'}}</td>
+					<td>{{ data.max_marge ~ '%'}}</td>
+					{% if data.min_marge == 0 %}
+						<td style="color:red">{{ data.min_marge ~ '%'}}</td>
+					{% else %}
+						<td>{{ data.min_marge ~ '%'}}</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_marginMerchant %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_marginMerchant %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script>
+$(document).ready(function() {
+	var table=$('#marginMerchantTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 3, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+	} );
+});
+	</script>
+{% endblock %}

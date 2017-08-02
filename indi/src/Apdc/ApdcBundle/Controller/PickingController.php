@@ -11,6 +11,11 @@ class PickingController extends Controller
 {
     public function indexAction(Request $request)
     {
+		
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_from	= new\Apdc\ApdcBundle\Entity\From();
@@ -31,6 +36,11 @@ class PickingController extends Controller
 
     public function pickingAllAction(Request $request, $from)
     {
+		
+		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		
 		$mage = $this->container->get('apdc_apdc.magento');
 
 		$entity_from	= new \Apdc\ApdcBundle\Entity\From();

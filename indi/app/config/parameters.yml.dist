@@ -36,3 +36,5 @@ parameters:
   to_email:           ['prix@aupasdecourses.com', 'Prix - Au Pas De Courses']
 
   enabled_email: true
+
+  stars_services_api_url:         'https://backend-recette.stars-services.com/WebServices/V1/getpictures'

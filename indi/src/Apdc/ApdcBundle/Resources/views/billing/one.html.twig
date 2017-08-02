@@ -44,6 +44,7 @@
 					<th>Virement</th>
 					<th colspan="2">Frais bancaires</th>
 					<th>Retrait</th>
+					<th style="color:red;">En-cours</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -60,6 +61,7 @@
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
 					<th class="float">TTC</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -79,6 +81,14 @@
 						<td>{{ summary.processing_fees_HT }}</td>
 						<td>{{ summary.processing_fees }}</td>
 						<td style="font-weight:bold;text-decoration:underline;">{{ summary.sum_payout }}</td>
+
+						{% if summary.date_payout is not null %}
+							{% set sum_payout_regle = summary.sum_payout %}
+						{% else %}
+							{% set sum_payout_regle = 0 %}
+						{% endif %}
+
+						<td style="color:red">{{ summary.sum_payout - sum_payout_regle }}</td>
 					</tr>
 					{% endfor %}
 			</tbody>

@@ -41,6 +41,7 @@
         "jms/serializer-bundle": "1.1.x",
         "nelmio/api-doc-bundle": "2.13.x",
         "nelmio/cors-bundle": "1.4.x",
+        "snilius/twig-sort-by-field": "^0.1.5",
         "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {

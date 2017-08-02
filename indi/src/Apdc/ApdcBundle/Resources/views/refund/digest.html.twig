@@ -3,6 +3,8 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+
+{% set customer_name = order_header.first_name ~ " " ~ order_header.last_name %}
 <div class="container">
 	<div class="col-sm-2">
 		<a href="{{ path('refundInput', {id:id}) }}" class="btn btn-default"><< Retour</a>
@@ -28,7 +30,7 @@
 	{% endif %}
 	<div class="row">
 		<div class="col-sm-12">
-			<h1>#{{id}}<small> Validation avant remboursement</small></h1>
+			<h1>#{{ id ~ " / " ~ customer_name }}<small> Validation avant remboursement</small></h1>
 		</div>
 	</div>
 	<div class="row">

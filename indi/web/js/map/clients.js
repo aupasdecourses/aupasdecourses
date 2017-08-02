@@ -45,8 +45,11 @@ function setMarker(data){
 }
 
 //Tile
-var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+// var city = L.tileLayer('http://91.121.51.120/osm_tiles/{z}/{x}/{y}.png', {
+//     attribution: '© OpenStreetMap contributors'
+// });
+var city = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
 });
 
 ///Get and set markers

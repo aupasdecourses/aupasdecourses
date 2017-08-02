@@ -16,8 +16,9 @@ security:
         Apdc\ApdcBundle\Entity\User: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_DISPATCH]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_INDI_GESTION:  [ROLE_INDI_DISPATCH, ROLE_INDI_COMMUNICATION]
+        ROLE_INDI_ADMIN:    [ROLE_INDI_GESTION]
+        ROLE_SUPER_ADMIN:   [ROLE_INDI_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         apdc_provider:

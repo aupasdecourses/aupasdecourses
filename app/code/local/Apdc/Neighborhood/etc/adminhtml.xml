@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<adminhtml>
+    <menu>
+        <neighborhoods>
+            <title>Neighborhoods</title>
+            <sort_order>15</sort_order>
+            <children>
+                <apdc_neighborhood>
+                    <title>Manage Neighborhoods</title>
+                    <sort_order>100</sort_order>
+                    <action>adminhtml/neighborhood_index/index</action>
+                </apdc_neighborhood>
+            </children>
+        </neighborhoods>
+    </menu>
+    <acl>
+      <resources>
+        <admin>
+          <children>
+            <neighborhoods module="apdc_neighborhood">
+              <title>Neighborhoods</title>
+              <sort_order>1</sort_order>
+              <children>
+                <apdc_neighborhood translate="title" module="apdc_neighborhood">
+                  <title>Neighborhood</title>
+                  <children>
+                    <view translate="title" module="apdc_neighborhood">
+                      <title>View Neighborhood</title>
+                      <sort_order>100</sort_order>
+                    </view>
+                    <save translate="title" module="apdc_neighborhood">
+                      <title>Save Neighborhood</title>
+                      <sort_order>100</sort_order>
+                    </save>
+                    <delete translate="title" module="apdc_neighborhood">
+                      <title>Delete Neighborhood</title>
+                      <sort_order>100</sort_order>
+                    </delete>
+                  </children>
+                </apdc_neighborhood>
+              </children>
+            </neighborhoods>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <apdc_neighborhood translate="title" module="apdc_neighborhood">
+                      <title>Neighborhoods configuration</title>
+                    </apdc_neighborhood>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+</adminhtml>
+

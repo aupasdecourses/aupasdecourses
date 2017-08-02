@@ -143,29 +143,54 @@ class Pdfbilling
         $this->_currentpage->drawText("Calcul des sommes versées sur le compte de {$data['shop']},", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
          $this->_currentpage->drawText("pour le mois de {$month}.", $this->_margin_horizontal, $this->_offset = $this->_offset - $this->_lineHeight);
 
+        $this->_currentpage->setFont($this->_font_italic, $this->_currentfontsize);        
+        $this->_offset -= $this->_lineHeight * 2;
+
         $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
         $this->_offset -= $this->_lineHeight * 2;
 
+        $this->_currentpage->drawText('HT', $this->_margin_horizontal+200, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText('TVA', $this->_margin_horizontal+300, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText('TTC', $this->_margin_horizontal+400, $this->_offset = $this->_offset - $this->_lineHeight);
+
         $this->_currentpage->drawText('Somme Ticket:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText($data['sum_ticket'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_ticket_HT'], $this->_margin_horizontal+200, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_ticket']-$data['sum_ticket_HT'], $this->_margin_horizontal+300, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
+        $this->_currentpage->drawText($data['sum_ticket'], $this->_margin_horizontal+400, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+
         $this->_currentpage->drawText('Commission APDC:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText(-$data['sum_commission'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
+        $this->_currentpage->drawText(-$data['sum_commission_HT'], $this->_margin_horizontal+195, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
+        $this->_currentpage->drawText(-$data['sum_commission']+$data['sum_commission_HT'], $this->_margin_horizontal+295, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['sum_commission'], $this->_margin_horizontal+395, $this->_offset = $this->_offset - $this->_lineHeight);
+        
         $this->_currentpage->setLineWidth(0.5);
         $this->_offset = $this->_offset - $this->_lineHeight;
-        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+250, $this->_offset);
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+450, $this->_offset);
         $this->_currentpage->drawText('Somme due:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText($data['sum_due'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_due_HT'], $this->_margin_horizontal+200, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_due']-$data['sum_due_HT'], $this->_margin_horizontal+300, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_due'], $this->_margin_horizontal+400, $this->_offset = $this->_offset - $this->_lineHeight);
+
         $this->_currentpage->drawText('Remise commerciale', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText($data['discount_shop'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['discount_shop_HT'], $this->_margin_horizontal+200, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['discount_shop_TVA'], $this->_margin_horizontal+300, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['discount_shop'], $this->_margin_horizontal+400, $this->_offset = $this->_offset - $this->_lineHeight);
+
         $this->_currentpage->drawText('Frais Hipay:', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText(-$data['processing_fees'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['processing_fees_HT'], $this->_margin_horizontal+195, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['processing_fees_TVA'], $this->_margin_horizontal+295, $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText(-$data['processing_fees'], $this->_margin_horizontal+395, $this->_offset = $this->_offset - $this->_lineHeight);
 
         $this->_currentpage->setFont($this->_font_bold, $this->_currentfontsize);
         $this->_currentpage->setLineWidth(0.5);
         $this->_offset = $this->_offset - $this->_lineHeight;
-        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+250, $this->_offset);
+        $this->_currentpage->drawLine($this->_margin_horizontal, $this->_offset, $this->_margin_horizontal+450, $this->_offset);
         $this->_currentpage->drawText('Total versé:  ', $this->_margin_horizontal, $this->_offset - $this->_lineHeight);
-        $this->_currentpage->drawText($data['sum_payout'], $this->_margin_horizontal+200, $this->_offset = $this->_offset - $this->_lineHeight);
+        $this->_currentpage->drawText($data['sum_payout'], $this->_margin_horizontal+400, $this->_offset = $this->_offset - $this->_lineHeight);
 
         $this->_currentpage->setFont($this->_font, $this->_currentfontsize);
         $this->_offset -= $this->_lineHeight * 3;
@@ -193,7 +218,7 @@ class Pdfbilling
             'header' => ['Prestation', 'Prix HT', '%TVA', 'TVA', 'Prix TTC'],
             'rows' => [
                 ['Commission sur les ventes', $data_s['sum_commission_HT'], $data_s['sum_commission_TVA_percent'], $data_s['sum_commission_TVA'], $data_s['sum_commission']],
-                //['Frais Bancaires', $data_s['processing_fees_HT'], $data_s['processing_fees_TVA_percent'], $data_s['processing_fees_TVA'], $data_s['processing_fees']],
+                ['Frais Bancaires', $data_s['processing_fees_HT'], $data_s['processing_fees_TVA_percent'], $data_s['processing_fees_TVA'], $data_s['processing_fees']],
                 ],
             'total' => ['TOTAL', $data_s['sum_billing_HT'], '', $data_s['sum_billing_TVA'], $data_s['sum_billing']],
         ];
@@ -227,6 +252,21 @@ class Pdfbilling
         $this->_offset = $this->_height - 2 * $this->_margin_vertical;
 
         //Table
+        // $table_d = [
+        //     'config' => [
+        //         'font_size_header' => 8,
+        //         'font_size_body' => 8,
+        //         'font_size_total' => 8,
+        //         'fill_color_header' => '#188071',
+        //         'line_color_header' => '#188071',
+        //     ],
+        //     'column_set' => [0.07, 0.075, 0.07, 0.08, 0.13, 0.08, 0.085, 0.055, 0.06, 0.055, 0.06, 0.09, 0.09],
+        //     'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
+        //     'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Commande HT', 'Commande TTC', 'Avoir HT', 'Avoir TTC', 'Ticket HT', 'Ticket TTC', 'Commission HT', 'Somme due HT'],
+        //     'rows' => [],
+        //     'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0],
+        // ];
+
         $table_d = [
             'config' => [
                 'font_size_header' => 8,
@@ -235,11 +275,11 @@ class Pdfbilling
                 'fill_color_header' => '#188071',
                 'line_color_header' => '#188071',
             ],
-            'column_set' => [0.07, 0.075, 0.07, 0.08, 0.13, 0.08, 0.085, 0.055, 0.06, 0.055, 0.06, 0.09, 0.09],
-            'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
-            'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Commande HT', 'Commande TTC', 'Avoir HT', 'Avoir TTC', 'Ticket HT', 'Ticket TTC', 'Commission HT', 'Somme due HT'],
+            'column_set' => [0.08, 0.08, 0.08, 0.09, 0.14, 0.09, 0.09, 0.06, 0.07, 0.06, 0.07, 0.10],
+            'header_type' => ['string', 'string', 'string', 'string', 'string', 'float', 'float', 'float', 'float', 'float', 'float', 'float'],
+            'header' => ['Date création', 'Date livraison', 'Mois factu', '#Commande', 'Client', 'Commande HT', 'Commande TTC', 'Avoir HT', 'Avoir TTC', 'Ticket HT', 'Ticket TTC', 'Commission HT'],
             'rows' => [],
-            'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0],
+            'total' => ['TOTAL', '', '', '', '', 0, 0, 0, 0, 0, 0, 0],
         ];
 
         foreach ($data_d as $id => $row) {
@@ -248,6 +288,7 @@ class Pdfbilling
             unset($row['id']);
             unset($row['shop_id']);
             unset($row['shop']);
+            unset($row['sum_due_HT']);
             $data_d[$id] = $row;
         }
 

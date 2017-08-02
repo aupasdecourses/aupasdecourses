@@ -2,6 +2,8 @@ Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
         return !Validation.get('IsEmpty').test(v);
 });
 
+var newsletterPopup = [];
+
 jQuery(document).ready(function() {
 
     if (typeof(apdcNewsletterPopup) === 'undefined') {
@@ -13,7 +15,6 @@ jQuery(document).ready(function() {
     jQuery(document).on('click', '#newsletter-popup',function(e) {
         e.preventDefault();
         e.stopPropagation();
-        apdcNewsletterPopup.showLoading();
         showNewsletterForm(this,'apdc_newsletter_view');
     });
 
@@ -24,30 +25,46 @@ jQuery(document).ready(function() {
     });
 
     function showNewsletterForm(elt,handle) {
-        var ajaxUrl = jQuery(elt).data('newsletter-view');
-        var data = new FormData();
-        data.append('isAjax', 1);
-        data.append('handle', handle);
-        jQuery.ajax({
-            url: ajaxUrl,
-            data: data,
-            processData: false,
-            contentType: false,
-            type: 'POST'
+        apdcNewsletterPopup.showLoading();
+        if (typeof(newsletterPopup[handle]) !== 'undefined') {
+            apdcNewsletterPopup.updateContent(newsletterPopup[handle]);
+            setNewsletterPopupHeight();
+        } else {
+            var ajaxUrl = jQuery(elt).data('newsletter-view');
+            var data = new FormData();
+            data.append('isAjax', 1);
+            data.append('handle', handle);
+            jQuery.ajax({
+                url: ajaxUrl,
+                data: data,
+                processData: false,
+                contentType: false,
+                type: 'POST'
 
-        })
-        .done(function(response) {
-            if (response.status === 'SUCCESS') {
-                apdcNewsletterPopup.updateContent(response.html);
-            } else if (response.status === 'ERROR') {
-                var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
-                apdcNewsletterPopup.updateContent(message);
-            }
-        })
-        .fail(function() {
-            console.log('failed');
-        });
+            })
+            .done(function(response) {
+                if (response.status === 'SUCCESS') {
+                    newsletterPopup[handle] = response.html;
+                    apdcNewsletterPopup.updateContent(response.html);
+                } else if (response.status === 'ERROR') {
+                    var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
+                    apdcNewsletterPopup.updateContent(message);
+                }
+                setNewsletterPopupHeight();
+            })
+            .fail(function() {
+                console.log('failed');
+            });
 
+        }
+    }
+
+    function setNewsletterPopupHeight() {
+        var popupContainer = jQuery('#' + apdcNewsletterPopup.id + ' .apdc-popup-container');
+        var height = popupContainer.find('.apdc-popup-content').children().outerHeight(true);
+        var padding = parseFloat(popupContainer.css('padding-top')) + parseFloat(popupContainer.css('padding-bottom'));
+        var border = parseFloat(popupContainer.css('border-top')) + parseFloat(popupContainer.css('border-bottom'));
+        popupContainer.css('height', (height + padding + border) + 'px');
     }
 
     function processNewsletterForm(elt) {

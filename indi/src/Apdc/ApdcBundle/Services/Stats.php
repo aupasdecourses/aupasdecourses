@@ -143,10 +143,12 @@ class Stats
 		$orders->getSelect()->columns('COUNT(*) AS nb_order')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
 			->columns('MAX(main_table.created_at) AS last_order')
-			->group('customer_id');
+			->group('sales_flat_order_address.customer_id');
 
 		// data[] n'a que les champs utiles pour l'update de la table geocode
 		foreach ($orders as $order) {
+			/* Corriger jointure sur customer id NULL*/
+			if($order->getCustomerId() != null) {	
 			array_push($data, [
 				'address'					=> $order->getStreet(), // cette addresse sera par la suite modifiée dans la fonction cleanAddrForMap()
 				'postcode'					=> $order->getPostcode(),
@@ -157,7 +159,7 @@ class Stats
 				'id_customer'				=> $order->getCustomerId(), // id pouvant faire office de jointure entre les tables geocode et customer_entity
 			]);
 		}
-
+		}
 		return $data;
 	}
 
@@ -224,7 +226,7 @@ class Stats
 				$v['long']	= floatval($json[0]['lon']);
 			}
 		}
-
+	 
 		return $data;
 	}
 
@@ -241,22 +243,30 @@ class Stats
 	   	$orderIds->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('customer_id')); 
 		$orderIds->getSelect()->group('sales_flat_order_address.customer_id');
 		$orders = [];
-
+		$oAddrs = [];
+		
 		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
 		$geocodes = [];
+		$gAddrs = [];
 
 		foreach ($orderIds as $orderId) {
 			$orders[] = $orderId->getData('customer_id');
+			$oAddrs[] = $orderId->getData('street');
 		}
 
+		$cpt = 0;
 		foreach ($geocodeIds as $geocodeId) {
 			$geocodes[] = $geocodeId->getData('whoami');
+			$gAddrs[$geocodeId->getData('whoami')][$cpt] = $geocodeId->getData('former_address');
+			$cpt++;
 		}
 
 		$countCustomers = array_count_values($geocodes);
 
 		if (count($orders) !== ($countCustomers['CUSTOMER'])) {
 			return true;
+		} else if (!empty(array_diff($oAddrs, $gAddrs['CUSTOMER']))) {
+			return true;	
 		} else {
 			return false;
 		}
@@ -306,8 +316,16 @@ class Stats
 				'id_shop'			=> $merchant->getData('id_shop'),
 			]);	
 		}
+
+		$bad_chars	= ['À','Á','Â','Ã','Ä','Å','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï','Ò','Ó','Ô','Õ','Ö','Ù','Ú','Û','Ü','Ý','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ð','ò','ó','ô','õ','ö','ù','ú','û','ü','ý','ÿ'];
+		$good_chars = ['A','A','A','A','A','A','C','E','E','E','E','I','I','I','I','O','O','O','O','O','U','U','U','U','Y','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','o','o','o','o','o','o','u','u','u','u','y','y'];
+
+
 		/* c'est comme la fonction addLatAndLong(), pour les commercants cette fois */
 		foreach ($data as &$content) {
+
+			$content['address'] = strtr($content['address'], array_combine($bad_chars, $good_chars));
+			
 			if ($content['address'] != "") {
 				$json = $this->geocodeAdress(htmlentities($content['address']));
 				$content['lat']		= floatval($json[0]['lat']);
@@ -325,29 +343,37 @@ class Stats
 	{
 		$shopIds = \Mage::getModel('apdc_commercant/shop')->getCollection();
 		$shops = [];
+		$sAddrs = [];
 
 		$geocodeIds = \Mage::getModel('pmainguet_delivery/geocode_customers')->getCollection();
 		$geocodes = [];
+		$gAddrs = [];
 
 		foreach ($shopIds as $shopId) {
 			$shops[] = $shopId->getData('id_shop');
+			$sAddrs[] = $shopId->getData('street');
 		}
 
+		$cpt = 0;
 		foreach ($geocodeIds as $geocodeId) {
 			$geocodes[] = $geocodeId->getData('whoami');
+			$gAddrs[$geocodeId->getData('whoami')][$cpt] = $geocodeId->getData('former_address');
+			$cpt++;
 		}
 
 		$countShops = array_count_values($geocodes);
 
 		if (count($shops) !== ($countShops['SHOP'])) {
 			return true;
+		} else if (!empty(array_diff($sAddrs, $gAddrs['SHOP']))) {
+			return true;
 		} else {
 			return false;
 		}
 	}
-	
 
-	/********************************************************/
+
+	
 	/********************************************************/
 	/* FIDELITE */
 	/*****************************/
@@ -431,20 +457,26 @@ class Stats
 					1 => 'Pour les articles ...',
 					2 => 'Pour la livraison ...',
 			);
-			if ($order->getCouponCode() <> "") {
-				$coupondata	= "";
-				if(floatval($order->getBaseDiscountAmount())<>0){
-					$coupondata	.= "Réduction de ".(-floatval($order->getBaseDiscountAmount()))."€.";
-				}
+			
+			//Coupon Code
+			$coupondata	= $couponcode = "";
+			if (floatval($order->getBaseDiscountAmount())<>0) {
+				$coupondata	.= "Réduction de ".(-floatval($order->getBaseDiscountAmount()))."€.";
+			} else {
 				if($order->getBaseShippingAmount()==0){
 					$coupondata	.= "Livraison gratuite.";
 				}
-			} else {
-				$coupondata	= "";
 			}
+			if($order->getCouponCode()<>""){
+				$couponcode	= $order->getCouponCode();
+			} else {
+				if (floatval($order->getBaseDiscountAmount())<>0) {
+					$couponcode = "Discount sans coupon";
+				}
+			}
+
 			$incrementid		= $order->getIncrementId();
 			$nom_client			= $order->getCustomerName().' '.$order->getCustomerId();
-			$couponcode			= $order->getCouponCode();
 			$couponrule			= $coupondata;
 			$total_withship		= $order->getGrandTotal();
 			$frais_livraison	= $order->getShippingAmount() + $order->getShippingTaxAmount();
@@ -478,8 +510,8 @@ class Stats
 	{
 		$data = [];
 		/* Format dates */
-		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
-		$fin	= date('Y-m-d H:i:s', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
+		$debut	= date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$fin	= date('Y-m-d', strtotime('-1 second', strtotime('+1 day', strtotime(str_replace('/', '-', $fin)))));
 		$orders = \Mage::getModel('sales/order')->getCollection()
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
 			->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
@@ -490,13 +522,30 @@ class Stats
 				'increment_id'	=> $order->getIncrementId(),
 				'quartier'		=> $order->getStoreName(),
 				'Coupon Code'	=> $order->getCouponCode(),
+				'Discount'		=> -floatval($order->getBaseDiscountAmount()),
+				'client'		=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
+				'created_at'	=> date('d-m-Y', strtotime($order->getData('created_at'))),
+				'shipping_amount' => floatval($order->getBaseShippingAmount()),
 			]);
 			arsort($data);
 		}
 		$data_conso = [];
 		foreach ($data as $row) {
-			if ($row['Coupon Code']) {
-				$data_conso[$row['Coupon Code']][] = $row['increment_id'].' - '.$row['quartier'];
+			if ($row['shipping_amount']==0 || floatval($row['Discount'])<>0 ) {
+				if(floatval($row['shipping_amount'])==0){
+					if($row['Coupon Code']==""){
+						$row['Coupon Code']='Livraison gratuite sans coupon';
+					}
+				} else{
+					if($row['Coupon Code']=="") {                                          
+						$row['Coupon Code']='Discount sans coupon';
+					}
+				}
+				$data_conso[$row['Coupon Code']][] = [
+					'order'			=> $row['increment_id'].' '.$row['quartier'],
+					'customer'		=> $row['client'],
+					'created_at'	=> $row['created_at'],
+				];
 			}
 		}
 

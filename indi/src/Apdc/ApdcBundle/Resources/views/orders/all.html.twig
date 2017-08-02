@@ -3,6 +3,7 @@
 
 {% block body %}
 <div class="container">
+
 	<div class="page-header">
 		<h1> Liste des commandes <subtitle>par client</subtitle></h1><br/>
 		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
@@ -28,8 +29,11 @@
 				<td style="width:9%">
 					<label>Nombre d'articles</label>
 				</td>
-				<td style="width:25%">
+				<td style="width:10%">
 					<label>Total</label>
+				</td>
+				<td style="width:15%">
+					<label>Quartier</label>
 				</td>
 			</tr>
 		</table>
@@ -54,12 +58,15 @@
 				<td style="width:9%">
 					{{ order.total_quantite }}
 				</td>
-				<td style="width:25%">
+				<td style="width:10%">
 					{{ order.total_prix ~ "€" }}
+				</td>
+				<td style="width:15%">
+					{{ order.store }}
 				</td>
 			</tr>
 			<tr >
-				<td colspan="7" style="padding:0px;">
+				<td colspan="8" style="padding:0px;">
 					<div id="{{ order_id }}" class="order collapse">
 						<table class="table">
 							<tr>
@@ -123,6 +130,7 @@
 						</table>
 						<table class="table table-striped">
 							<tr>
+								<th>Commercant</th>
 								<th>Produit</th>
 								<th>Quantite</th>
 								<th>Description</th>
@@ -130,8 +138,9 @@
 								<th>Total</th>
 								<th>Commentaire</th>
 							</tr>
-							{% for product in order.products %}
+							{% for product in order.products | sortbyfield('nom_commercant') %}
 							<tr>
+								<td>{{ product.nom_commercant }}</td>
 								<td>{{ product.nom }}</td>
 								<td>{{ product.quantite }}</td>
 								<td>{{ product.description }}</td>
@@ -142,6 +151,7 @@
 							{% endfor %}
 							<tr>
 								<td><b>TOTAL</b></td>
+								<td></td>
 								<td colspan="3"><b>{{ order.total_quantite }}</b></td>
 								<td colspan="2"><b>{{ order.total_prix }}</b></td>
 							</tr>

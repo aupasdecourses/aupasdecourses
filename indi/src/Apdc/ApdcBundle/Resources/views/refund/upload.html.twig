@@ -3,6 +3,14 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
+
+{% set customer_name = "" %}
+{% for merchant_id, data in order %}
+	{% if merchant_id == -1 %}
+		{% set customer_name = data.order.first_name ~ " " ~ data.order.last_name %}
+	{% endif %}
+{% endfor %}
+
 <div class="container">
 	<div class="row">
 		<div class="col-xs-2">
@@ -18,7 +26,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<h1>#{{id}}<small> Upload des tickets</small></h1>
+		<h1>#{{ id ~ " / " ~ customer_name }}<small> Upload des tickets</small></h1>
 		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	</div>
 </div>

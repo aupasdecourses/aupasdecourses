@@ -55,14 +55,17 @@ class Apdc_Notation_Block_Note extends Mage_Core_Block_Template
     	$note=$this->getNote();
     	$html='<div class="additional-stars">';
 
+        $_helper=Mage::helper('apdccustomer');
+        $url=$_helper->getCustomerWebsite().'customer/account/';
+
     	if($note<=3){
     		$html.='<p style="font-size:16px;">Notre objectif est de vous apporter le meilleur service, </br>alors si vous souhaitez nous aider à nous améliorer, vous pouvez répondre <a href="https://docs.google.com/forms/d/e/1FAIpQLSf47RPA2wzgbE1siha4yphX_Ya5HDnXd_1XF19VuM1Rr55iHQ/viewform">à ces quelques questions</a>.</p>';
     	}elseif($note==4){
     		$html.='<p style="font-size:16px;">Merci pour votre retour! On a fait mieux que le guide Michelin ;-)</p>
-            <p style="font-size:16px;">N\'hésitez pas à partager votre avis sur Facebook <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.facebook.com/aupasdecourses/">en cliquant ici</a></p>';
+            <p style="font-size:16px;">Faites découvrir Au Pas De Courses à vos amis et gagnez 10€ sur vos prochaines courses <a href="'.$url.'">en cliquant ici</a> !</p>';
     	} else{
             $html.='<p style="font-size:16px;">Merci pour votre retour! La prochaine fois, on visera la Lune ;-)</p>
-            <p style="font-size:16px;">N\'hésitez pas à partager votre avis sur Facebook <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.facebook.com/aupasdecourses/">en cliquant ici</a></p>';
+            <p style="font-size:16px;">Faites découvrir Au Pas De Courses à vos amis et gagnez 10€ sur vos prochaines courses <a href="'.$url.'">en cliquant ici</a> !</p>';
         }
 
         $html.='</div>';
