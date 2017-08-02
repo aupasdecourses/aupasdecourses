@@ -7,7 +7,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="api_old_user")
+ * Note: Not used anymore, keep it for legacy propose
+ *
+ * @ORM\Table(name="indi_old_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="fos_user.email.already_used")
  */

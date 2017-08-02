@@ -66,6 +66,17 @@ class OrderRepository extends AbstractMageRepository
 
     /**
      * @inheritdoc
+     */
+    public function find($id)
+    {
+        $result = parent::find($id);
+        $result['items'] = $this->entity->getItemsCollection()->toArray()['items'];
+
+        return $result;
+    }
+
+    /**
+     * @inheritdoc
      *
      * @see http://devdocs.magento.com/guides/m1x/magefordev/mage-for-dev-8.html#other-comparison-operators
      */

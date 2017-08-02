@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Settings
  *
  * @ORM\Table(
- *     name="api_setting",
+ *     name="indi_setting",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="setting_name", columns={"name"})}
  * )
  * @UniqueEntity(

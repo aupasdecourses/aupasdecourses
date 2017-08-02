@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="api_product_history")
+ * @ORM\Table(name="indi_product_history")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductHistoryRepository")
  * @ORM\HasLifecycleCallbacks
  */

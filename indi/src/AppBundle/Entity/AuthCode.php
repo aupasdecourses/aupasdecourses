@@ -5,7 +5,7 @@ use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="api_auth_code")
+ * @ORM\Table(name="indi_auth_code")
  * @ORM\Entity
  */
 class AuthCode extends BaseAuthCode
