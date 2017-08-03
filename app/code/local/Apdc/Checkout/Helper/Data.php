@@ -64,8 +64,9 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         Mage::getSingleton('core/session')->setDtime($dtime);
         Mage::getSingleton('core/session')->setDdatei($ddatei);
 
-        setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
-        $formatedDate = strftime('%a%e/%m', strtotime($ddate));
+        $strDate = date('Y-m-d', strtotime(Mage::getSingleton('core/date')->timestamp()));
+        $date = Mage::app()->getLocale()->date(strtotime(Mage::helper('core')->formatDate($strDate)));
+        $formatedDate = $date->get(Zend_Date::WEEKDAY_SHORT)." ".$date->get(Zend_Date::DAY)."/".$date->get(Zend_Date::MONTH);
         Mage::getSingleton('core/session')->setHeaderDdate($formatedDate . ' ' . $dtime);
         $_SESSION['ddate'] = $ddate;
         $_SESSION['dtime'] = $dtime;

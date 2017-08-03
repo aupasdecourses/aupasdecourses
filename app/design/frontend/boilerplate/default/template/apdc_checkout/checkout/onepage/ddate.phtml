@@ -117,8 +117,8 @@
 
 															<li <?php if ($i % 2 != 0) echo 'class="oddrow"' ?>>
 																<?php 
-                                                                setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
-																echo strftime('%a', strtotime('+' . $i . ' day', $currentTime));
+																$date = Mage::app()->getLocale()->date(strtotime($this->formatDate($strDate)));
+																echo $date->get(Zend_Date::WEEKDAY_SHORT);
                                                                 ?>
 																<div class="option_slot_select">
 																	<p class="ddate_day_selected">Sélectionner</p>

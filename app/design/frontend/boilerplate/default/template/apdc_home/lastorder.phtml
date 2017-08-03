@@ -1,16 +1,13 @@
 <?php
 	$orders = $this->getLastOrdersByCustomer();
 ?>
-<div class="block-lastorder <?php if(count($orders) > 0) { echo 'active'; }?>">
+<div class="block-lastorder active">
 	<?php if(count($orders) > 0) { ?>
 		<h2>Mes dernières commandes</h2>
 		<div class="row">
 			<?php foreach($orders as $order) { ?>
-				<?php
-					$date = new Zend_Date(Mage::getModel('core/date')->timestamp(strtotime($order->getCreatedAt()), false, Mage::app()->getLocale()->getLocaleCode()));
-				?>
 				<article class="col-md-4 col-sm-4">
-					<h3><strong>Ma commande </strong>du <?php echo $date->toString("d MMMM YYYY"); ?></h3>
+					<h3><strong>Ma commande </strong>du <?php echo $this->formatDate($order->getCreatedAt(),Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM); ?></h3>
 					<p><?php echo Mage::helper('core')->currency($order->getGrandTotal(), true, false); ?></p>
 					<a class="link" href="<?php echo Mage::getUrl('sales/order/view', array('order_id' => $order->getId())); ?>">Voir la commande</a>
 					<a class="button button-green" href="<?php echo Mage::getUrl('sales/order/reorder', array('order_id' => $order->getId())); ?>">Recommander</a>
@@ -18,6 +15,6 @@
 			<?php } ?>
 		</div>
 	<?php } else { ?>
-		<h2>Passez dès maitenant votre première commande</h2>
+		<h2>Passez dès maintenant votre première commande !</h2>
 	<?php } ?>
 </div>
