@@ -4,7 +4,7 @@ $block_data=[
 	[
 		'title'=>"Avantages",
 		'identifier'=>"block_advantages",
-		'content'=>'<div class="block-advantages row text-center">
+		'content'=>'<div class="block-reduction-apdc row text-center">
 			<div class="col-md-3">
 			<img src="{{skin url="dist/images/picto/choice.png"}}" alt="" />
 			<p>Belle sélection de produits, au même prix qu&#39;en boutique</p>
@@ -26,7 +26,7 @@ $block_data=[
 	[
 		'title'=>"Sponsor",
 		'identifier'=>"block_sponsor",
-		'content'=>'<div class="block-sponsor">
+		'content'=>'<div class="block-reduction-apdc">
 			<h2>Parrainez vos amis et bénéficiez de coupons de réduction</h2>
 			<div class="row">
 			<div class="col-md-5">

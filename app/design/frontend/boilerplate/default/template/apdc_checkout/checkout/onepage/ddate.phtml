@@ -113,11 +113,13 @@
 												<div class="deli_date_top deli_date_head">
 													<ul>
 													<?php
-														for ($i = 7 * $w; $i < 7 * $w + 7; $i++) { $strDate = date('Y-m-d', strtotime('+' . $i . ' day', $currentTime)); ?>
+														for ($i = 7 * $w; $i < 7 * $w + 7; $i++) { $strDate = date('Y-m-d', strtotime('+' . $i . ' day', $currentTime));
+															$strDate_FR = date('d/m/Y', strtotime('+' . $i . ' day', $currentTime));
+														 ?>
 
 															<li <?php if ($i % 2 != 0) echo 'class="oddrow"' ?>>
 																<?php 
-																$date = Mage::app()->getLocale()->date(strtotime($this->formatDate($strDate)));
+																$date = Mage::app()->getLocale()->date(strtotime($this->formatDate($strDate_FR)));
 																echo $date->get(Zend_Date::WEEKDAY_SHORT);
                                                                 ?>
 																<div class="option_slot_select">
