@@ -1,7 +1,7 @@
 <?php 
 
 $block_data=[
-	[<?php echo $this->getSkinUrl('dist/images/picto/choice.png')?>
+	[
 		'title'=>"Avantages",
 		'identifier'=>"block_advantages",
 		'content'=>'<div class="block-advantages row text-center">
