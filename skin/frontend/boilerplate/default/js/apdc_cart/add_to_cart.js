@@ -43,7 +43,7 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
           } else {
             $('#btn-minicart-remove-' + itemId).click();
           }
-        } else if ($clickedButton === 'btn-cart-remove') {
+        } else if ($clickedButton.val() === 'btn-cart-remove') {
           itemId = parseInt($clickedButton.data('item-id'));
           $('#btn-minicart-remove-' + itemId).click();
           if (isConfigureMode && typeof(apdcProductQuickViewPopup) !== 'undefined') {
