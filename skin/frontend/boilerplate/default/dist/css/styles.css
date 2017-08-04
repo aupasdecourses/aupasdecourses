@@ -13112,6 +13112,7 @@ section .section-description {
   margin-right: -15px;
   margin-left: -15px;
   background: url('../images/bg-3.jpg') no-repeat;
+  background-position-y: 50%;
   background-size: cover;
   -ms-flex-pack: center;
   justify-content: center;
@@ -13129,11 +13130,11 @@ section .section-description {
   margin-top: 0;
   text-align: center;
   text-transform: none;
-  color: #1e555a;
-  border: 4px solid;
-  border-color: #1e555a;
+  color: #fff;
+  border: 6px solid;
+  border-color: #fff;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #3ab64b;
   -ms-flex-align: center;
   align-items: center;
 }
