@@ -156,19 +156,8 @@ Product view
 <!--
 Additional block dependant on product type
 -->
-    <PRODUCT_TYPE_simple translate="label" module="catalog">
-        <label>Catalog Product View (Simple)</label>
-        <reference name="product.info">
-            <block type="catalog/product_view_type_simple" name="product.info.simple" as="product_type_data" template="catalog/product/view/type/default.phtml">
-            </block>
-        </reference>
-    </PRODUCT_TYPE_simple>
     <PRODUCT_TYPE_configurable translate="label" module="catalog">
         <label>Catalog Product View (Configurable)</label>
-        <reference name="product.info">
-            <block type="catalog/product_view_type_configurable" name="product.info.configurable" as="product_type_data" template="catalog/product/view/type/default.phtml">
-            </block>
-        </reference>
         <reference name="product.info.options.wrapper">
             <block type="catalog/product_view_type_configurable" name="product.info.options.configurable" as="options_configurable" before="-" template="catalog/product/view/type/options/configurable.phtml">
                 <block type="core/text_list" name="product.info.options.configurable.renderers" as="attr_renderers" />

@@ -135,7 +135,8 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                     $params['qty'] = $filter->filter($params['qty']);
                 }
 
-                $quoteItem = $this->_getCart()->getQuote()->getItemById($id);
+                $quoteItem = $cart->getQuote()->getItemById($id);
+                $cart->getQuote()->setHasError(false);
                 if (!$quoteItem) {
                     Mage::throwException($this->__('Quote item is not found.'));
                 }
@@ -185,6 +186,7 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
 
                 Mage::register('referrer_url', $this->_getRefererUrl());
             } catch (Mage_Core_Exception $e) {
+                $cart->getQuote()->setHasError(true);
                 $msg = '';
                 if ($this->_getSession()->getUseNotice(true)) {
                     $msg = $e->getMessage();

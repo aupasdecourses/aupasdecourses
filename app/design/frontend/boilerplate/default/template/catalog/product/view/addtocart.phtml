@@ -26,6 +26,7 @@
 ?>
 <?php $_product = $this->getProduct(); ?>
 <?php if($_product->isSaleable()): ?>
+<?php $isEditMode = ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0); ?>
 <div class="actions add-to-cart">
     <div class="action-group">
         <div class="action-loading">
@@ -35,7 +36,7 @@
         <div class="pull-right">
 			<?php if($this->helper('apdc_catalog/product_available')->isAvailable($_product)) { ?>
 				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
-				<button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
+                <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button<?php echo ($isEditMode ? ' hide' : ''); ?>"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
 				<div class="qty-buttons">
 					<button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-pink btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
 					<button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-green btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
@@ -49,7 +50,7 @@
     </div>
 </div>
 <?php endif; ?>
-<?php if ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0) : ?>
+<?php if ($isEditMode) : ?>
     <?php $item = Mage::getModel('sales/quote_item')->load($_product->getCartItemId()); ?>
     <?php if ($item && $item->getId()) : ?>
     <div class="action update-product-options disabled text-right">
