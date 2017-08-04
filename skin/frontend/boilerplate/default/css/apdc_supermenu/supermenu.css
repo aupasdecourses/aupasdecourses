@@ -80,7 +80,7 @@
     margin-right: 0;
 }
 
-#supermenu li>a {
+#supermenu .nav li.level0 > a {
   white-space:nowrap;
 }
 #supermenu li>a .deploy-menu-button {
