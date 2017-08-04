@@ -1,0 +1,10 @@
+<?php $informationType = $this->getInformationsType(); ?>
+<div class="header-neighborhood-container skip-container">
+    <a href="#" title="<?php echo $this->__('Neighborhood'); ?>" id="header-neighborhood-link" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>">
+        <i class="fa fa-home"></i>
+        <span class="label"><?php echo $this->__('Neighborhood') ?></span>
+        <?php if ($informationType) : ?>
+            <span class="count">1</span>
+        <?php endif; ?>
+    </a>
+</div>

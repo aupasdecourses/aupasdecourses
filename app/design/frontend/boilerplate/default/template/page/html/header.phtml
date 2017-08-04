@@ -38,12 +38,7 @@
                     </ul>
                 </div>
 
-                <div class="header-neighborhood-container skip-container">
-                    <a href="#" title="Quartier" id="header-neighborhood-link" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>">
-                        <i class="fa fa-home"></i>
-                        <span class="label"><?php echo $this->__('Quartier') ?></span>
-                    </a>
-                </div>
+                <?php echo $this->getChildHtml('neighborhood_header'); ?>
 
                 <?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
                     <div class="header-delivery-container skip-container">

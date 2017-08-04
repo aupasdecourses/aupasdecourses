@@ -5,7 +5,17 @@
       <action method="addItem"><type>skin_js</type><name>js/apdc_neighborhood/neighborhood.js</name><params/></action>
     </reference>
     <reference name="header">
-      <block type="apdc_neighborhood/header_menu" name="neighborhood_menu" template="apdc_neighborhood/header/menu.phtml" />
+      <block type="apdc_neighborhood/header_menu"
+        name="neighborhood_header" template="apdc_neighborhood/header/icon.phtml" />
     </reference>
   </default>
+	  
+	<apdc_neighborhood_view>
+		<reference name="content">
+      <block type="apdc_neighborhood/header_menu"
+        name="neighborhood_popupcontent"
+        template="apdc_neighborhood/header/popup-content.phtml" />
+    </reference>
+  </apdc_neighborhood_view>  
+
 </layout>

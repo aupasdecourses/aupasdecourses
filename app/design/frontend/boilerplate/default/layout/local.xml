@@ -384,11 +384,5 @@
             <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
         </reference>
     </apdc_forgotpassword_view>  
-	  
-	<apdc_neighborhood_view>
-		<reference name="content">
-            <block type="apdc_neighborhood/header_menu" name="neighborhood_menu" template="apdc_neighborhood/header/menu.phtml" />
-        </reference>
-    </apdc_neighborhood_view>  
 	    
 </layout>
