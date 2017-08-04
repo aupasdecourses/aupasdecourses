@@ -186,10 +186,16 @@ if(isset($_SESSION['ddate'])){
     </td>
 	<?php if($dispo == true) { ?>
 		<td class="comments text-center">
+            <div class="action-loading" style="display: none;">
+                <div class="loader"></div>
+            </div>
 			<input type="text" id="comment-<?php echo $_item->getId(); ?>" placeholder="Votre commentaire..." value="<?php if ($_item->getItemComment()) echo $_item->getItemComment(); ?>" />
 			<a href="#" onclick="saveCommentInCheckcart(event, <?php echo $_item->getId(); ?>);" class="button button-green" >Ok</a>
 		</td>
 		<td class="delete text-center">
+            <div class="action-loading" style="display: none;">
+                <div class="loader"></div>
+            </div>
 			<a href="#" onclick="deleteProductInCheckcart(event, <?php echo $_item->getId(); ?>);" title="Supprimer"><i class="fa fa-trash-o"></i></a>
 		</td>
 	<?php } else { ?>

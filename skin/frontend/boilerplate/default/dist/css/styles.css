@@ -14694,6 +14694,10 @@ footer .social-list .btn-social-icon {
   min-width: 40px;
 }
 
+#checkout-review-table tr {
+  transition: all ease .5s;
+}
+
 #checkout-review-table tr.no-dispo {
   background-color: #eee;
 }
@@ -14704,7 +14708,13 @@ footer .social-list .btn-social-icon {
   color: rgba(0, 0, 0, .84) !important;
 }
 
+#checkout-review-table tr.deleting {
+  transform: translateX(-120%);
+  opacity: 0;
+}
+
 #checkout-review-table td {
+  position: relative;
   min-width: 120px;
   padding: 15px 0;
   border-bottom: 1px solid #eee;
@@ -14766,6 +14776,23 @@ footer .social-list .btn-social-icon {
 
 #checkout-review-table td.delete i {
   color: #1e555a;
+}
+
+#checkout-review-table td .action-loading {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, .7);
+}
+
+#checkout-review-table td .action-loading .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #checkout-review-table td h3 {

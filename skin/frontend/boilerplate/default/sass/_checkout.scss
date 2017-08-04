@@ -420,17 +420,23 @@
         }
     }
     tr{
+        transition:all ease 0.5s;
         &.no-dispo{
             background-color: #eee;
             td, h3, .artisan-name{
                 color: $color-main-grey!important;
             }
         }
+        &.deleting {
+          opacity:0;
+          transform:translateX(-120%);
+        }
     }
     td{
         padding: 15px 0;
         border-bottom: 1px solid #eee;
         min-width: 120px;
+        position:relative;
         &.product-name{
             min-width: 450px;
         }
@@ -479,6 +485,21 @@
             i{
                 color: $color-second-green;
             }
+        }
+        .action-loading {
+          position:absolute;
+          top:0;
+          left:0;
+          height:100%;
+          width:100%;
+          z-index:9;
+          background-color:rgba(255, 255, 255, 0.7);
+          .loader {
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%, -50%);
+          }
         }
         h3{
             margin-top: 0;

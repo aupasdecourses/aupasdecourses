@@ -58,6 +58,8 @@
 	var ajaxUrlSaveCommentInCheckcart = '<?php echo $this->getUrl('checkout/onepage/saveCommentInCheckcart') ?>';
 	
 	function deleteProductInCheckcart(event, entity_id) {
+        var $link = jQuery(event.target);
+        $link.parents('tr').addClass('deleting');
 		event = event || window.event;
 		event.preventDefault();
 		jQuery.ajax({
@@ -76,6 +78,8 @@
 	}
 	
 	function saveCommentInCheckcart(event, entity_id) {
+        var $link = jQuery(event.target);
+        $link.parents('td').find('.action-loading').show();
 		event = event || window.event;
 		event.preventDefault();
 		jQuery.ajax({
@@ -88,6 +92,9 @@
 			checkcartContent = response.update_section.html; 
 			jQuery('#checkout-step-checkcart').html(checkcartContent);
 		})
+        .always(function() {
+            $link.parents('td').find('.action-loading').hide();
+        })
 		.fail(function() {
 			console.log('failed');
 		});
