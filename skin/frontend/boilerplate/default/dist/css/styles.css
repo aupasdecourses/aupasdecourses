@@ -12281,13 +12281,13 @@ header .top-nav li a a:visited {
 
 .dropdown-menu .template-column .cat-thumbnail {
   overflow: hidden;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 
 .dropdown-menu .template-column .cat-thumbnail img {
-  height: 30px;
+  height: 40px;
 }
 
 /**::-ms-backdrop, .header-minicart #header-cart .block-subtitle {

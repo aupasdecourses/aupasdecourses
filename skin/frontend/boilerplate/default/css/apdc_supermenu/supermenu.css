@@ -137,7 +137,7 @@
     vertical-align: middle;
     margin-left: 15px;
     width: 130px;
-    font-size: 0.875rem;
+    font-size: 1.125 rem;
     font-weight: 700;
     color: #1e555a;
 }
@@ -378,8 +378,8 @@ a.level3:hover {
   }
   #supermenu .template-column .cat-thumbnail img {
     position: relative;
-    max-width: 30px;
-    max-height: 30px;
+    max-width: 40px;
+    max-height: 40px;
   }
 
   #supermenu .template-column .cat-name {
