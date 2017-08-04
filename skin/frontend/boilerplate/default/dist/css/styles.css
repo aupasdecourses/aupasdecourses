@@ -11708,19 +11708,20 @@ header .top-nav li a a:visited {
 }
 
 .logo {
-  margin-top: 5px;
-  text-align: center;
+  height: 100%;
 }
 
 .logo a {
   display: block;
+  height: 100%;
+  padding: 6px 0 6px 10px;
+  text-align: left;
 }
 
 .logo a img {
   display: inline-block;
-  max-width: 100px;
-  height: auto;
-  vertical-align: middle;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 #notice-cookie-block {
@@ -14122,7 +14123,7 @@ section .section-description {
 }
 
 .main-container {
-  margin: 0 0 70px;
+  margin: 80px 0 70px 0;
   padding-bottom: 100px;
   border-bottom: 1px solid #ddd;
   background: url(../images/bg-cards.png);
@@ -14207,11 +14208,6 @@ footer .social-list .btn-social-icon {
   position: absolute;
   bottom: 0;
   width: 100%;
-}
-
-.checkout-onepage-index .skip-links .link-header-right {
-  float: right;
-  min-width: 185px;
 }
 
 #checkoutSteps {
@@ -14323,6 +14319,10 @@ footer .social-list .btn-social-icon {
 
 .apdc-form .form-second-column {
   margin-top: 45px;
+}
+
+.block-progress {
+  padding: 0;
 }
 
 .block-progress dl {
@@ -16410,15 +16410,11 @@ h1.account-title {
   }
 
   #supermenu div.level0 {
-    top: 108px;
+    top: 177px;
   }
 }
 
 @media screen and (max-width: 1316px) {
-  .block-progress {
-    margin-top: 60px;
-  }
-
   .block-progress dl > div {
     margin: 10px auto;
   }
@@ -16429,21 +16425,6 @@ h1.account-title {
 
   .block-progress dl > div dt:before {
     display: none;
-  }
-
-  .checkout-onepage-index .skip-links {
-    float: none !important;
-    width: 100%;
-    margin: auto;
-  }
-
-  .checkout-onepage-index .skip-links .link-header-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: auto;
-    margin-top: 20px;
-    text-align: right;
   }
 }
 
@@ -16466,8 +16447,8 @@ h1.account-title {
     font-size: .8125rem;
   }
 
-  .main-container {
-    margin-top: 80px;
+  .checkout-onepage-index .page-header-container {
+    padding-right: 15px;
   }
 
   .navbar-header {
@@ -16684,26 +16665,16 @@ h1.account-title {
     width: 100%;
   }
 
-  .logo {
-    text-align: center;
+  .block-progress dl > div dt strong {
+    display: none;
   }
 
-  .logo img {
-    margin-left: 0;
-  }
-
-  .checkout-onepage-index .logo {
-    text-align: left;
+  .block-progress dl > div dt span {
+    display: block;
   }
 
   #supermenu #storename a {
     margin-left: 0;
-  }
-
-  .block-progress {
-    float: none;
-    margin: 20px auto 0;
-    padding: 0 15px;
   }
 
   #co-billing-form,
@@ -16972,10 +16943,6 @@ h1.account-title {
 }
 
 @media screen and (max-width: 620px) {
-  .logo img {
-    max-width: 70px;
-  }
-
   section#prices,
     section#concept {
     min-height: 0;
@@ -17059,19 +17026,6 @@ h1.account-title {
     height: 30px;
   }
 
-  .checkout-onepage-index .logo {
-    text-align: center;
-  }
-
-  .checkout-onepage-index .skip-links .link-header-right {
-    top: -17px;
-    text-align: center;
-  }
-
-  .checkout-onepage-index .block-progress {
-    margin-top: 60px;
-  }
-
   .my-account {
     padding: 40px 20px;
   }
@@ -17121,14 +17075,6 @@ h1.account-title {
     top: 15px;
   }
 
-  .block-progress dl > div dt strong {
-    display: none;
-  }
-
-  .block-progress dl > div dt span {
-    display: block;
-  }
-
   .page-404 .container section {
     padding-bottom: 15px;
   }
@@ -17145,8 +17091,32 @@ h1.account-title {
 }
 
 @media screen and (max-width: 460px) {
-  .logo img {
-    max-width: 55px;
+  .page-header-container .skip-links .link-header-right {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .page-header-container .skip-links .link-header-right .skip-container {
+    width: 30%;
+    margin-top: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .page-header-container .skip-links .header-minicart {
+    vertical-align: -13px;
+  }
+
+  .page-header-container .skip-links .header-minicart .skip-link {
+    background-size: 18px 15px;
+  }
+
+  .page-header-container .skip-links .header-account-container {
+    margin-right: 3px;
   }
 
   .navbar-toggle {
@@ -17164,6 +17134,43 @@ h1.account-title {
     display: block;
     margin: 0;
     text-align: center;
+  }
+
+  .checkout-onepage-index .logo a img {
+    max-width: 80px;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links {
+    position: relative;
+    height: 100%;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links .block-progress {
+    position: absolute;
+    bottom: 5px;
+    left: 35px;
+    width: auto;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links .block-progress dl > div {
+    margin: 0;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links .block-progress dl > div dt {
+    padding: 3px 10px;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links .link-header-right {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    display: block;
+    width: auto;
+  }
+
+  .checkout-onepage-index .page-header-container .skip-links .link-header-right .skip-container {
+    width: auto;
+    vertical-align: top;
   }
 
   .intro-section #logo {
@@ -17311,15 +17318,6 @@ h1.account-title {
     padding: 7px 5px;
   }
 
-  .checkout-onepage-index .skip-links .link-header-right .label {
-    display: none;
-  }
-
-  .checkout-onepage-index .skip-links .link-header-right i {
-    font-size: 24px;
-    margin: 0 10px;
-  }
-
   #opc-shipping_method #co-ddate-form .delivery .deli_date {
     width: calc(100% - 90px);
   }
@@ -17331,34 +17329,6 @@ h1.account-title {
   #opc-shipping_method #co-ddate-form .delivery .deli_time p {
     font-size: .875rem;
     padding: 29px 0;
-  }
-
-  .page-header-container .skip-links .link-header-right {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-  }
-
-  .page-header-container .skip-links .link-header-right .skip-container {
-    width: 30%;
-    margin-top: 0;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-  }
-
-  .page-header-container .skip-links .header-minicart {
-    vertical-align: -13px;
-  }
-
-  .page-header-container .skip-links .header-minicart .skip-link {
-    background-size: 18px 15px;
-  }
-
-  .page-header-container .skip-links .header-account-container {
-    margin-right: 3px;
   }
 }
 

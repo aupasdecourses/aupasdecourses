@@ -12,10 +12,7 @@
 <?php
 	if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 		?>
-			<div class="block block-progress opc-block-progress col-md-8 col-sm-12 text-center">
-				<!--<div class="block-title">
-					<strong><span><?php echo $this->__('Your Checkout Progress') ?></span></strong>
-				</div>-->
+			<div class="block block-progress opc-block-progress col-md-8 col-sm-9 col-xs-8 text-center">
 				<div class="block-content">
 					<?php if($version == "mg1.8" || $version == "mg1.9" || $version == "enterprise14"): ?>
 						<dl>
@@ -35,17 +32,6 @@
 							<div id="payment-progress-opcheckout">
 								<?php echo $this->getChildHtml('payment.progress') ?>
 							</div>
-
-							<!--<div id="billing-progress-opcheckout">
-								<?php echo $this->getChildHtml('billing.progress') ?>
-							</div>-->
-							<!--<div id="shipping-progress-opcheckout">
-								<?php echo $this->getChildHtml('shipping.progress') ?>
-							</div>-->
-
-							<!--<div id="ddate-progress-opcheckout">
-								<?php echo $this->getChildHtml('ddate.progress') ?>
-							</div>-->
 
 						</dl>
 					<?php endif; ?>

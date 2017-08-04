@@ -1,29 +1,27 @@
+<?php $isCheckout = ((!$this->getData('isCheckout') && $this->getData('isCheckout') != 1) ? false : true); ?>
 <header id="header" class="container-fluid">
     <div class="page-header-container row">
-        <div class="logo col-md-2 col-sm-3 col-xs-5">
+    <div class="logo col-md-2 col-sm-3 <?php echo ($isCheckout ? 'col-xs-3' : 'col-xs-5'); ?>">
             <a class="logo-link" href="<?php echo Mage::getUrl('../');?>">
                 <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
             </a>
         </div>
          <!-- Skip Links -->
-         <div class="skip-links col-md-10 col-sm-9 col-xs-7 pull-right">
-            <div class="skip-container skip-container-header-nav hide">
-                <a href="#header-nav" class="skip-link skip-nav">
-                    <i class="fa fa-bars"></i>
-                    <span class="label"><?php echo $this->__('Menu'); ?></span>
-                </a>
-            </div>
+         <div class="skip-links col-md-10 col-sm-9 <?php echo ($isCheckout ? 'col-xs-9' : 'col-xs-7'); ?> pull-right">
 
-            <?php echo $this->getChildHtml('topSearch') ?>
+            <?php if (!$isCheckout) : ?>
+                <?php echo $this->getChildHtml('topSearch') ?>
+            <?php endif; ?>
             <?php echo $this->getChildHtml('checkout.progress') ?>
 
-            <div class="<?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ echo 'col-md-10 col-lg-9'; } else{ echo 'col-md-4'; }?> col-sm-6 col-xs-12 text-right link-header-right">
-
+            <div class="<?php echo ($isCheckout ? 'col-md-4 col-sm-3 col-xs-4' : 'col-lg-9 col-md-10 col-sm-6 col-xs-12'); ?> text-right link-header-right">
                 <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
 
-                <div class="skip-container toggle-search-container">
-			        <a href="#" id="toggle-search" title="<?php echo $this->quoteEscape($this->__('Search')) ?>" class="visible-xs skip-link"><i class="fa fa-search"></i></a>
-                </div>
+                <?php if (!$isCheckout) : ?>
+                    <div class="skip-container toggle-search-container">
+                        <a href="#" id="toggle-search" title="<?php echo $this->quoteEscape($this->__('Search')) ?>" class="visible-xs skip-link"><i class="fa fa-search"></i></a>
+                    </div>
+                <?php endif; ?>
                 <div class="skip-help skip-container">
                     <a id="dLabel" data-target="header-help" href="#header-help" class="skip-link skip-help">
                         <i class="fa fa-info-circle"></i>
@@ -40,7 +38,7 @@
 
                 <?php echo $this->getChildHtml('neighborhood_header'); ?>
 
-                <?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+                <?php if (!$isCheckout){ ?>
                     <div class="header-delivery-container skip-container">
                         <a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
                             <i class="fa fa-list-ul"></i>
@@ -74,7 +72,7 @@
                 </div>
 
                 <!-- Cart -->
-                <?php if ( !$this->getData('isCheckout') || $this->getData('isCheckout') != 1 ){ ?>
+                <?php if (!$isCheckout){ ?>
                     <div class="header-minicart skip-container">
                         <?php echo $this->getChildHtml('minicart_head'); ?>
                     </div>

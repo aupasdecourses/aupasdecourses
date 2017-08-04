@@ -27,7 +27,7 @@
             }
         }
         div.level0{
-            top: 108px;
+            top: 177px;
         }
     }
     .catalog-category-view{
@@ -46,7 +46,6 @@
 
 @media screen and (max-width: 1316px){
     .block-progress{
-        margin-top: 60px;
         dl > div{
             margin: 10px auto;
             &:last-of-type{
@@ -54,21 +53,6 @@
             }
             dt:before{
                 display: none;
-            }
-        }
-    }
-    .checkout-onepage-index{
-        .skip-links{
-            float: none!important;
-            margin: auto;
-            width: 100%;
-            .link-header-right{
-                width: auto;
-                text-align: right;
-                margin-top: 20px;
-                position: absolute;
-                top: 0;
-                right: 0;
             }
         }
     }
@@ -97,8 +81,10 @@
         }
       }
     }
-    .main-container{
-        margin-top: 80px;
+    .checkout-onepage-index {
+      .page-header-container {
+        padding-right:15px;
+      }
     }
     .navbar-header{
         float: none;
@@ -299,26 +285,24 @@
     #product-quick-view_popup-container{
         width: 100%;
     }
-    .logo{
-        text-align: center;
-        img{
-            margin-left: 0;
-        }
-    }
-    .checkout-onepage-index{
-        .logo{
-            text-align: left;
+    .block-progress{
+        dl{
+            & > div{
+                dt{
+                    strong{
+                        display: none;
+                    }
+                    span{
+                        display: block;
+                    }
+                }
+            }
         }
     }
     #supermenu{
         #storename a{
             margin-left: 0;
         }
-    }
-    .block-progress{
-        float: none;
-        margin: 20px auto 0;
-        padding: 0 15px;
     }
     #co-billing-form, #co-shipping-method-form, #checkout-step-payment, #checkout-step-checkcart{
         padding: 40px 20px;
@@ -611,11 +595,6 @@
 }
 
 @media screen and (max-width: 620px){
-    .logo{
-        img{
-            max-width: 70px;
-        }
-    }
     section{
         &#prices, &#concept{
             min-height:0;
@@ -703,20 +682,6 @@
             }
         }
     }
-    .checkout-onepage-index{
-        .logo{
-            text-align: center;
-        }
-        .skip-links{
-            .link-header-right{
-                top: -17px;
-                text-align: center;
-            }
-        }
-        .block-progress{
-            margin-top: 60px;
-        }
-    }
     .my-account{
         padding: 40px 20px;
         .block-account{
@@ -774,20 +739,6 @@
     .navbar-header{
         top: 15px;
     }
-    .block-progress{
-        dl{
-            & > div{
-                dt{
-                    strong{
-                        display: none;
-                    }
-                    span{
-                        display: block;
-                    }
-                }
-            }
-        }
-    }
     .page-404{
         .container{
             section{
@@ -806,10 +757,28 @@
 }
 
 @media screen and (max-width: 460px){
-    .logo{
-        img{
-            max-width: 55px;
+    .page-header-container{
+      .skip-links{
+        .link-header-right{
+          display: flex;
+          flex: 0 1 auto;
+          flex-wrap: wrap;
+          .skip-container{
+            margin-top: 0px;
+            flex-grow:1;
+            width:30%;
+          }
         }
+        .header-minicart{
+          vertical-align: -13px;
+          .skip-link{
+            background-size: 18px 15px;
+          }
+        }
+        .header-account-container{
+          margin-right: 3px;
+        }
+      }
     }
     .navbar-toggle{
         margin-top: -6px;
@@ -829,6 +798,40 @@
                 margin:0;
             }
         }
+    }
+    .checkout-onepage-index {
+      .logo a img {
+        max-width:80px;
+      }
+      .page-header-container {
+        .skip-links {
+          position:relative;
+          height:100%;
+          .block-progress {
+            position:absolute;
+            bottom:5px;
+            left:35px;
+            width:auto;
+            dl > div {
+              margin:0;
+              dt {
+                padding:3px 10px;
+              }
+            }
+          }
+          .link-header-right {
+            display:block;
+            position:absolute;
+            top:5px;
+            right:0px;
+            width:auto;
+            .skip-container {
+              width:auto;
+              vertical-align:top;
+            }
+          }
+        }
+      }
     }
     .intro-section{
         #logo{
@@ -967,19 +970,6 @@
             }
         }
     }
-    .checkout-onepage-index{
-        .skip-links{
-            .link-header-right{
-                .label{
-                    display: none;
-                }
-                i{
-                    font-size: 24px;
-                    margin: 0 10px;
-                }
-            }
-        }
-    }
     #opc-shipping_method{
         #co-ddate-form{
             .delivery{
@@ -995,28 +985,5 @@
                 }
             }
         }
-    }
-    .page-header-container{
-      .skip-links{
-        .link-header-right{
-          display: flex;
-          flex: 0 1 auto;
-          flex-wrap: wrap;
-          .skip-container{
-            margin-top: 0px;
-            flex-grow:1;
-            width:30%;
-          }
-        }
-        .header-minicart{
-          vertical-align: -13px;
-          .skip-link{
-            background-size: 18px 15px;
-          }
-        }
-        .header-account-container{
-          margin-right: 3px;
-        }
-      }
     }
 }

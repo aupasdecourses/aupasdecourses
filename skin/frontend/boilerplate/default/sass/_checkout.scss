@@ -1,11 +1,3 @@
-.checkout-onepage-index{
-    .skip-links{
-        .link-header-right{
-            float: right;
-            min-width: 185px;
-        }
-    }
-}
 
 #checkoutSteps{
     padding: 0;
@@ -109,6 +101,7 @@
 }
 
 .block-progress{
+    padding:0;
     dl{
         margin: 0;
         & > div{
