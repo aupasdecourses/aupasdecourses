@@ -72,15 +72,17 @@
 }
 #supermenu .nav>li {
   position:static;
-    width: 100%;
-    min-width: 130px;
-    text-align: center;
-    margin-bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
 }
 #supermenu .nav>li:last-child {
     margin-right: 0;
 }
 
+#supermenu li>a {
+  white-space:nowrap;
+}
 #supermenu li>a .deploy-menu-button {
   position:absolute;
   right:0px;
