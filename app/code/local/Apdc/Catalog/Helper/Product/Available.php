@@ -32,6 +32,26 @@ class Apdc_Catalog_Helper_Product_Available extends Mage_Core_Helper_Abstract
     public function isAvailable($product)
     {
         $available = true;
+        $deliveryDays = $this->getDeliveryDays($product);
+        if(Mage::getSingleton('core/session')->getDdate()){
+            $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
+            $day = date('w', $timestamp);
+            if(!in_array($day, $deliveryDays)){
+                $available = false;
+            }
+        }
+        return (boolean)$available;
+    }
+
+    /**
+     * getDeliveryDays 
+     * 
+     * @param Mage_Catalog_Model_Product $product product 
+     * 
+     * @return array
+     */
+    public function getDeliveryDays(Mage_Catalog_Model_Product $product)
+    {
         $commercant = (int)$product->getData('commercant');
         if (!$commercant > 0 && in_array($product->getTypeId(), ['bundle', 'grouped'])) {
             $productCommercant = $this->getChildrenProductCommercantCollection($product);
@@ -46,15 +66,8 @@ class Apdc_Catalog_Helper_Product_Available extends Mage_Core_Helper_Abstract
             ->getCollection()
             ->addFieldToFilter('id_attribut_commercant', $commercant)
             ->getFirstItem();
-        $delivery_days = ($shop->getDeliveryDays() ? $shop->getDeliveryDays() : []);
-        if(Mage::getSingleton('core/session')->getDdate()){
-            $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
-            $day = date('w', $timestamp);
-            if(!in_array($day, $delivery_days)){
-                $available = false;
-            }
-        }
-        return (boolean)$available;
+
+        return ($shop->getDeliveryDays() ? $shop->getDeliveryDays() : []);
     }
 
     /**

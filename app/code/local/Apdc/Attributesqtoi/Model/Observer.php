@@ -23,9 +23,7 @@ class Apdc_Attributesqtoi_Model_Observer extends Varien_Object
             if(isset($ddate)){
                 $timestamp = strtotime($ddate);
                 $day = (date('w', $timestamp)==0)?7:date('w', $timestamp);
-                $id_attribut_commercant=$quoteItem->getCommercant();
-                $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant)->getFirstItem();
-                $delivery_days=$shop->getDeliveryDays();
+                $delivery_days = Mage::helper('apdc_catalog/product_available')->getDeliveryDays($quoteItem->getProduct());
                 if(!in_array($day,$delivery_days)){
                     if(count($delivery_days)==0){
                         $orderItem->setDeliveryCheck('Non disponible cette semaine');
@@ -38,7 +36,7 @@ class Apdc_Attributesqtoi_Model_Observer extends Varien_Object
             }
         }catch(Exception $e){
             Mage::log('Error deliverycheck observer, see below',null,'deliverycheck.log');
-            Mage::log($e,null,'deliverycheck.log');
+            Mage::log($e->getMessage(),null,'deliverycheck.log');
         }
     }
 }

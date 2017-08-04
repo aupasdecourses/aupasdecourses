@@ -14123,12 +14123,16 @@ section .section-description {
 }
 
 .main-container {
-  margin: 80px 0 70px 0;
+  margin: 0 0 70px 0;
   padding-bottom: 100px;
   border-bottom: 1px solid #ddd;
   background: url(../images/bg-cards.png);
   background-repeat: no-repeat;
   background-position: center bottom;
+}
+
+.checkout-onepage-index .main-container {
+  margin-top: 80px;
 }
 
 .apdc-popup-container {
@@ -16429,6 +16433,10 @@ h1.account-title {
 }
 
 @media screen and (max-width: 1200px) {
+  .main-container {
+    margin-top: 80px;
+  }
+
   .commercants-block .products-grid .commercant-item .commercant-info-img,
     .commercants-block .products-grid .commercant-item .commercant-img-info {
     float: none;
