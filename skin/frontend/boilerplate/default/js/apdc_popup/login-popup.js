@@ -175,9 +175,25 @@ function initLoginPopup() {
 	function setPopupHeight(apdcPopup) {
 		var popupContainer = jQuery('#' + apdcPopup.id + ' .apdc-popup-container');
 		var height = popupContainer.find('.apdc-popup-content').children().outerHeight(true);
-		var padding = parseFloat(popupContainer.css('padding-top')) + parseFloat(popupContainer.css('padding-bottom'));
-		var border = parseFloat(popupContainer.css('border-top')) + parseFloat(popupContainer.css('border-bottom'));
-		popupContainer.css('height', (height + padding + border) + 'px');
+    var offset = 10;
+    var paddingTop = 0;
+    if (popupContainer.css('padding-top') !== '' && !isNaN(parseFloat(popupContainer.css('padding-top')))) {
+      paddingTop = parseFloat(popupContainer.css('padding-top'));
+    }
+    var paddingBottom = 0;
+    if (popupContainer.css('padding-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('padding-bottom')))) {
+      paddingBottom = parseFloat(popupContainer.css('padding-bottom'));
+    }
+
+    var borderTop = 0;
+    if (popupContainer.css('border-top') !== '' && !isNaN(parseFloat(popupContainer.css('border-top')))) {
+      borderTop = parseFloat(popupContainer.css('border-top'));
+    }
+    var borderBottom = 0;
+    if (popupContainer.css('border-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('border-bottom')))) {
+      borderBottom = parseFloat(popupContainer.css('border-bottom'));
+    }
+		popupContainer.css('height', (offset + height + paddingTop + paddingBottom + borderTop + borderBottom) + 'px');
 	}
 
 	function processLoginForm(elt) {
@@ -209,6 +225,7 @@ function initLoginPopup() {
 			} else {
 				console.log('failed');
 			}
+      setPopupHeight(apdcLoginPopup);
 		})
 		.fail(function() {
 			console.log('failed');
