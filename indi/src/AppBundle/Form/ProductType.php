@@ -24,7 +24,7 @@ class ProductType extends AbstractType
             ->add('notes_com')
             ->add('status')  // TODO: ChoiceType, 0 / 1
             ->add('on_selection')  // TODO: ChoiceType, 0 / 1
-            ->add('price')
+            ->add('prix_public')
             ->add('unite_prix', null, [
                 'empty_data' => '1'
             ])  // TODO: ChoiceType, and get choice form Mage
@@ -48,6 +48,14 @@ class ProductType extends AbstractType
             ->add('type_id', null, [
                 'data' => 'simple'
             ])
+            // Generated fields
+            ->add('prix_kilo_site')
+            ->add('price')
+            ->add('meta_title')
+            ->add('meta_description')
+            ->add('image_label')
+            ->add('small_image_label')
+            ->add('thumbnail_label')
         ;
     }
 

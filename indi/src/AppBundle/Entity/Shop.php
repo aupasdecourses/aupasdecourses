@@ -22,7 +22,7 @@ class Shop
     protected $id;
 
     /**
-     * User last name
+     * The merchant ID
      *
      * @var string
      *
@@ -31,7 +31,16 @@ class Shop
     private $merchant;
 
     /**
-     * User first name
+     * Shop name
+     *
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * SKU Code
      *
      * @var string
      *
@@ -40,7 +49,7 @@ class Shop
     private $code;
 
     /**
-     * User first name
+     * SKU incremental number
      *
      * @var integer
      *
@@ -80,6 +89,30 @@ class Shop
     public function getMerchant()
     {
         return $this->merchant;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Shop
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

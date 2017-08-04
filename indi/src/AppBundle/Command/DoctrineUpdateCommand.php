@@ -14,6 +14,7 @@ class DoctrineUpdateCommand extends UpdateSchemaDoctrineCommand
      * @var array
      */
     protected $ignoredEntities = [
+        'AppBundle\Entity\Merchant',
         'AppBundle\Entity\Shop',
         'AppBundle\Entity\User',
     ];

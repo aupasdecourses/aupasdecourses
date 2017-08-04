@@ -5,7 +5,7 @@ use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="api_client")
+ * @ORM\Table(name="indi_client")
  * @ORM\Entity
  */
 class Client extends BaseClient

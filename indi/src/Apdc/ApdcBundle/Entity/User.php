@@ -31,6 +31,11 @@ class User extends BaseUser
         return 'ROLE_USER';
     }
 
+    public function toArray()
+    {
+        return (array) $this;
+    }
+
     /**
      * Set shop
      *
