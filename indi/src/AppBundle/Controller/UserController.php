@@ -15,7 +15,7 @@ class UserController extends AbstractController
 
     /** @var array The ACL for each Action */
     protected $acl = [
-        'default' => 'ROLE_ADMIN'
+        'default' => 'ROLE_SUPER_ADMIN'
     ];
 
     protected $filterable = ['shop', 'type'];

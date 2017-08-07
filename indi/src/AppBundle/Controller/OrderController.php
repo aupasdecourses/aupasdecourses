@@ -11,7 +11,7 @@ class OrderController extends AbstractController
 
     /** @var array The ACL for each Action */
     protected $acl = [
-        'default' => 'ROLE_ADMIN',
+        'default' => 'ROLE_SUPER_ADMIN',
         'list'    => 'ROLE_USER',
         'get'     => 'ROLE_USER',
     ];
