@@ -46,6 +46,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
         $commercants = array();
         $items = array();
         foreach ($itemsCollection as $item) {
+			$color = '#3ab64b';
             if ($item->getParentItemId() && $item->getCommercant()) {
                 if (!isset($parentCommercantId[$item->getParentItemId()])) {
                     $parentCommercantId[$item->getParentItemId()] = $item->getCommercant();
@@ -59,6 +60,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                         if (!isset($commercants['bundle'])) {
                             $commercants['bundle']['name'] = $this->__('Paniers & Plateaux');
                             $commercants['bundle']['items'] = array();
+                            $commercants['bundle']['color'] = $color;
                         }
                         $commercants['bundle']['items'][] = $item;
                     } else if (isset($parentCommercantId[$item->getItemId()])) {
@@ -68,8 +70,16 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                 }
                 if (!isset($commercants[$commercant])) {
                     $name = $product->setCommercant($commercant);
+					$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $commercant)->getFirstItem();
+					if($shop) {
+						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+						if($category && $category->getParentCategory()) {
+							$color = $category->getParentCategory()->getData('menu_bg_color');
+						}
+					}
                     $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
                     $commercants[$commercant]['items'] = array();
+					$commercants[$commercant]['color'] = $color;
                 }
                 $commercants[$item->getCommercant()]['items'][] = $item;
             }

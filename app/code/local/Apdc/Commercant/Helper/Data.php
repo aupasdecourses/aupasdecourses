@@ -9,18 +9,43 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     }
+	
+	public function getShortDays()
+    {
+        return ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    }
 
-    public function formatDays($days, $string=false){
-    	$labeldays=$this->getDays();
+    public function getWeekDays($short=true)
+    {
+        $weekDays = [];
+        if ($short) {
+            $labels = $this->getShortDays();
+        } else {
+            $labels = $this->getDays();
+        }
+        for ($i=1; $i <= 7; ++$i) {
+            $weekDays[$i] = [
+                'value' => $i,
+                'label' => $labels[$i-1]
+            ];
+        }
+        return $weekDays;
+    }
+
+    public function formatDays($days, $string = false, $short = false){
+    	$labeldays = $this->getDays();
+		if($short == true) {
+			$labeldays = $this->getShortDays();
+		}
         $rsl=[];
         foreach($days as $day){
             $rsl[]=$labeldays[$day-1];
         }
-
+ 
         if ($string){
-           	$r=implode(", ", $rsl);
+           	$r = implode(", ", $rsl);
         }else {
-        	$return=$rsl;
+        	$r = $rsl;
         }
         return $r;
     }
@@ -67,11 +92,62 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $filter[$cat->getId()] = [
                 'store_id' => $cat->getStoreId(),
                 'url_path' => $cat->getUrlPath(),
-                'src' => $cat->getImage(),
+                'src' => Mage::helper('apdc_catalog/category')->getImageUrl($cat),
             ];
         }
 
         return $filter;
     }
+	
+	public function getInfoShop($shopId = null)
+    {
+        $shop_info = array();
+		if($shopId == null) {
+			$current_cat = Mage::registry('current_category');
+			$categoriesParent = $current_cat->getParentCategories();
+			foreach($categoriesParent as $categoryParent) {
+				if($categoryParent->getLevel() == 3) {
+					$categoryShop = $categoryParent;
+					break;
+				}
+			}
+			$categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
+			$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+		}
+		else {
+			$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', array('finset' => $shopId))->getFirstItem()->getData();
+			$categoryShop = Mage::getModel('catalog/category')->load($data['id_category'][0]);
+		}
+		
+        $shop_info = [];
+        if (!empty($data)) {
+            $shop_info["name"]=$data["name"];
+            $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
+            $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
+            $shop_info["phone"]=$data["phone"];
+            $shop_info["website"]=$data["website"];
+            $shop_info["closing_periods"]=$data["closing_periods"];
+            $shop_info["description"]=$categoryShop->getDescription();
+            $shop_info["delivery_days"] = $data["delivery_days"];
+            $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
+            $shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+            $shop_info["url"] = $categoryShop->getUrl();
+            
+            $html = "";
+            $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+            foreach($data["timetable"] as $day=>$hours){
+                $hours=($hours=="")?"Fermé":$hours;
+                $hoursExplode = explode('-', $hours);
+                if(count($hoursExplode) > 3) {
+                    $hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
+                    $hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
+                    $hours = $hoursExplode1.' / '.$hoursExplode2;
+                }
+                $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
+            }
+            $shop_info["timetable"]=$html;
+        }
 
+        return $shop_info;
+    }
 }

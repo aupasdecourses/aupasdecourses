@@ -55,7 +55,7 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $message = $this->__('%s was added to your shopping cart.', Mage::helper('core')->escapeHtml($product->getName()));
                 $result['status'] = 'SUCCESS';
                 $result['message'] = $message;
-                //New Code Here
+
                 $this->loadLayout();
                 $minicartContent = $this->getLayout()->getBlock('minicart_content');
                 $minicartContent->setData('product_id', $product->getId());

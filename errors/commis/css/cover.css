@@ -2,7 +2,9 @@
  * Globals
  */
 
-
+h1.maintenance-title{
+    font-family: 'Open Sans', sans-serif;
+}
 .maintenance-img{
   width:100px;
   margin-left: auto;
@@ -44,8 +46,7 @@ body {
 body {
   color: #fff;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-    font-family:Raleway, Helvetica;
+  font-family:'Open Sans', sans-serif;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -174,4 +175,51 @@ width:100%;
   .cover-container {
     width: 700px;
   }
+}
+
+
+
+/******************** CUSTOM **************************/
+.maintenance-page{
+    background: #F6F6F6;
+}
+.maintenance-page .cover-container{
+    width: 95%;
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 110px 15px;
+}
+.maintenance-page .cover-container p.hola{
+    font-weight: 300;
+    color: #2AA745;
+    font-size: 150px;
+    line-height: 100px;
+    margin-top: 40px;
+}
+.maintenance-page .cover-container h1{
+    font-weight: 700;
+    color: #055A5F;
+    font-size: 32px;
+    line-height: normal;
+    margin-top: 40px;
+}
+.maintenance-page .cover-container img{
+    display: inline-block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+}
+
+@media screen and (max-width: 620px){
+    .maintenance-page .cover-container p.hola{
+        font-size: 90px;
+        text-align: center;
+    }
+    .maintenance-page .cover-container h1{
+        text-align: center;
+    }
+    .maintenance-page .cover-container{
+        padding-bottom: 15px;
+    }
 }

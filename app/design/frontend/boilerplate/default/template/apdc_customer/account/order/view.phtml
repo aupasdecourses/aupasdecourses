@@ -1,0 +1,11 @@
+<div class="col-md-7 col-md-offset-1 box-account detail-order">
+    <?php $_order = $this->getOrder(); ?>
+	<div id="infos">
+		<?php echo $this->getChildHtml('order_info'); ?>
+	</div>
+    <h3><?php echo $this->__('Détails de la commande'); ?></h3>
+    <?php echo $this->getChildHtml('order_items'); ?>
+    <?php echo $this->getChildHtml('order_totals'); ?>
+</div>
+
+<?php echo $this->getChildHtml('footer_orderview');?>

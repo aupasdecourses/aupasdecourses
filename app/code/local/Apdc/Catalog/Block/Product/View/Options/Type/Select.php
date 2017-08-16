@@ -22,6 +22,21 @@
  */
 class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_Block_Product_View_Options_Type_Select
 {
+    protected $uniqIdProduct = '';
+
+    /**
+     * getValuesHtmlByUniqIdProduct 
+     * 
+     * @param string $uniqIdProduct uniqIdProduct 
+     * 
+     * @return string
+     */
+    public function getValuesHtmlByUniqIdProduct($uniqIdProduct)
+    {
+        $this->uniqIdProduct = $uniqIdProduct;
+        return $this->getValuesHtml();
+    }
+
     /**
      * Return html for control element
      *
@@ -101,6 +116,7 @@ class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_B
             }
             $count = 1;
             foreach ($_option->getValues() as $_value) {
+				$uniqId = uniqid();
                 $count++;
 
                 $priceStr = $this->_formatPrice(array(
@@ -119,14 +135,14 @@ class Apdc_Catalog_Block_Product_View_Options_Type_Select extends Mage_Catalog_B
                     . ' product-custom-option"'
                     . ($this->getSkipJsReloadPrice() ? '' : ' onclick="opConfig.reloadPrice()"')
                     . ' name="options[' . $_option->getId() . ']' . $arraySign . '" id="options_' . $_option->getId()
-                    . '_' . $count . '" value="' . $htmlValue . '" ' . $checked . ' price="'
+                    . '_' . $count . '_'.$uniqId.'" value="' . $htmlValue . '" ' . $checked . ' price="'
                     . $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false) . '" />'
-                    . '<span class="label"><label for="options_' . $_option->getId() . '_' . $count . '">'
-                    . $this->escapeHtml($_value->getTitle()) . ' ' . $priceStr . '</label></span>';
+                    . '<label for="options_' . $_option->getId() . '_' . $count . '_'.$uniqId.'">'
+                    . $this->escapeHtml($_value->getTitle()) . ' ' . $priceStr . '</label>';
                 if ($_option->getIsRequire()) {
                     $selectHtml .= '<script type="text/javascript">' . '$(\'options_' . $_option->getId() . '_'
-                    . $count . '\').advaiceContainer = \'options-' . $_option->getId() . '-container\';'
-                    . '$(\'options_' . $_option->getId() . '_' . $count
+                    . $count . '_'.$uniqId.'\').advaiceContainer = \'options-' . $_option->getId() . '-'.$this->uniqIdProduct.'-container\';'
+                    . '$(\'options_' . $_option->getId() . '_' . $count . '_'.$uniqId
                     . '\').callbackFunction = \'validateOptionsCallback\';' . '</script>';
                 }
                 $selectHtml .= '</li>';

@@ -1,46 +1,66 @@
 <?php
 /**
- * The MIT License (MIT)
+ * Magento
  *
- * Copyright (c) 2011-2014 Webcomm Pty Ltd
+ * NOTICE OF LICENSE
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * DISCLAIMER
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 <?php $_product = $this->getProduct(); ?>
-<?php $buttonTitle = $this->__('Add to Cart'); ?>
 <?php if($_product->isSaleable()): ?>
-    <div class="add-to-cart">
-        <?php if(!$_product->isGrouped()): ?>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <label for="qty"><?php echo $this->__('Qty:') ?></label>
-                </span>
-                <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo ($qty = $this->getProductDefaultQty() * 1) ? $qty : 1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text form-control qty" />
-                <span class="input-group-btn">
-                    <button type="button" title="<?php echo $buttonTitle ?>" class="button btn btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
-                <?php echo $this->getChildHtml('', true, true) ?>
-                </span>
-            </div>
-        <?php else: ?>
-            <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
-                <?php echo $this->getChildHtml('', true, true) ?>
-        <?php endif; ?>
+<?php $isEditMode = ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0); ?>
+<div class="actions add-to-cart">
+    <div class="action-group">
+        <div class="action-loading">
+            <div class="loader-cart"><img src="<?php echo $this->getSkinUrl('dist/images/opc-ajax-loader.gif') ?>" alt=""></div>
+        </div>
+
+        <div class="pull-right">
+			<?php if($this->helper('apdc_catalog/product_available')->isAvailable($_product)) { ?>
+				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
+                <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button<?php echo ($isEditMode ? ' hide' : ''); ?>"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
+				<div class="qty-buttons">
+					<button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-pink btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
+					<button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-green btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
+					<span class="added-qty">0</span>
+					<button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button button-green btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
+				</div>
+			<?php } else { ?>
+				<span class="button button-green notavailable"><?php echo $this->__('Non disponible') ?></span>
+			<?php } ?>
+        </div>
     </div>
+</div>
+<?php endif; ?>
+<?php if ($isEditMode) : ?>
+    <?php $item = Mage::getModel('sales/quote_item')->load($_product->getCartItemId()); ?>
+    <?php if ($item && $item->getId()) : ?>
+    <div class="action update-product-options disabled text-right">
+        <input type="hidden" name="update_product_options" value="1" />
+        <input type="hidden" name="update_product_options_initial_values" value="<?php echo (int)$item->getQty() . '-' . $item->getItemComment(); ?>" />
+        <button type="submit" class="button button-green btn-sm apdc-catalog-update-product-options" data-item-id="<?php echo $_product->getCartItemId(); ?>" data-product-id="<?php echo $_product->getId(); ?>" title="<?php echo $this->__('Update product'); ?>" value="update_product_options" disabled="true">
+            <span><span>
+                <i class="fa fa-save"></i> <?php echo $this->__('Update product');  ?>
+            </span></span>
+        </button>
+    </div>
+    <?php endif; ?>
 <?php endif; ?>

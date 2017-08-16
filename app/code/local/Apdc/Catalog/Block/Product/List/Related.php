@@ -23,7 +23,7 @@ class Apdc_Catalog_Block_Product_List_Related extends Mage_Catalog_Block_Product
 //        Mage::getSingleton('catalog/product_status')->addSaleableFilterToCollection($this->_itemCollection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($this->_itemCollection);
 
-        $this->_itemCollection->getSelect()->limit(3)->order(new Zend_Db_Expr('RAND()'));
+        $this->_itemCollection->getSelect()->order(new Zend_Db_Expr('RAND()')); //->limit(3)
         $this->_itemCollection->load();
 
         foreach ($this->_itemCollection as $product) {

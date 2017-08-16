@@ -8,6 +8,12 @@
     padding: 0;
 }
 
+.message-coupon{
+    padding: 5px;
+    position: relative;
+    top: 15px;
+}
+
 .messages ul{
     list-style: none;
     padding: 0;
@@ -27,14 +33,14 @@
     margin-top: -6px;
 }
 
-.messages .error-msg li {
+.messages .error-msg li,
+.message-coupon.error {
     color: $color-black;
     border-left: 5px solid $c-danger;
     background-color: $c-danger-background;
-}
-
-.messages .error-msg li:before {
-    @include triangle(right, 6px, $c-danger);
+    &:before {
+        @include triangle(right, 6px, $c-danger);
+    }
 }
 
 .messages .notice-msg li {
@@ -57,6 +63,33 @@
     @include triangle(right, 6px, $c-success);
 }
 
+.minicart-message{
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    &:before {
+        top: 50%;
+        left: 0;
+        margin-top: -6px;
+    }
+    &#minicart-error-message{
+        color: $color-black;
+        border-left: 5px solid $c-danger;
+        background-color: $c-danger-background;
+        &:before {
+            @include triangle(right, 6px, $c-danger);
+        }
+    }
+    &#minicart-success-message{
+        color: $color-black;
+        border-left: 5px solid $c-success;
+        background-color: $c-success-background;
+        &:before {
+            @include triangle(right, 6px, $c-success);
+        }
+    }
+}
+
 /* -------------------------------------------- *
  * Validation
  */
@@ -66,4 +99,12 @@ p.required,
     margin: 5px 0 0;
     color: $c-danger;
     font-size: 0.875rem;
+}
+.block-subscribe .validation-advice{
+    position: absolute;
+    top: 50px;
+    left: 10px;
+}
+input.validation-failed{
+    border: 1px solid #df280a!important;
 }

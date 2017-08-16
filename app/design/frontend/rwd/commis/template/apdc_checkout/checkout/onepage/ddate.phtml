@@ -86,8 +86,9 @@
 
                                                         <li <?php if ($i % 2 != 0) echo 'class="oddrow"' ?>>
                                                             <?php 
-                                                            $daytext=$this->__( date('D', strtotime('+' . $i . ' day', $currentTime)) );
-                                                            echo Mage::helper('apdc_checkout')->getFrdaytext($daytext);?>
+                                                            setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
+                                                            echo strftime('%a', strtotime('+' . $i . ' day', $currentTime));
+                                                            ?>
                                                             <div class="option_slot_select">
                                                                 <p class="ddate_day_selected">Sélectionner</p>
                                                                 <p class="ddate_day_option">

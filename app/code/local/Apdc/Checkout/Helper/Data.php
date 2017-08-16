@@ -47,6 +47,34 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         return $array[$daytext];
     }
 
+    /**
+     * saveDdate 
+     * 
+     * @param string $ddate ddate 
+     * @param string $dtime dtime 
+     * @param string $ddatei ddatei 
+     * 
+     * @return void
+     */
+    public function saveDdate($ddate, $dtime, $ddatei)
+    {
+        $dtime = Mage::getModel('ddate/dtime')->load($dtime)->getDtime();
+
+        Mage::getSingleton('core/session')->setDdate($ddate);
+        Mage::getSingleton('core/session')->setDtime($dtime);
+        Mage::getSingleton('core/session')->setDdatei($ddatei);
+
+        $ddate_array=explode("-",$ddate);
+        Mage::log($ddate_array,null,"datetest.log");
+        $strDate_FR = date('d/m/Y', mktime(0,0,0,$ddate_array[1],$ddate_array[2],$ddate_array[0]));
+        $date = Mage::app()->getLocale()->date(strtotime(Mage::helper('core')->formatDate($strDate_FR)));
+
+        $formatedDate = $date->get(Zend_Date::WEEKDAY_SHORT)." ".$date->get(Zend_Date::DAY)."/".$date->get(Zend_Date::MONTH);
+        Mage::getSingleton('core/session')->setHeaderDdate($formatedDate . ' ' . $dtime);
+        $_SESSION['ddate'] = $ddate;
+        $_SESSION['dtime'] = $dtime;
+    }
+
     public function getCommercantname($object){
         $name=$object->getProduct()->getAttributeText('commercant');
 
@@ -72,7 +100,7 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($commercants as $com =>$id){
             $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();
             $delivery_days=$shop->getDeliveryDays();
-            if(count($delivery_days)<4 && $delivery_days<>NULL){
+			if(count($delivery_days)<4 && $delivery_days<>NULL){
                 if($number){
                     $data[$com]=$delivery_days;
                 }else{

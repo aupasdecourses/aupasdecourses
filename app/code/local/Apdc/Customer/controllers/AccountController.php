@@ -19,10 +19,23 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Get model by path
+     * Get Helper.
+     *
+     * @param string $path
+     *
+     * @return Mage_Core_Helper_Abstract
+     */
+    protected function _getHelper($path)
+    {
+        return Mage::helper($path);
+    }
+
+    /**
+     * Get model by path.
      *
      * @param string $path
      * @param array|null $arguments
+     *
      * @return false|Mage_Core_Model_Abstract
      */
     public function _getModel($path, $arguments = array())
@@ -45,24 +58,13 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     }
 
     /**
-     * Get Helper
-     *
-     * @param string $path
-     * @return Mage_Core_Helper_Abstract
-     */
-    protected function _getHelper($path)
-    {
-        return Mage::helper($path);
-    }
-
-    /**
      * Define target URL and redirect customer after logging in.
      */
     protected function _loginPostRedirect()
     {
         $session = $this->_getSession();
 
-        if (!$session->getBeforeAuthUrl() || $session->getBeforeAuthUrl() == Mage::getBaseUrl()) {
+        /*if (!$session->getBeforeAuthUrl() || $session->getBeforeAuthUrl() == Mage::getBaseUrl()) {
             // Set default URL to redirect customer to
             $session->setBeforeAuthUrl($this->_getHelper('customer')->getAccountUrl());
             // Redirect customer to the last page visited after logging in
@@ -94,10 +96,65 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             if ($session->isLoggedIn()) {
                 $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
             }
-        }
+        }*/
+		
+		$referer = $this->getRequest()->getParam(Mage_Customer_Helper_Data::REFERER_QUERY_PARAM_NAME);
+		if ($referer) {
+			if ($this->_isUrlInternal($referer)) {
+				$session->setBeforeAuthUrl($referer);
+			}
+		}
 
         return $session->getBeforeAuthUrl(true);
     }
+	
+	public function loginPostAction()
+    {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+
+        if ($this->_getSession()->isLoggedIn()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+        $session = $this->_getSession();
+
+        if ($this->getRequest()->isPost()) {
+            $login = $this->getRequest()->getPost('login');
+            if (!empty($login['username']) && !empty($login['password'])) {
+                try {
+                    $session->login($login['username'], $login['password']);
+                    if ($session->getCustomer()->getIsJustConfirmed()) {
+                        $this->_welcomeCustomer($session->getCustomer(), true);
+                    }
+                } catch (Mage_Core_Exception $e) {
+                    switch ($e->getCode()) {
+                        case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
+                            $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
+                            $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
+                            break;
+                        case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
+                            $message = $e->getMessage();
+                            break;
+                        default:
+                            $message = $e->getMessage();
+                    }
+                    $session->addError($message);
+                    $session->setUsername($login['username']);
+                } catch (Exception $e) {
+                    // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
+                }
+            } else {
+                $session->addError($this->__('Login and password are required.'));
+            }
+        }
+
+        $this->getResponse()->setRedirect($this->_loginPostRedirect());
+		return;
+    }
+	
 
     public function ajaxPopupViewAction()
     {
@@ -132,9 +189,24 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
 
     public function ajaxLoginProcessAction()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+
+            return;
+        }
+
+        if ($this->_getSession()->isLoggedIn()) {
+            $this->_redirect('*/*/');
+
+            return;
+        }
+
+		$session = $this->_getSession();
+
         $params = $this->getRequest()->getPost();
+        $this->getResponse()->setHeader('Content-type', 'application/json', true);
+        $response = array();
         if ($params['isAjax'] == 1) {
-            $session = $this->_getSession();
             $login = $params['login'];
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -166,11 +238,13 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                             $response['status'] = 'ERROR';
                             $response['message'] = $e->getMessage();
                     }
+                    $session->addError($response['message']);
                     $session->setUsername($login['username']);
                 }
             } else {
                 $response['status'] = 'ERROR';
                 $response['message'] = $this->__('Login and password are required.');
+				$session->addError($this->__('Login and password are required.'));
             }
 
             if (!empty($response)) {
@@ -181,7 +255,8 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                     $response['html'] = $this->_getLayout('apdc_login_view');
                 } else {
                     if (!isset($response['redirect'])) {
-                        $response['redirect'] = $this->_loginPostRedirect();
+                        $session->addSuccess('Bienvenue '.Mage::helper('customer')->getCustomer()->getFirstname());
+                    	$response['redirect'] = $this->_loginPostRedirect();
                     }
                 }
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
@@ -497,4 +572,22 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     {
         return Mage::getUrl($url, $params);
     }
+/**
+     * Customer logout action
+     */
+    public function logoutAction()
+    {
+        $session = $this->_getSession();
+        $session->logout()->renewSession();
+
+        if (Mage::getStoreConfigFlag(Mage_Customer_Helper_Data::XML_PATH_CUSTOMER_STARTUP_REDIRECT_TO_DASHBOARD)) {
+            $session->setBeforeAuthUrl(Mage::getBaseUrl());
+        } else {
+            $session->setBeforeAuthUrl($this->_getRefererUrl());
+        }
+		Mage::getSingleton('customer/session')->addSuccess('Vous avez bien été déconnecté');
+        return $this->getResponse()->setRedirect(Mage::getBaseUrl());
+		//$this->_redirect(Mage::getBaseUrl());
+    }
+
 }

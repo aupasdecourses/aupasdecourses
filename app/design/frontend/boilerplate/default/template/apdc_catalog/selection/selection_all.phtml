@@ -1,0 +1,91 @@
+<?php
+	$collection = $this->getAllSelections();
+?>
+<?php if($collection['count'] > 0) :?>
+<div class="row apdc_home_selection">
+	<div class="col-xs-12">
+	    <div class="block-promos text-center container">
+	        <div class="border-container"></div>
+            <div class="inner-box" id="carrousel-selection-home">
+                <h2 class="title-block"><?php echo $this->__('En ce moment chez mes commerçants'); ?></h2>
+                <div class="colored-line"></div>
+                <div id="carrousel-selection-home-row1" class="owl-carousel apdc-products-grid">
+                    <?php
+                        foreach($collection['row1'] as $selection):
+                            $this->getChild("card-product")->setData("product", $selection);
+                            echo $this->getChildHtml('card-product', false);
+                        endforeach;
+                    ?>
+                </div>
+                <div id="carrousel-selection-home-row2" class="owl-carousel apdc-products-grid">
+                    <?php
+                        foreach($collection['row2'] as $selection):
+                            $this->getChild("card-product")->setData("product", $selection);
+                            echo $this->getChildHtml('card-product', false);
+                        endforeach;
+                    ?>
+                </div>
+                <div class="owl-buttons">
+                    <a href="#" class="prev"><i class="fa fa-angle-left"></i></a>
+                    <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
+                </div>
+		    </div>
+	    </div>
+	</div>
+</div>
+<script>
+    $j(document).ready(function() {
+
+		var optionsOwlCarouselSelectionHome = {
+			slideBy: 'page',
+			items:8,
+			autoPlay : false,
+			loop: true,
+			slideSpeed : 800,
+			responsive: {
+				0:{
+					items:1,
+					slideBy: 1,
+				},
+                500:{
+					items:2,
+					slideBy: 2,
+				},
+                740:{
+					items:4,
+					slideBy: 4,
+				},
+				1200:{
+					items:5,
+					slideBy: 5,
+				}
+			}
+		};
+
+        $j(window).load(function(){
+            var owlCarouselSelectionHomeRow1 = $j("#carrousel-selection-home-row1").owlCarousel(optionsOwlCarouselSelectionHome);
+            var owlCarouselSelectionHomeRow2 = $j("#carrousel-selection-home-row2").owlCarousel(optionsOwlCarouselSelectionHome);
+
+            $j("#carrousel-selection-home .prev").click(function (evt) {
+                evt.preventDefault();
+                owlCarouselSelectionHomeRow1.trigger('prev.owl.carousel');
+                owlCarouselSelectionHomeRow2.trigger('prev.owl.carousel');
+            });
+
+            $j("#carrousel-selection-home .next").click(function (evt) {
+                evt.preventDefault();
+                owlCarouselSelectionHomeRow1.trigger('next.owl.carousel');
+                owlCarouselSelectionHomeRow2.trigger('next.owl.carousel');
+            });
+
+            $j('.block-promos .apdc-products-grid .owl-item').hover(function(){
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+            });
+			$j('.apdc-products-grid .product-info').hover(function(){
+                $j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+            });
+        });
+
+    });
+</script>
+<?php endif;?>

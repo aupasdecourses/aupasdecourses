@@ -46,6 +46,16 @@ footer{
     .button{
         margin: 0;
     }
+    .social-list{
+        li{
+            padding: 0;
+        }
+        .btn-social-icon{
+            color: #fff;
+            font-size: 0.625rem;
+            width: 24px;
+        }
+    }
 }
 
 .apdc-notation-index-index footer{

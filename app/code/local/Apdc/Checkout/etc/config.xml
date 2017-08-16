@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Checkout>
-            <version>0.0.1</version>
+            <version>0.0.3</version>
         </Apdc_Checkout>
     </modules>
     <frontend>
@@ -72,15 +72,23 @@
             </apdc_checkout_checkout_onepage>
         </rewrite>
         <events>
-	    	<controller_action_postdispatch_checkout_onepage_savePayment>
+	    	    <controller_action_postdispatch_checkout_onepage_savePayment>
                 <observers>
                     <apdc_checkout>
                         <class>apdc_checkout/observer</class>
                         <method>saveOrder</method>
                     </apdc_checkout>
                 </observers>
-        	</controller_action_postdispatch_checkout_onepage_savePayment>
-	    </events>
+        	  </controller_action_postdispatch_checkout_onepage_savePayment>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <apdc_checkout>
+                        <class>apdc_checkout/observer</class>
+                        <method>cleanDdateSessionData</method>
+                    </apdc_checkout>
+                </observers>
+            </checkout_onepage_controller_success_action>
+	      </events>
         <sales>
             <quote>
                 <totals>
@@ -91,5 +99,16 @@
                 </totals>
             </quote>
     	</sales>
+		<resources>
+            <apdc_checkout_setup>
+                <setup>
+                    <module>Apdc_Checkout</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </apdc_checkout_setup>
+        </resources>
     </global>
 </config>

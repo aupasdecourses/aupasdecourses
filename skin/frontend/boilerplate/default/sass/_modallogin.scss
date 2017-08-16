@@ -1,15 +1,17 @@
 /* LOGIN FORM */
 
 #login-form-popup-container,
-#newsletter-form-popup-container {
+#newsletter-form-popup-container,
+#delivery-popup-container,
+#neighborhood-popup-container {
     display: block;
     position: absolute;
     background: white;
     opacity: 1;
     filter: alpha(opacity=100);
-    top: 50%;
+    /*top: 50%;*/
     z-index: 10000;
-    left: 50%;
+    /*left: 50%;*/
     text-align: center;
     border-radius: 10px;
     border: 1px solid lightgrey;
@@ -31,13 +33,19 @@
       margin-bottom:0px;
     }
 }
+#delivery-popup-container {
+    max-width:670px;
+    width:100%;
+}
 #newsletter-form-popup-container {
   overflow:initial;
 }
 
-
-#login-form-popup[data-current-view="apdc_login_view"] {
+#neighborhood-popup-container{
+    overflow: auto;
 }
+
+
 #login-form-popup[data-current-view="apdc_register_view"] {
   #login-form-popup-container {
     height:inherit;
@@ -51,11 +59,17 @@
   }
 
     .account-create {
+      padding: 0px;
+      margin-top: 0px;
+      margin-bottom: 0px;
       .form-list {
         padding:0 10px 0 0;
         select {
           width:100%;
         }
+      }
+      button[type=submit] {
+        margin-top:0;
       }
     }
 }

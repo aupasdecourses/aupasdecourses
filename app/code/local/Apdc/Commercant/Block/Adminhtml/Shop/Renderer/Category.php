@@ -24,7 +24,11 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminh
 		$input =  $row->getData($this->getColumn()->getIndex());
 
         foreach ($this->_commercantCategories as $category) {
-        	$storename=$this->_ShopsArray[explode('/', $category->getPath())[1]]['name'];
+            $catId = explode('/', $category->getPath())[1];
+            $storename = '';
+            if (isset($this->_ShopsArray[$catId])) {
+                $storename=$this->_ShopsArray[explode('/', $category->getPath())[1]]['name'];
+            }
             $parentcat=$category->getParentCategory()->getName();
             $values[$category->getId()] = $category->getName().' - '.$parentcat.' - '.$storename;
         }

@@ -57,7 +57,6 @@ class Apdc_Catalog_Helper_Category extends Mage_Core_Helper_Abstract
     {
         $url = false;
         if ($image) {
-            Mage::log(Mage::getBaseDir('media') . DS . $image);
             if (file_exists(Mage::getBaseDir('media') . DS . $image)) {
                 $url = Mage::getBaseUrl('media') . $image;
             } else if (file_exists(Mage::getBaseDir('media') . '/catalog/category/' . $image)) {

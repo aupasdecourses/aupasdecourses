@@ -154,15 +154,10 @@
 .delivery a{text-decoration:none;color:#281D0B;}
 
 .delivery{line-height:1.3em;margin:0;padding:0;font-family:arial;font-size:11px;color:#000;background:#fff;border:1px solid #a8a8a8;width:760px !important;text-align:left;}
-.deli_title{padding:5px 0px;background:url(../images/calendar_bg.jpg) repeat-x;}
 .deli_title h6{text-align:right;padding:0px 10px; margin-bottom:1px;}
 .deli_title h6 a:hover{text-decoration:underline;}
 .deli_time{float:left;width:54%;}
 .deli_date{float:left;width:46%;}
-
-/*.mw-osc-block-content.ddate-delivery .delivery{width: 100% !important}
-.mw-osc-block-content.ddate-delivery .deli_time{width: auto;}
-.mw-osc-block-content.ddate-delivery .deli_date{max-width: 760px;}*/
 
 .clear{clear:both;overflow:hidden;}
 .deli_time h6{font-size:11px;padding:5px;border-bottom:1px solid #ccc;margin:0;}
@@ -171,25 +166,16 @@
 .deli_date_top ul{margin:0;padding:0;width:100%;}
 .deli_date_top ul li{list-style-image:none;list-style-position:outside;list-style-type:none;display:block;float:left;text-align:center;}
 .deli_date_top ul li {display:block;padding:5px 10px;width:50px; box-sizing: border-box;}
-.deli_date_top ul li a {font-weight:bold;}
+.deli_date_top ul li a {font-weight:bold; display:inline-block;}
 .deli_date_top ul li a:hover{border:1px solid #acce00;padding:4px 3px;}
 .deli_date_top ul li span{display:block;color:#F18200;}
-.select_one{border-bottom:none;}
-.select_one ul li{padding:0px;width:auto;} 
-.select_one ul li a{display:block;padding:5px 10px;width:50px; box-sizing: border-box;}
-.select_one ul li a:hover{border:1px solid #a0c51f;padding:4px 9px;}
 
 .delivery .oddrow {background-color:#eaeaea;}
-.select_one ul li.disablerow{background:url(../images/disable.png) no-repeat top center;padding:0px;display:block;padding:5px 10px;width:50px;}
-
-.select_one ul li .ddate_day_active, .select_one ul li a.ddate_day_active:hover {background:#0A263C; border-style:inset; border-width:1px; padding:4px 9px; color:#FFFFFF;}
-
 
 #slideshow-area, #slideshow-scroller {  
   position: relative;
   overflow: hidden;
   width: 100%;
-  /*height: 335px;*/
 }
 
 #slideshow-area {
@@ -222,7 +208,6 @@
 	width: 350px;
 }
 
-/* .ddatepicker{ width:40%;} */
 .dtimepicker{ padding-top:13px;} 
 .deliverypicker{width:200px;}
 .loading_slot{width:322px;}
@@ -254,7 +239,6 @@ p.ddate_day_selected{margin: 0;}
 	.mw-osc-block-content #slideshow-area, .mw-osc-block-content #slideshow-scroller{width: auto}
 	.mw-osc-block-content #slideshow-holder{ width: 100% !important; height: 272px; overflow: hidden; }
 
-	/*.mw-osc-block-content .delivery{width: 100% !important;}*/
 	.mw-osc-block-content #co-ddate-form{overflow: hidden;}
 	.mw-osc-block-content .delivery .deli_date_top.select_one{
 		display: none;
@@ -268,7 +252,6 @@ p.ddate_day_selected{margin: 0;}
 	.deli_date_top ul li span{display: inline;}
 	.mw-osc-block-content .deli_date_top .option_slot_select{display: block; width: 80px; text-align: right; float: right;}
 	.mw-osc-block-content .delivery .first_column_header{ text-align: center; padding: 5px 0; border-bottom: none;}
-	/*.delivery{width: 100% !important;}*/
 	.delivery .option_slot_select .ddate_day_option a{display: none;}
 	.mw-osc-block-content .delivery .ddate_day_option {width: 80px; text-align: left; float: right; background: white; z-index: 2; position: absolute; display: none; border: 1px solid #cecece; border-bottom: none; }
 	.mw-osc-block-content p.ddate_day_selected, .mw-osc-block-content .ddate_day_option a, .mw-osc-block-content .ddate_day_option a:hover{padding: 4px 3px; border-bottom: 1px solid #e0e0e0; line-height: 20px; display: block; cursor: pointer; }
@@ -284,7 +267,6 @@ p.ddate_day_selected{margin: 0;}
 	.ddate_selected{display: block;}
 	.mw-osc-block-content  .slideshow-container{width: 90%}
 
-	.first_column_header{background: #3498db;}
 	.first_column_header strong{color: white;}
 	.slideshow-content{position: relative;}
 }
@@ -292,45 +274,4 @@ p.ddate_day_selected{margin: 0;}
 	.mw-osc-block-content.ddate-delivery .delivery{width: 720px !important;}	
 	.mw-osc-block-content.ddate-delivery .deli_time{width: 52%}	
 	.mw-osc-block-content.ddate-delivery .deli_date{width: 47%}	
-}
-@media only screen and (max-width: 780px) {
-	#slideshow-holder{ width: 100% !important; height: 272px; overflow: hidden; }
-
-	.delivery{width: 100% !important;}
-	#co-ddate-form{overflow: hidden;}
-	.delivery .deli_date_top.select_one{
-		display: none;
-	}
-	.delivery .deli_time p{display: none;}
-	.delivery .deli_time, .deli_date, .slideshow-content{width: 100%;}
-	.delivery .deli_title h6{text-align: center; padding: 0;}
-
-	.delivery .deli_date_top ul li{width: 100%; text-align: left; position: relative; max-height: 50px; background: transparent; border: none; border-bottom: 1px solid #cecece;}
-	.delivery .deli_date_top ul li:hover{background: #fff0e0}
-	/*.deli_date_top ul li span{display: inline;}*/
-	.deli_date_top .option_slot_select{display: block; width: 80px; text-align: right; float: right;}
-	.delivery .first_column_header{ text-align: center; padding: 5px 0; border-bottom: none;}
-	/*.delivery{width: 100% !important;}*/
-	/*.delivery .option_slot_select .ddate_day_option a{display: none;}*/
-	.delivery .ddate_day_option {width: 80px; text-align: left; float: right; background: white; z-index: 2; position: absolute; display: none; border: 1px solid #cecece; border-bottom: none; }
-	p.ddate_day_selected,.ddate_day_option a, .ddate_day_option a:hover{padding: 4px 3px; border-bottom: 1px solid #e0e0e0; line-height: 20px;  display: block; cursor: pointer; }
-	p.ddate_day_selected{background: url('../images/select_bg.png') no-repeat 95% 50%; padding-right: 15px; z-index: 1; border: none;}
-	.deli_date_top ul li .ddate_day_option a:hover{border: none; border-bottom: 1px solid #e0e0e0; background-color: #fff0e0; padding: 3px 8px;}
-	.deli_date_top ul li .ddate_day_option a{padding: 3px 8px; font-weight: normal;}
-	.deli_date_top ul li .ddate_day_option a:hover{font-weight: bold}
-	.deli_date_top ul li .ddate_day_option .disablerow{background: url('../images/disablerow.jpg') repeat;}
-	/*.option_slot_select:hover .ddate_day_option{display: block; }*/
-
-	select.option_slot_select{border: none; background: transparent; outline: none; font-size: 12px; line-height: 14px;}
-	#slideshow-area, #slideshow-scroller{overflow: visible;}
-	/*.ddate_selected{display: block;}*/
-	.slideshow-container{width: 90%}
-
-	.first_column_header{background: #3498db;}
-	.first_column_header strong{color: white;}
-	.slideshow-content{position: relative;}
-
-    .ddate-delivery .group-select{
-    	width: auto;
-    }
 }
