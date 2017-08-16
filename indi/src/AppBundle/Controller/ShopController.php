@@ -10,7 +10,7 @@ class ShopController extends AbstractController
 
     /** @var array The ACL for each Action */
     protected $acl = [
-        'default' => 'ROLE_ADMIN',
+        'default' => 'ROLE_SUPER_ADMIN',
     ];
 
     /** @var array Default orderBy used in indexAction */

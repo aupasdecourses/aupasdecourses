@@ -21,7 +21,7 @@ class ProductController extends AbstractController
 
     /** @var array The ACL for each Action */
     protected $acl = [
-        'default' => 'ROLE_ADMIN',
+        'default' => 'ROLE_SUPER_ADMIN',
         'list'    => 'ROLE_USER',
         'get'     => 'ROLE_USER',
         'post'    => 'ROLE_USER',
@@ -73,10 +73,10 @@ class ProductController extends AbstractController
                     .'-'.($shop->getIncremental() + 1);
 
                 $unit   = $request->request->get('unite_prix', 'kg');
-                $public = $request->request->get('price');
+                $public = $request->request->get('prix_public');
 
                 if ($unit == 'kg') {
-                    $price = $public * $request->request->get('poids_portion', 1) * $request->request->get('nbre_portion', 1);
+                    $price = $public * $request->request->get('poids_portion', 1000) * $request->request->get('nbre_portion', 1) / 1000;
                 } else {
                     $price = $public * $request->request->get('nbre_portion', 1);
                 }
@@ -124,7 +124,7 @@ class ProductController extends AbstractController
                     .'Référence : '.$entity['reference_interne_magasin'].PHP_EOL
                     .'Disponible : '.($entity['status'] ? 'Oui' : 'Non').PHP_EOL
                     .'Sélection APDC : '.($entity['on_selection']  ? 'Oui' : 'Non').PHP_EOL
-                    .'Prix : '.$entity['price'].PHP_EOL
+                    .'Prix : '.$entity['prix_public'].PHP_EOL
                     .'Unit : '.$entity['unite_prix'].PHP_EOL
                     .'Description : '.$entity['short_description'].PHP_EOL
                     .'Poids portion : '.$entity['poids_portion'].PHP_EOL
@@ -159,7 +159,7 @@ class ProductController extends AbstractController
             'Product.onUpdateBeforeSubmit',
             function (GenericEvent $event) {
                 /** @var \Symfony\Component\HttpFoundation\Request $request */
-                if (!$request = $event->getArgument('request')) {
+                if (!($request = $event->getArgument('request')) || !$entity = $event->getArgument('entity')) {
                     return;
                 }
 
@@ -172,24 +172,30 @@ class ProductController extends AbstractController
                 // TODO - Note: Check if we can do it directly on the form (prob not, Magento entity)
                 // TODO - Note: If cannot check if we can do it on the repository
                 // TODO - Note: Else find a way to avoid to do it twice (here and on onCreateBeforeSubmit)
-                $unit   = $request->request->get('unite_prix');
-                $public = $request->request->get('price');
+
+                // Note: If we are from the grid, we get the value from the entity
+                $public = $request->request->get('prix_public');
+                $unit   = $request->request->get('unite_prix', isset($entity['unite_prix']) ? $entity['unite_prix'] : 'kg');
 
                 if ($unit == 'kg') {
-                    $price = $public * $request->request->get('poids_portion', 1) * $request->request->get('nbre_portion', 1);
+                    $price = $public
+                        * $request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1000)
+                        * $request->request->get('nbre_portion', isset($entity['nbre_portion']) ? $entity['nbre_portion'] : 1) / 1000;
                 } else {
                     $price = $public * $request->request->get('nbre_portion', 1);
                 }
+
+                $name = $request->request->get('name', $entity['name']);
 
                 $request->request->add([
                     'prix_kilo_site'    => $public . '€/' . $unit,
                     'prix_public'       => $public,
                     'price'             => $price,
-                    'meta_title'        => $request->request->get('name') . ' - Au Pas De Courses',
-                    'meta_description'  => $request->request->get('name') . ' - Au Pas De Courses',
-                    'image_label'       => $request->request->get('name'),
-                    'small_image_label' => $request->request->get('name'),
-                    'thumbnail_label'   => $request->request->get('name'),
+                    'meta_title'        => $name . ' - Au Pas De Courses',
+                    'meta_description'  => $name . ' - Au Pas De Courses',
+                    'image_label'       => $name,
+                    'small_image_label' => $name,
+                    'thumbnail_label'   => $name,
                 ]);
             }
         );
@@ -234,7 +240,7 @@ class ProductController extends AbstractController
                     'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'],
                     'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non'),
                     'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non'),
-                    'price'                     => 'Prix : ' . $entity['price'],
+                    'price'                     => 'Prix : ' . $entity['prix_public'],
                     'unite_prix'                => 'Unit : ' . $entity['unite_prix'],
                     'short_description'         => 'Description : ' . $entity['short_description'],
                     'poids_portion'             => 'Poids portion : ' . $entity['poids_portion'],
