@@ -127,7 +127,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		
         $shop_info = [];
-        if (!empty($data) && $categoryShop & $categoryShop->getId()) {
+        if (!empty($data) && $categoryShop && $categoryShop->getId()) {
             $shop_info["name"]=$data["name"];
             $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
             $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
