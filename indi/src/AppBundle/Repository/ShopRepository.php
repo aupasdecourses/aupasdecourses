@@ -8,7 +8,7 @@ class ShopRepository extends AbstractRepository
     /** @var \AppBundle\Entity\Shop */
     protected $entity;
 
-    public function increment(int $amount = 1)
+    public function increment($amount = 1)
     {
         $this->entity->setIncremental(($this->entity->getIncremental() + $amount));
         $this->save();

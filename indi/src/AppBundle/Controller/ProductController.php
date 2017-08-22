@@ -312,16 +312,52 @@ class ProductController extends AbstractController
      */
     protected function getFilterBy(Request $request)
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             return parent::getFilterBy($request);
         }
 
         $filters = parent::getFilterBy($request);
-        $filters['user'] = $this->getUser()->getId();
+        $filters['commercant'] = $this->getUser()->getShop()->getMerchant();
 
         return $filters;
     }
     // TODO : Security, check user on GET and PUT for non-admin
+
+    /**
+     * @inheritdoc
+     */
+    protected function getFilters()
+    {
+        $array = [];
+
+        foreach (['origine', 'tax_class_id'] as $code) {
+            if ($code == 'tva_class_id') {
+                foreach (\Mage::getModel('tax/class')->getCollection() as $tax) {
+                    if ($tax['class_name'] != '') {
+                        $array['tva_class_id'][$tax['class_id']] = $tax['class_name'];
+                    }
+                }
+            } else {
+                $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
+
+                foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
+                    $array[$code][$option['value']] = $option['label'];
+                }
+            }
+        }
+
+        return $array + [
+            'produit_de_saison'  => [
+                448 => 'Oui',
+                447 => 'Non'
+            ],
+            'produit_biologique' => [
+                276 => 'Oui',
+                76  => 'Non',
+                34  => 'AB'
+            ]
+        ];
+    }
 
     /**
      * Set the status to false and send an email to the admin
