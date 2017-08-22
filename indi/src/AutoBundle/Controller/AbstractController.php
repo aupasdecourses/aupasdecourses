@@ -212,6 +212,9 @@ abstract class AbstractController extends Controller implements ClassResourceInt
             'recordsTotal'    => (int) $total,
             'recordsFiltered' => (int) $current,
             'data'            => $entities,
+            'filters'         => [
+                'values'   => $this->getFilters()
+            ],
         ];
 
         return $return;
@@ -298,6 +301,14 @@ abstract class AbstractController extends Controller implements ClassResourceInt
         }
 
         return $orderBy;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFilters()
+    {
+        return [];
     }
     /** /Index */
 

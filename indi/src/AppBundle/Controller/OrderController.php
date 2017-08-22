@@ -38,7 +38,7 @@ class OrderController extends AbstractController
      */
     protected function getFilterBy(Request $request)
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             return parent::getFilterBy($request);
         }
 
