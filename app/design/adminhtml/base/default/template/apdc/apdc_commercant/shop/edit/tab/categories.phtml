@@ -98,9 +98,12 @@ Ext.EventManager.onDocumentReady(function() {
         varienElementMethods.setHasChanges(Event.element(e), e);
     };
     function categoryAdd(id) {
-        var ids = $('shop_categories').value.split(',');
-        ids.push(id);
-        $('shop_categories').value = ids.join(',');
+        var val = $('shop_categories').value;
+        var ids = ((val && val !== '' ) ? val.split(',') : []);
+        if (ids.indexOf(id) === -1) {
+            ids.push(id);
+            $('shop_categories').value = ids.join(',');
+        }
     }
     function categoryRemove(id) {
         var ids = $('shop_categories').value.split(',');
