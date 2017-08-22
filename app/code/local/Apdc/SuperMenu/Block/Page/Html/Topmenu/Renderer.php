@@ -149,8 +149,12 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
     {
         $classes = array();
 
-        $classes[] = 'level' . $item->getLevel();
-        $classes[] = $item->getPositionClass();
+        if ($item->getLevel() !== null) {
+            $classes[] = 'level' . $item->getLevel();
+        }
+        if ($item->getPositionClass() !== null) {
+            $classes[] = $item->getPositionClass();
+        }
 
         if ($item->getIsFirst()) {
             $classes[] = 'first';
@@ -182,6 +186,9 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             if ($item->hasChildren()) {
                 $classes[] = 'dropdown dropdown-submenu menu-commercant';
             }
+        }
+        if ($item->getLevel() == 2) {
+            $classes[] = 'template-column';
         }
 
         $classes[] = $this->getShowInNavigationClasses($item);
