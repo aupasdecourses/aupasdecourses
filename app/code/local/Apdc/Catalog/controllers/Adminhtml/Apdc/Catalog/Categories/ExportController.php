@@ -89,7 +89,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
                 ->getCollection()
                 ->addAttributeToSelect('*');
         }
-        $allCats->addAttributeToFilter('level', ['in' => [2,3,4]]);
+        $allCats->addAttributeToFilter('level', ['in' => [2,3,4,5]]);
 
         if ($allCats->count() > 0) {
             $result = [];
