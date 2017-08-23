@@ -5,8 +5,8 @@
         </h4>
     </div>
     <fieldset id="grop_fields">
-        <input type="hidden" name="id_category" id="shop_categories" value="<?php echo $this->getIdsString() ?>">
-        <div id="shop-categories" class="tree"></div>
+        <input type="hidden" name="id_category" id="input_categories" value="<?php echo $this->getIdsString() ?>">
+        <div id="categories-container" class="tree"></div>
     </fieldset>
 </div>
 <?php if($this->getRootNode() && $this->getRootNode()->hasChildren()): ?>
@@ -34,7 +34,7 @@ Ext.EventManager.onDocumentReady(function() {
         categoryLoader.on("load", function(treeLoader, node, config) {
             varienWindowOnload();
         });
-        var tree = new Ext.tree.TreePanel('shop-categories', {
+        var tree = new Ext.tree.TreePanel('categories-container', {
         animate:true,
             loader: categoryLoader,
             enableDD:false,
@@ -98,19 +98,19 @@ Ext.EventManager.onDocumentReady(function() {
         varienElementMethods.setHasChanges(Event.element(e), e);
     };
     function categoryAdd(id) {
-        var val = $('shop_categories').value;
+        var val = $('input_categories').value;
         var ids = ((val && val !== '' ) ? val.split(',') : []);
         if (ids.indexOf(id) === -1) {
             ids.push(id);
-            $('shop_categories').value = ids.join(',');
+            $('input_categories').value = ids.join(',');
         }
     }
     function categoryRemove(id) {
-        var ids = $('shop_categories').value.split(',');
+        var ids = $('input_categories').value.split(',');
         while (-1 != ids.indexOf(id)) {
             ids.splice(ids.indexOf(id), 1);
         }
-        $('shop_categories').value = ids.join(',');
+        $('input_categories').value = ids.join(',');
     }
 </script>
 <?php endif; ?>
