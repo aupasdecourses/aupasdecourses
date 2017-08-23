@@ -61,7 +61,7 @@ class ProductController extends AbstractController
 
                 if ($this->isGranted('ROLE_ADMIN')) {
                     $shop = $this->getDoctrine()->getManager()
-                        ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('shop')]);
+                        ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('shop_id')]);
                 } else {
                     $shop = $this->getUser()->getShop();
 
@@ -110,7 +110,7 @@ class ProductController extends AbstractController
 
                 /** @var \AppBundle\Repository\ShopRepository $shopModel */
                 $shopModel = $this->getModel('Shop', false);
-                $shopModel->load($entity['shop'])->increment();
+                $shopModel->load($entity['shop_id'])->increment();
 
                 if (!$this->getParameter('enabled_email')) {
                     return;
