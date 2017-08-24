@@ -16410,6 +16410,66 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.apdc-notation-index-index {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.apdc-notation-index-index header {
+  height: 100%;
+  margin-bottom: 0 !important;
+}
+
+.apdc-notation-index-index #background_video_container {
+  height: 100% !important;
+}
+
+.apdc-notation-index-index .full {
+  height: 100%;
+}
+
+.apdc-notation-index-index .intro-section {
+  margin-top: 100px !important;
+  padding: 0;
+  padding-bottom: 40px;
+  background: white;
+}
+
+.apdc-notation-index-index .intro-section .border-container {
+  width: 100%;
+  height: 56px;
+  background: url(../images/border-pattern-height.png) repeat-x;
+}
+
+.apdc-notation-index-index .intro-section #logo {
+  padding: 40px 40px;
+}
+
+.apdc-notation-index-index .intro-section .icon {
+  margin-bottom: 10px;
+}
+
+.apdc-notation-index-index footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .apdc-notation-index-index .intro-section {
+    margin-top: 80px !important;
+  }
+
+  .apdc-notation-index-index .intro-section #logo {
+    width: 60%;
+  }
+
+  .apdc-notation-index-index .intro-section footer {
+    position: relative;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .container {
     width: 1130px;
