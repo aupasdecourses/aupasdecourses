@@ -88,7 +88,34 @@
             </modules>
         </translate>
     </frontend>
+    <admin>
+      <routers>
+        <adminhtml>
+          <args>
+            <modules>
+              <Apdc_Catalog before="Mage_Adminhtml">Apdc_Catalog_Adminhtml</Apdc_Catalog>
+            </modules>
+          </args>
+        </adminhtml>
+      </routers>
+    </admin>
     <adminhtml>
+      <layout>
+        <updates>
+          <apdc_catalog>
+            <file>apdc/apdc_catalog.xml</file>
+          </apdc_catalog>
+        </updates>
+      </layout>
+      <translate>
+        <modules>
+          <Apdc_Catalog>
+            <files>
+              <default>Apdc_Catalog.csv</default>
+            </files>
+          </Apdc_Catalog>
+        </modules>
+      </translate>
       <events>
         <adminhtml_catalog_category_edit_prepare_form>
           <observers>

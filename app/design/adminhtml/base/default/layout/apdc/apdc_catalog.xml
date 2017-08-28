@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  design
+ * @package   Apdc_Catalog
+ * @copyright Copyright (c) 2016 GardenMedia Studio VN
+ */
+-->
+<layout>
+
+  <adminhtml_apdc_catalog_categories_export_index>
+    <update handle="editor" />
+    <reference name="content">
+      <block type="apdc_catalog/adminhtml_catalog_categories_export" name="categories_export" />
+    </reference>
+    <reference name="left">
+      <block type="apdc_catalog/adminhtml_catalog_categories_export_tabs" name="categories_export_tabs" />
+    </reference>
+  </adminhtml_apdc_catalog_categories_export_index>
+
+  <adminhtml_apdc_catalog_categories_import_index>
+    <update handle="editor" />
+    <reference name="content">
+      <block type="apdc_catalog/adminhtml_catalog_categories_import" name="categories_import" />
+    </reference>
+    <reference name="left">
+      <block type="apdc_catalog/adminhtml_catalog_categories_import_tabs" name="categories_import_tabs">
+        <block type="apdc_catalog/adminhtml_catalog_categories_import_tab_main" name="catalog_categories_import_tabs_main" />
+        <action method="addTab"><name>main_section</name><block>catalog_categories_import_tabs_main</block></action>
+      </block>
+    </reference>
+  </adminhtml_apdc_catalog_categories_import_index>
+
+  <adminhtml_apdc_catalog_categories_toggle_index>
+    <update handle="editor" />
+    <reference name="content">
+      <block type="apdc_catalog/adminhtml_catalog_categories_toggle" name="categories_toggle" />
+    </reference>
+    <reference name="left">
+      <block type="apdc_catalog/adminhtml_catalog_categories_toggle_tabs" name="categories_toggle_tabs" />
+    </reference>
+  </adminhtml_apdc_catalog_categories_toggle_index>
+
+</layout>

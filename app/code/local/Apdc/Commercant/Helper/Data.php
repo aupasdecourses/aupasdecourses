@@ -102,6 +102,8 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getInfoShop($shopId = null)
     {
         $shop_info = [];
+        $data = [];
+        $categoryShop = null;
 		if($shopId == null) {
 			$current_cat = Mage::registry('current_category');
 			$categoriesParent = $current_cat->getParentCategories();
@@ -111,8 +113,10 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 					break;
 				}
 			}
-			$categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-			$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+            if ($categoryShop) {
+                $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
+                $data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+            }
 		}
 		else {
             $collection = Mage::getSingleton('apdc_commercant/shop')
@@ -126,7 +130,6 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             }
 		}
 		
-        $shop_info = [];
         if (!empty($data) && $categoryShop && $categoryShop->getId()) {
             $shop_info["name"]=$data["name"];
             $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
