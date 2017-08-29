@@ -20,14 +20,14 @@
         </div>
         <div class="container">
             <ul class="top-nav">
+
+<div class="container">
+            <ul class="top-nav">
                 <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Aide">Aide</a></li>
-                <?php $customerSession = Mage::getSingleton('customer/session'); ?>
-                <?php if (!$customerSession->isLoggedIn()): ?>
+                <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
                     <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
-                <?php elseif (!$customerSession->getCustomer()->needToChooseNeighborhood()) : ?>
+                <?php else: ?>
                     <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
-                <?php else : ?>
-                    <li><a href="#" id="choose-my-district" class="button button-green" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a></li>
                 <?php endif ?>
             </ul>
             <div class="intro-section">
