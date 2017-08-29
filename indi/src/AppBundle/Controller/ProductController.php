@@ -34,7 +34,7 @@ class ProductController extends AbstractController
     protected $orderable = ['status', 'name', 'origine', 'produit_biologique'];
 
     /** @var array */
-    protected $filterable = ['shop'];
+    protected $filterable = ['commercant'];
 
     /** @var null|array The name of the changed fields */
     private $original = null;
