@@ -73,7 +73,7 @@
 		// display loading and erase msg
 		init_msg(action);
 		$.ajax({
-			url: '/shell_uploads/script.php',
+			url: '/indi/web/shell_uploads/script.php',
 			type: 'POST',
 			data: {action: action},
 			success: function(msg) {
@@ -97,7 +97,7 @@
 
 	$(function () {
 		$('#fileupload').fileupload({
-			url: 'uploads/index.php',
+			url: '/indi/web/uploads/index.php',
 			dataType: 'json',
 			done: function (e,data) {
 				$.each(data.result.files, function(index, file){

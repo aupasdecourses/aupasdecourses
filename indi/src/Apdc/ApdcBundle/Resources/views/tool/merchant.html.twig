@@ -39,12 +39,12 @@
 $(function () {
 	action="commercants";
 	$('#fileupload').fileupload({
-		url: '/uploads/indexCategAndMerch.php',
+		url: '/indi/web/uploads/indexCategAndMerch.php',
 		dataType: 'json',
 		done: function (e,data) {
 			$.each(data.result.files, function(index, file){
 				$.ajax({
-					url: '/shell_uploads/script.php',
+					url: '/indi/web/shell_uploads/script.php',
 					type: 'POST',
 					data: {action: action,
 							image:file.name},
