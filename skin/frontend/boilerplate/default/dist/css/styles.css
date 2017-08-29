@@ -12724,6 +12724,10 @@ section .section-header {
   padding-top: 50px;
 }
 
+section#commercants > .container h2 {
+  color: #3ab64b;
+}
+
 section#districts > .container {
   padding-bottom: 120px;
   background: url(../images/picto/bandeau.png), #fff;

@@ -1,0 +1,100 @@
+<?php
+	$shops = $this->getListShops("Boucher",true);
+	$nbShops = $shops['count'];
+?>
+<div id="commercants-block" class="row hp-section commercants-block">
+	<div class="commercants-list col-md-12">
+		<div class="row">
+			<div class="commercants-main products-grid col-md-12" id="carrousel-commercant-home">
+				<div id="carrousel-commercant-home-row1" class="owl-carousel">
+					<?php
+						foreach ($shops['row1'] as $shop) {
+							?>
+								<div class="commercant-info-img item">
+									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
+										<div>
+											<h3 class="product-name"><?= $shop['name'];?></h3>
+											<span><?= $shop['adresse'];?></span>
+										</div>
+									</div>
+									<div class="commercant-img">
+										<a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
+											<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
+										</a>
+									</div>
+								</div>
+							<?php
+						}
+					?>
+				</div>
+				<div id="carrousel-commercant-home-row2" class="owl-carousel">
+					<?php
+						foreach ($shops['row2'] as $shop) {
+							?>	
+								<div class="commercant-img-info item">
+									<div class="commercant-img">
+										<a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
+											<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
+										</a>
+									</div>
+									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
+										<div>
+											<h3 class="product-name"><?= $shop['name'];?></h3>
+											<span><?= $shop['adresse'];?></span>
+										</div>
+									</div>
+								</div>
+							<?php
+						}
+					?>
+				</div>
+				<div class="owl-buttons">
+				    <a href="#" class="prev"><i class="fa fa-angle-left"></i></a>
+				    <a href="#" class="next"><i class="fa fa-angle-right"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $j(document).ready(function() {
+		
+		var optionsOwlCarouselCommencantsHome = {
+			slideBy: 3,
+			items:3,
+			autoPlay : false,
+			loop: true,
+			slideSpeed : 1600,
+			responsive: {
+                0:{
+					items:1,
+					slideBy: 1,
+				},
+				980:{
+					items:2,
+					slideBy: 2,
+				},
+				1200:{
+					items:3,
+					slideBy: 3,
+				}
+			}	
+		};
+		
+		var owlCarouselCommencantHomeRow1 = $j("#carrousel-commercant-home-row1").owlCarousel(optionsOwlCarouselCommencantsHome);
+		var owlCarouselCommencantHomeRow2 = $j("#carrousel-commercant-home-row2").owlCarousel(optionsOwlCarouselCommencantsHome);
+		
+		$j("#carrousel-commercant-home .prev").click(function (evt) {
+			evt.preventDefault();
+			owlCarouselCommencantHomeRow1.trigger('next.owl.carousel');
+			owlCarouselCommencantHomeRow2.trigger('next.owl.carousel');
+		});
+
+		$j("#carrousel-commercant-home .next").click(function (evt) {
+			evt.preventDefault();
+			owlCarouselCommencantHomeRow1.trigger('prev.owl.carousel');
+			owlCarouselCommencantHomeRow2.trigger('prev.owl.carousel');
+		});
+		
+    });
+</script>

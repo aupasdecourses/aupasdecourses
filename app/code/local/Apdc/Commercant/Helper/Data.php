@@ -78,6 +78,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getCategoriesInfos($rootId){
+        $filter=array();
         $categories = Mage::getModel('catalog/category')
                          ->getCollection()
                          ->addAttributeToSelect(array('image', 'url_path'))
@@ -157,4 +158,27 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $shop_info;
     }
+
+    public function getRandomShopImage($filter="all")
+    {
+        $shop_info = [];
+        $collection = Mage::getModel('apdc_commercant/shop')->getCollection()            
+            ->addFieldtoFilter('enabled',1);
+
+        if($filter<>"all"){
+            $collection->addFieldToFilter('type', $filter);
+        }
+
+        $collection->getSelect()->order('rand()');
+        $collection->getSelect()->limit(1);
+
+        if($collection->getFirstItem()->getCategoryImage()<>NULL){
+            return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$collection->getFirstItem()->getCategoryImage();
+        }else{
+            $i = mt_rand(1, 17); // generate random number size of the array
+            $url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+            return Mage::getDesign()->getSkinUrl()."../default/".$url;
+        }
+    }
+
 }
