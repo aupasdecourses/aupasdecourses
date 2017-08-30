@@ -60,7 +60,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ImportController extends Ma
                 $uploader->setAllowedExtensions(array('csv'));
                 $uploader->setAllowRenameFiles(true);
                 $uploader->setFilesDispersion(false);
-                $path = Mage::getBaseDir('var') . DS . 'import' . DS;
+                $path = Mage::getBaseDir('var') . DS .'cats'. DS . 'import' . DS;
                 if (!is_dir($path)) {
                     mkdir($path, 0755, true);
                 }
@@ -82,7 +82,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ImportController extends Ma
 
     public function setcomcatinfo($filename)
     {
-        $filepath = Mage::getBaseDir('var') . DS . 'import' . DS . $filename;
+        $filepath = Mage::getBaseDir('var') . DS .'cats'. DS . 'import' . DS . $filename;
         $myFileLink = fopen($filepath, 'r');
         while (!feof($myFileLink) ) {
             $data[] = fgetcsv($myFileLink, 0);
