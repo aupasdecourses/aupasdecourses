@@ -39,17 +39,17 @@
 					foreach ($_shippingRateGroups as $code => $_rates):
 						//Affichage spécial pour livraison à triporteur (code=tablerate)
 						if ($code=="tablerate"): ?>
-						    <div class="col-md-2">
+						    <div class="col-md-12">
 						        <img src="<?php echo $this->getSkinUrl('dist/images/icon-triporteur.png') ?>" alt="">
 						    </div>
-						    <div class="col-md-7">
+						    <div class="col-md-12">
 						        <span><?php echo $this->escapeHtml($this->getCarrierName($code)) ?> </span>
 						        <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
                                     <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
                                     <label class="infos" for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></label>
                                 <?php endforeach; ?>
 						    </div>
-						    <div class="col-md-3 text-right">
+						    <div class="col-md-12">
 						        <dd>
                                     <ul>
                                     <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>

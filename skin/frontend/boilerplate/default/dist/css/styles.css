@@ -14571,6 +14571,13 @@ footer .social-list .btn-social-icon {
   border: 1px solid #3ab64b;
 }
 
+#checkout-shipping-method-load dl > div {
+  float: none;
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 #checkout-shipping-method-load dl .price {
   font-size: 1.25rem;
   font-weight: 300;
