@@ -154,29 +154,35 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 			}
 			
 			$objQuote = new stdClass();
-			
-			$objQuote->transactionId = $quote->getIncrementId();
+
+			$objQuote->transactionId = $quote->getEntityId();
 			$objQuote->transactionAffiliation = Mage::app()->getStore()->getFrontendName();
-			$objQuote->transactionTotal = Mage::getModel('directory/currency')->formatTxt($quote->getBaseGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
-			$objQuote->transactionTax = Mage::getModel('directory/currency')->formatTxt($quote->getBaseTaxAmount(), array('display' => Zend_Currency::NO_SYMBOL));
-			$objQuote->transactionShipping = Mage::getModel('directory/currency')->formatTxt($quote->getBaseShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
-			
+			$objQuote->transactionTotal = Mage::getModel('directory/currency')->formatTxt($quote->getGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionTax = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getData('tax_amount'), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionShipping = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionCurrencyCode = $quote->getBaseCurrencyCode();
 			$objQuote->transactionProducts = $aItems;
+
+			$objQuote->user = new stdClass();
+			$objQuote->user->id = $quote->getCustomerId();
+			$objQuote->user->email = $quote->getCustomerEmail();
+
 						
 			$objQuote->ecommerce = new stdClass();
 			$objQuote->ecommerce->purchase = new stdClass();
 			$objQuote->ecommerce->purchase->actionField = new stdClass();
-			$objQuote->ecommerce->purchase->actionField->id = $quote->getIncrementId();
+			$objQuote->ecommerce->purchase->actionField->id = $quote->getEntityId();
 			$objQuote->ecommerce->purchase->actionField->affiliation = Mage::app()->getStore()->getFrontendName();
-			$objQuote->ecommerce->purchase->actionField->revenue = Mage::getModel('directory/currency')->formatTxt($quote->getBaseGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
-			$objQuote->ecommerce->purchase->actionField->tax = Mage::getModel('directory/currency')->formatTxt($quote->getBaseTaxAmount(), array('display' => Zend_Currency::NO_SYMBOL));
-			$objQuote->ecommerce->purchase->actionField->shipping = Mage::getModel('directory/currency')->formatTxt($quote->getBaseShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->ecommerce->purchase->actionField->revenue = Mage::getModel('directory/currency')->formatTxt($quote->getGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->ecommerce->purchase->actionField->tax = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getData('tax_amount'), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->ecommerce->purchase->actionField->shipping = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
 			$coupon = $quote->getCouponCode();
+			$totals =  $quote->getTotals();
 			$objQuote->ecommerce->purchase->actionField->coupon = $coupon == null ? '' : $coupon;
-			
+			$objQuote->ecommerce->currencyCode = $quote->getBaseCurrencyCode();
 			$objQuote->ecommerce->products = $productItems;
 						
-			$pageCategory = json_encode(array('pageCategory' => 'order-success'), JSON_PRETTY_PRINT);
+			$pageCategory = json_encode(array('pageCategory' => 'order-confirmation'), JSON_PRETTY_PRINT);
 			
 			$dataScript = PHP_EOL;
 			
