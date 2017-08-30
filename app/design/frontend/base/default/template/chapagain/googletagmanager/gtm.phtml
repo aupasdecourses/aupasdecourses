@@ -8,6 +8,7 @@ if ($_helper->getIsEnable()):
 	<?php 
 	if ($_helper->getIsEnableDataLayer()):
 		echo $this->getDataLayerProduct();	// Product Detail Page	
+		echo $this->getDataLayerQuote(); // Checkout
 		echo $this->getDataLayerOrder(); // Order Success Page
 	endif;
 	?>	
