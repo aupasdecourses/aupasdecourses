@@ -9,7 +9,6 @@ $uv = $helper->getUv();
     <script type="text/javascript">
       (function () {
         var uvTemp = <?php echo $uv->getUvData(); ?>;
-        window.dataLayerMarketing.push(uvTemp);
         window.universal_variable = $H(window.universal_variable || {}).merge(uvTemp).toObject();
       })();
     </script>
