@@ -129,7 +129,7 @@
                     <text>
                         <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
                             try{
-                               window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                               window.dataLayer.push({eventData:event_data,event:event_name});
                             } catch(e){
                         }};</script>]]>
                     </text>
@@ -360,7 +360,7 @@
 					<text>
 						<![CDATA[<script> var tagmanager_event=function(event_name,event_data){
 						try{
-						window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+						window.dataLayer.push({eventData:event_data,event:event_name});
 						} catch(e){
 						}};</script>]]>
 					</text>

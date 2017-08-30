@@ -1,6 +1,5 @@
 <?php
-	$i = mt_rand(1, 10); // generate random number size of the array
-	$url = "dist/images/header_notation/".$i.".jpg"; // set variable equal to which random filename was chosen
+    $url=Mage::getDesign()->getSkinUrl()."../default/dist/images/header/boucher.jpg";
     $_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -12,16 +11,9 @@
 	<?php echo $this->getChildHtml('after_body_start') ?>
 	<header class="header" id="faites-vos-courses">
         <div id="background_video_container">
-            <video id="background_video_video" autoplay muted loop poster="<?php echo $this->getSkinUrl($url);?>">
-                <source src="<?php echo $this->getSkinUrl('media/commercants.webm');?>" type="video/webm" />
-                <source src="<?php echo $this->getSkinUrl('media/commercants.mp4');?>" type="video/mp4" />
-            </video>
-            <img class="banner" src="<?php echo $this->getSkinUrl($url);?>" alt="Au pas de courses">
+            <img class="banner" src="<?php echo $url;?>" alt="Au pas de courses">
         </div>
         <div class="container">
-            <ul class="top-nav">
-
-<div class="container">
             <ul class="top-nav">
                 <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Aide">Aide</a></li>
                 <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
@@ -32,19 +24,26 @@
             </ul>
             <div class="intro-section">
                 <img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
-                <h1 class="intro">Faites-vous livrer les bons produits de votre quartier</h1>
+                <h1 class="intro">Les meilleurs bouchers de Paris,</br>livrés chez vous dans la journée.</h1>
                 <div class="col-md-5"></div>
             </div>
         </div>
 	</header>
+<section id="commercants">
+    <div class="container">
+    <div class="border-container"></div>
+    <div class="section-header">
+        <h2>Les meilleurs bouchers sont chez nous !</h2>
+        <div class="section-description">
+             Plus de 90 commerçants sur tout Paris nous font confiance
+        </div>
+    </div>
+</section>
+<?php echo $this->getChildHtml("liste_commercant_boucher");?>
 <section id="districts">
 	<div class="container">
-	    <div class="border-container"></div>
 		<div class="section-header">
-			<h2>Mon quartier</h2>
-			<div class="section-description">
-				 Les meilleurs commerçants de Paris livrés chez vous
-			</div>
+			<h2>Choisissez votre quartier</h2>
             <div id="search_neighborhoods">
                 <div class="input-box apdc-form">
                     <label><?php echo $this->__('Your postcode:'); ?></label>

@@ -19,7 +19,7 @@
                 <text>
                   <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
                     try{
-                    window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                    window.dataLayer.push({eventData:event_data,event:event_name});
                     } catch(e){
                     }};</script>]]>
                 </text>
@@ -43,9 +43,6 @@
 			<!-- RESPONSIVE FIXES -->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/responsive.css</href></action>-->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/custom.css</href></action>-->
-			<!-- OWL CARROUSEL -->
-			<!--<action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>-->
-			<!--<action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>-->
 			<!-- MAGNIFIC POPUP -->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>-->
 			
@@ -59,7 +56,10 @@
 			<!-- JQUERY -->
 			<action method="addJs"><script>prototype/prototype.js</script></action>
             <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
-			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>        
+			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+                <!-- IMPORTANT -->  
 			<!-- =========================
 				 END SCRIPTS   
 			============================== -->
@@ -102,6 +102,10 @@
              STYLESHEETS   
             ============================== -->
             <action method="addItem"><rel>skin_css</rel><href>dist/css/styles.css</href></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.carousel.min.css</href></action>
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
+                <!-- IMPORTANT -->
         </reference>
         <reference name="before_body_end">
           <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
@@ -151,7 +155,7 @@
             <text>
               <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
                 try{
-                window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                window.dataLayer.push({eventData:event_data,event:event_name});
                 } catch(e){
                 }};</script>]]>
             </text>
@@ -182,5 +186,17 @@
             </block>
         </reference>
     </apdc_newsletter_view>
+
+    <landing_page_commercants>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
+        </reference>
+    </landing_page_commercants>
+
+    <landing_page_boucher>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_boucher.phtml" name="liste_commercant_boucher"/>
+        </reference>
+    </landing_page_boucher>
 
 </layout>

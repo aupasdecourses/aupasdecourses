@@ -12724,6 +12724,10 @@ section .section-header {
   padding-top: 50px;
 }
 
+section#commercants > .container h2 {
+  color: #3ab64b;
+}
+
 section#districts > .container {
   padding-bottom: 120px;
   background: url(../images/picto/bandeau.png), #fff;
@@ -14565,6 +14569,13 @@ footer .social-list .btn-social-icon {
 
 #checkout-shipping-method-load dl.active {
   border: 1px solid #3ab64b;
+}
+
+#checkout-shipping-method-load dl > div {
+  float: none;
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 #checkout-shipping-method-load dl .price {
