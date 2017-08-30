@@ -151,5 +151,13 @@
             <Mage_CatalogSearch />
           </depends>
         </Apdc_Search>
+        <Apdc_Dataflow>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_Dataflow />
+            <Mage_Catalog />
+          </depends>
+        </Apdc_Dataflow>
     </modules>
 </config>

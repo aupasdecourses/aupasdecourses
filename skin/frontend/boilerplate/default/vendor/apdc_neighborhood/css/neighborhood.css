@@ -1,0 +1,71 @@
+#my_neighborhood_choose_links {
+  list-style:none;
+  background-color:#ffffff;
+  padding:0;
+}
+#my_neighborhood_choose_links .neighborhood_informations {
+  padding:10px;
+}
+#my_neighborhood_choose_links .neighborhood_informations .neighborhood_informations_title {
+  font-weight:bold;
+  font-size:18px;
+}
+#my_neighborhood_choose_links .neighborhood_informations i {
+  display:inline-block;
+  margin:0 5px
+}
+#my_neighborhood_choose_links .neighborhood_informations ul li {
+  display:table;
+}
+
+#my_neighborhood_choose_links .neighborhood_informations ul li i {
+  display:table-cell;
+  font-size:18px;
+  padding-right:10px
+}
+
+#my_neighborhood_choose_links li.neighborhood_title {
+  margin-top: 5px;
+  border-bottom: 2px solid #faae37;
+  padding: 3px 10px;
+}
+
+#my_neighborhood_choose_links li.neighborhood_list.choose {
+  background-color: #f5f5f5;
+  border-bottom: solid 1px #e4e4e4;
+  height: 60px;
+  white-space: normal;
+  position: relative;
+  display: block;
+  text-align:left;
+  cursor:pointer;
+}
+#my_neighborhood_choose_links li.neighborhood_list a {
+  padding:0;
+  height:100%;
+}
+#my_neighborhood_choose_links li.neighborhood_list img {
+  border-radius: 50px;
+  transform: translate(5px, 4px);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left:10px;
+  cursor:pointer;
+}
+
+#my_neighborhood_choose_links li.neighborhood_list p {
+  left: 85px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  padding-right: 15px;
+  line-height:8px;
+  cursor:pointer;
+}
+#my_neighborhood_choose_links li.neighborhood_list p i {
+  font-size:10px;
+  width:100%;
+  line-height:12px;
+  white-space:normal;
+  cursor:pointer;
+}
