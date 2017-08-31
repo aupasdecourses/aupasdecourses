@@ -41,6 +41,7 @@ class ProductType extends AbstractType
             ->add('origine')  // TODO: ChoiceType, and get choice form Mage
             ->add('produit_biologique')  // TODO: ChoiceType, and get choice form Mage
             ->add('shop_id')  // TODO: ChoiceType, and get choice form Mage
+            ->add('commercant')  // TODO: ChoiceType, and get choice form Mage
             ->add('photoFile')
             ->add('attribute_set_id', null, [
                 'data' => '4',
