@@ -61,11 +61,11 @@ class ProductController extends AbstractController
 
                 if ($this->isGranted('ROLE_ADMIN')) {
                     $shop = $this->getDoctrine()->getManager()
-                        ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('shop_id')]);
+                        ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('commercant')]);
                 } else {
                     $shop = $this->getUser()->getShop();
 
-                    $request->request->add(['shop_id' => $shop->getId()]);
+                    $request->request->add(['commercant' => $shop->getMerchant()]);
                 }
 
                 $sku = $shop->getCode()
@@ -74,6 +74,8 @@ class ProductController extends AbstractController
 
                 $unit   = $request->request->get('unite_prix', 'kg');
                 $public = $request->request->get('prix_public');
+
+                $public = str_replace(',', '.', $public);
 
                 if ($unit == 'kg') {
                     $price = $public * $request->request->get('poids_portion', 1000) * $request->request->get('nbre_portion', 1) / 1000;
