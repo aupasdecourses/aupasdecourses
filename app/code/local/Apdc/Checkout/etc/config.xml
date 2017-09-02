@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Checkout>
-            <version>0.0.3</version>
+            <version>0.0.4</version>
         </Apdc_Checkout>
     </modules>
     <frontend>
@@ -32,7 +32,28 @@
             </modules>
         </translate>
     </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <Apdc_Checkout>
+                    <file>apdc/apdc_checkout.xml</file>
+                </Apdc_Checkout>
+            </updates>
+        </layout>
+    </adminhtml>
     <global>
+        <fieldsets>
+            <sales_convert_quote>
+                <produit_equivalent>
+                    <to_order>*</to_order>
+                </produit_equivalent>
+            </sales_convert_quote>
+            <sales_convert_order>
+                <produit_equivalent>
+                    <to_quote>*</to_quote>
+                </produit_equivalent>
+            </sales_convert_order>
+        </fieldsets>
         <blocks>
             <apdc_checkout>
                 <class>Apdc_Checkout_Block</class>
