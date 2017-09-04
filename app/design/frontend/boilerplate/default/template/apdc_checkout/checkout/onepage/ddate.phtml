@@ -195,99 +195,34 @@
 					});
 				</script>
 			<?php }else { ?>
-				<div style="margin-top:10px;">
-					<table>
-						<tr>
-							<td valign="top">
-								<?php echo Mage::helper('ddate')->__('Choose your date'); ?>:
-								<input class="input-text" id="delivery_date" type="text" name="delivery_date" size="12" readonly>
-								<img src="<?php echo $this->getSkinUrl('ddate/images/grid-cal.gif') ?>" id="ddate-trigger-picker"/>
-							</td>                        
-						</tr>
-						<tr>
-							<td valign="top">
-								<div id="dtimepicker" class="dtimepicker">
-									<div class="loading_slot">
-										<label for="timedelivery"><?php echo $this->__('Delivery time:') ?></label>	
-										<span class="ddate-please-wait-slot" style="display:none;">
-										<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" class="please-wait v-middle" alt="" /> &nbsp; <?php echo $this->__('Loading available delivery time...') ?> &nbsp;
-										</span> 
-										<div id="select_dtimepicker"></div>
-									</div>
-								</div>
-
-								<input type="hidden" id="min_date" value="<?php echo date('Ymd') ?>">
-								<input type="hidden" id="datetime_picker" value="<?php echo date('Ymd') ?>">
-								<input type="hidden" id="max_date" value="<?php echo $this->getDateMax(); ?>">
-								<input type="hidden" id="d_saturday" value="<?php echo Mage::helper('ddate')->getSaturday(); ?>">
-								<input type="hidden" id="d_sunday" value="<?php echo Mage::helper('ddate')->getSunday(); ?>">
-								<input type="hidden" id="special_day" value="<?php echo Mage::helper('ddate')->getSpecialDayByList(); ?>">
-								<div id="cont" style="display:none;position:absolute;z-index:1;"></div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<script type="text/javascript">		
-
-					<?php
-					$currentTime = Mage::getSingleton('core/date')->timestamp();
-					$today=date('Ymd', strtotime("+0day",$currentTime));
-					$maxday=date('Ymd', strtotime('+' .((int)Mage::getStoreConfig("ddate/info/weeks")*7). ' day', $currentTime));
-					echo "var today=".$today.";";
-					echo "var maxday=".$maxday.";";				
-					$specialdays=Mage::helper('ddate')->getSpecialDayByList();
-					$day_array=explode(";",$specialdays); 
-					if(!empty($specialdays)){
-
-						$script_text="var DISABLED_DATES = {";
-						$i=0;$count= count($day_array);
-						foreach($day_array as $day){
-							$script_text=$script_text.str_replace("-","",$day).":true";
-							if($i < $count) $script_text=$script_text.",";
-							$i++;
-						};
-						$script_text=$script_text."}";
-						echo $script_text;
-
-					};
-					?>;
-
-					RANGE_CAL_1 = new Calendar({
-						inputField: "delivery_date",
-						dateFormat: "%B %d, %Y",
-						trigger: "ddate-trigger-picker",
-						bottomBar: false,
-						date:today,
-						min:today,
-						max:maxday,
-						onSelect: function() { 
-							var date =this.selection.print("%Y-%m-%d",this.selection.get());
-							var dateconfig =this.selection.print("<?php echo Mage::helper('ddate')->calendar_date_format();?>",this.selection.get());
-							document.getElementById("delivery_date").value = dateconfig;
-							document.getElementById("ddate:date").value = date;
-							this.hide();
-							jQuery(".ddate-please-wait-slot").css('display','block');
-							jQuery(".dtime_select").css('display','none');
-							jQuery('#select_dtimepicker').html('');
-							jQuery.ajax({
-								type: "POST",
-								url: "<?php echo Mage::getUrl('checkout/onepage/findDtime')?>",
-								data: "deliverydate="+date+">"+this.selection.print("%w",this.selection.get()),
-								success: function(msg){
-									jQuery(".ddate-please-wait-slot").css('display','none');
-									jQuery('#select_dtimepicker').html(msg);
-								}
-							});
-						},<?php if(!empty($specialdays)){ ?>
-							disabled : function(date) {
-								date = Calendar.dateToInt(date);
-								return date in DISABLED_DATES;
-							}
-						<?php };?>
-
-						jQuery()
-					});
-				</script>
+                <?php $availableDaysAndSlots = $this->getAvailableDaysAndSlots(); ?>
+				<div class="delivery apdc_datetimepicker">
+                    <div class="select-days">
+                        <ul class="select-days">
+                        <?php foreach ($availableDaysAndSlots as $strDate => $dayAndSlots) : ?>
+                            <li class="<?php echo ($dayAndSlots['has_slot'] ? 'available' : 'not-available'); ?>" data-date="<?php echo $strDate; ?>">
+                                <div>
+                                    <span class="day"><?php echo $dayAndSlots['day']['day']; ?></span>
+                                    <span class="date"><?php echo $dayAndSlots['day']['date']; ?></span>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="select-time hide">
+                        <ul>
+                        </ul>
+                    </div>
+                    <script type="text/javascript">
+                        var apdc_ddateTimePicker = Apdc_DdateTimePicker({
+                            'saveUrl': '<?php echo $this->getUrl('checkout/onepage/saveDdateAjax') ?>',
+                            'redirectUrl': '<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>',
+                            'daysAndSlots': <?php echo json_encode($availableDaysAndSlots); ?>,
+                            'currentDate': '<?php echo Mage::getSingleton('core/session')->getDdate(); ?>',
+                            'currentTime': '<?php echo Mage::getSingleton('core/session')->getDtime(); ?>'
+                        });
+                    </script>
+                </div>
 			<?php } ?>
 			<div>
 				<?php echo (Mage::getStoreConfig("ddate/info/description") ? Mage::getStoreConfig("ddate/info/description") : '') ?>
