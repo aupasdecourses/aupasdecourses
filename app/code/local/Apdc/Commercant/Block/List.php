@@ -41,6 +41,9 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                 }else{
                     $url_key=$category->getData('url_key');
                     $check=Mage::getModel('catalog/category')->setStoreId(0)->loadByAttribute('url_key',$url_key)->getIsActive();
+                    if($storecode=="paris7e"){
+                        Mage::log(Mage::getModel('catalog/category')->setStoreId(0)->loadByAttribute('url_key',$url_key)->getData());
+                    }
                     if($check){
                         $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
                     }else{
