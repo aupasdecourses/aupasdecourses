@@ -40,7 +40,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).$category->getData('url_path');
                 }else{
                     $url_key=$category->getData('url_key');
-                    $check=Mage::getModel('catalog/category')->setStoreId($storeid)->loadByAttribute('url_key',$url_key)->getIsActive();
+                    $check=Mage::getModel('catalog/category')->setStoreId(0)->loadByAttribute('url_key',$url_key)->getIsActive();
                     if($check){
                         $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
                     }else{
