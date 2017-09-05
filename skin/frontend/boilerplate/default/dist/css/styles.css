@@ -14502,6 +14502,92 @@ footer .social-list .btn-social-icon {
   color: #000;
 }
 
+.delivery.apdc_datetimepicker .select-time,
+.delivery.apdc_datetimepicker .select-days {
+  display: block;
+  text-align: center;
+}
+
+.delivery.apdc_datetimepicker .select-time ul,
+.delivery.apdc_datetimepicker .select-days ul {
+  display: inline-block;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li,
+.delivery.apdc_datetimepicker .select-days ul li {
+  font-size: 14px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  color: rgba(0, 0, 0, .84);
+  border: 3px solid #3ab64b;
+  border-color: #eee;
+  border-radius: 5px;
+  background-color: #eee;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li > div,
+.delivery.apdc_datetimepicker .select-days ul li > div {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  width: 100%;
+  transform: translate(0, -50%);
+}
+
+.delivery.apdc_datetimepicker .select-time ul li > div span.day,
+.delivery.apdc_datetimepicker .select-days ul li > div span.day {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li.available,
+.delivery.apdc_datetimepicker .select-days ul li.available {
+  cursor: pointer;
+  transition: opacity .2s ease;
+  opacity: .7;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li.available:hover,
+.delivery.apdc_datetimepicker .select-days ul li.available:hover {
+  opacity: 1;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li.selected,
+.delivery.apdc_datetimepicker .select-days ul li.selected {
+  opacity: 1;
+  color: #fff;
+  border-color: #3ab64b;
+  background-color: #3ab64b;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li.not-available,
+.delivery.apdc_datetimepicker .select-days ul li.not-available {
+  font-style: italic;
+  opacity: .3;
+  color: #272b32;
+  border-color: #eee;
+}
+
+.delivery.apdc_datetimepicker .select-days ul li {
+  margin-bottom: 5px;
+}
+
+.delivery.apdc_datetimepicker .select-time {
+  margin-top: 3px;
+}
+
+.delivery.apdc_datetimepicker .select-time ul li {
+  width: 120px;
+  height: 36px;
+  margin: 5px;
+}
+
 .ddate_selected i,
 .ddate_selected span {
   color: #3ab64b;
@@ -14550,6 +14636,11 @@ footer .social-list .btn-social-icon {
   margin: 0;
   padding: 26px 0;
   border-bottom: 1px solid #eee;
+}
+
+#co-shipping-method-form .delivery.apdc_datetimepicker {
+  max-width: 520px;
+  margin-top: 5px;
 }
 
 #checkout-shipping-method-load {

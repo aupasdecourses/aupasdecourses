@@ -237,6 +237,83 @@
             }
         }
     }
+    &.apdc_datetimepicker {
+      .select-time,
+      .select-days {
+        display:block;
+        text-align:center;
+        ul {
+          display:inline-block;
+          li {
+            width: 60px;
+            height: 60px;
+            border: 3px solid $color-main-green;
+            display: inline-block;
+            padding:0;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            vertical-align: middle;
+            position:relative;
+
+            border-color:#eee;
+            background-color:#eee;
+            color:$color-main-grey;
+
+            > div {
+              position:absolute;
+              top:50%;
+              left:0;
+              right:0;
+              width:100%;
+              transform:translate(0, -50%);
+              span.day {
+                font-weight:bold;
+                text-transform:uppercase;
+              }
+            }
+            &.available {
+              cursor:pointer;
+              opacity:0.7;
+              transition:opacity 0.2s ease;
+              &:hover {
+                opacity:1;
+              }
+            }
+            &.selected {
+              opacity:1;
+              background-color:$color-main-green;
+              color:$color-white;
+
+              border-color:$color-main-green;
+            }
+            &.not-available {
+              opacity:0.3;
+              border-color:#eee;
+              font-style:italic;
+              color:$color-dark-grey;
+            }
+          }
+        }
+      }
+      .select-days {
+        ul {
+          li {
+            margin-bottom:5px;
+          }
+        }
+      }
+      .select-time {
+        margin-top:3px;
+        ul {
+          li {
+            width:120px;
+            height:36px;
+            margin:5px;
+          }
+        }
+      }
+    }
 }
 .ddate_selected{
     i, span{
@@ -289,6 +366,10 @@
                 margin: 0;
                 padding: 26px 0;
             }
+        }
+        &.apdc_datetimepicker {
+          margin-top:5px;
+          max-width:520px;
         }
     }
 }
