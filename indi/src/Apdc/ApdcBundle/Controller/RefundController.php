@@ -395,6 +395,7 @@ class RefundController extends Controller
 
         $adyen	= $this->container->get('apdc_apdc.adyen');
         $mage	= $this->container->get('apdc_apdc.magento');
+		$session = $request->getSession();
 
         $order		= $mage->getRefunds($id);
         $orders		= $mage->getAdyenPaymentByPsp();
@@ -418,6 +419,7 @@ class RefundController extends Controller
 
             $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done']);
 
+			$session->getFlashBag()->add('success', 'Remboursement via Adyen effectué.');
             return $this->redirectToRoute('refundIndex');
         }
 
