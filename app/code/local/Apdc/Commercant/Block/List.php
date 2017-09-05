@@ -12,8 +12,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shops = Mage::getModel('apdc_commercant/shop')->getCollection()            
             ->addFieldtoFilter('enabled',1);
 
+        $storeid = Mage::app()->getStore()->getId();
+        $storecode = Mage::app()->getStore()->getCode();
+
         if($filter=="store"){
-            $storeid = Mage::app()->getStore()->getId();
             $shops->addFieldToFilter('stores', array('finset' =>$storeid));
         }
 
@@ -34,10 +36,16 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     }
 					$color = $category->getParentCategory()->getData('menu_bg_color');
 				}
-                if(Mage::app()->getStore()->getCode()=='accueil'){
-                    $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                if($storecode=='accueil'){
+                    $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).$category->getData('url_path');
                 }else{
-                    $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                    $url_key=$category->getData('url_key');
+                    $check=Mage::getModel('catalog/category')->setStoreId($storeid)->loadByAttribute('url_key',$url_key)->getIsActive();
+                    if($check){
+                        $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                    }else{
+                        continue;
+                    }
                 }
 			}
 
