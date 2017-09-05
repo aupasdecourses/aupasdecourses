@@ -12,8 +12,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shops = Mage::getModel('apdc_commercant/shop')->getCollection()            
             ->addFieldtoFilter('enabled',1);
 
-        $storeid = Mage::app()->getStore()->getId();
-        $storecode = Mage::app()->getStore()->getCode();
+        $store=Mage::app()->getStore();
+        $storeid = $store->getId();
+        $storecode = $store->getCode();
+        $storerootid=$store->getRootCategoryId();
 
         if($filter=="store"){
             $shops->addFieldToFilter('stores', array('finset' =>$storeid));
@@ -28,7 +30,19 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         foreach ($shops as $shop) {
             $shop = $shop->getData();
 			if($shop['id_category']) {
-				$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+
+                //Récupération de l'id catégorie correspondant au magasin
+                foreach($shop['id_category'] as $id){
+                    $current_cat=$id;
+                    $path=Mage::getModel('catalog/category')->load($id)->getPath();
+                    $rootcat=explode('/',$path)[1];
+                    if($rootcat==$storerootid){
+                       continue;
+                    }
+                }
+
+				$category = Mage::getModel('catalog/category')->setStoreId(0)->load($current_cat);
+
 				if($category && $category->getParentCategory()) {
                     $type = $category->getParentCategory()->getName();
                     if($filter<>"all" && $filter<>"store" && $filter<>$type){
@@ -36,16 +50,13 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     }
 					$color = $category->getParentCategory()->getData('menu_bg_color');
 				}
+
                 if($storecode=='accueil'){
                     $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).$category->getData('url_path');
                 }else{
-                    $url_key=$category->getData('url_key');
-                    $check=Mage::getModel('catalog/category')->setStoreId(0)->loadByAttribute('url_key',$url_key)->getIsActive();
-                    if($storecode=="paris7e"){
-                        Mage::log(Mage::getModel('catalog/category')->setStoreId(0)->loadByAttribute('url_key',$url_key)->getData());
-                    }
+                    $check=$category->getIsActive();
                     if($check){
-                        $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                        $url=Mage::getBaseUrl().$category->getData('url_path');
                     }else{
                         continue;
                     }
