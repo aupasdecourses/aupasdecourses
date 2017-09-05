@@ -2,7 +2,7 @@
 
 require_once 'CreateStore.php';
 
-class Pmainguet_CreateStore1 extends Pmainguet_CreateStore
+class Pmainguet_CreateStore2 extends Pmainguet_CreateStore
 {
     //PARAMETRES NOUVELLE BOUTIQUE A METTRE A JOUR
     protected $_rootcategory = 'Commercants 2e';

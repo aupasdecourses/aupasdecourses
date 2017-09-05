@@ -31,6 +31,6 @@ class Pmainguet_CreateStore8 extends Pmainguet_CreateStore
 }
 
 // Create a new instance of our class and run it.
-$shell = new Pmainguet_CreateStore2();
+$shell = new Pmainguet_CreateStore8();
 $shell->run();
     
