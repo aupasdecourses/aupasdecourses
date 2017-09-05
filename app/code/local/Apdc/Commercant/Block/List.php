@@ -34,7 +34,11 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     }
 					$color = $category->getParentCategory()->getData('menu_bg_color');
 				}
-                $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                if(Mage::app()->getStore()->getCode()=='accueil'){
+                    $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                }else{
+                    $url=Mage::getBaseUrl().Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+                }
 			}
 
             $sub = [
