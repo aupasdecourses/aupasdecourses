@@ -11603,7 +11603,7 @@ input[type=checkbox]:checked + label:before {
 #html-body #background_video_container video {
   display: block;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   object-fit: cover;
 }
 
