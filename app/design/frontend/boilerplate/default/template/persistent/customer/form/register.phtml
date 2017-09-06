@@ -36,7 +36,7 @@
     <h1><?php echo $this->__('Create an Account') ?></h1>
     <?php echo $this->getChildHtml('form_fields_before')?>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
-    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="register-form" class="form-validate scaffold-form row" enctype="multipart/form-data">
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="register-form-checkout" class="form-validate scaffold-form row" enctype="multipart/form-data">
         <div class="col-sm-5 col-sm-offset-1">
             <input type="hidden" name="success_url" value="<?php if(isset($_GET['checkout']) && $_GET['checkout'] == '1') echo Mage::helper('checkout/url')->getCheckoutUrl(); else echo $this->getSuccessUrl(); ?>" />
             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
@@ -197,7 +197,7 @@
     </form>
     <script type="text/javascript">
     //<![CDATA[
-        var dataForm = new VarienForm('register-form', true);
+        var dataForm = new VarienForm('register-form-checkout', true);
         <?php if($this->getShowAddressFields()): ?>
         new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
         <?php endif; ?>
