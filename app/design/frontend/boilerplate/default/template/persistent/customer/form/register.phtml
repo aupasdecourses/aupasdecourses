@@ -185,7 +185,7 @@
             </ul>
             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
             <div class="buttons-set">
-                <button type="submit" title="<?php echo $this->__('Register') ?>" class="button button-green" onclick="button_onclick()"><?php echo $this->__('Register') ?></button>
+                <button type="submit" title="<?php echo $this->__('Register') ?>" class="button button-green" ><?php echo $this->__('Register') ?></button>
             </div>
         </div>
         <div class="buttons-set col-xs-11 col-xs-offset-1">
@@ -197,20 +197,11 @@
     </form>
     <script type="text/javascript">
     //<![CDATA[
-        var dataForm = new VarienForm('form-validate', true);
+        var dataForm = new VarienForm('register-form', true);
         <?php if($this->getShowAddressFields()): ?>
         new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
         <?php endif; ?>
     //]]>
     </script>    
-    <script>
-            function button_onclick(){
-                try {
-                    tagmanager_event('validationInscription',{});
-                } catch(e) {
-                    console.log(e);
-                }
-            }
-     </script>   
 
 </div>
