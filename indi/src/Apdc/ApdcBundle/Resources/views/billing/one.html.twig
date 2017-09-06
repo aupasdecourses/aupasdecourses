@@ -30,6 +30,11 @@
 		{{ form_end(form_download) }}
 		{{ form_end(form_payout) }}
 	{% endif %}
+
+
+	<!--<div><a href="{#{ path('billingPayoutSubmit', { 'choice':bill.summary.0.shop_id }) }#}"><button type="button" class="btn btn-warning">Payout</button></a></div>-->
+
+
 	<h2> Synthèse de la facture commerçant</h2></br>
 	<div id="billing-summary" class="order">
 		<table id="billSummary" class="table table-striped">
