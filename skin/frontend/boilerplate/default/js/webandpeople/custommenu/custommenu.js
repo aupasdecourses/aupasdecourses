@@ -204,15 +204,15 @@ function wpSubMenuToggle(obj, activeMenuId, activeSubMenuId)
         }
     });
     // ---
-    if(!jQuery(activeSubMenuId).hasClass("skip-help")){
-        if ($(activeSubMenuId).getStyle('display') == 'none') {
-            $(activeSubMenuId).show();
-            $(obj).addClassName('open');
-        } else {
-                $(activeSubMenuId).hide();
-                $(obj).removeClassName('open');
-        }
-    }
+    // if(!jQuery(activeSubMenuId).hasClass("skip-help")){
+    //     if ($(activeSubMenuId).getStyle('display') == 'none') {
+    //         $(activeSubMenuId).show();
+    //         $(obj).addClassName('open');
+    //     } else {
+    //             $(activeSubMenuId).hide();
+    //             $(obj).removeClassName('open');
+    //     }
+    // }
 }
 
 function wpResetMobileMenuState()

@@ -44,7 +44,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
              'contactvoisin',
              'etage',
              'infoscomplementaires',
-             'produit_equivalent',
+             //'produit_equivalent', Removed with new template (Order Attribute) 
              'telcontact',
          ];
 

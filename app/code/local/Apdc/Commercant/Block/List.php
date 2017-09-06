@@ -12,8 +12,12 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         $shops = Mage::getModel('apdc_commercant/shop')->getCollection()            
             ->addFieldtoFilter('enabled',1);
 
+        $store=Mage::app()->getStore();
+        $storeid = $store->getId();
+        $storecode = $store->getCode();
+        $storerootid=$store->getRootCategoryId();
+
         if($filter=="store"){
-            $storeid = Mage::app()->getStore()->getId();
             $shops->addFieldToFilter('stores', array('finset' =>$storeid));
         }
 
@@ -26,7 +30,19 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         foreach ($shops as $shop) {
             $shop = $shop->getData();
 			if($shop['id_category']) {
-				$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+
+                //Récupération de l'id catégorie correspondant au magasin
+                foreach($shop['id_category'] as $id){
+                    $current_cat=$id;
+                    $path=Mage::getModel('catalog/category')->load($id)->getPath();
+                    $rootcat=explode('/',$path)[1];
+                    if($rootcat==$storerootid){
+                       continue;
+                    }
+                }
+
+				$category = Mage::getModel('catalog/category')->setStoreId(0)->load($current_cat);
+
 				if($category && $category->getParentCategory()) {
                     $type = $category->getParentCategory()->getName();
                     if($filter<>"all" && $filter<>"store" && $filter<>$type){
@@ -34,7 +50,17 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     }
 					$color = $category->getParentCategory()->getData('menu_bg_color');
 				}
-                $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).Mage::getModel('catalog/category')->load($shop['id_category'][0])->getData('url_path');
+
+                if($storecode=='accueil'){
+                    $url=Mage::app()->getStore($shop['stores'][0])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK).$category->getData('url_path');
+                }else{
+                    $check=$category->getIsActive();
+                    if($check){
+                        $url=Mage::getBaseUrl().$category->getData('url_path');
+                    }else{
+                        continue;
+                    }
+                }
 			}
 
             $sub = [
