@@ -17,7 +17,7 @@
 <config>
     <modules>
         <Inchoo_SocialConnect>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Inchoo_SocialConnect>
     </modules>
