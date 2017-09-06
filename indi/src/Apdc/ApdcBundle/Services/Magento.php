@@ -938,4 +938,14 @@ class Magento
         return $data;
     }
 
+	
+	/* Affiche les infos relatifs à l'historique de la commande */
+	public function getOrderHistory($order_id)
+	{
+		$order = \Mage::getModel('sales/order')->loadByIncrementId($order_id);
+		$history = $order->getStatusHistoryCollection();
+
+		return $history;
+	}
+
 }

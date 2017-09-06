@@ -26,6 +26,10 @@ span#logo {
     color: rgba(255,153,0,.7);
 }
 
+.info {
+	color: rgba(30,144,255,.7);
+}
+
 .bold {
     font-weight: bold;
 }

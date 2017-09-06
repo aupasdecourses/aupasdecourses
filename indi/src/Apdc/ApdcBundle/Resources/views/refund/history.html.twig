@@ -1,0 +1,29 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+
+	<h2>Historique des statuts de la commande</h2>
+
+	<table class="table table-striped">
+		<tr>
+			<th>Le</th>
+			<th>Statut</th>
+			<th>Commentaire</th>
+		</tr>
+
+		{% for order in order_history %}
+			<tr>	
+				<td>{{ order.data.created_at|date('d/m/Y H:i:s') }}</td>
+				<td>{{ order.data.status }}</td>
+				<td>{{ order.data.comment|raw }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

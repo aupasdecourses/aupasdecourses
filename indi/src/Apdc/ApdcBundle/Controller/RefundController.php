@@ -430,7 +430,21 @@ class RefundController extends Controller
             'orders'		=> $orders,
             'event_data'	=> $event_data,
         ]);
-    }
+	}
+
+	public function refundHistoryAction(Request $request, $id)
+	{
+		if (!$this->isGranted('ROLE_INDI_GESTION')) {
+            return $this->redirectToRoute('root');
+		}
+		
+		$mage = $this->container->get('apdc_apdc.magento');
+		$order_history = $mage->getOrderHistory($id);
+
+		return $this->render('ApdcApdcBundle::refund/history.html.twig', [
+			'order_history' => $order_history,
+		]);
+	}
 
     public function refundAdyenIndexAction(Request $request)
     {
