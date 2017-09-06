@@ -17,7 +17,7 @@
 
 		{% for order in order_history %}
 			<tr>	
-				<td>{{ order.data.created_at|date('d/m/Y H:i:s') }}</td>
+				<td>{{ order.data.created_at|date_modify("+2 hours")|date('d/m/Y H:i:s') }}</td>
 				<td>{{ order.data.status }}</td>
 				<td>{{ order.data.comment|raw }}</td>
 			</tr>
