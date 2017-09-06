@@ -57,7 +57,7 @@ var Apdc_DdateTimePicker = function(options) {
           var selected = (this.currentDate === this.options.currentDate && slots[slot].dtime === this.options.currentTime ? ' selected' : '');
           chooseTime += '<li class="available' + selected + '" data-time="' + slots[slot].dtime_id + '"><div>' + slots[slot].dtime + '</div></li>';
         }
-        chooseTime += '<li class="availabl" data-time=""><div>15h00-18h00</div></li>';
+        //chooseTime += '<li class="availabl" data-time=""><div>15h00-18h00</div></li>';
         jQuery(this.options.container + ' .select-time ul').html(chooseTime);
         jQuery(this.options.container + ' .select-time').removeClass('hide');
         if (this.isInPopup && typeof(apdcDeliveryPopup) !== 'undefined') {

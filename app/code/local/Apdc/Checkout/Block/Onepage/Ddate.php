@@ -31,6 +31,7 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
     {
         $availableDaysAndSlots = [];
         $slots = $this->getSlots();
+
         $currentTime = Mage::getSingleton('core/date')->timestamp();
         $cpt = 0;
         $day = 0;

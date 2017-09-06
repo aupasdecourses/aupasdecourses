@@ -238,6 +238,8 @@
         }
     }
     &.apdc_datetimepicker {
+        margin-left:auto;
+        margin-right:auto;
       .select-time,
       .select-days {
         display:block;
@@ -376,8 +378,8 @@
 
 #checkout-shipping-method-load{
     border-bottom: 1px solid #eee;
-    padding-bottom: 40px;
-    margin-bottom: 40px;
+    padding-bottom: 25px;
+    text-align:center;
     dl{
         position: relative;
         background-color: #fafafa;
@@ -624,6 +626,13 @@
         text-align: left;
     }
 }
+
+#co-ddate-form{
+    h3{
+        text-align:center;
+    }
+}
+
 #discount-coupon-form{
     input{
         color: $color-main-grey;

@@ -13086,7 +13086,6 @@ section#ils-parlent-de-nous .container-fluid ul li img {
 
 section#advantages {
   padding: 20px 0;
-  border-top: 1px solid #eee;
 }
 
 section#advantages .container {
@@ -14502,6 +14501,11 @@ footer .social-list .btn-social-icon {
   color: #000;
 }
 
+.delivery.apdc_datetimepicker {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .delivery.apdc_datetimepicker .select-time,
 .delivery.apdc_datetimepicker .select-days {
   display: block;
@@ -14644,8 +14648,8 @@ footer .social-list .btn-social-icon {
 }
 
 #checkout-shipping-method-load {
-  margin-bottom: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 25px;
+  text-align: center;
   border-bottom: 1px solid #eee;
 }
 
@@ -14929,6 +14933,10 @@ footer .social-list .btn-social-icon {
   text-align: left;
   text-transform: none;
   color: #1e555a;
+}
+
+#co-ddate-form h3 {
+  text-align: center;
 }
 
 #discount-coupon-form input {
