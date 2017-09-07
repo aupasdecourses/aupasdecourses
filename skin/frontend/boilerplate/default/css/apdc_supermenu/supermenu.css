@@ -11,6 +11,15 @@
 #supermenu .menu-template-content {
   display:none;
 }
+#supermenu .menu-template-content li.template-column a:hover {
+  text-decoration:underline!important;
+}
+#supermenu .menu-template-content li.template-column a .cat-name {
+  transition:color 0.2s ease;
+}
+#supermenu .menu-template-content li.template-column a:hover .cat-name {
+  color:#028414;
+}
 .main-container,
 .footer-container,
 .copyright-cards-container {
@@ -140,6 +149,11 @@
     font-size: 1.125 rem;
     font-weight: 700;
     color: #1e555a;
+    opacity:1;
+    transition:opacity 0.2s ease;
+}
+#supermenu li.level1 > a:hover span {
+  opacity:0.7;
 }
 ul.nav a {
   outline: none;
