@@ -5,8 +5,15 @@
 {% block body %}
 
 <div class="container">
-
-	<h2>Historique des statuts de la commande</h2>
+	
+	<div>
+		<h2>Cloturer la commande {{ " # " ~  id }}</h2>
+		<input type="submit" name="close" value="Cloturer" class="btn btn-success btn-lg"/>
+	</div>
+	
+	<hr/>
+	
+	<h3>Recap des statuts de la commande</h3>
 
 	<table class="table table-striped">
 		<tr>

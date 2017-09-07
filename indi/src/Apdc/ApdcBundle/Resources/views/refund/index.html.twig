@@ -16,7 +16,7 @@
 					<th>Saisie ticket</th>
 					<th>Validation Credit Memo</th>
 					<th>Remboursement Adyen</th>
-					<th>Historique</th>
+					<th>Cloture et recapitulatif</th>
 				</tr>
 			</thead>
 			{% for order in orders %}
@@ -64,7 +64,7 @@
 						{% endif %}
 					</td>
 					<td>
-						<a href='{{ path('refundHistory', {id: order.id}) }}' class='info' target="_blank">Voir</a>
+						<a href='{{ path('refundClosure', {id: order.id}) }}' class='info' target="_blank">Voir</a>
 					</td>
 				</tr>
 			{% endfor %}

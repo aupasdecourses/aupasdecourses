@@ -86,9 +86,9 @@ refundFinal:
   defaults: { _controller: ApdcApdcBundle:Refund:refundFinal}
   requirements: { id:"[0-9]+" }
 
-refundHistory:
-  path: /refund/{id}/history/
-  defaults: { _controller: ApdcApdcBundle:Refund:refundHistory}
+refundClosure:
+  path: /refund/{id}/closure/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundClosure}
   requirements: { id:"[0-9]+" }
 
 refundAdyenIndex:

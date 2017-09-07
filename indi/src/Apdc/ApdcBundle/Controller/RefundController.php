@@ -432,7 +432,7 @@ class RefundController extends Controller
         ]);
 	}
 
-	public function refundHistoryAction(Request $request, $id)
+	public function refundClosureAction(Request $request, $id)
 	{
 		if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -441,8 +441,9 @@ class RefundController extends Controller
 		$mage = $this->container->get('apdc_apdc.magento');
 		$order_history = $mage->getOrderHistory($id);
 
-		return $this->render('ApdcApdcBundle::refund/history.html.twig', [
+		return $this->render('ApdcApdcBundle::refund/closure.html.twig', [
 			'order_history' => $order_history,
+			'id'			=> $id,
 		]);
 	}
 
