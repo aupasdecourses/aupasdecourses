@@ -817,11 +817,8 @@ class Magento
         return $rsl;
     }
 
-    /**	Retourne le contenu de la table adyen/order_payment
-     *	Trié par reference marchante ( ex : 2016000723 ).
-     *
-     *	Utilisé dans RefundController, refundAdyenIndexAction
-     *	pour la liste des commandes remboursables. (Remboursement Back-up )
+	/**	
+	 *	Retourne le contenu de la table adyen/order_payment
      */
     public function getAdyenOrderPaymentTable()
     {
@@ -839,9 +836,8 @@ class Magento
         return $ref;
     }
 
-    /**	Retourne le contenu de la table adyen/order_payment
-     *	Utilisé dans les deux formulaires de soumission de remboursement Adyen
-     *	refundFinalAction & refundAdyenFormAction.
+	/**	
+	 *	Retourne le contenu de la table adyen/order_payment
      */
     public function getAdyenPaymentByPsp()
     {
@@ -860,12 +856,12 @@ class Magento
         return $ref;
     }
 
-    /**	Retourne le contenu de la table adyen/event_queue
-     *	Utilisé dans les 2 formulaires de soumission de remboursement.
+	/**
+	 *	Retourne le contenu de la table adyen/event_data
      */
     public function getAdyenQueueFields()
     {
-        $collection = \Mage::getModel('adyen/event_queue')->getCollection();
+        $collection = \Mage::getModel('adyen/event')->getCollection();
         $collection->addFieldToFilter('increment_id', ['neq' => null]);
         $ref = [];
         $cpt = 1;
