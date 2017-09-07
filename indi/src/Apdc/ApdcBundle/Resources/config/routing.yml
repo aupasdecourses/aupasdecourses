@@ -91,13 +91,13 @@ refundClosure:
   defaults: { _controller: ApdcApdcBundle:Refund:refundClosure}
   requirements: { id:"[0-9]+" }
 
-refundAdyenIndex:
-  path: /refund/adyenIndex/
-  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
+refundPostClosureIndex:
+  path: /refund/postclosure/index
+  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureIndex}
 
-refundAdyenForm:
-  path: /refund/{psp}/adyenForm/
-  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
+refundPostClosureForm:
+  path: /refund/postclosure/{psp}/form
+  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureForm}
   requirements: { psp:"[0-9]+" }
 
 mistralTicketImg:

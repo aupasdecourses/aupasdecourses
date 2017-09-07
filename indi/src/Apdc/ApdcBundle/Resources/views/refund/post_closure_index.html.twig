@@ -4,26 +4,25 @@
 {% block body %}
 
 <div class="container">
-	<h1> Liste des commandes remboursables </h1>
+	<h2> Remboursement post-cloture </h2>
+	<div>( Passer la commande en "Complete" après remboursement !! )</div>
 
 	<table class="table">
 		<tr>
 			<th>N° de commande</th>
-			<th>Reference PSP</th>
 			<th>Montant payé</th>
-			<th>Montant remboursé</th>
-			<th>Formulaire de remboursement</th>
+			<th>Montant déjà remboursé</th>
+			<th>Lien de remboursement</th>
 		</tr>
 
 		{% for order_id, fields in orders %}
 			{% for id, order in fields %}
 				<tr>
 					<td>{{order.merchant_reference }}</td>
-					<td>{{order.pspreference }}</td>
 					<td>{{order.amount }}</td>
 					<td>{{order.total_refunded }}</td>
 					<td>{% if order.total_refunded < order.amount and order.total_refunded >= 0 %}
-						<a href="{{ path('refundAdyenForm', {psp: order.pspreference}) }}">Lien</a>
+						<a href="{{ path('refundPostClosureForm', {psp: order.pspreference}) }}">Lien</a>
 						{% endif %}</td>
 				</tr>
 			{% endfor %}

@@ -465,7 +465,7 @@ class RefundController extends Controller
 		]);
 	}
 
-    public function refundAdyenIndexAction(Request $request)
+    public function refundPostClosureIndexAction(Request $request)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -474,12 +474,12 @@ class RefundController extends Controller
         $mage	= $this->container->get('apdc_apdc.magento');
         $orders = $mage->getAdyenOrderPaymentTable();
 
-        return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
+        return $this->render('ApdcApdcBundle::refund/post_closure_index.html.twig', [
             'orders' => $orders,
         ]);
     }
 
-    public function refundAdyenFormAction(Request $request, $psp)
+    public function refundPostClosureFormAction(Request $request, $psp)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -505,10 +505,10 @@ class RefundController extends Controller
             }
 
             $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
-            return $this->redirectToRoute('refundAdyenIndex');
+            return $this->redirectToRoute('refundPostClosureIndex');
         }
 
-        return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
+        return $this->render('ApdcApdcBundle::refund/post_closure_form.html.twig', [
             'form'			=> $form->createView(),
             'psp'			=> $psp,
             'orders'		=> $orders,
