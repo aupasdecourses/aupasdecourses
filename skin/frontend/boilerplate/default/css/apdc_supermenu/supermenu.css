@@ -260,7 +260,7 @@ a.level3:hover {
   #supermenu ul.level0 {
     height: 300px;
     overflow: hidden;
-    z-index: 98;
+    z-index: 97;
     padding-top: 20px;
     border-radius: 0;
     border: 1px solid #dcdcdc;
@@ -284,7 +284,7 @@ a.level3:hover {
   }
   #supermenu div.level0{
       border: 0;
-      top: 118px;
+      top: 117px;
   }
   #supermenu .close-menu {
     display:block;

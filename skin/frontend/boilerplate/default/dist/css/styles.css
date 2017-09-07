@@ -16502,6 +16502,37 @@ h1.account-title {
   .container {
     width: 1130px;
   }
+
+  #supermenu li.level0.active > a:after {
+    position: absolute;
+    top: 98%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -15px;
+    content: ' ';
+    pointer-events: none;
+    border: solid transparent;
+    border-width: 15px;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: inherit;
+  }
+
+  #supermenu li.level0.open > a:after {
+    position: absolute;
+    z-index: 98;
+    top: 98%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -15px;
+    content: ' ';
+    pointer-events: none;
+    border: solid transparent;
+    border-width: 15px;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: inherit;
+  }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1020px) {
@@ -16530,7 +16561,7 @@ h1.account-title {
   }
 
   #supermenu div.level0 {
-    top: 177px;
+    top: 175px;
   }
 }
 
