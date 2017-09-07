@@ -361,14 +361,6 @@ class RefundController extends Controller
                 } catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
-            } elseif (!is_null($_POST['close'])) {
-                try {
-                    //Close order
-                    $close = $mage->setCloseStatus($id);
-                    $session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
-                } catch (Exception $e) {
-                    $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
-                }
             }
         }
 
@@ -382,7 +374,6 @@ class RefundController extends Controller
             'order'				=> $order,
             'id'				=> $id,
             'show_creditmemo'	=> $mage->checkdisplaybutton($id, 'creditmemo'),
-            'show_close'		=> $mage->checkdisplaybutton($id, 'close'),
             'forms'				=> [$form_submit->createView()],
         ]);
     }
@@ -438,12 +429,39 @@ class RefundController extends Controller
             return $this->redirectToRoute('root');
 		}
 		
-		$mage = $this->container->get('apdc_apdc.magento');
-		$order_history = $mage->getOrderHistory($id);
+		$mage			= $this->container->get('apdc_apdc.magento');
+		$order_history	= $mage->getOrderHistory($id);
+		$session		= $request->getSession();
+		$order			= $mage->getRefunds($id);
+
+		$refund_diff	= $order[-1]['merchant']['refund_diff'];
+		$refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
+
+		$entity_submit	= new \Apdc\ApdcBundle\Entity\Model();
+        $form_submit	= $this->createFormBuilder($entity_submit);
+        $form_submit->setAction($this->generateUrl('refundClosure', array('id' => $id)));
+        $form_submit	= $form_submit->getForm();
+
+		if ($request->isMethod('POST')) {
+            $form_submit->handleRequest($request);
+			if (!is_null($_POST['close'])) {
+				try {
+					//Close order
+					$close = $mage->setCloseStatus($id);
+					$session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
+				} catch (Exception $e) {
+					$session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
+				}
+			}
+		}		
 
 		return $this->render('ApdcApdcBundle::refund/closure.html.twig', [
 			'order_history' => $order_history,
 			'id'			=> $id,
+			'refund_full'	=> $mage->getRefundfull($refund_diff, $refund_shipping_amount),
+			'show_close'	=> $mage->checkdisplaybutton($id, 'close'),
+			'forms'			=> [$form_submit->createView()],
+
 		]);
 	}
 
