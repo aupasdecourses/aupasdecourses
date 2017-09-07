@@ -14,7 +14,9 @@
             <option value="0" <?php if($produit_equivalent==0) echo 'selected="selected"'; ?>>Non</option>
         </select>
     </div>
-	<?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
+    <div id="apdc_checkout_checkcart_info">
+	    <?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
+    </div>
 	<p class="text-right">En cliquant sur continuer les produits non disponibles seront supprimés.</p>
 	<div class="buttons-set clearfix" id="checkcart-buttons-container">
 		<p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
@@ -29,7 +31,4 @@
     var checkcart = new Checkcart('co-checkcart-form', '<?php echo $this->getUrl('checkout/onepage/saveCheckcart') ?>');
     //var ddateForm = new VarienForm('co-ddate-form');
     //]]>
-	jQuery(document).ready(function(){
-        jQuery('a[data-toggle=tooltip]').tooltip();
-    });
 </script>

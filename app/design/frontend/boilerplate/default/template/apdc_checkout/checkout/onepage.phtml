@@ -70,7 +70,7 @@
 		})
 		.done(function(response) {
 			checkcartContent = response.update_section.html; 
-			jQuery('#checkout-step-checkcart').html(checkcartContent);
+			jQuery('#apdc_checkout_checkcart_info').html(checkcartContent);
 		})
 		.fail(function() {
 			console.log('failed');
@@ -90,7 +90,7 @@
 		})
 		.done(function(response) {
 			checkcartContent = response.update_section.html; 
-			jQuery('#checkout-step-checkcart').html(checkcartContent);
+			jQuery('#apdc_checkout_checkcart_info').html(checkcartContent);
 		})
         .always(function() {
             $link.parents('td').find('.action-loading').hide();

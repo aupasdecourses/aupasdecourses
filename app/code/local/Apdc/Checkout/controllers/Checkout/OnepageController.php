@@ -162,7 +162,7 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 			$result["goto_section"] = "checkcart";
 			$result["update_section"] = array(
 				"name" => "checkcart",
-				"html" => $this->_getCheckcartHtml()
+				"html" => $this->_getCheckcartInfoHtml()
 			);
 			$this->getResponse()->setBody(Zend_Json::encode($result));
 		}
@@ -181,7 +181,7 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 			$result["goto_section"] = "checkcart";
 			$result["update_section"] = array(
 				"name" => "checkcart",
-				"html" => $this->_getCheckcartHtml()
+				"html" => $this->_getCheckcartInfoHtml()
 			);
 			$this->getResponse()->setBody(Zend_Json::encode($result));
 		}
@@ -215,6 +215,14 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         $layout->generateBlocks();
         $output = $layout->getOutput();
         return $output;
+	}
+	public function _getCheckcartInfoHtml() {
+		$layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_onepage_checkcart');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        return $layout->getBlock('checkout.onepage.checkcart.info')->toHtml();
 	}
 	
 	protected function _getPaymentMethodsHtml()
