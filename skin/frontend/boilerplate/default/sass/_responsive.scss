@@ -175,6 +175,9 @@
           }
           .template-column{
               width: 100%;
+              &.visible-xs {
+                  display:block!important;
+              }
           }
           a.level2:link{
               margin: 0;

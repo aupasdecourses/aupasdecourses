@@ -190,7 +190,7 @@ ul.nav a {
 .dropdown-submenu.open>.dropdown-menu-template {
     display: block;
 }
-#supermenu div.level0>ul{
+#supermenu div.level0>ul:not(.menu-template-content){
     list-style-type: none;
     padding-left: 10px;
 }
@@ -283,7 +283,7 @@ a.level3:hover {
     width: 100%;
     padding-bottom: 0;
   }
-  #supermenu div.level0>ul {
+  #supermenu div.level0>ul:not(.menu-template-content) {
     float:left;
     width:280px;
     overflow-x:hidden;
@@ -293,7 +293,7 @@ a.level3:hover {
     padding-left: 20px;
     border-right: 1px solid #eee;
   }
-  #supermenu div.level0>ul>li{
+  #supermenu div.level0>ul:not(.menu-template-content)>li{
       margin-bottom: 10px;
   }
   #supermenu div.level0{
@@ -317,12 +317,14 @@ a.level3:hover {
     color:#333333;
   }
   #supermenu .menu-template-content {
-    display:block;
+    display: inline-block;
     float:right;
     width:calc(100% - 280px);
     height: 100%;
     overflow: auto;
-    display: inline-block;
+    padding:0;
+    list-style:none;
+    margin:0;
   }
 
 

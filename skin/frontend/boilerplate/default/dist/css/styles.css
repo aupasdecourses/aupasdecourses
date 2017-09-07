@@ -16676,6 +16676,10 @@ h1.account-title {
     width: 100%;
   }
 
+  #topmenu #supermenu .template-column.visible-xs {
+    display: block !important;
+  }
+
   #topmenu #supermenu a.level2:link {
     margin: 0;
   }
