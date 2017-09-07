@@ -9,6 +9,7 @@ var Apdc_DdateTimePicker = function(options) {
     options: {},
     currentDate: null,
     currentTime: null,
+    currentTimeId: null,
     init: function(options) {
       this.options = jQuery.extend(defaults, options);
       this.isInPopup = (jQuery(this.options.container).parents('.apdc-popup').length > 0);
@@ -21,9 +22,11 @@ var Apdc_DdateTimePicker = function(options) {
       jQuery(this.options.container).find('.select-days li.available').on('click', function() {
         self.currentDate = jQuery(this).data('date');
         self.currentTime = null;
+        self.currentTimeId = null;
         self.refreshCurrentDate();
       });
       jQuery(document).on('click', this.options.container + ' .select-time li', function() {
+        self.currentTimeId = jQuery(this).data('time-id');
         self.currentTime = jQuery(this).data('time');
         self.refreshCurrentTime();
       });
@@ -44,6 +47,7 @@ var Apdc_DdateTimePicker = function(options) {
     refreshCurrentDate: function() {
       jQuery(this.options.container + ' .select-days li.selected').removeClass('selected');
       if (this.currentDate && this.currentDate !== '') {
+        jQuery('input[name="ddate[date]"]').val(this.currentDate);
         if (this.isInPopup && typeof(apdcDeliveryPopup) !== 'undefined') {
           apdcDeliveryPopup.showLoading();
           window.setTimeout(function() {
@@ -55,9 +59,12 @@ var Apdc_DdateTimePicker = function(options) {
         var chooseTime = '';
         for (var slot in slots) {
           var selected = (this.currentDate === this.options.currentDate && slots[slot].dtime === this.options.currentTime ? ' selected' : '');
-          chooseTime += '<li class="available' + selected + '" data-time="' + slots[slot].dtime_id + '"><div>' + slots[slot].dtime + '</div></li>';
+          if (selected !== '') {
+            this.currentTimeId = slots[slot].dtime_id;
+            jQuery('input[name="ddate[dtime]"]').val(this.currentTimeId);
+          }
+          chooseTime += '<li class="available' + selected + '" data-time-id="' + slots[slot].dtime_id + '" data-time="' + slots[slot].dtime + '"><div>' + slots[slot].dtime + '</div></li>';
         }
-        //chooseTime += '<li class="availabl" data-time=""><div>15h00-18h00</div></li>';
         jQuery(this.options.container + ' .select-time ul').html(chooseTime);
         jQuery(this.options.container + ' .select-time').removeClass('hide');
         if (this.isInPopup && typeof(apdcDeliveryPopup) !== 'undefined') {
@@ -67,8 +74,9 @@ var Apdc_DdateTimePicker = function(options) {
     },
     refreshCurrentTime: function() {
       jQuery(this.options.container + ' .select-time li.selected').removeClass('selected');
-      if (this.currentTime && this.currentTime !== '') {
-        jQuery(this.options.container + ' .select-time li[data-time="' + this.currentTime + '"]').addClass('selected');
+      if (this.currentTimeId && this.currentTimeId !== '') {
+        jQuery('input[name="ddate[dtime]"]').val(this.currentTimeId);
+        jQuery(this.options.container + ' .select-time li[data-time-id="' + this.currentTimeId + '"]').addClass('selected');
         this.saveSelectedDateTime();
       }
     },
@@ -84,7 +92,7 @@ var Apdc_DdateTimePicker = function(options) {
         dataType : 'json',
         data:{
           'date':self.currentDate,
-          'dtime':self.currentTime,
+          'dtime':self.currentTimeId,
           'ddatei':'',
           'url':self.options.redirectUrl
         },
