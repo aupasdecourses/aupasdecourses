@@ -5,9 +5,22 @@
 {% block body %}
 
 <div class="container">
-	
+	<div class="row">
+		<div class="col-sm-2">
+			<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default"><< Retour </a>
+		</div>
+		<div class="progress col-sm-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+				<span>Cloture</span>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
+		</div>
+	</div>
+
 	<div>
-		<h2>Cloturer la commande {{ " # " ~  id }}</h2>
+		<h1>#{{id}}<small> Cloturer la commande</small></h1>
 		<input type="submit" name="close" value="Cloturer" class="btn btn-success btn-lg"/>
 	</div>
 	
