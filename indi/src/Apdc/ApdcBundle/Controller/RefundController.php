@@ -411,7 +411,7 @@ class RefundController extends Controller
             $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done']);
 
 			$session->getFlashBag()->add('success', 'Remboursement via Adyen effectué.');
-            return $this->redirectToRoute('refundIndex');
+            return $this->redirectToRoute('refundClosure', ['id' => $id]);
         }
 
         return $this->render('ApdcApdcBundle::refund/final.html.twig', [
