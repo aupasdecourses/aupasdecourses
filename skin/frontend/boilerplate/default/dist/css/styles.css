@@ -14527,11 +14527,11 @@ footer .social-list .btn-social-icon {
   padding: 0;
   text-align: center;
   vertical-align: middle;
-  color: rgba(0, 0, 0, .84);
-  border: 3px solid #3ab64b;
-  border-color: #eee;
+  color: #00540c;
+  border: 2px solid #3ab64b;
+  border-color: #3ab64b;
   border-radius: 5px;
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .delivery.apdc_datetimepicker .select-time ul li > div,

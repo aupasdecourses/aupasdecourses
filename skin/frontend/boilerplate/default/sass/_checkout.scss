@@ -249,7 +249,7 @@
           li {
             width: 60px;
             height: 60px;
-            border: 3px solid $color-main-green;
+            border: 2px solid $color-main-green;
             display: inline-block;
             padding:0;
             border-radius: 5px;
@@ -258,9 +258,9 @@
             vertical-align: middle;
             position:relative;
 
-            border-color:#eee;
-            background-color:#eee;
-            color:$color-main-grey;
+            border-color:#3ab64b;
+            background-color:#fff;
+            color:#00540c;
 
             > div {
               position:absolute;
