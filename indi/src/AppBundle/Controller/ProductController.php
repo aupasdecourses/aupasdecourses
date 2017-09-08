@@ -65,7 +65,7 @@ class ProductController extends AbstractController
                 } else {
                     $shop = $this->getUser()->getShop();
 
-                    $request->request->add(['commercant' => $shop->getMerchant()]);
+                    $request->request->add(['commercant' => $shop->getProductMerchant()]);
                 }
 
                 $sku = $shop->getCode()
@@ -168,7 +168,7 @@ class ProductController extends AbstractController
                 if (!$this->isGranted('ROLE_ADMIN')) {
                     $user = $this->getUser();
 
-                    $request->request->add(['shop_id' => $user->getShop()->getId()]);
+                    $request->request->add(['commercant' => $user->getShop()->getProductMerchant()]);
                 }
 
                 // TODO - Note: Check if we can do it directly on the form (prob not, Magento entity)
@@ -178,6 +178,8 @@ class ProductController extends AbstractController
                 // Note: If we are from the grid, we get the value from the entity
                 $public = $request->request->get('prix_public');
                 $unit   = $request->request->get('unite_prix', isset($entity['unite_prix']) ? $entity['unite_prix'] : 'kg');
+
+                $public = str_replace(',', '.', $public);
 
                 if ($unit == 'kg') {
                     $price = $public
@@ -319,7 +321,7 @@ class ProductController extends AbstractController
         }
 
         $filters = parent::getFilterBy($request);
-        $filters['commercant'] = $this->getUser()->getShop()->getMerchant();
+        $filters['commercant'] = $this->getUser()->getShop()->getProductMerchant();
 
         return $filters;
     }
