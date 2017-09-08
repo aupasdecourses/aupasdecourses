@@ -17,71 +17,61 @@
 			<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right">Cloturer >></a>
 		</div>
 	</div>
+
+	{% set psp_reference = 0 %}
+	{% set customer_amount = 0 %}
+	{% set amount_already_refunded = 0 %}
+	{% set amount_refundable = 0 %}
+
+	{% for order, fields in orders %}
+		{% if fields.merchant_reference == id %}
+			{% set psp_reference = psp_reference + fields.pspreference %}
+			{% set customer_amount = customer_amount + fields.amount %}
+			{% set amount_already_refunded = amount_already_refunded + fields.total_refunded %}
+		{% endif %}
+	{% endfor %}
+
+	{% set amount_refundable = customer_amount - amount_already_refunded %}
+
 	<div class="row">
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>#{{id}}<small> Rembourser via Adyen</small></h1>
 			</div>
 		</div>
-		{{ form_start(form)}}
-		{% for order_id, fields in orders %}
-			{% if fields.merchant_reference == id %}
-				<h4>Reference PSP : </h4>
-					{{ form_widget(form.originalReference, {'attr': {'value': fields.pspreference} }) }}
-				<hr>
-				<h4>Montant à rembourser :</h4>
-				<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ refund_diff ~ " € " }}</h4>
-					{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ ' € '} }) }}
-				<hr>
-				<h4> Montant déjà remboursé :</h4>
-					{{ fields.total_refunded ~ " € "}}
-				<hr>
-			{% endif %}
-		{% endfor %}
 
+		<hr/>
+		<div>
+			<h4>Rappels : </h4>
+			<div><i>Montant payé par le client : {{ customer_amount ~ " € " }}</i></div>
+			<div><i>Montant déja remboursé : {{ amount_already_refunded ~ " € " }}</i></div>
+			<div><i>Montant restant potentiellement remboursable : {{ amount_refundable ~ " € " }}</i></div>
+		</div>
+
+		<hr/>
+		{{ form_start(form)}}
+			<h4><b> Reference PSP </b></h4>
+				{{ form_widget(form.originalReference, {'attr': {'value': psp_reference} }) }}
+			<hr>
+			<h4><b>Montant à rembourser </b></h4>
+			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ amount_refundable ~ " € " }}</h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': amount_refundable ~ " € "} }) }}
+			<br/>
 		{{form_errors(form)}}
 		{{form_rest(form)}}
 		{{form_end(form)}}
 
-		<hr>	
-		<h1> Historique de la commande </h1>
-		<br>
-		<table class='table'>
-			<thead>
-				<tr>
-					<th>N° Commande</th>
-					<th>Reference PSP de CHAQUE remboursement</th>	
-					<th> Crée le </th>
-					<th> Resultat </th>
-					<th> Success ? </th>
-				</tr>
-			</thead>
-				{% for order_id, fields in orders %}
-					{% if fields.merchant_reference == id %}
-						{% for key, value in event_data %}
-							{% if value.increment_id == id %}
-								<tr>
-									<td>{{ value.increment_id }}</td>
-									<td>{{ value.psp_reference }}</td>
-									<td>{{ value.created_at }}</td>
-									<td>{{ value.adyen_event_result }}</td>
-									<td>{{ value.success }}</td>
-								</tr>
-							{% endif %}
-						{% endfor %}
-					{% endif %}
-			{% endfor %}		
-		</table>
-		{% for order_id, fields in orders %}
-				{% if fields.merchant_reference == id %}
-					Pas assez d'infos sur la commande ? Clique ici :
-						<a href={{ adyen_platform_first_part ~ fields.pspreference ~ adyen_platform_second_part }} target="_blank">
-							<input type="button" class="btn btn-success" value="Go to Adyen"/>
-						</a>
-				{% endif %}
-		{% endfor %}
-	</div>
-</div>
+		<hr/>	
+	
+		<div>
+			Pas assez d'infos sur la commande ?
+			<div>
+				<a href={{ adyen_platform_first_part ~ psp_reference ~ adyen_platform_second_part }} target="_blank">
+					<input type="button" class="btn btn-success" value="Plateforme Adyen"/>
+				</a>
+			</div>
+		</div>
 
+</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

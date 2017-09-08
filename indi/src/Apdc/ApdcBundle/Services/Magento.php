@@ -856,27 +856,6 @@ class Magento
         return $ref;
     }
 
-	/**
-	 *	Retourne le contenu de la table adyen/event_data
-     */
-    public function getAdyenQueueFields()
-    {
-        $collection = \Mage::getModel('adyen/event')->getCollection();
-        $collection->addFieldToFilter('increment_id', ['neq' => null]);
-        $ref = [];
-        $cpt = 1;
-        foreach ($collection as $col) {
-            $ref[$cpt]['increment_id'] = $col->getData('increment_id');
-            $ref[$cpt]['psp_reference'] = $col->getData('psp_reference');
-            $ref[$cpt]['adyen_event_result'] = $col->getData('adyen_event_result');
-            $ref[$cpt]['success'] = $col->getData('success');
-            $ref[$cpt]['created_at'] = $col->getData('created_at');
-            ++$cpt;
-        }
-
-        return $ref;
-    }
-
     /** Pour les payouts */
     public function getApdcBankFields()
     {
