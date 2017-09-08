@@ -168,8 +168,9 @@ class Magento
                 'digest' => 'attachment.digest',
                 'refund' => 'attachment.refund',
                 'refund_shipping' => 'attachment.refund_shipping',
+				'closure' => 'attachment.closure',
                 'commentaire_commercant' => 'attachment.commentaires_ticket',
-                'commentaire_client' => 'attachment.commentaires_fraislivraison',
+				'commentaire_client' => 'attachment.commentaires_fraislivraison',
             )
         );
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
@@ -211,6 +212,7 @@ class Magento
         $orderHeader['digest'] = $order->getData('digest');
         $orderHeader['refund'] = $order->getData('refund');
         $orderHeader['refund_shipping'] = $order->getData('refund_shipping');
+		$orderHeader['closure'] = $order->getData('closure');
         $orderHeader['commentaire_commercant'] = $order->getData('commentaire_commercant');
         $orderHeader['commentaire_client'] = $order->getData('commentaire_client');
         $orderHeader['customer_id'] = $order->getData('customer_id');

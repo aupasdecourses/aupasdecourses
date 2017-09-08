@@ -458,6 +458,7 @@ class RefundController extends Controller
 
 		$refund_diff	= $order[-1]['merchant']['refund_diff'];
 		$refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
+		$order_mid		= $order[-1]['order']['mid'];
 
 		$entity_submit	= new \Apdc\ApdcBundle\Entity\Model();
         $form_submit	= $this->createFormBuilder($entity_submit);
@@ -470,11 +471,14 @@ class RefundController extends Controller
 				try {
 					//Close order
 					$close = $mage->setCloseStatus($id);
-					$session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
-					return $this->redirectToRoute('refundClosure', ['id' => $id]);
-				} catch (Exception $e) {
+					} catch (Exception $e) {
 					$session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
 				}
+				
+				$mage->updateEntryToOrderField(['order_id' => $order_mid], ['closure' => 'done']);
+				
+				$session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
+				return $this->redirectToRoute('refundClosure', ['id' => $id]);
 			}
 		}		
 
