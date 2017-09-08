@@ -1,0 +1,10 @@
+<?php if ($this->getCheckout()->getStepData('shipping_method', 'complete') || $this->getCheckout()->getStepData('shipping_method', 'allow')): ?>
+<dt class="complete">
+    <a href="#shipping_method" onclick="checkout.changeSection('opc-shipping_method'); return false;"><strong><?php echo $this->__('Votre livraison') ?></strong><span>2</span></a>
+</dt>
+<?php else: ?>
+<dt>
+   <strong><?php echo $this->__('Votre livraison') ?></strong>
+   <span>2</span>
+</dt>
+<?php endif; ?>

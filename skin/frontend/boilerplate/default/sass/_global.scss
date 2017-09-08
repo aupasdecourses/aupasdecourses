@@ -47,6 +47,21 @@ a{
     }
 }
 
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    rgba(0,0,0,0.54);
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    rgba(0,0,0,0.54);
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    rgba(0,0,0,0.54);
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    rgba(0,0,0,0.54);
+}
+
 .button{
     position: relative;
     display: inline-block;
@@ -54,6 +69,7 @@ a{
     margin: 20px auto;
     color: #fff;
     border-radius: 3px;
+    border: none;
     font-size: 1.125rem;
     font-weight: 700;
     &:before{
@@ -84,23 +100,40 @@ a{
         -o-transition: all 300ms ease-in;
         transition: all 300ms ease-in;
     }
-    &:hover{
+    &:not(.btn-cart):hover{
         text-decoration: none;
             &:before, &:after{
             width: 100%;
         }
+    }
+    &:active, &:focus, &:visited{
+        color: #fff;
+        text-decoration: none;
     }
     &.button-green{
         background-color: $color-main-green;
         &:hover{
             color: #fff;
             &:before, &:after{
-                background-color: $color-second-green;;
+                background-color: $color-second-green;
+            }
+        }
+    }
+    &.button-grey{
+        background-color: #ccc;
+        &:hover{
+            color: #fff;
+            background-color: $color-main-green;
+            &:before, &:after{
+                background-color: $color-second-green;
             }
         }
     }
     &.button-pink{
         background-color: $color-main-pink;
+    }
+    &.button-orange{
+        background-color: $color-dark-orange;
     }
     &.button-white{
         color: $color-main-green;
@@ -111,4 +144,109 @@ a{
             }
         }
     }
+}
+
+input[type=checkbox]{
+    position:absolute;
+    z-index:-1000;
+    left:-1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height:1px;
+    width:1px;
+    margin:-1px;
+    padding:0;
+    border:0;
+}
+input[type=checkbox] + label{
+    font-size: 0.875rem;
+    &:before {
+        content:'';
+        font-family:FontAwesome;
+        font-size:16px;
+        display:inline-block;
+        margin-right:5px;
+        width:25px;
+        height:25px;
+        line-height:22px;
+        text-align:center;
+        color:$color-main-green;
+        display:inline-block;
+        vertical-align:middle;
+        cursor:pointer;
+        border-radius:7px;
+        border:1px solid #ccc;
+        background-color:#fafafa;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+input[type=checkbox]:checked + label:before {
+    content:'\f00c';
+    font-family:FontAwesome;
+}
+
+.tooltip{
+    &.bottom > .tooltip-arrow{
+        border-bottom: 8px solid #F6F6F6;
+        border-width: 0 8px 8px;
+        top: -3px;
+        margin-left: -8px;
+    }
+    .tooltip-inner{
+        background-color: #F6F6F6;
+        padding: 10px;
+        text-align: left;
+        dt{
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: $color-second-green;
+        }
+        dd{
+            font-size: 0.75rem;
+            font-weight: normal;
+            color: $color-main-grey;
+        }
+    }
+}
+
+.limiter{
+    select{
+        color: $color-main-grey;
+        font-size: 0.875rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #f6f6f6;
+        width: auto;
+        height: auto;
+        outline: none;
+    }
+}
+
+.form-control{
+    color: $color-main-grey;
+}
+.action-success {
+  position:relative;
+  &:before {
+    content:'\f00c';
+    font-family:FontAwesome;
+    position:absolute;
+    left:2px;
+    top:50%;
+    transform:translate(0, -50%);
+    color:$color-main-green;
+    background-color:#ffffff;
+    width:24px;
+    height:24px;
+    line-height:24px;
+    font-size:12px;
+    border-radius:50%;
+    border:1px solid #ccc;
+  }
 }

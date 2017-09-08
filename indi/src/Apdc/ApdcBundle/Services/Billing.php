@@ -394,12 +394,12 @@ class Billing
             }
             $incrementid = $order->getIncrementId();
             $total_withship = $order->getGrandTotal();
-            if($total_withship>0){
+            if($total_withship - $order->getShippingAmount() - + $order->getShippingTaxAmount()>0){
                 $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount();
             }else{
-                $frais_livraison = $order->getShippingAmount() + $order->getShippingHiddenTaxAmount();
+                $frais_livraison = $order->getShippingAmount() + $order->getShippingTaxAmount() + $order->getShippingHiddenTaxAmount();
             }
-            $total_withoutship = $total_withship - $frais_livraison;
+            $total_withoutship = $total_withship - $frais_livraison + $discount;
             $ordered_items = $order->getAllItems();
 
             $missing_com_att_count=0;
@@ -580,7 +580,8 @@ class Billing
             }
 
             // 4 - Vérification totaux égaux
-            if (round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'] - $result_data_magento['discount'], FLOAT_NUMBER, PHP_ROUND_HALF_UP) == 0) {
+            $diff_facturation_magento = round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'], FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+            if ($diff_facturation_magento == 0) {
                 $result['verif_totaux'] = true;
             } else {
                 $result['verif_totaux'] = false;
@@ -600,7 +601,7 @@ class Billing
                 'sum_discount_magento' => $result_data_magento['discount'],
                 'sum_discount_coupon_magento' => $result_data_magento['discount_coupon'],
                 'sum_items_magento' => $result_data_magento['total_produit'] + $result_data_magento['discount'],
-                'diff_facturation_magento' => round($result_data_facturation['sum_items'] - $result_data_magento['total_produit'] - $result_data_magento['discount'], FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+                'diff_facturation_magento' => $diff_facturation_magento,
                 'status_ok_count' => $result_data_magento['status_ok_count'],
                 'status_nok_count' => $result_data_magento['status_nok_count'],
                 'status_processing_count' => $result_data_magento['status_processing_count'],

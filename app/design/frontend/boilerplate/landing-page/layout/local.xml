@@ -4,6 +4,7 @@
         <reference name="root">
             <action method="setTemplate"><template>page/empty.phtml</template></action>
             <block type="page/html_head" name="head" as="head"/>
+            <block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
         </reference>
 
@@ -19,7 +20,7 @@
                 <text>
                   <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
                     try{
-                    window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                    window.dataLayer.push({eventData:event_data,event:event_name});
                     } catch(e){
                     }};</script>]]>
                 </text>
@@ -43,9 +44,6 @@
 			<!-- RESPONSIVE FIXES -->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/responsive.css</href></action>-->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/custom.css</href></action>-->
-			<!-- OWL CARROUSEL -->
-			<!--<action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.carousel.css</href></action>-->
-			<!--<action method="addItem"><rel>skin_css</rel><href>owl-carrousel/owl.theme.css</href></action>-->
 			<!-- MAGNIFIC POPUP -->
 			<!--<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>-->
 			
@@ -54,12 +52,15 @@
 			<!-- =========================
 				 SCRIPTS   
 			============================== -->
-			<!--<action method="addJs"><script>script.js</script></action>-->
+			<action method="addItem"><type>skin_js</type><file>dist/js/script.js</file></action>
 			
 			<!-- JQUERY -->
 			<action method="addJs"><script>prototype/prototype.js</script></action>
             <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
-			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>        
+			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+                <!-- IMPORTANT -->  
 			<!-- =========================
 				 END SCRIPTS   
 			============================== -->
@@ -101,7 +102,11 @@
             <!-- =========================
              STYLESHEETS   
             ============================== -->
-            <action method="addItem"><rel>skin_css</rel><href>dist/css/main.css</href></action>
+            <action method="addItem"><rel>skin_css</rel><href>dist/css/styles.css</href></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.carousel.min.css</href></action>
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
+                <!-- IMPORTANT -->
         </reference>
         <reference name="before_body_end">
           <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
@@ -133,7 +138,7 @@
 
     <apdc_login_view>
       <reference name="content">
-            <block type="customer/form_login" name="customer_login" template="page/loginmodal.phtml">
+            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
               <!--
                 <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
                     <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
@@ -151,7 +156,7 @@
             <text>
               <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
                 try{
-                window.dataLayerMarketing.push({eventData:event_data,event:event_name});
+                window.dataLayer.push({eventData:event_data,event:event_name});
                 } catch(e){
                 }};</script>]]>
             </text>
@@ -159,7 +164,7 @@
         </block>
       </reference>
       <reference name="content">
-        <block type="customer/form_register" name="modal_register" template="page/registermodal.phtml">
+			  <block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
           <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
             <label>Form Fields Before</label>
           </block>
@@ -182,5 +187,17 @@
             </block>
         </reference>
     </apdc_newsletter_view>
+
+    <landing_page_commercants>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
+        </reference>
+    </landing_page_commercants>
+
+    <landing_page_boucher>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_boucher.phtml" name="liste_commercant_boucher"/>
+        </reference>
+    </landing_page_boucher>
 
 </layout>

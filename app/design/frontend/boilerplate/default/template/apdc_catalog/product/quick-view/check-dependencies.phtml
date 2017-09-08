@@ -1,0 +1,60 @@
+<script type="text/javascript">
+// CHECK REQUIREMENTS FOR QUICK VIEW
+var apdcQuickView = new ApdcQuickView([
+    {
+        type:'css',
+        url:'<?php echo $this->getSkinUrl('css/apdc_catalog/product-options.css'); ?>',
+    },
+    {
+        type:'css',
+        url:'<?php echo $this->getSkinUrl('css/apdc_catalog/product-add-to-cart.css'); ?>',
+    },
+    {
+        type:'js',
+        url: '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>varien/product.js',
+        test : [
+            'Product'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_configurable.js'); ?>',
+        test: [
+            'Product',
+            'ApdcConfig'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/bundle.js'); ?>',
+        test: [
+            'Product',
+            'Bundle'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_bundle.js'); ?>',
+        test : [
+            'ApdcBundleLoaded',
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_optionsPrices.js'); ?>',
+        test : [
+            'Product',
+            'OptionsPrice',
+            'reloadWithContainer'
+        ]
+    },
+    {
+        type:'js',
+        url: '<?php echo $this->getSkinUrl('js/apdc_catalog/apdc_custom_options.js'); ?>',
+        test: [
+            'Product',
+            'Options'
+        ]
+    }
+]);
+</script>

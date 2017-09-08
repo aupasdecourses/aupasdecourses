@@ -21,10 +21,13 @@
         <div class="container">
             <ul class="top-nav">
                 <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Aide">Aide</a></li>
-                <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                <?php $customerSession = Mage::getSingleton('customer/session'); ?>
+                <?php if (!$customerSession->isLoggedIn()): ?>
                     <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
-                <?php else: ?>
+                <?php elseif (!$customerSession->getCustomer()->needToChooseNeighborhood()) : ?>
                     <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                <?php else : ?>
+                    <li><a href="#" id="choose-my-district" class="button button-green" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a></li>
                 <?php endif ?>
             </ul>
             <div class="intro-section">
@@ -43,7 +46,7 @@
 				 Les meilleurs commerçants de Paris livrés chez vous
 			</div>
             <div id="search_neighborhoods">
-                <div class="input-box">
+                <div class="input-box apdc-form">
                     <label><?php echo $this->__('Your postcode:'); ?></label>
                     <input type="text" id="search_neighborhoods_postcode" class="input-text" placeholder="<?php echo $this->__('Search for your neighborhood'); ?>" />
                 </div>
@@ -230,28 +233,7 @@
 <?php if ($nous) : ?>
 <?php echo $nous->toHtml(); ?>
 <?php endif; ?>
-<section id="advantages">
-    <div class="container">
-        <div class="row text-center">
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/choice.png')?>" alt="Belle sélection de produits, au même prix qu'en boutique.">
-                <p>Belle sélection de produits, au même prix qu'en boutique</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/calendar-round.png')?>" alt="Livraison en soirée du mardi au vendredi">
-                <p>Livraison en soirée du mardi au vendredi</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/fresh.png')?>" alt="Qualité et fraîcheur de la commande à la livraison.">
-                <p>Qualité et fraîcheur de la commande à la livraison</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/kitchen.png')?>" alt="Gagnez du temps et mangez bon.">
-                <p>Gagnez du temps et mangez bon</p>
-            </div>
-        </div>
-    </div>
-</section>
+<?php echo $this->getChildHtml('reassurance');?>
 
 <footer>
     <div class="container">

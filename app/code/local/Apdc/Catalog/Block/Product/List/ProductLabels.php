@@ -52,7 +52,10 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($this->getProduct()->getData('origine')) {
             $origineLabel = array();
             $attributeValue = $this->getAttributeValue('origine');
-            if (substr($attributeValue, 0, 6) == 'France') {
+            if(is_array($attributeValue)){
+                $attributeValue=implode(" ",$attributeValue);
+            }
+            if (strpos($attributeValue, 'France')) {
                 $origineLabel = array(
                     'text' => $attributeValue,
                     'icon' => $this->getSkinUrl('images/france_flag_icon.png')

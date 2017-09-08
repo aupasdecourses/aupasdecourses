@@ -1,0 +1,15 @@
+<?php if ($this->getCheckout()->getStepData('payment', 'complete') || $this->getCheckout()->getStepData('payment', 'allow') ): ?>
+<dt class="complete">
+    <a href="#payment" onclick="checkout.changeSection('opc-payment'); return false;"><strong><?php echo $this->__('Validation & paiement') ?></strong><span>4</span></a>
+</dt>
+<!--
+<dd class="complete">
+    <?php echo $this->getPaymentHtml() ?>
+</dd>
+-->
+<?php else: ?>
+<dt>
+    <strong><?php echo $this->__('Validation & paiement') ?></strong>
+    <span>4</span>
+</dt>
+<?php endif; ?>

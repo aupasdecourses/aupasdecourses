@@ -40,7 +40,7 @@ Whoops, it looks like you have an invalid PHP version.</h3></div><p>Magento supp
 define('MAGENTO_ROOT', getcwd());
 
 $ip = $_SERVER['REMOTE_ADDR'];
-$allowed = array('127.0.0.1','85.69.57.250'); // these are the IP's that are allowed to view the site.
+$allowed = array('127.0.0.1','85.69.57.250','62.161.8.215'); // these are the IP's that are allowed to view the site.
 
 $compilerConfig = MAGENTO_ROOT . '/includes/config.php';
 if (file_exists($compilerConfig)) {
@@ -69,11 +69,11 @@ require_once $mageFilename;
 
 #Varien_Profiler::enable();
 
-if (isset($_SERVER['MAGE_IS_DEVELOPER_MODE'])) {
+//if (isset($_SERVER['MAGE_IS_DEVELOPER_MODE'])) {
     Mage::setIsDeveloperMode(true);
-}
+//} 
 
-#ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 umask(0);
 

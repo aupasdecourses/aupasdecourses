@@ -144,7 +144,7 @@
 					</thead>
 					{% for row in details %}
 					<tr>
-						<td>{{row.increment_id}}</td>
+						<td><a href="{{ path('refundDigest',{ 'id': row.increment_id })}}" target="_blank">{{row.increment_id}}</a></td>
 						<td>{{row.total_commande}}</td>
 						<td>{{row.frais_livraison}}</td>
 						<td>{{row.discount}}</td>

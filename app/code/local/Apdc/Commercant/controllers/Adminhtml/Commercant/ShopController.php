@@ -104,21 +104,25 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
             }
 
             if (isset($data['id_category'])) {
-                if ($data['id_category'] != -1) {
-                    $data['id_category'] = explode(',', $data['id_category']);
-                    $data['id_category'] = array_unique($data['id_category']);
-                }
-
-                $data["stores"] = [];
-                $S = Mage::helper('apdc_commercant')->getStoresArray();
-                $categories=Mage::getModel ('catalog/category');
-                foreach ($data["id_category"] as $id) {
-                    $cat=$categories->getCollection()->addAttributeToSelect("path")
-                        ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
-                    $storeid=$S[explode('/', $cat->getPath())[1]]['store_id'];
-                    if(!in_array($storeid,$data["stores"])){
-                        $data["stores"][]=$storeid;
+                if (!empty($data['id_category'])) {
+                    if ($data['id_category'] != -1) {
+                        $data['id_category'] = explode(',', $data['id_category']);
+                        $data['id_category'] = array_unique($data['id_category']);
                     }
+
+                    $data["stores"] = [];
+                    $S = Mage::helper('apdc_commercant')->getStoresArray();
+                    $categories=Mage::getModel ('catalog/category');
+                    foreach ($data["id_category"] as $id) {
+                        $cat = $categories->getCollection()->addAttributeToSelect("path")
+                            ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
+                        $storeid = $S[explode('/', $cat->getPath())[1]]['store_id'];
+                        if (!in_array($storeid,$data["stores"])) {
+                            $data["stores"][]=$storeid;
+                        }
+                    }
+                } else {
+                    $data['id_category'] = [];
                 }
             }
 

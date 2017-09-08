@@ -1,0 +1,21 @@
+<?php
+$commercants=Mage::helper('apdc_checkout')->getSpottyCom();
+if($commercants):?>
+<div class="col-sm-12">
+	<p class="warning"><strong>ATTENTION</strong>: Des commerçants ne sont pas disponibles certains jours de la semaine:</p>
+	<ul id="list_commercants_days">
+	<?php foreach($commercants as $name=>$days):?>
+		<li>
+			<?php if(empty($days)):?>
+				<span><b><?php echo $name;?>: </b>Pas de livraison cette semaine</span>;
+			<?php elseif(count($days)<4):?>
+				<span><b><?php echo $name;?></b>: Livraison uniquement
+					<?php foreach($days as $d){
+					echo $d.', ';
+					}?></span>
+			<?php endif;?>
+		</li>
+	<?php endforeach;?>
+	</ul>
+</div>
+<?php endif;?>

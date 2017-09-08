@@ -3,10 +3,32 @@
   <default>
     <reference name="head">
       <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
-      <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
+      <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
     </reference>
     <reference name="before_body_end">
       <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
     </reference>
+
+
+
+
+    <!-- ##########  TEST CASE ########## -->
+    <!--<reference name="head">-->
+      <!--<action method="addItem"><type>skin_js</type><file>js/apdc_popup/test.js</file></action>-->
+      <!--<action method="addItem"><type>skin_css</type><file>css/apdc_popup/test.css</file></action>-->
+    <!--</reference>-->
+    <!--<reference name="before_body_end">-->
+      <!--<block type="core/template" name="apdc_popup_test_button" template="apdc_popup/test/button.phtml" />-->
+    <!--</reference>-->
+    <!-- ##########  END TEST CASE ########## -->
+
   </default>
+
+  <!-- ##########  TEST CASE ########## -->
+  <!--<apdc_popup_index_templateajax>-->
+    <!--<reference name="content">-->
+      <!--<block type="core/template" name="test_popup_apdc_popup_child" template="apdc_popup/test/popup-content.phtml" />-->
+    <!--</reference>-->
+  <!--</apdc_popup_index_templateajax>-->
+  <!-- ##########  END TEST CASE ########## -->
 </layout>

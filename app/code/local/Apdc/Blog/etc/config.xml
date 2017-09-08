@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Apdc_Blog>
+            <version>0.1.0</version>
+        </Apdc_Blog>
+    </modules>
+    <global>
+        <blocks>
+            <apdc_blog>
+                <class>Apdc_Blog_Block</class>
+            </apdc_blog>
+        </blocks>
+    </global>
+</config>

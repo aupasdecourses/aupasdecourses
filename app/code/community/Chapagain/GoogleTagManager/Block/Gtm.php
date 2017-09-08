@@ -1,4 +1,6 @@
 <?php 
+
+// Changes made by Pmainguet on 30/08/2017
  
 class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 {			
@@ -32,7 +34,7 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 	
 	public function getIsCheckoutPage()
 	{
-		if (strpos(Mage::app()->getRequest()->getPathInfo(), '/checkout/onepage') !== false) {
+		if (strpos(Mage::app()->getRequest()->getPathInfo(), '/checkout/onepage') !== false||strpos(Mage::app()->getRequest()->getPathInfo(), '/votre-commande/checkout_onepage') !== false) {
 			return true;
 		}
 		return false;
@@ -49,7 +51,7 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 	}
 	
 	public function getOrder()
-    {   	
+    {   
 		if ($this->getIsOrderSuccessPage()) {
 			$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();		
 			$order = Mage::getModel('sales/order')->load($orderId);
@@ -60,6 +62,18 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 		}
 		return false;
     }
+
+    public function getQuote(){
+		if ($this->getIsCheckoutPage()) {
+	        /** @var Mage_Sales_Model_Quote $quote */
+	        $quote = Mage::getSingleton('checkout/session')->getQuote();
+			if (!$quote) {
+				return false;
+			}			
+			return $quote;
+		}
+		return false;
+	}
     
     public function getDataLayerProduct()
     {
@@ -109,6 +123,79 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 		}
 	}
 	
+	public function getDataLayerQuote(){
+        if ($quote = $this->getQuote()) {
+        	$aItems = array();
+			$productItems = array();			
+			foreach ($quote->getAllVisibleItems() as $item) {
+				
+				$categoryCollection = $item->getProduct()->getCategoryCollection();
+				$categories = array();
+				foreach ($categoryCollection as $category) {
+					$categories[] = Mage::getModel('catalog/category')->load($category->getEntityId())->getName();
+				}
+				
+				$productItem = array();
+				$productItem['name'] = $item->getName();			  
+				$productItem['id'] = $item->getSku();
+				$productItem['price'] = Mage::getModel('directory/currency')->formatTxt($item->getBasePrice(), array('display' => Zend_Currency::NO_SYMBOL));
+				$productItem['category'] = implode('|', $categories);
+				$productItem['quantity'] = intval($item->getQtyOrdered()); // converting qty from decimal to integer
+				$productItem['coupon'] = '';
+				$productItems[] = (object) $productItem;
+
+				$objItem = array();
+				$objItem['sku'] = $item->getSku();
+				$objItem['name'] = $item->getName();
+				$objItem['category'] = implode('|', $categories);
+				$objItem['price'] = Mage::getModel('directory/currency')->formatTxt($item->getBasePrice(), array('display' => Zend_Currency::NO_SYMBOL));
+				$objItem['quantity'] = intval($item->getQtyOrdered()); // converting qty from decimal to integer
+				$aItems[] = (object) $objItem;
+			}
+			
+			$objQuote = new stdClass();
+
+			$objQuote->transactionId = $quote->getEntityId();
+			$objQuote->transactionAffiliation = Mage::app()->getStore()->getFrontendName();
+			$objQuote->transactionTotal = Mage::getModel('directory/currency')->formatTxt($quote->getGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionTax = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getData('tax_amount'), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionShipping = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->transactionCurrencyCode = $quote->getBaseCurrencyCode();
+			$objQuote->transactionProducts = $aItems;
+
+			$objQuote->user = new stdClass();
+			$objQuote->user->id = $quote->getCustomerId();
+			$objQuote->user->email = $quote->getCustomerEmail();
+
+						
+			$objQuote->ecommerce = new stdClass();
+			$objQuote->ecommerce->purchase = new stdClass();
+			$objQuote->ecommerce->purchase->actionField = new stdClass();
+			$objQuote->ecommerce->purchase->actionField->id = $quote->getEntityId();
+			$objQuote->ecommerce->purchase->actionField->affiliation = Mage::app()->getStore()->getFrontendName();
+			$objQuote->ecommerce->purchase->actionField->revenue = Mage::getModel('directory/currency')->formatTxt($quote->getGrandTotal(), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->ecommerce->purchase->actionField->tax = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getData('tax_amount'), array('display' => Zend_Currency::NO_SYMBOL));
+			$objQuote->ecommerce->purchase->actionField->shipping = Mage::getModel('directory/currency')->formatTxt($quote->getShippingAddress()->getShippingAmount(), array('display' => Zend_Currency::NO_SYMBOL));
+			$coupon = $quote->getCouponCode();
+			$totals =  $quote->getTotals();
+			$objQuote->ecommerce->purchase->actionField->coupon = $coupon == null ? '' : $coupon;
+			$objQuote->ecommerce->currencyCode = $quote->getBaseCurrencyCode();
+			$objQuote->ecommerce->products = $productItems;
+						
+			$pageCategory = json_encode(array('pageCategory' => 'order-confirmation'), JSON_PRETTY_PRINT);
+			
+			$dataScript = PHP_EOL;
+			
+			$dataScript .= '<script type="text/javascript">'.PHP_EOL.'dataLayer = [' . $pageCategory . '];'.PHP_EOL.'</script>';
+			
+			$dataScript .= PHP_EOL.PHP_EOL;
+			
+			$dataScript .= '<script type="text/javascript">'.PHP_EOL.'dataLayer.push('. json_encode($objQuote, JSON_PRETTY_PRINT) . ');'.PHP_EOL.'</script>';		
+			
+			return $dataScript;		
+		}
+	}
+
 	public function getDataLayerOrder()
 	{
 		if ($order = $this->getOrder()) {

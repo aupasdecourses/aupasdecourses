@@ -18,6 +18,9 @@
         <remove name="emailcatcher"/>
         <remove name="footer"/>
         <remove name="global_cookie_notice"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
         <reference name="content">
         	<block type="apdc_notation/note" name="notation_content" template="apdc_notation/note.phtml"/>
         </reference>
@@ -31,6 +34,9 @@
         <remove name="emailcatcher"/>
         <remove name="footer"/>
         <remove name="global_cookie_notice"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
         <reference name="content">
             <block type="apdc_notation/note" name="notation_content" template="apdc_notation/survey.phtml"/>
         </reference>

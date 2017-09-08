@@ -81,15 +81,41 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customer = Mage::getSingleton('customer/session')->getCustomer();
-            if ($customer->getCustomerNeighborhood()) {
-                return Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getStoreUrl();
-            } else {
-                $store = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore();
-                return $store->getBaseUrl();
-            }
+            return $customer->getNeighborhoodUrl();
         }
         return $this->getVisitingNeighborhood()->getStoreUrl();
     }
+
+    /**
+     * getCustomerNeighborhoodStoreId 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return int
+     */
+    public function getCustomerNeighborhoodStoreId($customer)
+    {
+        if ($customer->getCustomerNeighborhood()) {
+            $websiteId = Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getWebsiteId();
+        } else {
+            $websiteId = $customer->getWebsiteId();
+        }
+        return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
+    }
+
+    /**
+     * getCustomerNeighborhoodStore 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getCustomerNeighborhoodStore($customer)
+    {
+        $storeId = $this->getCustomerNeighborhoodStoreId($customer);
+        return Mage::getModel('core/store')->load($storeId);
+    }
+
 
     /**
      * getNeighborhoodByPostcode 

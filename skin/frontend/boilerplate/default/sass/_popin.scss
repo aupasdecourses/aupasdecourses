@@ -1,0 +1,23 @@
+.apdc-popup-close{
+    top: 0;
+    right: 0;
+    z-index: 10;
+    i{
+        color: $color-main-grey;
+    }
+}
+p{
+    &.required{
+        font-size: 0.75rem;
+        color: $color-second-green;
+        em{
+            color: $color-main-green;
+        }
+    }
+    &.info{
+        font-size: 0.75rem;
+        color: rgba(0,0,0,0.54);
+        margin-top: 20px;
+    }
+}
+

@@ -209,7 +209,7 @@ function all_orders($var = 'mwddate', $commercantId = 'all')
         if ($var == 'mwddate') {
             $orders->getSelect()->join('mwddate_store', 'main_table.entity_id=mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
             $orders->getSelect()->join('mwddate', 'mwddate_store.ddate_id=mwddate.ddate_id', array('ddate' => 'mwddate.ddate', 'dtime' => 'mwddate.dtimetext'));
-            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
+            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
             $orders->addFilterToMap('ddate', 'mwddate.ddate');
             $orders->addFilterToMap('dtime', 'mwddate.dtimetext')
             ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
@@ -221,7 +221,7 @@ function all_orders($var = 'mwddate', $commercantId = 'all')
         //Amasty Delivery Date
         } elseif ($var = '') {
             $orders->getSelect()->join(array('delivery_date' => 'amasty_amdeliverydate_deliverydate'), 'delivery_date.order_id = main_table.entity_id', array('*', 'delivery_date' => 'delivery_date.date', 'delivery_time' => 'delivery_date.time'))->order('delivery_date', 'ASC');
-            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('produit_equivalent' => 'order_attribute.produit_equivalent', 'contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
+            $orders->getSelect()->join(array('order_attribute' => 'amasty_amorderattr_order_attribute'), 'order_attribute.order_id = main_table.entity_id', array('contactvoisin' => 'order_attribute.contactvoisin', 'codeporte1' => 'order_attribute.codeporte1', 'codeporte2' => 'order_attribute.codeporte2', 'batiment' => 'order_attribute.batiment', 'etage' => 'order_attribute.etage', 'telcontact' => 'order_attribute.telcontact', 'infocomplementaires' => 'order_attribute.infoscomplementaires'));
             $orders->addFilterToMap('delivery_date', 'delivery_date.date');
             $orders->addFilterToMap('delivery_time', 'delivery_date.time')
             ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))

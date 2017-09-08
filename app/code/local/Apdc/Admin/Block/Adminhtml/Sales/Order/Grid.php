@@ -80,6 +80,10 @@ class Apdc_Admin_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_S
 
         //Address
          $collection->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id AND sales_flat_order_address.address_type = "shipping"', array('postcode', 'street'));
+
+        //Produit Equivalent
+        $collection->getSelect()->joinLeft('sales_flat_order', 'main_table.entity_id = sales_flat_order.entity_id', array('produit_equivalent'));
+
         $this->setCollection($collection);
 
         //Important to not use parent::_prepareCollection() but Mage_Adminhtml_Block_Widget_Grid (grandparent function)
@@ -88,6 +92,7 @@ class Apdc_Admin_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_S
 
     protected function _prepareColumns()
     {
+
         $this->addColumn('real_order_id', array(
             'header' => Mage::helper('sales')->__('Order #'),
             //'width' => '80px',
@@ -178,10 +183,18 @@ class Apdc_Admin_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_S
             'currency' => 'order_currency_code',
         ));
 
+        $this->addColumn('produit_equivalent', array(
+            'header' => Mage::helper('sales')->__('Produit Eq.'),
+            'index' => 'produit_equivalent',
+            'align' => 'center',
+            'type'=>'options',
+            'options' => array('1' => 'Oui', '0' => 'Non')
+        ));
+
         // //Amasty Order Attributes Attachments, Flags ... are added via observer, use the following functions to reorder the produit_equivalent column, via http://sofc.developer-works.com/article/21770138/Reposition+Magento%26%2339%3Bs+admin+grid+column+at+first+position
 
-        $this->addColumnsOrder('produit_equivalent', 'grand_total');
-        $this->sortColumnsByOrder();
+        // $this->addColumnsOrder('produit_equivalent', 'grand_total');
+        // $this->sortColumnsByOrder();
 
         // Remove columns
         $this->removeColumn('base_grand_total');

@@ -19,6 +19,14 @@
                 <Mage_Catalog/>
             </depends>
         </Apdc_Config>
+		<Apdc_Core>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Core>
+		<Apdc_Blog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Blog>
         <Apdc_Google>
             <active>true</active>
             <codePool>local</codePool>
@@ -114,7 +122,7 @@
             <codePool>local</codePool>
         </Apdc_Commercant>
         <Apdc_Notation>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Apdc_Notation>
         <Apdc_Neighborhood>
@@ -132,5 +140,24 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Media>
+	    <Apdc_CMS>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_CMS>
+        <Apdc_Search>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_CatalogSearch />
+          </depends>
+        </Apdc_Search>
+        <Apdc_Dataflow>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_Dataflow />
+            <Mage_Catalog />
+          </depends>
+        </Apdc_Dataflow>
     </modules>
 </config>

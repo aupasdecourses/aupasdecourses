@@ -1,0 +1,276 @@
+<?php
+    $url=Mage::helper('apdc_commercant')->getRandomShopImage();
+    $_helper=Mage::helper('apdccustomer');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+	<?php echo $this->getChildHtml('head') ?>
+</head>
+<body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
+	<?php echo $this->getChildHtml('after_body_start') ?>
+	<header class="header" id="faites-vos-courses">
+        <div id="background_video_container">
+            <img class="banner" src="<?php echo $url;?>" alt="Au pas de courses">
+        </div>
+        <div class="container">
+            <ul class="top-nav">
+                <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Aide">Aide</a></li>
+                <?php $customerSession = Mage::getSingleton('customer/session'); ?>
+                <?php if (!$customerSession->isLoggedIn()): ?>
+                    <li><a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a></li>
+                <?php elseif (!$customerSession->getCustomer()->needToChooseNeighborhood()) : ?>
+                    <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                <?php else : ?>
+                    <li><a href="#" id="choose-my-district" class="button button-green" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a></li>
+                <?php endif ?>
+            </ul>
+            <div class="intro-section">
+                <img id="logo" src="<?php echo $this->getSkinUrl('dist/images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
+                <h1 class="intro">Les petits commerçants de Paris,</br>livrés chez vous dans la journée.</h1>
+                <div class="col-md-5"></div>
+            </div>
+        </div>
+	</header>
+<section id="commercants">
+    <div class="container">
+    <div class="border-container"></div>
+    <div class="section-header">
+        <h2>Vos commerçants sont chez nous !</h2>
+        <div class="section-description">
+             Plus de 90 commerçants sur tout Paris nous font confiance
+        </div>
+    </div>
+</section>
+<?php echo $this->getChildHtml("liste_commercant_all");?>
+<section id="districts">
+	<div class="container">
+		<div class="section-header">
+			<h2>Choisissez votre quartier</h2>
+            <div id="search_neighborhoods">
+                <div class="input-box apdc-form">
+                    <label><?php echo $this->__('Your postcode:'); ?></label>
+                    <input type="text" id="search_neighborhoods_postcode" class="input-text" placeholder="<?php echo $this->__('Search for your neighborhood'); ?>" />
+                </div>
+            </div>
+		</div>
+		<div class="row" id="neighborhood-list">
+            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
+            <?php $nbQuartiers = $quartiers->count(); ?>
+
+            <?php $mdNbFullLines = (floor($nbQuartiers / 4) * 4); ?>
+            <?php $mdNbLeave = $nbQuartiers - $mdNbFullLines; ?>
+
+            <?php $smNbFullLines = (floor($nbQuartiers / 3) * 3); ?>
+            <?php $smNbLeave = $nbQuartiers - $smNbFullLines; ?>
+
+            <?php $xsNbFullLines = (floor($nbQuartiers / 2) * 2); ?>
+            <?php $xsNbLeave = $nbQuartiers - $xsNbFullLines; ?>
+
+            <?php $cpt = 1; foreach ($quartiers as $quartier) : ?>
+                <?php 
+                    if ($cpt <= $mdNbFullLines) {
+                        $classMd = 'col-md-3';
+                    } else {
+                        switch($mdNbLeave) {
+                        case 3:
+                            $classMd = 'col-md-4';
+                            break;
+                        case 2:
+                            $classMd = 'col-md-6';
+                            break;
+                        default:
+                            $classMd = 'col-md-12';
+                        }
+                    }
+
+                    if ($cpt <= $smNbFullLines) {
+                        $classSm = 'col-sm-4';
+                    } else {
+                        switch($smNbLeave) {
+                        case 2:
+                            $classSm = 'col-sm-6';
+                            break;
+                        default:
+                            $classSm = 'col-sm-12';
+                        }
+                    }
+                    if ($cpt <= $xsNbFullLines) {
+                        $classXs = 'col-xs-6';
+                    } else {
+                        $classXs = 'col-xs-12';
+                    }
+                ?>
+
+
+                    <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>" data-postcodes="<?php echo implode(',', unserialize($quartier->getPostcodes())); ?>">
+                    <a href="<?php echo $quartier->getStoreUrl();?>">
+                        <img src="<?php echo Mage::helper('apdc_neighborhood/media')->getMediaUrl($quartier->getImage(), array('width' => 200, 'height' => 200));?>" alt="Au Pas De Courses - <?php echo $quartier->getName(); ?>" class="img-circle"/>
+                        <span class="button"><?php echo $quartier->getName(); ?></span>
+                    </a>
+                </div>
+
+            <?php $cpt++; endforeach; ?>
+        </div>
+        <div class="row text-center" id="no_neighborhood">
+            <p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p>
+            <a class="button button-green" href="#" id="newsletter-popup" data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role="button" title="Inscrivez-vous à notre newsletter">Inscrivez-vous à notre newsletter !
+            </a>
+        </div>
+	</div>
+</section>
+<div class="container">
+    <div class="row">
+        <section class="packages col-sm-6" id="concept">
+            <div class="section-header">
+                <h2>Comment ça marche</h2>
+                <div class="section-description">
+                     Se faire livrer des produits frais et artisanaux de commerces locaux
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/online.png')?>" alt="Commandez en ligne vos produits frais et artisanaux">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Commandez en ligne chez les commerçants de votre quartier</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/shops.png')?>" alt="Les commerçants préparent votre commande">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Les commerçants préparent votre commande</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/bike.png')?>" alt="On vous livre le tout chez vous, en une fois">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">On vous livre le tout chez vous, en une fois</p>
+                </div>
+            </div>
+        </section>
+        <section class="packages col-sm-6" id="prices">
+            <div class="section-header">
+                <h2>Combien ça coûte</h2>
+                <div class="section-description">
+                     Un service juste </br> au centime près !
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm-4 price-tag"><span>9 €</span><br> Commande &#60;45 €</div>
+                    <div class="col-sm-4 price-tag"><span>6 €</span><br> Commande &#60;90 €</div>
+                    <div class="col-sm-4 price-tag"><span>3 €</span><br> Commande &#62;90 €</div>
+                </div> -->
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/price.png')?>" alt="Vous commandez au même prix qu'en magasin">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Commandez au même prix qu'en magasin</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/weight.png')?>" alt="Nous vous remboursons les écarts de poids">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Nous vous remboursons les écarts de poids</p>
+                </div>
+            </div>
+            <div class="item row">
+                <div class="col-md-3">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/groceries.png')?>" alt="Vous payez une seule livraison quel que soit le nombre de commerçants">
+                </div>
+                <div class="col-md-9">
+                    <p class="package-feature">Vous payez une seule livraison quel que soit le nombre de commerçants</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<section id="missions" class="container-fluid">
+    <h2>Ce que nous aimons</h2>
+    <div class="row">
+        <div class="col-md-4 item-mission mission-1">
+            <div>
+                <h3>Travailler ensemble</h3>
+                <p>Un fonctionnement raisonné et transparent avec nos commerçants, nos livreurs et nos équipes</p>
+            </div>
+        </div>
+        <div class="col-md-4 item-mission mission-2">
+            <div>
+                <h3>Consommer local</h3>
+                <p>Le soutien des artisans de votre quartier, garants d'un savoir-faire et de produits de qualité</p>
+            </div>
+        </div>
+        <div class="col-md-4 item-mission mission-3">
+            <div>
+                <h3>Etre proche de vous</h3>
+                <p>Une livraison verte, organisée en tournée et limitée à votre quartier pour favoriser la proximité</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cards" class="container">
+    <div class="row">
+        <div class="col-md-5 clients">
+            <img src="<?php echo $this->getSkinUrl('dist/images/photo/sandrine.jpg')?>" alt="Nos clients">
+            <p class="quote">"Ce qui m'a séduite, c'est de pouvoir me faire livrer des produits sains et de qualité le soir, même lorsque je finis tard."</p>
+            <p class="quote-author">Sandrine G., cliente fidèle.</p>
+        </div>
+        <div class="col-md-5 col-md-offset-2 partners">
+            <img src="<?php echo $this->getSkinUrl('dist/images/photo/bdm2.jpg')?>" alt="Nos commerçants partenaires">
+            <p class="quote">"Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses !"</p>
+            <p class="quote-author">Michel Vaidie, Boucherie des Moines, Paris 17.</p>
+        </div>
+    </div>
+</section>
+<?php $nous = $this->getLayout()->createBlock('cms/block')->setBlockId('ils-parlent-de-nous'); ?>
+<?php if ($nous) : ?>
+<?php echo $nous->toHtml(); ?>
+<?php endif; ?>
+<?php echo $this->getChildHtml('reassurance');?>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p class="copyright text-center">
+                    ©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.
+                </p>
+                <ul class="nav text-center" role="navigation">
+                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Mentions légales">Mentions légales</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Conditions générales d'utilisation">Conditions générales d'utilisation</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl().'../faq';?>" title="Tarifs">Tarifs</a></li>
+                    <li><a href="<?php echo Mage::getBaseUrl().'../blog';?>" title="Blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+	<?php echo $this->getChildHtml('footer') ?>
+	<?php echo $this->getChildHtml('before_body_end') ?>
+    <!-- Credits
+    Coin icon by Madebyoliver - http://www.flaticon.com/free-icon/coin_134652
+    Scale icon by Madebyoliver - http://www.flaticon.com/free-icon/scale_135529
+    Grocery icon by Madebyoliver - http://www.flaticon.com/free-icon/groceries_135532
+    Calendar icon by Madebyoliver - http://www.flaticon.com/free-icon/calendar_137866
+    Kitchen icon by Madebyolivder - http://www.flaticon.com/free-icon/kitchen_135441
+    Snowflake icon by Madebyolivder - http://www.flaticon.com/free-icon/snowflake_136613
+    Sausage icon by Madebyolivder - http://www.flaticon.com/free-icon/sausage_135419
+    -->
+</body>
+</html>

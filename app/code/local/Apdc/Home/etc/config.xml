@@ -2,19 +2,19 @@
 <config>
     <modules>
         <Apdc_Home>
-            <version>0.2.0</version>
+            <version>0.2.1</version>
         </Apdc_Home>
     </modules>
     <frontend>
         <routers>
-                <customhome>
-                    <use>standard</use>
-                    <args>
-                        <module>Apdc_Home</module>
-                        <frontName>customhome</frontName>
-                    </args>
-                </customhome>
-            </routers>
+			<customhome>
+				<use>standard</use>
+				<args>
+					<module>Apdc_Home</module>
+					<frontName>customhome</frontName>
+				</args>
+			</customhome>
+		</routers>
     	<layout>
             <updates>
                 <apdc_home>
@@ -44,6 +44,36 @@
                     <template>page/landingpage.phtml</template>
                     <layout_handle>landing_page</layout_handle>
                 </landingpage>
+                <landingpage_commercants translate="label">
+                    <label>Landing Page Commerçants</label>
+                    <template>page/landingpage_commercants.phtml</template>
+                    <layout_handle>landing_page_commercants</layout_handle>
+                </landingpage_commercants>
+                <landingpage_primeur translate="label">
+                    <label>Landing Page Primeur</label>
+                    <template>page/landingpage_primeur.phtml</template>
+                    <layout_handle>landing_page_primeur</layout_handle>
+                </landingpage_primeur>
+                <landingpage_boucher translate="label">
+                    <label>Landing Page Boucher</label>
+                    <template>page/landingpage_boucher.phtml</template>
+                    <layout_handle>landing_page_boucher</layout_handle>
+                </landingpage_boucher>
+                <landingpage_fromager translate="label">
+                    <label>Landing Page Fromager</label>
+                    <template>page/landingpage_fromager.phtml</template>
+                    <layout_handle>landing_page_fromager</layout_handle>
+                </landingpage_fromager>
+                <landingpage_caviste translate="label">
+                    <label>Landing Page Caviste</label>
+                    <template>page/landingpage_caviste.phtml</template>
+                    <layout_handle>landing_page_caviste</layout_handle>
+                </landingpage_caviste>
+                <landingpage_boulanger translate="label">
+                    <label>Landing Page Boulanger</label>
+                    <template>page/landingpage_boulanger.phtml</template>
+                    <layout_handle>landing_page_boulanger</layout_handle>
+                </landingpage_boulanger>
             </layouts>
         </page>
     </global>

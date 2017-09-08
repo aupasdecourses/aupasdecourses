@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <modules>
+    <Apdc_Core>
+      <version>0.1.0</version>
+    </Apdc_Core>
+  </modules>
+  <global>
+    <blocks>
+      <apdc_core>
+        <class>Apdc_Core_Block</class>
+      </apdc_core>
+      <core>
+        <rewrite>
+          <messages>Apdc_Core_Block_Messages</messages>
+        </rewrite>
+      </core>
+    </blocks>
+  </global>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <Apdc_Core before="Mage_Adminhtml">Apdc_Core_Adminhtml</Apdc_Core>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+  <adminhtml>
+    <layout>
+      <updates>
+        <apdc_core>
+          <file>apdc/apdc_core.xml</file>
+        </apdc_core>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <Apdc_Core>
+          <files>
+            <default>Apdc_Core.csv</default>
+          </files>
+        </Apdc_Core>
+      </modules>
+    </translate>
+  </adminhtml>
+</config>

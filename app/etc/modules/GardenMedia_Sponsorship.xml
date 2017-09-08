@@ -15,6 +15,7 @@
               <Mage_Rule />
               <Mage_SalesRule />
               <Mage_Customer />
+              <Apdc_Neighborhood />
             </depends>
         </GardenMedia_Sponsorship>
     </modules>
