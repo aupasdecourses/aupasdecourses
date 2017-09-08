@@ -59,7 +59,7 @@ class ProductController extends AbstractController
                     return;
                 }
 
-                if ($this->isGranted('ROLE_ADMIN')) {
+                if ($this->isGranted('ROLE_SUPER_ADMIN')) {
                     $shop = $this->getDoctrine()->getManager()
                         ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('commercant')]);
                 } else {
@@ -165,7 +165,7 @@ class ProductController extends AbstractController
                     return;
                 }
 
-                if (!$this->isGranted('ROLE_ADMIN')) {
+                if (!$this->isGranted('ROLE_SUPER_ADMIN')) {
                     $user = $this->getUser();
 
                     $request->request->add(['commercant' => $user->getShop()->getProductMerchant()]);
