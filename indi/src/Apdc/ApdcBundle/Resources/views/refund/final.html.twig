@@ -19,19 +19,13 @@
 	</div>
 
 	{% set psp_reference = 0 %}
-	{% set customer_amount = 0 %}
-	{% set amount_already_refunded = 0 %}
-	{% set amount_refundable = 0 %}
 
 	{% for order, fields in orders %}
 		{% if fields.merchant_reference == id %}
 			{% set psp_reference = psp_reference + fields.pspreference %}
-			{% set customer_amount = customer_amount + fields.amount %}
-			{% set amount_already_refunded = amount_already_refunded + fields.total_refunded %}
 		{% endif %}
 	{% endfor %}
 
-	{% set amount_refundable = customer_amount - amount_already_refunded %}
 
 	<div class="row">
 		<div class="row">
@@ -41,21 +35,12 @@
 		</div>
 
 		<hr/>
-		<div>
-			<h4>Rappels : </h4>
-			<div><i>Montant payé par le client : {{ customer_amount ~ " € " }}</i></div>
-			<div><i>Montant déja remboursé : {{ amount_already_refunded ~ " € " }}</i></div>
-			<div><i>Montant restant potentiellement remboursable : {{ amount_refundable ~ " € " }}</i></div>
-		</div>
-
-		<hr/>
 		{{ form_start(form)}}
 			<h4><b> Reference PSP </b></h4>
 				{{ form_widget(form.originalReference, {'attr': {'value': psp_reference} }) }}
 			<hr>
-			<h4><b>Montant à rembourser </b></h4>
-			<h4> {{ "Vous ne pouvez pas rembourser plus de : " ~ amount_refundable ~ " € " }}</h4>
-				{{ form_widget(form.value, {'attr': {'placeholder': amount_refundable ~ " € "} }) }}
+			<h4><b>Montant à rembourser : </b>{{ refund_diff ~  " € "}}</h4>
+				{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ " € "} }) }}
 			<br/>
 		{{form_errors(form)}}
 		{{form_rest(form)}}
