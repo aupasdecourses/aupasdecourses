@@ -62,9 +62,9 @@ shippingAll:
   requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
 
 refundIndex:
-  path:   /refund/{from}
-  defaults:   { _controller: ApdcApdcBundle:Refund:index, from: null}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
+  path:   /refund/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Refund:index, from: null, to: null}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 refundUpload:
   path: /refund/{id}/upload/
