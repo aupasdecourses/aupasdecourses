@@ -58,6 +58,8 @@
 								<a href='{{ path('refundFinal', {id: order.id}) }}' class='error' target="_blank">A faire</a>
 							{% elseif order.refund == 'done'%}
 								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% elseif order.refund == 'no_refund' %}
+								<span class="disabled">Pas de remboursement</span>
 							{% endif %}
 						{% else %}
 							<span class="disabled">A faire</span>

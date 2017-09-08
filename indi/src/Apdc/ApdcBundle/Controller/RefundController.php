@@ -366,7 +366,26 @@ class RefundController extends Controller
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
             }
-        }
+		}
+		
+		/* Form qui permet de passer de digest à closure sans passer par final
+		 * lorsque la commande ne necessite aucun remboursement pré-cloture.
+		 */
+		$no_refund_data = array('message' => 'No refund');
+		$no_refund_form = $this->createFormBuilder($no_refund_data)
+			->add("Go to closure view", SubmitType::class, array(
+				'label'	=>	'Cloturer >>',
+				'attr'	=> array(
+					'class'	=>'btn btn-default',
+					'style'	=>'float:right;margin-top:-15px;')))
+			->getForm();
+
+		$no_refund_form->handleRequest($request);
+
+		if ($no_refund_form->isSubmitted() && $no_refund_form->isValid()) {
+			$mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'no_refund']);
+			return $this->redirectToRoute('refundClosure', ['id' => $id]);
+		}
 
         return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
             'total'				=> $total,
@@ -378,7 +397,8 @@ class RefundController extends Controller
             'order'				=> $order,
             'id'				=> $id,
             'show_creditmemo'	=> $mage->checkdisplaybutton($id, 'creditmemo'),
-            'forms'				=> [$form_submit->createView()],
+			'forms'				=> [$form_submit->createView()],
+			'no_refund_form'	=> $no_refund_form->createView(),
         ]);
     }
 
@@ -451,6 +471,7 @@ class RefundController extends Controller
 					//Close order
 					$close = $mage->setCloseStatus($id);
 					$session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
+					return $this->redirectToRoute('refundClosure', ['id' => $id]);
 				} catch (Exception $e) {
 					$session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
 				}
