@@ -36,8 +36,12 @@
     
 	function button_onclick(){
         if($j('#agreement-1').is(":checked")){
-            tagmanager_event('validationPaiement',{});
-            payment.save();
+          try {
+                tagmanager_event('validationPaiement',{});
+            } catch(e) {
+                console.log(e);
+            }
+           payment.save();
         }
         else{
             alert("Veuillez accepter les conditions générales de vente pour commander sur Au Pas De Courses");
