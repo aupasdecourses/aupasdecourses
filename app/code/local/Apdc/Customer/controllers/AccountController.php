@@ -288,7 +288,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                     $response['status'] = 'SUCCESS';
                     $this->_getSession()
                     ->addSuccess($this->_getHelper('customer')
-                    ->__('Nous venons d\envoyer un mail à l\'adresse %s pour que vous puissiez réinitialiser votre mot de passe..',
+                    ->__("Nous venons d\envoyer un mail à l'adresse %s pour que vous puissiez réinitialiser votre mot de passe.",
                         $this->_getHelper('customer')->escapeHtml($email)));
                 } catch (Exception $exception) {
                     $response['status'] = 'ERROR';

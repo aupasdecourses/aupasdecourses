@@ -74,6 +74,30 @@ ApdcPopup.prototype.hideLoading = function() {
   jQuery('#' + this.id + ' .apdc-popup-loading').hide();
 };
 
+ApdcPopup.prototype.initPopupHeight = function() {
+  var popupContainer = jQuery('#' + this.id + ' .apdc-popup-container');
+  var height = popupContainer.find('.apdc-popup-content').children().outerHeight(true);
+  var offset = 10;
+  var paddingTop = 0;
+  if (popupContainer.css('padding-top') !== '' && !isNaN(parseFloat(popupContainer.css('padding-top')))) {
+    paddingTop = parseFloat(popupContainer.css('padding-top'));
+  }
+  var paddingBottom = 0;
+  if (popupContainer.css('padding-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('padding-bottom')))) {
+    paddingBottom = parseFloat(popupContainer.css('padding-bottom'));
+  }
+
+  var borderTop = 0;
+  if (popupContainer.css('border-top') !== '' && !isNaN(parseFloat(popupContainer.css('border-top')))) {
+    borderTop = parseFloat(popupContainer.css('border-top'));
+  }
+  var borderBottom = 0;
+  if (popupContainer.css('border-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('border-bottom')))) {
+    borderBottom = parseFloat(popupContainer.css('border-bottom'));
+  }
+  popupContainer.css('height', (offset + height + paddingTop + paddingBottom + borderTop + borderBottom) + 'px');
+};
+
 //Remove validation advice that prevents form to be submitted
 jQuery(document).on('click','input',function(e){
     jQuery('.validation-advice').remove();

@@ -237,6 +237,85 @@
             }
         }
     }
+    &.apdc_datetimepicker {
+        margin-left:auto;
+        margin-right:auto;
+      .select-time,
+      .select-days {
+        display:block;
+        text-align:center;
+        ul {
+          display:inline-block;
+          li {
+            width: 60px;
+            height: 60px;
+            border: 2px solid $color-main-green;
+            display: inline-block;
+            padding:0;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            vertical-align: middle;
+            position:relative;
+
+            border-color:#3ab64b;
+            background-color:#fff;
+            color:#00540c;
+
+            > div {
+              position:absolute;
+              top:50%;
+              left:0;
+              right:0;
+              width:100%;
+              transform:translate(0, -50%);
+              span.day {
+                font-weight:bold;
+                text-transform:uppercase;
+              }
+            }
+            &.available {
+              cursor:pointer;
+              opacity:0.7;
+              transition:opacity 0.2s ease;
+              &:hover {
+                opacity:1;
+              }
+            }
+            &.selected {
+              opacity:1;
+              background-color:$color-main-green;
+              color:$color-white;
+
+              border-color:$color-main-green;
+            }
+            &.not-available {
+              opacity:0.3;
+              border-color:#eee;
+              font-style:italic;
+              color:$color-dark-grey;
+            }
+          }
+        }
+      }
+      .select-days {
+        ul {
+          li {
+            margin-bottom:5px;
+          }
+        }
+      }
+      .select-time {
+        margin-top:3px;
+        ul {
+          li {
+            width:120px;
+            height:36px;
+            margin:5px;
+          }
+        }
+      }
+    }
 }
 .ddate_selected{
     i, span{
@@ -290,13 +369,17 @@
                 padding: 26px 0;
             }
         }
+        &.apdc_datetimepicker {
+          margin-top:5px;
+          max-width:520px;
+        }
     }
 }
 
 #checkout-shipping-method-load{
     border-bottom: 1px solid #eee;
-    padding-bottom: 40px;
-    margin-bottom: 40px;
+    padding-bottom: 25px;
+    text-align:center;
     dl{
         position: relative;
         background-color: #fafafa;
@@ -306,6 +389,12 @@
         margin: 0;
         &.active{
             border: 1px solid $color-main-green;
+        }
+        & > div{
+            float: none;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
         }
         .price{
             font-size: 1.25rem;
@@ -537,6 +626,13 @@
         text-align: left;
     }
 }
+
+#co-ddate-form{
+    h3{
+        text-align:center;
+    }
+}
+
 #discount-coupon-form{
     input{
         color: $color-main-grey;

@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Apdc_CMS>
-			<version>0.1.4</version>
+			<version>0.1.6</version>
 		</Apdc_CMS>
 	</modules>
     <global>

@@ -148,7 +148,6 @@ class Magento
             ),
             'order_attribute.order_id = main_table.entity_id',
             array(
-                'produit_equivalent' => 'order_attribute.produit_equivalent',
                 'contactvoisin' => 'order_attribute.contactvoisin',
                 'codeporte1' => 'order_attribute.codeporte1',
                 'codeporte2' => 'order_attribute.codeporte2',

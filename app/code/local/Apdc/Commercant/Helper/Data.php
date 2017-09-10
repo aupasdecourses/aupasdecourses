@@ -78,6 +78,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getCategoriesInfos($rootId){
+        $filter=array();
         $categories = Mage::getModel('catalog/category')
                          ->getCollection()
                          ->addAttributeToSelect(array('image', 'url_path'))
@@ -102,6 +103,8 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getInfoShop($shopId = null)
     {
         $shop_info = [];
+        $data = [];
+        $categoryShop = null;
 		if($shopId == null) {
 			$current_cat = Mage::registry('current_category');
 			$categoriesParent = $current_cat->getParentCategories();
@@ -111,8 +114,10 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 					break;
 				}
 			}
-			$categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-			$data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+            if ($categoryShop) {
+                $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
+                $data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+            }
 		}
 		else {
             $collection = Mage::getSingleton('apdc_commercant/shop')
@@ -126,7 +131,6 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             }
 		}
 		
-        $shop_info = [];
         if (!empty($data) && $categoryShop && $categoryShop->getId()) {
             $shop_info["name"]=$data["name"];
             $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
@@ -157,4 +161,27 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $shop_info;
     }
+
+    public function getRandomShopImage($filter="all")
+    {
+        $shop_info = [];
+        $collection = Mage::getModel('apdc_commercant/shop')->getCollection()            
+            ->addFieldtoFilter('enabled',1);
+
+        if($filter<>"all"){
+            $collection->addFieldToFilter('type', $filter);
+        }
+
+        $collection->getSelect()->order('rand()');
+        $collection->getSelect()->limit(1);
+
+        if($collection->getFirstItem()->getCategoryImage()<>NULL){
+            return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$collection->getFirstItem()->getCategoryImage();
+        }else{
+            $i = mt_rand(1, 17); // generate random number size of the array
+            $url = "dist/images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
+            return Mage::getDesign()->getSkinUrl()."../default/".$url;
+        }
+    }
+
 }

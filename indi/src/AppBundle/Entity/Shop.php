@@ -26,7 +26,7 @@ class Shop
      *
      * @var string
      *
-     * @ORM\Column(name="id_commercant", type="string", length=255)
+     * @ORM\Column(name="id_commercant", type="integer", length=11)
      */
     private $merchant;
 
@@ -58,6 +58,15 @@ class Shop
     private $incremental;
 
     /**
+     * The product merchant ID
+     *
+     * @var string
+     *
+     * @ORM\Column(name="id_attribut_commercant", type="integer", length=11)
+     */
+    private $productMerchant;
+
+    /**
      * Get id
      *
      * @return integer
@@ -70,7 +79,7 @@ class Shop
     /**
      * Set merchant
      *
-     * @param string $merchant
+     * @param integer $merchant
      *
      * @return Shop
      */
@@ -84,7 +93,7 @@ class Shop
     /**
      * Get merchant
      *
-     * @return string
+     * @return integer
      */
     public function getMerchant()
     {
@@ -161,5 +170,29 @@ class Shop
     public function getIncremental()
     {
         return $this->incremental;
+    }
+
+    /**
+     * Set productMerchant
+     *
+     * @param integer $productMerchant
+     *
+     * @return Shop
+     */
+    public function setProductMerchant($productMerchant)
+    {
+        $this->productMerchant = $productMerchant;
+
+        return $this;
+    }
+
+    /**
+     * Get productMerchant
+     *
+     * @return integer
+     */
+    public function getProductMerchant()
+    {
+        return $this->productMerchant;
     }
 }

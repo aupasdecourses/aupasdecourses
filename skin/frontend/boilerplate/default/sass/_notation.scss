@@ -1,0 +1,50 @@
+.apdc-notation-index-index {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  header {
+    height: 100%;
+    margin-bottom: 0 !important;
+  }
+  #background_video_container {
+    height: 100% !important;
+  }
+  .full {
+    height: 100%;
+  }
+  .intro-section {
+    margin-top: 100px !important;
+    padding: 0;
+    padding-bottom: 40px;
+    background: white;
+    .border-container {
+      width: 100%;
+      height: 56px;
+      background: url(../images/border-pattern-height.png) repeat-x;
+    }
+    #logo {
+      padding: 40px 40px;
+    }
+    .icon {
+      margin-bottom: 10px;
+    }
+  }
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .apdc-notation-index-index .intro-section {
+    margin-top: 80px !important;
+    #logo {
+      width: 60%;
+    }
+    footer {
+      position: relative;
+    }
+  }
+
+}

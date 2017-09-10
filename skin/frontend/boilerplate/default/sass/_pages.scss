@@ -6,6 +6,13 @@ section {
         margin-bottom: 65px;
         padding-top: 50px;
     }
+    &#commercants {
+        & > .container {
+            h2 {
+                color: $color-main-green;
+            }
+        }
+    }
     &#districts {
         & > .container {
             background: url(../images/picto/bandeau.png), #fff;
@@ -324,7 +331,6 @@ section {
       }
     }
     &#advantages {
-        border-top: 1px solid #eee;
         padding: 20px 0;
         .container {
             background: none;

@@ -23,17 +23,10 @@
                     </div>
                 <?php endif; ?>
                 <div class="skip-help skip-container">
-                    <a id="dLabel" data-target="header-help" href="<?php echo Mage::getBaseUrl().'../faq';?>" class="skip-link skip-help">
+                    <a id="dLabel" href="<?php echo Mage::getBaseUrl().'../faq';?>" class="skip-help">
                         <i class="fa fa-info-circle"></i>
                         <span class="label">Aide</span>
                     </a>
-                    <ul id="header-help" class="dropdown-menu skip-content links" aria-labelledby="dLabel">
-                        <li class="first"><a href="<?php echo Mage::getBaseUrl();?>besoin-d-aide">Besoin d'aide ?</a></li>
-                        <li><a href="<?php echo Mage::getBaseUrl();?>zone-et-horaire">Zone & horaires</a></li>
-                        <li><a href="<?php echo Mage::getBaseUrl();?>tarifs-livraison">Tarifs</a></li>
-                        <li><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/commercantsmanquants/">Commerce manquant</a></li>
-                        <li class="last"><a href="<?php echo Mage::getBaseUrl();?>formulaire/index/produitsmanquants/">Produit manquant</a></li>
-                    </ul>
                 </div>
 
                 <?php echo $this->getChildHtml('neighborhood_header'); ?>

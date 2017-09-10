@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  design
+ * @package   Apdc_Core
+ * @copyright Copyright (c) 2016 GardenMedia Studio VN
+ */
+-->
+<layout>
+  <adminhtml_apdc_core_categories_treeview>
+    <block type="core/text_list" name="root" output="toHtml">
+      <block type="apdc_core/adminhtml_tab_categoriesTreeView" name="apdc_core.tab.categoriesTreeView"/>
+    </block>
+  </adminhtml_apdc_core_categories_treeview>
+</layout>
