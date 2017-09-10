@@ -310,6 +310,10 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     public function ajaxRegisterProcessAction()
     {
         $params = $this->getRequest()->getPost();
+        Mage::log("Request",null,"ajaxlog.log");
+        Mage::log($this->getRequest()->getData(),null,"ajaxlog.log");
+        Mage::log("Params",null,"ajaxlog.log");
+        Mage::log($params,null,"ajaxlog.log");
         if ($params['isAjax'] == 1) {
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -380,6 +384,9 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
             }
         }
+
+        Mage::log("Response",null,"ajaxlog.log");
+        Mage::log($this->getResponse()->getData(),null,"ajaxlog.log");
 
         return;
     }
