@@ -311,7 +311,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
     {
         $params = $this->getRequest()->getPost();
         Mage::log("Request",null,"ajaxlog.log");
-        Mage::log($this->getRequest()->getData(),null,"ajaxlog.log");
+        Mage::log($this->getRequest(),null,"ajaxlog.log");
         Mage::log("Params",null,"ajaxlog.log");
         Mage::log($params,null,"ajaxlog.log");
         if ($params['isAjax'] == 1) {
@@ -386,7 +386,7 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
         }
 
         Mage::log("Response",null,"ajaxlog.log");
-        Mage::log($this->getResponse()->getData(),null,"ajaxlog.log");
+        Mage::log($this->getResponse(),null,"ajaxlog.log");
 
         return;
     }
