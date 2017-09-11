@@ -65,7 +65,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcNeighborhoodPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(neighborhoodPopup[handle]) !== 'undefined') {
 		  apdcNeighborhoodPopup.updateContent(neighborhoodPopup[handle]);
-		  setPopupHeight(apdcNeighborhoodPopup);
+      apdcNeighborhoodPopup.initPopupHeight();
 		} else {
 			//var ajaxUrl = jQuery(elt).data('login-view');
 			var ajaxUrl = jQuery(elt).data('url');
@@ -89,7 +89,7 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcNeighborhoodPopup.updateContent(message);
 				}
-			  setPopupHeight(apdcNeighborhoodPopup);
+        apdcNeighborhoodPopup.initPopupHeight();
 			})
 			.fail(function() {
 				console.log('failed');
@@ -103,7 +103,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcDeliveryPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(deliveryPopup[handle]) !== 'undefined') {
 		  apdcDeliveryPopup.updateContent(deliveryPopup[handle]);
-		  setPopupHeight(apdcDeliveryPopup);
+      apdcDeliveryPopup.initPopupHeight();
 		} else {
 			//var ajaxUrl = jQuery(elt).data('login-view');
 			var ajaxUrl = jQuery(elt).data('url');
@@ -121,13 +121,13 @@ function initLoginPopup() {
 			})
 			.done(function(response) {
 				if (response.status === 'SUCCESS') {
-					deliveryPopup[handle] = response.html;
+					//deliveryPopup[handle] = response.html;
 					apdcDeliveryPopup.updateContent(response.html);
 				} else if (response.status === 'ERROR') {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcDeliveryPopup.updateContent(message);
 				}
-			  setPopupHeight(apdcDeliveryPopup);
+        apdcDeliveryPopup.initPopupHeight();
 			})
 			.fail(function() {
 				console.log('failed');
@@ -141,7 +141,7 @@ function initLoginPopup() {
 		jQuery('#' + apdcLoginPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(accountPopup[handle]) !== 'undefined') {
 		  apdcLoginPopup.updateContent(accountPopup[handle]);
-		  setPopupHeight(apdcLoginPopup);
+      apdcLoginPopup.initPopupHeight();
 		} else {
 			var ajaxUrl = jQuery(elt).data('login-view');
 			var data = new FormData();
@@ -164,36 +164,12 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcLoginPopup.updateContent(message);
 				}
-			  setPopupHeight(apdcLoginPopup);
+        apdcLoginPopup.initPopupHeight();
 			})
 			.fail(function() {
 				console.log('failed');
 			});
 		}
-	}
-
-	function setPopupHeight(apdcPopup) {
-		var popupContainer = jQuery('#' + apdcPopup.id + ' .apdc-popup-container');
-		var height = popupContainer.find('.apdc-popup-content').children().outerHeight(true);
-    var offset = 10;
-    var paddingTop = 0;
-    if (popupContainer.css('padding-top') !== '' && !isNaN(parseFloat(popupContainer.css('padding-top')))) {
-      paddingTop = parseFloat(popupContainer.css('padding-top'));
-    }
-    var paddingBottom = 0;
-    if (popupContainer.css('padding-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('padding-bottom')))) {
-      paddingBottom = parseFloat(popupContainer.css('padding-bottom'));
-    }
-
-    var borderTop = 0;
-    if (popupContainer.css('border-top') !== '' && !isNaN(parseFloat(popupContainer.css('border-top')))) {
-      borderTop = parseFloat(popupContainer.css('border-top'));
-    }
-    var borderBottom = 0;
-    if (popupContainer.css('border-bottom') !== '' && !isNaN(parseFloat(popupContainer.css('border-bottom')))) {
-      borderBottom = parseFloat(popupContainer.css('border-bottom'));
-    }
-		popupContainer.css('height', (offset + height + paddingTop + paddingBottom + borderTop + borderBottom) + 'px');
 	}
 
 	function processLoginForm(elt) {
@@ -225,7 +201,7 @@ function initLoginPopup() {
 			} else {
 				console.log('failed');
 			}
-      setPopupHeight(apdcLoginPopup);
+      apdcLoginPopup.initPopupHeight();
 		})
 		.fail(function() {
 			console.log('failed');

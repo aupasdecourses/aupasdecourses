@@ -235,28 +235,7 @@
 <?php if ($nous) : ?>
 <?php echo $nous->toHtml(); ?>
 <?php endif; ?>
-<section id="advantages">
-    <div class="container">
-        <div class="row text-center">
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/choice.png')?>" alt="Belle sélection de produits, au même prix qu'en boutique.">
-                <p>Belle sélection de produits, au même prix qu'en boutique</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/calendar-round.png')?>" alt="Livraison en soirée du mardi au vendredi">
-                <p>Livraison en soirée du mardi au vendredi</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/fresh.png')?>" alt="Qualité et fraîcheur de la commande à la livraison.">
-                <p>Qualité et fraîcheur de la commande à la livraison</p>
-            </div>
-            <div class="item col-sm-3 col-xs-6">
-                <img src="<?php echo $this->getSkinUrl('dist/images/picto/kitchen.png')?>" alt="Gagnez du temps et mangez bon.">
-                <p>Gagnez du temps et mangez bon</p>
-            </div>
-        </div>
-    </div>
-</section>
+<?php echo $this->getChildHtml('reassurance');?>
 
 <footer>
     <div class="container">

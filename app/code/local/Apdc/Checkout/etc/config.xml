@@ -63,6 +63,11 @@
                     <onepage>Apdc_Checkout_Block_Onepage</onepage>
                 </rewrite>
             </checkout>
+            <checkout>
+              <rewrite>
+                <onepage_ddate>Apdc_Checkout_Block_Onepage_Ddate</onepage_ddate>
+              </rewrite>
+            </checkout>
             <hipaymod>
 	            <rewrite>
 	            	<form>Apdc_Checkout_Block_Hipay_Form</form>

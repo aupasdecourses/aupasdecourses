@@ -81,6 +81,7 @@ Mage_Sales::Grand Total,Total TTC
 Mage_Checkout::Proceed to Checkout,Régler vos achats
 Mage_Catalog::Add to Cart,Ajouter
 Mage_Core::Search entire store here...,Rechercher un produit
+Mage_Customer::Forgot your password?,Mot de passe oublié ?
 Mage_Customer::Login or Create an Account,Connectez-vous à votre compte
 Mage_Customer::Already registered?,Client enregistré
 Mage_Customer::If you have an account with us, please log in.,Identifiez vous pour avoir accès à votre compte,

@@ -8,6 +8,7 @@
       <action method="addItem"><type>skin_js</type><file>js/ddate/opcheckout_rwd.js</file></action>
       <action method="addItem"><type>skin_js</type><file>js/ddate/jscal2.js</file></action>
       <action method="addItem"><type>skin_js</type><file>js/ddate/lang/en.js</file></action>
+      <action method="addItem" ifconfig="ddate/info/calender_display"><type>skin_js</type><file>js/apdc_checkout/ddate_timepicker.js</file></action>
     </reference>
     <reference name="header">
 		  <block type="checkout/onepage_ddate" name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />

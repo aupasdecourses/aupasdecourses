@@ -770,7 +770,7 @@ Payment.prototype = {
         this.form = form;
         this.saveUrl = saveUrl;
         this.onSave = this.nextStep.bindAsEventListener(this);
-        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        //this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
     },
 
     addBeforeInitFunction : function(code, func) {
@@ -910,7 +910,7 @@ Payment.prototype = {
         if (checkout.loadWaiting!=false) return;
         var validator = new Validation(this.form);
         if (this.validate() && validator.validate()) {
-            checkout.setLoadWaiting('payment');
+            checkout.setLoadWaiting('payment',true);
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
