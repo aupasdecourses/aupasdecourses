@@ -177,6 +177,10 @@ class ProductController extends AbstractController
 
                 // Note: If we are from the grid, we get the value from the entity
                 $public = $request->request->get('prix_public');
+                if(!preg_match('/[0-9.,]/', $public)){
+                    $public= $entity['prix_public'];
+                }
+
                 $unit   = $request->request->get('unite_prix', isset($entity['unite_prix']) ? $entity['unite_prix'] : 'kg');
 
                 $public = str_replace(',', '.', $public);
@@ -189,11 +193,22 @@ class ProductController extends AbstractController
                     $price = $public * $request->request->get('nbre_portion', 1);
                 }
 
+                $weight = $request->request->get('nbre_portion', 1)*$request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1000);
+
                 $name = $request->request->get('name', $entity['name']);
 
+                $status = $request->request->get('status', $entity['status']);
+                if($status){
+                    $status = 1;
+                } elseif(!$status){
+                    $status = 2;
+                }
+
                 $request->request->add([
+                    'status'            => $status,
                     'prix_kilo_site'    => $public . '€/' . $unit,
                     'prix_public'       => $public,
+                    'weight'            => $weight,
                     'price'             => $price,
                     'meta_title'        => $name . ' - Au Pas De Courses',
                     'meta_description'  => $name . ' - Au Pas De Courses',
@@ -350,6 +365,7 @@ class ProductController extends AbstractController
             }
         }
 
+
         return $array + [
             'produit_de_saison'  => [
                 448 => 'Oui',
@@ -359,8 +375,37 @@ class ProductController extends AbstractController
                 276 => 'Oui',
                 76  => 'Non',
                 34  => 'AB'
+            ],
+            'status' => [
+                1 => 1,
+                2 => 0,
             ]
         ];
+    }
+
+    /**
+     * Return an existing entity
+     *
+     * @param integer $id      The entity id
+     * @param Request $request The Request
+     *
+     * @return array|object
+     *
+     * @ViewTemplate()
+     * @ApiDoc(output={})
+     */
+    public function getAction($id, Request $request)
+    {
+        $this->init('get');
+
+        if (!$entity = $this->getModel(null, false)->find($id)) {
+            return $this->notFound();
+        }
+
+        $filters=$this->getFilters();
+        $entity['status']=$filters['status'][$entity['status']];
+
+        return $entity;
     }
 
     /**

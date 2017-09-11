@@ -297,3 +297,4 @@ trait Products
     {
         return \Mage::getModel($name);
     }
+}
