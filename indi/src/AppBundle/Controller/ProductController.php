@@ -388,6 +388,27 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @inheritdoc
+     *
+     * @ViewTemplate()
+     * @ApiDoc(output={})
+     */
+    public function getAction($id, Request $request)
+    {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            return parent::getAction($id, $request);
+        }
+
+        $entity = parent::getAction($id, $request);
+
+        if ($entity['commercant'] != $this->getUser()->getShop()->getProductMerchant()) {
+            return $this->notFound();
+        }
+
+        return $entity;
+    }
+
+    /**
      * Set the status to false and send an email to the admin
      *
      * @inheritdoc

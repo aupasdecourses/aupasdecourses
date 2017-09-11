@@ -160,7 +160,6 @@ abstract class AbstractController extends Controller implements ClassResourceInt
      */
     public function cgetAction(Request $request)
     {
-
         $this->init('list');
 
         $search  = $this->getSearch($request);
