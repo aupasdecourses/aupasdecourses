@@ -321,6 +321,8 @@ class RefundController extends Controller
         $order_mid				= $order[-1]['order']['mid'];
         $order_header			= $order[-1]['order'];
         unset($order[-1]);
+		
+		$refund_full = $mage->getRefundfull($refund_diff, $refund_shipping_amount);
 
         $files = $this->getUploadedFiles($id);
         foreach ($order as $merchant_id => $merchant_part) {
@@ -360,45 +362,34 @@ class RefundController extends Controller
                         $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
                     } else {
                         $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
-                    }
-                    $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
-                } catch (\Exception $e) {
+					}
+					
+					if ($refund_full != 0) {
+						$mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
+					} else {
+						$mage->updateEntryToOrderField(['order_id' => $order_mid], [
+							'digest' => 'done',
+							'refund' => 'no_refund'
+						]);
+					}
+
+				} catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
             }
 		}
 		
-		/* Form qui permet de passer de digest à closure sans passer par final
-		 * lorsque la commande ne necessite aucun remboursement pré-cloture.
-		 */
-		$no_refund_data = array('message' => 'No refund');
-		$no_refund_form = $this->createFormBuilder($no_refund_data)
-			->add("Go to closure view", SubmitType::class, array(
-				'label'	=>	'Cloturer >>',
-				'attr'	=> array(
-					'class'	=>'btn btn-default',
-					'style'	=>'float:right;margin-top:-15px;')))
-			->getForm();
-
-		$no_refund_form->handleRequest($request);
-
-		if ($no_refund_form->isSubmitted() && $no_refund_form->isValid()) {
-			$mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'no_refund']);
-			return $this->redirectToRoute('refundClosure', ['id' => $id]);
-		}
-
         return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
             'total'				=> $total,
             'refund_total'		=> $refund_total,
             'refund_diff'		=> $refund_diff,
             'refund_shipping'	=> $refund_shipping_amount,
-            'refund_full'		=> $mage->getRefundfull($refund_diff, $refund_shipping_amount),
+            'refund_full'		=> $refund_full,
             'order_header'		=> $order_header,
             'order'				=> $order,
             'id'				=> $id,
             'show_creditmemo'	=> $mage->checkdisplaybutton($id, 'creditmemo'),
 			'forms'				=> [$form_submit->createView()],
-			'no_refund_form'	=> $no_refund_form->createView(),
         ]);
     }
 
