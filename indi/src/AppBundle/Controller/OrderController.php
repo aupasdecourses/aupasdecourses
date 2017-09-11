@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AutoBundle\Controller\AbstractController;
+use FOS\RestBundle\Controller\Annotations\View as ViewTemplate;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends AbstractController
@@ -46,5 +48,32 @@ class OrderController extends AbstractController
         $filters['customer_id'] = $this->getUser()->getId();
 
         return $filters;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @ViewTemplate()
+     * @ApiDoc(output={})
+     */
+    public function getAction($id, Request $request)
+    {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            return parent::getAction($id, $request);
+        }
+
+        $entity = parent::getAction($id, $request);
+
+        $items = [];
+
+        foreach ($entity['items'] as $item) {
+            if ($item['commercant'] == $this->getUser()->getShop()->getProductMerchant()) {
+                $items[] = $item;
+            }
+        }
+
+        $entity['items'] = $items;
+
+        return $entity;
     }
 }

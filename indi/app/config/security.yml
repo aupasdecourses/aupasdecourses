@@ -35,6 +35,10 @@ security:
             pattern:    ^/api/oauth/v2/token
             security:   false
 
+        resetting:
+            pattern: ^/api/resetting
+            anonymous: true
+
         api:
             pattern: ^/api
             fos_oauth: true
