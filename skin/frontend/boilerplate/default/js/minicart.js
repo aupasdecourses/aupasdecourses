@@ -34,6 +34,7 @@ function Minicart(options) {
 
     this.selectors = {
         itemRemove:           '#cart-sidebar .remove',
+        emptyCart:            '#header-cart .empty-cart',
         container:            '.minicart-wrapper',
         inputQty:             '.cart-item-quantity',
         qty:                  'div.header-minicart span.count',
@@ -70,6 +71,10 @@ Minicart.prototype = {
             e.preventDefault();
             cart.removeItem($j(this));
         });
+        $j(this.selectors.emptyCart).unbind('click.minicart').bind('click.minicart', function(e) {
+            e.preventDefault();
+            cart.emptyCart($j(this));
+        });
 
         // bind update qty event
         $j(this.selectors.inputQty)
@@ -84,9 +89,8 @@ Minicart.prototype = {
             });
 
         $j(this.selectors.quantityButtonClass)
-            .unbind('click.quantity')
-            .bind('click.quantity', function() {
-              var self = this;
+            .off('click')
+            .on('click', function() {
               cart.processUpdateQuantity(this);
         });
     },
@@ -116,9 +120,44 @@ Minicart.prototype = {
             });
         }
     },
+    emptyCart: function(el) {
+        var cart = this;
+        if (confirm(el.data('confirm'))) {
+            //$j(document).trigger('updateCartStartLoading', [$j(el).data('item-id'), $j(el).data('product-id')]);
+            var commercantId = el.data('commercant-id');
+            cart.hideMessage();
+            cart.showOverlay();
+            $j.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {form_key: cart.formKey, commercant_id:commercantId},
+                url: el.data('ajax-url')
+            }).done(function(result) {
+                cart.hideOverlay();
+                if (result.success) {
+                    cart.updateCartQty(result.qty);
+                    if (typeof(result.product_ids) !== 'undefined') {
+                      for (var i=0; i < result.product_ids.length; ++i) {
+                        jQuery(document).trigger('updateCartStartLoading', [null, result.product_ids[i]]);
+                      }
+                    }
+                    if (typeof(commercantId) === 'undefined') {
+                      cart.updateContentOnRemove(result, jQuery('#cart-sidebar li'));
+                    } else {
+                      cart.updateContentOnRemove(result, el.closest('li'));
+                    }
+                } else {
+                    cart.showMessage(result);
+                }
+            }).error(function() {
+                cart.hideOverlay();
+                cart.showError(cart.defaultErrorMessage);
+            });
+        }
+    },
 
     revertInvalidValue: function(el) {
-        if (!this.isValidQty($j(el).val()) || $j(el).val() == this.previousVal) {
+        if (!this.isValidQty($j(el).val()) || $j(el).val() === this.previousVal) {
             $j(el).val(this.previousVal);
             this.hideQuantityButton(el);
         }
@@ -136,7 +175,7 @@ Minicart.prototype = {
 
     processUpdateQuantity: function(el) {
         var input = $j(this.selectors.quantityInputPrefix + $j(el).data('item-id'));
-        if (this.isValidQty(input.val()) && input.val() != this.previousVal) {
+        if (this.isValidQty(input.val()) && input.val() !== this.previousVal) {
             this.updateItem(el);
         } else {
             this.revertInvalidValue(input);
@@ -197,7 +236,7 @@ Minicart.prototype = {
     },
 
     updateCartQty: function(qty) {
-        if (typeof qty != 'undefined') {
+        if (typeof qty !== 'undefined') {
           $j(this.selectors.qty).text(qty);
           if (qty > 0) {
             $j(this.selectors.qty).show();
@@ -208,7 +247,7 @@ Minicart.prototype = {
     },
 
     isValidQty: function(val) {
-        return (val.length > 0) && (val - 0 == val) && (val - 0 > 0);
+        return (val.length > 0) && (parseInt(val) - 0 === parseInt(val)) && (parseInt(val) - 0 > 0);
     },
 
     showOverlay: function() {
@@ -220,11 +259,11 @@ Minicart.prototype = {
     },
 
     showMessage: function(result) {
-        if (typeof result.notice != 'undefined') {
+        if (typeof result.notice !== 'undefined') {
             this.showError(result.notice);
-        } else if (typeof result.error != 'undefined') {
+        } else if (typeof result.error !== 'undefined') {
             this.showError(result.error);
-        } else if (typeof result.message != 'undefined') {
+        } else if (typeof result.message !== 'undefined') {
             this.showSuccess(result.message);
         }
       var self = this;

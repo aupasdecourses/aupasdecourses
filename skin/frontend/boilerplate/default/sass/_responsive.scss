@@ -106,6 +106,15 @@
             background-color: transparent;
         }
     }
+    .header-minicart{
+        #header-cart{
+            .block-subtitle {
+                .close {
+                    margin-right:50px;
+                }
+            }
+        }
+    }
     #topmenu {
       position:fixed;
       z-index:100;
@@ -528,9 +537,22 @@
                 }
             }
             .mini-cart-bottom{
-                bottom: 60px;
                 .subtotal .label{
                     display: block;
+                }
+            }
+            .commercant-product-list {
+                .item-cell {
+                  width:50%;
+                    &.item-qty {
+                        width: 20%;
+                    }
+                    &.item-price {
+                        width: 20%;
+                    }
+                    &.item-actions {
+                        width: 9%;
+                    }
                 }
             }
         }

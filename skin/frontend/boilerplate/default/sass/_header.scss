@@ -340,20 +340,21 @@ header{
             text-transform: none;
             position: absolute;
             top: 0;
-            left: auto;
+            left: 0;
             bottom: auto;
-            right: 20px;
+            right: 0;
             transition: transform 0.3s ease;
             z-index: 9;
-            line-height: 35px;
+            line-height: 5px;
             text-align: left;
-            padding: 20px 0 50px 20px;
-            height: 43px;
-            width: calc(100% - 20px);
+            padding: 20px 0 10px 20px;
+            margin:0;
+            height: 60px;
+            width: 100%;
             background: #fff;
             opacity: 1;
             & + hr{
-                margin: 5px auto 20px;
+                margin: 0px auto 10px;
                 width: 90%;
             }
             .close {
@@ -372,6 +373,13 @@ header{
                     background: none;
                 }
             }
+            .link-empty-cart {
+              clear:both;
+              .empty-cart {
+                cursor:pointer;
+                font-size:11px;
+              }
+            }
         }
         .mini-cart-bottom {
             position: absolute;
@@ -384,7 +392,7 @@ header{
             width: 100%;
             min-height:100px;
             hr{
-                margin: 5px auto 20px;
+                margin: 5px auto 10px;
                 width: 90%;
             }
             .block-content {
@@ -418,7 +426,7 @@ header{
         .minicart-wrapper {
             height: 100%;
             overflow: auto;
-            padding: 70px 10px 155px;
+            padding: 55px 10px 145px;
             width: 100%;
             p.empty {
               margin: 5px 0 0;
@@ -453,12 +461,12 @@ header{
             & > li {
                 border:none;
                 padding:0;
-                margin: 0 0 20px;
+                margin: 0 0 5px;
             }
         }
         .mini-commercant-name {
             height: 40px;
-            padding: 5px 20px 5px 10px;
+            padding: 5px 10px;
             line-height: 30px;
             background-color: #3bb64b;
             color: #fff;
@@ -468,23 +476,51 @@ header{
             &:hover{
                 background-color: $color-second-green;
             }
-            &.closed i {
-                transform: translateY(-50%) rotateZ(180deg);
-            }
             .title {
               font-size: 0.875rem;
               display:inline-block;
             }
-            .count {
-                display:inline-block;
-                float:right;
-            }
-            i {
-                position: absolute;
-                right: 5px;
-                top: 50%;
+            .actions {
+              display:inline-block;
+              float:right;
+              padding-top:4px;
+              span {
+                float:left;
+              }
+              .count {
+                cursor:default;
+              }
+              .badge {
+                margin-right:10px;
+                display:block;
+                width:20px;
+                height:20px;
+                border-radius:50%;
+                background-color:white;
+                position:relative;
+                color:inherit;
+                i {
+                  position:absolute;
+                  top:50%;
+                  left:50%;
+                  transform:translate(-50%, -50%);
+                  font-style:normal;
+                  font-size:12px;
+                  margin:0;
+                }
+              }
+              i.fa-angle-up {
+                clear:left;
+                color:white;
+                font-size:20px;
+                vertical-align:middle;
+
                 transform: translateY(-50%) rotateZ(0);
                 transition: transform 0.3s ease;
+              }
+            }
+            &.closed .actions i.fa-angle-up {
+                transform: translateY(-50%) rotateZ(180deg);
             }
         }
         .commercant-product-list {
