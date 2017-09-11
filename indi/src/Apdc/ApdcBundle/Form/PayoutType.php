@@ -25,7 +25,8 @@ class PayoutType extends AbstractType
 				->add('shopperReference', TextType::class);
 
 		$builder->add('value', MoneyType::class, [
-					'divisor' => 100,
+			'divisor'	=> 100,
+			'label'		=> 'Montant',
 		]);
 
 		$builder->add('date', DateTimeType::class, [

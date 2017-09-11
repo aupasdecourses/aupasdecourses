@@ -878,7 +878,6 @@ class Magento
         foreach ($merchants as $merchant) {
             $tab[$merchant->getData('name')] = [
                 'id' => $merchant->getData('id_commercant'),
-                'reference' => 'PAY-'.date('Y-m').'-'.$merchant->getData('code').'-',
                 'name' => $merchant->getData('name'),
                 'ownerName' => $merchant->getData('owner_name'),
                 'iban' => $merchant->getData('account_iban'),

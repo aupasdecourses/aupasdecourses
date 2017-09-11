@@ -441,7 +441,7 @@ class BillingController extends Controller
         $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
         $payout_list = $repository->findAll();
 
-        return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
+        return $this->render('ApdcApdcBundle::billing/payout_index.html.twig', [
             'payout_list' => $payout_list,
             'form_prepayout' => $form_prepayout->createView(),
         ]);
@@ -485,7 +485,7 @@ class BillingController extends Controller
             return $this->redirectToRoute('billingPayoutIndex');
         }
 
-        return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig', [
+        return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [
             'form' => $form->createView(),
             'merchants' => $merchants,
             'choice' => $choice,

@@ -3,34 +3,32 @@
 
 {% block body %}
 <div class="container">
-	<h1> Payout Submit </h1><br>
-
+	
+	<h1>Effectuer un virement commercant</h1><br>
+	<hr/>
 
 	{{ form_start(form) }}
-
-
 
 	{% for key , fields in merchants %}
 		{% if fields.id == choice %}
 		
-			<h4><b> Reference :</b></h4>
-			{{ form_widget(form.reference, {'attr': {'value': fields.reference} }) }}
-
-			<h4><b> Owner Name :</b></h4>
+			<h4><b>Magasin</b></h4>
 			{{ form_widget(form.ownerName, {'attr': {'value': fields.ownerName} }) }}
 
-			<h4><b> Iban :</b></h4>
+			<h4><b>IBAN</b></h4>
 			{{ form_widget(form.iban, {'attr': {'value': fields.iban} }) }}
 
-			<h4><b> Shopper Email:</b></h4>
+			<h4><b>Commercant</b></h4>
+			{{ form_widget(form.shopperReference, {'attr': {'value': fields.shopperReference} }) }}
+
+			<h4><b>Mail commercant</b></h4>
 			{{ form_widget(form.shopperEmail, {'attr': {'value': fields.shopperEmail} }) }}
 
-			<h4><b> Shopper Reference:</b></h4>
-			{{ form_widget(form.shopperReference, {'attr': {'value': fields.shopperReference} }) }}
-			
+			<h4><b>Reference</b></h4>
+			{{ form_widget(form.reference, {'attr': {'value': 'lala'} }) }}
 
 			{{ form_widget(form) }}
-			<input type="submit" value="Submit" class="btn btn-default" onClick="return confirm('Confirmer le payout ?');" />
+			<input type="submit" value="Confirmer" class="btn btn-default" onClick="return confirm('Confirmer le payout ?');" />
 		{% endif %}
 	{% endfor %}
 
