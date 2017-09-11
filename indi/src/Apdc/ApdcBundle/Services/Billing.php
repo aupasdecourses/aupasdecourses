@@ -231,7 +231,8 @@ class Billing
                 if($item->getProductType()!="bundle"){
                     $itcom=$item->getCommercant();
                     $do=$data_order[$incrementid][$itcom];
-                    $do['shop_id']=$list_commercant[$itcom]['shop_id'];
+					$do['shop_id']=$list_commercant[$itcom]['shop_id'];
+					$do['id_attribut_commercant']=$list_commercant[$itcom]['id_attribut_commercant'];
                     $do['order_shop_id'] = $incrementid.'-'.$do['shop_id'];
                     $do['billing_month']=$billing_month;
                     $do['customer_name']=$nom_client;
@@ -335,7 +336,8 @@ class Billing
                 foreach ($data_summary_key as $key) {
                     $data_summary[$com['shop_id']][$key] = 0;
                 }
-                $data_summary[$com['shop_id']]['shop_id'] = $com['shop_id'];
+				$data_summary[$com['shop_id']]['shop_id'] = $com['shop_id'];
+				$do['id_attribut_commercant']=$list_commercant[$itcom]['id_attribut_commercant'];
                 $data_summary[$com['shop_id']]['shop'] = $com['name'];
                 $data_summary[$com['shop_id']]['billing_month'] = $billing_month;
                 $data_summary[$com['shop_id']]['created_at'] = $currentTimestamp;
