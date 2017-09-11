@@ -406,6 +406,24 @@ class BillingController extends Controller
 
         $check_file = file_exists($billing_path.$id.'.pdf');
 
+
+		$data_payout = array('message' => 'Redirection vers formulaire de virement commercant');
+		$payout_form = $this->createFormBuilder($data_payout)
+			->add('Payout', SubmitType::class, array(
+				'label'	=> 'Virement',
+				'attr'	=> array(
+					'class' => 'btn btn-warning btn-lg',
+					'style'	=> 'float:right; margin-top:-60px;')))
+				->getForm();
+		
+		$payout_form->handleRequest($request);
+
+		if ($payout_form->isSubmitted() && $payout_form->isValid()) {
+			$session->set('increment_id', $bill['increment_id']);
+			$session->set('sum_payout', $bill['summary'][0]['sum_payout']);
+			return $this->redirectToRoute('billingPayoutSubmit', ['choice' => $bill['summary'][0]['shop_id']]);
+		}
+
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
             'forms' => [$form_id->createView()],
             'billing_form' => $form_billing->createView(),
@@ -414,7 +432,8 @@ class BillingController extends Controller
             'form_send' => $form_download->createView(),
             'bill' => $bill,
             'check_date' => $check_date,
-            'check_file' => $check_file,
+			'check_file' => $check_file,
+			'payout_form' => $payout_form->createView(),
         ]);
     }
 
@@ -456,7 +475,9 @@ class BillingController extends Controller
         $mage = $this->container->get('apdc_apdc.magento');
         $merchants = $mage->getApdcBankFields();
 
-        $session = $request->getSession();
+		$session = $request->getSession();
+		$increment_id	= $session->get('increment_id');
+		$sum_payout		= $session->get('sum_payout');
 
         $adyen = $this->container->get('apdc_apdc.adyen');
         $payout = new Payout();
@@ -486,9 +507,11 @@ class BillingController extends Controller
         }
 
         return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [
-            'form' => $form->createView(),
-            'merchants' => $merchants,
-            'choice' => $choice,
+            'form'			=> $form->createView(),
+            'merchants'		=> $merchants,
+			'choice'		=> $choice,
+			'increment_id'	=> $increment_id,
+			'sum_payout'	=> $sum_payout,
         ]);
     }
 }

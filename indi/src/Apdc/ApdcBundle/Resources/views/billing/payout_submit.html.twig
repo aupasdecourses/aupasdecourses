@@ -25,9 +25,16 @@
 			{{ form_widget(form.shopperEmail, {'attr': {'value': fields.shopperEmail} }) }}
 
 			<h4><b>Reference</b></h4>
-			{{ form_widget(form.reference, {'attr': {'value': 'lala'} }) }}
+			{% if increment_id is not null %}
+				{{ form_widget(form.reference, {'attr': {'value': increment_id} }) }}
+			{% endif %}
 
-			{{ form_widget(form) }}
+			<h4><b>Montant</b></h4>
+			{% if sum_payout is not null %}
+				{{ form_widget(form.value, {'attr': {'value': sum_payout} }) }}
+			{% endif %}
+
+			<br/>
 			<input type="submit" value="Confirmer" class="btn btn-default" onClick="return confirm('Confirmer le payout ?');" />
 		{% endif %}
 	{% endfor %}

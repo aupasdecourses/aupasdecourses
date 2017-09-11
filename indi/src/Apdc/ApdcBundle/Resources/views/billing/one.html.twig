@@ -31,9 +31,7 @@
 		{{ form_end(form_payout) }}
 	{% endif %}
 
-
-	<div style="float:right; margin-top:-46px;"><a href="{{ path('billingPayoutSubmit', { 'choice':bill.summary.0.shop_id }) }}"><button type="button" class="btn btn-warning btn-lg">Virement</button></a></div>
-
+	{{ form(payout_form) }}
 
 	<h2> Synthèse de la facture commerçant</h2></br>
 	<div id="billing-summary" class="order">
