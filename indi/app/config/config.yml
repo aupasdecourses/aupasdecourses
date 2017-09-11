@@ -136,7 +136,7 @@ fos_oauth_server:
 nelmio_cors:
    defaults:
        allow_credentials: true
-       allow_origin: []
+       allow_origin: ['*']
        allow_headers: []
        allow_methods: []
        expose_headers: []

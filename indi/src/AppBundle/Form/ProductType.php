@@ -20,8 +20,8 @@ class ProductType extends AbstractType
                 ]
             ])
             ->add('sku')
-            ->add('ref')
             ->add('reference_interne_magasin')
+            ->add('notes_com')
             ->add('status')  // TODO: ChoiceType, 1: Enabled / 2 Disabled
             ->add('on_selection')  // TODO: ChoiceType, 0 / 1
             ->add('prix_public')

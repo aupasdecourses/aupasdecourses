@@ -61,10 +61,9 @@ class ProductController extends AbstractController
 
                 if ($this->isGranted('ROLE_SUPER_ADMIN')) {
                     $shop = $this->getDoctrine()->getManager()
-                        ->getRepository('AppBundle:Shop')->findOneBy(['merchant' => $request->get('commercant')]);
+                        ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $request->get('commercant')]);
                 } else {
                     $shop = $this->getUser()->getShop();
-
                     $request->request->add(['commercant' => $shop->getProductMerchant()]);
                 }
 
@@ -111,14 +110,16 @@ class ProductController extends AbstractController
                 }
 
                 /** @var \AppBundle\Repository\ShopRepository $shopModel */
-                $shopModel = $this->getModel('Shop', false);
-                $shopModel->load($entity['shop_id'])->increment();
+                $shop = $this->getDoctrine()->getManager()
+                        ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $entity['commercant']]);
+                $shopModel = $this->getModel('Shop', false)->load($shop->getMerchant());
+                $shopModel->increment();
 
                 if (!$this->getParameter('enabled_email')) {
                     return;
                 }
 
-                $title = 'Produit créé chez le commerçant ID : '.$entity['commercant'];
+                $title = 'Produit créé chez le commerçant avec l\'attribut commercant n° : '.$entity['commercant'];
                 $body  = 'Le produit suivant a été créé par '.$this->getUser()->getUsername()
                     .', le '.date("Y-m-d").' :'.PHP_EOL
                     .'SKU : '.$entity['sku'].PHP_EOL
