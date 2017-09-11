@@ -820,14 +820,18 @@ class Magento
     }
 
 	/**	
-	 *	Retourne le contenu de la table adyen/order_payment
+	 *	Retourne le contenu de la table adyen/order_payment trié par n° de commande
      */
-    public function getAdyenOrderPaymentTable()
+    public function getAdyenPaymentByMerchRef()
     {
-        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
+
         $ref = [];
         $cpt = 1;
         foreach ($collection as $fields) {
+			$ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
+			$ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
             $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
             $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
             $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();

@@ -499,7 +499,7 @@ class RefundController extends Controller
         }
 
         $mage	= $this->container->get('apdc_apdc.magento');
-        $orders = $mage->getAdyenOrderPaymentTable();
+        $orders = $mage->getAdyenPaymentByMerchRef();
 
         return $this->render('ApdcApdcBundle::refund/post_closure_index.html.twig', [
             'orders' => $orders,
