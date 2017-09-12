@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-use Apdc\ApdcBundle\Entity\Refund;
-use Apdc\ApdcBundle\Form\RefundType;
+use Apdc\ApdcBundle\Entity\IndiRefund;
+use Apdc\ApdcBundle\Form\IndiRefundType;
 
 class RefundController extends Controller
 {
@@ -409,8 +409,8 @@ class RefundController extends Controller
         $refund_diff	= $order[-1]['merchant']['refund_diff'];
         $order_mid		= $order[-1]['order']['mid'];
 
-        $refund = new Refund();
-        $form	= $this->createForm(RefundType::class, $refund);
+        $refund = new IndiRefund();
+        $form	= $this->createForm(IndiRefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
@@ -508,8 +508,8 @@ class RefundController extends Controller
 
 		$orders	= $mage->getAdyenPaymentByPsp();
 
-        $refund = new Refund();
-        $form	= $this->createForm(RefundType::class, $refund);
+        $refund = new IndiRefund();
+        $form	= $this->createForm(IndiRefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
