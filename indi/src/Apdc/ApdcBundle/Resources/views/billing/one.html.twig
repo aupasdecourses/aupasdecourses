@@ -95,9 +95,13 @@
 						
 						<td>
 							{% if bill.summary[0].sum_payout != 0 %}
-								{{ form(payout_form) }}
+								{% if bill.summary[0].merchant_payout_status == NULL %}
+									{{ form(payout_form) }}
+								{% elseif bill.summary[0].merchant_payout_status == "done" %}
+									<span class="success">OK</span>
+								{% endif %}
 							{% else %}
-								<span class="disabled">A faire</span>	
+								<span class="disabled">A faire</span>
 							{% endif %}
 						</td>
 

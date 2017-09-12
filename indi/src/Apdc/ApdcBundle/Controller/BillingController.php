@@ -408,7 +408,7 @@ class BillingController extends Controller
         $check_file = file_exists($billing_path.$id.'.pdf');
 
 
-		$data_payout = array('message' => 'Redirection vers formulaire de virement commercant');
+		$data_payout = array('message' => 'Formulaire de virement commercant');
 		$payout_form = $this->createFormBuilder($data_payout)
 			->add('Payout', SubmitType::class, array(
 				'label'	=> 'Virement',
@@ -491,6 +491,7 @@ class BillingController extends Controller
             return $this->redirectToRoute('root');
         }
 
+		$mage = $this->container->get('apdc_apdc.magento');
         $bill = $this->container->get('apdc_apdc.billing');
         $merchants = $bill->getApdcBankFields();
 
@@ -520,9 +521,14 @@ class BillingController extends Controller
                 echo $e->getMessage();
             }
 
-            $session->getFlashBag()->add('success', 'Virement à ' . $ownerName . ' effectué');
+            $session->getFlashBag()->add('success', 'Virement de ' . ($value/100) . ' à ' . $ownerName . ' effectué');
 
-            return $this->redirectToRoute('billingPayoutIndex');
+			if ($increment_id != null && $sum_payout != null) {
+				$mage->updateEntryToBillingSummary(['increment_id' => $increment_id], ['merchant_payout_status' => "done"]);
+				return $this->redirectToRoute('billingOne', ['id' => $increment_id]);
+			} else {				
+				return $this->redirectToRoute('billingPayoutIndex');
+			}
         }
 
         return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [

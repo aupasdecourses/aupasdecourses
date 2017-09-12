@@ -18,4 +18,13 @@ $table = $installer->getConnection()
 		'comment'	=> 'ID attribut commercant'
 	));
 
+$table = $installer->getConnection()
+	->addColumn($installer->getTable('pmainguet_delivery/indi_billingsummary'), 'merchant_payout_status', array(
+		'type'		=> Varien_Db_Ddl_Table::TYPE_TEXT,
+		'length'	=> 255,
+		'nullable'	=> true,
+		'default'	=> null,
+		'comment'	=> 'statut virement commercant'
+	));
+
 $installer->endSetup();
