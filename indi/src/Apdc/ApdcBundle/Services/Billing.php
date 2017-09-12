@@ -337,7 +337,7 @@ class Billing
                     $data_summary[$com['shop_id']][$key] = 0;
                 }
 				$data_summary[$com['shop_id']]['shop_id'] = $com['shop_id'];
-				$do['id_attribut_commercant']=$list_commercant[$itcom]['id_attribut_commercant'];
+				$data_summary[$com['shop_id']]['id_attribut_commercant'] = $com['id_attribut_commercant'];
                 $data_summary[$com['shop_id']]['shop'] = $com['name'];
                 $data_summary[$com['shop_id']]['billing_month'] = $billing_month;
                 $data_summary[$com['shop_id']]['created_at'] = $currentTimestamp;
