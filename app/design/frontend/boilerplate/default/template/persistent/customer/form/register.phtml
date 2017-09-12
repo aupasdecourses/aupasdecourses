@@ -186,6 +186,7 @@
             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
             <div class="buttons-set">
                 <button type="submit" id="register-button" title="<?php echo $this->__('Register') ?>" class="button button-green" ><?php echo $this->__('Register') ?></button>
+                <?php echo $this->getChildHtml('form.additional.actions'); ?>
                 <div class="please-wait" id="register-please-wait" style="display:none;">
                     <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" title="<?php echo $this->__('Un instant s\'il vous plaît...') ?>" class="v-middle" /> <?php echo $this->__('Un instant s\'il vous plaît...') ?>
                 </div>

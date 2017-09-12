@@ -61,7 +61,6 @@
                 <action method="addItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/app.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
-                <!-- <action method="addItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action> -->
                 <action method="addItem"><type>skin_js</type><name>js/slideshow.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/minicart.js</name></action>
@@ -69,16 +68,10 @@
 				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
 				<action method="addItem"><rel>skin_css</rel><href>css/apdc_catalog/category_view.css</href></action>
 				<action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-add-to-cart.css</file></action>
-				<!--<action method="addItem"><rel>skin_css</rel><href>css/apdc_home/selection_all.css</href></action>-->
 				<action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_view.js</file></action>
 				
-				<!--<action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>-->
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
-				
-				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
-				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>
-				<action method="addItem"><type>skin_js</type><file>js/login-form.js</file></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
 				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
@@ -104,7 +97,6 @@
                     <action method="setText"><text><![CDATA[<meta name="viewport" content="initial-scale=1.0, width=device-width" />]]>&#10;</text></action>
                 </block>
                 <!-- MAGNIFIC POPUP -->
-				<action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
                 <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
@@ -134,13 +126,7 @@
                     <action method="setElementClass"><value>top-container</value></action>
                 </block>
                 <block type="page/html_welcome" name="welcome" as="welcome"/>
-				<!--<block type="customer/form_login" name="customer_form_login" template="apdc_customer/form/mini.login.phtml" />-->
-				<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
-					<!--<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">-->
-						<!--<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>-->
-						<!--<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />-->
-					<!--</block>-->
-				</block>
+                <block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml" />
 				
 				
             </block>
@@ -185,10 +171,6 @@
                 <block type="page/template_links" name="footer_links2" as="footer_links2" template="page/template/links.phtml">
                     <action method="setTitle"><title>Account</title></action>
                 </block>
-                <!-- This static block can be created and populated in admin. The footer_links cms block can be used as a starting point. -->
-                <!--<block type="cms/block" name="footer_social_links">
-                    <action method="setBlockId"><block_id>footer_social_links</block_id></action>
-                </block>-->
             </block>
 
             <block type="core/text_list" name="before_body_end" as="before_body_end" translate="label">

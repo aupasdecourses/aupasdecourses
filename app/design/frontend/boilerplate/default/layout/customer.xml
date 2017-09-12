@@ -44,6 +44,8 @@ Supported layout update handles (special):
     <default>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><file>js/apdc_customer/capitalize-name.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>
+				    <action method="addItem"><type>skin_js</type><file>js/login-form.js</file></action>
         </reference>
     </default>
 
@@ -63,12 +65,12 @@ Load this update on every page when customer is logged out
 -->
 
     <customer_logged_out>
-        <!---<reference name="right">
-            <block type="customer/form_login" name="customer_form_mini_login" before="-" template="customer/form/mini.login.phtml"/>
-        </reference>-->
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>Log In</label><url helper="customer/getLoginUrl"/><title>Log In</title><prepare/><urlParams/><position>100</position></action>
             <action method="addLink" translate="label title" module="customer"><label>Sign up</label><url helper="customer/getRegisterUrl"/><title>Sign up</title><prepare/><urlParams/><position>110</position></action>
+            <action method="removeLinkByUrl">
+                <url helper="customer/getAccountUrl" />
+            </action>
         </reference>
         <remove name="reorder"></remove>
     </customer_logged_out>
@@ -82,6 +84,12 @@ Layout for customer login page
         <!-- Mage_Customer -->
         <remove name="right"/>
         <remove name="left"/>
+
+        <reference name="head">
+            <action method="setTitle" translate="title">
+                <title>Espace Personnel sur Au Pas De Courses</title>
+            </action>
+        </reference>
 
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
@@ -211,12 +219,7 @@ Customer account pages, rendered for all tabs in dashboard
             </block>
         </reference>
 
-        <!--<reference name="left_first">
-            <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="apdc_customer/account/navigation.phtml">
-                <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
-                <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
-            </block>
-        </reference>-->
+
         <reference name="left">
             <remove name="tags_popular"/>
         </reference>
@@ -272,5 +275,35 @@ Customer account address edit page
             <block type="customer/address_edit" name="customer_address_edit" template="apdc_customer/address/edit.phtml"/>
         </reference>
     </customer_address_form>
+
+    <apdc_login_view>
+        <reference name="content">
+            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml" />
+        </reference>
+    </apdc_login_view>
+
+    <apdc_register_view>
+      <reference name="content">
+        <block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
+          <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+            <label>Form Fields Before</label>
+          </block>
+          <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+          <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+        </block>
+      </reference>
+    </apdc_register_view>
+
+    <apdc_forgotpassword_view>
+		    <reference name="content">
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+        </reference>
+    </apdc_forgotpassword_view>  
+	    
+    <customer_account_changeforgotten translate="label">
+      <reference name="content">
+        <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="apdc_customer/form/resetforgottenpassword.phtml" />
+      </reference>
+    </customer_account_changeforgotten>
 
 </layout>
