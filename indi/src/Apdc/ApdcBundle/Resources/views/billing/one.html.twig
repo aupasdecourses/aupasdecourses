@@ -94,7 +94,7 @@
 						<td style="color:red">{{ summary.sum_payout - sum_payout_regle }}</td>
 						
 						<td>
-							{% if bill.summary[0].sum_payout != 0 %}
+							{% if bill.summary[0].date_payout is not null %}
 								{% if bill.summary[0].merchant_payout_status == NULL %}
 									{{ form(payout_form) }}
 								{% elseif bill.summary[0].merchant_payout_status == "done" %}

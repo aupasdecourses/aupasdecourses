@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class PayoutType extends AbstractType
+class IndiPayoutType extends AbstractType
 {
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
