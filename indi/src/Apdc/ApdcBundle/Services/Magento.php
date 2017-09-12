@@ -862,34 +862,7 @@ class Magento
         return $ref;
     }
 
-    /** Pour les payouts */
-    public function getApdcBankFields()
-    {
-        $tab = [];
-
-        $merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
-
-        $merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
-
-        $merchants->getSelect()->join('apdc_commercant_contact', 'main_table.id_contact_billing = apdc_commercant_contact.id_contact');
-
-        $merchants->getSelect()->join('apdc_shop', 'main_table.id_commercant = apdc_shop.id_commercant')->group('main_table.id_commercant');
-
-        foreach ($merchants as $merchant) {
-            $tab[$merchant->getData('name')] = [
-                'id' => $merchant->getData('id_commercant'),
-                'name' => $merchant->getData('name'),
-                'ownerName' => $merchant->getData('owner_name'),
-                'iban' => $merchant->getData('account_iban'),
-                'shopperEmail' => $merchant->getData('email'),
-                'shopperReference' => $merchant->getData('firstname').' - '.$merchant->getData('lastname'),
-            ];
-        }
-
-        return $tab;
-    }
-
-
+    
     /* Retourne la marge arriere par commercant */
     public function getMargin()
     {

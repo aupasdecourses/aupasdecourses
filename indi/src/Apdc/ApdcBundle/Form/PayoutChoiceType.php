@@ -8,14 +8,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use Apdc\ApdcBundle\Services\Magento;
+use Apdc\ApdcBundle\Services\Billing;
 
 class PayoutChoiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 
-		$merchants = new Magento();
+		$merchants = new Billing();
 
 		$merchantChoices = [];
 		foreach ($merchants->getApdcBankFields() as $key => $content) {

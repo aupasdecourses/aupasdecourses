@@ -424,6 +424,7 @@ class BillingController extends Controller
 			return $this->redirectToRoute('billingPayoutSubmit', ['choice' => $bill['summary'][0]['shop_id']]);
 		}
 
+		// NE PAS CONFONDRE FORM_PAYOUT ET PAYOUT_FORM
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
             'forms' => [$form_id->createView()],
             'billing_form' => $form_billing->createView(),
@@ -472,8 +473,8 @@ class BillingController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $merchants = $mage->getApdcBankFields();
+        $bill = $this->container->get('apdc_apdc.billing');
+        $merchants = $bill->getApdcBankFields();
 
 		$session = $request->getSession();
 		$increment_id	= $session->get('increment_id');
