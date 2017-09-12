@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PayoutType extends AbstractType
 {
@@ -30,10 +31,17 @@ class PayoutType extends AbstractType
 		]);
 
 		$builder->add('date', DateTimeType::class, [
-					'label' => false,
-					'attr'	=> [
-						'style' => 'visibility:hidden'
-					]
+			'label' => false,
+			'attr'	=> [
+				'style' => 'visibility:hidden'
+			]
+		]);
+
+		$builder->add('submit', SubmitType::class, [
+			'label' => 'Confirmer',
+			'attr'	=> [
+				'onclick' => 'return confirm("Confirmer le virement commercant ?")' 
+			]
 		]);
     }
 
