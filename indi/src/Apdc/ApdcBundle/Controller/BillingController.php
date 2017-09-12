@@ -413,8 +413,8 @@ class BillingController extends Controller
 			->add('Payout', SubmitType::class, array(
 				'label'	=> 'Virement',
 				'attr'	=> array(
-					'class' => 'btn btn-warning btn-lg',
-					'style'	=> 'float:right; margin-top:-60px;')))
+					'class' => 'btn btn-link btn-lg',
+					'style'	=> 'margin-top:-13px;')))
 				->getForm();
 		
 		$payout_form->handleRequest($request);
@@ -422,7 +422,7 @@ class BillingController extends Controller
 		if ($payout_form->isSubmitted() && $payout_form->isValid()) {
 			$session->set('increment_id', $bill['increment_id']);
 			$session->set('sum_payout', $bill['summary'][0]['sum_payout']);
-			return $this->redirectToRoute('billingPayoutSubmit', ['choice' => $bill['summary'][0]['shop_id']]);
+			return $this->redirectToRoute('billingPayoutSubmit', ['id' => $bill['summary'][0]['id_attribut_commercant']]);
 		}
 
 		// NE PAS CONFONDRE FORM_PAYOUT ET PAYOUT_FORM
@@ -520,7 +520,7 @@ class BillingController extends Controller
                 echo $e->getMessage();
             }
 
-            $session->getFlashBag()->add('success', 'Payout effectué avec succès');
+            $session->getFlashBag()->add('success', 'Virement à ' . $ownerName . ' effectué');
 
             return $this->redirectToRoute('billingPayoutIndex');
         }
