@@ -4,8 +4,8 @@ namespace Apdc\ApdcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Apdc\ApdcBundle\Entity\Payout;
-use Apdc\ApdcBundle\Form\PayoutType;
+use Apdc\ApdcBundle\Entity\IndiPayout;
+use Apdc\ApdcBundle\Form\IndiPayoutType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -445,7 +445,7 @@ class BillingController extends Controller
             return $this->redirectToRoute('root');
         }
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
+        $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:IndiPayout');
         $payout_list = $repository->findAll();
 
         return $this->render('ApdcApdcBundle::billing/payout_history.html.twig', [
@@ -468,8 +468,8 @@ class BillingController extends Controller
 		$sum_payout		= $session->get('sum_payout');
 
         $adyen = $this->container->get('apdc_apdc.adyen');
-        $payout = new Payout();
-        $form = $this->createForm(PayoutType::class, $payout);
+        $payout = new IndiPayout();
+        $form = $this->createForm(IndiPayoutType::class, $payout);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();

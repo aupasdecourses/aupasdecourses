@@ -48,7 +48,7 @@ class PayoutType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-			'data_class'		=> 'Apdc\ApdcBundle\Entity\Payout',
+			'data_class'		=> 'Apdc\ApdcBundle\Entity\IndiPayout',
 			'csrf_protection'	=> true
         ));
     }
