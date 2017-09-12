@@ -10,7 +10,7 @@
 	{{ form_start(form) }}
 
 	{% for key , fields in merchants %}
-		{% if fields.id == choice %}
+		{% if fields.id_attribut_commercant == id %}
 		
 			<h4><b>Magasin</b></h4>
 			{{ form_widget(form.ownerName, {'attr': {'value': fields.ownerName} }) }}

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Apdc\ApdcBundle\Entity\Payout;
 use Apdc\ApdcBundle\Form\PayoutType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BillingController extends Controller
@@ -445,29 +446,46 @@ class BillingController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+		$bill = $this->container->get('apdc_apdc.billing');
 
-        $entity_prepayout = new \Apdc\ApdcBundle\Entity\PayoutChoice();
-        $form_prepayout = $this->createForm(\Apdc\ApdcBundle\Form\PayoutChoiceType::class, $entity_prepayout);
-        $form_prepayout->handleRequest($request);
+		$merchants = $bill->getApdcBankFields();
+		$choices = [];
 
-        $choice = $form_prepayout['choice']->getData();
+		foreach ($merchants as $key => $value) {
+			$choices[$value['name']] = $value['id_attribut_commercant'];
+		}
+		ksort($choices);
 
-        if ($form_prepayout->isSubmitted() && $form_prepayout->isValid()) {
-            return $this->redirectToRoute('billingPayoutSubmit', [
-                'choice' => $choice,
-            ]);
-        }
+		$data = array('message' => 'Liste deroulante de choix de commercant');
+		$choice_form = $this->createFormBuilder($data)
+			->add('Choice', ChoiceType::class, array(
+				'label'		=> 'Magasin',
+				'choices'	=> $choices,
+				'required'	=> true
+			))
+			->add('Submit', SubmitType::class, array(
+				'label'	=> 'Continuer'
+			))
+			->getForm();
+		
+		$choice_form->handleRequest($request);
+
+		if ($choice_form->isSubmitted() && $choice_form->isValid()) {
+			return $this->redirectToRoute('billingPayoutSubmit', [
+				'id'	=> $choice_form['Choice']->getData(),
+			]);
+		}
 
         $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
         $payout_list = $repository->findAll();
 
         return $this->render('ApdcApdcBundle::billing/payout_index.html.twig', [
             'payout_list' => $payout_list,
-            'form_prepayout' => $form_prepayout->createView(),
+            'choice_form' => $choice_form->createView(),
         ]);
     }
 
-    public function payoutSubmitAction(Request $request, $choice)
+    public function payoutSubmitAction(Request $request, $id)
     {
         if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
@@ -510,7 +528,7 @@ class BillingController extends Controller
         return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [
             'form'			=> $form->createView(),
             'merchants'		=> $merchants,
-			'choice'		=> $choice,
+			'id'			=> $id,
 			'increment_id'	=> $increment_id,
 			'sum_payout'	=> $sum_payout,
         ]);

@@ -6,9 +6,12 @@
 		
 	<h2>Effectuer un virement commercant</h2>
 
-		{{ form_start(form_prepayout) }}
-		{{ form_widget(form_prepayout) }}
-		{{ form_end(form_prepayout) }}
+		<div class="row">
+			<div class="col-md-2">
+				{{ form(choice_form) }}
+			</div>
+			<div class="col-md-10"></div>
+		</div>
 
 	<hr>
 	<h2>Historique des virements :</h2>

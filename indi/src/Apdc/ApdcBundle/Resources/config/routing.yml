@@ -130,9 +130,9 @@ billingPayoutIndex:
   defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
 
 billingPayoutSubmit:
-  path: /billing/payout/{choice}/submit/
+  path: /billing/payout/{id}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
-  requirements: { choice:"[0-9]+" }
+  requirements: { id:"[0-9]+" }
 
 toolProduct:
   path: /tool/product/
