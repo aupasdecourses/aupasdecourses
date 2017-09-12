@@ -125,9 +125,9 @@ billingOne:
   defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
   requirements: { id:"COM-[0-9-]+" }
 
-billingPayoutIndex:
-  path: /billing/payout/
-  defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
+billingPayoutHistory:
+  path: /billing/payout/history
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutHistory }
 
 billingPayoutSubmit:
   path: /billing/payout/{id}/submit/

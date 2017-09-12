@@ -13,7 +13,7 @@
 		{% if fields.id_attribut_commercant == id %}
 		
 			<h4><b>Magasin</b></h4>
-			{{ form_widget(form.ownerName, {'attr': {'value': fields.ownerName} }) }}
+			{{ form_widget(form.ownerName, {'attr': {'value': fields.name} }) }}
 
 			<h4><b>IBAN</b></h4>
 			{{ form_widget(form.iban, {'attr': {'value': fields.iban} }) }}

@@ -98,7 +98,7 @@
 								{% if bill.summary[0].merchant_payout_status == NULL %}
 									{{ form(payout_form) }}
 								{% elseif bill.summary[0].merchant_payout_status == "done" %}
-									<span class="success">OK</span>
+									<span class="success">Effectué</span>
 								{% endif %}
 							{% else %}
 								<span class="disabled">A faire</span>

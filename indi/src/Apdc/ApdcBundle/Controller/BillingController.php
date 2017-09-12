@@ -439,49 +439,17 @@ class BillingController extends Controller
         ]);
     }
 
-    public function payoutIndexAction(Request $request)
+    public function payoutHistoryAction(Request $request)
     {
         if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-		$bill = $this->container->get('apdc_apdc.billing');
-
-		$merchants = $bill->getApdcBankFields();
-		$choices = [];
-
-		foreach ($merchants as $key => $value) {
-			$choices[$value['name']] = $value['id_attribut_commercant'];
-		}
-		ksort($choices);
-
-		$data = array('message' => 'Liste deroulante de choix de commercant');
-		$choice_form = $this->createFormBuilder($data)
-			->add('Choice', ChoiceType::class, array(
-				'label'		=> 'Magasin',
-				'choices'	=> $choices,
-				'required'	=> true
-			))
-			->add('Submit', SubmitType::class, array(
-				'label'	=> 'Continuer'
-			))
-			->getForm();
-		
-		$choice_form->handleRequest($request);
-
-		if ($choice_form->isSubmitted() && $choice_form->isValid()) {
-			return $this->redirectToRoute('billingPayoutSubmit', [
-				'id'	=> $choice_form['Choice']->getData(),
-			]);
-		}
-
         $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
         $payout_list = $repository->findAll();
 
-        return $this->render('ApdcApdcBundle::billing/payout_index.html.twig', [
+        return $this->render('ApdcApdcBundle::billing/payout_history.html.twig', [
             'payout_list' => $payout_list,
-            'choice_form' => $choice_form->createView(),
         ]);
     }
 
@@ -521,14 +489,10 @@ class BillingController extends Controller
                 echo $e->getMessage();
             }
 
+			$mage->updateEntryToBillingSummary(['increment_id' => $increment_id], ['merchant_payout_status' => "done"]);
             $session->getFlashBag()->add('success', 'Virement de ' . ($value/100) . ' à ' . $ownerName . ' effectué');
-
-			if ($increment_id != null && $sum_payout != null) {
-				$mage->updateEntryToBillingSummary(['increment_id' => $increment_id], ['merchant_payout_status' => "done"]);
-				return $this->redirectToRoute('billingOne', ['id' => $increment_id]);
-			} else {				
-				return $this->redirectToRoute('billingPayoutIndex');
-			}
+			
+			return $this->redirectToRoute('billingOne', ['id' => $increment_id]);
         }
 
         return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [

@@ -4,17 +4,9 @@
 {% block body %}
 <div class="container-fluid">
 		
-	<h2>Effectuer un virement commercant</h2>
+	<h2>Historique des virements commercants</h2>
+	<hr/>
 
-		<div class="row">
-			<div class="col-md-2">
-				{{ form(choice_form) }}
-			</div>
-			<div class="col-md-10"></div>
-		</div>
-
-	<hr>
-	<h2>Historique des virements :</h2>
 	<table id="payoutTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -52,7 +44,7 @@
 	<script type="text/javascript">
 $(document).ready(function() {
 	$('#payoutTable').DataTable( {
-		"order": [[ 0, 'asc' ]],
+		"order": [[ 0, 'dsc' ]],
 		"footerCallback": function ( row, data, start, end, display ) {
 			var api = this.api(), data;
 
