@@ -41,7 +41,6 @@ class OrderRepository extends AbstractMageRepository
             ],
             'order_attribute.order_id = main_table.entity_id',
             [
-                'order_attribute.produit_equivalent',
                 'order_attribute.codeporte1',
                 'order_attribute.codeporte2',
                 'order_attribute.batiment',

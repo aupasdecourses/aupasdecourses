@@ -32,7 +32,7 @@ parameters:
   adyen_platform_first_part:      'https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference='
   adyen_platform_second_part:     '&accountKey=MerchantAccount.AuPasDeCoursesFR'
 
-  from_email:         ['noreplay@aupasdecourses.com', 'Au Pas De Couses']
+  from_email:         ['noreply@aupasdecourses.com', 'Au Pas De Courses']
   to_email:           ['prix@aupasdecourses.com', 'Prix - Au Pas De Courses']
 
   enabled_email: true
