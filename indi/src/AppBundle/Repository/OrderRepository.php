@@ -48,6 +48,12 @@ class OrderRepository extends AbstractMageRepository
                 'order_attribute.telcontact',
                 'order_attribute.infoscomplementaires',
             ]
+        )->join(
+            'sales_flat_order_item',
+            '`sales_flat_order_item`.order_id=`main_table`.entity_id',
+            [
+                'commercant' => 'sales_flat_order_item.commercant'
+            ]
         )->joinLeft(
             ['shipping_o_a' => $this->model->getTable('sales/order_address')],
             '(main_table.entity_id = shipping_o_a.parent_id AND shipping_o_a.address_type = "shipping")',
@@ -60,7 +66,8 @@ class OrderRepository extends AbstractMageRepository
                 'shipping_o_a.postcode',
                 'shipping_o_a.city'
             ]
-        );
+        )->group('main_table.entity_id')
+        ;
     }
 
     /**

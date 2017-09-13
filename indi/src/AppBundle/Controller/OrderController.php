@@ -25,7 +25,7 @@ class OrderController extends AbstractController
     protected $orderable = ['increment_id', 'ddate'];
 
     /** @var array  */
-    protected $filterable = ['customer_id'];
+    protected $filterable = ['commercant'];
 
     /**
      * @inheritdoc
@@ -45,7 +45,7 @@ class OrderController extends AbstractController
         }
 
         $filters = parent::getFilterBy($request);
-        $filters['customer_id'] = $this->getUser()->getId();
+        $filters['commercant'] = $this->getUser()->getShop()->getProductMerchant();
 
         return $filters;
     }

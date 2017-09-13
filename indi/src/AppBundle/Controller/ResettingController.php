@@ -38,17 +38,21 @@ class ResettingController extends BaseController
             $username = $request->request->get('username');
 
             /** @var $user \FOS\UserBundle\Model\UserInterface */
-            $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
+            $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
 
             if (null === $user) {
-                $data['message'] = $this->trans('resetting.request.invalid_username', ['%username%' => $username]);
+                // Note: For some reason the tanslation are not working
+                // $data['message'] = $this->trans('resetting.request.invalid_username', ['%username%' => $username]);
+
+                $data['message'] = 'Utilisateur invalide';
                 $response->setData($data)->setStatusCode(400);
 
                 return $response;
             }
 
-            if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-                $data['message'] = $this->trans('resetting.password_already_requested', []);
+            if ($user->isPasswordRequestNonExpired($this->getParameter('fos_user.resetting.token_ttl'))) {
+                // data['message'] = $this->trans('resetting.password_already_requested', []);
+                $data['message'] = 'Réinitialisation du mot de passe, déjà demandé';
                 $response->setData($data)->setStatusCode(400);
 
                 return $response;
@@ -56,15 +60,16 @@ class ResettingController extends BaseController
 
             if (null === $user->getConfirmationToken()) {
                 /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
-                $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+                $tokenGenerator = $this->get('fos_user.util.token_generator');
                 $user->setConfirmationToken($tokenGenerator->generateToken());
             }
 
-            $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
+            $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
             $user->setPasswordRequestedAt(new \DateTime());
-            $this->container->get('fos_user.user_manager')->updateUser($user);
+            $this->get('fos_user.user_manager')->updateUser($user);
 
-            $data['message'] = $this->trans('resetting.check_email', ['%email%' => $username]);
+            // $data['message'] = $this->trans('resetting.check_email', ['%email%' => $username, '%tokenLifetime%' => 2]);
+            $data['message'] = 'Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe';
             $response->setData($data);
 
             return $response;
@@ -145,6 +150,6 @@ class ResettingController extends BaseController
      */
     private function trans($message, array $params = [])
     {
-        return $this->container->get('translator')->trans($message, $params, 'FOSUserBundle');
+        return $this->get('translator')->trans($message, $params, 'FOSUserBundle');
     }
 }
