@@ -10,15 +10,21 @@ class MW_Ddate_Model_Dtime extends Mage_Core_Model_Abstract
         $this->_init('ddate/dtime');
     }
 
-    public function getStartTimeOfFirstSlot()
+    public function getStartTimeOfFirstSlot($ddateTime)
     {
+
         if (is_null($this->startTimeOfFirstSlot)) {
             $startTime = 24;
-            $dtimes = $this->getCollection()->addFieldToFilter('status', array('eq' => 1));
+            $day = strtolower(date('D',$ddateTime));
+            $storeid=Mage::app()->getStore()->getStoreId();
+            $dtimes=Mage::helper("ddate")->getDtime($storeid);
+            $dtimes ->addFieldToFilter('status',1 );
             foreach ($dtimes as $dtime) {
-                preg_match_all('/(\d+):/', $dtime->getInterval(), $matchesarray, PREG_SET_ORDER);
-                if (isset($matchesarray[0][1]) && $matchesarray[0][1] < $startTime) {
-                    $startTime = $matchesarray[0][1];
+                if($dtime[$day]){
+                    preg_match_all('/(\d+):/', $dtime['interval'], $matchesarray, PREG_SET_ORDER);
+                    if (isset($matchesarray[0][1]) && $matchesarray[0][1] < $startTime) {
+                        $startTime = $matchesarray[0][1];
+                    }
                 }
             }
             $this->startTimeOfFirstSlot = $startTime;
