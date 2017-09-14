@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Attributesqtoi>
-            <version>0.0.7</version>
+            <version>0.0.8</version>
         </Apdc_Attributesqtoi>
     </modules>
     <frontend>
@@ -22,7 +22,8 @@
                         <marge_arriere />
                         <commercant />
                         <prix_kilo_site />
-                        <short_description />
+						<short_description />
+						<produit_fragile />
                     </product_attributes>
                 </item>
             </quote>
@@ -40,7 +41,10 @@
                 </prix_kilo_site>
                 <short_description>
                     <to_order_item>*</to_order_item>
-                </short_description>
+				</short_description>
+				<produit_fragile>
+					<to_order_item>*</to_order_item>
+				</produit_fragile>
             </sales_convert_quote_item>
             <sales_convert_order_item>
                 <marge_arriere>
@@ -54,7 +58,10 @@
                 </prix_kilo_site>
                 <short_description>
                     <to_quote_item>*</to_quote_item>
-                </short_description>
+				</short_description>
+				<produit_fragile>
+					<to_quote_item>*</to_quote_item>
+				</produit_fragile>
             </sales_convert_order_item>
         </fieldsets>
          <events>
