@@ -12,14 +12,21 @@
 			{% for merchant_id, merchant in mercs %}
 				<div class="merchant">
 					<label>
-						<h3> {{ merchant.name }} - clients de 	{{store_name}} </h3>
+						<div style="display:inline-block"><h3> {{ merchant.name }} - clients de 	{{store_name}} </h3></div>
+						<div style="display:inline-block; margin-left:8px;"><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) ~ "horaires" }}" data-toggle="collapse"><i class="fa fa-calendar" aria-hidden="true"></i></a></div>
+
 						<h4 style="color:red;">{{ merchant.warning_days }}</h4>
 						{% if merchant.orders|length == 0 %}
 							<h4>Pas de commande</h4>
 						{% else %}
-							<h4>{{ merchant.orders|length ~ " commande(s)" }}</h4>
+							<h4 style="color:red">{{ merchant.orders|length ~ " commande(s)" }}</h4>
 						{% endif %}
 					</label>
+
+					<div id="{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) ~ "horaires" }}" class="store collapse">
+							<div>{{ merchant.timetable|raw }}</div>
+					</div>
+
 					<br/>
 					{% for order_id, order in merchant.orders %}
 						<table style="width:100%">

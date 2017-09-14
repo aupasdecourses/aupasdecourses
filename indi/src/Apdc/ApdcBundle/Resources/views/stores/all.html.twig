@@ -37,9 +37,16 @@
 							{% for com_id, merchant in merchants %}
 								<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
 									<label>
-										<h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ merchant.name }}</a></h3>
+										<div style="display:inline-block;"><h3><a href={{ shop_url ~ merchant.shop_id }} target="_blank">{{ merchant.name }}</a></h3></div>
+										<div style="display:inline-block; margin-left:8px;"><a href="#{{ com_id }}" data-toggle="collapse"><i class="fa fa-calendar" aria-hidden="true"></i></div>
 										<h4><a href={{ manager_url ~ merchant.manager_id }} target="_blank">{{ merchant.manager_name }}: <a href="tel:{{ merchant.phone }}">{{ merchant.phone }}</a> / <a href="tel:{{ merchant.mobile }}">{{ merchant.mobile }}</a></h4>
 									<h4 style="color:red;">{{ merchant.warning_days }}</h4></label><br/>
+
+									<div id="{{ com_id }}" class="store collapse">
+										<div>{{ merchant.timetable|raw }}</div>
+									</div>
+									<br/>
+
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>
