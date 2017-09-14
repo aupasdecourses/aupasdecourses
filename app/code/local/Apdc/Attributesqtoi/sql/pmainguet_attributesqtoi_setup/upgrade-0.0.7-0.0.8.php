@@ -3,9 +3,10 @@
 /* Add 'produit_fragile' attribute */
 
 
-$installer = $this;
+$installer = new Mage_Eav_Model_Entity_Setup('core_setup');
 $installer->startSetup();
 
+$installer->removeAttribute('catalog_product', 'produit_fragile');
 $installer->addAttribute('catalog_product', 'produit_fragile', array(
 	'group'						=> 'Infos Produits',
 	'type'						=> 'int',
@@ -22,8 +23,9 @@ $installer->addAttribute('catalog_product', 'produit_fragile', array(
 	'is_user_defined'			=> true,
 	'used_in_product_listing'	=> true,
 	'default'					=> 0,
-));
+	'apply_to'					=> 'simple,configurable,virtual',
 
+));
 $installer->endSetup();
 
 $installer2 = new Mage_Sales_Model_Resource_Setup('core_setup');
@@ -40,5 +42,3 @@ $options = array(
 foreach ($entities as $entity) {
 	$installer2->addAttribute($entity, 'produit_fragile', $options);
 }
-$installer2->endSetup();
-
