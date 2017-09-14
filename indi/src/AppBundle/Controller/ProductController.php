@@ -244,8 +244,6 @@ class ProductController extends AbstractController
                     return;
                 }
 
-                dump($entity);
-
                 $entity  = $entity->getData();
                 $changes = array_diff($this->original, $entity);
 
