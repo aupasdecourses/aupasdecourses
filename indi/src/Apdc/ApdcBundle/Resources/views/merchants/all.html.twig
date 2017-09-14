@@ -21,11 +21,17 @@
 							{% set commandes_msg %}<div style="color:red">{{ nb_commandes_commercant ~ " commande(s) "}}</div>{% endset %}
 						{% endif %}
 
-						<h2><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}<h4>{{ commandes_msg }}</h4></a></h2>
+						<div style="display:inline-block"><h2><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}</a></h2></div>
+						<div style="display:inline-block; margin-left:8px;"><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) ~ "horaires" }}" data-toggle="collapse"><i class="fa fa-calendar" aria-hidden="true"></i></a></div>
+						<div><h4>{{ commandes_msg }}</h4></div>
 					</th>
 				</tr>
 				<tr>
 					<td>
+						<div id="{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) ~ "horaires" }}" class="store collapse">
+							<div>{{ merchant.timetable|raw }}</div>
+						</div>
+
 						<div id="{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" class="store collapse">
 							<div class="merchant{{ (merchant.active==0) ? " error" : "" }}">
 									<label>

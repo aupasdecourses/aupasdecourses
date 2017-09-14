@@ -676,7 +676,7 @@ class Magento
                         'mobile' => $shop_manager->getPhone(),
                         'manager_id' => $shop_manager->getIdContact(),
                         'orders' => [],
-                        'timetable' => implode(',', $shop->getTimetable()),
+                        'timetable' => implode("<br/>", $shop->getTimetable()),
                         'closing_periods' => $closed_periods,
                         'delivery_days' => $delivery_days,
                         'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
