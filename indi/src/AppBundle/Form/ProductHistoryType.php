@@ -31,7 +31,7 @@ class ProductHistoryType extends AbstractType
             ])  // TODO: ChoiceType, and get choice form Mage
             ->add('short_description')
             ->add('poids_portion', null, [
-                'empty_data' => '500',
+                'empty_data' => '0.5',
                 'property_path' => 'portionWeight',
             ])
             ->add('nbre_portion', null, [

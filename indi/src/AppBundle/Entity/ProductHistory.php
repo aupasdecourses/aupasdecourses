@@ -101,7 +101,7 @@ class ProductHistory
      *
      * @ORM\Column(name="poids_portion", type="float", length=255, nullable=true)
      */
-    private $portionWeight = 500;
+    private $portionWeight = 0.5;
 
     /**
      * Number of portion

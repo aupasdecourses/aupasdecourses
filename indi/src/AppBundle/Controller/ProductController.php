@@ -78,12 +78,12 @@ class ProductController extends AbstractController
                 $public = str_replace(',', '.', $public);
 
                 if ($unit == 'kg') {
-                    $price = $public * $request->request->get('poids_portion', 1000) * $request->request->get('nbre_portion', 1) / 1000;
+                    $price = $public * $request->request->get('poids_portion', 1) * $request->request->get('nbre_portion', 1);
                 } else {
                     $price = $public * $request->request->get('nbre_portion', 1);
                 }
 
-                $weight = $request->request->get('nbre_portion', 1) * $request->request->get('poids_portion', 1000);
+                $weight = $request->request->get('nbre_portion', 1) * $request->request->get('poids_portion', 1);
                 $status = $status = $request->request->get('status') ? 1 : 2;
 
                 $request->request->add([
@@ -193,14 +193,14 @@ class ProductController extends AbstractController
 
                 if ($unit == 'kg') {
                     $price = $public
-                        * $request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1000)
-                        * $request->request->get('nbre_portion', isset($entity['nbre_portion']) ? $entity['nbre_portion'] : 1) / 1000;
+                        * $request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1)
+                        * $request->request->get('nbre_portion', isset($entity['nbre_portion']) ? $entity['nbre_portion'] : 1);
                 } else {
                     $price = $public * $request->request->get('nbre_portion', 1);
                 }
 
                 $weight = $request->request->get('nbre_portion', 1)
-                    * $request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1000);
+                    * $request->request->get('poids_portion', isset($entity['poids_portion']) ? $entity['poids_portion'] : 1);
                 $name   = $request->request->get('name', $entity['name']);
 
                 if (null === $status = $request->request->get('status')) {
@@ -244,6 +244,8 @@ class ProductController extends AbstractController
                     return;
                 }
 
+                dump($entity);
+
                 $entity  = $entity->getData();
                 $changes = array_diff($this->original, $entity);
 
@@ -275,11 +277,14 @@ class ProductController extends AbstractController
                     'photo'                     => 'Photo : ' . $photo,
                 ];
 
-                $title = 'Produit mise à jour chez le commerçant ID : '.$entity['commercant'];
-                $body  = 'Le produit suivant a été mis à jour par '.$this->getUser()->getUsername()
-                    .', le '.date("Y-m-d").' :'.PHP_EOL
-                    .'SKU : '.$entity['sku'].PHP_EOL
-                    .'Nom du produit : '.$entity['name'].PHP_EOL.PHP_EOL
+                $title = 'Appli V2 - Produit mis à jour chez le commerçant ID n°'.$entity['commercant'].', nom: '.$entity['nom_catcommercant'];
+                $body  = 'Le produit suivant a été mis à jour sur l\'APPLI V2:'.PHP_EOL
+                    .'- par '.$this->getUser()->getUsername().PHP_EOL
+                    .'- le '.date("Y-m-d").PHP_EOL
+                    .'- Commerçant : attribut commerçant n°'.$entity['commercant'].' ('.$entity['nom_catcommercant'].')'.PHP_EOL
+                    .'- SKU : '.$entity['sku'].PHP_EOL
+                    .'- Nom du produit : '.$entity['name'].PHP_EOL
+                    .'- Modifications apportées aux produits:'.PHP_EOL.PHP_EOL
                     .implode(PHP_EOL, array_intersect_key($bodyChanges, $changes))
                 ;
 
