@@ -1,7 +1,7 @@
-Apdc\ApdcBundle\Entity\Refund:
+Apdc\ApdcBundle\Entity\IndiRefund:
     type: entity
     table: null
-    repositoryClass: Apdc\ApdcBundle\Repository\RefundRepository
+    repositoryClass: Apdc\ApdcBundle\Repository\IndiRefundRepository
     id:
         id:
             type: integer

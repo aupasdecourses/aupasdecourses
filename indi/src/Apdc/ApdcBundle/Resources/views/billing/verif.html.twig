@@ -3,9 +3,12 @@
 
 {% block body %}
 <div class="container">
-	{% if verif.verif_noentry == 0 %}
-		<span style="float:right;"><a href="{{ path('billingSummary') }}?date_debut={{ date_debut }}">Aller à la liste des commandes du mois</a></span>
+	{% if verif %}
+		{% if verif.verif_noentry == 0 %}
+			<span style="float:right;"><a href="{{ path('billingSummary') }}?date_debut={{ date_debut }}">Aller à la liste des commandes du mois</a></span>
+		{% endif %}
 	{% endif %}
+
 	<h1> Facturation INDI <subtitle>Vérification</subtitle></h1>
 	
 		<div class="page-header">

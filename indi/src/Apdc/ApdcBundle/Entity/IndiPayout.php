@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Entity;
 
-class Payout
+class IndiPayout
 {
     private $id;
 

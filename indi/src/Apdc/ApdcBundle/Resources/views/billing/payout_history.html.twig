@@ -2,38 +2,33 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid">
 		
-	<h2>Soumettre un payout :</h2>
+	<h2>Historique des virements commercants</h2>
+	<hr/>
 
-		{{ form_start(form_prepayout) }}
-		{{ form_widget(form_prepayout) }}
-		{{ form_end(form_prepayout) }}
-
-	<hr>
-	<h2>Historique des payouts :</h2>
 	<table id="payoutTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Reference</th>
-				<th>Value</th>
 				<th>Date</th>
+				<th>Reference</th>
+				<th>Montant</th>
+				<th>Magasin</th>
 				<th>IBAN</th>
-				<th>Owner Name</th>
-				<th>Shopper Email</th>
-				<th>Shopper Reference</th>
+				<th>Commercant</th>
+				<th>Mail commercant</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for payout in payout_list %}
 			<tr>
-				<td>{{ payout.reference }}</td>
-				<td>{{ payout.value/100 }}</td>
 				<td>{{ payout.date|date('d-m-Y H:i:s') }}</td>
-				<td>{{ payout.iban }}</td>
+				<td>{{ payout.reference }}</td>
+				<td>{{ payout.value/100 ~ " € " }}</td>
 				<td>{{ payout.ownerName }}</td>
-				<td>{{ payout.shopperEmail }}</td>
+				<td>{{ payout.iban }}</td>
 				<td>{{ payout.shopperReference }}</td>
+				<td>{{ payout.shopperEmail }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
@@ -49,6 +44,7 @@
 	<script type="text/javascript">
 $(document).ready(function() {
 	$('#payoutTable').DataTable( {
+		"order": [[ 0, 'dsc' ]],
 		"footerCallback": function ( row, data, start, end, display ) {
 			var api = this.api(), data;
 

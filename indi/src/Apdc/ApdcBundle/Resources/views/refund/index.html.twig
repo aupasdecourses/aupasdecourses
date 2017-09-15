@@ -16,6 +16,7 @@
 					<th>Saisie ticket</th>
 					<th>Validation Credit Memo</th>
 					<th>Remboursement Adyen</th>
+					<th>Cloture et recapitulatif</th>
 				</tr>
 			</thead>
 			{% for order in orders %}
@@ -57,6 +58,19 @@
 								<a href='{{ path('refundFinal', {id: order.id}) }}' class='error' target="_blank">A faire</a>
 							{% elseif order.refund == 'done'%}
 								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% elseif order.refund == 'no_refund' %}
+								<span class="disabled">Pas de remboursement</span>
+							{% endif %}
+						{% else %}
+							<span class="disabled">A faire</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if order.refund != '' %}
+							{% if order.closure == '' %}
+								<a href='{{ path('refundClosure', {id: order.id}) }}' class='error' target="_blank">A faire</a>
+							{% elseif order.closure == 'done' %}
+								<a href='{{ path('refundClosure', {id: order.id}) }}' class='success' target="_blank">OK</a>
 							{% endif %}
 						{% else %}
 							<span class="disabled">A faire</span>

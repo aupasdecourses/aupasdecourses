@@ -96,7 +96,7 @@ class Magento
                         'mobile' => $shop_manager->getPhone(),
                         'manager_id' => $shop_manager->getIdContact(),
                         'orders' => [],
-                        'timetable' => implode(',', $shop->getTimetable()),
+                        'timetable' => implode("<br/>", $shop->getTimetable()),
                         'closing_periods' => $closed_periods,
                         'delivery_days' => $delivery_days,
                         'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
@@ -168,8 +168,9 @@ class Magento
                 'digest' => 'attachment.digest',
                 'refund' => 'attachment.refund',
                 'refund_shipping' => 'attachment.refund_shipping',
+				'closure' => 'attachment.closure',
                 'commentaire_commercant' => 'attachment.commentaires_ticket',
-                'commentaire_client' => 'attachment.commentaires_fraislivraison',
+				'commentaire_client' => 'attachment.commentaires_fraislivraison',
             )
         );
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
@@ -211,6 +212,7 @@ class Magento
         $orderHeader['digest'] = $order->getData('digest');
         $orderHeader['refund'] = $order->getData('refund');
         $orderHeader['refund_shipping'] = $order->getData('refund_shipping');
+		$orderHeader['closure'] = $order->getData('closure');
         $orderHeader['commentaire_commercant'] = $order->getData('commentaire_commercant');
         $orderHeader['commentaire_client'] = $order->getData('commentaire_client');
         $orderHeader['customer_id'] = $order->getData('customer_id');
@@ -257,6 +259,7 @@ class Magento
             'prix_total' => round($product->getRowTotalInclTax(), 2),
             'commercant_id' => $product->getCommercant(),
             'refund_comment' => $product->getRefundComment(),
+			'produit_fragile' => $product->getProduitFragile(),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
@@ -674,7 +677,7 @@ class Magento
                         'mobile' => $shop_manager->getPhone(),
                         'manager_id' => $shop_manager->getIdContact(),
                         'orders' => [],
-                        'timetable' => implode(',', $shop->getTimetable()),
+                        'timetable' => implode("<br/>", $shop->getTimetable()),
                         'closing_periods' => $closed_periods,
                         'delivery_days' => $delivery_days,
                         'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
@@ -817,18 +820,19 @@ class Magento
         return $rsl;
     }
 
-    /**	Retourne le contenu de la table adyen/order_payment
-     *	Trié par reference marchante ( ex : 2016000723 ).
-     *
-     *	Utilisé dans RefundController, refundAdyenIndexAction
-     *	pour la liste des commandes remboursables. (Remboursement Back-up )
+	/**	
+	 *	Retourne le contenu de la table adyen/order_payment trié par n° de commande
      */
-    public function getAdyenOrderPaymentTable()
+    public function getAdyenPaymentByMerchRef()
     {
-        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
+		$collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
+
         $ref = [];
         $cpt = 1;
         foreach ($collection as $fields) {
+			$ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
+			$ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
             $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
             $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
             $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
@@ -839,9 +843,8 @@ class Magento
         return $ref;
     }
 
-    /**	Retourne le contenu de la table adyen/order_payment
-     *	Utilisé dans les deux formulaires de soumission de remboursement Adyen
-     *	refundFinalAction & refundAdyenFormAction.
+	/**	
+	 *	Retourne le contenu de la table adyen/order_payment
      */
     public function getAdyenPaymentByPsp()
     {
@@ -860,56 +863,7 @@ class Magento
         return $ref;
     }
 
-    /**	Retourne le contenu de la table adyen/event_queue
-     *	Utilisé dans les 2 formulaires de soumission de remboursement.
-     */
-    public function getAdyenQueueFields()
-    {
-        $collection = \Mage::getModel('adyen/event_queue')->getCollection();
-        $collection->addFieldToFilter('increment_id', ['neq' => null]);
-        $ref = [];
-        $cpt = 1;
-        foreach ($collection as $col) {
-            $ref[$cpt]['increment_id'] = $col->getData('increment_id');
-            $ref[$cpt]['psp_reference'] = $col->getData('psp_reference');
-            $ref[$cpt]['adyen_event_result'] = $col->getData('adyen_event_result');
-            $ref[$cpt]['success'] = $col->getData('success');
-            $ref[$cpt]['created_at'] = $col->getData('created_at');
-            ++$cpt;
-        }
-
-        return $ref;
-    }
-
-    /** Pour les payouts */
-    public function getApdcBankFields()
-    {
-        $tab = [];
-
-        $merchants = \Mage::getModel('apdc_commercant/commercant')->getCollection();
-
-        $merchants->getSelect()->join('apdc_bank_information', 'main_table.id_bank_information = apdc_bank_information.id_bank_information');
-
-        $merchants->getSelect()->join('apdc_commercant_contact', 'main_table.id_contact_billing = apdc_commercant_contact.id_contact');
-
-        $merchants->getSelect()->join('apdc_shop', 'main_table.id_commercant = apdc_shop.id_commercant')->group('main_table.id_commercant');
-
-        foreach ($merchants as $merchant) {
-            $tab[$merchant->getData('name')] = [
-                'id' => $merchant->getData('id_commercant'),
-                'reference' => 'PAY-'.date('Y-m').'-'.$merchant->getData('code').'-',
-                'name' => $merchant->getData('name'),
-                'ownerName' => $merchant->getData('owner_name'),
-                'iban' => $merchant->getData('account_iban'),
-                'shopperEmail' => $merchant->getData('email'),
-                'shopperReference' => $merchant->getData('firstname').' - '.$merchant->getData('lastname'),
-            ];
-        }
-
-        return $tab;
-    }
-
-
+    
     /* Retourne la marge arriere par commercant */
     public function getMargin()
     {
@@ -937,5 +891,15 @@ class Magento
         ksort($data);
         return $data;
     }
+
+	
+	/* Affiche les infos relatifs à l'historique de la commande */
+	public function getOrderHistory($order_id)
+	{
+		$order = \Mage::getModel('sales/order')->loadByIncrementId($order_id);
+		$history = $order->getStatusHistoryCollection();
+
+		return $history;
+	}
 
 }

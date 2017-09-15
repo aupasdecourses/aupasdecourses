@@ -1,7 +1,7 @@
-Apdc\ApdcBundle\Entity\Payout:
+Apdc\ApdcBundle\Entity\IndiPayout:
     type: entity
     table: null
-    repositoryClass: Apdc\ApdcBundle\Repository\PayoutRepository
+    repositoryClass: Apdc\ApdcBundle\Repository\IndiPayoutRepository
     id:
         id:
             type: integer

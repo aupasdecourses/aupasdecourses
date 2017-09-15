@@ -1,0 +1,84 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+	<div class="alert alert-danger" style="float:right;">Repasser la commande en statut "Complete" sur Magento après remboursement</div>
+	<h2> Remboursement post-cloture </h2>
+
+	<table class="table table-striped" id="refund_postclosure_table">
+		<thead>
+			<tr>
+				<th>Client</th>
+				<th class="float"># Commande</th>
+				<th>Montant payé</th>
+				<th>Montant déjà remboursé</th>
+				<th>Lien de remboursement</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for order_id, fields in orders %}
+			{% for id, order in fields %}
+				<tr>
+					<td>{{order.customer_firstname ~ " " ~ order.customer_lastname }}</td>
+					<td>{{order.merchant_reference }}</td>
+					<td>{{order.amount }}</td>
+					<td>{{order.total_refunded|round(2, 'common') }}</td>
+					<td>{% if order.total_refunded < order.amount and order.total_refunded >= 0 %}
+						<a href="{{ path('refundPostClosureForm', {psp: order.pspreference}) }}">Lien</a>
+						{% endif %}</td>
+				</tr>
+			{% endfor %}
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block css_refund_postclosure %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_refund_postclosure %}
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	var table=$('#refund_postclosure_table').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ]],
+		initComplete: function () {
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				// Total over this page
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+</script>
+
+
+
+{% endblock %}

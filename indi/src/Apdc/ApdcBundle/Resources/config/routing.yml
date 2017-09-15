@@ -62,9 +62,9 @@ shippingAll:
   requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
 
 refundIndex:
-  path:   /refund/{from}
-  defaults:   { _controller: ApdcApdcBundle:Refund:index, from: null}
-  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null" }
+  path:   /refund/{from}/{to}
+  defaults:   { _controller: ApdcApdcBundle:Refund:index, from: null, to: null}
+  requirements: { from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 refundUpload:
   path: /refund/{id}/upload/
@@ -86,13 +86,18 @@ refundFinal:
   defaults: { _controller: ApdcApdcBundle:Refund:refundFinal}
   requirements: { id:"[0-9]+" }
 
-refundAdyenIndex:
-  path: /refund/adyenIndex/
-  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenIndex}
+refundClosure:
+  path: /refund/{id}/closure/
+  defaults: { _controller: ApdcApdcBundle:Refund:refundClosure}
+  requirements: { id:"[0-9]+" }
 
-refundAdyenForm:
-  path: /refund/{psp}/adyenForm/
-  defaults: { _controller: ApdcApdcBundle:Refund:refundAdyenForm}
+refundPostClosureIndex:
+  path: /refund/postclosure/index
+  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureIndex}
+
+refundPostClosureForm:
+  path: /refund/postclosure/{psp}/form
+  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureForm}
   requirements: { psp:"[0-9]+" }
 
 mistralTicketImg:
@@ -120,14 +125,14 @@ billingOne:
   defaults:   { _controller: ApdcApdcBundle:Billing:billingOne}
   requirements: { id:"COM-[0-9-]+" }
 
-billingPayoutIndex:
-  path: /billing/payout/
-  defaults: { _controller: ApdcApdcBundle:Billing:payoutIndex }
+billingPayoutHistory:
+  path: /billing/payout/history
+  defaults: { _controller: ApdcApdcBundle:Billing:payoutHistory }
 
 billingPayoutSubmit:
-  path: /billing/payout/{choice}/submit/
+  path: /billing/payout/{id}/submit/
   defaults: { _controller: ApdcApdcBundle:Billing:payoutSubmit }
-  requirements: { choice:"[0-9]+" }
+  requirements: { id:"[0-9]+" }
 
 toolProduct:
   path: /tool/product/
