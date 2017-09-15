@@ -259,6 +259,7 @@ class Magento
             'prix_total' => round($product->getRowTotalInclTax(), 2),
             'commercant_id' => $product->getCommercant(),
             'refund_comment' => $product->getRefundComment(),
+			'produit_fragile' => $product->getProduitFragile(),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
