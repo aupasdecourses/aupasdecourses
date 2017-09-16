@@ -25,12 +25,16 @@ foreach ($children as $child) {
             $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
         }
         $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';
-        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
         $html .= '</a>';
     } else {
         $html .= '<span class="template-column-title" style="' . $child->getLinkStyle() . '" class="'. $child->getLinkClasses() .'">';
         $html .= $this->escapeHtml($this->__($child->getName()));
-        $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
         $html .= '</span>';
     }
 

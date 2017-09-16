@@ -5,9 +5,13 @@
 			event.preventDefault();
 			event.stopPropagation();
 			var templateContent = $(self).siblings('.template-content').html();
+      var screenWidth = jQuery(window).width();
 
 			$('.menu-template-content').remove();
-			$(self).parents('div.level0 ul').after('<div class="menu-template-content">' + templateContent + '</div>');
+			$(self).parents('div.level0 ul').after('<ul class="menu-template-content">' + templateContent + '</ul>');
+      if (screenWidth > 1200) {
+        $('.menu-template-content').find('.visible-xs').remove();
+      }
 			$(self).parent().siblings().removeClass('open');
 			$(self).parent().toggleClass('open');
 

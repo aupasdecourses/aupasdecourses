@@ -15,6 +15,7 @@ class Apdc_Commercant_Model_Resource_Shop_Collection extends Mage_Core_Model_Res
         parent::_afterLoad();
         foreach ($this->_items as $item) {
             $item->afterLoad();
+            $this->getResource()->unserializeFields($item);
         }
         return $this;
     }

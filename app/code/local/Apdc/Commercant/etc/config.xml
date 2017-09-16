@@ -85,6 +85,17 @@
           </Apdc_Commercant>
         </modules>
       </translate>
+      <events>
+        <catalog_category_delete_before>
+          <observers>
+            <apdc_commercant>
+              <type>singleton</type>
+              <class>apdc_commercant/observer</class>
+              <method>cleanShopCategory</method>
+            </apdc_commercant>
+          </observers>
+        </catalog_category_delete_before>
+      </events>
 
     </adminhtml>
 </config>

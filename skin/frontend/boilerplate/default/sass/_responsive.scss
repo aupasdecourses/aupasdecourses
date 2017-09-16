@@ -2,6 +2,37 @@
     .container{
         width: 1130px;
     }
+    #supermenu li.level0 {
+        &.active > a:after {
+            top: 98%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(255, 255, 255, 0);
+            border-top-color: inherit;
+            border-width: 15px;
+            margin-left: -15px;
+        }
+        &.open > a:after {
+            top: 98%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(255, 255, 255, 0);
+            border-top-color: inherit;
+            border-width: 15px;
+            margin-left: -15px;
+            z-index:98;
+        }
+    }
 }
 @media screen and (min-width: 992px) and (max-width: 1020px){
     .container{
@@ -27,7 +58,7 @@
             }
         }
         div.level0{
-            top: 177px;
+            top: 175px;
         }
     }
     .catalog-category-view{
@@ -144,6 +175,9 @@
           }
           .template-column{
               width: 100%;
+              &.visible-xs {
+                  display:block!important;
+              }
           }
           a.level2:link{
               margin: 0;
