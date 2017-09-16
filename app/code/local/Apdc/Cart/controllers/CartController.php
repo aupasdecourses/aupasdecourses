@@ -49,6 +49,56 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+    public function ajaxEmptyCartAction()
+    {
+        if (!$this->_validateFormKey()) {
+            Mage::throwException('Invalid form key');
+        }
+        $commercantId = $this->getRequest()->getParam('commercant_id', null);
+        $result = array();
+        try {
+            $items = $this->_getCart()->getQuote()->getAllVisibleItems();
+            $productIds = [];
+            $itemIds = [];
+            foreach ($items as $item) {
+                if ($commercantId && $commercantId != 'bundle' && $item->getCommercant() != $commercantId) {
+                    continue;
+                } else if ($commercantId && $commercantId == 'bundle' && $item->getProductType() != 'bundle') {
+                    continue;
+                }
+                $productIds[] = $item->getProduct()->getId();
+                $itemIds[] = $item->getId();
+                $this->_getCart()->removeItem($item->getId());
+            }
+            $this->_getCart()->save();
+
+            // Reload quote to clean and fetch new error messages
+            $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
+            $quote->getItemsCollection()->load();
+            $this->_getCart()->setQuote($quote);
+
+            $result['qty'] = $this->_getCart()->getSummaryQty();
+            $result['product_ids'] = $productIds;
+
+            $this->loadLayout();
+            $minicartContent = $this->getLayout()->getBlock('minicart_content');
+            $minicartContent->setData('product_ids', $productIds);
+            $result['content'] = $minicartContent->toHtml();
+
+            $result['success'] = 1;
+            $result['message'] = $this->__('All merchant\'s items have been removed successfully.');
+            foreach ($itemIds as $id) {
+                Mage::dispatchEvent('ajax_cart_remove_item_success', array('id' => $id));
+            }
+        } catch (Exception $e) {
+            $result['success'] = 0;
+            $result['error'] = $this->__('Can not remove the item.');
+        }
+
+        $this->getResponse()->setHeader('Content-type', 'application/json', true);
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+
     /**
      * Minicart ajax update qty action.
      */

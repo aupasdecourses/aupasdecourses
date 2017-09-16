@@ -41,14 +41,21 @@ $cartMessages = $this->getMessages();
 if ($cartMessages) {
     $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
 }
+$commercants = $this->getItemsByCommercant();
+$countItems = count($commercants);
 ?>
 
 <div class="minicart-wrapper">
 
-    <p class="block-subtitle">
+    <div class="block-subtitle">
         <?php echo $this->__('Mon panier') ?>
         <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i></a>
-    </p>
+        <?php if($countItems): ?>
+            <div class="link-empty-cart">
+                <a class="empty-cart" href="#" data-ajax-url="<?php echo $this->helper('apdccart')->getAjaxEmptyCartUrl() ?>" data-confirm="<?php echo $this->__('Êtes vous sûr de vouloir vider votre panier ?'); ?>"><?php echo $this->__('Vider mon panier'); ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <hr>
 
@@ -56,15 +63,21 @@ if ($cartMessages) {
     <div id="minicart-error-message" class="minicart-message"></div>
     <div id="minicart-success-message" class="minicart-message"></div>
 
-    <?php $commercants = $this->getItemsByCommercant() ?>
-    <?php $countItems = count($commercants); ?>
     <?php if($countItems): ?>
         <div class="minicart-items">
             <ul id="cart-sidebar" class="mini-products-list">
                 <?php foreach($commercants as $id => $commercant): ?>
                     <li>
                     <?php $closed = ((isset($apdcAccordion[$id]) && $apdcAccordion[$id] == 0) ? ' closed' : ''); ?>
-                    <div style="background-color: <?php echo $commercant['color']; ?>;" class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>"><span class="title"><?php echo $commercant['name']; ?></span> <span class="count"><?php echo count($commercant['items']); ?></span><i class="fa fa-angle-up"></i></div>
+                        <div style="background-color: <?php echo $commercant['color']; ?>;" class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>">
+                            <span class="title"><?php echo $commercant['name']; ?></span>
+                            <span class="actions" style="color:<?php echo $commercant['color']; ?>;">
+                                <?php $confirm = $this->__('Êtes vous sûr de vouloir supprimer tous les produits du commercant %s ?', $commercant['name']); ?>
+                                <span data-ajax-url="<?php echo $this->helper('apdccart')->getAjaxEmptyCartUrl() ?>" class="badge empty-cart" data-confirm="<?php echo $confirm; ?>" data-commercant-id="<?php echo $id; ?>"><i class="fa fa-trash"></i></span>
+                                <span class="badge count"><i><?php echo count($commercant['items']); ?></i></span>
+                                <i class="fa fa-angle-up"></i>
+                            </span>
+                        </div>
                         <ul class="commercant-product-list">
                         <?php foreach ($commercant['items'] as $item): ?>
                             <?php echo $this->getItemHtml($item) ?>
@@ -120,11 +133,17 @@ var apdcProductAddedToCart = <?php echo json_encode($this->getApdcProductAddedTo
 var apdcProductAddedToCart = {};
 <?php endif; ?>
 <?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
+<?php $productIds = ($this->getData('product_ids') ? $this->getData('product_ids') : null); ?>
 var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
 jQuery(document).ready(function() {
     <?php if ($productId) : ?>
         jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
         jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
+    <?php elseif ($productIds && !empty($productIds)) : ?>
+        <?php foreach ($productIds as $productId) : ?>
+            jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
+            jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
+        <?php endforeach; ?>
     <?php else : ?>
         jQuery('.apdc-add-to-cart-form').trigger('change', [true]);
         jQuery(document).trigger('minicartLoaded');
