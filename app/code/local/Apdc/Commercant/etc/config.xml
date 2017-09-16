@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.6.2</version>
+            <version>0.6.4</version>
         </Apdc_Commercant>
     </modules>
     <global>

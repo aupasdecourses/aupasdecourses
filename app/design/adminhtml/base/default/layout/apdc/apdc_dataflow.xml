@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<adminhtml_system_convert_profile_run>
+		<reference name="system_convert_profile_run">
+			<action method="setTemplate">
+	            <file>apdc/apdc_dataflow/system/convert/profile/process.phtml</file>
+	        </action>
+	    </reference>
+    </adminhtml_system_convert_profile_run>
+</layout>
