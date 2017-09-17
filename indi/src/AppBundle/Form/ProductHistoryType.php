@@ -24,7 +24,9 @@ class ProductHistoryType extends AbstractType
             ->add('on_selection', null, [
                 'property_path' => 'selected',
             ])  // TODO: ChoiceType, 0 / 1
-            ->add('price')
+            ->add('prix_public', null, [
+                'property_path' => 'prixPublic',
+            ])
             ->add('unite_prix', null, [
                 'empty_data' => '1',
                 'property_path' => 'priceUnit',
@@ -48,9 +50,11 @@ class ProductHistoryType extends AbstractType
             ->add('produit_biologique', null, [
                 'property_path' => 'bio',
             ])  // TODO: ChoiceType, and get choice form Mage
-            ->add('shop_id', null, [
-                'property_path' => 'shopId',
-            ])  // TODO: ChoiceType, and get choice form Mage
+            ->add('commercant')
+            ->add('image_tmp', null, [
+                'property_path' => 'photo',
+            ])
+            ->add('price')
         ;
     }
 

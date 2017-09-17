@@ -68,12 +68,19 @@ class ProductHistory
     private $selected = false;
 
     /**
-     * Price
+     * Prix Public
      *
      * @var float
      *
      * @ORM\Column(name="prix_public", type="float", length=255, nullable=true)
      */
+    private $prixPublic;
+
+    /**
+     * Price
+     *
+     * @var float
+     *
     private $price;
 
     /**
@@ -160,7 +167,7 @@ class ProductHistory
      *
      * @ORM\Column(name="shop_id", type="integer", length=11, nullable=true)
      */
-    private $shopId;
+    private $commercant;
 
     /**
      * @var \DateTime
@@ -317,6 +324,30 @@ class ProductHistory
     public function getSelected()
     {
         return $this->selected;
+    }
+
+    /**
+     * Set prixPublic
+     *
+     * @param float $prixPublic
+     *
+     * @return ProductHistory
+     */
+    public function setPrixPublic($prixPublic)
+    {
+        $this->prixPublic = $prixPublic;
+
+        return $this;
+    }
+
+    /**
+     * Get prix_public
+     *
+     * @return float
+     */
+    public function getPrixPublic()
+    {
+        return $this->prixPublic;
     }
 
     /**
@@ -564,27 +595,27 @@ class ProductHistory
     }
 
     /**
-     * Set bio
+     * Set commercant
      *
-     * @param integer $shopId
+     * @param integer $commercant
      *
      * @return ProductHistory
      */
-    public function setShopId($shopId)
+    public function setCommercant($commercant)
     {
-        $this->shopId = $shopId;
+        $this->commercant = $commercant;
 
         return $this;
     }
 
     /**
-     * Get bio
+     * Get commercant
      *
-     * @return boolean
+     * @return integer
      */
-    public function getShopId()
+    public function getCommercant()
     {
-        return $this->shopId;
+        return $this->commercant;
     }
 
     /**

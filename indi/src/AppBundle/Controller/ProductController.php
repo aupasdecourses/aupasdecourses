@@ -139,6 +139,7 @@ class ProductController extends AbstractController
                     .'Tax : '.$entity['tax_class_id'].PHP_EOL
                     .'Origin : '.$entity['origine'].PHP_EOL
                     .'Bio : '.($entity['produit_biologique'] ? 'Oui' : 'Non').PHP_EOL
+                    .'Notes du commerçant : '.$entity['notes_com'].PHP_EOL
                 ;
 
                 $from = $this->getParameter('from_email');
@@ -245,7 +246,7 @@ class ProductController extends AbstractController
                 }
 
                 $entity  = $entity->getData();
-                $changes = array_diff($this->original, $entity);
+                $changes = array_diff_assoc($entity,$this->original);
 
                 $this->getModel('ProductHistory')->addHistory($entity);
 
@@ -255,33 +256,36 @@ class ProductController extends AbstractController
 
                 $photo = null;
 
-                if (isset($entity['photo'])) {
+                if (isset($entity['image_tmp'])) {
                     $photo = $this->get('request_stack')->getMasterRequest()
-                        ->getUriForPath('/uploads/products/'.$entity['entity_id'].'/'.$entity['photo']);
+                        ->getUriForPath('/uploads/products/'.$entity['entity_id'].'/../../../'.$entity['image_tmp']);
                 }
 
                 $bodyChanges = [
-                    'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'],
-                    'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non'),
-                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non'),
-                    'price'                     => 'Prix : ' . $entity['prix_public'],
-                    'unite_prix'                => 'Unit : ' . $entity['unite_prix'],
-                    'short_description'         => 'Description : ' . $entity['short_description'],
-                    'poids_portion'             => 'Poids portion : ' . $entity['poids_portion'],
-                    'nbre_portion'              => 'Nombre portion : ' . $entity['nbre_portion'],
-                    'tax_class_id'              => 'Tax : ' . $entity['tax_class_id'],
-                    'origine'                   => 'Origin : ' . $entity['origine'],
-                    'produit_biologique'        => 'Bio : ' . ($entity['produit_biologique'] ? 'Oui' : 'Non'),
-                    'photo'                     => 'Photo : ' . $photo,
+                    'name'                      => 'Nom : '.$entity['name'].' (ancienne valeur: '.$this->original['name'].')',
+                    'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'].' (ancienne valeur: '.$this->original['reference_interne_magasin'].')',
+                    'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['status'] ? 'Oui' : 'Non').')',
+                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['on_selection'] ? 'Oui' : 'Non').')',
+                    'prix_public'                     => 'Prix : ' . $entity['prix_public'].' (ancienne valeur: '.$this->original['prix_public'].')',
+                    'unite_prix'                => 'Unit : ' . $entity['unite_prix'].' (ancienne valeur: '.$this->original['unite_prix'].')',
+                    'short_description'         => 'Description : ' . $entity['short_description'].' (ancienne valeur: '.$this->original['short_description'].')',
+                    'poids_portion'             => 'Poids portion : ' . $entity['poids_portion'].' (ancienne valeur: '.$this->original['poids_portion'].')',
+                    'nbre_portion'              => 'Nombre portion : ' . $entity['nbre_portion'].' (ancienne valeur: '.$this->original['nbre_portion'].')',
+                    'tax_class_id'              => 'Tax Class Id : ' . $entity['tax_class_id'].' (ancienne valeur: '.$this->original['tax_class_id'].')',
+                    'origine'                   => 'Origine : ' . $entity['origine'].' (ancienne valeur: '.$this->original['origine'].')',
+                    'produit_biologique'        => 'Bio : ' . ($entity['produit_biologique'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['produit_biologique'] ? 'Oui' : 'Non').')',
+                    'image_tmp'                 => 'Photo proposée par le commerçant : ' . $photo,
+                    'notes_com'                 => 'Notes Commerçants : ' . $entity['notes_com'].' (ancienne valeur: '.$this->original['notes_com'].')',
+                    'commercant'                => 'Commercant Id : '. $entity['commercant'].' (ancienne valeur: '.$this->original['commercant'].')',
                 ];
 
-                $title = 'Appli V2 - Produit mis à jour chez le commerçant ID n°'.$entity['commercant'].', nom: '.$entity['nom_catcommercant'];
+                $title = 'Appli V2 - Produit '.$entity['sku'].' mis à jour (commerçant ID n°'.$this->original['commercant'].', nom catégorie commerçant: '.$entity['nom_catcommercant'];
                 $body  = 'Le produit suivant a été mis à jour sur l\'APPLI V2:'.PHP_EOL
                     .'- par '.$this->getUser()->getUsername().PHP_EOL
                     .'- le '.date("Y-m-d").PHP_EOL
-                    .'- Commerçant : attribut commerçant n°'.$entity['commercant'].' ('.$entity['nom_catcommercant'].')'.PHP_EOL
                     .'- SKU : '.$entity['sku'].PHP_EOL
-                    .'- Nom du produit : '.$entity['name'].PHP_EOL
+                    .'- Commerçant original: attribut commerçant n°'.$this->original['commercant'].' / Cat Commercant : '.$this->original['nom_catcommercant'].PHP_EOL
+                    .'- Nom original du produit : '.$this->original['name'].PHP_EOL
                     .'- Modifications apportées aux produits:'.PHP_EOL.PHP_EOL
                     .implode(PHP_EOL, array_intersect_key($bodyChanges, $changes))
                 ;

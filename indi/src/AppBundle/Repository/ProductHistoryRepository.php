@@ -18,15 +18,16 @@ class ProductHistoryRepository extends AbstractRepository
             'reference_interne_magasin' => true,
             'status'                    => true,
             'on_selection'              => true,
-            'price'                     => true,
+            'prix_public'               => true,
             'unite_prix'                => true,
             'short_description'         => true,
             'poids_portion'             => true,
             'nbre_portion'              => true,
             'tax_class_id'              => true,
+            'commercant'                => true,
             'origine'                   => true,
             'produit_biologique'        => true,
-//            'photo'                     => 'Photo : ' . $photo,
+            'image_tmp'                 => $photo,
         ];
 
         $newData = array_intersect_key($data, $fields);
