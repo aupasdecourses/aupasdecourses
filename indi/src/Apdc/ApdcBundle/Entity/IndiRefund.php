@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Entity;
 
-class Refund
+class IndiRefund
 {
     private $id;
 

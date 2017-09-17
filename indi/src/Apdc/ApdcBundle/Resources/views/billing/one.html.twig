@@ -8,7 +8,7 @@
 	{% if check_date  %}
 		<div class="alert alert-warning">Attention, pour les mois antérieurs à Janvier 2017, les factures présentées ici diffèrent des factures envoyées aux commerçants (prise en compte de la date de livraison et non plus de la date de commande) - se référer au Google Drive pour les factures correctes.</div>
 	{% endif %}
-	{% if bill.summary[0].date_finalized is null%}
+	{% if bill.summary[0].date_finalized is null %}
 		{% include 'ApdcApdcBundle::forms/versement.html.twig' %}
 	{% endif %}
 	{% if bill.summary[0].date_finalized != NULL %}
@@ -30,6 +30,7 @@
 		{{ form_end(form_download) }}
 		{{ form_end(form_payout) }}
 	{% endif %}
+
 	<h2> Synthèse de la facture commerçant</h2></br>
 	<div id="billing-summary" class="order">
 		<table id="billSummary" class="table table-striped">
@@ -45,6 +46,7 @@
 					<th colspan="2">Frais bancaires</th>
 					<th>Retrait</th>
 					<th style="color:red;">En-cours</th>
+					<th>Lien de virement</th>
 				</tr>
 				<tr>
 					<th></th>
@@ -61,6 +63,7 @@
 					<th class="float">HT</th>
 					<th class="float">TTC</th>
 					<th class="float">TTC</th>
+					<th></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -89,6 +92,19 @@
 						{% endif %}
 
 						<td style="color:red">{{ summary.sum_payout - sum_payout_regle }}</td>
+						
+						<td>
+							{% if bill.summary[0].date_payout is not null %}
+								{% if bill.summary[0].merchant_payout_status == NULL %}
+									{{ form(payout_form) }}
+								{% elseif bill.summary[0].merchant_payout_status == "done" %}
+									<span class="success">Effectué</span>
+								{% endif %}
+							{% else %}
+								<span class="disabled">A faire</span>
+							{% endif %}
+						</td>
+
 					</tr>
 					{% endfor %}
 			</tbody>

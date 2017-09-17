@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
-class RefundType extends AbstractType
+class IndiRefundType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,7 +24,7 @@ class RefundType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-			'data_class'		=> 'Apdc\ApdcBundle\Entity\Refund',
+			'data_class'		=> 'Apdc\ApdcBundle\Entity\IndiRefund',
 			'csrf_protection'	=> true
         ));
     }

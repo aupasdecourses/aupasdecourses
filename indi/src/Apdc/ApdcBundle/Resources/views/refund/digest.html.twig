@@ -11,7 +11,7 @@
 	</div>
 	{% if refund_full > 0 %}
 	<div class="progress col-sm-8">
-		<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+		<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
 	    	<span>Validation</span>
 		</div>
 	</div>
@@ -20,12 +20,12 @@
 	</div>
 	{% else %}
 	<div class="progress col-sm-8">
-		<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+		<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
 	    	<span>Validation</span>
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
+		<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right">Cloturer >></a>
 	</div>	
 	{% endif %}
 	<div class="row">
@@ -37,7 +37,7 @@
 		<div class="col-sm-12">
 			<table class='table'>
 				<tr>
-					<th>Total de la commande:</th>
+					<th>Total de la commande :</th>
 					<td>{{total}}</td>
 				</tr>
 				<tr>
@@ -69,9 +69,6 @@
 				<div class="btn-group right" role="group" aria-label="...">
 					{% if show_creditmemo %}
 						<input type="submit" name="creditmemo" value='Credit Memo / Envoi mail' class="btn btn-success btn-lg right"/>
-					{% endif %}
-					{% if show_close %}
-						<input type="submit" name="close" value='Clôturer' class="btn btn-success btn-lg right"/>
 					{% endif %}
 				</div>
 			</div>

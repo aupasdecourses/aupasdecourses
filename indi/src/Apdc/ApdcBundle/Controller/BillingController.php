@@ -4,9 +4,10 @@ namespace Apdc\ApdcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Apdc\ApdcBundle\Entity\Payout;
-use Apdc\ApdcBundle\Form\PayoutType;
+use Apdc\ApdcBundle\Entity\IndiPayout;
+use Apdc\ApdcBundle\Form\IndiPayoutType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BillingController extends Controller
@@ -406,6 +407,25 @@ class BillingController extends Controller
 
         $check_file = file_exists($billing_path.$id.'.pdf');
 
+
+		$data_payout = array('message' => 'Formulaire de virement commercant');
+		$payout_form = $this->createFormBuilder($data_payout)
+			->add('Payout', SubmitType::class, array(
+				'label'	=> 'Virement',
+				'attr'	=> array(
+					'class' => 'btn btn-link btn-lg',
+					'style'	=> 'margin-top:-13px;')))
+				->getForm();
+		
+		$payout_form->handleRequest($request);
+
+		if ($payout_form->isSubmitted() && $payout_form->isValid()) {
+			$session->set('increment_id', $bill['increment_id']);
+			$session->set('sum_payout', $bill['summary'][0]['sum_payout']);
+			return $this->redirectToRoute('billingPayoutSubmit', ['id' => $bill['summary'][0]['id_attribut_commercant']]);
+		}
+
+		// NE PAS CONFONDRE FORM_PAYOUT ET PAYOUT_FORM
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
             'forms' => [$form_id->createView()],
             'billing_form' => $form_billing->createView(),
@@ -414,53 +434,42 @@ class BillingController extends Controller
             'form_send' => $form_download->createView(),
             'bill' => $bill,
             'check_date' => $check_date,
-            'check_file' => $check_file,
+			'check_file' => $check_file,
+			'payout_form' => $payout_form->createView(),
         ]);
     }
 
-    public function payoutIndexAction(Request $request)
+    public function payoutHistoryAction(Request $request)
     {
         if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-
-        $entity_prepayout = new \Apdc\ApdcBundle\Entity\PayoutChoice();
-        $form_prepayout = $this->createForm(\Apdc\ApdcBundle\Form\PayoutChoiceType::class, $entity_prepayout);
-        $form_prepayout->handleRequest($request);
-
-        $choice = $form_prepayout['choice']->getData();
-
-        if ($form_prepayout->isSubmitted() && $form_prepayout->isValid()) {
-            return $this->redirectToRoute('billingPayoutSubmit', [
-                'choice' => $choice,
-            ]);
-        }
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:Payout');
+        $repository = $this->getDoctrine()->getManager()->getRepository('ApdcApdcBundle:IndiPayout');
         $payout_list = $repository->findAll();
 
-        return $this->render('ApdcApdcBundle::billing/payoutIndex.html.twig', [
+        return $this->render('ApdcApdcBundle::billing/payout_history.html.twig', [
             'payout_list' => $payout_list,
-            'form_prepayout' => $form_prepayout->createView(),
         ]);
     }
 
-    public function payoutSubmitAction(Request $request, $choice)
+    public function payoutSubmitAction(Request $request, $id)
     {
         if (!$this->isGranted('ROLE_INDI_ADMIN')) {
             return $this->redirectToRoute('root');
         }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $merchants = $mage->getApdcBankFields();
+		$mage = $this->container->get('apdc_apdc.magento');
+        $bill = $this->container->get('apdc_apdc.billing');
+        $merchants = $bill->getApdcBankFields();
 
-        $session = $request->getSession();
+		$session = $request->getSession();
+		$increment_id	= $session->get('increment_id');
+		$sum_payout		= $session->get('sum_payout');
 
         $adyen = $this->container->get('apdc_apdc.adyen');
-        $payout = new Payout();
-        $form = $this->createForm(PayoutType::class, $payout);
+        $payout = new IndiPayout();
+        $form = $this->createForm(IndiPayoutType::class, $payout);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -480,15 +489,18 @@ class BillingController extends Controller
                 echo $e->getMessage();
             }
 
-            $session->getFlashBag()->add('success', 'Payout effectué avec succès');
-
-            return $this->redirectToRoute('billingPayoutIndex');
+			$mage->updateEntryToBillingSummary(['increment_id' => $increment_id], ['merchant_payout_status' => "done"]);
+            $session->getFlashBag()->add('success', 'Virement de ' . ($value/100) . ' à ' . $ownerName . ' effectué');
+			
+			return $this->redirectToRoute('billingOne', ['id' => $increment_id]);
         }
 
-        return $this->render('ApdcApdcBundle::billing/payoutSubmit.html.twig', [
-            'form' => $form->createView(),
-            'merchants' => $merchants,
-            'choice' => $choice,
+        return $this->render('ApdcApdcBundle::billing/payout_submit.html.twig', [
+            'form'			=> $form->createView(),
+            'merchants'		=> $merchants,
+			'id'			=> $id,
+			'increment_id'	=> $increment_id,
+			'sum_payout'	=> $sum_payout,
         ]);
     }
 }
