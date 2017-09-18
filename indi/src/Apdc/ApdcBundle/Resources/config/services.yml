@@ -26,7 +26,7 @@ services:
 
     apdc_apdc.mistral:
         class: Apdc\ApdcBundle\Services\Mistral
-        arguments: ['%stars_services_api_url%']
+        arguments: [ '%kernel.root_dir%', '%stars_services_api_url%' ]
 
     twig.extension.sortbyfield:
         class: Snilius\Twig\SortByFieldExtension

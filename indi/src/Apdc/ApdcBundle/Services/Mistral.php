@@ -8,8 +8,11 @@ class Mistral
 
 	private $stars_services_api_url;
 
-	public function __construct($stars_services_api_url)
+	public function __construct($rootDir, $stars_services_api_url)
 	{
+		
+		$this->_webRoot = realpath($rootDir . '/../web');
+
 		$this->_ch = curl_init();
 
 		$this->stars_services_api_url = $stars_services_api_url;
@@ -28,14 +31,24 @@ class Mistral
 		curl_close($this->_ch);
 	}
 
+	private function convertBase64ToJpg($base64_string, $output_file)
+	{
+		$ifp = fopen($output_file, "w");
+		fwrite($ifp, base64_decode($base64_string));
+		fclose($ifp);
+
+		dump($output_file);
+		return ($output_file);
+	}	
+
 	public function getPictures()
 	{
 		
 		/* exemple avec pascal bassard */
 		$array = array(
-			// 'Token' 		=> 'APDC2712A9B6',
-			// 'PartnerRef' 	=> 'APDC5535',
-			// 'OrderRef' 		=> '2017000293-272',
+			 'Token' 		=> 'APDC2712A9B6',
+			 'PartnerRef' 	=> 'APDC5535',
+			 'OrderRef' 		=> '2017000293-272',
 		 );
 		
 
@@ -51,6 +64,10 @@ class Mistral
 
 		$jsonResult = json_decode($result, true);
 
-		return $jsonResult;
+
+		$img = $this->convertBase64ToJpg($jsonResult['Pictures'][0]['ImageBase64'], 'tmp.jpg' );
+
+		dump($img);
+		return $img;
 	}
 }
