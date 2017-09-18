@@ -246,7 +246,7 @@ class ProductController extends AbstractController
                 }
 
                 $entity  = $entity->getData();
-                $changes = array_diff_assoc($entity,$this->original);
+                $changes = array_diff_assoc($entity, $this->original);
 
                 $this->getModel('ProductHistory')->addHistory($entity);
 
@@ -258,7 +258,7 @@ class ProductController extends AbstractController
 
                 if (isset($entity['image_tmp'])) {
                     $photo = $this->get('request_stack')->getMasterRequest()
-                        ->getUriForPath('/uploads/products/'.$entity['entity_id'].'/../../../'.$entity['image_tmp']);
+                        ->getUriForPath('/' . $entity['image_tmp']);
                 }
 
                 $bodyChanges = [
