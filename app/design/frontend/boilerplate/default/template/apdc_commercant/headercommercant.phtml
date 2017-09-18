@@ -52,11 +52,10 @@
 	?>
 </div>
 
-
 <script type="text/javascript">
     $j(window).ready(function(){
         
-        $j('.open-collapse').click(function(){
+        $j('.open-collapse').on('click', function(){
             if($j(this).hasClass('open')){
                 $j('.collapse-wrapper').hide().removeClass('open');
                 $j(this).removeClass('open');
@@ -68,5 +67,8 @@
                 $j('i', this).removeClass('fa-angle-down').addClass('fa-angle-up');
             }
         });
+        <?php if ($currentcat->getLevel() == 3) : ?>
+            $j('.open-collapse').click();
+        <?php endif; ?>
     })
 </script>
