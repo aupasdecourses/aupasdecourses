@@ -73,6 +73,7 @@ Minicart.prototype = {
         });
         $j(this.selectors.emptyCart).unbind('click.minicart').bind('click.minicart', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             cart.emptyCart($j(this));
         });
 
