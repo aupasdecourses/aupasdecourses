@@ -133,7 +133,13 @@ a{
         background-color: $color-main-pink;
     }
     &.button-orange{
+        color:#fff;
         background-color: $color-dark-orange;
+        &:hover{
+            &:before, &:after{
+                background-color: $color-second-dark-orange;;
+            }
+        }
     }
     &.button-white{
         color: $color-main-green;

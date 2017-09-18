@@ -11464,7 +11464,13 @@ a:hover {
 }
 
 .button.button-orange {
+  color: #fff;
   background-color: #f57320;
+}
+
+.button.button-orange:hover:before,
+.button.button-orange:hover:after {
+  background-color: #c75000;
 }
 
 .button.button-white {
@@ -16149,9 +16155,8 @@ h1.account-title {
   margin-bottom: 10px;
 }
 
-.my-account .box-account.addresses-list .link-remove {
-  font-size: .75rem;
-  color: rgba(0, 0, 0, .84);
+.my-account .box-account.addresses-list .button.add_new_address {
+  margin-top: 0;
 }
 
 .my-account .box-account.detail-order h2 {
