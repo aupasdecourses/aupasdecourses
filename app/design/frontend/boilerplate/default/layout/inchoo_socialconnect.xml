@@ -69,6 +69,14 @@
             </block>
         </reference>
     </apdc_login_view>
+    <apdc_popup_index_templateajax>
+      <reference name="login_form_popup_apdc_popup_child">
+            <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login" as="form.additional.actions">
+                <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button" />
+                <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+            </block>
+        </reference>
+    </apdc_popup_index_templateajax>
 
     <apdc_register_view>
       <reference name="modal_register">

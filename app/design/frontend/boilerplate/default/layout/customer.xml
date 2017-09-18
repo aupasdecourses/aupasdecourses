@@ -281,6 +281,9 @@ Customer account address edit page
             <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml" />
         </reference>
     </apdc_login_view>
+    <apdc_popup_index_templateajax>
+      <block type="customer/form_login" name="login_form_popup_apdc_popup_child" template="apdc_modal/loginmodal.phtml" />
+    </apdc_popup_index_templateajax>
 
     <apdc_register_view>
       <reference name="content">
@@ -296,7 +299,7 @@ Customer account address edit page
 
     <apdc_forgotpassword_view>
 		    <reference name="content">
-            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword-popup.phtml" />
         </reference>
     </apdc_forgotpassword_view>  
 	    

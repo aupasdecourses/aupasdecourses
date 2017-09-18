@@ -92,9 +92,6 @@
                 <action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
                 <!-- IMPORTANT -->
         </reference>
-        <reference name="before_body_end">
-          <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
-        </reference>
         <reference name="footer">
             <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
         </reference>

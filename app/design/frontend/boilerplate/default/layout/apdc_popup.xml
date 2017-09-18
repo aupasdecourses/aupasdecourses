@@ -5,10 +5,53 @@
       <action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
       <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
     </reference>
-    <reference name="before_body_end">
-      <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
+    <reference name="after_body_start">
+      <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml">
+        <block type="apdc_popup/popup" name="apdc_popup_template" template="apdc_popup/popup.phtml" />
+      </block>
     </reference>
 
+    <!-- HOW TO USE
+
+    Le after_body_start avec popup_js va charger l'url Ajax par défaut permettant de récupérer le contenu du popup.
+    Popup.phtml est ajouté à popup_js et est utilisé comme template par défaut. Vous pouvez soit générer automatiquement le contenu du popup via le layout en utilisant l'option getTemplate: true. Sinon vous pouvez manuellement ajouter et mettre à jour le contenu du popup via la méthode updateContent.
+
+pour instancier un popup il suffit de créer un nouvel object Javascript : 
+
+    apdcPoppupTest = new ApdcPopup({
+     id: 'test' // identifiant unique pour le popup. ApdcPopup ajoute automatiquement un suffixe : -popup. L'id sera donc test-popup 
+     getTemplate : true | false // Permet de récupérer le contenu du popup en Ajax. Vous pouvez gérer le contenu via le layout (voir ci-dessous)
+     autoHeightPopup: true | false // Permet de recalculer automatiquement la hauteur du popup à chaque fois qu'on utilise la méthode updateContent
+     onReady: function() {
+      // Optionnel : si renseigné sera exécuté une fois le popup complètement initialisé. 
+      // Si getTemplate == true, alors sera exécuté une fois la requête ajax terminée. 
+      // Si getTemplate == false, alors sera exécuté une fois le template par défaut initialisé.
+     }
+    });
+
+
+    Dans le cas de getTemplate: true
+    ApdcPopup fera une requête ajax sur l'url : apdc_popup/index/templateAjax avec l'id (ex: test-popup)
+    Dans ce controller on génère un block apdc_popup/popup avec le template popup.phtml.
+    Ce template appelle la méthode $this->getChildHtml() au niveau du contenu.
+    Vous pouvez donc ajouter des block grâce à cela. Un block est automatiquement généré dans le controller avec l'id du popup. :
+    Les - sont remplacé par des _
+
+    {{id_popup}}_apdc_popup_child
+
+    ex : avec notre id test-popup on aura un handle : test_popup_apdc_popup_child
+
+
+    on pourra donc ajouter dans notre layout : 
+    <apdc_popup_index_templateajax> // non du handle pour le controller
+      <block type="core/template" name="test_popup_apdc_popup_child" template="form/test.phtml" />
+    </apdc_popup_index_templateajax>
+
+
+    de cette manière le block sera automatiquement ajouté au contenu du popup.
+
+    Voir le test CASE ci-sessous
+    -->
 
 
 
@@ -26,9 +69,7 @@
 
   <!-- ##########  TEST CASE ########## -->
   <!--<apdc_popup_index_templateajax>-->
-    <!--<reference name="content">-->
       <!--<block type="core/template" name="test_popup_apdc_popup_child" template="apdc_popup/test/popup-content.phtml" />-->
-    <!--</reference>-->
   <!--</apdc_popup_index_templateajax>-->
   <!-- ##########  END TEST CASE ########## -->
 </layout>
