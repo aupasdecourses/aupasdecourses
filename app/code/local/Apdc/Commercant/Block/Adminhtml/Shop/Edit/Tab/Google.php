@@ -37,6 +37,18 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Google
             ['legend' => $this->__('Tableau produits Google Sheets')]
         );
 
+        $fieldset->addField(
+            'flag_magmi',
+            'select',
+            array(
+                'name' => 'flag_magmi',
+                'label' => $this->_helper()->__('Actif dans Magmi'),
+                'title' => $this->_helper()->__('Actif dans Magmi'),
+                'values' => Mage::getSingleton('adminhtml/system_config_source_enabledisable')->toOptionArray(),
+                'required' => true,
+            )
+        );
+        
         $fieldset->addField('google_id', 'text', [
             'name' => 'google_id',
             'label' => $this->__('Google id'),

@@ -30,5 +30,15 @@ services:
 
     twig.extension.sortbyfield:
         class: Snilius\Twig\SortByFieldExtension
-        tags: 
+        tags:
             - { name: twig.extension }
+
+    apdc_apdc.repository.products:
+        class: AppBundle\Repository\ProductRepository
+        arguments:
+            - '@apdc_apdc.magento'
+
+    apdc_apdc.repository.orders:
+        class: AppBundle\Repository\OrderRepository
+        arguments:
+            - '@apdc_apdc.magento'

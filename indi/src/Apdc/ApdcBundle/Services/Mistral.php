@@ -51,14 +51,6 @@ class Mistral
 
 		$jsonResult = json_decode($result, true);
 
-		echo '<pre>';
-		var_dump($jsonArray);
-		var_dump($jsonResult);
-		echo '<pre>';
-
-		dump($jsonArray);
-		dump($jsonResult);
-
 		return $jsonResult;
 	}
 }

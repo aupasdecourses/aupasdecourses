@@ -75,9 +75,6 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                 return $this->_redirect('*/*/');
             }
 
-            if (isset($data['timetable'])) {
-                $data['timetable'] = serialize($data['timetable']);
-            }
             if (isset($data['closing_periods']) && is_array($data['closing_periods'])) {
                 $closingData = [];
                 $i = 0;
@@ -87,9 +84,9 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                     }
                     $i++;
                 }
-                $data['closing_periods'] = serialize($closingData);
+                $data['closing_periods'] = $closingData;
             } else {
-                $data['closing_periods'] = serialize([]);
+                $data['closing_periods'] = [];
             }
 
             if (!isset($data['delivery_days'])) {
@@ -110,17 +107,6 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                         $data['id_category'] = array_unique($data['id_category']);
                     }
 
-                    $data["stores"] = [];
-                    $S = Mage::helper('apdc_commercant')->getStoresArray();
-                    $categories=Mage::getModel ('catalog/category');
-                    foreach ($data["id_category"] as $id) {
-                        $cat = $categories->getCollection()->addAttributeToSelect("path")
-                            ->addAttributetoFilter ("entity_id",$id)->getFirstItem ();
-                        $storeid = $S[explode('/', $cat->getPath())[1]]['store_id'];
-                        if (!in_array($storeid,$data["stores"])) {
-                            $data["stores"][]=$storeid;
-                        }
-                    }
                 } else {
                     $data['id_category'] = [];
                 }

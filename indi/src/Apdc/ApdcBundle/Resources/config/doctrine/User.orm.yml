@@ -8,4 +8,10 @@ Apdc\ApdcBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
+    manyToOne:
+        shop:
+            targetEntity: AppBundle\Entity\Shop
+            joinColumn:
+                name: shop_id
+                referencedColumnName: id_shop
     lifecycleCallbacks: {  }

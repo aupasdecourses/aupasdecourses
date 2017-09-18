@@ -52,7 +52,7 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
             $this->setPosition($position);
 
             $row = array(
-                'store'         => $this->getStore()->getCode(),
+                'store'         => '',
                 'websites'      => '',
                 'attribute_set' => $this->getAttributeSetName($product->getEntityTypeId(),
                                         $product->getAttributeSetId()),
@@ -63,20 +63,31 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
                 'gr_skus' => ''
             );
 
+            //Stores
 
-            if ($this->getStore()->getCode() == Mage_Core_Model_Store::ADMIN_CODE) {
-                $websiteCodes = array();
-                foreach ($product->getWebsiteIds() as $websiteId) {
-                    $websiteCode = Mage::app()->getWebsite($websiteId)->getCode();
-                    $websiteCodes[$websiteCode] = $websiteCode;
-                }
-                $row['websites'] = join(',', $websiteCodes);
-            } else {
-                $row['websites'] = $this->getStore()->getWebsite()->getCode();
-                if ($this->getVar('url_field')) {
-                    $row['url'] = $product->getProductUrl(false);
+
+            //if ($this->getStore()->getCode() == Mage_Core_Model_Store::ADMIN_CODE) {
+            $websiteCodes = array();
+            $storeCodes = array();
+            foreach ($product->getWebsiteIds() as $websiteId) {
+                $website=Mage::app()->getWebsite($websiteId);
+                $websiteCode = $website->getCode();
+                $websiteCodes[$websiteCode] = $websiteCode;
+
+                $storeids = $website->getStoreIds();
+                foreach($storeids as $id){
+                    $code=Mage::getModel('core/store')->load($id)->getCode();
+                    $storeCodes[$code] = $code;
                 }
             }
+            $row['websites'] = join(',', $websiteCodes);
+            $row['store'] = 'admin,'.join(',', $storeCodes);
+            //} else {
+            //    $row['websites'] = $this->getStore()->getWebsite()->getCode();
+            //    if ($this->getVar('url_field')) {
+            //        $row['url'] = $product->getProductUrl(false);
+            //    }
+            //}
             $row['_product_websites'] = $row['websites'];
 
             foreach ($linkIdColPrefix as $linkId => &$colPrefix) {

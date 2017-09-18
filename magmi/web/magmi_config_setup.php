@@ -39,8 +39,13 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 </div>
 <div class="container_12">
 	<div class="grid_12 col">
-		<h3>Sélectionner les fichiers à synchroniser</h3>
-			<div id="sync_div">
+		<h3>Synchronisation du fichier <a href="https://docs.google.com/spreadsheets/d/1Fwbc87dXCyvvkk7wWLknoCqIGl8MpNF8FVlJElelO80/edit#gid=835854434" target="_blank">Mass Edit Template</a></h3>
+		<div id="sync_div_1" style="padding:20px 0;">	
+			<label>Mass Edit Template</label>
+			<input type="submit" class="button_sync" name="met" value="Sync!" />
+		</div>
+		<h3>UNIQUEMENT POUR RÉFÉRENCEMENT! - Sélectionner les fichiers à synchroniser (si fichier non visible, vérifier flag dans <a href="../../index.php/admin/petitcommisadmin/commercant_shop/" target="_blank">le back office Magento </a></h3>
+			<div id="sync_div_2">
 				<?php
 					define('CHEMIN_MAGE','../../');
 					include CHEMIN_MAGE.'app/Mage.php';
@@ -63,26 +68,24 @@ if (!$eplconf->hasSection("PLUGINS_DATASOURCES"))
 							<?php endforeach;?>
 						</table>
 					<?php endforeach;?>
-				<input type="submit" id="button_sync" name="Sync!" value="Sync!" />
+				<input type="submit" class="button_sync" name="com" value="Sync!" />
 			</div>
 			<script>
 				$j(document).ready(function(){
-				    $j('#button_sync').click(function(){
-				    	$j('#sync_div').append('<img id="waitgif" src="http://www.mediaforma.com/sdz/jquery/ajax-loader.gif">');
-				    	var commercant=[];
-				    	$j("#sync_div input:checkbox").each(function () {
-				    		var ischecked = $j(this).is(":checked");
-					        if (ischecked) {
-					            if(commercant.length===0){
-					            	commercant=$j(this).val();
-					            }else{
-					            	commercant+='|'+$j(this).val();
-					            }
-					        }
+				    $j('.button_sync').on("click",function(){
+				    	if($j(this).attr('name')=="com"){
+					    	$j('#sync_div_2').append('<img id="waitgif" src="http://www.mediaforma.com/sdz/jquery/ajax-loader.gif">');
+					    	$j("#sync_div_2 input:checkbox").each(function () {
+						        if ($j(this).is(":checked")) {
+						            commercant=$j(this).val();
+						        }
 
-				    	});
-
-				        $j.ajax({ url: 'importgooglecsv.php',
+					    	});
+						}else if($j(this).attr('name')=="met"){
+							$j('#sync_div_1').append('<img id="waitgif" src="http://www.mediaforma.com/sdz/jquery/ajax-loader.gif">');
+							commercant=$j(this).attr('name');
+						}
+						$j.ajax({ url: 'importgooglecsv.php',
 						         data: {action: commercant},
 						         type: 'GET',
 						         cache: false,

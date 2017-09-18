@@ -18,26 +18,30 @@
     );
 
     if (isset($_GET['action'])) {
-        $commercant = explode('|', $_GET['action']);
-        foreach ($commercant as $code) {
-            $google_csv = Mage::helper('pmainguet_delivery')->getgooglecsv($code);
+        $commercant = $_GET['action'];
+        if($commercant <> "met"){
+            $google_csv = Mage::helper('pmainguet_delivery')->getgooglecsv($commercant);
             $name = $google_csv['name'];
             $key = $google_csv['key'];
             $gid = $google_csv['gid'];
-            if (!is_null($key) && !is_null($gid)) {
-                try {
-                    $filepath = $url_base.date('ymd_Hi').'_'.$code.'.csv';
-                    $filesize = 0;
-                    //while($filesize<$size_file_limit){
-                        file_put_contents($filepath, file_get_contents('https://docs.google.com/spreadsheets/d/'.$key.'/export?gid='.$gid.'&format=csv&id='.$key, false, stream_context_create($arrContextOptions)));
-                    $filesize = filesize($filepath);
-                    //}
-                    echo 'Fichier '.$name.' synchronisé! (taille='.round(floatval($filesize) / 1000, 0).'Ko)';
-                } catch (Exception $e) {
-                    echo 'Erreur!';
-                }
-            } else {
-                echo 'Key & gid vides! Vérifier les informations Google Sheets dans la catégorie correspondante.';
+        }else{
+            $name = "met";
+            $key = "1Fwbc87dXCyvvkk7wWLknoCqIGl8MpNF8FVlJElelO80";
+            $gid = "2030347927";
+        }
+        if (!is_null($key) && !is_null($gid)) {
+            try {
+                $filepath = $url_base.date('ymd_Hi').'_'.$commercant.'.csv';
+                $filesize = 0;
+                //while($filesize<$size_file_limit){
+                    file_put_contents($filepath, file_get_contents('https://docs.google.com/spreadsheets/d/'.$key.'/export?gid='.$gid.'&format=csv&id='.$key, false, stream_context_create($arrContextOptions)));
+                $filesize = filesize($filepath);
+                //}
+                echo 'Fichier '.$name.' synchronisé! (taille='.round(floatval($filesize) / 1000, 0).'Ko)';
+            } catch (Exception $e) {
+                echo 'Erreur!';
             }
+        } else {
+            echo 'Key & gid vides! Vérifier les informations Google Sheets dans la catégorie correspondante.';
         }
     }

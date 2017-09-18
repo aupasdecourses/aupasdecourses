@@ -1,0 +1,62 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+		
+	<h2>Historique des virements commercants</h2>
+	<hr/>
+
+	<table id="payoutTable" class="table table-striped">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Reference</th>
+				<th>Montant</th>
+				<th>Magasin</th>
+				<th>IBAN</th>
+				<th>Commercant</th>
+				<th>Mail commercant</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for payout in payout_list %}
+			<tr>
+				<td>{{ payout.date|date('d-m-Y H:i:s') }}</td>
+				<td>{{ payout.reference }}</td>
+				<td>{{ payout.value/100 ~ " € " }}</td>
+				<td>{{ payout.ownerName }}</td>
+				<td>{{ payout.iban }}</td>
+				<td>{{ payout.shopperReference }}</td>
+				<td>{{ payout.shopperEmail }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_payout %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_payout %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function() {
+	$('#payoutTable').DataTable( {
+		"order": [[ 0, 'dsc' ]],
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+		}
+	} );
+} );
+	</script>
+{% endblock %}

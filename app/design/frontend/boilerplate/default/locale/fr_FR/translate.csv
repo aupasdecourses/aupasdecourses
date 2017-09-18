@@ -119,3 +119,5 @@ Mage_Checkout::Estimate Shipping and Tax,"Sélectionnez votre mode de livraison"
 "Mage_Catalog::As low as:","A partir de:"
 "Search results for '%s'","Résultats de recherche pour '%s'"
 "Your search returns no results.","Désolé, nos commerçants n'ont pas le produit que vous recherchez."
+Apdc_Cart::All merchant's items have been removed successfully.,Tous les produits du commerçant ont été retiré de votre panier.
+Apdc_Cart::"Can not remove the item.","Nous ne pouvons retirer le(s) produit(s) de votre panier."

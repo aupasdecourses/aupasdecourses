@@ -10,7 +10,12 @@
 					<h3><strong>Ma commande </strong>du <?php echo $this->formatDate($order->getCreatedAt(),Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM); ?></h3>
 					<p><?php echo Mage::helper('core')->currency($order->getGrandTotal(), true, false); ?></p>
 					<a class="link" href="<?php echo Mage::getUrl('sales/order/view', array('order_id' => $order->getId())); ?>">Voir la commande</a>
-					<a class="button button-green" href="<?php echo Mage::getUrl('sales/order/reorder', array('order_id' => $order->getId())); ?>">Recommander</a>
+                    <a class="button button-green" href="<?php echo Mage::getUrl('sales/order/reorder', array('order_id' => $order->getId())); ?>">
+                        Recommander
+                        <div class="action-loading" style="display: none;">
+                            <div class="loader"></div>
+                        </div>
+                    </a>
 				</article>
 			<?php } ?>
 		</div>
@@ -18,3 +23,8 @@
 		<h2>Passez dès maintenant votre première commande !</h2>
 	<?php } ?>
 </div>
+<script type="text/javascript">
+    jQuery('.block-lastorder a.button-green').on('click', function() {
+        jQuery(this).parents('article').find('.action-loading').show();
+    });
+</script>

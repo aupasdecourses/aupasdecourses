@@ -1,0 +1,48 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container">
+	
+	<h1>Effectuer un virement commercant</h1><br>
+	<hr/>
+
+	{{ form_start(form) }}
+
+	{% for key , fields in merchants %}
+		{% if fields.id_attribut_commercant == id %}
+		
+			<h4><b>Magasin</b></h4>
+			{{ form_widget(form.ownerName, {'attr': {'value': fields.name} }) }}
+
+			<h4><b>IBAN</b></h4>
+			{{ form_widget(form.iban, {'attr': {'value': fields.iban} }) }}
+
+			<h4><b>Commercant</b></h4>
+			{{ form_widget(form.shopperReference, {'attr': {'value': fields.shopperReference} }) }}
+
+			<h4><b>Mail commercant</b></h4>
+			{{ form_widget(form.shopperEmail, {'attr': {'value': fields.shopperEmail} }) }}
+
+			{% if increment_id is not null %}
+			<h4><b>Reference</b></h4>
+				{{ form_widget(form.reference, {'attr': {'value': increment_id} }) }}
+			{% endif %}
+
+			{% if sum_payout is not null %}
+			<h4><b>Montant</b></h4>
+				{{ form_widget(form.value, {'attr': {'value': sum_payout} }) }}
+			{% endif %}
+
+		{% endif %}
+	{% endfor %}
+
+	{{ form_errors(form) }}
+	{{ form_rest(form) }}
+	{{ form_end(form) }}
+
+
+
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

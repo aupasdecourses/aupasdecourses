@@ -137,4 +137,24 @@ class Apdc_Cart_Helper_Data extends Mage_Checkout_Helper_Cart
             )
         );
     }
+
+    /**
+     * getAjaxEmptyCartUrl 
+     * 
+     * @return string
+     */
+    public function getAjaxEmptyCartUrl()
+    {
+        $lastUrl = null;
+        if (Mage::app()->getRequest()->getParam('uenc')) {
+            $lastUrl = Mage::helper('core/url')->urlDecode(Mage::app()->getRequest()->getParam('uenc'));
+        }
+        return Mage::getUrl(
+            'checkout/cart/ajaxEmptyCart',
+            array(
+                Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => Mage::helper('core/url')->getEncodedUrl($lastUrl),
+                '_secure' => Mage::app()->getStore()->isCurrentlySecure(),
+            )
+        );
+    }
 }

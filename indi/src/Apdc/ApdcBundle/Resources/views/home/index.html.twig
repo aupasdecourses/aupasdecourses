@@ -35,7 +35,7 @@
 				<h3>TRAITEMENT POST-LIVRAISON</h3>
 				<div class="button_accueil">
 					<a href="{{ path ('refundIndex')}}"><button type="button" class="btn btn-default btn-lg btn-block">Saisie Ticket</button></a>
-					<a href="{{ path ('refundAdyenIndex') }}"><button type="button" class="btn btn-default btn-lg btn-block">Formulaire Adyen</button></a>
+					<a href="{{ path ('refundPostClosureIndex') }}"><button type="button" class="btn btn-default btn-lg btn-block">Remboursement post-cloture</button></a>
 					<!--<a href="{{ path ('mistralTicketImg')}}"><button type="button" class="btn btn-danger btn-lg btn-block">Mistral Ticket Img</button></a>-->
 				</div>
 				<h3>FACTURATION</h3>
@@ -44,7 +44,7 @@
 					<a href="{{ path ('billingVerif') }}"><button type="button" class="btn btn-default btn-lg btn-block">Calcul Facturation</button></a>
 					<a href="{{ path ('billingDetails') }}"><button type="button" class="btn btn-default btn-lg btn-block">Commandes Facturées</button></a>
 					<a href="{{ path ('billingSummary') }}"><button type="button" class="btn btn-default btn-lg btn-block">Factures Commerçant</button></a>
-					<!-- <a href="{{ path ('billingPayoutIndex') }}"><button type="button" class=" btn btn-default btn-lg btn-block">Payout</button></a> -->
+					<!-- <a href="{{ path ('billingPayoutHistory') }}"><button type="button" class=" btn btn-default btn-lg btn-block">Payout</button></a> -->
 					{% endif %} {# end role gestion #}
 				</div>
 			</div>

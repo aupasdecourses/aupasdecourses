@@ -41,5 +41,13 @@
       </apdc_dataflow_setup>
     </resources>
   </global>
-
+  <adminhtml>
+   <layout>
+     <updates>
+       <apdc_dataflow>
+          <file>apdc/apdc_dataflow.xml</file>
+       </apdc_dataflow>  
+     </updates>
+   </layout>
+  </adminhtml>
 </config>

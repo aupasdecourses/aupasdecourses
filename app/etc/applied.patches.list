@@ -263,3 +263,14 @@ patching file skin/adminhtml/default/default/media/uploaderSingle.swf
 patching file skin/adminhtml/default/default/xmlconnect/boxes.css
 
 
+-e -n 2017-09-11 06:57:25 UTC | SUPEE-8967 | EE_1.13.1.0 | v1 | 1fa53e9533f6f3a16f24d9b64dabef0ab7f965d7 | Thu Aug 18 16:32:48 2016 +0300 | 97d160644..1fa53e9533
+patching file app/code/core/Mage/Payment/Model/Method/Cc.php
+Hunk #1 succeeded at 122 with fuzz 1 (offset -1 lines).
+patching file js/prototype/validation.js
+Hunk #1 succeeded at 880 with fuzz 2 (offset -1 lines).
+
+
+-e -n 2017-09-11 06:58:04 UTC | SUPEE-9652 | EE_1.14.3.1 | v1 | 4038f0785d828794083f53f10c01aaa6af403523 | Tue Jan 24 15:03:12 2017 +0200 | 9586981e6ca8b255014b242d50b68b88525b0754..4038f0785d828794083f53f10c01aaa6af403523
+patching file lib/Zend/Mail/Transport/Sendmail.php
+
+

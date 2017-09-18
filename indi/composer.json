@@ -36,7 +36,13 @@
         "symfony/validator": "^3.2",
         "symfony/filesystem": "^3.2",
         "symfony/finder": "^3.2",
-        "snilius/twig-sort-by-field": "^0.1.5"
+        "friendsofsymfony/rest-bundle": "2.1.x",
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "jms/serializer-bundle": "1.1.x",
+        "nelmio/api-doc-bundle": "2.13.x",
+        "nelmio/cors-bundle": "1.4.x",
+        "snilius/twig-sort-by-field": "^0.1.5",
+        "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

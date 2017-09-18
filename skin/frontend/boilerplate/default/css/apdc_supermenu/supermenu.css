@@ -11,6 +11,15 @@
 #supermenu .menu-template-content {
   display:none;
 }
+#supermenu .menu-template-content li.template-column a:hover {
+  text-decoration:underline!important;
+}
+#supermenu .menu-template-content li.template-column a .cat-name {
+  transition:color 0.2s ease;
+}
+#supermenu .menu-template-content li.template-column a:hover .cat-name {
+  color:#028414;
+}
 .main-container,
 .footer-container,
 .copyright-cards-container {
@@ -140,6 +149,11 @@
     font-size: 1.125 rem;
     font-weight: 700;
     color: #1e555a;
+    opacity:1;
+    transition:opacity 0.2s ease;
+}
+#supermenu li.level1 > a:hover span {
+  opacity:0.7;
 }
 ul.nav a {
   outline: none;
@@ -176,7 +190,7 @@ ul.nav a {
 .dropdown-submenu.open>.dropdown-menu-template {
     display: block;
 }
-#supermenu div.level0>ul{
+#supermenu div.level0>ul:not(.menu-template-content){
     list-style-type: none;
     padding-left: 10px;
 }
@@ -260,7 +274,7 @@ a.level3:hover {
   #supermenu ul.level0 {
     height: 300px;
     overflow: hidden;
-    z-index: 98;
+    z-index: 97;
     padding-top: 20px;
     border-radius: 0;
     border: 1px solid #dcdcdc;
@@ -269,7 +283,7 @@ a.level3:hover {
     width: 100%;
     padding-bottom: 0;
   }
-  #supermenu div.level0>ul {
+  #supermenu div.level0>ul:not(.menu-template-content) {
     float:left;
     width:280px;
     overflow-x:hidden;
@@ -279,12 +293,12 @@ a.level3:hover {
     padding-left: 20px;
     border-right: 1px solid #eee;
   }
-  #supermenu div.level0>ul>li{
+  #supermenu div.level0>ul:not(.menu-template-content)>li{
       margin-bottom: 10px;
   }
   #supermenu div.level0{
       border: 0;
-      top: 118px;
+      top: 117px;
   }
   #supermenu .close-menu {
     display:block;
@@ -303,12 +317,14 @@ a.level3:hover {
     color:#333333;
   }
   #supermenu .menu-template-content {
-    display:block;
+    display: inline-block;
     float:right;
     width:calc(100% - 280px);
     height: 100%;
     overflow: auto;
-    display: inline-block;
+    padding:0;
+    list-style:none;
+    margin:0;
   }
 
 

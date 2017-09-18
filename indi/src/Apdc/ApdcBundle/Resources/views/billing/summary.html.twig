@@ -33,6 +33,7 @@
 				<th>Finalisé</th>
 				<th>Réglé</th>
 				<th>Envoyé</th>
+				<th>Virement effectué</th>
 			</tr>
 			<tr>
 				<th></th>
@@ -49,6 +50,7 @@
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -94,12 +96,20 @@
 							<span style="color:green;">Oui
 						{% endif %}
 					</td>
+					<td>
+						{% if order.merchant_payout_status == NULL %}
+							<span style="color:red;">Non
+						{% elseif order.merchant_payout_status == "done" %}
+							<span style="color:green;">Oui	
+						{% endif %}
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 		<tfoot>
 			<tr>
 				<th colspan="2">Total</th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>

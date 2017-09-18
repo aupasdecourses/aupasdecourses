@@ -41,6 +41,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 
 	    //with Apdc_Commercant module
 	    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
+	    $shops->addFieldToFilter("flag_magmi",1);
         $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
         $shops->addFilterToMap('path', 'catalog_category_entity.path');
         foreach ($shops as $shop) {

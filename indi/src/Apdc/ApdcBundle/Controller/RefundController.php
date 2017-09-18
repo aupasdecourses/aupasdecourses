@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-use Apdc\ApdcBundle\Entity\Refund;
-use Apdc\ApdcBundle\Form\RefundType;
+use Apdc\ApdcBundle\Entity\IndiRefund;
+use Apdc\ApdcBundle\Form\IndiRefundType;
 
 class RefundController extends Controller
 {
@@ -17,7 +17,7 @@ class RefundController extends Controller
     const    SUCCESS	= 1;
     const    WARNING	= 2;
 
-    public function indexAction(Request $request, $from)
+    public function indexAction(Request $request, $from, $to)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -25,24 +25,28 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $entity_from	= new\Apdc\ApdcBundle\Entity\From();
-        $form_from		= $this->createForm(\Apdc\ApdcBundle\Form\From::class, $entity_from);
+        $entity_fromto	= new\Apdc\ApdcBundle\Entity\FromTo();
+        $form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
 
-        $form_from->handleRequest($request);
+        $form_fromto->handleRequest($request);
 
-        if ($form_from->isValid()) {
-            return $this->redirectToRoute('refundIndex', ['from' => $entity_from->from]);
+        if ($form_fromto->isValid()) {
+			return $this->redirectToRoute('refundIndex', [
+				'from'	=> $entity_fromto->from,
+				'to'	=> $entity_fromto->to
+			]);
         }
-        if (!isset($from)) {
+        if (!isset($from) && (!isset($to))) {
             return $this->redirectToRoute('refundIndex', ['from' => date('Y-m-d', strtotime('now'))]);
         }
 
-        $form_from->get('from')->setData($from);
+        $form_fromto->get('from')->setData($from);
+		$form_fromto->get('to')->setData($to);
 
-        $orders = $mage->getOrders($from);
+        $orders = $mage->getOrders($from, $to);
 
         return $this->render('ApdcApdcBundle::refund/index.html.twig', [
-            'forms'		=> [$form_from->createView()],
+            'forms'		=> [$form_fromto->createView()],
             'orders'	=> $orders,
         ]);
     }
@@ -317,6 +321,8 @@ class RefundController extends Controller
         $order_mid				= $order[-1]['order']['mid'];
         $order_header			= $order[-1]['order'];
         unset($order[-1]);
+		
+		$refund_full = $mage->getRefundfull($refund_diff, $refund_shipping_amount);
 
         $files = $this->getUploadedFiles($id);
         foreach ($order as $merchant_id => $merchant_part) {
@@ -356,34 +362,34 @@ class RefundController extends Controller
                         $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
                     } else {
                         $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
-                    }
-                    $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
-                } catch (\Exception $e) {
-                    $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
-                }
-            } elseif (!is_null($_POST['close'])) {
-                try {
-                    //Close order
-                    $close = $mage->setCloseStatus($id);
-                    $session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
-                } catch (Exception $e) {
+					}
+					
+					if ($refund_full != 0) {
+						$mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
+					} else {
+						$mage->updateEntryToOrderField(['order_id' => $order_mid], [
+							'digest' => 'done',
+							'refund' => 'no_refund'
+						]);
+					}
+
+				} catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }
             }
-        }
-
+		}
+		
         return $this->render('ApdcApdcBundle::refund/digest.html.twig', [
             'total'				=> $total,
             'refund_total'		=> $refund_total,
             'refund_diff'		=> $refund_diff,
             'refund_shipping'	=> $refund_shipping_amount,
-            'refund_full'		=> $mage->getRefundfull($refund_diff, $refund_shipping_amount),
+            'refund_full'		=> $refund_full,
             'order_header'		=> $order_header,
             'order'				=> $order,
             'id'				=> $id,
             'show_creditmemo'	=> $mage->checkdisplaybutton($id, 'creditmemo'),
-            'show_close'		=> $mage->checkdisplaybutton($id, 'close'),
-            'forms'				=> [$form_submit->createView()],
+			'forms'				=> [$form_submit->createView()],
         ]);
     }
 
@@ -395,16 +401,16 @@ class RefundController extends Controller
 
         $adyen	= $this->container->get('apdc_apdc.adyen');
         $mage	= $this->container->get('apdc_apdc.magento');
+		$session = $request->getSession();
 
         $order		= $mage->getRefunds($id);
         $orders		= $mage->getAdyenPaymentByPsp();
-        $event_data = $mage->getAdyenQueueFields();
 
         $refund_diff	= $order[-1]['merchant']['refund_diff'];
         $order_mid		= $order[-1]['order']['mid'];
 
-        $refund = new Refund();
-        $form	= $this->createForm(RefundType::class, $refund);
+        $refund = new IndiRefund();
+        $form	= $this->createForm(IndiRefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
@@ -418,7 +424,8 @@ class RefundController extends Controller
 
             $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done']);
 
-            return $this->redirectToRoute('refundIndex');
+			$session->getFlashBag()->add('success', 'Remboursement via Adyen effectué.');
+            return $this->redirectToRoute('refundClosure', ['id' => $id]);
         }
 
         return $this->render('ApdcApdcBundle::refund/final.html.twig', [
@@ -426,25 +433,71 @@ class RefundController extends Controller
             'refund_diff'	=> $refund_diff,
             'id'			=> $id,
             'orders'		=> $orders,
-            'event_data'	=> $event_data,
         ]);
-    }
+	}
 
-    public function refundAdyenIndexAction(Request $request)
+	public function refundClosureAction(Request $request, $id)
+	{
+		if (!$this->isGranted('ROLE_INDI_GESTION')) {
+            return $this->redirectToRoute('root');
+		}
+		
+		$mage			= $this->container->get('apdc_apdc.magento');
+		$order_history	= $mage->getOrderHistory($id);
+		$session		= $request->getSession();
+		$order			= $mage->getRefunds($id);
+
+		$refund_diff	= $order[-1]['merchant']['refund_diff'];
+		$refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
+		$order_mid		= $order[-1]['order']['mid'];
+
+		$entity_submit	= new \Apdc\ApdcBundle\Entity\Model();
+        $form_submit	= $this->createFormBuilder($entity_submit);
+        $form_submit->setAction($this->generateUrl('refundClosure', array('id' => $id)));
+        $form_submit	= $form_submit->getForm();
+
+		if ($request->isMethod('POST')) {
+            $form_submit->handleRequest($request);
+			if (!is_null($_POST['close'])) {
+				try {
+					//Close order
+					$close = $mage->setCloseStatus($id);
+					} catch (Exception $e) {
+					$session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
+				}
+				
+				$mage->updateEntryToOrderField(['order_id' => $order_mid], ['closure' => 'done']);
+				
+				$session->getFlashBag()->add('success', 'Commande cloturée avec succès!');
+				return $this->redirectToRoute('refundClosure', ['id' => $id]);
+			}
+		}		
+
+		return $this->render('ApdcApdcBundle::refund/closure.html.twig', [
+			'order_history' => $order_history,
+			'id'			=> $id,
+			'refund_full'	=> $mage->getRefundfull($refund_diff, $refund_shipping_amount),
+			'show_close'	=> $mage->checkdisplaybutton($id, 'close'),
+			'forms'			=> [$form_submit->createView()],
+
+		]);
+	}
+
+    public function refundPostClosureIndexAction(Request $request)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
         }
 
         $mage	= $this->container->get('apdc_apdc.magento');
-        $orders = $mage->getAdyenOrderPaymentTable();
+        $orders = $mage->getAdyenPaymentByMerchRef();
 
-        return $this->render('ApdcApdcBundle::refund/adyenIndex.html.twig', [
+        return $this->render('ApdcApdcBundle::refund/post_closure_index.html.twig', [
             'orders' => $orders,
         ]);
     }
 
-    public function refundAdyenFormAction(Request $request, $psp)
+    public function refundPostClosureFormAction(Request $request, $psp)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -453,11 +506,10 @@ class RefundController extends Controller
         $adyen	= $this->container->get('apdc_apdc.adyen');
         $mage	= $this->container->get('apdc_apdc.magento');
 
-		$orders		= $mage->getAdyenPaymentByPsp();
-        $event_data = $mage->getAdyenQueueFields();
+		$orders	= $mage->getAdyenPaymentByPsp();
 
-        $refund = new Refund();
-        $form	= $this->createForm(RefundType::class, $refund);
+        $refund = new IndiRefund();
+        $form	= $this->createForm(IndiRefundType::class, $refund);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             try {
@@ -470,14 +522,13 @@ class RefundController extends Controller
             }
 
             $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
-            return $this->redirectToRoute('refundAdyenIndex');
+            return $this->redirectToRoute('refundPostClosureIndex');
         }
 
-        return $this->render('ApdcApdcBundle::refund/adyenForm.html.twig', [
+        return $this->render('ApdcApdcBundle::refund/post_closure_form.html.twig', [
             'form'			=> $form->createView(),
             'psp'			=> $psp,
             'orders'		=> $orders,
-            'event_data'	=> $event_data,
         ]);
     }
 

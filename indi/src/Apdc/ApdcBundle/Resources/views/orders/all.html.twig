@@ -139,7 +139,11 @@
 								<th>Commentaire</th>
 							</tr>
 							{% for product in order.products | sortbyfield('nom_commercant') %}
+						{% if product.produit_fragile == 1 %}
+							<tr style="background-color:rgba(255, 165, 0, 0.7)">
+						{% else %}
 							<tr>
+						{% endif %}
 								<td>{{ product.nom_commercant }}</td>
 								<td>{{ product.nom }}</td>
 								<td>{{ product.quantite }}</td>
