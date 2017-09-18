@@ -7,6 +7,9 @@
 require_once Mage::getModuleDir('controllers', 'Mage_Checkout') . DS . 'CartController.php';
 class Apdc_Cart_CartController extends Mage_Checkout_CartController
 {
+    public function indexAction() {
+        return $this->getResponse()->setRedirect(Mage::getUrl('/') . '?opencart=1');
+    }
     /**
      * Minicart delete action.
      */
