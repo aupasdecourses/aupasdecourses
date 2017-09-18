@@ -48,7 +48,7 @@ var Apdc_DdateTimePicker = function(options) {
       jQuery(this.options.container + ' .select-days li.selected').removeClass('selected');
       if (this.currentDate && this.currentDate !== '') {
         jQuery('input[name="ddate[date]"]').val(this.currentDate);
-        if (this.isInPopup && typeof(apdcDeliveryPopup) !== 'undefined') {
+        if (this.isInPopup && typeof(apdcDeliveryPopup) !== 'undefined' && apdcDeliveryPopup.isOpen()) {
           apdcDeliveryPopup.showLoading();
           window.setTimeout(function() {
             apdcDeliveryPopup.hideLoading();

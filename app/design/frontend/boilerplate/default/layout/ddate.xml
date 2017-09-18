@@ -131,10 +131,8 @@
     </reference>
   </sales_order_print>
 
-  <apdc_headerdelivery_view>
-    <reference name="content">
-      <block type="checkout/onepage_ddate"  name="header.delivery" as="header.delivery" template="apdc_checkout/checkout/onepage/ddate.phtml" />
-    </reference>
-  </apdc_headerdelivery_view>   
+  <apdc_popup_index_templateajax>
+    <block type="checkout/onepage_ddate"  name="delivery_popup_apdc_popup_child" template="apdc_checkout/checkout/onepage/ddate.phtml" />
+  </apdc_popup_index_templateajax>
 
 </layout>

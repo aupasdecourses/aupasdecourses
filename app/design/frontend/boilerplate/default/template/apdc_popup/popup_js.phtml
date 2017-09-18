@@ -1,3 +1,8 @@
 <script type="text/javascript">
     var apdcPopupAjaxUrl = '<?php echo $this->getAjaxUrl(); ?>';
 </script>
+<?php 
+$popupTemplate = $this->getChild('apdc_popup_template');
+$popupTemplate->setData('id', '_apdc_popup_default_template_id_');
+echo $popupTemplate->toHtml();
+?>

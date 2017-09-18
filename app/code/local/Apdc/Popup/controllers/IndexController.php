@@ -26,6 +26,7 @@ class Apdc_Popup_IndexController extends Mage_Core_Controller_Front_Action
                 );
                 $block->setData('id', $id);
 
+                $name = str_replace('-', '_', $name);
                 $popupContent = $this->getLayout()->getBlock($name . '_child');
                 if ($popupContent) {
                     $block->setChild($name . '_child', $popupContent);

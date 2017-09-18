@@ -189,18 +189,6 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
 
     public function ajaxLoginProcessAction()
     {
-        if (!$this->_validateFormKey()) {
-            $this->_redirect('*/*/');
-
-            return;
-        }
-
-        if ($this->_getSession()->isLoggedIn()) {
-            $this->_redirect('*/*/');
-
-            return;
-        }
-
 		$session = $this->_getSession();
 
         $params = $this->getRequest()->getPost();
@@ -215,9 +203,10 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
             if (!$this->_validateFormKey()) {
                 $response['status'] = 'ERROR';
                 $response['message'] = Mage::helper('customer')->__('Invalid form key');
+                $session->addError($response['message']);
             } else if ($session->isLoggedIn()) {
                 $response['status'] = 'SUCCESS';
-                //$response['redirect'] = Mage::getUrl('customer/account/');
+                $response['redirect'] = Mage::getUrl('customer/account/');
             } else if (!empty($login['username']) && !empty($login['password'])) {
                 try {
                     $session->login($login['username'], $login['password']);
@@ -249,9 +238,6 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
 
             if (!empty($response)) {
                 if ($response['status'] == 'ERROR') {
-                    if (isset($response['message'])) {
-                        $session->addError($response['message']);
-                    }
                     $response['html'] = $this->_getLayout('apdc_login_view');
                 } else {
                     if (!isset($response['redirect'])) {
