@@ -136,46 +136,6 @@
         <remove name="left_first"/>
     </checkout_onepage_index>
 
-    <customer_account_login>
-        <reference name="head">
-            <action method="setTitle" translate="title">
-                <title>Espace Personnel sur Au Pas De Courses</title>
-            </action>
-        </reference>
-    </customer_account_login>
-
-    <customer_account>
-        <remove name="right"/>
-        <reference name="customer_account_navigation">
-            <action method="removeLinkByName">
-                <name>recurring_profiles</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>billing_agreements</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>reviews</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>OAuth Customer Tokens</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>downloadable_products</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>autoresponderlists</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>mailchimp</name>
-            </action>
-            <action method="removeLinkByName">
-                <name>newsletter</name>
-            </action>
-            <remove name="sale.reorder.sidebar.left" />
-            <remove name="reports.product.viewed.left" />
-        </reference>
-    </customer_account>
-
     <sales_order_history>
         <reference name="sales.order.history">
             <action method="setTemplate">
@@ -183,29 +143,6 @@
             </action>
         </reference>
     </sales_order_history>
-
-    <!--<sales_order_view translate="label">
-        <remove name="amorderattach.attachment"/>
-        <label>Customer My Account Order View</label>
-        <update handle="customer_account"/>
-        <reference name="my.account.wrapper">
-            <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
-            <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
-                <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
-                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
-                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
-                </block>
-                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
-                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
-                </block>
-            </block>
-            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
-                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
-                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
-                <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
-            </block>
-        </reference>
-    </sales_order_view>-->
 
     <cms_page translate="label">
         <label>CMS Pages (All)</label>
@@ -231,20 +168,6 @@
             <block type="core/template" name="contactForm" template="contacts/form.phtml" />
         </reference>
     </cms_index_noroute>-->
-
-    <customer_logged_out>
-        <reference name="top.links">
-            <action method="removeLinkByUrl">
-                <url helper="customer/getAccountUrl" />
-            </action>
-        </reference>
-    </customer_logged_out>
-    
-    <customer_account_changeforgotten translate="label">
-        <reference name="content">
-            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="apdc_customer/form/resetforgottenpassword.phtml" />
-        </reference>
-    </customer_account_changeforgotten>
 
     <hipay_mapi_payment ifhandle="STORE_batignolles">
         <reference name="content">
@@ -311,47 +234,36 @@
         <remove name="customer.account.link.back"/>
     </monkey_customer_account_index>
 
-	<!--<apdc_login_view>
-		<reference name="content">
-			<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
-				<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-					<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
-					<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
-				</block>
-			</block>
-		</reference>
-	</apdc_login_view>
-
-	  <apdc_forgotpassword_view>
-		<reference name="content">
-			  <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
-		  </reference>
-	  </apdc_forgotpassword_view>-->
-	  
-	<apdc_login_view>
-		<reference name="content">
-        <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
-        </block>
+    <customer_account>
+        <remove name="right"/>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName">
+                <name>recurring_profiles</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>billing_agreements</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>reviews</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>OAuth Customer Tokens</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>downloadable_products</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>autoresponderlists</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>mailchimp</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>newsletter</name>
+            </action>
+            <remove name="sale.reorder.sidebar.left" />
+            <remove name="reports.product.viewed.left" />
         </reference>
-    </apdc_login_view>
 
-    <apdc_register_view>
-		<reference name="content">
-			<block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
-				<block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
-					<label>Form Fields Before</label>
-				</block>
-				<block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
-				<block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
-				<block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
-			</block>
-		</reference>
-    </apdc_register_view>
-
-    <apdc_forgotpassword_view>
-		<reference name="content">
-            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
-        </reference>
-    </apdc_forgotpassword_view>  
-	    
+    </customer_account>
 </layout>

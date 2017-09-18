@@ -16,6 +16,12 @@
                     <account_navigation>Apdc_Customer_Block_Account_Navigation</account_navigation>
                 </rewrite>
             </customer>
+            <inchoo_socialconnect>
+                <rewrite>
+                  <google_button>Apdc_Customer_Block_Inchoo_Google_Button</google_button>
+                  <facebook_button>Apdc_Customer_Block_Inchoo_Facebook_Button</facebook_button>
+                </rewrite>
+            </inchoo_socialconnect>
         </blocks>
         <models>
             <apdccustomer>

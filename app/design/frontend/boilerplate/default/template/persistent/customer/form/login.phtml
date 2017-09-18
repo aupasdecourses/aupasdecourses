@@ -29,6 +29,7 @@
                             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
                             <div class="col-sm-12" style="text-align:center;">
                                 <button type="submit" class="button button-green" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><?php echo $this->__('Login') ?></span></button>
+                                <?php echo $this->getChildHtml('form.additional.actions'); ?>
                                 <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" style="margin-left:20px;"><?php echo $this->__('Forgot your password?') ?></a>
                             </div>
                         </ul>

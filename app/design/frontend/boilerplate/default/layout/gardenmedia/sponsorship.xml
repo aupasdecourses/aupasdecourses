@@ -50,8 +50,14 @@
   </gm_sponsorship_index_rewards>
 -->
   <customer_account_create>
-    <reference name="customer_form_register">
-      <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+    <reference name="form.additional.info">
+      <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="gm_sponsorship.form.additional.info" />
     </reference>
   </customer_account_create>
+
+  <apdc_register_view>
+    <reference name="modal_register">
+      <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="gm_sponsorship.form.additional.info" as="form.additional.info" />
+    </reference>
+  </apdc_register_view>
 </layout>

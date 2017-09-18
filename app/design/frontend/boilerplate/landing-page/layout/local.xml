@@ -28,27 +28,6 @@
             </block>
 					
 			
-			
-			<!-- FONT ICONS -->
-			<!--<action method="addLinkRel"> -->
-			<!--	<rel>stylesheet</rel> -->
-			<!--	<href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href> -->
-			<!--</action> -->
-			<!-- WEB FONTS -->
-			<!-- <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action> -->
-			<!-- <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Montserrat:400,700</href><type>text/css</type></action> -->
-			<!-- ANIMATIONS -->
-			<!--<action method="addItem"><rel>skin_css</rel><href>css/animate.min.css</href></action>-->
-			<!-- CUSTOM STYLESHEETS -->
-			<!-- <action method="addItem"><rel>skin_css</rel><href>css/style.css</href></action> -->
-			<!-- RESPONSIVE FIXES -->
-			<!--<action method="addItem"><rel>skin_css</rel><href>css/responsive.css</href></action>-->
-			<!--<action method="addItem"><rel>skin_css</rel><href>css/custom.css</href></action>-->
-			<!-- MAGNIFIC POPUP -->
-			<!--<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>-->
-			
-			
-			
 			<!-- =========================
 				 SCRIPTS   
 			============================== -->
@@ -68,15 +47,18 @@
             <action method="addJs"><script>prototype/validation.js</script></action>
             <action method="addJs"><script>varien/js.js</script></action>
             <action method="addJs"><script>varien/form.js</script></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/apdc_quickview.js</file></action>
-            <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>vendor/apdc_customer/js/capitalize-name.js</file></action>
+            <action method="addItem"><type>skin_css</type><file>css/apdc_popup/popup.css</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_neighborhood/search.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_customer/capitalize-name.js</file></action>
+
+
             <!-- Social Connect -->
-            <!--
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-facebook.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-google.js</file></action>
             <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/google/css/button.css</name>
@@ -97,7 +79,9 @@
                 <type>skin_css</type>
                 <name>inchoo_socialconnect/css/styles.css</name>
             </action>
-            -->
+            <block type="core/template" name="facebook_app_id" template="inchoo/socialconnect/facebook/appid.phtml" />
+            <block type="core/template" name="google_app_id" template="inchoo/socialconnect/google/appid.phtml" />
+
 
             <!-- =========================
              STYLESHEETS   
@@ -136,19 +120,6 @@
         <remove name="custommenu-content"/>
     </default>
 
-    <apdc_login_view>
-      <reference name="content">
-            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
-              <!--
-                <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
-                    <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
-                    <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
-                </block>
-            -->
-            </block>
-        </reference>
-    </apdc_login_view>
-
     <apdc_register_view>
       <reference name="head">
         <block type="core/text" name="suivi_hipay" before="-">
@@ -163,23 +134,7 @@
           </action>
         </block>
       </reference>
-      <reference name="content">
-			  <block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
-          <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
-            <label>Form Fields Before</label>
-          </block>
-          <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
-          <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
-          <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
-        </block>
-      </reference>
     </apdc_register_view>
-
-    <apdc_forgotpassword_view>
-      <reference name="content">
-            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
-        </reference>
-    </apdc_forgotpassword_view>
 
     <apdc_newsletter_view>
       <reference name="content">
