@@ -48,13 +48,12 @@ class Apdc_Sales_OrderController  extends Mage_Sales_OrderController {
                     Mage::helper('checkout')->__('Cannot add the item to shopping cart.')
                 );
 				return $this->getResponse()->setRedirect(Mage::getBaseUrl().'?opencart=1');
-                //$this->_redirect('checkout/cart');
             }
         }
 
         $cart->save();
+        Mage::getSingleton('checkout/session')->addSuccess(Mage::helper('checkout')->__('Tous vos articles ont été ajoutés à votre panier'));
 		return $this->getResponse()->setRedirect(Mage::getBaseUrl().'?opencart=1');
-        //$this->_redirect('checkout/cart');
     }
 	
 }
