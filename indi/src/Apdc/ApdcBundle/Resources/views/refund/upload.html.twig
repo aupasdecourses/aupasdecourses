@@ -27,6 +27,13 @@
 	</div>
 	<div class="row">
 		<h1>#{{ id ~ " / " ~ customer_name }}<small> Upload des tickets</small></h1>
+		<hr/>
+
+		<h3 style="display:inline-block">Upload via Mistral :</h3>
+		<div style="display:inline-block">{{ form(mistral_form) }}</div>
+		<hr/>
+
+		<h3>Upload manuellement :</h3>
 		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
 	</div>
 </div>

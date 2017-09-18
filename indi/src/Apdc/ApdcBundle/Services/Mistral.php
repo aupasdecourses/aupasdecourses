@@ -8,11 +8,9 @@ class Mistral
 
 	private $stars_services_api_url;
 
-	public function __construct($rootDir, $stars_services_api_url)
+	public function __construct($stars_services_api_url)
 	{
 		
-		$this->_webRoot = realpath($rootDir . '/../web');
-
 		$this->_ch = curl_init();
 
 		$this->stars_services_api_url = $stars_services_api_url;
@@ -31,43 +29,60 @@ class Mistral
 		curl_close($this->_ch);
 	}
 
-	private function convertBase64ToJpg($base64_string, $output_file)
-	{
-		$ifp = fopen($output_file, "w");
-		fwrite($ifp, base64_decode($base64_string));
-		fclose($ifp);
+	private function mediaPath()
+    {
+        return realpath(__DIR__.'/../../../../../media');
+    }
 
-		dump($output_file);
-		return ($output_file);
+	private function convert_base64_to_img($base64_string, $order_id, $merchant_id)
+	{
+		$media_folder = $this->mediaPath().'/merchants_tickets/'.$order_id;
+		
+		if (!file_exists($media_folder)) {
+			try {
+				$oldmask = umask(0);
+				mkdir($media_folder, 0777, true);
+				umask($oldmask);
+			} catch (Exception $e) { }
+		}
+
+		// exemple 2017000293-272
+		if (file_exists($media_folder)) {
+			$img_folder	= "{$media_folder}/{$order_id}";
+			$img_name	= "{$order_id}-{$merchant_id}";
+		}
+
+
+		$img_f = fopen($img_folder, "w");
+		fwrite($img_f, base64_decode($base64_string));
+		fclose($img_f);
+
 	}	
 
-	public function getPictures()
+	public function getPictures($order_id, $merchant_id)
 	{
 		
 		/* exemple avec pascal bassard */
 		$array = array(
 			 'Token' 		=> 'APDC2712A9B6',
 			 'PartnerRef' 	=> 'APDC5535',
-			 'OrderRef' 		=> '2017000293-272',
+			 'OrderRef' 	=> "$order_id"."-"."$merchant_id",
 		 );
 		
 
-		$jsonArray = json_encode($array);
+		$json_array = json_encode($array);
 
 		curl_setopt($this->_ch, CURLOPT_URL, $this->stars_services_api_url);
-		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $jsonArray);
+		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $json_array);
 
 		$result = curl_exec($this->_ch);
 
 		if (curl_errno($this->_ch))
 			throw new Exception('Refund Curl Error'.curl_error($this->_ch));
 
-		$jsonResult = json_decode($result, true);
+		$json_result = json_decode($result, true);
 
+		return $json_result;
 
-		$img = $this->convertBase64ToJpg($jsonResult['Pictures'][0]['ImageBase64'], 'tmp.jpg' );
-
-		dump($img);
-		return $img;
 	}
 }

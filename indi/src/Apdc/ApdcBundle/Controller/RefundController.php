@@ -124,7 +124,8 @@ class RefundController extends Controller
         }
 
         $mage		= $this->container->get('apdc_apdc.magento');
-        $session	= $request->getSession();
+		$mistral	= $this->container->get('apdc_apdc.mistral');
+		$session	= $request->getSession();
 
         $order		= $mage->getOrderByMerchants($id);
 
@@ -202,16 +203,36 @@ class RefundController extends Controller
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             } else {
-                $session->getFlashBag()->add('error', 'L\'image n\'a pas été uploadée :-(');
+                $session->getFlashBag()->add('error', 'L\'image n\'a pas été uploadée');
 
                 return $this->redirectToRoute('refundUpload', ['id' => $id]);
             }
-        }
+		}
+
+		// MISTRAL AUTO UPLOAD
+		$mistral_data = array('message' => 'Upload via Mistral');
+		$mistral_form = $this->createFormBuilder($mistral_data)
+			->add('Mistral tickets upload', SubmitType::class, array(
+				'label'	=> 'Upload tickets',
+				'attr'	=> array(
+					'class'	=> 'btn btn-info')))
+			->getForm();
+		$mistral_form->handleRequest($request);
+
+		if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
+
+			foreach ($order as $merchant_id => $data) {
+				if ($merchant_id != -1) {
+					$mistral_img_result = $mistral->getPictures($id, $merchant_id);
+				}	
+			}
+		}
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
-            'forms' => [$form_upload->createView()],
-            'order' => $order,
-            'id'	=> $id,
+            'forms'			=> [$form_upload->createView()],
+            'order'			=> $order,
+			'id'			=> $id,
+			'mistral_form'	=> $mistral_form->createView(),
         ]);
     }
 
@@ -529,35 +550,6 @@ class RefundController extends Controller
             'form'			=> $form->createView(),
             'psp'			=> $psp,
             'orders'		=> $orders,
-        ]);
-    }
-
-
-    /* Pour l'instant, simple var_dump. A integrer à refund upload images */
-    public function mistralTicketImgAction(Request $request)
-    {
-        if (!$this->isGranted('ROLE_INDI_GESTION')) {
-            return $this->redirectToRoute('root');
-        }
-
-        $mistral = $this->container->get('apdc_apdc.mistral');
-
-        $dataMistral = array('message' => 'Dump img ticket');        
-        $formMistral = $this->createFormBuilder($dataMistral)
-			->add("Dump", SubmitType::class,array(
-				'label' => 'Dump img ticket',
-				'attr'	=> array(
-					'class' => 'btn btn-lg btn-danger',
-					'style'	=> 'float:right')))
-            ->getForm();
-        $formMistral->handleRequest($request);
-
-        if ($formMistral->isSubmitted() && $formMistral->isValid()) {
-            $mistral_img = $mistral->getPictures();
-        }
-
-        return $this->render('ApdcApdcBundle::refund/mistralTicketImg.html.twig', [
-			'formMistral'	=> $formMistral->createView(),
         ]);
     }
 }
