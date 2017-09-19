@@ -2,6 +2,8 @@
 
 namespace Apdc\ApdcBundle\Services;
 
+include_once '../../app/Mage.php';
+
 class Mistral
 {
 	private $_ch;
@@ -10,7 +12,8 @@ class Mistral
 
 	public function __construct($stars_services_api_url)
 	{
-		
+		\Mage::app();	
+
 		$this->_ch = curl_init();
 
 		$this->stars_services_api_url = $stars_services_api_url;
@@ -34,39 +37,14 @@ class Mistral
         return realpath(__DIR__.'/../../../../../media');
     }
 
-	private function convert_base64_to_img($base64_string, $order_id, $merchant_id)
-	{
-		$media_folder = $this->mediaPath().'/merchants_tickets/'.$order_id;
-		
-		if (!file_exists($media_folder)) {
-			try {
-				$oldmask = umask(0);
-				mkdir($media_folder, 0777, true);
-				umask($oldmask);
-			} catch (Exception $e) { }
-		}
-
-		// exemple 2017000293-272
-		if (file_exists($media_folder)) {
-			$img_folder	= "{$media_folder}/{$order_id}";
-			$img_name	= "{$order_id}-{$merchant_id}";
-		}
-
-
-		$img_f = fopen($img_folder, "w");
-		fwrite($img_f, base64_decode($base64_string));
-		fclose($img_f);
-
-	}	
-
-	public function getPictures($order_id, $merchant_id)
+	public function getPictures($token, $partner_ref, $order_id, $merchant_id)
 	{
 		
 		/* exemple avec pascal bassard */
 		$array = array(
-			 'Token' 		=> 'APDC2712A9B6',
-			 'PartnerRef' 	=> 'APDC5535',
-			 'OrderRef' 	=> "$order_id"."-"."$merchant_id",
+			 'Token' 		=> $token,
+			 'PartnerRef' 	=> $partner_ref,
+			 'OrderRef' 	=> $order_id."-".$merchant_id,
 		 );
 		
 
@@ -85,4 +63,46 @@ class Mistral
 		return $json_result;
 
 	}
+
+	public function getApdcNeighborhood()
+	{
+		$neighborhood = \Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
+		$data = [];
+
+		foreach ($neighborhood as $neigh) {
+			array_push($data, [
+				'store_name'	=> $neigh->getData('name'),
+				'store_id'		=> $neigh->getData('website_id'),
+				'partner_ref'	=> $neigh->getData('code_do'),
+				'store_token'	=> $neigh->getData('mistral_guid'),
+			]);
+		}
+		return $data;
+	}
+
+	public function convert_base64_to_img($base64_string, $order_id, $merchant_id)
+	{
+		$media_folder = $this->mediaPath().'/merchants_tickets/'.$order_id;
+		
+		if (!file_exists($media_folder)) {
+			try {
+				$oldmask = umask(0);
+				mkdir($media_folder, 0777, true);
+				umask($oldmask);
+			} catch (Exception $e) { }
+		}
+
+		// exemple 2017000293-272
+		if (file_exists($media_folder)) {
+			$img_folder	= "{$media_folder}/{$order_id}";
+			$img_name	= "{$order_id}-{$merchant_id}";
+		}
+
+		$img_f = fopen($img_folder, "w");
+		fwrite($img_f, base64_decode($base64_string));
+		fclose($img_f);
+
+	}	
+
+
 }

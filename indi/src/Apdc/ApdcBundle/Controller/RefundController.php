@@ -210,6 +210,9 @@ class RefundController extends Controller
 		}
 
 		// MISTRAL AUTO UPLOAD
+		$neighborhood = $mistral->getApdcNeighborhood();
+		$temp = [];
+
 		$mistral_data = array('message' => 'Upload via Mistral');
 		$mistral_form = $this->createFormBuilder($mistral_data)
 			->add('Mistral tickets upload', SubmitType::class, array(
@@ -222,10 +225,48 @@ class RefundController extends Controller
 		if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
 
 			foreach ($order as $merchant_id => $data) {
-				if ($merchant_id != -1) {
-					$mistral_img_result = $mistral->getPictures($id, $merchant_id);
-				}	
+				if (is_numeric($merchant_id) && $merchant_id != -1) {
+					
+					foreach ($neighborhood as $neigh) {
+						if ($neigh['store_id'] == $data['merchant']['store_id']) {	
+							
+							$temp[$merchant_id] = [
+								'merchant_id'	=> $data['merchant']['id'],
+								'order_id'		=> $data['products'][0]['order_id'],
+								'store_token'	=> $neigh['store_token'],
+								'partner_ref'	=> $neigh['partner_ref'],
+							];
+						}
+					}	
+				}
 			}
+			
+			foreach ($temp as $tmp) {
+				try {
+					$base64_imgs[$tmp['merchant_id']] = $mistral->getPictures(
+		//				$tmp['store_token'],
+						'APDC2712A9B6',
+						$tmp['partner_ref'],
+						$tmp['order_id'],
+						$tmp['merchant_id']
+					);				
+				} catch (Exception $e) {
+				}
+			}
+
+			dump($base64_imgs);
+
+			$test = $mistral->getPictures(
+				'APDC2712A9B6',
+				'APDC5535',
+				'2017000350',
+				'72'
+			);
+
+//			dump($test);
+			
+			
+			//return $this->redirectToRoute('refundInput', ['id' => $id]);
 		}
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
