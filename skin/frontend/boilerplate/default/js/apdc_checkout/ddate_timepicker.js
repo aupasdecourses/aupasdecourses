@@ -35,13 +35,17 @@ var Apdc_DdateTimePicker = function(options) {
       if (typeof (this.options.currentDate) !== 'undefined' &&
         this.options.currentDate !== ''
       ) {
-        this.currentDate = this.options.currentDate;
-        if (typeof(this.options.currentTime) !== 'undefined' &&
-          this.options.currentTime !== ''
+        if (typeof(this.options.daysAndSlots[this.options.currentDate]) !== 'undefined' &&
+          this.options.daysAndSlots[this.options.currentDate].has_slot
         ) {
-          this.currentTime = this.options.currentTime;
+          this.currentDate = this.options.currentDate;
+          if (typeof(this.options.currentTime) !== 'undefined' &&
+            this.options.currentTime !== ''
+          ) {
+            this.currentTime = this.options.currentTime;
+          }
+          this.refreshCurrentDate();
         }
-        this.refreshCurrentDate();
       }
     },
     refreshCurrentDate: function() {
@@ -56,6 +60,9 @@ var Apdc_DdateTimePicker = function(options) {
         }
         jQuery(this.options.container + ' .select-days li[data-date="' + this.currentDate + '"]').addClass('selected');
         var slots = this.options.daysAndSlots[this.currentDate].slots;
+        if (jQuery.isArray(slots)) {
+          slots = {};
+        }
         var chooseTime = '';
         for (var slot in slots) {
           var selected = (this.currentDate === this.options.currentDate && slots[slot].dtime === this.options.currentTime ? ' selected' : '');
