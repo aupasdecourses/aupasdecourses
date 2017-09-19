@@ -46,15 +46,26 @@
 <script>
     $j(document).ready(function() {
       $j('.owl-carousel').owlCarousel({
-            items:5,
             itemsScaleUp : false,
             pagination:false,
             autoPlay : false,
             navigation : true,
             afterInit:function() {
                 alignProductGridActions();
-            }
-      });     
+            },
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                420:{
+                    items:5,
+                    nav:true
+                },
+            },
+            navText: ['<i class="fa fa-angle-left">','<i class="fa fa-angle-right">'],
+      });  
     });
 </script>
 <?php endif; ?>

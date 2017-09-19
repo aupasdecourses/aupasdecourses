@@ -15,7 +15,7 @@
     $isAvailable = $this->isAvailable();
 
 ?>
-<div class="product-info row item col-xs-6 <?php echo (!$isAvailable ? ' notavailable' : ''); ?>">
+<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$isAvailable ? ' notavailable' : ''); ?>">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"

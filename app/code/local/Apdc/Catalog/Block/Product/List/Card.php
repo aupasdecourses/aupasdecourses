@@ -31,4 +31,9 @@ class Apdc_Catalog_Block_Product_List_Card extends Mage_Catalog_Block_Product_Ab
     {
         return (boolean) Mage::helper('apdc_catalog/product_available')->isAvailable($this->getProduct());
     }
+
+    public function isCategoryPage(){
+    	return Mage::registry('current_category');
+
+    }
 }
