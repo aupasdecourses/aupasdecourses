@@ -110,3 +110,8 @@ tags
 /nbproject
 /nbproject/private/
 /.idea
+/n98*
+/apdc.sublime*
+
+#ignore indi/web
+/indi/web
