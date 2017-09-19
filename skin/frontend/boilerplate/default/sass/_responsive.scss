@@ -1000,10 +1000,24 @@
         width: calc(100% - 15px);
     }
     .catalog-category-view{
+        .title-block{
+            font-size: 1.6rem;
+        }
         .category-products{
+            .title-block{
+                margin-bottom: 20px;
+            }
             .apdc-products-grid{
-                .item{
-                    width: 100%;
+                .product-name{
+                    font-size: 0.95rem; 
+                }
+                .price-box{
+                    .price{
+                        font-size:1.3rem;
+                    }
+                }
+                .button{
+                    padding: 10px 15px;
                 }
             }
         }

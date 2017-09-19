@@ -15,10 +15,10 @@
     $isAvailable = $this->isAvailable();
 
 ?>
-<div class="product-info row item<?php echo (!$isAvailable ? ' notavailable' : ''); ?>">
+<div class="product-info row item col-xs-6 <?php echo (!$isAvailable ? ' notavailable' : ''); ?>">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
-		  class="col-md-12 product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
+		  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
 		  id="product_addtocart_form_<?php echo $product->getId().$uniqidCard; ?>"
 		  data-product-id="<?php echo $product->getId(); ?>"
 		  data-ajax-action="<?php echo $formAjaxUrl; ?>">

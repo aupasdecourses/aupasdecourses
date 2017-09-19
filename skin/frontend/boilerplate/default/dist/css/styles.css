@@ -14835,7 +14835,7 @@ footer .social-list .btn-social-icon {
   font-size: .875rem;
   font-weight: 700;
   margin-bottom: 2px;
-  color: #ff7d73;
+  color: #3ab64b;
 }
 
 #checkout-review-table thead {
@@ -17609,8 +17609,24 @@ h1.account-title {
     margin-left: 15px;
   }
 
-  .catalog-category-view .category-products .apdc-products-grid .item {
-    width: 100%;
+  .catalog-category-view .title-block {
+    font-size: 1.6rem;
+  }
+
+  .catalog-category-view .category-products .title-block {
+    margin-bottom: 20px;
+  }
+
+  .catalog-category-view .category-products .apdc-products-grid .product-name {
+    font-size: .95rem;
+  }
+
+  .catalog-category-view .category-products .apdc-products-grid .price-box .price {
+    font-size: 1.3rem;
+  }
+
+  .catalog-category-view .category-products .apdc-products-grid .button {
+    padding: 10px 15px;
   }
 
   .catalog-category-view .commercant-collapse .commercant-info .delivery-days {
