@@ -32,8 +32,9 @@
 ?>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <div class="col-md-7 col-md-offset-1 addresses-list box-account">
-    <h2><?php echo $this->__('Mes adresses') ?></h2>
-    <div class="addresses-primary">
+    <h2 class="pull-left"><?php echo $this->__('Mes adresses') ?></h2>
+    <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button button-green pull-right add_new_address" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>';"><span><span><i class="fa fa-plus"></i> <?php echo $this->__('Add New Address') ?></span></span></button>
+    <div class="addresses-primary clear">
         <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
             <section>
                 <h3><?php echo $this->__('Adresse de facturation') ?></h3>
@@ -72,8 +73,7 @@
                 <address>
                     <?php echo $this->getAddressHtml($_address) ?>
                 </address>
-                <a href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>" class="button button-green"><?php echo $this->__('Edit Address') ?></a>
-                <p><a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete Address') ?></a></p>
+                <p><a class="button button-green" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_address->getId())) ?>"><i class="fa fa-pencil-square-o"></i> <?php echo $this->__('Modifier') ?></a> <a href="#" class="link-remove button button-orange" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><i class="fa fa-trash"></i> <?php echo $this->__('Supprimer') ?></a></p>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>

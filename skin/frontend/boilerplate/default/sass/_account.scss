@@ -55,10 +55,9 @@ h1.account-title{
             .button{
                 font-size: 0.875rem;
                 margin-bottom: 10px;
-            }
-            .link-remove{
-                color: $color-main-grey;
-                font-size: 0.75rem;
+                &.add_new_address {
+                  margin-top:0;
+                }
             }
         }
         &.detail-order{
