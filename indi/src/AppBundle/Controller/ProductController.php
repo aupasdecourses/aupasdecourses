@@ -274,7 +274,7 @@ class ProductController extends AbstractController
                     'tax_class_id'              => 'Tax Class Id : ' . $entity['tax_class_id'].' (ancienne valeur: '.$this->original['tax_class_id'].')',
                     'origine'                   => 'Origine : ' . $entity['origine'].' (ancienne valeur: '.$this->original['origine'].')',
                     'produit_biologique'        => 'Bio : ' . ($entity['produit_biologique'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['produit_biologique'] ? 'Oui' : 'Non').')',
-                    'image_tmp'                 => 'Photo proposée par le commerçant : ' . $photo,
+                    'image_tmp'                 => 'Photo proposée par le commerçant : <a href="' . $photo.'">'.$photo.'</a>',
                     'notes_com'                 => 'Notes Commerçants : ' . $entity['notes_com'].' (ancienne valeur: '.$this->original['notes_com'].')',
                     'commercant'                => 'Commercant Id : '. $entity['commercant'].' (ancienne valeur: '.$this->original['commercant'].')',
                 ];
