@@ -418,6 +418,9 @@ Billing.prototype = {
 
     save: function(){
         if (checkout.loadWaiting!=false) return;
+        if ($('billing:same_as_shipping').checked) {
+            this.syncWithShipping();
+        }
 
         var validator = new Validation(this.form);
         if (validator.validate()) {
