@@ -37,11 +37,11 @@ class Mistral
         return realpath(__DIR__.'/../../../../../media');
     }
 
-	public function getPictures($token, $partner_ref, $order_id, $merchant_id)
+	public function getPictures($partner_ref, $order_id, $merchant_id)
 	{
 		
 		$array = array(
-			 'Token' 		=> $token,
+			 'Token' 		=> 'APDC2712A9B6',
 			 'PartnerRef' 	=> $partner_ref,
 			 'OrderRef' 	=> $order_id."-".$merchant_id,
 		 );
@@ -73,7 +73,6 @@ class Mistral
 				'store_name'	=> $neigh->getData('name'),
 				'store_id'		=> $neigh->getData('website_id'),
 				'partner_ref'	=> $neigh->getData('code_do'),
-				'store_token'	=> $neigh->getData('mistral_guid'),
 			]);
 		}
 		return $data;
@@ -81,7 +80,7 @@ class Mistral
 
 	public function convert_base64_to_img($base64_string, $order_id, $merchant_id)
 	{
-		$media_folder = $this->mediaPath().'/merchants_tickets/'.$order_id;
+		$media_folder = $this->mediaPath().'/attachments/'.$order_id;
 		
 		if (!file_exists($media_folder)) {
 			try {
@@ -92,14 +91,14 @@ class Mistral
 		}
 
 		if (file_exists($media_folder)) {
-			$img_folder	= "{$media_folder}/{$order_id}";
-			$img_name	= "{$order_id}-{$merchant_id}";
+		
+			$img = "{$media_folder}/{$order_id}-{$merchant_id}.png";
+
+			$img_file = fopen($img, "w");
+			fwrite($img_file, base64_decode($base64_string));
+			fclose($img_file);
+
 		}
-
-		$img_f = fopen($img_folder, "w");
-		fwrite($img_f, base64_decode($base64_string));
-		fclose($img_f);
-
 	}	
 
 

@@ -211,8 +211,7 @@ class RefundController extends Controller
 
 		// MISTRAL AUTO UPLOAD
 		$neighborhood = $mistral->getApdcNeighborhood();
-		$temp = [];
-		$temp_bis = [];
+		$results = [];
 
 		$mistral_data = array('message' => 'Upload via Mistral');
 		$mistral_form = $this->createFormBuilder($mistral_data)
@@ -225,57 +224,52 @@ class RefundController extends Controller
 
 		if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
 
-			foreach ($order as $merchant_id => $data) {
+			foreach ($order as $merchant_id => $merchant) {
 				if (is_numeric($merchant_id) && $merchant_id != -1) {
 					
 					foreach ($neighborhood as $neigh) {
-						if ($neigh['store_id'] == $data['merchant']['store_id']) {	
+						if ($neigh['store_id'] == $merchant['merchant']['store_id']) {	
 							
-							$temp[$merchant_id] = [
-								'merchant_id'	=> $data['merchant']['id'],
-								'order_id'		=> $data['products'][0]['order_id'],
-								'store_token'	=> $neigh['store_token'],
+							$results[$merchant_id] = [
+								'merchant_id'	=> $merchant['merchant']['id'],
+								'order_id'		=> $id,
 								'partner_ref'	=> $neigh['partner_ref'],
 							];
 						}
 					}	
 				}
 			}
-			
-			foreach ($temp as $tmp) {
-				try {
-					$base64_imgs[$tmp['merchant_id']] = $mistral->getPictures(
-		//				$tmp['store_token'],
-						'APDC2712A9B6',
-						$tmp['partner_ref'],
-						$tmp['order_id'],
-						$tmp['merchant_id']
-					);				
-				} catch (Exception $e) {
-				}
-			}
+			// Here, results[] contains merchant/order id + partner ref, sort by merchant_id
 
-			foreach ($base64_imgs as $merchant_id => $data) {
+			$mistral_imgs = [];
+			foreach ($results as $result) {
+				try {
+					$mistral_imgs[$result['merchant_id']] = $mistral->getPictures($result['partner_ref'], $result['order_id'], $result['merchant_id']);				
+				} catch (Exception $e) { }
+			}
+			// Here, mistral_imgs[] contains mistral images, sort by merchant_id			
+
+			foreach ($mistral_imgs as $merchant_id => $data) {
 				if ($data['AsPicture'] == true) {
 
 					foreach($data['Pictures'] as $type => $content) {
 						
-						// "E" == ticket
-						// "L" == signature 
-						if ($content['MoveTypeCode'] == 'E') {
-
-							$temp_bis[$merchant_id] = [
-								'order_id'		=> '',
-								'merchant_id'	=> $merchant_id,
-								'base64_string'	=> $content['ImageBase64']
-							];
+						// "E" == ticket. "L" == signature
+						if ($content['MoveTypeCode'] == 'E') {	
+							$results[$merchant_id]['base64_string']	= $content['ImageBase64'];
 						}
 					}
 				}
 			}
+			// Here, results[] contains mistral images + merchant/order id + partner ref, sort by merchant_id
 
-			dump($temp_bis);
-			//return $this->redirectToRoute('refundInput', ['id' => $id]);
+			foreach ($results as $merchant_id => $result) {
+				try {
+					$mistral->convert_base64_to_img($result['base64_string'], $result['order_id'], $result['merchant_id']);
+				} catch (Exception $e) { }
+			}
+
+			return $this->redirectToRoute('refundInput', ['id' => $id]);
 		}
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
