@@ -148,6 +148,11 @@ nelmio_cors:
         allow_headers: ['*']
         allow_methods: ['POST', 'PUT', 'PATCH', 'GET', 'DELETE','OPTIONS']
         max_age: 3600
+    '^/api/':
+        allow_origin: ['*']
+        allow_headers: ['*']
+        allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
+        max_age: 3600
 
 assetic:
     debug:          '%kernel.debug%'
