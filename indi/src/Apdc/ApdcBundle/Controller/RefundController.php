@@ -212,6 +212,7 @@ class RefundController extends Controller
 		// MISTRAL AUTO UPLOAD
 		$neighborhood = $mistral->getApdcNeighborhood();
 		$temp = [];
+		$temp_bis = [];
 
 		$mistral_data = array('message' => 'Upload via Mistral');
 		$mistral_form = $this->createFormBuilder($mistral_data)
@@ -254,18 +255,26 @@ class RefundController extends Controller
 				}
 			}
 
-			dump($base64_imgs);
+			foreach ($base64_imgs as $merchant_id => $data) {
+				if ($data['AsPicture'] == true) {
 
-			$test = $mistral->getPictures(
-				'APDC2712A9B6',
-				'APDC5535',
-				'2017000350',
-				'72'
-			);
+					foreach($data['Pictures'] as $type => $content) {
+						
+						// "E" == ticket
+						// "L" == signature 
+						if ($content['MoveTypeCode'] == 'E') {
 
-//			dump($test);
-			
-			
+							$temp_bis[$merchant_id] = [
+								'order_id'		=> '',
+								'merchant_id'	=> $merchant_id,
+								'base64_string'	=> $content['ImageBase64']
+							];
+						}
+					}
+				}
+			}
+
+			dump($temp_bis);
 			//return $this->redirectToRoute('refundInput', ['id' => $id]);
 		}
 

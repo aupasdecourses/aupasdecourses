@@ -40,7 +40,6 @@ class Mistral
 	public function getPictures($token, $partner_ref, $order_id, $merchant_id)
 	{
 		
-		/* exemple avec pascal bassard */
 		$array = array(
 			 'Token' 		=> $token,
 			 'PartnerRef' 	=> $partner_ref,
@@ -92,7 +91,6 @@ class Mistral
 			} catch (Exception $e) { }
 		}
 
-		// exemple 2017000293-272
 		if (file_exists($media_folder)) {
 			$img_folder	= "{$media_folder}/{$order_id}";
 			$img_name	= "{$order_id}-{$merchant_id}";
