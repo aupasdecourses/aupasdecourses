@@ -166,3 +166,12 @@ assetic:
             bin: /usr/local/bin/uglifyjs
         uglifycss:
             bin: /usr/local/bin/uglifycss
+    bundles:
+        # Defaults (all currently registered bundles):
+        - FrameworkBundle
+        - SecurityBundle
+        - TwigBundle
+        - MonologBundle
+        - SwiftmailerBundle
+        - DoctrineBundle
+        - AsseticBundle

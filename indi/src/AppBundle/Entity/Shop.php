@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Note: Magento Table
  *
- * @ORM\Table(name="apdc_shop", options={"engine"="InnoDB"})
+ * @ORM\Table(name="apdc_shop")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ShopRepository")
  */
 class Shop
