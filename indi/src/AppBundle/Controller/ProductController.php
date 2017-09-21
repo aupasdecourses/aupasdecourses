@@ -117,7 +117,8 @@ class ProductController extends AbstractController
 
                 /** @var \AppBundle\Repository\ShopRepository $shopModel */
                 $shopModel = $this->getModel('Shop', false);
-                $shopModel->findOneBy(['productMerchant' => $entity['commercant']])->increment();
+                $shop = $shopModel->findOneBy(['productMerchant' => $entity['commercant']]);
+                $shopModel->increment(1, $shop);
 
                 if (!$this->getParameter('enabled_email')) {
                     return;
