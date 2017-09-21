@@ -257,15 +257,17 @@ class RefundController extends Controller
 						// "E" == ticket. "L" == signature
 						if ($content['MoveTypeCode'] == 'E') {	
 							$results[$merchant_id]['base64_string']	= $content['ImageBase64'];
+							$results[$merchant_id]['image_type']	= substr($content['ImageType'], 6);
 						}
 					}
 				}
 			}
 			// Here, results[] contains mistral images + merchant/order id + partner ref, sort by merchant_id
 
+			dump($results);
 			foreach ($results as $merchant_id => $result) {
 				try {
-					$mistral->convert_base64_to_img($result['base64_string'], $result['order_id'], $result['merchant_id']);
+					$mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $result['order_id'], $result['merchant_id']);
 				} catch (Exception $e) { }
 			}
 

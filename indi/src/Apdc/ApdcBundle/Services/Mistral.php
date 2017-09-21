@@ -9,14 +9,16 @@ class Mistral
 	private $_ch;
 
 	private $stars_services_api_url;
+	private $stars_services_api_token;
 
-	public function __construct($stars_services_api_url)
+	public function __construct($stars_services_api_url, $stars_services_api_token)
 	{
 		\Mage::app();	
 
 		$this->_ch = curl_init();
 
-		$this->stars_services_api_url = $stars_services_api_url;
+		$this->stars_services_api_url	= $stars_services_api_url;
+		$this->stars_services_api_token = $stars_services_api_token;
 
 		if ($this->_ch === false) {
 			throw new Exception('Mistral: curl_init() error:'.curl_error($this->_ch));
@@ -41,7 +43,7 @@ class Mistral
 	{
 		
 		$array = array(
-			 'Token' 		=> 'APDC2712A9B6',
+			 'Token' 		=> $this->stars_services_api_token;
 			 'PartnerRef' 	=> $partner_ref,
 			 'OrderRef' 	=> $order_id."-".$merchant_id,
 		 );
@@ -78,24 +80,24 @@ class Mistral
 		return $data;
 	}
 
-	public function convert_base64_to_img($base64_string, $order_id, $merchant_id)
+	public function convert_base64_to_img($base64_string, $image_type, $order_id, $merchant_id)
 	{
 		$media_folder = $this->mediaPath().'/attachments/'.$order_id;
 		
 		if (!file_exists($media_folder)) {
 			try {
 				$oldmask = umask(0);
-				mkdir($media_folder, 0777, true);
+		//		mkdir($media_folder, 0777, true);
 				umask($oldmask);
 			} catch (Exception $e) { }
 		}
 
 		if (file_exists($media_folder)) {
 		
-			$img = "{$media_folder}/{$order_id}-{$merchant_id}.png";
+			$img = "{$media_folder}/{$order_id}-{$merchant_id}.{$image_type}";
 
 			$img_file = fopen($img, "w");
-			fwrite($img_file, base64_decode($base64_string));
+		//	fwrite($img_file, base64_decode($base64_string));
 			fclose($img_file);
 
 		}
