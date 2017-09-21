@@ -43,7 +43,7 @@ class Mistral
 	{
 		
 		$array = array(
-			 'Token' 		=> $this->stars_services_api_token;
+			 'Token' 		=> $this->stars_services_api_token,
 			 'PartnerRef' 	=> $partner_ref,
 			 'OrderRef' 	=> $order_id."-".$merchant_id,
 		 );
@@ -87,7 +87,7 @@ class Mistral
 		if (!file_exists($media_folder)) {
 			try {
 				$oldmask = umask(0);
-		//		mkdir($media_folder, 0777, true);
+				mkdir($media_folder, 0777, true);
 				umask($oldmask);
 			} catch (Exception $e) { }
 		}
@@ -97,7 +97,7 @@ class Mistral
 			$img = "{$media_folder}/{$order_id}-{$merchant_id}.{$image_type}";
 
 			$img_file = fopen($img, "w");
-		//	fwrite($img_file, base64_decode($base64_string));
+			fwrite($img_file, base64_decode($base64_string));
 			fclose($img_file);
 
 		}

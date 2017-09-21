@@ -211,7 +211,6 @@ class RefundController extends Controller
 
 		// MISTRAL AUTO UPLOAD
 		$neighborhood = $mistral->getApdcNeighborhood();
-		$results = [];
 
 		$mistral_data = array('message' => 'Upload via Mistral');
 		$mistral_form = $this->createFormBuilder($mistral_data)
@@ -224,36 +223,48 @@ class RefundController extends Controller
 
 		if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
 
+			$results = array(
+				'order_id'		=> $id,
+				'order_mid'		=> $order[-1]['order']['mid'],
+				'ticket_com'	=> '',
+				'partner_ref'	=> '',		
+			);
+
+			// First, construct results[]
 			foreach ($order as $merchant_id => $merchant) {
 				if (is_numeric($merchant_id) && $merchant_id != -1) {
-					
 					foreach ($neighborhood as $neigh) {
 						if ($neigh['store_id'] == $merchant['merchant']['store_id']) {	
-							
-							$results[$merchant_id] = [
-								'merchant_id'	=> $merchant['merchant']['id'],
-								'order_id'		=> $id,
-								'partner_ref'	=> $neigh['partner_ref'],
-							];
+							$results['partner_ref'] = $neigh['partner_ref'];
+							$results[$merchant_id]	= ['merchant_id' => $merchant_id];
 						}
 					}	
 				}
 			}
-			// Here, results[] contains merchant/order id + partner ref, sort by merchant_id
 
-			$mistral_imgs = [];
-			foreach ($results as $result) {
-				try {
-					$mistral_imgs[$result['merchant_id']] = $mistral->getPictures($result['partner_ref'], $result['order_id'], $result['merchant_id']);				
-				} catch (Exception $e) { }
+			foreach ($results as $merchant_id => $result) {
+				if (is_numeric($merchant_id)) {	
+					$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$result['merchant_id']}"; 
+				}
 			}
-			// Here, mistral_imgs[] contains mistral images, sort by merchant_id			
+			$results['ticket_com'] = substr($results['ticket_com'], 1);
 
-			foreach ($mistral_imgs as $merchant_id => $data) {
+			// Then, store Mistral images in tmp[]	
+			$temp = [];
+			foreach ($results as $merchant_id => $result) {
+				if (is_numeric($merchant_id)) {
+					try {
+						$temp[$result['merchant_id']] = $mistral->getPictures($results['partner_ref'], $results['order_id'], $result['merchant_id']);				
+					} catch (Exception $e) { 
+						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la récupération via Mistral');
+					}
+				}
+			}
+			
+			// Store images in results[]
+			foreach ($temp as $merchant_id => $data) {
 				if ($data['AsPicture'] == true) {
-
 					foreach($data['Pictures'] as $type => $content) {
-						
 						// "E" == ticket. "L" == signature
 						if ($content['MoveTypeCode'] == 'E') {	
 							$results[$merchant_id]['base64_string']	= $content['ImageBase64'];
@@ -262,16 +273,29 @@ class RefundController extends Controller
 					}
 				}
 			}
-			// Here, results[] contains mistral images + merchant/order id + partner ref, sort by merchant_id
-
-			dump($results);
+			
+			// Convert base64 into real img + add imgs into medi/attachments
 			foreach ($results as $merchant_id => $result) {
-				try {
-					$mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $result['order_id'], $result['merchant_id']);
-				} catch (Exception $e) { }
+				if (is_numeric($merchant_id)) {
+					try {
+						$mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $result['merchant_id']);
+					} catch (Exception $e) {
+						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors du traitement des images');
+						return $this->redirectToRoute('refundUpload', ['id' => $id]);
+					}
+				}
 			}
 
-			return $this->redirectToRoute('refundInput', ['id' => $id]);
+			try {
+				$mage->updateEntryToOrderField(
+					['order_id' => $results['order_mid']],
+					['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]);
+
+				$session->getFlashBag()->add('success', 'Images uploadées via Mistral');
+				return $this->redirectToRoute('refundInput', ['id' => $id]);
+			} catch (Exception $e) {
+				$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'upload des images');		
+			}
 		}
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
