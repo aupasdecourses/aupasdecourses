@@ -61,7 +61,7 @@ class ProductController extends AbstractController
                 }
 
                 if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                    $shop = $this->getDoctrine()->getManager()
+                    $shop = $this->getDoctrine()          
                         ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $request->get('commercant')]);
                 } else {
                     $shop = $this->getUser()->getShop();
@@ -116,10 +116,8 @@ class ProductController extends AbstractController
                 }
 
                 /** @var \AppBundle\Repository\ShopRepository $shopModel */
-                $shop = $this->getDoctrine()->getManager()
-                        ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $entity['commercant']]);
-                $shopModel = $this->getModel('Shop', false)->load($shop->getMerchant());
-                $shopModel->increment();
+                $shopModel = $this->getModel('Shop', false);
+                $shopModel->findOneBy(['productMerchant' => $entity['commercant']])->increment();
 
                 if (!$this->getParameter('enabled_email')) {
                     return;
