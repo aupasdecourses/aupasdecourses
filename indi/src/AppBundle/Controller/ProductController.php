@@ -116,14 +116,16 @@ class ProductController extends AbstractController
                 }
 
                 /** @var \AppBundle\Repository\ShopRepository $shopModel */
-                $shopModel = $this->getModel('Shop', false);
-                $shopModel->findOneBy(['productMerchant' => $entity['commercant']])->increment();
+                $shop = $this->getDoctrine()->getManager()
+                        ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $entity['commercant']]);
+                $shopModel = $this->getModel('Shop', false)->load($shop->getMerchant());
+                $shopModel->increment();
 
                 if (!$this->getParameter('enabled_email')) {
                     return;
                 }
 
-                $title = 'Produit créé chez le commerçant avec l\'attribut commercant n° : '.$entity['commercant'];
+                $title = 'Appli V2 - Produit créé chez le commerçant avec l\'attribut commercant n° : '.$entity['commercant'];
                 $body  = 'Le produit suivant a été créé par '.$this->getUser()->getUsername()
                     .', le '.date("Y-m-d").' :'.PHP_EOL
                     .'SKU : '.$entity['sku'].PHP_EOL
