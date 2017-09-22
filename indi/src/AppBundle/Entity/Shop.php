@@ -67,6 +67,24 @@ class Shop
     private $productMerchant;
 
     /**
+     * Stores
+     *
+     * @var string
+     *
+     * @ORM\Column(name="stores", type="string", length=255)
+     */
+    private $stores;
+
+    /**
+     * category
+     *
+     * @var string
+     *
+     * @ORM\Column(name="id_category", type="string", length=255)
+     */
+    private $category;
+
+    /**
      * Get id
      *
      * @return integer
@@ -195,4 +213,53 @@ class Shop
     {
         return $this->productMerchant;
     }
+
+    /**
+     * Set stores
+     *
+     * @param string $stores
+     *
+     * @return Shop
+     */
+    public function setStores($stores)
+    {
+        $this->stores = $stores;
+
+        return $this;
+    }
+
+    /**
+     * Get stores
+     *
+     * @return string
+     */
+    public function getStores()
+    {
+        return $this->stores;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return Shop
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
 }

@@ -17,9 +17,9 @@ class ShopRepository extends AbstractRepository
      */
     public function increment($amount = 1, $entity = null)
     {
-        if (!$entity) {
-            $entity = $this->entity;
-        }
+        //if (!$entity) {
+            $this->entity=$entity;
+        //}
 
         $entity->setIncremental(($entity->getIncremental() + $amount));
         $this->save();

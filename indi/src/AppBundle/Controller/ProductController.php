@@ -61,7 +61,7 @@ class ProductController extends AbstractController
                 }
 
                 if ($this->isGranted('ROLE_SUPER_ADMIN')) {
-                    $shop = $this->getDoctrine()          
+                    $shop = $this->getDoctrine()->getManager()          
                         ->getRepository('AppBundle:Shop')->findOneBy(['productMerchant' => $request->get('commercant')]);
                 } else {
                     $shop = $this->getUser()->getShop();
@@ -86,6 +86,10 @@ class ProductController extends AbstractController
                 $weight = $request->request->get('nbre_portion', 1) * $request->request->get('poids_portion', 1);
                 $status = $status = $request->request->get('status') ? 1 : 2;
 
+
+                $websiteids = explode(",",$shop->getStores());
+                $category=explode(",",$shop->getCategory());
+
                 $request->request->add([
                     'sku'               => $sku,
                     'status'            => $status,
@@ -101,6 +105,8 @@ class ProductController extends AbstractController
                     // Default attribute
                     'attribute_set_id'  => '4',
                     'type_id'           => 'simple',
+                    'website_ids'       => $websiteids,
+                    'category_ids'       => $category,
                 ]);
             }
         );
@@ -141,6 +147,8 @@ class ProductController extends AbstractController
                     .'Origin : '.$entity['origine'].PHP_EOL
                     .'Bio : '.($entity['produit_biologique'] ? 'Oui' : 'Non').PHP_EOL
                     .'Notes du commerçant : '.$entity['notes_com'].PHP_EOL
+                    .'Ids quartier : '.$entity['website_ids'].PHP_EOL
+                    .'Ids Category : '.$entity['category_ids'].PHP_EOL
                 ;
 
                 $from = $this->getParameter('from_email');
@@ -375,6 +383,7 @@ class ProductController extends AbstractController
                 foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
                     $array[$code][$option['value']] = $option['label'];
                 }
+                asort($array[$code]);
             }
         }
 
@@ -386,7 +395,7 @@ class ProductController extends AbstractController
             'produit_biologique' => [
                 276 => 'Oui',
                 76  => 'Non',
-                34  => 'AB'
+                //34  => 'AB'
             ],
             'status' => [
                 1 => 1,

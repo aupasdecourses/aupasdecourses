@@ -58,6 +58,8 @@ class ProductType extends AbstractType
             ->add('image_label')
             ->add('small_image_label')
             ->add('thumbnail_label')
+            ->add('website_ids')
+            ->add('category_ids')
         ;
     }
 
