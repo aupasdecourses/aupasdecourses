@@ -230,13 +230,13 @@ class RefundController extends Controller
 				'partner_ref'	=> '',		
 			);
 
-			// First, construct results[]
+			// Construct results[]
 			foreach ($order as $merchant_id => $merchant) {
 				if (is_numeric($merchant_id) && $merchant_id != -1) {
 					foreach ($neighborhood as $neigh) {
 						if ($neigh['store_id'] == $merchant['merchant']['store_id']) {	
 							$results['partner_ref'] = $neigh['partner_ref'];
-							$results[$merchant_id]	= ['merchant_id' => $merchant_id];
+							$results[$merchant_id]	= '';
 						}
 					}	
 				}
@@ -244,58 +244,65 @@ class RefundController extends Controller
 
 			foreach ($results as $merchant_id => $result) {
 				if (is_numeric($merchant_id)) {	
-					$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$result['merchant_id']}"; 
+					$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}"; 
 				}
 			}
 			$results['ticket_com'] = substr($results['ticket_com'], 1);
 
-			// Then, store Mistral images in tmp[]	
+			// Store Mistral images in tmp[]	
 			$temp = [];
 			foreach ($results as $merchant_id => $result) {
 				if (is_numeric($merchant_id)) {
 					try {
-						$temp[$result['merchant_id']] = $mistral->getPictures($results['partner_ref'], $results['order_id'], $result['merchant_id']);				
+						$temp[$merchant_id] = $mistral->getPictures($results['partner_ref'], $results['order_id'], $merchant_id);				
 					} catch (Exception $e) { 
-						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la récupération via Mistral');
-					}
-				}
-			}
-			
-			// Store images in results[]
-			foreach ($temp as $merchant_id => $data) {
-				if ($data['AsPicture'] == true) {
-					foreach($data['Pictures'] as $type => $content) {
-						// "E" == ticket. "L" == signature
-						if ($content['MoveTypeCode'] == 'E') {	
-							$results[$merchant_id]['base64_string']	= $content['ImageBase64'];
-							$results[$merchant_id]['image_type']	= substr($content['ImageType'], 6);
-						}
-					}
-				}
-			}
-			
-			// Convert base64 into real img + add imgs into medi/attachments
-			foreach ($results as $merchant_id => $result) {
-				if (is_numeric($merchant_id)) {
-					try {
-						$mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $result['merchant_id']);
-					} catch (Exception $e) {
-						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors du traitement des images');
+						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la récupération via Mistral. Veuillez reessayer');
 						return $this->redirectToRoute('refundUpload', ['id' => $id]);
 					}
 				}
 			}
 
-			try {
+			// Store images in results[]
+			foreach ($temp as $merchant_id => $data) {
+				if ($data['AsPicture'] == true) {
+					foreach($data['Pictures'] as $type => $content) {
+						if ($content['MoveTypeCode'] == 'E') {	
+							$results[$merchant_id]['base64_string']	= $content['ImageBase64'];
+							$results[$merchant_id]['image_type']	= substr($content['ImageType'], 6);
+						} else {
+							unset($results[$merchant_id]); // Si ticket == signature du commercant
+						}
+					}
+				} else {
+					unset($results[$merchant_id]); // Si pas de ticket du commercant
+				}	
+			}
+
+			$diff = array_diff_assoc($temp, $results);
+
+			// Convert base64 into real img, add imgs into medi/attachments & update DBB
+			foreach ($results as $merchant_id => $result) {
+				if (is_numeric($merchant_id)) {
+					$mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $merchant_id);
+					// Update DDB
+				}
+			}
+
+			if (!empty($diff)) {
+				foreach ($diff as $merchant_id => $merchant) {
+					$session->getFlashBag()->add('error', 'Image non uploadée pour ' . $merchant_id . ' Veuillez uploader manuellement ');
+				}
+				return $this->redirectToRoute('refundUpload', ['id' => $id]);
+			} else {
+				$session->getFlashBag()->add('success', 'Images uploadées via Mistral');
+				return $this->redirectToRoute('refundInput', ['id' => $id]);
+			}
+
+			/*
 				$mage->updateEntryToOrderField(
 					['order_id' => $results['order_mid']],
 					['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]);
-
-				$session->getFlashBag()->add('success', 'Images uploadées via Mistral');
-				return $this->redirectToRoute('refundInput', ['id' => $id]);
-			} catch (Exception $e) {
-				$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'upload des images');		
-			}
+			}*/
 		}
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
