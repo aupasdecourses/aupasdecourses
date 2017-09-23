@@ -33,12 +33,11 @@ if(isset($_SESSION['ddate'])){
 }
 $name = Mage::helper('apdc_checkout')->getCommercantname($this);
 
-$dispo = true;
+$dispo = Mage::helper('apdc_catalog/product_available')->isAvailable($_product);
 if(isset($_SESSION['ddate'])){
 	if(is_array($commercants) && array_key_exists($name,$commercants)){
 		if(!in_array($day,$commercants[$name])){
 			if(count($commercants[$name]) < 4){
-				$dispo = false;
 				echo '<input type="hidden" name="entity_id[]" value="'.$_item->getId().'" />';
 			}
 		}
