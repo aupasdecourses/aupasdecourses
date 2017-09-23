@@ -1,0 +1,58 @@
+<?php 
+$helper = Mage::helper("agegate");
+$cookieExpire = $helper->getCookieExpire();
+$blockId = $helper->getBlockId();
+$dissagreeblockId = $helper->getDissagreeBlockId();
+$agree = $helper->getAgree();
+$disagree = $helper->getDisagree();
+$showPop = $helper->showPopUp();
+$height = $helper->getHeight();
+$width = $helper->getWidth();
+$blockTitle = $helper->getBlockTitle();
+
+if($showPop == "Y"):
+?>
+<div class="age-outer-bg">&nbsp;</div>
+<!-- Popup Box -->
+<div class="age-pop-up ageconf" style="height:<?php echo $height; ?>; width:<?php echo $width; ?>">
+	<h3><?php echo $blockTitle; ?></h3>
+	<div class="age-pop-cont">
+	<div class="verify">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHtml(); ?>
+        <div class="block-button">
+        	<a class="button" href="#" id="enter" title="Enter"><?php echo $agree;?></a>
+            <a class="button" href="#" id="no" title="Exit"><?php echo $disagree;?></a>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Dissagree Box -->
+<div class="age-pop-up not-verify">
+    <div class="notverify">
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($dissagreeblockId)->toHtml(); ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+		if(getAgeCookie("ageverification")!="Y" || getAgeCookie("verify")!="Y"){
+			jQuery('.age-outer-bg').fadeIn();
+			jQuery('.age-pop-up.ageconf').addClass('open');						
+			setAgeCookie("ageverification","Y",<?php echo $cookieExpire; ?>);
+		}
+		// Close popup
+		jQuery('.age-pop-up #enter').click(function(e){
+			setAgeCookie("verify","Y",<?php echo $cookieExpire; ?>);
+			e.preventDefault();
+			jQuery('.age-outer-bg').fadeOut();
+			jQuery('.age-pop-up').removeClass('open');
+		});
+		jQuery('.age-pop-up #no').click(function(e){
+			setAgeCookie("verify","N",<?php echo $cookieExpire; ?>);
+			e.preventDefault();
+			jQuery('.age-pop-up.ageconf').removeClass('open');
+			jQuery('.age-pop-up.not-verify').addClass('open');
+		});
+})
+</script>
+<?php endif; ?>

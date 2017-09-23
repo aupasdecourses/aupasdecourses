@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package>
+    <name>Age_Gate_Pop_Up</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/MIT">Massachusetts Institute of Technology License (MITL)</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Age Gate allows you to lock your store until users confirms their Age. &#xD;
+</summary>
+    <description>Age Gate Pop-Up enable websites that require Adult Verification to lock their store with the Pop-Up. User will be able to access the store once they confirm their Age on website. &#xD;
+&#xD;
+The extension provides flexibility for admin to select page where Pop-Up is required. The content of the Agree and Disagree pop-up are completely manageable through Magento Admin. &#xD;
+&#xD;
+&#xD;
+Simple 5 minute setup, and your Age Gate pop-up is ready to use. Follow these steps to have it setup instantly:&#xD;
+&#xD;
+Install the extension from Magento Connect&#xD;
+Edit static block content of "vsourz-age-gate" and "vsourz-age-gate-disagree" if required.&#xD;
+Setup system settings from System &gt;&gt; Configuration &gt;&gt; Age Gate Pop-Up&#xD;
+&#xD;
+You can learn more about Extension Configuration from How to Use section&#xD;
+&#xD;
+Need Support? Click Here&#xD;
+&#xD;
+Demo Link: http://extensiondemo.vsourz.co/age-verification&#xD;
+&#xD;
+Features:&#xD;
+Full control over Pop-Up Content from Magento Admin.&#xD;
+Ability to setup time interval for verification Pop-Up.&#xD;
+Ability to select the pages where Pop-Up needs to be displayed.&#xD;
+Built with Animated effect using CSS3.&#xD;
+No technical knowledge required for setup.&#xD;
+Automatic pre defined Pop-Up creation.&#xD;
+&#xD;
+How to Use?&#xD;
+Log into your Magento Admin panel&#xD;
+Go to System &gt;&gt; Configuration &gt;&gt; Age Gate Pop-Up&#xD;
+Select the required pages from Pages&#xD;
+Select Pop-Up Block and Disagree Block id from the drop down&#xD;
+Enter the Agree Button and Disagree button text&#xD;
+Setup the Cookie interval for the pop-up</description>
+    <notes>Age Gate allows you to lock your store until users confirms their Age. </notes>
+    <authors><author><name>Vsourz Digital</name><user>MAG002979323</user><email>mehul@vsourz.com</email></author></authors>
+    <date>2015-08-08</date>
+    <time>08:41:33</time>
+    <contents><target name="magecommunity"><dir name="Vsourz"><dir name="Agegate"><dir name="Block"><file name="Agegate.php" hash="d1db1b72bfd03eedc7f683d4b12d6b4b"/></dir><dir name="Helper"><file name="Data.php" hash="9e54f2f94b96a77694c43d3afbffd481"/></dir><dir name="Model"><dir name="Source"><file name="Page.php" hash="8f20f31d4da383dfdd2bf819dfef96d5"/><file name="Staticblock.php" hash="082960cdcf944680108fc2599581ba71"/><file name="Truefalse.php" hash="a395ee7dbf5785afee763bf4bbd9ba1a"/></dir></dir><dir name="data"><dir name="agegate_setup"><file name="data-install-0.1.0.php" hash="48b79d53fe9cef96c1c895bdcd5b1eac"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="7565815f591bcbde92be6eeafa23b132"/><file name="config.xml" hash="ebd25d3a59dea999a394149e39123f97"/><file name="system.xml" hash="fbe9432245560133632b18da2420afdc"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Vsourz_Agegate.xml" hash="0ba147b3e6e88ddc330fa591487c92de"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><dir name="vsourz"><file name="agegate.xml" hash="f199fa1e79634dd8cf2900d65d1b9b74"/></dir></dir><dir name="template"><dir name="vsourz"><file name="agegate.phtml" hash="95cf143ee573c77af1b930a3301edc9c"/></dir></dir></dir></dir></dir></target><target name="mageskin"><dir name="frontend"><dir name="base"><dir name="default"><dir name="css"><dir name="agegate"><file name="agegate.css" hash="1b1850af1985a04a3f8fbce54d885d1f"/></dir></dir><dir name="js"><dir name="agegate"><file name="agegatepopup.js" hash="a975eca1a519c779504be4d0dce6a3b2"/><file name="jquery-1.10.2.min.js" hash="628072e7212db1e8cdacb22b21752cda"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

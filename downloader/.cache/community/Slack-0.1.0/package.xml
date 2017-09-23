@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Slack</name>
+    <version>0.1.0</version>
+    <stability>stable</stability>
+    <license>MIT</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Magento activity in Slack</summary>
+    <description>Orders, Invoices, Shipments, New Customers, and more, directly in your favourite Slack channel.</description>
+    <notes>This is the first release</notes>
+    <authors><author><name>Eduard G. Dumitrescu</name><user>bregoiu</user><email>eddie.dumitrescu@gmail.com</email></author></authors>
+    <date>2015-05-28</date>
+    <time>12:24:08</time>
+    <contents><target name="magecommunity"><dir name="Intelivemetrics"><dir name="Slack"><dir name="Helper"><file name="Data.php" hash="458ed57e6ec081205bf68d1a55f4142e"/></dir><dir name="Model"><file name="Abstract.php" hash="45d300c4b9b40c8940b14b491681d47e"/><file name="Notification.php" hash="c1fec7e28db44d448c12f1eb30bd0a9c"/><dir name="Observers"><file name="Abstract.php" hash="f86aa41a54f1e840c253e7e191e59538"/><file name="AdminUserLoginFailed.php" hash="60191213630c28b7a62146c22cd82fef"/><file name="AdminUserLoginSuccess.php" hash="c43efd74af494719aa1fc48e8ae7110a"/><file name="DailyStats.php" hash="c4cd888f88d684bab62fd8e2211bb821"/><file name="Interface.php" hash="6d4996e4e5d815071b2f377b8dbe68d0"/><file name="NewCreditmemo.php" hash="5f8c5219720ca77e1c2ee2f31bb88fa7"/><file name="NewCustomer.php" hash="af00e41f97e6f133e66fb46b0198a125"/><file name="NewInvoice.php" hash="0664b32b9b571cdc4927673c206b146b"/><file name="NewOrder.php" hash="d0d7a9f6e8d80a069c7f843d8770bac1"/><file name="NewShipment.php" hash="28d34753f92ec7368ddd25769eff9c15"/></dir><file name="Queue.php" hash="6d1a3ef3a3f995c924e8ebe4396a4053"/><dir name="Resource"><dir name="Queue"><file name="Collection.php" hash="025cdeade0a997613663e3c2bda8bf10"/></dir><file name="Queue.php" hash="5afce1d6866689dc586ecda2500245c9"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="9dd77853d19351f70d8b2f9eca75c21f"/><file name="config.xml" hash="4cfc656c518cbe10ff78d59f5bccebf2"/><file name="system.xml" hash="dce8ddf6e6cd90d8d8581422e31fbf34"/></dir><dir name="sql"><dir name="intelivemetrics_slack_setup"><file name="install-0.4.0.php" hash="223e5c4eab9b7842a859b3dc072db96c"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Intelivemetrics_Slack.xml" hash="c9c1ad068381f13a506680f61ede49ba"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>7.0.0</max></php></required></dependencies>
+</package>
