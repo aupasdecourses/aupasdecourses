@@ -1,0 +1,12 @@
+<div id="<?php echo $this->getId(); ?>" class="apdc-popup">
+    <div id="<?php echo $this->getId(); ?>-container" class="apdc-popup-container container">
+        <div id="<?php echo $this->getId(); ?>-close" class="apdc-popup-close"><i class="fa fa-close"></i></div>
+        <div id="<?php echo $this->getId(); ?>-loading" class="apdc-popup-loading">
+            <div class="loader"></div>
+        </div>
+        <div id="<?php echo $this->getId(); ?>-content" class="apdc-popup-content content">
+            <?php echo $this->getChildHtml(); ?>
+        </div>
+    </div>
+    <div id="<?php echo $this->getId(); ?>-overlay" class="apdc-popup-overlay"></div>
+</div>

@@ -1,0 +1,66 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php if($_product->isSaleable()): ?>
+<?php $isEditMode = ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0); ?>
+<div class="actions add-to-cart">
+    <div class="action-group">
+        <div class="action-loading">
+            <div class="loader-cart"><img src="<?php echo $this->getSkinUrl('dist/images/opc-ajax-loader.gif') ?>" alt=""></div>
+        </div>
+
+        <div class="pull-right">
+			<?php if($this->helper('apdc_catalog/product_available')->isAvailable($_product)) { ?>
+				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
+                <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button<?php echo ($isEditMode ? ' hide' : ''); ?>"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
+				<div class="qty-buttons">
+					<button type="submit" value="btn-cart-qty-minus" title="<?php echo $this->quoteEscape($this->__('Remove one product')); ?>" class="button button-pink btn-cart btn-cart-qty-minus"><span><span><i class="fa fa-minus"></i></span></span></button>
+					<button type="submit" value="btn-cart-remove" title="<?php echo $this->quoteEscape($this->__('Remove product from cart')); ?>" class="button button-green btn-cart btn-cart-remove"><span><span><i class="fa fa-trash"></i></span></span></button>
+					<span class="added-qty">0</span>
+					<button type="submit" value="btn-cart-qty-plus" title="<?php echo $this->quoteEscape($this->__('Add one product')); ?>" class="button button-green btn-cart btn-cart-qty-plus"><span><span><i class="fa fa-plus"></i></span></span></button>
+				</div>
+			<?php } else { ?>
+				<span class="button button-green notavailable"><?php echo $this->__('Non disponible') ?></span>
+			<?php } ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($isEditMode) : ?>
+    <?php $item = Mage::getModel('sales/quote_item')->load($_product->getCartItemId()); ?>
+    <?php if ($item && $item->getId()) : ?>
+    <div class="action update-product-options disabled text-right">
+        <input type="hidden" name="update_product_options" value="1" />
+        <input type="hidden" name="update_product_options_initial_values" value="<?php echo (int)$item->getQty() . '-' . $item->getItemComment(); ?>" />
+        <button type="submit" class="button button-green btn-sm apdc-catalog-update-product-options" data-item-id="<?php echo $_product->getCartItemId(); ?>" data-product-id="<?php echo $_product->getId(); ?>" title="<?php echo $this->__('Update product'); ?>" value="update_product_options" disabled="true">
+            <span><span>
+                <i class="fa fa-save"></i> <?php echo $this->__('Update product');  ?>
+            </span></span>
+        </button>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>

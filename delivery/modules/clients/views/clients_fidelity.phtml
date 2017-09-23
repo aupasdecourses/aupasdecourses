@@ -6,19 +6,19 @@
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
 <style>
  input#datepicker,input#datepicker_fin{
- 	width:100px;
- 	display: inline;
- 	vertical-align:top;
+    width:100px;
+    display: inline;
+    vertical-align:top;
 }
 </style>
 <?php
-    		//Génération de la liste des increment_id des commmandes et récupération d'un tableau des données
-    		if(isset($_GET['date_debut']) && isset($_GET['date_fin'])){
-    			$orderid_array=get_list_orderid();
-    			$date_debut=$_GET['date_debut'];
-    			$date_fin=$_GET['date_fin'];
-    			$data=data_clients($date_debut,$date_fin);
-    		}   
+            //Génération de la liste des increment_id des commmandes et récupération d'un tableau des données
+            if(isset($_GET['date_debut']) && isset($_GET['date_fin'])){
+                $orderid_array=get_list_orderid();
+                $date_debut=$_GET['date_debut'];
+                $date_fin=$_GET['date_fin'];
+                $data=data_clients($date_debut,$date_fin);
+            }   
 ?>
 
 <body>
@@ -28,43 +28,44 @@
     </div>
     <div id="filter"><label>Sélectionnez le client:</label></div>
     <div class="row">
-    	<div id="data" class="col-sm-12">
-	    	<table class="display dt-responsive no-wrap" id="data_facturation">
-		    	<thead>
-		    		<tr>
-			    		<th class="sort">Statut</th>
-			    		<th>Date Commande</th>
+        <div id="data" class="col-sm-12">
+            <table class="display dt-responsive no-wrap" id="data_facturation">
+                <thead>
+                    <tr>
+                        <th class="sort">Statut</th>
+                        <th>Date Commande</th>
                         <th>Date Livraison</th>
-			    		<th># Commande</th>
-			    		<th class="sort">Nom client</th>
-			    		<th class="float">Total Produits</th>
-			    		<th class="float">Frais livraisons</th>
-			    		<th class="float">TOTAL</th>
-			    		<th>Coupon</th>
+                        <th># Commande</th>
+                        <th class="sort">Nom client</th>
+                        <th class="float">Total Produits</th>
+                        <th class="float">Frais livraisons</th>
+                        <th class="float">TOTAL</th>
+                        <th>Code coupon</th>
+                        <th>Règle Coupon</th>
                         <th>Commentaires</th>
-			    	</tr>
-		    	</thead>
-		    	<tbody>
-		    		<?php foreach($data as $row){?>
-		    		<tr>
-		    			<?php foreach($row as $key=>$value){
-		    				echo '<td>'.$value.'</td>';
-		    			}?>
-		    		</tr>
-		    		<?php } ?>
-		    	</tbody>
-		    	<tfoot>
-		    		<tr>
-		    			<th colspan="5">Total</th>
-			    		<th></th>
-			    		<th></th>
-			    		<th></th>
-			    		<th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($data as $row){?>
+                    <tr>
+                        <?php foreach($row as $key=>$value){
+                            echo '<td>'.$value.'</td>';
+                        }?>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">Total</th>
                         <th></th>
-		    		</tr>
-		    	</tfoot>
-	    	</table>
-    	</div>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
   </div>
 </body>
@@ -104,7 +105,7 @@ $(function() {
 
 $(function(){
   $("#datepicker_fin").change(function(){
-    	window.location='index.php?module=clients&action=view&option=fidelity&date_debut='+$("#datepicker").val()+'&date_fin='+this.value;
+        window.location='index.php?module=clients&action=view&option=fidelity&date_debut='+$("#datepicker").val()+'&date_fin='+this.value;
   });
 });
 
@@ -131,7 +132,7 @@ $(document).ready(function() {
         "lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
         "pageLength": -1,
         "order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
-    	initComplete: function () {
+        initComplete: function () {
             this.api().columns(['.sort']).every(function () {
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
@@ -163,30 +164,30 @@ $(document).ready(function() {
                         i : 0;
             };
 
- 			this.api().columns(['.float']).every(function (){
- 				var index = this.index();
-	            // Total over all pages
-	            // total = api
-	            //     .column( index )
-	            //     .data()
-	            //     .reduce( function (a, b) {
-	            //         return intVal(a) + intVal(b);
-	            //     } );
-	            // total=total.toFixed(2);
-	 
-	            // Total over this page
-	            pageTotal = api
-	                .column( index, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
+            this.api().columns(['.float']).every(function (){
+                var index = this.index();
+                // Total over all pages
+                // total = api
+                //     .column( index )
+                //     .data()
+                //     .reduce( function (a, b) {
+                //         return intVal(a) + intVal(b);
+                //     } );
+                // total=total.toFixed(2);
+     
+                // Total over this page
+                pageTotal = api
+                    .column( index, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
 
-	            pageTotal=pageTotal.toFixed(2);
+                pageTotal=pageTotal.toFixed(2);
 
-	            // Update footer
-	            $( api.column( index ).footer() ).html(pageTotal);
-	        });
+                // Update footer
+                $( api.column( index ).footer() ).html(pageTotal);
+            });
         }
     } );
 

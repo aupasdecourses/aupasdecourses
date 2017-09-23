@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Status extends Amasty_Oaction_Model_Command_Abstract
@@ -31,14 +31,48 @@ class Amasty_Oaction_Model_Command_Status extends Amasty_Oaction_Model_Command_A
         foreach ($ids as $id){
             $order = Mage::getModel('sales/order')->load($id);
             $orderCode = $order->getIncrementId();
+
+            if (Mage::getStoreConfig('amoaction/status/check_state')) {
+                $state = $order->getState();
+                $statuses = Mage::getModel('sales/order_status')
+                    ->getCollection()
+                    ->addStateFilter($state)
+                    ->toOptionHash();
+                if (Mage::helper('core')->isModuleEnabled('Amasty_Orderstatus')) {
+                    $customStatuses = Mage::getModel('amorderstatus/status')->getCollection();
+                    $customStatuses->getSelect()
+                        ->where('parent_state LIKE ?', '' . $state . ',%')
+                        ->orWhere('parent_state LIKE ?', '%,' . $state . ',%')
+                        ->orWhere('parent_state LIKE ?', '%,' . $state . '');
+                    
+                    foreach ($customStatuses as $customStatus) {
+                        $statuses[$state . '_' .$customStatus->getAlias()] = $customStatus->getStatus();
+                    }
+                }
+                
+                if (!array_key_exists($val, $statuses)) {
+                    $err = $hlp->__('Selected status does not correspond to the state of order.');
+                    $this->_errors[] = $hlp->__(
+                        'Can not update order #%s: %s', $orderCode, $err);
+                    continue;
+                }
+            }
+
             try {
-                Mage::getModel('sales/order_api')->addComment($orderCode, $val, '', false);
+                $notify = Mage::getStoreConfig('amoaction/status/notify', $order->getStoreId());
+                if (!$notify) {
+                    $notify = parent::orderUpdateNotify($val);
+                }
+                Mage::getModel('sales/order_api')->addComment($orderCode, $val, '', $notify);
                 ++$numAffectedOrders;          
             }
             catch (Exception $e) {
-                $err = $e->getCustomMessage() ? $e->getCustomMessage() : $e->getMessage();
-                $this->_errors[] = $hlp->__(
-                    'Can not update order #%s: %s', $orderCode, $err);
+                if ('Mage_Api_Exception' == get_class($e)) {
+                    $err = $e->getCustomMessage();
+                } else {
+                    $err = $e->getMessage();
+                }
+                $this->_errors[] = $hlp->__('Can not update order #%s: %s', $orderCode, $err);
             }
             $order = null;
             unset($order); 

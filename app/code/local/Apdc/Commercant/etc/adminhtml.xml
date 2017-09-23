@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<adminhtml>
+    <menu>
+        <neighborhoods>
+            <children>
+                <commercant>
+                    <title>Commerçants &amp; Magasins</title>
+                    <sort_order>100</sort_order>
+                    <children>
+                        <commercant>
+                            <title>Commercants (Entité Légale)</title>
+                            <sort_order>30</sort_order>
+                            <action>adminhtml/commercant_commercant/index</action>
+                        </commercant>
+                        <shop>
+                            <title>Magasins</title>
+                            <sort_order>40</sort_order>
+                            <action>adminhtml/commercant_shop/index</action>
+                        </shop>
+                        <contact>
+                            <title>Contacts</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/commercant_contact/index</action>
+                        </contact>
+                        <bank_information>
+                            <title>Infos bancaires &amp; légales</title>
+                            <sort_order>20</sort_order>
+                            <action>adminhtml/commercant_bankinfo/index</action>
+                        </bank_information>
+                    </children>
+                </commercant>
+            </children>
+        </neighborhoods>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <neighborhoods>
+                        <children>
+                            <commercant>
+                                <title>Commerçants &amp; Magasins</title>
+                                <sort_order>100</sort_order>
+                                <children>
+                                    <commercant>
+                                        <title>Commercants (Entités Légales)</title>
+                                        <sort_order>30</sort_order>
+                                    </commercant>
+                                    <shop>
+                                      <title>Magasins</title>
+                                      <sort_order>40</sort_order>
+                                      <save translate="title" module="apdc_commercant">
+                                        <title>Save Shop</title>
+                                        <sort_order>100</sort_order>
+                                      </save>
+                                      <update_categories translate="title" module="apdc_commercant">
+                                        <title>Update Shop categories</title>
+                                        <sort_order>100</sort_order>
+                                      </update_categories>
+                                      <delete translate="title" module="apdc_commercant">
+                                        <title>Delete Shop</title>
+                                        <sort_order>110</sort_order>
+                                      </delete>
+                                    </shop>
+                                    <contact>
+                                        <title>Contacts</title>
+                                        <sort_order>10</sort_order>
+                                    </contact>
+                                    <bank_information>
+                                        <title>Infos bancaires &amp; légales</title>
+                                        <sort_order>20</sort_order>
+                                    </bank_information>
+                                </children>
+                            </commercant>
+                        </children>
+                    </neighborhoods>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</adminhtml>

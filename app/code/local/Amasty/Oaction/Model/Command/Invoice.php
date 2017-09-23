@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Invoice extends Amasty_Oaction_Model_Command_Abstract
@@ -41,9 +41,11 @@ class Amasty_Oaction_Model_Command_Invoice extends Amasty_Oaction_Model_Command_
                     ->create($orderCode, array(), $comment, false, false); 
                     
                 $status = Mage::getStoreConfig('amoaction/invoice/status', $order->getStoreId());
-                if ($status)    
-                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', false);                      
-                    
+                if ($status) {
+                    $notify = parent::orderUpdateNotify($status);
+                    Mage::getModel('sales/order_api')->addComment($orderCode, $status, '', $notify);
+                }
+
                 $invoice = null;       
                 if ($invoiceCode && $notifyCustomer){
                     $invoice = Mage::getModel('sales/order_invoice')
@@ -57,7 +59,7 @@ class Amasty_Oaction_Model_Command_Invoice extends Amasty_Oaction_Model_Command_
                     }
                 }
                 
-                $print = Mage::getStoreConfig('amoaction/invoice/print', $order->getStoreId()); 
+                $print = Mage::getStoreConfig('amoaction/invoice/print', $order->getStoreId());
                 if ($invoiceCode && $print){
                     if (!$invoice){
                         $invoice = Mage::getModel('sales/order_invoice')
@@ -75,9 +77,12 @@ class Amasty_Oaction_Model_Command_Invoice extends Amasty_Oaction_Model_Command_
                 ++$numAffectedOrders; 
             }
             catch (Exception $e) {
-                $err = $e->getCustomMessage() ? $e->getCustomMessage() : $e->getMessage();
-                $this->_errors[] = $hlp->__(
-                    'Can not invoice order #%s: %s', $orderCode, $err);
+                if ('Mage_Api_Exception' == get_class($e)) {
+                    $err = $e->getCustomMessage();
+                } else {
+                    $err = $e->getMessage();
+                }
+                $this->_errors[] = $hlp->__('Can not invoice order #%s: %s', $orderCode, $err);
             }
             $order = null;
             unset($order); 

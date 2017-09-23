@@ -3,7 +3,7 @@
 if (utilisateur_est_connecte()) {
 		
 		// Affichage de la calculette
-		$orders=liste_commande();
+		$orders=Mage::getModel('sales/order')->getCollection();
 
 		//récupération de la liste des commandes (numéro et date)
 		$orderid_array=get_list_orderid();

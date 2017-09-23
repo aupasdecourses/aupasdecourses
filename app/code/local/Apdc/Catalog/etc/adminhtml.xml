@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<adminhtml>
+  <menu>
+    <catalog>
+      <children>
+        <categories>
+          <children>
+            <import>
+              <title>Import infos</title>
+              <sort_order>10</sort_order>
+              <action>adminhtml/apdc_catalog_categories_import/index</action>
+            </import>
+            <export>
+              <title>Export infos</title>
+              <sort_order>20</sort_order>
+              <action>adminhtml/apdc_catalog_categories_export/index</action>
+            </export>
+            <toggle>
+              <title>Toggle enable/disable</title>
+              <sort_order>30</sort_order>
+              <action>adminhtml/apdc_catalog_categories_toggle/index</action>
+            </toggle>
+          </children>
+        </categories>
+      </children>
+    </catalog>
+  </menu>
+  <acl>
+    <resources>
+      <admin>
+        <children>
+          <catalog>
+            <children>
+              <categories>
+                <children>
+                  <import>
+                    <title>Import infos</title>
+                    <sort_order>30</sort_order>
+                  </import>
+                  <export>
+                    <title>Export infos</title>
+                    <sort_order>40</sort_order>
+                  </export>
+                  <toggle>
+                    <title>Toggle enable/disable</title>
+                    <sort_order>50</sort_order>
+                  </toggle>
+                </children>
+              </categories>
+            </children>
+          </catalog>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+</adminhtml>

@@ -1,0 +1,17 @@
+<div id="viewblock_<?php echo $this->getItemCode(); ?>">
+    <?php if ($this->getItemValue()): ?>
+        <?php
+        if (!is_array($this->getItemValue())) {
+            $val = explode(';', $this->getItemValue());
+            $this->setItemValue($val);
+        }
+        ?>
+        <ul>
+            <?php foreach ($this->getItemValue() as $value): ?>
+                <?php if (trim($value)): ?>
+                    <li><a href="<?php echo $this->getUrl('attaches/order/download', array('file' => $value, 'customer_id' => Mage::getSingleton('customer/session')->getCustomerId())); ?>"><?php echo $value; ?></a></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>

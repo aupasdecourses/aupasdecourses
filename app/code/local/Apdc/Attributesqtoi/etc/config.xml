@@ -2,9 +2,18 @@
 <config>
     <modules>
         <Apdc_Attributesqtoi>
-            <version>0.0.6</version>
+            <version>0.0.8</version>
         </Apdc_Attributesqtoi>
     </modules>
+    <frontend>
+        <product>
+            <collection>
+                <attributes>
+                    <commercant />
+                </attributes>
+            </collection>
+        </product>
+    </frontend>
     <global>
         <sales>
             <quote>
@@ -12,9 +21,9 @@
                     <product_attributes>
                         <marge_arriere />
                         <commercant />
-                        <commercant_id />
                         <prix_kilo_site />
-                        <short_description />
+						<short_description />
+						<produit_fragile />
                     </product_attributes>
                 </item>
             </quote>
@@ -27,15 +36,15 @@
                 <commercant>
                     <to_order_item>*</to_order_item>
                 </commercant>
-                <commercant_id>
-                    <to_order_item>*</to_order_item>
-                </commercant_id>
                 <prix_kilo_site>
                     <to_order_item>*</to_order_item>
                 </prix_kilo_site>
                 <short_description>
                     <to_order_item>*</to_order_item>
-                </short_description>
+				</short_description>
+				<produit_fragile>
+					<to_order_item>*</to_order_item>
+				</produit_fragile>
             </sales_convert_quote_item>
             <sales_convert_order_item>
                 <marge_arriere>
@@ -44,15 +53,15 @@
                 <commercant>
                     <to_quote_item>*</to_quote_item>
                 </commercant>
-                <commercant_id>
-                    <to_quote_item>*</to_quote_item>
-                </commercant_id>
                 <prix_kilo_site>
                     <to_quote_item>*</to_quote_item>
                 </prix_kilo_site>
                 <short_description>
                     <to_quote_item>*</to_quote_item>
-                </short_description>
+				</short_description>
+				<produit_fragile>
+					<to_quote_item>*</to_quote_item>
+				</produit_fragile>
             </sales_convert_order_item>
         </fieldsets>
          <events>

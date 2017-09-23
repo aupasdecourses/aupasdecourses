@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <!-- Local.xml -->
+        <!--remove unneeded blocks-->
+        <remove name="optional_zip_countries"/>
+        <remove name="store_language"/>
+        <remove name="top.container"/>
+        <remove name="currency"/>
+        <remove name="wishlist_link"/>
+        <remove name="cart_sidebar.cart_promotion"/>
+        <remove name="cart_sidebar.extra_actions"/>
+        <remove name="footer_currency"/>
+        <remove name="right.poll"/>
+        <remove name="paypal.partner.right.logo"/>
+        <remove name="bml.right.logo"/>
+        <remove name="product.info.addtocart.paypal.wrapper"/>
+        <remove name="product.info.addtocart.paypaluk.wrapper"/>
+        <remove name="product.tooltip"/>
+        <remove name="bottom.container"/>
+        <remove name="custommenu-content"/>
+        <remove name="emailcatcher"/>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            
+            <!-- MAGNIFIC POPUP -->
+            <action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css</href><integrity>sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7</integrity><crossorigin>anonymous</crossorigin></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href> </action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
+            <action method="addLinkRel"><rel>stylesheet</rel><href>//fonts.googleapis.com/css?family=Open+Sans:300,400,700</href></action>
+            <action method="addLinkRel"><rel>alternate</rel><href>https://www.aupasdecourses.com</href><hreflang>fr</hreflang></action>
+            <block type="core/text" name="cdn">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>]]>
+                    </text>
+                </action>
+            </block>
+            <block type="core/text" name="suivi_hipay" before="-">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                            try{
+                               window.dataLayer.push({eventData:event_data,event:event_name});
+                            } catch(e){
+                        }};</script>]]>
+                    </text>
+                </action>
+            </block>
+            <block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+        </reference>
+        <reference name="header">
+            <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
+        </reference>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
+            <remove name="checkout_cart_link"/>
+        </reference>
+        <reference name="right">
+            <!--Remove whishlist -->
+            <remove name="wishlist_sidebar" />
+            <!-- Remove products viewed -->
+            <remove name="right.reports.product.viewed" />
+            <!-- Remove recently purchased items -->
+            <remove name="sale.reorder.sidebar" />
+        </reference>
+        <reference name="before_body_end">
+            <block type="page/html_head" name="jsfooter" template="apdc_base/jsfooter.phtml">
+                <action method="addCss"><name>css/bootstrap-social.css</name></action>
+                <action method="addJs"><script>mage/cookies.js</script></action>
+                <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
+            </block>
+        </reference>
+        <reference name="footer">
+            <block type="cms/block" name="footer.links.left">
+                <action method="setBlockId">
+                    <block_id>footer_links_left</block_id>
+                </action>
+            </block>
+            <block type="cms/block" name="footer.links.middle">
+                <action method="setBlockId">
+                    <block_id>footer_links_middle</block_id>
+                </action>
+            </block>
+            <block type="cms/block" name="footer.links.middle.2">
+                <action method="setBlockId">
+                    <block_id>footer_links_middle_2</block_id>
+                </action>
+            </block>
+            <block type="cms/block" name="footer.links.right">
+                <action method="setBlockId">
+                    <block_id>footer_links_right</block_id>
+                </action>
+            </block>
+            <block type="cms/block" name="footer.social">
+                <action method="setBlockId">
+                    <block_id>footer-social</block_id>
+                </action>
+            </block>
+            <block type="cms/block" name="footer.cards">
+                <action method="setBlockId">
+                    <block_id>footer-cards</block_id>
+                </action>
+            </block>
+            <remove name="footer_links" />
+            <remove name="footer_links2" />
+        </reference>
+        <reference name="before_body_end">
+            <remove name="global_cookie_notice" />
+        </reference>
+        <reference name="global_notices">
+            <block type="page/html_cookieNotice" name="global_cookie_notice_head" as="global_cookie_notice_head" template="page/html/cookienotice.phtml" />
+        </reference>
+
+        <reference name="left">
+          <remove name="catalog.leftnav" />
+        </reference>
+    </default>
+
+      <!-- Homepage, from catalog.xml -->
+    <page_homepage>
+        <remove name="right"/>
+        <remove name="left"/>
+        <remove name="left_first"/>
+        <label>Homepage</label>
+    </page_homepage>
+
+    <checkout_onepage_index>
+        <remove name="left"/>
+        <remove name="left_first"/>
+    </checkout_onepage_index>
+
+    <customer_account_login>
+        <reference name="head">
+            <action method="setTitle" translate="title">
+                <title>Espace Personnel sur Au Pas De Courses</title>
+            </action>
+        </reference>
+    </customer_account_login>
+
+    <customer_account>
+        <remove name="right"/>
+        <reference name="customer_account_navigation">
+            <action method="removeLinkByName">
+                <name>recurring_profiles</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>billing_agreements</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>reviews</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>OAuth Customer Tokens</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>downloadable_products</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>autoresponderlists</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>mailchimp</name>
+            </action>
+            <action method="removeLinkByName">
+                <name>newsletter</name>
+            </action>
+            <remove name="sale.reorder.sidebar.left" />
+            <remove name="reports.product.viewed.left" />
+        </reference>
+    </customer_account>
+
+    <sales_order_history>
+        <reference name="sales.order.history">
+            <action method="setTemplate">
+                <template>apdc_customer/account/history.phtml</template>
+            </action>
+        </reference>
+    </sales_order_history>
+
+    <!--<sales_order_view translate="label">
+        <remove name="amorderattach.attachment"/>
+        <label>Customer My Account Order View</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="sales/order_info" as="info" name="sales.order.info" template="apdc_customer/account/order/info.phtml"/>
+            <block type="sales/order_view" name="sales.order.view" template="apdc_customer/account/order/view.phtml">
+                <block type="sales/order_items" name="order_items" template="apdc_customer/account/order/order_items.phtml">
+                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>apdc_customer/account/order/items/renderer/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
+                </block>
+                 <block type="sales/order_totals" name="order_totals" template="apdc_customer/account/order/totals_account.phtml">
+                    <block type="tax/sales_order_tax" name="tax" template="apdc_customer/account/order/tax.phtml" />
+                </block>
+            </block>
+            <block type="sales/order_items" name="totals_refund" template="apdc_customer/account/order/total_refunds.phtml">
+                <block type="sales/order_totals" name="order_remboursements" template="apdc_customer/account/order/order_remboursements.phtml"/>
+                <block type="amorderattach/sales_order_view_attachment" name="amorderattach.attachment2" template="apdc_customer/account/order/amasty_attachments.phtml" output="toHtml" />
+                <block type="core/template" name="footer_orderview" template="apdc_customer/account/order/footer_orderview.phtml"/>
+            </block>
+        </reference>
+    </sales_order_view>-->
+
+    <cms_page translate="label">
+        <label>CMS Pages (All)</label>
+        <remove name="left.permanent.callout"/>
+
+        <update handle="cms_menu"/>
+        <reference name="header">
+            <block type="core/template" name="page_content_heading" template="cms/content_heading.phtml"/>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="cms.wrapper" translate="label">
+                <label>CMS Content Wrapper</label>
+                <action method="setElementClass"><value>std</value></action>
+                <block type="cms/page" name="cms_page"/>
+            </block>
+        </reference>
+    </cms_page>
+
+
+    <!--<cms_index_noroute translate="label">
+        <label>CMS No-Route Page</label>
+        <reference name="content">
+            <block type="core/template" name="contactForm" template="contacts/form.phtml" />
+        </reference>
+    </cms_index_noroute>-->
+
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="removeLinkByUrl">
+                <url helper="customer/getAccountUrl" />
+            </action>
+        </reference>
+    </customer_logged_out>
+    
+    <customer_account_changeforgotten translate="label">
+        <reference name="content">
+            <block type="customer/account_changeforgotten" name="changeForgottenPassword" template="apdc_customer/form/resetforgottenpassword.phtml" />
+        </reference>
+    </customer_account_changeforgotten>
+
+    <hipay_mapi_payment ifhandle="STORE_batignolles">
+        <reference name="content">
+            <block type="core/text" name="googleconversion">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<!-- Google Code for ACHAT BATIGNOLLES Conversion Page -->
+                            <script type="text/javascript">
+                            var google_conversion_id = 952464504;
+                            var google_conversion_language = "en";
+                            var google_conversion_format = "3";
+                            var google_conversion_color = "ffffff";
+                            var google_conversion_label = "21grCM_JxmYQ-OiVxgM";
+                            var google_conversion_value = 17.00;
+                            var google_conversion_currency = "EUR";
+                            var google_remarketing_only = false;
+                            </script>
+                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+                            </script>
+                            <noscript>
+                            <div style="display:inline;">
+                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?value=17.00&amp;currency_code=EUR&amp;label=21grCM_JxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
+                            </div>
+                            </noscript>]]>
+                    </text>
+                </action>
+            </block>
+        </reference>
+    </hipay_mapi_payment>
+
+    <hipay_mapi_payment ifhandle="STORE_saintmartin">
+        <reference name="content">
+            <block type="core/text" name="googleconversion">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<!-- Google Code for ACHAT SAINT-MARTIN Conversion Page -->
+                            <script type="text/javascript">
+                            var google_conversion_id = 952464504;
+                            var google_conversion_language = "en";
+                            var google_conversion_format = "3";
+                            var google_conversion_color = "ffffff";
+                            var google_conversion_label = "cBSoCOnLxmYQ-OiVxgM";
+                            var google_conversion_value = 17.00;
+                            var google_conversion_currency = "EUR";
+                            var google_remarketing_only = false;
+                            </script>
+                            <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+                            </script>
+                            <noscript>
+                            <div style="display:inline;">
+                            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/952464504/?value=17.00&amp;currency_code=EUR&amp;label=cBSoCOnLxmYQ-OiVxgM&amp;guid=ON&amp;script=0"/>
+                            </div>
+                            </noscript>]]>
+                    </text>
+                </action>
+            </block>
+        </reference>
+    </hipay_mapi_payment>
+
+    <monkey_customer_account_index>
+        <reference name="magemonkey_additionallists">
+            <action method="setTemplate"><template>apdc_customer/account/newsletter/list.phtml</template></action>
+        </reference>
+        <remove name="customer.account.link.back"/>
+    </monkey_customer_account_index>
+
+	<!--<apdc_login_view>
+		<reference name="content">
+			<block type="customer/form_login" name="customer_login" template="apdc_popup/loginmodal.phtml">
+				<block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
+					<block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+					<block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+				</block>
+			</block>
+		</reference>
+	</apdc_login_view>
+
+	  <apdc_forgotpassword_view>
+		<reference name="content">
+			  <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+		  </reference>
+	  </apdc_forgotpassword_view>-->
+	  
+	<apdc_login_view>
+		<reference name="content">
+        <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
+        </block>
+        </reference>
+    </apdc_login_view>
+
+    <apdc_register_view>
+		<reference name="content">
+			<block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
+				<block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+					<label>Form Fields Before</label>
+				</block>
+				<block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+				<block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+				<block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+			</block>
+		</reference>
+    </apdc_register_view>
+
+    <apdc_forgotpassword_view>
+		<reference name="content">
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+        </reference>
+    </apdc_forgotpassword_view>  
+	    
+</layout>

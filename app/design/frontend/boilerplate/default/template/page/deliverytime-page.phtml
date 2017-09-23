@@ -1,0 +1,12 @@
+<?php 
+	$hlp = Mage::helper('amdeliverydate');
+	$storeId = $this->getCurrentStore();
+	$options = $hlp->getTIntervals($storeId);
+	echo '<ul class="delivery-time">';
+	foreach($options as $timeint){
+		if($timeint<>''){
+			echo '<li>'.$timeint.'</li>';
+		}
+	}
+	echo '</ul>';
+?>

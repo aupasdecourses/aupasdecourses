@@ -40,18 +40,32 @@ class GardenMedia_Sponsorship_Block_Dashboard extends Mage_Core_Block_Template
      */
     public function getBlockInfos()
     {
-        $blockId = Mage::getStoreConfig('gm_sponsorship/general/block_dashboard');
+        if ($this->customerIsSponsor()) {
+            $blockId = Mage::getStoreConfig('gm_sponsorship/general/block_dashboard');
+        } else {
+            $blockId = Mage::getStoreConfig('gm_sponsorship/general/block_become_sponsor_dashboard');
+        }
         if (!empty($blockId)) {
           return $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHtml();
         }
         return '';
     }
 
+    /**
+     * getUniqueLink 
+     * 
+     * @return string
+     */
     public function getUniqueLink()
     {
         return Mage::helper('gm_sponsorship')->getUniqueLink(Mage::getSingleton('customer/session')->getCustomer());
     }
 
+    /**
+     * getFacebookShareLink 
+     * 
+     * @return string
+     */
     public function getFacebookShareLink()
     {
         $appId = Mage::getStoreConfig('gm_sponsorship/facebook/app_id');
@@ -65,6 +79,11 @@ class GardenMedia_Sponsorship_Block_Dashboard extends Mage_Core_Block_Template
         
     }
 
+    /**
+     * getTwitterShareLink 
+     * 
+     * @return string
+     */
     public function getTwitterShareLink()
     {
         $params = array(
@@ -77,5 +96,46 @@ class GardenMedia_Sponsorship_Block_Dashboard extends Mage_Core_Block_Template
         }
 
         return 'https://twitter.com/intent/tweet?' . http_build_query($params, '', '&amp;');
+    }
+
+    /**
+     * customerIsSponsor 
+     * 
+     * @return bool
+     */
+    public function customerIsSponsor()
+    {
+        if (!$this->firstOrderEnabled() || ($this->firstOrderEnabled() && $this->hasAlreadyOrdered())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * firstOrderEnabled 
+     * 
+     * @return bool
+     */
+    public function firstOrderEnabled()
+    {
+        return (bool) Mage::getStoreConfig('gm_sponsorship/general/become_sponsor_is_active');
+    }
+
+    /**
+     * hasAlreadyOrdered 
+     * 
+     * @return bool
+     */
+    public function hasAlreadyOrdered()
+    {
+        $invoices = Mage::getModel('sales/order_invoice')->getCollection();
+        $invoices->getSelect()->join(
+            array('orders' => $invoices->getTable('sales/order')),
+            'orders.entity_id = main_table.order_id and orders.customer_id = ' . Mage::getSingleton('customer/session')->getId(),
+            array()
+        );
+        $invoices->getSelect()->limit(1);
+
+        return (bool) $invoices->count();
     }
 }

@@ -19,6 +19,14 @@
                 <Mage_Catalog/>
             </depends>
         </Apdc_Config>
+		<Apdc_Core>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Core>
+		<Apdc_Blog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Blog>
         <Apdc_Google>
             <active>true</active>
             <codePool>local</codePool>
@@ -30,10 +38,21 @@
         <Apdc_Catalog>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Apdc_Popup />
+              <Cybage_Swatches />
+              <Apdc_Media />
+            </depends>
         </Apdc_Catalog>
         <Apdc_Cart>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Checkout />
+              <Apdc_Popup />
+              <Apdc_Catalog />
+            </depends>
         </Apdc_Cart>
         <Apdc_Customer>
             <active>true</active>
@@ -78,5 +97,67 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Custcatatt>
+        <Apdc_Popup>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Apdc_Popup>
+        <Apdc_SalesRule>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_SalesRule />
+            </depends>
+        </Apdc_SalesRule>
+        <Apdc_SuperMenu>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+              <Mage_Catalog />
+              <Mage_Page />
+              <Mage_Cms />
+            </depends>
+        </Apdc_SuperMenu>
+        <Apdc_Commercant>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_Commercant>
+        <Apdc_Notation>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Apdc_Notation>
+        <Apdc_Neighborhood>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Neighborhood>
+        <Apdc_Shiprestriction>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Amasty_Shiprestriction />
+          </depends>
+        </Apdc_Shiprestriction>
+        <Apdc_Media>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Media>
+	    <Apdc_CMS>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Apdc_CMS>
+        <Apdc_Search>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_CatalogSearch />
+          </depends>
+        </Apdc_Search>
+        <Apdc_Dataflow>
+          <active>true</active>
+          <codePool>local</codePool>
+          <depends>
+            <Mage_Dataflow />
+            <Mage_Catalog />
+          </depends>
+        </Apdc_Dataflow>
     </modules>
 </config>

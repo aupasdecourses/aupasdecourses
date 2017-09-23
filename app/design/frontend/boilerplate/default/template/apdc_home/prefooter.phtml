@@ -1,0 +1,8 @@
+<div class="text-center">
+	<?php if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
+		<?php echo $this->getChildHtml('block_sponsor'); ?>
+	<?php } else { ?>
+		<?php echo $this->getChildHtml('lastorder'); ?>
+	<?php } ?>
+    <?php echo $this->getChildHtml('blog'); ?>
+</div>

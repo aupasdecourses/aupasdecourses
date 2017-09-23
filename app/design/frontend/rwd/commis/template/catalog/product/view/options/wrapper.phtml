@@ -25,9 +25,8 @@
  */
 ?>
 <div class="product-options" id="product-options-wrapper">
+    <h3>Options du produit <?php if ($this->hasRequiredOptions()):?><span class="subtitle"><?php echo $this->__("*option requise");?></subtitle><?php endif;?></span></h3>
     <?php echo $this->getChildHtml('', true, true);?>
-    <?php if ($this->hasRequiredOptions()):?>
-        <p class="required" style="color:#333;border:none;max-width:100%;top:0;"><?php echo $this->__('Veuillez sélectionner vos préférences:');?></p>
-    <?php endif;?>
+    <p style="font-size:13px;margin-top:10px;font-style:italic;">Nota: Si l'option que vous avez choisi n'est plus disponible au moment de la commande, le commerçant se réserve le droit de proposer une autre option pour le même produit, ou un produit équivalent.</p>
 </div>
 <script type="text/javascript">decorateGeneric($$('#product-options-wrapper dl'), ['last']);</script>

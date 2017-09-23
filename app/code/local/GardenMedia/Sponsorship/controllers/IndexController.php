@@ -116,6 +116,8 @@ class GardenMedia_Sponsorship_IndexController extends Mage_Core_Controller_Front
         $customer = $this->_getSession()->getCustomer();
 
 		$emailTemplate = Mage::getModel('core/email_template');
+        $customerStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($customer);
+
         $vars = array(
             'customer' => $customer,
             'sponsorCode' => Mage::helper('gm_sponsorship')->getSponsorCode($customer),
@@ -135,7 +137,7 @@ class GardenMedia_Sponsorship_IndexController extends Mage_Core_Controller_Front
 
 
 		try{
-            //$emailTemplate->addBcc($customer->getEmail());
+            Mage::getDesign()->setStore($customerStore);
             $emailTemplate->sendTransactional($templateId, $sender, $postData['sendTo'], $postData['friendName'], $vars);
             if ($emailTemplate->getSentSuccess()) {
                 Mage::getSingleton('core/session')->addSuccess($this->__('Invitation has been sent successfully'));

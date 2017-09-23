@@ -1,0 +1,167 @@
+<!--@subject Au Pas De Courses vient de traiter votre commande ! @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var customer_firstname":"Customer First Name",
+"var order_id":"Order Increment Id"
+"var comment":"Comments",
+"var refund_diff":"Refund products",
+"var refund_shipping":"Refund shipping",
+"var refund_full":"Full refund",
+"var store_code":"Store Code",
+"var id":"Order Id",
+"var base_url":"Base Url",
+@-->
+
+<body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
+    <div style="margin-top:10px;">
+        <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%" summary="">
+            <tr>
+                <td align="center" valign="top" style="padding:20px 0 20px 0">
+                    <table bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0" style="width: 600px; line-height: 1.4;" summary="">
+                        <tr>
+                            <td valign="top">
+                                <img alt="Au Pas De Courses" align="center" src="https://gallery.mailchimp.com/813feff892b5d2dac949b8ad4/images/ec9c9712-fd1a-443f-a0b4-73bb3f0658b5.jpg" width="100%" style="padding-bottom: 20;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:5px;">
+                                <h1>Bonjour {{var customer_firstname}},</h1>
+                                <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
+                                <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et avons constaté les écarts suivants :</p>
+                                {{if comment}}
+                                <p>{{var comment}}</p>
+                                {{/if}}
+                                <p>Soit un écart total en votre faveur de <strong>{{var refund_diff}}€</strong>.</p>
+                                {{if refund_shipping}}
+                                <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande, d'un montant de {{var refund_shipping}}€.</p>
+                                {{/if}} {{if refund_full}}
+                                <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de rembourser directement sur votre carte bancaire.</p>
+                                {{else}}
+                                <p>Les commerçants et Au Pas De Courses, vous offrent avec plaisir ces suppléments de produits, pour toujours plus de gourmandise !</p>
+                                {{/if}}
+                                <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                <p style="font-weight:bold;">Une dernière chose, pourriez vous nous dire comment s'est passée votre commande, en donnant une note ci-dessous ?</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="display: table-cell; width: 200px; padding: 5px 20px;text-align:center;">
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=1" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=2" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=3" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=4" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                                <span class="rating-star" style="font-size: 11px; height: 20px; padding: 0px 2px; width:25px !important; display: inline-block !important;"><a moz-do-not-send="true" href="{{var base_url}}/accueil/votrecommande/index/note?order_id={{var id}}&note=5" style="color: rgb(43, 166, 203) !important; text-decoration: none;" class=""><img moz-do-not-send="true" class="star-icon" src="https://www.aupasdecourses.com/skin/frontend/boilerplate/default/dist/images/picto/star.png" style="outline: none; text-decoration: none; float: left; clear: both; display: block; width:24px; border: none;" align="left"></a></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
+                                <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table cellspacing="0" cellpadding="0" border="0" style="padding-top:20px;padding-bottom:10px;width: 600px;background-color:white;line-height:1.2em;" summary="">
+                        <tr>
+                            <td>
+                                <p style="font-size:12px;font-style:italic;text-align:center;">N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a>
+                                    <br/>si vous avez des questions ou pour partager vos bonnes recettes!</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table cellspacing="0" cellpadding="0" border="0" style="width: 600px;background-color: #3ab64b;" summary="">
+                        <tr>
+                            <td align="center" valign="top" style="padding-top: 10px;">
+                                <table align="center" border="0" cellpadding="0" cellspacing="0" summary="">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="padding-right: 10px;" summary="">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top">
+                                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td align="left" valign="middle" style="padding-top: 5px;padding-bottom: 5px;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" summary="">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td align="center" valign="middle" width="25">
+                                                                                                <a href="https://www.facebook.com/aupasdecourses/" target="_blank" style=""><img alt="Facebook" src="https://www.aupasdecourses.com/skin/frontend/rwd/landing-page/images/fa-facebook.png" height="25" width="25" /></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table align="left" border="0" cellpadding="0" cellspacing="0" summary="">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top">
+                                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td align="left" valign="middle" style="padding-top: 5px;padding-bottom: 5px;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" summary="">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td align="center" valign="middle" width="25">
+                                                                                                <a href="https://twitter.com/aupasdecourses" target="_blank" style=""><img alt="Twitter" src="https://www.aupasdecourses.com/skin/frontend/rwd/landing-page/images/fa-twitter.png" height="25" width="25" /></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="padding-left: 10px;" summary="">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top">
+                                                                <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td align="left" valign="middle" style="padding-top: 5px;padding-bottom: 5px;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" summary="">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td align="center" valign="middle" width="25">
+                                                                                                <a href="https://www.instagram.com/aupasdecourses/" target="_blank" style=""><img alt="Instagram" src="https://www.aupasdecourses.com/skin/frontend/rwd/landing-page/images/fa-instagram.png" height="25" width="25" /></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" style="padding-right: 9px;padding-left: 9px;padding-bottom: 10px;">
+                                <p style="color:white;font-size: 0.75rem;"><a style="color:#fff;font-weight: 600;text-decoration: none;" href="https://www.aupasdecourses.com">Au Pas De Courses.</a></p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>

@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <commercant translate="title" module="api2">
+                <title>Commercant</title>
+                <sort_order>40</sort_order>
+            </commercant>
+        </resource_groups>
+        <resources>
+            <commercant translate="title" module="api2">
+                <group>commercant</group>
+                <model>apdc_commercant/api2_commercant</model>
+                <working_model>apdc_commercant/commercant</working_model>
+                <title>Commercant</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <id_commercant>Commercant ID</id_commercant>
+                    <name>name</name>
+                    <siren>siren</siren>
+                    <vat_number>vat_number</vat_number>
+                    <hq_siret>HQ siret</hq_siret>
+                    <hq_street>HQ Street</hq_street>
+                    <hq_postcode>HQ Postcode</hq_postcode>
+                    <hq_city>HQ City</hq_city>
+                    <hq_country>HQ Country</hq_country>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/commercant/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/commercants</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </commercant>
+            <contact translate="title" module="api2">
+                <group>commercant</group>
+                <model>apdc_commercant/api2_contact</model>
+                <working_model>apdc_commercant/contact</working_model>
+                <title>Contact</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <id_contact>Contact ID</id_contact>
+                    <firstname>First name</firstname>
+                    <lastname>Last name</lastname>
+                    <email>Email</email>
+                    <phone>Phone</phone>
+                    <type>Type</type>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/contact/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/contacts</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </contact>
+            <shop translate="title" module="api2">
+                <group>commercant</group>
+                <model>apdc_commercant/api2_shop</model>
+                <working_model>apdc_commercant/shop</working_model>
+                <title>Shop</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <id_shop>Shop ID</id_shop>
+                    <id_commercant>Commercant ID</id_commercant>
+                    <name>name</name>
+                    <siret>siret</siret>
+                    <street>Street</street>
+                    <postcode>Postcode</postcode>
+                    <city>City</city>
+                    <phone>Phone</phone>
+                    <code>Shop code</code>
+                    <website>Website</website>
+                    <timetable>Timetable</timetable>
+                    <closing_periods>Closing Periods</closing_periods>
+                    <id_contact_manager>Contact Manager</id_contact_manager>
+                    <id_contact_employee>Contact Employee</id_contact_employee>
+                    <id_category>Category</id_category>
+                    <google_id>Google id</google_id>
+                    <google_key>Google key</google_key>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/shop/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/shops</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </shop>
+            <product>
+                <model>apdc_commercant/api2_product</model>
+                <routes>
+                    <route_collection_with_commercant>
+                        <route>/products/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_commercant>
+                    <route_collection_with_store_and_commercant>
+                        <route>/products/store/:store/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store_and_commercant>
+                </routes>
+            </product>
+            <order_item>
+                <model>apdc_commercant/api2_order_item</model>
+                <routes>
+                    <route_collection_with_commercant>
+                        <route>/orders/:id/items/commercant/:commercant</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_commercant>
+                </routes>
+            </order_item>
+        </resources>
+    </api2>
+</config>

@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+            <block type="page/html_head" name="head" as="head"/>
+            <block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
+            <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
+        </reference>
+
+        <reference name="head">
+            <!-- Sets viewport meta tag using text block -->
+            <block type="core/text" name="head.viewport">
+                <action method="setText"><text><![CDATA[<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />]]>&#10;</text></action>
+            </block>
+			<block type="core/template" name="metatags" template="page/html/metatags.phtml" />
+
+            <block type="core/text" name="suivi_hipay" before="-">
+              <action method="setText">
+                <text>
+                  <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                    try{
+                    window.dataLayer.push({eventData:event_data,event:event_name});
+                    } catch(e){
+                    }};</script>]]>
+                </text>
+              </action>
+            </block>
+					
+			
+			
+			<!-- FONT ICONS -->
+			<!--<action method="addLinkRel"> -->
+			<!--	<rel>stylesheet</rel> -->
+			<!--	<href>//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css</href> -->
+			<!--</action> -->
+			<!-- WEB FONTS -->
+			<!-- <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action> -->
+			<!-- <action method="addLinkRel"><rel>stylesheet</rel><href>https://fonts.googleapis.com/css?family=Montserrat:400,700</href><type>text/css</type></action> -->
+			<!-- ANIMATIONS -->
+			<!--<action method="addItem"><rel>skin_css</rel><href>css/animate.min.css</href></action>-->
+			<!-- CUSTOM STYLESHEETS -->
+			<!-- <action method="addItem"><rel>skin_css</rel><href>css/style.css</href></action> -->
+			<!-- RESPONSIVE FIXES -->
+			<!--<action method="addItem"><rel>skin_css</rel><href>css/responsive.css</href></action>-->
+			<!--<action method="addItem"><rel>skin_css</rel><href>css/custom.css</href></action>-->
+			<!-- MAGNIFIC POPUP -->
+			<!--<action method="addItem"><rel>skin_css</rel><href>css/magnific-popup.css</href></action>-->
+			
+			
+			
+			<!-- =========================
+				 SCRIPTS   
+			============================== -->
+			<action method="addItem"><type>skin_js</type><file>dist/js/script.js</file></action>
+			
+			<!-- JQUERY -->
+			<action method="addJs"><script>prototype/prototype.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+                <!-- IMPORTANT -->  
+			<!-- =========================
+				 END SCRIPTS   
+			============================== -->
+			<!-- APDC POPUP -->
+            <action method="addJs"><script>prototype/validation.js</script></action>
+            <action method="addJs"><script>varien/js.js</script></action>
+            <action method="addJs"><script>varien/form.js</script></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/apdc_quickview.js</file></action>
+            <action method="addItem"><type>skin_css</type><file>vendor/apdc_popup/css/popup.css</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/login-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_popup/js/newsletter-popup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_neighborhood/js/search.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>vendor/apdc_customer/js/capitalize-name.js</file></action>
+            <!-- Social Connect -->
+            <!--
+            <action method="addItem" ifconfig="customer/inchoo_socialconnect_google/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/google/css/button.css</name>
+            </action>
+            <action method="addItem" ifconfig="customer/inchoo_socialconnect_facebook/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/facebook/css/button.css</name>
+            </action>
+            <action method="addItem" ifconfig="customer/inchoo_socialconnect_twitter/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/twitter/css/button.css</name>
+            </action>
+            <action method="addItem" ifconfig="customer/inchoo_socialconnect_linkedin/enabled">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/linkedin/css/button.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>inchoo_socialconnect/css/styles.css</name>
+            </action>
+            -->
+
+            <!-- =========================
+             STYLESHEETS   
+            ============================== -->
+            <action method="addItem"><rel>skin_css</rel><href>dist/css/styles.css</href></action>
+            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.carousel.min.css</href></action>
+                <action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
+                <!-- IMPORTANT -->
+        </reference>
+        <reference name="before_body_end">
+          <block type="apdc_popup/popup" name="apdc_popup_js" template="apdc_popup/popup_js.phtml" />
+        </reference>
+        <reference name="footer">
+            <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
+        </reference>
+        <remove name="global_notices"/>
+        <remove name="top.links"/>
+        <remove name="store_language"/>
+        <remove name="top.menu"/>
+        <remove name="top.container"/>
+        <remove name="welcome"/>
+        <remove name="currency"/>
+        <remove name="top.search"/>
+        <remove name="minicart_head"/>
+        <remove name="account.links"/>
+        <remove name="breadcrumbs"/>
+        <remove name="left_first"/>
+        <remove name="left"/>
+        <remove name="global_messages"/>
+        <remove name="messages"/>
+        <remove name="product.tooltip"/>
+        <remove name="emailcatcher"/>
+        <remove name="right"/>
+        <remove name="global_cookie_notice"/>
+        <remove name="custommenu-content"/>
+    </default>
+
+    <apdc_login_view>
+      <reference name="content">
+            <block type="customer/form_login" name="customer_login" template="apdc_modal/loginmodal.phtml">
+              <!--
+                <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_login">
+                    <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button"/>
+                    <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
+                </block>
+            -->
+            </block>
+        </reference>
+    </apdc_login_view>
+
+    <apdc_register_view>
+      <reference name="head">
+        <block type="core/text" name="suivi_hipay" before="-">
+          <action method="setText">
+            <text>
+              <![CDATA[<script> var tagmanager_event=function(event_name,event_data){
+                try{
+                window.dataLayer.push({eventData:event_data,event:event_name});
+                } catch(e){
+                }};</script>]]>
+            </text>
+          </action>
+        </block>
+      </reference>
+      <reference name="content">
+			  <block type="customer/form_register" name="modal_register" template="apdc_modal/registermodal.phtml">
+          <block type="page/html_wrapper" name="customer.form.register.fields.before" as="form_fields_before" translate="label">
+            <label>Form Fields Before</label>
+          </block>
+          <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+          <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+          <block type="gm_sponsorship/customer_form_register" template="gardenmedia/sponsorship/customer/form/register/additional.phtml" name="form.additional.info" as="form.additional.info" />
+        </block>
+      </reference>
+    </apdc_register_view>
+
+    <apdc_forgotpassword_view>
+      <reference name="content">
+            <block type="customer/account_forgotpassword" name="forgotPassword" template="apdc_customer/form/forgotpassword.phtml" />
+        </reference>
+    </apdc_forgotpassword_view>
+
+    <apdc_newsletter_view>
+      <reference name="content">
+            <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml">
+            </block>
+        </reference>
+    </apdc_newsletter_view>
+
+    <landing_page_commercants>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
+        </reference>
+    </landing_page_commercants>
+
+    <landing_page_boucher>
+        <reference name="root">
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_boucher.phtml" name="liste_commercant_boucher"/>
+        </reference>
+    </landing_page_boucher>
+
+</layout>

@@ -1,0 +1,123 @@
+Mage_Customer::Account Dashboard,Vue générale
+Additional Information,Plus d'infos
+Description,En bref
+Discount Codes,Entrez votre code de réduction
+Mage_Catalog::Currently Shopping by:
+Mage_Customer::Create an Account,Inscrivez-vous
+Mage_Customer::Register,Inscrivez-vous !
+"Mage_Customer::""If you are a registered VAT customer"," please click <a href=""%s"">here</a> to enter you shipping address for proper VAT calculation"""
+Mage_Customer::Account Information,Mes infos
+Mage_Customer::Address Book,Mes adresses
+Mage_Customer::Address Books,Mes adresses
+Mage_Customer::Dashboard,Vue générale
+Mage_Customer::Edit Account Info,'Modifier vos infos'
+Mage_Customer::My Dashboard,Mon Compte
+Mage_Customer::Newsletters,Newsletter
+Mage_Sales::Complete,Cloturée
+My Account,Mon Compte
+Related Products,Suggestion du commerçant
+Amasty_Orderattr::Additional Information:,Informations complémentaires :
+Amasty_Orderattr::Additional Info,Informations complémentaires
+Amasty_Deliverydate::Delivery Date,Jour de livraison
+Amasty_Deliverydate::Delivery Time Interval,Heure de livraison
+Items in your order,Produits commandés
+"Mage_Customer ::If you are a registered VAT customer, please click <a href=""%s"">here</a> to enter you shipping address for proper VAT calculation","Si vous êtes un client Entreprise, merci de compléter votre adresse d'envoi en cliquant <a href=""%s"">ici</a>"
+"Mage_Customer ::'If you are a registered VAT customer, please click <a href=""%s"">here</a> to enter you shipping address for proper VAT calculation'","Si vous êtes un client Entreprise, merci de compléter votre adresse d'envoi en cliquant <a href=""%s"">ici</a>"
+"""If there is an account associated with %s you will receive an email with a link to reset your password.""","""Si l'adresse %s existe dans notre base de données, vous recevrez un lien sur celle-ci pour réinitialiser votre mot de passe."""
+MW_Ddate::Shipping Address,Adresse de livraison
+MW_Ddate::Shipping Method,Votre livraison
+MW_Ddate::Billing Address,Votre adresse
+MW_Ddate::Payment Method,Votre Paiement
+MW_Ddate::Checkout,Finaliser votre commande
+MW_Ddate::Delivery Date,Date et horaire de livraison
+MW_Ddate::Comment,Commentaire
+MW_Ddate::Additional Info,Informations complémentaires
+Mage_Sales::Invoiced,Facturé
+MW_Ddate::* Required Fields,* Champs obligatoires
+MW_Ddate::Back,Retour
+MW_Ddate::Edit,Modifier
+MW_Ddate::Loading next step...,Plus qu'une étape :-)
+MW_Ddate::Billing Info,Votre adresse
+MW_Ddate::Invalid Delivery Date.,Créneau de livraison invalide!,
+Mage_Checkout::Billing Info,Adresse de facturation
+Mage_Contacts::Contact Us,Contactez nous
+Mage_Page::Quick Links,Liens
+Mage_Checkout::Checkout as a Guest or Register,Payer en tant qu'invité ou s'enregistrer
+Mage_Checkout::Login,Se connecter
+Mage_Checkout::Sign in to speed up your checkout process,Réglez plus vite vos achats et profitez de nos offres exclusives.
+Mage_Checkout::Register with us for future convenience:,Enregistrez vous pour régler plus vite vos achats.
+Mage_Checkout::Returning Customers,Se connecter
+Mage_Checkout::Forgot your password?,Mot de passe oublié ?
+Mage_Persistent::What's this?,Qu'est ce que c'est ?
+Mage_Checkout::Checkout Method,Se connecter
+Mage_Checkout::Billing Information,<span>1/4</span> Votre adresse
+Mage_Checkout::Shipping Information,Adresse de livraison
+Mage_Checkout::Shipping Method,<span>2/4</span> Votre livraison
+Mage_Checkout::Payment Information,<span>4/4</span> Votre paiement
+Mage_Checkout::Order Review,Confirmer votre commande
+Mage_Checkout::Availibility,Disponibilité
+Mage_Sales::Shipping & Handling
+Mage_Core::Place Order,Passer commande
+Mage_Checkout::Forgot an Item?,Un produit oublié ?
+Mage_Checkout::Register and Checkout,S'enregistrer et régler ses achats
+Mage_Checkout::Ship to this address,Livraison à cette adresse
+Mage_Checkout::Ship to different address,Livraison à une autre adresse
+Mage_Catalog::Shop By,Filtrer par
+"Mage_Catalog::Please specify the product\'s required option(s)","Veuillez choisir une option"
+"Mage_Catalog::Please specify the product required option(s)","Veuillez choisir une option"
+"Mage_Catalog::Please specify the product\'s required option(s).","Veuillez choisir une option"
+"Mage_Catalog::Please specify the product required option(s).","Veuillez choisir une option"
+Please specify the product\'s required option(s).,fdsfds
+Amasty_Orderattr::This is a required field.,Ceci est un champ obligatoire
+Amasty_Deliverydate::Delivery Time Interval,Heure de livraison
+Amasty_Deliverydate::Delivery Date,Jour de livraison
+Amasty_Deliverydate::Delivery Comments,Informations complémentaires
+Amasty_Orderattr::Shipping Address,Adresse de livraison
+Amasty_Orderattr::Shipping Method,Votre livraison
+Amasty_Orderattr::Payment Method,Règlement
+Mage_Sales::Subtotal,Total des produits
+Mage_Tax::Tax,Total TVA
+Mage_Sales::Grand Total,Total TTC
+Mage_Checkout::Proceed to Checkout,Régler vos achats
+Mage_Catalog::Add to Cart,Ajouter
+Mage_Core::Search entire store here...,Rechercher un produit
+Mage_Customer::Forgot your password?,Mot de passe oublié ?
+Mage_Customer::Login or Create an Account,Connectez-vous à votre compte
+Mage_Customer::Already registered?,Client enregistré
+Mage_Customer::If you have an account with us, please log in.,Identifiez vous pour avoir accès à votre compte,
+Mage_Customer::Login,Se connecter
+Mage_Customer::Account Dashboard,Tableau de bord
+Mage_Customer::My Dashboard,Tableau de bord
+Mage_Sales::Complete,Terminée
+Mage_Customer::You are currently subscribed to 'General Subscription'.,Vous êtes actuellement abonné à notre newsletter.
+Ebizmarts_MageMonkey::Click to subscribe to this list.,Cliquez pour recevoir notre newsletter.
+Ebizmarts_MageMonkey::You have been removed from Newsletter.,Vous avez bien été désinscrit de notre newsletter.,
+Mage_Sales::Shipping Address,Adresse de livraison
+Mage_Sales::Shipping Method,Votre livraison
+Amasty_Orderattr::Additional Info,Informations complémentaires
+Amasty_Orderattach::Order Attachments,Tickets commerçants:
+Mage_Customer::If you are a registered VAT customer," please click <a href=""%s"">here</a> to enter you billing address for proper VAT calculation",Si vous êtes un client Entreprise," merci de compléter votre adresse d'envoi en cliquant <a href=""%s"">ici</a>"
+Mage_Customer::If there is an account associated with %s you will receive an email with a link to reset your password.,"Si l'adresse %s existe dans notre base de données, vous recevrez un lien sur celle-ci pour réinitialiser votre mot de passe."
+Mage_Customer::Your password has been updated.,Votre mot de passe a été mis à jour.
+Mage_Checkout::Select a shipping address from your address book or enter a new address.,Choisissez une adresse de livraison depuis votre carnet d'adresses ou entrer une nouvelle adresse.
+Mage_Checkout::Select a billing address from your address book or enter a new address.,Choisissez une adresse de facturation depuis votre carnet d'adresses ou entrer une nouvelle adresse.
+MW_Ddate::Your Checkout Progress,Rappel de votre commande
+Mage_Checkout::Shopping Cart,Votre panier
+Mage_Checkout::"Based on your selection, you may be interested in the following items:",Vos commerçants vous proposent
+Pmainguet_CustomCheckout::Edit,Modifier
+Pmainguet_CustomCheckout::Loading next step...,Un instant s'il vous plaît ...
+Mage_Checkout::Loading next step...,Un instant s'il vous plaît ...
+Mage_Checkout::Submitting order information...,"Un instant, vous allez être redirigé vers Hipay..."
+Mage_Bundle::Price as configured,Prix total
+"Mage_Customer::Log In","Se connecter"
+"Mage_Customer::Sign up","S'inscrire"
+"Mage_Customer::My Account","Mon Compte"
+"Mage_Customer::Prefix","Préfixe"
+Mage_Checkout::Estimate Shipping and Tax,"Sélectionnez votre mode de livraison"
+"Mage_Adminhtml::As low as:","A partir de:"
+"Mage_Bundle::As low as","A partir de"
+"Mage_Catalog::As low as:","A partir de:"
+"Search results for '%s'","Résultats de recherche pour '%s'"
+"Your search returns no results.","Désolé, nos commerçants n'ont pas le produit que vous recherchez."
+Apdc_Cart::All merchant's items have been removed successfully.,Tous les produits du commerçant ont été retiré de votre panier.
+Apdc_Cart::"Can not remove the item.","Nous ne pouvons retirer le(s) produit(s) de votre panier."

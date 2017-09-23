@@ -52,7 +52,7 @@
                     </event_queue>
                     <order_payment>
                         <table>adyen_order_payment</table>
-                    </order_payment>
+					</order_payment>
                 </entities>
             </adyen_resource>
             <sales>

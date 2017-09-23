@@ -268,7 +268,7 @@
             <package>
                 <area>frontend</area>
                 <default_theme>default</default_theme>
-                <name>rwd</name>
+                <name>boilerplate</name>
                 <theme>default</theme>
                 <translate>default</translate>
             </package>

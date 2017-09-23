@@ -7,7 +7,7 @@
   <div id="canvas" class="container theme-showcase" role="main">
     <div class="page-header">
       <h2><?php 
-      echo liste_commercant_id()[$_GET['id']]?></h2>
+      echo getShops()[$_GET['id']]?></h2>
     </div>
     <?php
     	$orders=orders_fortheday($_GET['date'],$_GET['id']);

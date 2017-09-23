@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Oaction
  */
 class Amasty_Oaction_Model_Command_Abstract
@@ -69,7 +69,7 @@ class Amasty_Oaction_Model_Command_Abstract
     {
         $block->addItem('amoaction_' . $this->_type, array(
             'label'      => $block->__($this->_label),
-		    'url'        => Mage::helper('adminhtml')->getUrl('amoaction/adminhtml_index/do/command/' . $this->_type), 
+		    'url'        => Mage::helper('adminhtml')->getUrl('adminhtml/amoaction/do/command/' . $this->_type),
             'additional' => $this->_getValueField($block->__($this->_fieldLabel)),		    
         ));
         
@@ -89,8 +89,8 @@ class Amasty_Oaction_Model_Command_Abstract
         
         $hlp = Mage::helper('amoaction');
         $yesno = array();
-        $yesno[] = array('value'=>0, 'label'=>Mage::helper('catalog')->__('No'));
-        $yesno[] = array('value'=>1, 'label'=>Mage::helper('catalog')->__('Yes'));
+        $yesno[] = array('value' => 0, 'label' => $hlp->__('No'));
+        $yesno[] = array('value' => 1, 'label' => $hlp->__('Yes'));
         
         $field = array('amoaction_value' => array(
             'name'   => 'amoaction_value',
@@ -98,7 +98,7 @@ class Amasty_Oaction_Model_Command_Abstract
             'class'  => 'required-entry',
             'label'  => $title,
             'values' => $yesno,
-            'value'  => Mage::getStoreConfig('amoaction/' . $this->_type . '/notify'),
+            'value'  => $this->_getDefault(),
         )); 
         return $field;       
     }
@@ -131,5 +131,28 @@ class Amasty_Oaction_Model_Command_Abstract
     public function getResponseBody()
     {
         return 'application/pdf';
-    }    
+    }
+
+    protected function _getDefault()
+    {
+        return (int)Mage::getStoreConfig('amoaction/' . $this->_type . '/notify');
+    }
+    
+    public function orderUpdateNotify($status)
+    {
+        $notify = false;
+        if (Mage::helper('core')->isModuleEnabled('Amasty_Orderstatus')) {
+            $statusCollection = Mage::getResourceModel('amorderstatus/status_collection');
+            $statusCollection->addFieldToFilter('is_system', array('eq' => 0));
+            foreach ($statusCollection as $statusModel) {
+                if ($statusModel->getAlias() == substr($status, strpos($status, '_') + 1)) {
+                    if ($statusModel->getNotifyByEmail()) {
+                        $notify = true;
+                    }
+                    break;
+                }
+            }
+        }
+        return $notify;
+    }
 }

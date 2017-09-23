@@ -2,55 +2,13 @@
 	$i = rand(1, 17); // generate random number size of the array
 	$url = "images/header/".$i.".jpg"; // set variable equal to which random filename was chosen
 	$angledown= $this->getSkinUrl("images/angle-down.png");
+	$_helper=Mage::helper('apdccustomer');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
 <head>
 	<?php echo $this->getChildHtml('head') ?>
 </head>
-<style>
-/**
- * Simple fade transition,
- */
-.mfp-fade.mfp-bg {
-	opacity: 0;
-	-webkit-transition: all 0.15s ease-out; 
-	-moz-transition: all 0.15s ease-out; 
-	transition: all 0.15s ease-out;
-}
-.mfp-fade.mfp-bg.mfp-ready {
-	opacity: 0.8;
-}
-.mfp-fade.mfp-bg.mfp-removing {
-	opacity: 0;
-}
-
-.mfp-fade.mfp-wrap .mfp-content {
-	opacity: 0;
-	-webkit-transition: all 0.15s ease-out; 
-	-moz-transition: all 0.15s ease-out; 
-	transition: all 0.15s ease-out;
-}
-.mfp-fade.mfp-wrap.mfp-ready .mfp-content {
-	opacity: 1;
-}
-.mfp-fade.mfp-wrap.mfp-removing .mfp-content {
-	opacity: 0;
-}
-</style>
-<script>
-$j(document).ready(function() {
-	$j('.popup-gmaps').magnificPopup({
-		disableOn: 700,
-		type: 'iframe',
-		mainClass: 'mfp-fade',
-		removalDelay: 160,
-		preloader: false,
-
-		fixedContentPos: false
-	});
-});
-</script>
 <body id="html-body"<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : ''; ?>>
 	<?php echo $this->getChildHtml('after_body_start') ?>
 	<header class="header" id="faites-vos-courses">
@@ -61,10 +19,18 @@ $j(document).ready(function() {
 				<source src="<?php echo $this->getSkinUrl('media/demo.ogv');?>" type="video/ogg" />
 				<source src="<?php echo $this->getSkinUrl('media/demo.webm');?>" type="video/webm" /> -->
 			</video>
+			<div class="top-nav">
+				<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+				<a class="btn standard-button faq-button" style="float:right;" id="account-login" role="button">Se connecter</a>
+				<?php else: ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?= $_helper->getCustomerWebsite()?>" role="button">Mon quartier</button>
+				<?php endif ?>
+				<a class="btn standard-button faq-button" style="float:right;" href="<?php echo $this->getBaseUrl()."faq";?>" role="button">Des questions ?</a>
+			</div>
 			<div class="intro-section">
 				<img id="logo" src="<?php echo $this->getSkinUrl('images/logo@2x.png')?>" alt="Logo Au Pas De Courses">
-				<h1 class="intro">Les meilleurs produits de votre quartier,</br>sans vous déplacer</h1>
-				<p class="intro-subtitle">Première livraison offerte</p>
+				<h1 class="intro">Faites-vous livrer les bons produits de votre quartier</h1>
+				<p class="intro-subtitle">En ce moment, votre première livraison offerte</p>
 					<!-- <form id='form-quartier' role="form" class="col-xs-12 col-md-12 form-inline contact-form form_zipcode" method="post" action="<?php echo $this->getUrl('customhome/index/redirect'); ?>">
 						<div id="input-group-intro">
 							<input id='GoogleAutoCompleteInput' class='form-control input-quartier' placeholder='Entrez votre adresse' type='text' name='input_addr' />
@@ -87,47 +53,65 @@ $j(document).ready(function() {
 <section class="packages" id="quartiers">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="dark-text">Cliquez sur votre quartier</h2>
+			<h2>Sélectionnez votre quartier</h2>
 			<div class="section-description" style="margin-bottom:20px;">
-				 Au Pas De Courses est aujourd'hui actif dans les arrondissements suivants à Paris.
+				 Au Pas De Courses vous livre dans les arrondissements suivants à Paris.
 			</div>
 		</div>
 		<div class="row">
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">Batignolles</h3>
-					<p>17e-18e-9e-8e</p>
-				</a>
-			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">Commerce</h3>
-					<p>15e</p>
-				</a>
-			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
+			<div class="hidden-sm col-md-2"></div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
 				<a href="<?php echo Mage::getBaseUrl().'../saintmartin';?>" style="display:block;width:100%">
 					<img src="<?php echo $this->getSkinUrl('images/saintmartin_marais.jpg');?>" alt="Saint Martin - Marais 10e-3e-11e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">Saint Martin</h3>
-					<p>10e-3e-11e</p>
+					<h3 class="package-heading main-color">10e</h3>
 				</a>
 			</div>
-			<div class="bouton-quartier col-sm-12 col-md-3">
-				<a class="popup-gmaps" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401" style="display:block;width:100%">
-					<img src="<?php echo $this->getSkinUrl('images/paris.jpg');?>" alt="Autres quartiers" class="img-circle" style="width:100%;max-width:200px;"/>
-					<h3 class="package-heading main-color">Pas sûr ?</h3>
-					<p>Cliquez pour savoir si nous pouvons vous livrer</p>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../paris13e';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/tolbiac.jpg');?>" alt="Tolbiac - 13e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">13e</h3>
 				</a>
 			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../paris14e';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/daguerre.jpg');?>" alt="14e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">14e</h3>
+				</a>
+			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../commerce';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/commerce.jpg');?>" alt="Commerce, 15e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">15e</h3>
+				</a>
+			</div>
+			<div class="hidden-sm col-md-2"></div>
+		</div>
+		<div class="row">
+			<div class="hidden-sm col-md-4"></div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../paris16e';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/passy.jpg');?>" alt="16e arrondissement de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">16e</h3>
+				</a>
+			</div>
+			<div class="bouton-quartier col-sm-12 col-md-2">
+				<a href="<?php echo Mage::getBaseUrl().'../batignolles';?>" style="display:block;width:100%">
+					<img src="<?php echo $this->getSkinUrl('images/monceau_batignolles.jpg');?>" alt="Monceau - Batignolles, 17e-18e-9e-8e arrondissements de Paris" class="img-circle" style="width:100%;max-width:200px;"/>
+					<h3 class="package-heading main-color">17e</h3>
+				</a>
+			</div>
+			<div class="hidden-sm col-md-4"></div>
+		</div>
+		<div class="hidden-sm col-md-1"></div>
+		<div class="row">
+			<a class="popup-gmaps col-sm-12" href="https://umap.openstreetmap.fr/fr/map/zones-de-livraison-au-pas-de-courses_86851#12/48.8648/2.3401">Voir nos zones de livraison</a>
 		</div>
 	</div>
 </section>
 <section class="packages grey-bg" id="concept">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="dark-text">Comment cela fonctionne ?</h2>
+			<h2>Comment cela fonctionne ?</h2>
 			<div class="colored-line"></div>
 			<div class="section-description" >
 				 Une plateforme pour commander et se faire livrer des produits frais et artisanaux de commerces de bouche locaux.
@@ -168,12 +152,14 @@ $j(document).ready(function() {
 <section class="packages" id="nos-tarifs">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="dark-text">Combien cela coûte ?</h2>
+			<h2>Combien cela coûte ?</h2>
 			<div class="colored-line"></div>
 			<div class="section-description" >
-				Vous commandez au même prix qu'en magasin,</br>
-				Nous vous remboursons les écarts de poids, </br>
-				Vous payez une seule livraison quel que soit le nombre de commerçants
+				<ul>
+					<li>Vous commandez au même prix qu'en magasin,</li>
+					<li>Vous réglez une seule livraison quel que soit le nombre de commerçants,</li>
+					<li>Vous êtes facturé uniquement de ce qui vous est livré</li>
+				</ul>
 			</div>
 		</div>
 		<div class="row">
@@ -182,8 +168,8 @@ $j(document).ready(function() {
 					<div class="single-package">	
 						<img src="<?php echo $this->getSkinUrl('images/bagx1.png')?>" alt="Montant des produits commandés inférieur à 45€">
 						<ul class="package-feature">
-							<li>Montant des produits commandés</br> inférieur à 45€</li>
 							<li class="price">9€ la livraison</li>
+							<li>Pour une commande</br> jusqu'à 45€</li>
 						</ul>
 					</div>
 				</div>
@@ -191,8 +177,8 @@ $j(document).ready(function() {
 					<div class="single-package">
 						<img src="<?php echo $this->getSkinUrl('images/bagx2.png')?>" alt="Montant des produits commandés entre 45 et 90€">	
 						<ul class="package-feature">
-							<li>Montant des produits commandés</br> entre 45 et 90€</li>
 							<li class="price">6€ la livraison</li>
+							<li>Pour une commande</br> entre 45 et 90€</li>
 						</ul>
 					</div>
 				</div>
@@ -200,17 +186,17 @@ $j(document).ready(function() {
 					<div class="single-package">
 						<img src="<?php echo $this->getSkinUrl('images/bagx3.png')?>" alt="Montant des produits commandés au-dessus de 90€">	
 						<ul class="package-feature">
-							<li>Montant des produits commandés</br> au-dessus de 90€</li>
 							<li class="price">3€ la livraison</li>
+							<li>Pour une commande</br> au-delà de 90€</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<p class="section-description" style="font-size: 20px;">Première livraison gratuite avec le code PANIER.</p>
+			<p class="section-description" style="font-size: 20px;">Première livraison gratuite avec le code <strong>PANIER</strong>.</p>
 		</div>
 	</div>
 </section>
-<section class="app-brief grey-bg" id="brief1">
+<section class="packages grey-bg" id="brief1">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
@@ -219,11 +205,9 @@ $j(document).ready(function() {
 				</div>
 			</div>
 			<div class="col-md-6 left-align">
-				<h2 class="dark-text">Simple, pratique et local</h2>
-				<div class="colored-line-left">
-				</div>
+				<h2>Bon, pratique et responsable</h2>
 				<ul class="feature-list">
-					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des commerçants locaux sélectionnés pour qualité de leur produit et leur savoir faire,</li>
+					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des commerçants locaux sélectionnés pour la qualité de leurs produits et leur savoir-faire,</li>
 					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Des créneaux de livraison de 45 minutes,</li>
 					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Une livraison possible le soir même ou durant les 5 prochains jours,</li>
 					<li><i class="fa fa-check-circle-o" aria-hidden="true"></i> Une livraison douce en triporteur électrique par un livreur professionnel.</li>
@@ -232,7 +216,7 @@ $j(document).ready(function() {
 		</div>
 	</div>
 </section>
-<section class="avis" id="avis">
+<section class="packages" id="avis">
 	<div class="container">
 		<div class="section-header">
 			<h2>Lauréat des <a href="http://www.cci-paris-idf.fr/presse/communiques/7eme-edition-des-palmes-du-e-commerce-2015-neuf-laureats-recompenses-pour-des-projets-de-commerce-innovants-presse" target="_blank" >Palmes du eCommerce 2015</a>!</h2>
@@ -310,7 +294,7 @@ $j(document).ready(function() {
 <section class="packages grey-bg" id="evenements">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="dark-text">Un évènement à organiser ?</h2>
+			<h2>Un évènement à organiser ?</h2>
 			<div class="colored-line"></div>
 			<div class="section-description" style="margin-bottom:50px;">
 				 Au Pas De Courses et vos commerçants de quartier vous proposent des plateaux et des prestations sur mesure pour vos évènements, en famille ou au travail.
@@ -327,10 +311,9 @@ $j(document).ready(function() {
 	<div class="container">
 		<ul class="social-icons">
 			<p>Suivez nous sur</p>
-			<li><a href="https://www.facebook.com/aupasdecourses"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
-			<li><a href="https://twitter.com/aupasdecourses"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
-			<li><a href="https://plus.google.com/114890137995721785465/about"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a></li>
-			<li><a href="https://instagram.com/aupasdecourses/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+			<li><a href="https://www.facebook.com/aupasdecourses" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+			<li><a href="https://twitter.com/aupasdecourses" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+			<li><a href="https://instagram.com/aupasdecourses/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
 		</ul>
 		<p class="copyright">
 			©<?php echo date("Y");?> Au Pas De Courses, tous droits réservés.<!-- </br> Crédit Photos: Pierre Mainguet, <a href="https://flic.kr/p/mJNxaB">David Fleg</a> et besopha <a href="https://commons.wikimedia.org/wiki/File%3ARue_de_Bretagne%2C_75003_Paris%2C_2015.jpg">Rue de Bretagne</a> / <a href="https://flic.kr/p/xifWho">Parc Georges Brassens</a> -->

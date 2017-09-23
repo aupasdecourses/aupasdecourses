@@ -3799,17 +3799,6 @@ a.skip-link {
     padding: 0 10px;
   }
 
-  #header-cart.skip-active {
-    background: #FBFBFB;
-    border: solid 1px #cccccc;
-    display: block;
-    position: absolute;
-    z-index: 200;
-    top: 40px;
-    right: 0;
-    width: 320px;
-    background: white;
-  }
 }
 /* -------------------------------------------- *
  * Skip Cart Notifier

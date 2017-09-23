@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_apdcimagebrowser_index>
+      <update handle="adminhtml_cms_wysiwyg_images_index" />
+
+    </adminhtml_apdcimagebrowser_index>
+    <adminhtml_apdcimagebrowser_contents>
+      <update handle="adminhtml_cms_wysiwyg_images_contents" />
+    </adminhtml_apdcimagebrowser_contents>
+
+</layout>

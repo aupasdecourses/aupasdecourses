@@ -10,28 +10,30 @@ define('CHEMIN_MAGE', dirname(__FILE__).'/../');
 define('AMASTY_MW_DATE', date('Y-m-d', mktime(0, 0, 0, 1, 20, 2016)));
 define('TODAY_DATE', date('Y-m-d'));
 
-$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
+$GLOBALS['ORDER_STATUS_NODISPLAY'] = array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
 
 $GLOBALS['REFUND_ITEMS_INFO_ID_LIMIT'] = 2016000249;
 
 include CHEMIN_MODELE.'magento.php';
 connect_magento();
 
+//important car Magento set par défaut la timezone à UTC quand on initialise Mage::app() !!!
+date_default_timezone_set ("Europe/Paris");
+
+//Sera a refactoriser avec la fonction liste_commercant_id() de magento.php
 function getCommercant()
 {
     $commercants = [];
-    $categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter()->addFieldToFilter('estcom_commercant', ['neq' => null]);
-    foreach ($categories as $category) {
-        $commercants[$category->getData('att_com_id')] = [
-            'name' => $category->getName(),
-            'addr' => $category->getAdresseCommercant(),
-            'phone' => $category->getTelephone(),
-            'mobile' => $category->getPortable(),
-            'mail3' => $category->getData('mail_3'),
-            'mailc' => $category->getMailContact(),
-            'mailp' => $category->getMailPro(),
-			'orders' => []
-        ];
+    $shops = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('enabled', '1');
+    foreach ($shops as $shop) {
+        $commercants[$shop->getIdAttributCommercant()] = array(
+            'name' => $shop->getName(),
+            'adresse' => $shop->getStreet().' '.$shop->getPostcode().' '.$shop->getCity(),
+            'telephone' => $shop->getPhone(),
+            'mail_contact' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem()->getEmail(),
+            'mail_pro' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployee())->getFirstItem()->getEmail(),
+            'mail_3' => Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactEmployeeBis())->getFirstItem()->getEmail(),
+        );
     }
 
     return $commercants;
@@ -128,9 +130,9 @@ class generatePdf
         $this->_date = $orders_date;
         $this->_name = $commercant['name'];
         $this->_mails = [
-            $commercant['mail3'],
-            $commercant['mailc'],
-            $commercant['mailp'],
+            $commercant['mail_contact'],
+            $commercant['mail_pro'],
+            $commercant['mail_3'],
         ];
 
         $this->_pdf = new Zend_Pdf();
@@ -340,6 +342,10 @@ class generatePdf
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
     }
 
+    public function getOrdersCount(){
+        return $this->_orders_count;
+    }
+
     public function addOrder($order)
     {
         $pages = [];
@@ -353,7 +359,7 @@ class generatePdf
         $pages[0]->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         $pages[0]->drawText("Date de Prise de Commande: {$order['order_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 7));
         $pages[0]->drawText("Date de Livraison: {$order['delivery_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 8));
-        $pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
+//        $pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
         $pages[0]->drawText('Remplacement equivalent: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));    // <===
         if ($order['equivalent_replacement']) {
             $pages[0]->drawText('oui', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
@@ -405,6 +411,7 @@ class generatePdf
                 $tmp[] = $m;
             }
         }
+        //test $tmp="pierre@aupasdecourses.com";
         $mail->addTo($tmp);
         $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
         $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
@@ -422,7 +429,7 @@ class generatePdf
         try {
             $mail->send($tr);
         } catch (Exception $e) {
-            Mage::log($e, null, 'email.log');
+            Mage::log($e, null, 'send_daily_order.log');
         }
     }
 }
@@ -430,13 +437,23 @@ class generatePdf
 $commercants = getCommercant();
 
 $orders_date = date('Y-m-d');
+$current_hour=date('H');
+
+//test $orders_date=date('Y-m-d', mktime(0, 0, 0, 2, 23, 2017));
 
 getOrders($commercants, $orders_date);
 
-foreach ($commercants as $commercant) {
-    $commercant_pdf = new generatePdf($commercant, $orders_date);
-    foreach ($commercant['orders'] as $order) {
-        $commercant_pdf->addOrder($order);
-    }
-    $commercant_pdf->send();
-}
+ foreach ($commercants as $commercant) {
+     $commercant_pdf = new generatePdf($commercant, $orders_date);
+     foreach ($commercant['orders'] as $order) {
+         $commercant_pdf->addOrder($order);
+     }
+     if($commercant_pdf->getOrdersCount()!=0 || $current_hour>12){
+        echo $commercant['name']."1\n";
+         $commercant_pdf->send();
+         Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - envoi réalisé.', null, 'send_daily_order.log');
+     }else{
+        echo $commercant['name']."2\n";
+      Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - pas d\'envoi au commercant.', null, 'send_daily_order.log');
+     }
+ }

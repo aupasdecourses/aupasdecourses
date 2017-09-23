@@ -1,0 +1,419 @@
+h1.account-title{
+    font-size: 2.25rem;
+    letter-spacing: normal;
+    color: $color-main-green;
+    margin: 40px 20px;
+}
+.my-account{
+    background-color: #fff;
+    border-radius: 5px;
+    max-width: 1300px;
+    margin: 40px auto 0;
+    padding: 40px;
+    .block-account{
+        .menu-account{
+            list-style-type: none;
+            padding-left: 0;
+            li{
+                &:first-child{
+                    a{
+                        -webkit-border-radius: 5px 5px 0 0;
+                        border-radius: 5px 5px 0 0;
+                    }
+                }
+                &:last-child{
+                    a{
+                        border: 0;
+                        -webkit-border-radius: 0 0 5px 5px;
+                        border-radius: 0 0 5px 5px;
+                    }
+                }
+                &.current, &:hover{
+                    a{
+                        background-color: $color-second-green;
+                    }
+                }
+                a{
+                    display: block;
+                    color: #fff;
+                    font-size: 1.125rem;
+                    padding: 30px 30px 30px 50px;
+                    border-bottom: 1px solid #59B26C;
+                    background-color: $color-main-green;
+                    i{
+                        margin-top: -7px;
+                    }
+                }
+            }
+        }
+    }
+    .box-account{
+        &.addresses-list{
+            section{
+                margin-bottom: 30px;
+            }
+            .button{
+                font-size: 0.875rem;
+                margin-bottom: 10px;
+                &.add_new_address {
+                  margin-top:0;
+                }
+            }
+        }
+        &.detail-order{
+            h2{
+                margin-bottom: 0;
+            }
+            h3{
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+            p{
+                font-size: 1rem;
+                &.order-ref{
+                    font-weight: 700;
+                    color: $color-main-green;
+                    margin-top: 5px;
+                    margin-bottom: 50px;
+                }
+                strong{
+                    display: block;
+                    color: $color-main-green;
+                    font-weight: normal;
+                }
+            }
+            .reorder-link{
+                float: right;
+                margin-top: -110px;
+                font-size: 0.875rem;
+            }
+        }
+        &.sponsorship{
+            padding-bottom: 60px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 60px;
+            &:last-of-type{
+                border: 0;
+                padding-bottom: 0;
+            }
+            h3{
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: $color-main-green;
+                text-transform: uppercase;
+                line-height: 1.5em;
+            }
+            p{
+                font-size: 1rem;
+                color: #333;
+                opacity: 1;
+            }
+            #sponsor-link{
+                display: inline-block;
+                list-style-type: none;
+                padding: 25px 35px;
+                margin: 30px 0;
+                border: 4px solid $color-main-green;
+                border-radius: 5px;
+            }
+            #sponsorship-share{
+                p, ul, li{
+                    display: inline-block;
+                    vertical-align: bottom;
+                }
+                ul{
+                    list-style-type: none;
+                    padding-left: 10px;
+                    margin-bottom: 4px;
+                }
+                button, a{
+                    margin: 0 5px;
+                    background: none;
+                    outline: none;
+                    i{
+                        color: $color-main-green;
+                    }
+                }
+            }
+            #send-email{
+                display: none;
+                .field{
+                    padding: 10px 0;
+                    p{
+                        font-size: 0.875rem;
+                        color: $color-main-green;
+                    }
+                }
+                textarea{
+                    height: 200px;
+                    resize: none;
+                }
+            }
+        }
+        h2{
+            font-weight: 700;
+            font-size: 2rem;
+            color: $color-second-green;
+            text-transform: none;
+            text-align: left;
+            letter-spacing: normal;
+            margin: 0 0 40px;
+        }
+        h3{
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #333;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        .field{
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            label, p{
+                font-size: 1.125rem;
+                margin: 0;
+            }
+        }
+        .button{
+            font-weight: normal;
+        }
+        .form-list{
+            list-style-type: none;
+            padding-left: 0;
+            input[type=text],
+            input[type=email],
+            input[type=password],
+            input[type=tel],
+            select,
+            textarea{
+                color: $color-main-grey;
+                font-size: 0.875rem;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #eee;
+                background-color: #f6f6f6;
+                width: 100%;
+                height: auto;
+                outline: none;
+            }
+            select {
+              height:39px;
+            }
+            .field{
+                border-bottom: 0;
+            }
+            label{
+                font-size: 0.875rem;
+                color: $color-main-grey;
+                font-weight: normal;
+                em{
+                    color: $color-main-green;
+                }
+            }
+            .change-password{
+                margin-top: 20px;
+                label{
+                    font-size: 1rem;
+                    font-weight: normal;
+                }
+            }
+        }
+        table{
+            width: 100%;
+            &#my-orders-table{
+                th{
+                    font-size: 0.875rem;
+                    width: 14.29%;
+                    padding: 20px 4px;
+                }
+                td{
+                    width: 14.29%;
+                    padding: 10px 4px;
+                    p, span{
+                        font-size: 0.875rem;
+                        margin-bottom: 0;
+                        line-height: 1.5em;
+                    }
+                    .product-name{
+                        font-weight: 700;
+                    }
+                }
+            }
+            th{
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: #333;
+                padding: 20px 0;
+                border-bottom: 1px solid #eee;
+            }
+            td{
+                padding: 20px 0;
+                border-bottom: 1px solid #eee;
+                font-size: 0.875rem;
+                .button{
+                    font-size: 0.875rem;
+                    margin: 0 0 10px;
+                }
+                .view-order{
+                    color: $color-main-grey;
+                }
+            }
+        }
+        .total-order{
+            margin-top: 70px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            p{
+                font-size: 1rem;
+                span{
+                    color: $color-main-green;
+                }
+            }
+            .total{
+                margin-top: 138px;
+                p{
+                    font-size: 1.75rem;
+                    strong{
+                        color: $color-main-green;
+                        font-weight: normal;
+                    }
+                }
+            }
+            .customer-price{
+                p{
+                    font-size: 1.75rem;
+                    line-height: normal;
+                }
+            }
+        }
+        .cancel-edit-customer{
+            position: relative;
+            top: -55px;
+            left: 190px;
+        }
+        #infos{
+            padding-bottom: 50px;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #eee;
+        }
+    }
+    .newsletter-wrapper{
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        h4{
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #333;
+            text-align: left;
+            text-transform: none;
+        }
+        ul{
+            list-style-type: none;
+            padding-left: 0;
+        }
+    }
+    .slide-tickets{
+        padding-left: 0;
+        list-style-type: none;
+        margin-bottom: 50px;
+        .owl-stage-outer{
+            height: 250px;
+            img{
+                max-height: 250px;
+                width: auto;
+            }
+        }
+        .owl-nav{
+            position: absolute;
+            width: 100%;
+            top: 38%;
+            .prev, .next,
+            .owl-prev, .owl-next{
+                background: none;
+                color: #ccc;
+                font-size: 3rem;
+                border-radius: 0;
+                margin: 0;
+                padding: 0;
+                opacity: 1;
+            }
+            .prev, .owl-prev{
+                float: left;
+                margin-left: -10px;
+            }
+            .next, .owl-next{
+                float: right;
+                margin-right: -10px;
+            }
+        }
+    }
+}
+
+.account-create{
+    background: #fff;
+    padding: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    h1{
+        /*color: $color-main-green;*/
+        margin-bottom: 30px;
+    }
+    .form-list{
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            text-align:left;
+
+            input[type=text],
+            input[type=email],
+            input[type=password],
+            input[type=tel],
+            select,
+            textarea{
+                color: $color-main-grey;
+                font-size: 0.875rem;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #eee;
+                background-color: #f6f6f6;
+                width: 100%;
+                height: auto;
+                outline: none;
+            }
+            select {
+              height:39px;
+            }
+            .field{
+                border-bottom: 0;
+                margin-bottom: 15px;
+            }
+            label{
+                font-size: 0.875rem;
+                color: $color-main-grey;
+                font-weight: normal;
+                em{
+                    display:none;
+                }
+                &.required {
+                  &:after {
+                      font-size: 12px;
+                      font-weight: normal;
+                      content: ' *';
+                      color: $color-main-green;
+                  }
+                }
+            }
+        }
+    }
+    button[type=submit]{
+        margin-top: 228px;
+    }
+    p.required{
+        color: $color-main-green;
+    }
+}

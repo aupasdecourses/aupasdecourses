@@ -65,6 +65,7 @@
                                                 jQuery('.ddate_selected').show();
                                                 jQuery(option_responsive).parent().hide();
 
+                                                Mage.Cookies.set('delivery_slot', ddatei);
                                             } else {
                                                 jQuery(option_responsive).parent().hide();
                                             }
@@ -85,8 +86,9 @@
 
                                                         <li <?php if ($i % 2 != 0) echo 'class="oddrow"' ?>>
                                                             <?php 
-                                                            $daytext=$this->__( date('D', strtotime('+' . $i . ' day', $currentTime)) );
-                                                            echo Mage::helper('apdc_checkout')->getFrdaytext($daytext);?>
+                                                            setlocale(LC_ALL, Mage::app()->getLocale()->getLocaleCode());
+                                                            echo strftime('%a', strtotime('+' . $i . ' day', $currentTime));
+                                                            ?>
                                                             <div class="option_slot_select">
                                                                 <p class="ddate_day_selected">Sélectionner</p>
                                                                 <p class="ddate_day_option">
@@ -153,6 +155,14 @@
                 <div class="col-sm-6"><i class="fa fa-calendar" style="margin-right:5px"></i>Jour de livraison: <span id="showddate:date"></span></div>
                 <div class="col-sm-6"><i class="fa fa-clock-o" style="margin-right:5px"></i>Horaire: <span id="showddate:dtime"></span></div>
             </div>
+            <script type="text/javascript">
+                jQuery(function ($) {
+                    var slot = Mage.Cookies.get('delivery_slot');
+                    if (slot) {
+                        $('#slideshow-holder').find("a[data-ddatei='"+slot+"']").click();
+                    }
+                });
+            </script>
             <div style="margin-top:10px;">
 				<!-- <span id="availablepic"></span>Horaire disponible
                 <span id="unavailablepic"></span>Horaire non disponible</div> -->

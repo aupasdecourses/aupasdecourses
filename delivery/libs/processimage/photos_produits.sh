@@ -1,4 +1,6 @@
 #!/bin/bash
+#need to install image-magick and bc
+
 URL="$(cd "$(dirname "$0")" && pwd)"
 cd "$URL"
 cd ../../uploads/files

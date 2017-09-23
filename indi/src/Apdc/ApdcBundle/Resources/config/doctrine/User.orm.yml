@@ -1,0 +1,17 @@
+Apdc\ApdcBundle\Entity\User:
+    type: entity
+    table: null
+    repositoryClass: Apdc\ApdcBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        shop:
+            targetEntity: AppBundle\Entity\Shop
+            joinColumn:
+                name: shop_id
+                referencedColumnName: id_shop
+    lifecycleCallbacks: {  }

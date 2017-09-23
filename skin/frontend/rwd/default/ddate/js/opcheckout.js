@@ -900,7 +900,7 @@ Payment.prototype = {
                 }
                 return;
             }
-            alert(response.error);
+            alert(response.error_messages);
             return;
         }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+
+	<modules>
+		<Apdc_SalesRule>
+			<version>0.1.0</version>
+		</Apdc_SalesRule>
+	</modules>
+
+	<global>
+		<models>
+			<apdc_salesrule>
+				<class>Apdc_SalesRule_Model</class>
+			</apdc_salesrule>
+    </models>
+
+		<events>
+      <sales_order_place_after>
+        <observers>
+          <salesrule>
+            <type>disabled</type><!-- Do Noting -->
+          </salesrule>
+        </observers>
+      </sales_order_place_after>
+      <sales_order_invoice_save_after>
+        <observers>
+          <apdc_salesrule_apply_coupon_used>
+            <class>apdc_salesrule/observer</class>
+            <method>sales_order_afterPlace</method>
+          </apdc_salesrule_apply_coupon_used>
+        </observers>
+      </sales_order_invoice_save_after>
+    </events>
+	</global>
+</config>

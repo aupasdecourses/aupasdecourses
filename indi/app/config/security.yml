@@ -1,0 +1,61 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    acl:
+        connection: default
+
+        # CSRF TOKEN FOR 'REFUND INPUT ACTION'
+        #secured_area:
+        #     form_login:
+        #       csrf_token_generator: security.csrf.token_manager
+        #       csrf_parameter: _csrf_security_token
+        #       csrf_token_id: authenticate
+
+    encoders:
+        Apdc\ApdcBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_INDI_GESTION:  [ROLE_INDI_DISPATCH, ROLE_INDI_COMMUNICATION]
+        ROLE_INDI_ADMIN:    [ROLE_INDI_GESTION]
+        ROLE_SUPER_ADMIN:   [ROLE_INDI_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        apdc_provider:
+            id: fos_user.user_provider.username
+
+    access_control:
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        oauth_token:
+            pattern:    ^/api/oauth/v2/token
+            security:   false
+
+        resetting:
+            pattern: ^/api/resetting
+            anonymous: true
+
+        api:
+            pattern: ^/api
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+
+        apdc_login_firewall:
+            pattern: ^/login$
+            anonymous: true
+
+        apdc_firewall:
+            pattern: ^/
+            anonymous: false
+            provider: apdc_provider
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+            logout:
+                path: fos_user_security_logout
+                target: /login

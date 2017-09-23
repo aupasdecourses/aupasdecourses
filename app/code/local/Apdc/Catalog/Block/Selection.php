@@ -1,71 +1,104 @@
 <?php
-
-class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product
+/**
+ * This file is part of the GardenMedia Mission Project 
+ * 
+ * @category Apdc
+ * @package  Catalog
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
+/**
+ * Apdc_Catalog_Block_Selection 
+ * 
+ * @category Apdc
+ * @package  Catalog
+ * @uses     Mage
+ * @uses     Mage_Catalog_Block_Product_Abstract
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
+class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
 {
+    /**
+     * getAllSelections 
+     * 
+     * @return Mage_Catalog_Model_Resource_Product_Collection
+     */
     public function getAllSelections()
     {
-        //filter by store
-        $storeid = Mage::app()->getStore()->getId();
-        $collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeid)
-                    ->addAttributeToSelect(array('name', 'price', 'small_image', 'short_description', 'produit_biologique', 'origine'))
-                    ->addFieldToFilter('status', 1);
-                    //->addFieldToFilter('on_selection',True);
-        $collection->getSelect()->orderRand();
+        $collection = Mage::getModel('catalog/product')->getCollection();
+        $collection = $this->prepareProductCollection($collection);
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+        //$collection->setPageSize(20);
 
+		$row1 = array();
+		$row2 = array();
+		$i = 1;
+		foreach($collection as $selection) {
+			if($i == 1) {
+				$row1[] = $selection;
+			}
+			else {
+				$row2[] = $selection;
+			}
+			if($i == 2) {
+				$i = 1;
+			}
+			else {
+				$i ++;
+			}
+		}
+		return array('row1' => $row1, 'row2' => $row2, 'count' => $collection->count());
+    }
+
+    /**
+     * Initialize product collection
+     *
+     * @param Mage_Catalog_Model_Resource_Product_Collection $collection
+     *
+     * @return Mage_Catalog_Model_Resource_Product_Collection
+     */
+    public function prepareProductCollection($collection)
+    {
+        $storeId = Mage::app()->getStore()->getId();
+        $collection = $this->_addProductAttributesAndPrices($collection)
+            ->addStoreFilter($storeId)
+			//->addFieldToFilter('entity_id', array('in'=>array(4365)));
+            ->addFieldToFilter('status', 1)
+            ->addFieldToFilter('on_selection', 1)
+            ->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
+				
+        $collection->getSelect()
+            ->joinLeft(
+                array('_gallery_table' => $collection->getTable('catalog/product_attribute_media_gallery')),
+                'e.entity_id = _gallery_table.entity_id',
+                array()
+            )
+            ->distinct(true)
+            ->where('_gallery_table.value IS NOT NULL');
         return $collection;
     }
 
-    public function getSelectionbyById($category_id)
+    /**
+     * getSelectionById 
+     * 
+     * @param int $categoryId categoryId 
+     * 
+     * @return Mage_Catalog_Model_Resource_Product_Collection
+     */
+    public function getSelectionById($categoryId)
     {
-        $storeid = Mage::app()->getStore()->getId();
-        $collection = Mage::getModel('catalog/product')->getCollection()->addStoreFilter($storeid)
+        $collection = Mage::getModel('catalog/product')->getCollection()
                 ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
-                ->addAttributeToSelect('*')
-                ->addAttributeToFilter('category_id', $category_id)
-                ->addFieldToFilter('status', 1);
-                //->addFieldToFilter('on_selection',True);
-        $collection->getSelect()->orderRand();
-
+                ->distinct(true)
+                ->addAttributeToFilter('category_id', $categoryId);
+        $collection = $this->prepareProductCollection($collection);
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+        $collection->setPageSize(50);
+        
         return $collection;
     }
 
-    public function getCustomerLastOrders()
-    {
-        $customer_data = Mage::helper('customer')->getCustomer();
-        $orders = Mage::getResourceModel('sales/order_collection')
-                    ->addFieldToSelect('*')
-                    ->addFieldToFilter('customer_id', $customer_data->getId())
-                    ->addAttributeToSort('created_at', 'DESC')
-                    ->setPageSize(1);
-
-        return $orders;
-    }
-
-    public function getCustomerLastOrderedItems($orders, $commercant_id)
-    {
-        $itemarray = [];
-        foreach ($orders as $order) {
-            $order_id = $order->getId();
-            $order = Mage::getModel('sales/order')->load($order_id);
-            $ordered_items = $order->getItemsCollection();
-            foreach ($ordered_items as $item) {
-                $product_id = $item->getProductId();
-                $_product = Mage::getModel('catalog/product')->load($product_id);
-                $cats = $_product->getCategoryIds();
-                if (isset($cats) && in_array($commercant_id, $cats)) {
-                    $itemarray = [$product_id];
-                }
-            }
-        }
-
-        return $itemarray;
-    }
-
-    public function getPriceHtml($product)
-    {
-        $this->setTemplate('blockselection/price.phtml');
-        $this->setProduct($product);
-
-        return $this->toHtml();
-    }
 }

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Front>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
         </Apdc_Front>
     </modules>
     <global>
@@ -15,11 +15,11 @@
                     <html_footer>Apdc_Front_Block_Page_Html_Footer</html_footer>
                 </rewrite>
             </page>
-            <custommenu>
+            <monkey>
                 <rewrite>
-                    <navigation>Apdc_Front_Block_Navigation</navigation>
+                    <lists>Apdc_Front_Block_Newsletter_Form</lists>
                 </rewrite>
-            </custommenu>
+            </monkey>
         </blocks>
         <helpers>
             <apdc_front>
@@ -27,4 +27,15 @@
             </apdc_front>
         </helpers>
     </global>
+    <frontend>
+        <routers>
+            <apdc_front>
+                <use>standard</use>
+                <args>
+                    <module>Apdc_Front</module>
+                    <frontName>apdc-front</frontName>
+                </args>
+            </apdc_front>
+        </routers>
+    </frontend>
 </config>

@@ -3,7 +3,7 @@
 
 	<modules>
 		<GardenMedia_Sponsorship>
-			<version>0.1.2</version>
+			<version>0.1.3</version>
 		</GardenMedia_Sponsorship>
 	</modules>
 
@@ -76,6 +76,11 @@
                 <file>gardenmedia/sponsorship/rewards_godchild.html</file>
                 <type>html</type>
             </gm_sponsorship_rewards_template_godchild>
+            <gm_sponsorship_rewards_template_godchild_register translate="label" module="gm_sponsorship">
+                <label>Sponsorship - Rewards sent to Godchild after successfull registration</label>
+                <file>gardenmedia/sponsorship/rewards_godchild.html</file>
+                <type>html</type>
+            </gm_sponsorship_rewards_template_godchild_register>
             <gm_sponsorship_sponsor_template_new_godchild translate="label" module="gm_sponsorship">
                 <label>Sponsorship - New Godchild</label>
                 <file>gardenmedia/sponsorship/new_godchild.html</file>
@@ -253,7 +258,7 @@
       <general>
         <active>0</active>
         <register_sponsor_message><![CDATA[Plus qu'un pas pour valider le parrainage de <strong>%s</strong> et bénéficier d'un coupon de réduction.]]></register_sponsor_message>
-        <register_success_message><![CDATA[Bravo ! Vous avez été parrainé par <strong>%s</strong>. Dès 50€ d'achat sur AuPasDeCourses.fr vous bénéficirez d'un coupon de réduction de 10€]]></register_success_message>
+        <register_success_message><![CDATA[Bravo ! Vous avez été parrainé par <strong>%s</strong>. Vous avez reçu dans votre boite mail un coupon de réduction de 10€, à utiliser sur votre prochaine commande!]]></register_success_message>
         <register_instruction>Entrez ici le code de votre parrain et bénéficiez d'un coupon de réduction de 10€ dès 50€ d'achat.</register_instruction>
       </general>
       <twitter>

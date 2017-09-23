@@ -1,0 +1,102 @@
+<?php $isCheckout = ((!$this->getData('isCheckout') && $this->getData('isCheckout') != 1) ? false : true); ?>
+<header id="header" class="container-fluid">
+    <div class="page-header-container row">
+    <div class="logo col-md-2 col-sm-3 <?php echo ($isCheckout ? 'col-xs-3' : 'col-xs-5'); ?>">
+            <a class="logo-link" href="<?php echo Mage::getUrl('../');?>">
+                <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+            </a>
+        </div>
+         <!-- Skip Links -->
+         <div class="skip-links col-md-10 col-sm-9 <?php echo ($isCheckout ? 'col-xs-9' : 'col-xs-7'); ?> pull-right">
+
+            <?php if (!$isCheckout) : ?>
+                <?php echo $this->getChildHtml('topSearch') ?>
+            <?php endif; ?>
+            <?php echo $this->getChildHtml('checkout.progress') ?>
+
+            <div class="<?php echo ($isCheckout ? 'col-md-4 col-sm-3 col-xs-4' : 'col-lg-9 col-md-10 col-sm-6 col-xs-12'); ?> text-right link-header-right">
+                <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
+
+                <?php if (!$isCheckout) : ?>
+                    <div class="skip-container toggle-search-container">
+                        <a href="#" id="toggle-search" title="<?php echo $this->quoteEscape($this->__('Search')) ?>" class="visible-xs skip-link"><i class="fa fa-search"></i></a>
+                    </div>
+                <?php endif; ?>
+                <div class="skip-help skip-container">
+                    <a id="dLabel" href="<?php echo Mage::getBaseUrl().'../faq';?>" class="skip-help">
+                        <i class="fa fa-info-circle"></i>
+                        <span class="label">Aide</span>
+                    </a>
+                </div>
+
+                <?php echo $this->getChildHtml('neighborhood_header'); ?>
+
+                <?php if (!$isCheckout){ ?>
+                    <div class="header-delivery-container skip-container">
+                        <a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
+                            <i class="fa fa-list-ul"></i>
+                            <?php if (Mage::getSingleton('core/session')->getHeaderDdate()) : ?>
+                                <span class="label"><?php echo Mage::getSingleton('core/session')->getHeaderDdate(); ?> <i class="fa fa-angle-down"></i></span>
+                            <?php else : ?>
+                                <span class="label"><?php echo $this->__('Créneaux') ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </div>
+                <?php } ?>
+
+                <div class="header-account-container skip-container">
+                    <?php if($this->helper('customer')->isLoggedIn()) : ?>
+                        <a href="#" id="my-account-menu" title="Mon Compte">
+                            <i class="fa fa-user account-connected"></i>
+                            <span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
+                        </a>
+                    <?php else : ?>
+                        <a href="#" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
+                    <?php endif; ?>
+                    <div class="block block-login" id="login-form-header_popup">
+                        <div class="apdc-popup-content">
+                            <?php if($this->helper('customer')->isLoggedIn()) : ?>
+                                <?php echo $this->getChildHtml('topLinks') ?>
+                            <?php else : ?>
+                                <?php echo $this->getChildHtml('customer_login') ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart -->
+                <?php if (!$isCheckout){ ?>
+                    <div class="header-minicart skip-container">
+                        <?php echo $this->getChildHtml('minicart_head'); ?>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+    <div id="topmenu" class="row">
+            <!-- Navigation -->
+
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div>
+	</div>
+</header>
+<?php echo $this->getChildHtml('topContainer'); ?>
+<?php echo $this->getChildHtml('page_content_heading'); ?>
+<script>
+	$j(document).ready(function(){
+
+		$j('#my-account-menu').click(function(evt){
+			if($j(this).parent().find('.block-login').hasClass('open') ){
+				$j(this).parent().find('.block-login').removeClass('open');
+			}
+			else{
+				$j(this).parent().find('.block-login').addClass('open');
+			}
+		});
+
+		if(getUrlParameter('opencart') == 1) {
+			$j('.header-minicart .skip-cart').trigger('click');
+		}
+	});
+</script>

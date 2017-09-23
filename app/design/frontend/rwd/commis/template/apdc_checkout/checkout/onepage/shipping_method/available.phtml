@@ -29,7 +29,7 @@
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
-    <dl class="sp-methods" style="margin-bottom: 20px;margin-left:10px;">
+    <dl class="sp-methods" style="margin-bottom: 20px;margin-left:10px;border-bottom: 1px solid #ededed;">
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
         <?php

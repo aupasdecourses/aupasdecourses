@@ -382,6 +382,9 @@ class ImageAttributeItemProcessor extends Magmi_ItemProcessor
 	 */
 	public function copyImageFile($imgfile,&$item,$extra)
 	{
+		//add by Pierre Mainguet to handle all imagefiles in lowercase
+		$imgfile=strtolower($imgfile);
+
 		if($imgfile==$this->_lastnotfound)
 		{
 			if($this->_newitem){

@@ -134,8 +134,9 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
     {
         try {
             $couponCode = Mage::getModel('gm_sponsorship/couponCode');
-            $sponsorCode = $couponCode->generateRewardCode($sponsorId, $customer->getId(), 'sponsor');
-            $godchildCode = $couponCode->generateRewardCode($customer->getId(), $sponsorId, 'godchild');
+            $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule');
+            $sponsorCode = $couponCode->generateRewardCode($sponsorId, $customer->getId(), 'sponsor', $ruleId);
+            $godchildCode = $couponCode->generateRewardCode($customer->getId(), $sponsorId, 'godchild', $ruleId);
 
             $templateSponsorId = Mage::getStoreConfig('gm_sponsorship/rewards/template_sponsor');
             if (!$templateSponsorId) {
@@ -153,12 +154,106 @@ class GardenMedia_Sponsorship_Helper_Data extends Mage_Core_Helper_Abstract
                 'godchild' => $customer,
                 'couponCode' => $sponsorCode
             );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsor);
+            Mage::getDesign()->setStore($sponsorStore);
             $this->sendRewardEmail($templateSponsorId, $sponsor->getEmail(), $sponsor->getName(), $vars);
 
             $vars['couponCode'] = $godchildCode;
+            $customerStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($customerStore);
+            Mage::getDesign()->setStore($customerStore);
             $this->sendRewardEmail($templateGodchildId, $customer->getEmail(), $customer->getName(), $vars);
 
+            Mage::getDesign()->setStore($origStore);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+    }
 
+    /**
+     * sponsorRegistrationReward 
+     * 
+     * @param Mage_Customer_Model_Customer $customer  : customer 
+     * @param int                          $sponsorId : sponsorId 
+     * 
+     * @return void
+     */
+    public function sponsorRegistrationReward(Mage_Customer_Model_Customer $customer, $sponsorId)
+    {
+        try {
+            $couponCode = Mage::getModel('gm_sponsorship/couponCode');
+            $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule_register');
+            $sponsorCode = $couponCode->generateRewardCode($sponsorId, $customer->getId(), 'sponsor', $ruleId);
+
+            $templateSponsorId = Mage::getStoreConfig('gm_sponsorship/rewards/template_sponsor');
+            if (!$templateSponsorId) {
+                $templateSponsorId = 'gm_sponsorship_rewards_template_sponsor';
+            }
+
+            $sponsor = Mage::getModel('customer/customer')->load($sponsorId);
+            $vars = array(
+                'sponsor' => $sponsor,
+                'godchild' => $customer,
+                'couponCode' => $sponsorCode
+            );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsor);
+            Mage::getDesign()->setStore($sponsorStore);
+            $this->sendRewardEmail($templateSponsorId, $sponsor->getEmail(), $sponsor->getName(), $vars);
+
+            Mage::getDesign()->setStore($origStore);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+    }
+
+    /**
+     * godchildRegistrationReward 
+     * @param Mage_Customer_Model_Customer $customer         : customer 
+     * @param Mage_Customer_Model_Customer $sponsorCustomer  :  sponsor customer entity
+     * 
+     * @return void
+     */
+    public function godchildRegistrationReward($customer, $sponsorCustomer)
+    {
+        try {
+            $ruleId = Mage::getStoreConfig('gm_sponsorship/rewards/salesrule_register');
+            $couponCode = Mage::getModel('gm_sponsorship/couponCode');
+            $godchildCode = $couponCode->generateRewardCode($customer->getId(), $sponsorCustomer->getId(), 'godchild', $ruleId);
+
+            //Send coupon code to godchild
+            $templateGodchildId = Mage::getStoreConfig('gm_sponsorship/rewards/template_godchild_register');
+            if (!$templateGodchildId) {
+                $templateGodchildId = 'gm_sponsorship_rewards_template_godchild_register';
+            }
+            $vars = array(
+                'sponsor' => $sponsorCustomer,
+                'godchild' => $customer,
+                'couponCode' => $godchildCode
+            );
+            $origStore = Mage::getDesign()->getStore();
+            // Manually change store to get the store url depending on the Neighborhood
+            $customerStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($customer);
+            Mage::getDesign()->setStore($customerStore);
+            $this->sendRewardEmail($templateGodchildId, $customer->getEmail(), $customer->getName(), $vars);
+
+            // Send new godchild email to sponsor
+            $emailTemplate = Mage::getModel('core/email_template');
+            $templateId = Mage::getStoreConfig('gm_sponsorship/sponsor/template_new_godchild');
+            if (!$templateId) {
+                $templateId = 'gm_sponsorship_sponsor_template_new_godchild';
+            }
+            $vars = array(
+                'sponsor' => $sponsorCustomer,
+                'godchild' => $customer
+            );
+            $sponsorStore = Mage::helper('apdc_neighborhood')->getCustomerNeighborhoodStore($sponsorCustomer);
+            Mage::getDesign()->setStore($sponsorStore);
+            $this->sendRewardEmail($templateId, $sponsorCustomer->getEmail(), $sponsorCustomer->getName(), $vars);
+
+            Mage::getDesign()->setStore($origStore);
         } catch (Exception $e) {
             Mage::logException($e);
         }

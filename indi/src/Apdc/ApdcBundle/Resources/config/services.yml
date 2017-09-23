@@ -1,0 +1,44 @@
+services:
+#    apdc_apdc.example:
+#        class: Apdc\ApdcBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+#
+    apdc_apdc.magento:
+        class: Apdc\ApdcBundle\Services\Magento
+
+    apdc_apdc.adyen:
+        class: Apdc\ApdcBundle\Services\Adyen
+        arguments: ['%refund_url%' , '%refund_webservice%' , '%refund_password%' , '%store_submit_3party_url%' , '%store_payout_webservice%' , '%store_payout_password%' , '%confirm_3party_url%' , '%decline_3party_url%' , '%review_payout_webservice%' , '%review_payout_password%' , '%list_recurr_details_url%' , '%list_recurr_details_webservice%' , '%list_recurr_details_password%']
+
+    apdc_apdc.billing:
+        class: Apdc\ApdcBundle\Services\Billing
+
+    apdc_apdc.pdfbilling:
+        class: Apdc\ApdcBundle\Services\Pdfbilling
+        arguments: [ '%kernel.root_dir%', '@router' ]
+
+    apdc_apdc.pdforder:
+        class: Apdc\ApdcBundle\Services\Pdforder
+        arguments: [ '%kernel.root_dir%', '@router' ]
+
+    apdc_apdc.stats:
+        class: Apdc\ApdcBundle\Services\Stats
+
+    apdc_apdc.mistral:
+        class: Apdc\ApdcBundle\Services\Mistral
+        arguments: ['%stars_services_api_url%']
+
+    twig.extension.sortbyfield:
+        class: Snilius\Twig\SortByFieldExtension
+        tags:
+            - { name: twig.extension }
+
+    apdc_apdc.repository.products:
+        class: AppBundle\Repository\ProductRepository
+        arguments:
+            - '@apdc_apdc.magento'
+
+    apdc_apdc.repository.orders:
+        class: AppBundle\Repository\OrderRepository
+        arguments:
+            - '@apdc_apdc.magento'

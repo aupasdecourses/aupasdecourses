@@ -1,0 +1,55 @@
+<ol class="opc apdc-form" id="checkoutSteps">
+    <li id="opc-login" class="section allow active">
+        <div class="step-title">
+            <h2>Se Connecter</h2>
+        </div>
+        <div id="checkout-step-login" class="step a-item">
+            <div class="container account-login col1-set<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
+                <div class="row">
+                    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form-account" class="apdc-form" method="post">
+                    <div class="fieldset col-sm-12">
+                        <?php echo $this->getMessagesBlock()->toHtml() ?>
+                        <?php echo $this->getBlockHtml('formkey'); ?>
+                        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+                        <ul class="form-list fields">
+                            <li>
+                                <label for="login-email-account" class="required"><?php echo $this->__('Email Address') ?> <em>*</em></label>
+                                <div class="input-box">
+                                    <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" class="input-text required-entry validate-email" id="login-email-checkout" name="login[username]" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" />
+                                </div>
+                            </li>
+                            <li>
+                                <label for="login-password-account" class="required"><?php echo $this->__('Password') ?> <em>*</em></label>
+                                <div class="input-box">
+                                    <input type="password" class="input-text validate-password required-entry" id="login-password-account" name="login[password]" />
+                                </div>
+                            </li>
+                            <?php echo $this->getChildHtml('form.additional.info'); ?>
+                            <?php echo $this->getChildHtml('persistent.remember.me'); ?>
+                            <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+                            <div class="col-sm-12" style="text-align:center;">
+                                <button type="submit" class="button button-green" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><?php echo $this->__('Login') ?></span></button>
+                                <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" style="margin-left:20px;"><?php echo $this->__('Forgot your password?') ?></a>
+                            </div>
+                        </ul>
+                    </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8" style="text-align:center;">
+                        <p class="required">&nbsp;</p>
+                        <span>Pas encore de compte ? </span><br>
+                        <button id="onepage-guest-register-button" type="button" class="button button-green" onclick="window.location='<?php echo $this->helper('checkout/url')->getRegistrationUrl();?>'"><span><span><?php echo $this->__('Register') ?></span></span></button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ol>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('login-form-account', true);
+//]]>
+</script>

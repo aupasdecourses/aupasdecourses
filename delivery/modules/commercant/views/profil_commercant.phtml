@@ -1,28 +1,27 @@
+<?php $info=getShop($_GET['id'])?>
 <div class="container">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-      <div class="page-header"><h2><?php echo commercant($_GET['id'])->getName();?> <small>Fiche Profil</small></h2></div>
+      <div class="page-header"><h2><?= $info["name"];?> <small>Fiche Profil</small></h2></div>
       <div class="info_commercant">
         <dl class="dl-horizontal">
           <dt>Adresse</dt>
-          <dd><a href="http://maps.google.com/?q=<?php echo commercant($_GET['id'])->getData('adresse_commercant')?>"><?php echo commercant($_GET['id'])->getData('adresse_commercant')?></a></dd>
+          <dd><a href="<?= $info["url_adresse"];?>"><?= $info["adresse"];?></a></dd>
           <dt>Téléphone</dt>
-          <dd><a href="tel:<?php echo commercant($_GET['id'])->getData('portable')?>"><?php echo commercant($_GET['id'])->getData('portable')?></a></dd>
+          <dd><a href="tel:<?= $info["phone"];?>"><?= $info["phone"];?></a></dd>
           <dt>Site Internet</dt>
-          <dd><a href="<?php echo commercant($_GET['id'])->getData('site_internet')?>"><?php echo commercant($_GET['id'])->getData('site_internet')?></a></dd>
+          <dd><a href="<?= $info["name"];?>"><?= $info["name"];?></a></dd>
           <dt>Nom du contact</dt>
-          <dd><?php echo commercant($_GET['id'])->getData('nom_contact')?></dd></dd>
-          <dt>Portable</dt>
-          <dd><a href="tel:<?php echo commercant($_GET['id'])->getData('portable')?>"><?php echo commercant($_GET['id'])->getData('portable')?></a></dd>
+          <dd><?= $info["name"];?></dd></dd>
           <dt>Email</dt>
-          <dd><a href="mailto:<?php echo commercant($_GET['id'])->getData('mail_contact')?>"><?php echo commercant($_GET['id'])->getData('mail_contact')?></a></dd>
+          <dd><a href="mailto:<?= $info["name"];?>"><?= $info["name"];?></a></dd>
           <dt>Horaire d'ouverture</dt>
-          <dd><?php echo commercant($_GET['id'])->getData('horaires_commercant')?></dd>
+          <dd><?= $info["name"];?></dd>
           <dt>Jour dispo</dt>
-          <dd><?php echo commercant($_GET['id'])->getData('livraison_commercant')?></dd>
+          <dd><?= $info["name"];?></dd>
           <dt>Infos Complémentaires</dt>
-          <dd><?php echo commercant($_GET['id'])->getData('infos_complementaires')?></dd>
+          <dd><?= $info["name"];?></dd>
         </dl>
       </div>
       <div class="button_profil">

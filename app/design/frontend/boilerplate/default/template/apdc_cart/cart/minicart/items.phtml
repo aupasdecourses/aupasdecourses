@@ -1,0 +1,164 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Shoping cart sidebar
+ *
+ * @var Mage_Checkout_Block_Cart_Minicart $this
+ */
+?>
+
+<?php
+$_cartQty = $this->getSummaryCount();
+if(empty($_cartQty)) {
+    $_cartQty = 0;
+}
+$apdcAccordion = $this->getApdcCartAccordion();
+$cartMessages = $this->getMessages();
+if ($cartMessages) {
+    $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
+}
+$commercants = $this->getItemsByCommercant();
+$countItems = count($commercants);
+?>
+
+<div class="minicart-wrapper">
+
+    <div class="block-subtitle">
+        <?php echo $this->__('Mon panier') ?>
+        <a class="close skip-link-close" href="#" title="<?php echo $this->quoteEscape($this->__('Close')); ?>"><i class="fa fa-close"></i></a>
+        <?php if($countItems): ?>
+            <div class="link-empty-cart">
+                <a class="empty-cart" href="#" data-ajax-url="<?php echo $this->helper('apdccart')->getAjaxEmptyCartUrl() ?>" data-confirm="<?php echo $this->__('Êtes vous sûr de vouloir vider votre panier ?'); ?>"><?php echo $this->__('Vider mon panier'); ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <hr>
+
+    <?php echo $messageBlock->getGroupedHtml() ?>
+    <div id="minicart-error-message" class="minicart-message"></div>
+    <div id="minicart-success-message" class="minicart-message"></div>
+
+    <?php if($countItems): ?>
+        <div class="minicart-items">
+            <ul id="cart-sidebar" class="mini-products-list">
+                <?php foreach($commercants as $id => $commercant): ?>
+                    <li>
+                    <?php $closed = ((isset($apdcAccordion[$id]) && $apdcAccordion[$id] == 0) ? ' closed' : ''); ?>
+                        <div style="background-color: <?php echo $commercant['color']; ?>;" class="mini-commercant-name<?php echo $closed; ?>" data-commercant="<?php echo $id; ?>">
+                            <span class="title"><?php echo $commercant['name']; ?></span>
+                            <span class="actions" style="color:<?php echo $commercant['color']; ?>;">
+                                <?php $confirm = $this->__('Êtes vous sûr de vouloir supprimer tous les produits du commercant %s ?', $commercant['name']); ?>
+                                <span data-ajax-url="<?php echo $this->helper('apdccart')->getAjaxEmptyCartUrl() ?>" class="badge empty-cart" data-confirm="<?php echo $confirm; ?>" data-commercant-id="<?php echo $id; ?>"><i class="fa fa-trash"></i></span>
+                                <span class="badge count"><i><?php echo count($commercant['items']); ?></i></span>
+                                <i class="fa fa-angle-up"></i>
+                            </span>
+                        </div>
+                        <ul class="commercant-product-list">
+                        <?php foreach ($commercant['items'] as $item): ?>
+                            <?php echo $this->getItemHtml($item) ?>
+                        <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <div id="minicart-widgets">
+            <?php echo $this->getChildHtml('cart_promotion') ?>
+        </div>
+        <div class="mini-cart-bottom">
+            <hr>
+            <div class="block-content">
+                <p class="subtotal">
+                    <?php if ($this->canApplyMsrp()): ?>
+                        <span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></span>
+                    <?php else: ?>
+                        <span class="label"><?php echo $this->__('Cart Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+                            <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+
+
+            <div class="minicart-actions">
+                <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
+                    <ul class="checkout-types minicart text-center">
+                        <?php echo $this->getChildHtml('extra_actions') ?>
+                        <li>
+                            <a title="<?php echo $this->quoteEscape($this->__('Checkout')) ?>" class="button button-green checkout-button" href="<?php echo $this->getCheckoutUrl() ?>">
+                                <?php echo $this->__('Checkout') ?>
+                            </a>
+                        </li>
+                    </ul>
+                <?php endif ?>
+            </div>
+        </div>
+
+    <?php else: ?>
+        <p class="empty"><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+
+    <?php endif ?>
+</div>
+<script type="text/javascript">
+<?php if ($countItems) : ?>
+var apdcProductAddedToCart = <?php echo json_encode($this->getApdcProductAddedToCartFromCommercantItems($commercants)); ?>;
+<?php else : ?>
+var apdcProductAddedToCart = {};
+<?php endif; ?>
+<?php $productId = ($this->getData('product_id') ? $this->getData('product_id') : null); ?>
+<?php $productIds = ($this->getData('product_ids') ? $this->getData('product_ids') : null); ?>
+var cartSlideUpdateAccordionUrl = '<?php echo $this->getUrl("checkout/cart/ajaxUpdateCartAccordion"); ?>';
+jQuery(document).ready(function() {
+    <?php if ($productId) : ?>
+        jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
+        jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
+    <?php elseif ($productIds && !empty($productIds)) : ?>
+        <?php foreach ($productIds as $productId) : ?>
+            jQuery('.product_addtocart_form_<?php echo $productId; ?>').trigger('change', [true]);
+            jQuery(document).trigger('minicartLoaded', ['<?php echo $productId; ?>']);
+        <?php endforeach; ?>
+    <?php else : ?>
+        jQuery('.apdc-add-to-cart-form').trigger('change', [true]);
+        jQuery(document).trigger('minicartLoaded');
+    <?php endif; ?>
+	cartSlide();
+});
+
+truncateOptions();
+decorateList('cart-sidebar', 'none-recursive');
+//var Mini = null;
+$j('document').ready(function() {
+    var minicartOptions  = {
+        formKey:           "<?php echo $this->getFormKey();?>"
+    }
+    Mini = new Minicart(minicartOptions);
+    Mini.init();
+});
+</script>

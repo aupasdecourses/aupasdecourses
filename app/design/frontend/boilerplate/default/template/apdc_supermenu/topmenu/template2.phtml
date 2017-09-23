@@ -1,0 +1,66 @@
+<?php
+/** @var Mage_Page_Block_Html_Topmenu_Renderer $this */
+/** @var Varien_Data_Tree_Node $menuTree */
+
+$html = '';
+$nbCategoryColumns = 4;
+$children = $menuTree->getChildren();
+$menuTree->setCounter(1);
+if ($menuTree->getMenuMainStaticBlock()) {
+    $html .= '<li class="template-column block-static-menu">';
+    $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
+    $html .= '</li>';
+}
+$cpt = 1;
+foreach ($children as $child) {
+
+    $this->initChild($child, $menuTree);
+
+    $html .= '<li '. $this->_getRenderedMenuItemAttributes($child) .'>';
+
+    if ($child->getIsClickable()) {
+        $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
+        if ($child->getThumbnail()) {
+            $thumbnail = $this->getResizedImage($child->getThumbnail(), 50,50);
+            $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
+        }
+        $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
+        $html .= '</a>';
+    } else {
+        $html .= '<span class="template-column-title" style="' . $child->getLinkStyle() . '" class="'. $child->getLinkClasses() .'">';
+        $html .= $this->escapeHtml($this->__($child->getName()));
+        if ($child->hasChildren()) {
+            $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
+        }
+        $html .= '</span>';
+    }
+
+    if ($child->hasChildren()) {
+        $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
+        foreach ($child->getChildren() as $subChild) {
+            $html .= '<li '. $this->_getRenderedMenuItemAttributes($subChild) .'>';
+            if ($subChild->getIsClickable()) {
+                $html .= '<a style="' . $subChild->getLinkStyle() . '" href="'. $subChild->getUrl() .'" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</a>';
+            } else {
+                $html .= '<span style="' . $subChild->getLinkStyle() . '" class="'. $subChild->getLinkClasses() .'"><i class="fa fa-angle-right"></i>'. $this->escapeHtml($this->__($subChild->getName())) .'</span>';
+            }
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+    }
+
+    $html .= '</li>';
+
+    $counter = $menuTree->getCounter();
+    $counter++;
+    $menuTree->setCounter($counter);
+    $cpt++;
+    if ($cpt > $nbCategoryColumns) {
+        break;
+    }
+}
+
+return $html;

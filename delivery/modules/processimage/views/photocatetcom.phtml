@@ -1,0 +1,68 @@
+    <style>
+        .bar {
+            height: 18px;
+            background: green;
+        }
+        .paragraph {
+            margin-bottom: 10px;
+        }
+    </style>
+    <div class="row">
+        <h1>Traitement des photos <?= $_GET['type']?></h1>
+        <div class="col-sm-12 paragraph">
+            <p>1. Sélectionnez l'image <?= $_GET['type']?>, vous pourrez ensuite télécharger les version optimisées en cliquant sur les liens qui apparaitront. Il ne vous restera plus qu'à les uploader via l'interface Magento dans la catégorie correspondante.</p>
+            <input class="btn-lg" id="fileupload" type="file" name="files[]">
+            <div id="progress">
+                <div class="bar" style="width: 0%;"></div>
+            </div>
+            <div id="file_uploaded">
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="libs/js/bootstrap.3.2.0.min.js"></script>
+    <script src="libs/js/upload/jquery.ui.widget.js"></script>
+    <script src="libs/js/upload/jquery.iframe-transport.js"></script>
+    <script src="libs/js/upload/jquery.fileupload.js"></script>
+    <script>
+
+
+    $(function () {
+        action="<?= $_GET['type']?>";
+        $('#fileupload').fileupload({
+            url: 'uploads/index.php?type=<?= $_GET['type']?>',
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+
+                    $.ajax({
+                        url: 'libs/processimage/script.php',
+                        type: 'POST',
+                        data: {action: action,
+                                image:file.name},
+                        success: function (msg) {
+                            alert(msg);
+                        },
+                        error: function (msg) {
+                            alert(msg);
+                        }
+                    });
+                    var base_url=file.url.split("/");
+                    base_url=base_url.splice(0,base_url.length-1).join("/");
+
+                    $('<p/>').html('<a href="'+base_url+'/thumbnail.jpg" target="_blank" download>thumbnail.jpg</a>').appendTo($('#file_uploaded'));
+                    $('<p/>').html('<a href="'+base_url+'/full.jpg" target="_blank" download>full.jpg</a>').appendTo($('#file_uploaded'));
+                });
+            },
+            progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+        });
+    });
+    </script>

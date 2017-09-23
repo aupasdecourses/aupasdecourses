@@ -1,0 +1,46 @@
+<?php 
+$_products = $this->getProductCollection();
+
+if (($_products = $this->getProductCollection()) && $_products->getSize()): ?>
+    <div class="page-title">
+        <div class="title-block"><?php echo $this->__('Les produits préférés de nos clients') ?></div>
+    </div>
+    <?php $_collectionSize = count($_products->getItems()) ?>
+    <ul class="products-grid products-grid--max-4-col">
+    <?php $i=1; foreach ($_products->getItems() as $_product): ?>
+            <li class="item last">
+                <a class="product-image" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getImageLabel($_product, 'small_image')) ?>">
+                    <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(154, 138); ?>" width="154" height="138" alt="<?php echo $this->htmlEscape($this->getImageLabel($_product, 'small_image')) ?>" title="<?php echo $this->htmlEscape($this->getImageLabel($_product, 'small_image')) ?>" />
+                </a>
+                <h3 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><?php echo $this->htmlEscape($_product->getName()) ?></a></h3>
+                <?php
+                    //Affichage du nom du commerçant sous le produits
+                    //$cats = $_product->getCategoryIds();
+                    //echo Mage::getModel('catalog/category')->load($cats[0])->getName();
+                ?>
+                <div class="a-center">                        
+                    <?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                    <?php endif; ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    <?php if($_product->isSaleable()): ?>
+                        <button class="button" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><span><?php echo $this->__('Add') ?></span></span></span></button>
+                        <div class="clear"></div>
+                    <?php else: ?>
+                        <p class="availability"><span class="out-of-stock"><?php echo $this->__('Out of stock') ?></span></p>
+                        <div class="clear"></div>
+                    <?php endif; ?>
+                    <!-- <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <li class="last"><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"><?php echo $this->__('Add to Compare') ?></a></li>
+                        <?php endif; ?>
+                    </ul> -->
+                    <?php if($_product->getevent_date()) {echo $_product->getevent_date();} ?>
+                </div>
+            </li>
+      <?php $i++; endforeach; $kol = $_collectionSize; ?>
+    </ul>
+<?php endif; ?>

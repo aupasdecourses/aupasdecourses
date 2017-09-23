@@ -5,10 +5,10 @@ if (utilisateur_est_connecte()) {
 	if(isset($_GET['id'])){
 		include 'views/commande_commercant.phtml';		
 	} elseif($_GET['option']=='client'){
-		$orders=liste_commande();
+		$orders=Mage::getModel('sales/order')->getCollection();
 		include 'views/liste_commande_client.phtml';
 	} else {
-		$orders=liste_commande();
+		$orders=Mage::getModel('sales/order')->getCollection();
 		include 'views/liste_commande.phtml';
 	}
 	

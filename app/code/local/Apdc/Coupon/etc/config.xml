@@ -24,12 +24,12 @@
         </layout>
     </frontend>
     <global>
-    	<rewrite>
-	        <ajax_coupon> 
-	            <from><![CDATA[#^/checkout/cart/#]]></from>  <!-- the URL which u want to override-->
-	            <to>/ajaxcoupon/index/</to>  <!-- destination url -->
-	        </ajax_coupon>
-	    </rewrite>
+      <!--<rewrite>-->
+					<!--<ajax_coupon> -->
+							<!--<from><![CDATA[#^/checkout/cart/couponPost#]]></from>  [> the URL which u want to override<]-->
+							<!--<to>/ajaxcoupon/index/customcouponPost</to>  [> destination url <]-->
+					<!--</ajax_coupon>-->
+			<!--</rewrite>-->
         <models>
             <ajaxcoupon>
                 <class>Apdc_Coupon_Model</class>

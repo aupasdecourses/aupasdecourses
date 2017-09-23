@@ -33,6 +33,13 @@
             </action>
             <action method="addItem">
                 <type>js</type>
+                <name>calendar/calendar-setup.js</name>
+                <params/>
+                <if/>
+                <condition>can_load_calendar_js</condition>
+            </action>
+            <action method="addItem">
+                <type>js</type>
                 <name>calendar/lang/calendar-en.js</name>
                 <params/>
                 <if/>

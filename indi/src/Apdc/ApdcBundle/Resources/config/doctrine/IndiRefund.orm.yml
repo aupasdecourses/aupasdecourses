@@ -1,0 +1,17 @@
+Apdc\ApdcBundle\Entity\IndiRefund:
+    type: entity
+    table: null
+    repositoryClass: Apdc\ApdcBundle\Repository\IndiRefundRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        originalReference:
+            type: string
+        value:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

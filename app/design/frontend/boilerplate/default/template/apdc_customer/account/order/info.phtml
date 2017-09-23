@@ -1,0 +1,24 @@
+<?php $_order = $this->getOrder() ;?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<h2 class="table-caption"><?php echo $this->__('Ma commande') ?></h2>
+<p class="order-ref">#<?php echo $_order->getRealOrderId() ?></p>
+<a href="<?php echo $this->getReorderUrl($_order) ?>" class="button button-green reorder-link"><i class="fa fa-credit-card"></i> Commander à nouveau</a>
+<h3><?php echo $this->__('Mes informations générales') ?></h3>
+<div class="row">
+    <div class="col-sm-6">
+        <?php
+            $ddate = Mage::getResourceModel('ddate/ddate')->getDdateByOrder($this->getOrder()->getIncrementId());
+            if($ddate):
+        ?>
+            <p><strong><?php echo Mage::helper('ddate')->__('Date de livraison') ?> </strong><?php echo Mage::helper('ddate')->format_ddate($ddate['ddate']);?></p>
+            <p><strong><?php echo Mage::helper('ddate')->__('Créneau de livraison') ?> </strong><?php if(!empty($ddate['dtime'])) { echo $ddate['dtime']; } else echo $ddate['dtimetext'] ;?></p>
+        <?php endif;?>
+        <p><strong><?php echo $this->__('Votre adresse de livraison') ?> </strong><?php echo $_order->getShippingAddress()->format('string') ?></p>
+    </div>
+    <div class="col-sm-6">
+        <p><strong><?= $this->__('Statut de la commande ')?></strong><?= $_order->getStatusLabel()?></p>
+        <p><strong><?php echo $this->__('Méthode de paiement ') ?></strong><?php echo $this->getPaymentInfoHtml() ?></p>
+        <p><strong><?php echo $this->__('Votre adresse de facturation') ?></strong> <?php echo $_order->getBillingAddress()->format('string') ?></p>
+    </div>
+</div>

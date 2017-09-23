@@ -1,0 +1,170 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+	<h1> Facturation INDI </h1>
+	
+		<div class="row">
+			<div class="page-header col-md-6">
+				<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+			</div>
+			<div class="col-md-6">{{ form(formCSV) }}</div>
+		</div>
+		{% if check_date  %}
+			<div class="alert alert-warning">Attention, pour les mois antérieurs à Janvier 2017, les factures présentées ici diffèrent des factures envoyées aux commerçants (prise en compte de la date de livraison et non plus de la date de commande) - se référer au Google Drive pour les factures correctes.</div>
+		{% endif %}
+
+		<div id="filter"><label>Selectionnez le commercant : &nbsp; </label></div>
+	<table id="billIndex" class="table table-striped">
+		<thead>
+			<tr>
+				<th colspan="2">Date</th>
+				<th>#Commande</th>
+				<th>#Facture</th>
+				<th>Nom client</th>
+				<th>Commercant</th>
+				<th colspan="2">Commande Client</th>
+				<th colspan="2">Avoir</th>
+				<th colspan="2">Valeur Ticket</th>
+				<th>Commission APDC</th>
+				<th>Versement Commercant</th>
+			</tr>
+			<tr>
+				<th>Création</th>
+				<th>Livraison</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th class="sort"></th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>				
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">TTC</th>
+				<th class="float">HT</th>
+				<th class="float">HT</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for order in bill %}
+				<tr>
+					<td>{{ order.creation_date }}</td>
+					<td>{{ order.delivery_date }}</td>
+					<td>{{ order.increment_id }}</td>
+					<td>{{ order.id_billing }}</td>
+					<td>{{ order.customer_name }}</td>
+					<td>{{ order.shop }}</td>
+					<td>{{ order.sum_items_HT }}</td>
+					<td>{{ order.sum_items }}</td>
+					<td>{{ order.sum_items_credit_HT }}</td>
+					<td>{{ order.sum_items_credit }}</td>
+					<td>{{ order.sum_ticket_HT }}</td>
+					<td>{{ order.sum_ticket }}</td>
+					<td>{{ order.sum_commission_HT }}</td>
+					<td>{{ order.sum_due_HT }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="5">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_billing %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_billing %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+
+
+	<script>
+		$(function() {
+			$( "#datepickerBill" ).datepicker({
+				altField: "#datepickerBill",
+				closeText: 'Fermer',
+				prevText: 'Précédent',
+				nextText: 'Suivant',
+				currentText: 'Aujourd\'hui',
+				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+				weekHeader: 'Sem.',
+				dateFormat: 'dd/mm/yy',
+			});
+		});
+		
+		$(function(){
+			$("#datepickerBill").change(function(){
+				window.location='{{ path('billingDetails') }}?date_debut='+this.value;
+			});
+		});
+
+
+		$(document).ready(function() {
+			var table=$('#billIndex').DataTable({
+				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+				"pageLength": -1,
+				"order": [[ 1, 'dsc' ], [ 0, 'asc' ]],
+				initComplete: function () {
+					this.api().columns(['.sort']).every(function () {
+						var column = this;
+						var select = $('<select><option value=""></option></select>')
+							.appendTo( $('#filter') )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+										$(this).val()
+										);
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					});
+					},
+
+				"footerCallback": function ( row, data, start, end, display ) {
+					var api = this.api(), data;
+
+					var intVal = function ( i ) {
+						return typeof i === 'string' ?
+							i.replace(/[\$,]/g, '')*1 :
+							typeof i === 'number' ?
+							i : 0;
+					};
+					this.api().columns(['.float']).every(function (){
+						var index = this.index();
+						pageTotal = api
+							.column( index, { page: 'current'} )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+						pageTotal=pageTotal.toFixed(2);
+						$( api.column( index ).footer() ).html(pageTotal);
+					});
+				}
+			} );
+		});
+	</script>
+{% endblock %}

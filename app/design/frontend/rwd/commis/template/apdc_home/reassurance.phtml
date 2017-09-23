@@ -7,7 +7,13 @@
 				<div class="reassurance-outer first-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">COMMANDEZ EN LIGNE</div>
-						<div class="reassurance-text">en une seule fois<br/>aux mêmes prix qu'en magasin</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>Les mêmes prix qu'en magasin</li>
+								<li>Une livraison unique quel que soit le nombre de commerçants</li>
+								<li>Livraison le jour même pour une commande avant 15h</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -15,34 +21,53 @@
 				<div class="reassurance-outer second-item">
 					<div class="reassurance-inner">
 						<div class="reassurance-title">NOS CRENEAUX DE LIVRAISON</div>
-						<div class="reassurance-text"><?php echo $this->getChildHtml('deliverytime-home')?></div>						
+						<div class="reassurance-text">
+							<p style="margin-bottom: 0px;text-align:center;">Du Lundi au Vendredi</p>
+							<?php echo $this->getChildHtml('deliverytime-home')?>
+						</div>						
 					</div>
 				</div>
 			</div>
 			<div>
 				<div class="reassurance-outer third-item">
 					<div class="reassurance-inner">
-						<div class="reassurance-title">DU MARDI AU VENDREDI</div>
-						<div class="reassurance-text">Livraison le jour même pour une commande avant 15h.</div>
+						<div class="reassurance-title">TARIFS DE LIVRAISON</div>
+						<div class="reassurance-text">
+							<ul style="list-style:circle">
+								<li>9€ pour une commande jusqu'à 45€</li>
+								<li>6€ pour une commande entre 45 et 90€</li>
+								<li>3€ pour une commande supérieure à 90€</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div>
-				<div class="reassurance-outer fourth-item">
-						<div class="reassurance-inner">
-								<div class="reassurance-title">10€ OFFERTS</div>
-								<div class="reassurance-text">En parrainant vos proches </br><a href="https://www.aupasdecourses.com/batignolles/sponsorship/"><i>Cliquez pour en savoir plus</i></a></div>
-						</div>
+			<?php 
+				$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
+				if ($payment_activated == true) : ?>
+			    <div>
+					<div class="reassurance-outer fourth-item">
+							<div class="reassurance-inner">
+								<div class="reassurance-title">COMMANDEZ JUSQU'A 4 JOURS EN AVANCE</div>
+								<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
+									<div id="countdown"></div>
+								</div>
+							</div>
+							<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
+			   				<script type='text/javascript 'src='/js/countdown/js/script.js'></script>
+					</div>
 				</div>
-			</div>
+			<?php endif ?>
 		</div>
 	</div>
-<?php $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment'); ?>
-<?php if ($payment_activated == true) : ?>
-	<script type='text/javascript 'src='/js/countdown/js/jquery.countdown.js'></script>
-    <script type='text/javascript 'src='/js/countdown/js/script.js'></script>
-	<div class="col-xs-12 livraison-countdown" id="#livraison-countdown">
-		<div id="countdown"></div>
-	</div>
-<?php endif ?>
 </div>
+<script>
+    $j(document).ready(function() {
+      $j("#carrousel-reassurance").owlCarousel({
+            items:4,
+            pagination:false,
+            autoPlay : false,
+            navigation : true
+      });
+    });
+</script>
