@@ -95,7 +95,7 @@
             </action>
         </reference>
         <reference name="customer_form_register">
-            <block type="inchoo_socialconnect/register" name="inchoo_socialconnect_register" as="form.additional.actions">
+            <block type="inchoo_socialconnect/register" name="inchoo_socialconnect_register">
                 <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button" />
                 <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
                 <block type="inchoo_socialconnect/twitter_button" name="inchoo_socialconnect_checkout_twitter_button" />
@@ -238,13 +238,11 @@
         </reference>
         <reference name="checkout.onepage.login">
             <action method="setTemplate" >
-                <template>inchoo/socialconnect/checkout/onepage/login.phtml</template>
+                <template>persistent/checkout/onepage/login.phtml</template>
             </action>
-            <block type="inchoo_socialconnect/checkout" name="inchoo_socialconnect_checkout">
-                <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_checkout_google_button" />
-                <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_checkout_facebook_button" />
-                <block type="inchoo_socialconnect/twitter_button" name="inchoo_socialconnect_checkout_twitter_button" />
-                <block type="inchoo_socialconnect/linkedin_button" name="inchoo_socialconnect_checkout_linkedin_button" />
+            <block type="inchoo_socialconnect/login" name="inchoo_socialconnect_checkout">
+                <block type="inchoo_socialconnect/google_button" name="inchoo_socialconnect_google_login_button" />
+                <block type="inchoo_socialconnect/facebook_button" name="inchoo_socialconnect_facebook_login_button" />
             </block>
         </reference>
     </checkout_onepage_index>

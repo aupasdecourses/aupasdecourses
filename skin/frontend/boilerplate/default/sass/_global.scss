@@ -150,6 +150,29 @@ a{
             }
         }
     }
+
+    &.button-social{
+        border-width: 1px;
+        border-style: solid;
+        font-size: 1rem;
+        text-align: center;
+        &.button-fb{
+            color: #5179bd;
+            border-color: #5179bd;
+            &:hover{
+                color: #fff;
+                background-color:#5179bd;
+            }
+        }
+        &.button-google{
+            color: #f64743;
+            border-color: #f64743;
+            &:hover{
+                color: #fff;
+                background-color:#f64743;
+            }
+        }
+    }
 }
 
 input[type=checkbox]{
@@ -255,4 +278,18 @@ input[type=checkbox]:checked + label:before {
     border-radius:50%;
     border:1px solid #ccc;
   }
+}
+
+.separator{
+    color: #a6b5bf;
+    text-align: center;
+    &:before, &:after{
+        content: '';
+        display: inline-block;
+        width: 15%;
+        height: 0;
+        border-top: 1px solid #d3dadf;
+        line-height: inherit;
+        vertical-align: middle;
+    }
 }

@@ -1,8 +1,16 @@
 <?php $isCheckout = ((!$this->getData('isCheckout') && $this->getData('isCheckout') != 1) ? false : true); ?>
+<?php 
+    if($isCheckout){
+        $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();
+        $url_logo = $neighborhood->getStoreUrl();
+    }else{
+        $url_logo= Mage::getUrl('../');
+    }
+?>
 <header id="header" class="container-fluid">
     <div class="page-header-container row">
     <div class="logo col-md-2 col-sm-3 <?php echo ($isCheckout ? 'col-xs-3' : 'col-xs-5'); ?>">
-            <a class="logo-link" href="<?php echo Mage::getUrl('../');?>">
+            <a class="logo-link" href="<?php echo $url_logo ;?>">
                 <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
             </a>
         </div>
@@ -12,9 +20,19 @@
             <?php if (!$isCheckout) : ?>
                 <?php echo $this->getChildHtml('topSearch') ?>
             <?php endif; ?>
-            <?php echo $this->getChildHtml('checkout.progress') ?>
-
-            <div class="<?php echo ($isCheckout ? 'col-md-4 col-sm-3 col-xs-4' : 'col-lg-9 col-md-10 col-sm-6 col-xs-12'); ?> text-right link-header-right">
+            <?php echo $html_progress=$this->getChildHtml('checkout.progress');
+                    $isCheckoutProcess=(sizeof($html_progress)<3)?0:1;
+                    if($isCheckout){
+                        if($isCheckoutProcess){
+                            $responsive='col-md-4 col-sm-3 col-xs-4';
+                        }else{
+                            $responsive='col-md-12 col-sm-6 col-xs-12';
+                        }
+                    }else{
+                        $responsive='col-lg-9 col-md-10 col-sm-6 col-xs-12';
+                    }
+            ?>
+            <div class="<?php echo $responsive ?> text-right link-header-right">
                 <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
 
                 <?php if (!$isCheckout) : ?>

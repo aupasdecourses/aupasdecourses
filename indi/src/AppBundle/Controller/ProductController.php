@@ -381,7 +381,9 @@ class ProductController extends AbstractController
                 $attribute = \Mage::getModel('eav/config')->getAttribute('catalog_product', $code);
 
                 foreach ($attribute->getSource()->getAllOptions(true, true) as $option) {
-                    $array[$code][$option['value']] = $option['label'];
+                    if($option['label']){
+                        $array[$code][$option['value']] = $option['label'];
+                    }
                 }
                 asort($array[$code]);
             }

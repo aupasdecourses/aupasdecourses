@@ -21,3 +21,15 @@
         </li>
     <?php endforeach; ?>
 </ul>
+<script type="text/javascript">
+//<![CDATA[
+    $j('a').on("click", function (e) {
+        $('login-form-popup-loading').show();
+      try {
+            tagmanager_event('validationInscription',{});
+        } catch(e) {
+            console.log(e);
+        }
+     });
+//]]>
+</script>    

@@ -11,7 +11,7 @@
             color: $color-main-green;
             text-transform: none;
             margin-top: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             letter-spacing: normal;
             span{
                 font-weight: normal;
@@ -43,6 +43,9 @@
         padding-left: 0;
         li{
             margin-bottom: 20px;
+            &.remember-me-box{
+                margin-bottom: 0px;
+            }
         }
     }
     p.required{

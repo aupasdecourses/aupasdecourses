@@ -114,11 +114,16 @@
 			  }
 		});
 
-		$j('.block-promos .apdc-products-grid .owl-item').hover(function(){
-			if($j('.display-hover', this).outerHeight() > 0) {
-				$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+		$j('.block-promos .apdc-products-grid .owl-item').hover(
+			function(){
+				if($j('.display-hover', this).outerHeight() > 0) {
+					$j(this).css({'margin-bottom' : -$j('.display-hover', this).outerHeight()+'px'});
+				}
+			},
+			function(){
+				$j(this).css({'margin-bottom' : 0});
 			}
-		});
+		);
 
     });
 </script>

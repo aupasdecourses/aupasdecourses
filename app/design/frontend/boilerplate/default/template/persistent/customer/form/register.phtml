@@ -34,6 +34,8 @@
 ?>
 <div class="account-create container">
     <h1><?php echo $this->__('Create an Account') ?></h1>
+    <?php echo $this->getChildHtml('inchoo_socialconnect_register'); ?>
+    <p class="separator">ou</p>
     <?php echo $this->getChildHtml('form_fields_before')?>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="register-form-checkout" class="form-validate scaffold-form row" enctype="multipart/form-data">

@@ -78,6 +78,10 @@
         </block>
       </reference> 
 
+      <reference name="reassurance">
+          <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-carroussel"/>
+      </reference>
+
     </apdc_catalog_product_list>
 
     <catalog_category_view>
@@ -101,6 +105,10 @@
         <reference name="right">
             <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
             </block>
+        </reference>
+
+        <reference name="reassurance">
+          <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-carroussel"/>
         </reference>
 
     </catalog_category_view>

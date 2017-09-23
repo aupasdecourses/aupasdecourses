@@ -3,6 +3,8 @@
         <div class="step-title">
             <h2>Se Connecter</h2>
         </div>
+        <?php echo $this->getChildHtml('form.additional.info'); ?>
+        <p class="separator">ou</p>
         <div id="checkout-step-login" class="step a-item">
             <div class="container account-login col1-set<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
                 <div class="row">
@@ -24,7 +26,6 @@
                                     <input type="password" class="input-text validate-password required-entry" id="login-password-account" name="login[password]" />
                                 </div>
                             </li>
-                            <?php echo $this->getChildHtml('form.additional.info'); ?>
                             <?php echo $this->getChildHtml('persistent.remember.me'); ?>
                             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
                             <div class="col-sm-12" style="text-align:center;">

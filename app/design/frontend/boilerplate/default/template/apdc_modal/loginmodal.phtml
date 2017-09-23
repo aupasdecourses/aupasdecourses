@@ -1,7 +1,7 @@
 <div class="account-login-container<?php if (!$this->helper('customer')->isRegistrationAllowed()) echo ' login-only' ?>">
-    <h1><?php echo $this->__('Connectez-vous!'); ?></h1>
-    <p>Vous n'avez pas encore de compte ?</br><a id="choose-district" href="#districts" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" style="font-weight:bold;">Enregistrez-vous</a> !</p>
-    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('form.additional.actions'); ?>
+    <p class="separator">ou</p>
+    <!-- <h1><?php echo $this->__('Connectez-vous!'); ?></h1> -->
     <form action="<?php echo $this->getUrl('apdc-customer/account/ajaxLoginProcess');?>" method="post" id="login-form" class="apdc-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="form-group">
@@ -17,9 +17,10 @@
             <?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
         </div>
         <button type="submit" class="button button-green" title="<?php echo $this->__('Login') ?>" name="send" ><span><span><?php echo $this->__('Se Connecter') ?></span></span></button>
-        <?php echo $this->getChildHtml('form.additional.actions'); ?>
 		<input type="hidden" value="<?php echo Mage::app()->getRequest()->getParam('referer'); ?>" name="referer" />
     </form>
+        <p>Vous n'avez pas encore de compte ? <a id="choose-district" href="#districts" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" style="font-weight:bold;">Enregistrez-vous</a> !</p>
+        <?php echo $this->getMessagesBlock()->toHtml() ?>
         <script type="text/javascript">
     //<![CDATA[
         var dataForm = new VarienForm('login-form', true);

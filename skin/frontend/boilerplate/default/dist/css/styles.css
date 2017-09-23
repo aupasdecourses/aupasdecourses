@@ -11483,6 +11483,33 @@ a:hover {
   background-color: #1e555a;
 }
 
+.button.button-social {
+  font-size: 1rem;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.button.button-social.button-fb {
+  color: #5179bd;
+  border-color: #5179bd;
+}
+
+.button.button-social.button-fb:hover {
+  color: #fff;
+  background-color: #5179bd;
+}
+
+.button.button-social.button-google {
+  color: #f64743;
+  border-color: #f64743;
+}
+
+.button.button-social.button-google:hover {
+  color: #fff;
+  background-color: #f64743;
+}
+
 input[type=checkbox] {
   position: absolute;
   z-index: -1000;
@@ -11590,6 +11617,22 @@ input[type=checkbox]:checked + label:before {
   border: 1px solid #ccc;
   border-radius: 50%;
   background-color: #fff;
+}
+
+.separator {
+  text-align: center;
+  color: #a6b5bf;
+}
+
+.separator:before,
+.separator:after {
+  line-height: inherit;
+  display: inline-block;
+  width: 15%;
+  height: 0;
+  content: '';
+  vertical-align: middle;
+  border-top: 1px solid #d3dadf;
 }
 
 #html-body header {
@@ -12375,66 +12418,79 @@ header .top-nav li a a:visited {
   color: #3ab64b;
 }
 
-#header-neighborhood {
+#header-neighborhood,
+#my_neighborhood_choose_links {
   display: table;
   margin: 0 auto;
   padding-left: 0;
   list-style-type: none;
 }
 
-#header-neighborhood.open {
+#header-neighborhood.open,
+#my_neighborhood_choose_links.open {
   display: block;
 }
 
-#header-neighborhood h3 {
+#header-neighborhood h3,
+#my_neighborhood_choose_links h3 {
   font-size: 1.125rem;
   font-weight: 700;
   text-transform: none;
   color: #1e555a;
 }
 
-#header-neighborhood .neighborhood_informations {
+#header-neighborhood .neighborhood_informations,
+#my_neighborhood_choose_links .neighborhood_informations {
   padding: 10px;
 }
 
-#header-neighborhood .neighborhood_informations .neighborhood_informations_title {
+#header-neighborhood .neighborhood_informations .neighborhood_informations_title,
+#my_neighborhood_choose_links .neighborhood_informations .neighborhood_informations_title {
   font-size: 18px;
   font-weight: bold;
   color: #3ab64b;
 }
 
-#header-neighborhood .neighborhood_informations i {
+#header-neighborhood .neighborhood_informations i,
+#my_neighborhood_choose_links .neighborhood_informations i {
   display: inline-block;
   margin: 0 5px;
 }
 
-#header-neighborhood .neighborhood_informations li {
+#header-neighborhood .neighborhood_informations li,
+#my_neighborhood_choose_links .neighborhood_informations li {
   display: table;
 }
 
-#header-neighborhood .neighborhood_informations li i {
+#header-neighborhood .neighborhood_informations li i,
+#my_neighborhood_choose_links .neighborhood_informations li i {
   font-size: 18px;
   display: table-cell;
   padding-right: 10px;
 }
 
-#header-neighborhood .neighborhood_informations .neighborhood_ok {
+#header-neighborhood .neighborhood_informations .neighborhood_ok,
+#my_neighborhood_choose_links .neighborhood_informations .neighborhood_ok {
   margin: 10px 0 0 0;
   text-align: center;
 }
 
-#header-neighborhood .neighborhood_informations a.button {
+#header-neighborhood .neighborhood_informations a.button,
+#my_neighborhood_choose_links .neighborhood_informations a.button {
   display: inline-block;
 }
 
-#header-neighborhood li.neighborhood_title {
+#header-neighborhood li.neighborhood_title,
+#my_neighborhood_choose_links li.neighborhood_title {
   margin-top: 5px;
   padding: 3px 10px;
   border-bottom: 2px solid #3ab64b;
 }
 
 #header-neighborhood li.neighborhood_list.selected,
-#header-neighborhood li.neighborhood_list.choose {
+#header-neighborhood li.neighborhood_list.choose,
+#my_neighborhood_choose_links li.neighborhood_list.selected,
+#my_neighborhood_choose_links li.neighborhood_list.choose {
   position: relative;
   display: block;
   height: auto;
@@ -12443,25 +12499,30 @@ header .top-nav li a a:visited {
   border-bottom: solid 1px #e4e4e4;
 }
 
-#header-neighborhood li.neighborhood_list.selected {
+#header-neighborhood li.neighborhood_list.selected,
+#my_neighborhood_choose_links li.neighborhood_list.selected {
   border-top: 1px solid #e4e4e4;
   background-color: #fff;
 }
 
-#header-neighborhood li.neighborhood_list.selected a {
+#header-neighborhood li.neighborhood_list.selected a,
+#my_neighborhood_choose_links li.neighborhood_list.selected a {
   height: 100%;
   padding: 0;
 }
 
-#header-neighborhood li.neighborhood_list.choose > a {
+#header-neighborhood li.neighborhood_list.choose > a,
+#my_neighborhood_choose_links li.neighborhood_list.choose > a {
   display: table-row;
 }
 
-#header-neighborhood li.neighborhood_list {
+#header-neighborhood li.neighborhood_list,
+#my_neighborhood_choose_links li.neighborhood_list {
   text-align: center;
 }
 
-#header-neighborhood li.neighborhood_list img {
+#header-neighborhood li.neighborhood_list img,
+#my_neighborhood_choose_links li.neighborhood_list img {
   display: inline-block;
   width: 50px;
   height: 50px;
@@ -12469,7 +12530,8 @@ header .top-nav li a a:visited {
   border-radius: 50px;
 }
 
-#header-neighborhood li.neighborhood_list p {
+#header-neighborhood li.neighborhood_list p,
+#my_neighborhood_choose_links li.neighborhood_list p {
   display: inline-block;
   margin: 0;
   margin-left: 20px;
@@ -12477,7 +12539,8 @@ header .top-nav li a a:visited {
   vertical-align: middle;
 }
 
-#header-neighborhood li.neighborhood_list p i {
+#header-neighborhood li.neighborhood_list p i,
+#my_neighborhood_choose_links li.neighborhood_list p i {
   font-size: 10px;
   line-height: 12px;
   display: block;
@@ -12485,18 +12548,21 @@ header .top-nav li a a:visited {
   white-space: normal;
 }
 
-#header-neighborhood li.neighborhood_list ul.neighborhood_actions {
+#header-neighborhood li.neighborhood_list ul.neighborhood_actions,
+#my_neighborhood_choose_links li.neighborhood_list ul.neighborhood_actions {
   position: absolute;
   top: 0;
   right: 0;
   display: inline-block;
 }
 
-#header-neighborhood li.neighborhood_list ul.neighborhood_actions li {
+#header-neighborhood li.neighborhood_list ul.neighborhood_actions li,
+#my_neighborhood_choose_links li.neighborhood_list ul.neighborhood_actions li {
   display: inline-block;
 }
 
-#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a {
+#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a,
+#my_neighborhood_choose_links li.neighborhood_list ul.neighborhood_actions li a {
   position: relative;
   display: inline-block;
   width: 35px;
@@ -12508,13 +12574,15 @@ header .top-nav li a a:visited {
   color: #000;
 }
 
-#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a :hover {
+#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a :hover,
+#my_neighborhood_choose_links li.neighborhood_list ul.neighborhood_actions li a :hover {
   transform: scale3d(1.3, 1.3, 1.3);
   color: #000;
   background-color: inherit;
 }
 
-#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a i {
+#header-neighborhood li.neighborhood_list ul.neighborhood_actions li a i,
+#my_neighborhood_choose_links li.neighborhood_list ul.neighborhood_actions li a i {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12522,7 +12590,8 @@ header .top-nav li a a:visited {
   transform: translate(-50%, -50%);
 }
 
-#header-neighborhood li.neighborhood_list :hover ul.neighborhood_actions {
+#header-neighborhood li.neighborhood_list :hover ul.neighborhood_actions,
+#my_neighborhood_choose_links li.neighborhood_list :hover ul.neighborhood_actions {
   display: inline-block;
 }
 
@@ -13491,7 +13560,8 @@ section .section-description {
   color: #055a5f;
 }
 
-.apdc-products-grid .product-portion {
+.apdc-products-grid .product-portion,
+.apdc-products-grid .product-commercant-name {
   font-size: .75rem;
   margin-bottom: 0;
   color: rgba(0, 0, 0, .84);
@@ -14297,7 +14367,7 @@ footer .social-list .btn-social-icon {
 #checkoutSteps .section h2 {
   font-size: 2.25rem;
   margin-top: 30px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   letter-spacing: normal;
   text-transform: none;
   color: #3ab64b;
@@ -14332,6 +14402,10 @@ footer .social-list .btn-social-icon {
 
 .apdc-form .form-list li {
   margin-bottom: 20px;
+}
+
+.apdc-form .form-list li.remember-me-box {
+  margin-bottom: 0;
 }
 
 .apdc-form p.required {
@@ -16575,10 +16649,6 @@ h1.account-title {
   color: #3ab64b;
 }
 
-.account-create button[type=submit] {
-  margin-top: 228px;
-}
-
 .account-create p.required {
   color: #3ab64b;
 }
@@ -17632,6 +17702,14 @@ h1.account-title {
 
   .catalog-category-view .category-products .apdc-products-grid .button {
     padding: 10px 15px;
+  }
+
+  .catalog-category-view .category-products .apdc-products-grid .apdc-product-custom-options label {
+    font-size: .8rem !important;
+  }
+
+  .catalog-category-view .category-products .apdc-products-grid .apdc-product-custom-options select {
+    font-size: .8rem !important;
   }
 
   .catalog-category-view .commercant-collapse .commercant-info .delivery-days {

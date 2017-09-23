@@ -15,7 +15,7 @@
     $isAvailable = $this->isAvailable();
 
 ?>
-<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$isAvailable ? ' notavailable' : ''); ?>">
+<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$isAvailable ? ' notavailable' : ''); ?>" style="margin-bottom: 0px;">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
@@ -38,12 +38,12 @@
 				<h3 class="product-name"><?php echo $strippedName; ?></h3>
 			</a>
 			<p class="product-portion"><?php echo $product->getData('short_description'); ?></p>
-			<!--<p class="product-commercant-name">
+			<p class="product-commercant-name">
 				<?php echo Mage::getResourceSingleton('catalog/product')
 						->getAttribute('commercant')
 						->getSource()
 						->getOptionText($product->getData('commercant')); ?>
-			</p>-->
+			</p>
 			<div class="bottom">
 				<?php echo $this->getPriceHtml($product, true) ?>
 				<?php if($product->getData('prix_kilo_site')) :?>
@@ -66,6 +66,7 @@
 						</div>
 					<?php endif; ?>
 				<?php endif; ?>
+				<?php echo $product->getCommercantName(); ?>
 			</div>
 		</div>
 		<div class="display-hover">

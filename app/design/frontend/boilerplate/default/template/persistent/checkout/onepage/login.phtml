@@ -37,6 +37,8 @@
     <div class="row">
         <form id="login-form-checkout" class="apdc-form" action="<?php echo $this->getPostAction() ?>" method="post">
         <div class="fieldset col-sm-12">
+            <?php echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
+            <p class="separator">ou</p>
             <?php echo $this->getMessagesBlock()->toHtml() ?>
             <?php echo $this->getBlockHtml('formkey'); ?>
             <p class="required"><?php echo $this->__('* Required Fields') ?></p>
@@ -60,20 +62,16 @@
                     <button type="submit" class="button button-green" onclick="onepageLogin(this)"><span><?php echo $this->__('Login') ?></span></button>
                     <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" style="margin-left:20px;"><?php echo $this->__('Forgot your password?') ?></a>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align:center;">
+                        <p>Pas encore de compte ?  <a id="onepage-guest-register-button" type="button" style="font-weight:bold;" href="<?php echo $this->helper('checkout/url')->getRegistrationUrl().'?checkout=1';?>"><span><span><?php echo $this->__('Register') ?></span></span></a></p>
+                    </div>
+                </div>
             </ul>
 			<input name="referer" type="hidden" value="<?php echo Mage::helper('checkout/url')->getCheckoutUrl();; ?>" />
             <input name="context" type="hidden" value="checkout" />
         </div>
         </form>
-    </div>
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8" style="text-align:center;">
-            <p class="required">&nbsp;</p>
-            <span>Pas encore de compte ? </span><br>
-            <button id="onepage-guest-register-button" type="button" class="button button-green" onclick="window.location='<?php echo $this->helper('checkout/url')->getRegistrationUrl();?>?checkout=1'"><span><span><?php echo $this->__('Register') ?></span></span></button>
-        </div>
-        <div class="col-sm-2"></div>
     </div>
 </div>
 
