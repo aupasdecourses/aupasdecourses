@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addItem" ifconfig="agegate/settings/loadjs"><type>skin_js</type><name>js/agegate/jquery-1.10.2.min.js</name></action>
+			<action method="addItem" ifconfig="agegate/settings/enable_extension"><type>skin_js</type><name>js/agegate/agegatepopup.js</name></action>
+			<action method="addItem" ifconfig="agegate/settings/enable_extension"><type>skin_css</type><name>css/agegate/agegate.css</name></action>
+		</reference>
+		<reference name="head">
+			<block type="agegate/agegate" name="agegate">
+				<action method="setTemplate" ifconfig="agegate/settings/enable_extension"><template>vsourz/agegate.phtml</template>
+				</action>
+			</block>
+		</reference>
+	</default>
+</layout>

@@ -59,7 +59,6 @@ tags
 /cron.sh
 
 #ignore downloader, install and compile folders#
-/downloader
 /includes
 /install.php
 /var
