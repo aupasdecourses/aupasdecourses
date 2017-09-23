@@ -46,4 +46,15 @@
             </amorderattr>
         </helpers>
     </global>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <Apdc_Sales before="MW_Ddate_Adminhtml">Apdc_Sales_Adminhtml</Apdc_Sales>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
 </config>
