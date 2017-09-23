@@ -21,7 +21,7 @@
                 <?php echo $this->getChildHtml('topSearch') ?>
             <?php endif; ?>
             <?php echo $html_progress=$this->getChildHtml('checkout.progress');
-                    $isCheckoutProcess=(sizeof($html_progress)<3)?0:1;
+                    $isCheckoutProcess=(strlen($html_progress)<3)?0:1;
                     if($isCheckout){
                         if($isCheckoutProcess){
                             $responsive='col-md-4 col-sm-3 col-xs-4';
