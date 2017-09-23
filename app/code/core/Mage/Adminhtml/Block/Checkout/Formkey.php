@@ -20,30 +20,33 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
- * Adminhtml AdminNotification Severity Renderer
- *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author      Magento Core Team <core@magentocommerce.com>
+ * Class Mage_Adminhtml_Block_Checkout_Formkey
  */
-class Mage_Adminhtml_Block_Notification_Grid_Renderer_Notice
-    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+class Mage_Adminhtml_Block_Checkout_Formkey extends Mage_Adminhtml_Block_Template
 {
     /**
-     * Renders grid column
+     * Check form key validation on checkout.
+     * If disabled, show notice.
      *
-     * @param   Varien_Object $row
-     * @return  string
+     * @return boolean
      */
-    public function render(Varien_Object $row)
+    public function canShow()
     {
-        return '<span class="grid-row-title">' . $this->escapeHtml($row->getTitle()) . '</span>'
-            . ($row->getDescription() ? '<br />' . $this->escapeHtml($row->getDescription()) : '');
+        return !Mage::getStoreConfigFlag('admin/security/validate_formkey_checkout');
+    }
+
+    /**
+     * Get url for edit Advanced -> Admin section
+     *
+     * @return string
+     */
+    public function getSecurityAdminUrl()
+    {
+        return Mage::helper("adminhtml")->getUrl('adminhtml/system_config/edit/section/admin');
     }
 }
