@@ -45,7 +45,7 @@
 
   function ajaxLogin(data)
   {
-    var ajaxUrl = jQuery('#connect_with_facebook').data('ajax-action');
+    var ajaxUrl = jQuery('#connect_with_facebook').attr('href');
     apdcLoginPopup.showLoading();
     data.isAjax = 1;
     jQuery.ajax({
@@ -59,6 +59,7 @@
         } else if (typeof(response.html) !== 'undefined' && response.html !== '') {  
           apdcLoginPopup.updateContent(response.html);
         }
+        apdcLoginPopup.initPopupHeight();
       })
       .fail(function() {
         console.log('failed');

@@ -5,28 +5,78 @@ Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
 var accountPopup = [];
 var deliveryPopup = [];
 var neighborhoodPopup = [];
+var apdcLoginPopup = null;
+var apdcDeliveryPopup = null;
+var apdcNeighborhoodPopup = null;
 
 function initLoginPopup() {
 
-	jQuery(document).on('click', '#account-login, .to-login-form',function(e) {
+  if (apdcLoginPopup === null) {
+    apdcLoginPopup = new ApdcPopup({
+      id: 'login-form',
+      autoHeightPopup:true,
+      getTemplate:true,
+      onReady: function() {
+        accountPopup.apdc_login_view = jQuery('#' + apdcLoginPopup.id).find('.content').html();
+      }
+    });
+  }
+  if (apdcDeliveryPopup === null) {
+    apdcDeliveryPopup = new ApdcPopup({
+      id: 'delivery',
+      autoHeightPopup:true,
+      getTemplate:true
+    });
+  }
+  if (apdcNeighborhoodPopup === null) {
+    apdcNeighborhoodPopup = new ApdcPopup({
+      autoHeightPopup:true,
+      id: 'neighborhood',
+      getTemplate: true
+    });
+  }
+
+	jQuery('#account-login').on('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		apdcLoginPopup.showLoading();
-		showLoginForm(this,'apdc_login_view');
+    if (apdcLoginPopup) {
+      if (apdcLoginPopup.isLoaded()) {
+        apdcLoginPopup.showLoading();
+        apdcLoginPopup.updateContent(accountPopup.apdc_login_view);
+      } else {
+        apdcLoginPopup.showLoading();
+      }
+    }
 	});
-	
-	jQuery(document).on('click', '#header-delivery-link',function(e) {
+	jQuery(document).on('click', '.to-login-form', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		apdcDeliveryPopup.showLoading();
-		showDelivery(this,'apdc_headerdelivery_view');
+    showLoginForm(this, 'apdc_login_view');
+  });
+
+	jQuery('#header-delivery-link').on('click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+    if (apdcDeliveryPopup) {
+      if (apdcDeliveryPopup.isLoaded()) {
+        apdcDeliveryPopup.show();
+        apdcDeliveryPopup.initPopupHeight();
+      } else {
+        apdcDeliveryPopup.showLoading();
+      }
+    }
 	});
-	
-	jQuery(document).on('click', '#header-neighborhood-link',function(e) {
+	jQuery('#header-neighborhood-link').on('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		apdcNeighborhoodPopup.showLoading();
-		showNeighborhood(this,'apdc_neighborhood_view');
+    if (apdcNeighborhoodPopup) {
+      if (apdcNeighborhoodPopup.isLoaded()) {
+        apdcNeighborhoodPopup.show();
+        apdcNeighborhoodPopup.initPopupHeight();
+      } else {
+        apdcNeighborhoodPopup.showLoading();
+      }
+    }
 	});
 
 	jQuery(document).on('submit','#login-form', function(e) {
@@ -47,11 +97,23 @@ function initLoginPopup() {
 		showLoginForm(this, 'apdc_register_view');
 	});
 
+  jQuery(document).on('click', '#choose-my-district',function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'apdc_choose_neighborhood');
+  });
+
 	jQuery(document).on('click','#forgot-password', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		showLoginForm(this, 'apdc_forgotpassword_view');
 	});
+
+  jQuery(document).on('click','#connect-with-google', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'connect_with_google');
+  });
 
 	jQuery(document).on('submit','#password-form', function(e) {
 		e.preventDefault();
@@ -59,89 +121,12 @@ function initLoginPopup() {
 		processLoginForm(this);
 	});
 	
-	function showNeighborhood(elt,handle) {
-		apdcNeighborhoodPopup.showLoading();
-		jQuery('#' + apdcNeighborhoodPopup.id).data('currentView', handle);
-		jQuery('#' + apdcNeighborhoodPopup.id)[0].dataset.currentView =  handle;
-		if (typeof(neighborhoodPopup[handle]) !== 'undefined') {
-		  apdcNeighborhoodPopup.updateContent(neighborhoodPopup[handle]);
-      apdcNeighborhoodPopup.initPopupHeight();
-		} else {
-			//var ajaxUrl = jQuery(elt).data('login-view');
-			var ajaxUrl = jQuery(elt).data('url');
-			var data = new FormData();
-			data.append('isAjax', 1);
-			data.append('handle', handle);
-
-			jQuery.ajax({
-				url: ajaxUrl,
-				data: data,
-				processData: false,
-				contentType: false,
-				type: 'POST'
-
-			})
-			.done(function(response) {
-				if (response.status === 'SUCCESS') {
-					neighborhoodPopup[handle] = response.html;
-					apdcNeighborhoodPopup.updateContent(response.html);
-				} else if (response.status === 'ERROR') {
-					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
-					apdcNeighborhoodPopup.updateContent(message);
-				}
-        apdcNeighborhoodPopup.initPopupHeight();
-			})
-			.fail(function() {
-				console.log('failed');
-			});
-		}
-	}
-	
-	function showDelivery(elt,handle) {
-		apdcDeliveryPopup.showLoading();
-		jQuery('#' + apdcDeliveryPopup.id).data('currentView', handle);
-		jQuery('#' + apdcDeliveryPopup.id)[0].dataset.currentView =  handle;
-		if (typeof(deliveryPopup[handle]) !== 'undefined') {
-		  apdcDeliveryPopup.updateContent(deliveryPopup[handle]);
-      apdcDeliveryPopup.initPopupHeight();
-		} else {
-			//var ajaxUrl = jQuery(elt).data('login-view');
-			var ajaxUrl = jQuery(elt).data('url');
-			var data = new FormData();
-			data.append('isAjax', 1);
-			data.append('handle', handle);
-
-			jQuery.ajax({
-				url: ajaxUrl,
-				data: data,
-				processData: false,
-				contentType: false,
-				type: 'POST'
-
-			})
-			.done(function(response) {
-				if (response.status === 'SUCCESS') {
-					//deliveryPopup[handle] = response.html;
-					apdcDeliveryPopup.updateContent(response.html);
-				} else if (response.status === 'ERROR') {
-					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
-					apdcDeliveryPopup.updateContent(message);
-				}
-        apdcDeliveryPopup.initPopupHeight();
-			})
-			.fail(function() {
-				console.log('failed');
-			});
-		}
-	}
-
 	function showLoginForm(elt,handle) {
 		apdcLoginPopup.showLoading();
 		jQuery('#' + apdcLoginPopup.id).data('currentView', handle);
 		jQuery('#' + apdcLoginPopup.id)[0].dataset.currentView =  handle;
 		if (typeof(accountPopup[handle]) !== 'undefined') {
 		  apdcLoginPopup.updateContent(accountPopup[handle]);
-      apdcLoginPopup.initPopupHeight();
 		} else {
 			var ajaxUrl = jQuery(elt).data('login-view');
 			var data = new FormData();
@@ -164,7 +149,6 @@ function initLoginPopup() {
 					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
 					apdcLoginPopup.updateContent(message);
 				}
-        apdcLoginPopup.initPopupHeight();
 			})
 			.fail(function() {
 				console.log('failed');
@@ -201,7 +185,6 @@ function initLoginPopup() {
 			} else {
 				console.log('failed');
 			}
-      apdcLoginPopup.initPopupHeight();
 		})
 		.fail(function() {
 			console.log('failed');
@@ -211,20 +194,5 @@ function initLoginPopup() {
 }
 
 jQuery(document).ready(function() {
-	if (typeof(apdcLoginPopup) === 'undefined') {
-		apdcLoginPopup = new ApdcPopup({
-			id: 'login-form',
-			onReady: initLoginPopup
-		});
-	}
-	if (typeof(apdcDeliveryPopup) === 'undefined') {
-		apdcDeliveryPopup = new ApdcPopup({
-			id: 'delivery'
-		});
-	}
-	if (typeof(apdcNeighborhoodPopup) === 'undefined') {
-		apdcNeighborhoodPopup = new ApdcPopup({
-			id: 'neighborhood'
-		});
-	}
+  initLoginPopup();
 });

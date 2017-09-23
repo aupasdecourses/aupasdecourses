@@ -4,7 +4,7 @@ var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.google
 
 function googleAjaxLogin(data)
 {
-  var ajaxUrl = jQuery('#connect_with_google').data('ajax-action');
+  var ajaxUrl = jQuery('#connect_with_google').attr('href');
   apdcLoginPopup.showLoading();
   data.isAjax = 1;
   jQuery.ajax({
@@ -18,10 +18,12 @@ function googleAjaxLogin(data)
       } else if (typeof(response.html) !== 'undefined' && response.html !== '') {  
         apdcLoginPopup.updateContent(response.html);
       }
+      apdcLoginPopup.initPopupHeight();
     })
     .fail(function() {
       console.log('failed');
     });
+  return false;
 }
 
 function googleConnectUser(user)
@@ -85,6 +87,7 @@ function initClient() {
       e.preventDefault();
       e.stopPropagation();
       googleHandleAuthClick();
+      return false;
     }); 
   });
 }
