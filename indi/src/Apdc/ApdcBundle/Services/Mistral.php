@@ -56,8 +56,12 @@ class Mistral
 
 		$result = curl_exec($this->_ch);
 
+		/*Commented because generate error 500 in Symfony
 		if (curl_errno($this->_ch))
 			throw new Exception('Refund Curl Error'.curl_error($this->_ch));
+
+		if(strstr($result,"Authentification invalide"))
+			throw new Exception('Authentification invalide');*/
 
 		$json_result = json_decode($result, true);
 
