@@ -11,85 +11,110 @@ var apdcNeighborhoodPopup = null;
 
 function initLoginPopup() {
 
-  if (apdcLoginPopup === null) {
-    apdcLoginPopup = new ApdcPopup({
-      id: 'login-form',
-      autoHeightPopup:true,
-      getTemplate:true,
-      onReady: function() {
-        accountPopup.apdc_login_view = jQuery('#' + apdcLoginPopup.id).find('.content').html();
+  if (jQuery('#account-login').length > 0) {
+    if (apdcLoginPopup === null) {
+      apdcLoginPopup = new ApdcPopup({
+        id: 'login-form',
+        autoHeightPopup:true,
+        getTemplate:true,
+        onReady: function() {
+          accountPopup.apdc_login_view = jQuery('#' + apdcLoginPopup.id).find('.content').html();
+        }
+      });
+    }
+
+    jQuery('#account-login').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (apdcLoginPopup) {
+        if (apdcLoginPopup.isLoaded()) {
+          apdcLoginPopup.showLoading();
+          apdcLoginPopup.updateContent(accountPopup.apdc_login_view);
+        } else {
+          apdcLoginPopup.showLoading();
+        }
       }
     });
-  }
-  if (apdcDeliveryPopup === null) {
-    apdcDeliveryPopup = new ApdcPopup({
-      id: 'delivery',
-      autoHeightPopup:true,
-      getTemplate:true
+    jQuery(document).on('click', '.to-login-form', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'apdc_login_view');
     });
-  }
-  if (apdcNeighborhoodPopup === null) {
-    apdcNeighborhoodPopup = new ApdcPopup({
-      autoHeightPopup:true,
-      id: 'neighborhood',
-      getTemplate: true
+
+    jQuery(document).on('submit','#login-form', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      processLoginForm(this);
+    });
+    
+    jQuery(document).on('submit','#register-form', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      processLoginForm(this);
+    });
+
+    jQuery(document).on('click','#forgot-password', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLoginForm(this, 'apdc_forgotpassword_view');
+    });
+
+    jQuery(document).on('click','#connect-with-google', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showLoginForm(this, 'connect_with_google');
+    });
+
+    jQuery(document).on('submit','#password-form', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      processLoginForm(this);
     });
   }
 
-	jQuery('#account-login').on('click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-    if (apdcLoginPopup) {
-      if (apdcLoginPopup.isLoaded()) {
-        apdcLoginPopup.showLoading();
-        apdcLoginPopup.updateContent(accountPopup.apdc_login_view);
-      } else {
-        apdcLoginPopup.showLoading();
-      }
+  if (jQuery('header #header-delivery-link').length > 0) {
+    if (apdcDeliveryPopup === null) {
+      apdcDeliveryPopup = new ApdcPopup({
+        id: 'delivery',
+        autoHeightPopup:true,
+        getTemplate:true
+      });
     }
-	});
-	jQuery(document).on('click', '.to-login-form', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-    showLoginForm(this, 'apdc_login_view');
-  });
+    jQuery('#header-delivery-link').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (apdcDeliveryPopup) {
+        if (apdcDeliveryPopup.isLoaded()) {
+          apdcDeliveryPopup.show();
+          apdcDeliveryPopup.initPopupHeight();
+        } else {
+          apdcDeliveryPopup.showLoading();
+        }
+      }
+    });
+  }
 
-	jQuery('#header-delivery-link').on('click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-    if (apdcDeliveryPopup) {
-      if (apdcDeliveryPopup.isLoaded()) {
-        apdcDeliveryPopup.show();
-        apdcDeliveryPopup.initPopupHeight();
-      } else {
-        apdcDeliveryPopup.showLoading();
-      }
+  if (jQuery('#header-neighborhood-link').length > 0) {
+    if (apdcNeighborhoodPopup === null) {
+      apdcNeighborhoodPopup = new ApdcPopup({
+        autoHeightPopup:true,
+        id: 'neighborhood',
+        getTemplate: true
+      });
     }
-	});
-	jQuery('#header-neighborhood-link').on('click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-    if (apdcNeighborhoodPopup) {
-      if (apdcNeighborhoodPopup.isLoaded()) {
-        apdcNeighborhoodPopup.show();
-        apdcNeighborhoodPopup.initPopupHeight();
-      } else {
-        apdcNeighborhoodPopup.showLoading();
+    jQuery('#header-neighborhood-link').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (apdcNeighborhoodPopup) {
+        if (apdcNeighborhoodPopup.isLoaded()) {
+          apdcNeighborhoodPopup.show();
+          apdcNeighborhoodPopup.initPopupHeight();
+        } else {
+          apdcNeighborhoodPopup.showLoading();
+        }
       }
-    }
-	});
-
-	jQuery(document).on('submit','#login-form', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		processLoginForm(this);
-	});
-	
-	jQuery(document).on('submit','#register-form', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		processLoginForm(this);
-	});
+    });
+  }
 
 	jQuery(document).on('click', '#choose-district',function(e) {
 		e.preventDefault();
@@ -103,24 +128,6 @@ function initLoginPopup() {
       showLoginForm(this, 'apdc_choose_neighborhood');
   });
 
-	jQuery(document).on('click','#forgot-password', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		showLoginForm(this, 'apdc_forgotpassword_view');
-	});
-
-  jQuery(document).on('click','#connect-with-google', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      showLoginForm(this, 'connect_with_google');
-  });
-
-	jQuery(document).on('submit','#password-form', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		processLoginForm(this);
-	});
-	
 	function showLoginForm(elt,handle) {
 		apdcLoginPopup.showLoading();
 		jQuery('#' + apdcLoginPopup.id).data('currentView', handle);

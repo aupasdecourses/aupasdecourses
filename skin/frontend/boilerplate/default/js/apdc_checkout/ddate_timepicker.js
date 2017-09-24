@@ -20,6 +20,7 @@ var Apdc_DdateTimePicker = function(options) {
     initActions: function() {
       var self = this;
       jQuery(this.options.container).find('.select-days li.available').on('click', function() {
+        jQuery('input[name="ddate[dtime]"]').val('');
         self.currentDate = jQuery(this).data('date');
         self.currentTime = null;
         self.currentTimeId = null;
