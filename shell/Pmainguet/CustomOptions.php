@@ -82,7 +82,7 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 	}
 
 	public function listIdsVerbatim(){
-		$this->listIds(1,1);
+		return $this->listIds(1,1);
 	}
 
 	//Clean products options from a list of ids
