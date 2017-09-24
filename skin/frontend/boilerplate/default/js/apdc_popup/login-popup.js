@@ -9,9 +9,79 @@ var apdcLoginPopup = null;
 var apdcDeliveryPopup = null;
 var apdcNeighborhoodPopup = null;
 
+function showLoginForm(elt,handle) {
+  apdcLoginPopup.showLoading();
+  jQuery('#' + apdcLoginPopup.id).data('currentView', handle);
+  jQuery('#' + apdcLoginPopup.id)[0].dataset.currentView =  handle;
+  if (typeof(accountPopup[handle]) !== 'undefined') {
+    apdcLoginPopup.updateContent(accountPopup[handle]);
+  } else {
+    var ajaxUrl = jQuery(elt).data('login-view');
+    var data = new FormData();
+    data.append('isAjax', 1);
+    data.append('handle', handle);
+    data.append('referer', window.location.href);
+    jQuery.ajax({
+      url: ajaxUrl,
+      data: data,
+      processData: false,
+      contentType: false,
+      type: 'POST'
+
+    })
+      .done(function(response) {
+        if (response.status === 'SUCCESS') {
+          accountPopup[handle] = response.html;
+          apdcLoginPopup.updateContent(response.html);
+        } else if (response.status === 'ERROR') {
+          var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
+          apdcLoginPopup.updateContent(message);
+        }
+      })
+      .fail(function() {
+        console.log('failed');
+      });
+  }
+}
+
+function processLoginForm(elt) {
+  apdcLoginPopup.showLoading();
+  var ajaxUrl = jQuery(elt).attr('action');
+  var data = new FormData(jQuery(elt)[0]);
+  data.append("isAjax", 1);
+  jQuery(elt).children("input").attr("disabled", true);
+  jQuery(elt).children("button").attr("disabled", true).removeClass("button-green");
+  jQuery.ajax({
+    url: ajaxUrl,
+    data: data,
+    processData: false,
+    contentType: false,
+    type: 'POST'
+
+  })
+    .done(function(response) {
+      if (response.status === 'SUCCESS') {
+        if(typeof response.redirect !== 'undefined'){
+          window.location.href = response.redirect;
+        } else {
+          loginContent = response.html;
+          apdcLoginPopup.updateContent(response.html);
+        }
+      } else if (response.status === 'ERROR') {
+        loginContent = response.html;
+        apdcLoginPopup.updateContent(response.html);
+      } else {
+        console.log('failed');
+      }
+    })
+    .fail(function() {
+      console.log('failed');
+    });
+}
+
 function initLoginPopup() {
 
-  if (jQuery('#account-login').length > 0) {
+  if (jQuery('#account-login').length > 0 || jQuery('#choose-my-district')) {
     if (apdcLoginPopup === null) {
       apdcLoginPopup = new ApdcPopup({
         id: 'login-form',
@@ -22,7 +92,9 @@ function initLoginPopup() {
         }
       });
     }
+  }
 
+  if (jQuery('#account-login').length > 0) {
     jQuery('#account-login').on('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -127,76 +199,6 @@ function initLoginPopup() {
       e.stopPropagation();
       showLoginForm(this, 'apdc_choose_neighborhood');
   });
-
-	function showLoginForm(elt,handle) {
-		apdcLoginPopup.showLoading();
-		jQuery('#' + apdcLoginPopup.id).data('currentView', handle);
-		jQuery('#' + apdcLoginPopup.id)[0].dataset.currentView =  handle;
-		if (typeof(accountPopup[handle]) !== 'undefined') {
-		  apdcLoginPopup.updateContent(accountPopup[handle]);
-		} else {
-			var ajaxUrl = jQuery(elt).data('login-view');
-			var data = new FormData();
-			data.append('isAjax', 1);
-			data.append('handle', handle);
-			data.append('referer', window.location.href);
-			jQuery.ajax({
-				url: ajaxUrl,
-				data: data,
-				processData: false,
-				contentType: false,
-				type: 'POST'
-
-			})
-			.done(function(response) {
-				if (response.status === 'SUCCESS') {
-					accountPopup[handle] = response.html;
-					apdcLoginPopup.updateContent(response.html);
-				} else if (response.status === 'ERROR') {
-					var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
-					apdcLoginPopup.updateContent(message);
-				}
-			})
-			.fail(function() {
-				console.log('failed');
-			});
-		}
-	}
-
-	function processLoginForm(elt) {
-		apdcLoginPopup.showLoading();
-		var ajaxUrl = jQuery(elt).attr('action');
-		var data = new FormData(jQuery(elt)[0]);
-		data.append("isAjax", 1);
-		jQuery(elt).children("input").attr("disabled", true);
-		jQuery(elt).children("button").attr("disabled", true).removeClass("button-green");
-		jQuery.ajax({
-			url: ajaxUrl,
-			data: data,
-			processData: false,
-			contentType: false,
-			type: 'POST'
-
-		})
-		.done(function(response) {
-			if (response.status === 'SUCCESS') {
-				if(typeof response.redirect !== 'undefined'){
-				  window.location.href = response.redirect;
-				} else {
-				  loginContent = response.html;
-				  apdcLoginPopup.updateContent(response.html);
-				}
-			} else if (response.status === 'ERROR') {
-				loginContent = response.html;
-				apdcLoginPopup.updateContent(response.html);
-			} else {
-				console.log('failed');
-			}
-		})
-		.fail(function() {
-			console.log('failed');
-		});
-	}
 
 }
 

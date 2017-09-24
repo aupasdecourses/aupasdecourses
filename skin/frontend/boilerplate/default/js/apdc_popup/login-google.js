@@ -17,6 +17,10 @@ function googleAjaxLogin(data)
         window.location.href = response.redirect;
       } else if (typeof(response.html) !== 'undefined' && response.html !== '') {  
         apdcLoginPopup.updateContent(response.html);
+        if (response.need_to_choose_neighborhood) {
+          jQuery('#account-login').remove();
+          jQuery('#choose-my-district').show();
+        }
       }
       apdcLoginPopup.initPopupHeight();
     })

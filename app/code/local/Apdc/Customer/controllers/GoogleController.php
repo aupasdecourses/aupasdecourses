@@ -37,6 +37,7 @@ class Apdc_Customer_GoogleController extends Mage_Core_Controller_Front_Action
                         if ($customer->getCustomerNeighborhood()) {
                             $response['redirect'] = $customer->getNeighborhoodUrl();
                         } else {
+                            $response['need_to_choose_neighborhood'] = 1;
                             $response['html'] = $this->_getLayout('apdc_choose_neighborhood');
                         }
                     } else {
@@ -61,6 +62,7 @@ class Apdc_Customer_GoogleController extends Mage_Core_Controller_Front_Action
                             if ($customer->getCustomerNeighborhood()) {
                                 $response['redirect'] = $customer->getNeighborhoodUrl();
                             } else {
+                                $response['need_to_choose_neighborhood'] = 1;
                                 $response['html'] = $this->_getLayout('apdc_choose_neighborhood');
                             }
                         } else {
@@ -93,6 +95,7 @@ class Apdc_Customer_GoogleController extends Mage_Core_Controller_Front_Action
                             );
 
                             $response['status'] = 'SUCCESS';
+                            $response['need_to_choose_neighborhood'] = 1;
                             $response['html'] = $this->_getLayout('apdc_choose_neighborhood');
                         }
                     }
