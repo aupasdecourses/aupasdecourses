@@ -58,7 +58,7 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 		 		foreach($product->getProductOptionsCollection()->getData() as $option){
 		 			if(!in_array($option['default_title'],$this->_optionstitle)){
 		 				if($verbatim){
-		 					echo $option['default_title'].PHP_EOL;
+		 					echo $product->getSku()." : ".$option["default_title"].PHP_EOL;
 		 				}
 		 				$result[$product->getId()]=[
 		 					"sku" => $product->getSku(),
@@ -82,7 +82,7 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 	}
 
 	public function listIdsVerbatim(){
-		return $this->listIds(1,1);
+		$this->listIds(1,1);
 	}
 
 	//Clean products options from a list of ids
@@ -127,7 +127,6 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
         //get argument passed to shell script
         $step = $this->getArg('step');
         if (in_array($step, $steps)) {
-        	if($this->getArg('params'))
             $this->$step();
         } else {
             echo "STEP MUST BE ONE OF THESE:".PHP_EOL;
