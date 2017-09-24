@@ -102,11 +102,11 @@ ApdcPopup.prototype.close = function() {
 };
 
 ApdcPopup.prototype.updateContent = function(contentHtml) {
-  this.hideLoading();
   jQuery('#' + this.id + ' .apdc-popup-content').html(contentHtml);
   if (this.autoHeightPopup) {
     this.initPopupHeight();
   }
+  this.hideLoading();
 };
 
 ApdcPopup.prototype.showLoading = function() {
