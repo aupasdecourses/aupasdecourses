@@ -39,7 +39,7 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 	}
 
 	//List products with bad options
-	public function listIds($dump=1)
+	public function listIds($dump=1,$verbatim=0)
 	{
 		$products=Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*');
 		$options=array();
@@ -57,6 +57,7 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 		 		}
 		 		foreach($product->getProductOptionsCollection()->getData() as $option){
 		 			if(!in_array($option['default_title'],$this->_optionstitle)){
+		 				echo $option['default_title'].PHP_EOL;
 		 				$result[$product->getId()]=[
 		 					"sku" => $product->getSku(),
 		 					"default_title" => $option['default_title'],
