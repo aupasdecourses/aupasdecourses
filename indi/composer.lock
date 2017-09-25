@@ -921,16 +921,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.5.10",
+            "version": "v2.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "c78afd51721804f4f76ff30d9b6f6159eb046161"
+                "reference": "249b737094f1e7cba4f0a8d19acf5be6cf3ed504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/c78afd51721804f4f76ff30d9b6f6159eb046161",
-                "reference": "c78afd51721804f4f76ff30d9b6f6159eb046161",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/249b737094f1e7cba4f0a8d19acf5be6cf3ed504",
+                "reference": "249b737094f1e7cba4f0a8d19acf5be6cf3ed504",
                 "shasum": ""
             },
             "require": {
@@ -938,7 +938,7 @@
                 "doctrine/collections": "~1.2",
                 "doctrine/common": ">=2.5-dev,<2.9-dev",
                 "doctrine/dbal": ">=2.5-dev,<2.7-dev",
-                "doctrine/instantiator": "~1.0.1",
+                "doctrine/instantiator": "^1.0.1",
                 "ext-pdo": "*",
                 "php": ">=5.4",
                 "symfony/console": "~2.5|~3.0"
@@ -993,7 +993,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-08-18 19:17:35"
+            "time": "2017-09-18 06:50:20"
         },
         {
             "name": "friendsofsymfony/oauth-server-bundle",
@@ -2062,20 +2062,21 @@
         },
         {
             "name": "oneup/uploader-bundle",
-            "version": "1.7.7",
+            "version": "1.8.2",
             "target-dir": "Oneup/UploaderBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1up-lab/OneupUploaderBundle.git",
-                "reference": "5b1b2076daab43b3e8aaed9e0b43cb537142c456"
+                "reference": "5ff6a2e7bc9c7361fc719321f2fe3d620d9c7f8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/5b1b2076daab43b3e8aaed9e0b43cb537142c456",
-                "reference": "5b1b2076daab43b3e8aaed9e0b43cb537142c456",
+                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/5ff6a2e7bc9c7361fc719321f2fe3d620d9c7f8a",
+                "reference": "5ff6a2e7bc9c7361fc719321f2fe3d620d9c7f8a",
                 "shasum": ""
             },
             "require": {
+                "paragonie/random_compat": "^1.1|^2.0",
                 "php": ">=5.4",
                 "symfony/finder": "^2.4.0|~3.0",
                 "symfony/framework-bundle": "^2.4.0|~3.0"
@@ -2127,7 +2128,7 @@
                 "plupload",
                 "upload"
             ],
-            "time": "2017-05-03 09:01:35"
+            "time": "2017-09-19 09:38:39"
         },
         {
             "name": "paragonie/random_compat",

@@ -100,10 +100,6 @@ refundPostClosureForm:
   defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureForm}
   requirements: { psp:"[0-9]+" }
 
-mistralTicketImg:
-  path: /refund/mistralTicketImg/
-  defaults: { _controller: ApdcApdcBundle:Refund:mistralTicketImg}
-
 billingIndex:
   path: /billing/
   defaults: { _controller: ApdcApdcBundle:Billing:index}

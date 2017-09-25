@@ -45,7 +45,7 @@ class Adyen
 		$this->list_recurr_details_password		= $list_recurr_details_password;
 
 		if ($this->_ch === false) {
-			throw new Exception('Adyen: curl_init() error:'.curl_error($this->_ch));
+			throw new \Exception('Adyen: curl_init() error:'.curl_error($this->_ch));
 		}
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->_ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -80,11 +80,11 @@ class Adyen
 		$refundResult = curl_exec($this->_ch);
 
 		if (curl_errno($this->_ch))
-			throw new Exception('Refund Curl Error'.curl_error($this->_ch));
+			throw new \Exception('Refund Curl Error'.curl_error($this->_ch));
 
 		$refundDecoded = json_decode($refundResult, true);
 		if (!in_array("[refund-received]", $refundDecoded))
-			throw new Exception('Adyen Error, Remboursement non valide');
+			throw new \Exception('Adyen Error, Remboursement non valide');
 
 		return($refundDecoded['response']);
 	}
@@ -121,7 +121,7 @@ class Adyen
 		$storeResult = curl_exec($this->_ch);
 		$storeDecoded = json_decode($storeResult, true);
 		if (!in_array("[payout-submit-received]", $storeDecoded))
-			throw new Exception('Adyen Error, Payout Store and Submit non valide');
+			throw new \Exception('Adyen Error, Payout Store and Submit non valide');
 
 
 
@@ -142,7 +142,7 @@ class Adyen
 		$result = curl_exec($this->_ch);
 		$storeDecoded = json_decode($result, true);
 		if (!in_array("[payout-confirm-received]", $storeDecoded))
-			throw new Exception('Adyen Error, Confirm non valide');
+			throw new \Exception('Adyen Error, Confirm non valide');
 
 		return($storeDecoded["pspReference"]);
 	}

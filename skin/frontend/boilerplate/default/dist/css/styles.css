@@ -16756,6 +16756,12 @@ h1.account-title {
   }
 }
 
+@media screen and (min-width: 992px) {
+  .button.button-social.button-fb {
+    float: right;
+  }
+}
+
 @media screen and (max-width: 1324px) {
   #supermenu .nav {
     display: block;
