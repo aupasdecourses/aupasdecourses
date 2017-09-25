@@ -29,7 +29,7 @@
 <config>
     <modules>
         <Adyen_Payment>
-            <version>2.7.1</version>
+            <version>2.9.3</version>
         </Adyen_Payment>
     </modules>
     <global>
@@ -52,7 +52,7 @@
                     </event_queue>
                     <order_payment>
                         <table>adyen_order_payment</table>
-					</order_payment>
+                    </order_payment>
                 </entities>
             </adyen_resource>
             <sales>
@@ -113,7 +113,36 @@
                 <adyen>Adyen</adyen>
             </groups>
         </payment>
+        <fieldsets>
+            <sales_convert_quote_item>
+                <adyen_pre_order>
+                    <to_order_item>*</to_order_item>
+                </adyen_pre_order>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <adyen_pre_order>
+                    <to_quote_item>*</to_quote_item>
+                </adyen_pre_order>
+            </sales_convert_order_item>
+        </fieldsets>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <adyen_pre_order />
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
         <events>
+            <sales_quote_item_set_product>
+                <observers>
+                    <adyen_payment_sales_quote_item_set_product>
+                        <class>Adyen_Payment_Model_Observers_Quote</class>
+                        <method>salesQuoteItemSetProduct</method>
+                    </adyen_payment_sales_quote_item_set_product>
+                </observers>
+            </sales_quote_item_set_product>
             <sales_order_payment_capture>
                 <observers>
                     <adyen_payment_capture>
@@ -122,7 +151,7 @@
                     </adyen_payment_capture>
                 </observers>
             </sales_order_payment_capture>
-            <controller_action_predispatch>
+            <controller_action_predispatch_checkout>
                 <observers>
                     <adyen_payment_hpp>
                         <class>adyen/observer</class>
@@ -133,15 +162,75 @@
                         <method>addMethodsToConfig</method>
                     </adyen_payment_billing_agreement>
                 </observers>
-            </controller_action_predispatch>
-            <sales_order_shipment_save_after>
+            </controller_action_predispatch_checkout>
+            <controller_action_predispatch_firecheckout>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_firecheckout>
+            <controller_action_predispatch_onestepcheckout>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_onestepcheckout>
+            <controller_action_predispatch_opc>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_opc>
+            <controller_action_predispatch_streamcheckout>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_streamcheckout>
+            <controller_action_predispatch_gomage_checkout>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_gomage_checkout>
+            <sales_order_shipment_save_before>
                 <observers>
                     <adyen_payment_capture_invoice_on_shipment>
                         <class>adyen/observer</class>
                         <method>captureInvoiceOnShipment</method>
                     </adyen_payment_capture_invoice_on_shipment>
                 </observers>
-            </sales_order_shipment_save_after>
+            </sales_order_shipment_save_before>
         </events>
     </global>
 
@@ -205,6 +294,18 @@
             </modules>
         </translate>
         <events>
+            <controller_action_predispatch_adminhtml>
+                <observers>
+                    <adyen_payment_hpp>
+                        <class>adyen/observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_hpp>
+                    <adyen_payment_billing_agreement>
+                        <class>adyen/billing_agreement_observer</class>
+                        <method>addMethodsToConfig</method>
+                    </adyen_payment_billing_agreement>
+                </observers>
+            </controller_action_predispatch_adminhtml>
             <sales_order_payment_cancel>
                 <observers>
                     <adyen_payment>
@@ -231,6 +332,7 @@
                 <demoMode>Y</demoMode>
                 <debug>1</debug>
                 <uncancelorder>1</uncancelorder>
+                <unholdorder>0</unholdorder>
                 <autorefundoncancel>1</autorefundoncancel>
                 <order_status>pending</order_status>
                 <payment_authorized>processing</payment_authorized>
@@ -316,6 +418,7 @@
                 <telephone_show>0</telephone_show>
                 <shoppertype>1</shoppertype>
                 <different_address_disable>0</different_address_disable>
+                <ratepay_id>oj9GsQ</ratepay_id>
                 <sort_order>40</sort_order>
             </adyen_openinvoice>
             <adyen_cc translate="title" module="adyen">
@@ -329,8 +432,6 @@
                 <cse_public_key></cse_public_key>
                 <visible_type>both</visible_type>
                 <enable_moto>0</enable_moto>
-                <account_id>99999</account_id>
-                <trxuser_id>99999</trxuser_id>
                 <trxuser_password>0</trxuser_password>
                 <adminaction_password>5cfgRT34xsdedtFLdfHxj7tfwx24fe</adminaction_password>
                 <wsdl>https://pal-test.adyen.com/pal/Payment.wsdl</wsdl>
@@ -341,18 +442,10 @@
                 <active>0</active>
                 <model>adyen/adyen_oneclick</model>
                 <group>adyen</group>
-                <title>Adyen OneClick</title>
+                <title>Adyen Stored Payment Methods</title>
                 <sort_order>1</sort_order>
                 <recurring_payment_type>ONECLICK</recurring_payment_type>
             </adyen_oneclick>
-            <adyen_elv translate="title" module="adyen">
-                <active>0</active>
-                <model>adyen/adyen_elv</model>
-                <group>adyen</group>
-                <visible_type>both</visible_type>
-                <title>Adyen ELV</title>
-                <sort_order>50</sort_order>
-            </adyen_elv>
             <adyen_boleto translate="title" module="adyen">
                 <active>0</active>
                 <model>adyen/adyen_boleto</model>
@@ -383,6 +476,19 @@
                 <session_validity>3</session_validity>
                 <sort_order>70</sort_order>
             </adyen_pay_by_mail>
+            <adyen_apple_pay translate="title" module="adyen">
+                <active>0</active>
+                <model>adyen/adyen_applePay</model>
+                <group>adyen</group>
+                <title>Adyen Apple Pay</title>
+                <sort_order>80</sort_order>
+                <shipping_type>shipping</shipping_type>
+                <allow_quest_checkout>1</allow_quest_checkout>
+                <change_address>1</change_address>
+                <show_in_payment_step_checkout>1</show_in_payment_step_checkout>
+                <show_outside_of_checkout>1</show_outside_of_checkout>
+                <allow_billing_agreement_wizard>0</allow_billing_agreement_wizard>
+            </adyen_apple_pay>
         </payment>
         <adyen>
             <payment>
@@ -498,6 +604,11 @@
                         <name>Klarna</name>
                         <order>20</order>
                     </klarna>
+                    <ratepay>
+                        <code>ratepay</code>
+                        <name>RatePAY</name>
+                        <order>30</order>
+                    </ratepay>
                 </openinvoicetypes>
                 <recurringtypes>
                     <none>
