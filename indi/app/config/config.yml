@@ -116,8 +116,8 @@ fos_user:
     firewall_name: apdc_firewall
     user_class: Apdc\ApdcBundle\Entity\User
     from_email:
-        address: pierre@aupasdecourses.com
-        sender_name: pierre-apdc
+        address: contact@aupasdecourses.com
+        sender_name: L'équipe Au Pas De Courses
 
 # OAuth Configuration
 fos_oauth_server:

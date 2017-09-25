@@ -34,3 +34,6 @@ parameters:
 
   stars_services_api_url:         'https://backend-recette.stars-services.com/WebServices/V1/getpictures'
   stars_services_api_token:		  'APDC2712A9B6'
+  from_email: contact@aupasdecourses.com
+  sender_name: L'Equipe Au Pas De Courses
+  to_email: prix@aupasdecourses.com
