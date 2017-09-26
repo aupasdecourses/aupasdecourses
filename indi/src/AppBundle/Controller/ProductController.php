@@ -273,8 +273,8 @@ class ProductController extends AbstractController
                 $bodyChanges = [
                     'name'                      => 'Nom : '.$entity['name'].' (ancienne valeur: '.$this->original['name'].')',
                     'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'].' (ancienne valeur: '.$this->original['reference_interne_magasin'].')',
-                    'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['status'] ? 'Oui' : 'Non').')',
-                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['on_selection'] ? 'Oui' : 'Non').')',
+                    'status'                    => 'Disponible : ' . ($entity['status']==1 ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['status']==1 ? 'Oui' : 'Non').')',
+                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection']==1 ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['on_selection']==1 ? 'Oui' : 'Non').')',
                     'prix_public'                     => 'Prix : ' . $entity['prix_public'].' (ancienne valeur: '.$this->original['prix_public'].')',
                     'unite_prix'                => 'Unit : ' . $entity['unite_prix'].' (ancienne valeur: '.$this->original['unite_prix'].')',
                     'short_description'         => 'Description : ' . $entity['short_description'].' (ancienne valeur: '.$this->original['short_description'].')',
