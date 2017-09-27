@@ -121,3 +121,4 @@ Mage_Checkout::Estimate Shipping and Tax,"Sélectionnez votre mode de livraison"
 "Your search returns no results.","Désolé, nos commerçants n'ont pas le produit que vous recherchez."
 Apdc_Cart::All merchant's items have been removed successfully.,Tous les produits du commerçant ont été retiré de votre panier.
 Apdc_Cart::"Can not remove the item.","Nous ne pouvons retirer le(s) produit(s) de votre panier."
+"Adyen_Payment::Invalid credit number card.","Le numéro de carte de crédit, le CVV et/ou la date de validité sont invalides. Merci de bien vouloir vérifier vos informations bancaires."
