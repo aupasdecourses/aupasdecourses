@@ -2,6 +2,38 @@
 
 class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_ProcessNotification {
 
+    
+    /**
+     * SAME AS ORIGINAL, COPY BECAUSE IT IS A PRIVATE FUNCTION
+     * 
+     * @param $order
+     */
+    private function _setPrePaymentAuthorized($order)
+    {
+        $status = $this->_getConfigData('payment_pre_authorized', 'adyen_abstract', $order->getStoreId());
+
+        // only do this if status in configuration is set
+        if(!empty($status)) {
+
+            $statusObject = Mage::getModel('sales/order_status')->getCollection()
+                ->addFieldToFilter('main_table.status', $status)
+                ->addFieldToFilter('state_table.is_default', true)
+                ->joinStates()
+                ->getFirstItem();
+            $state = $statusObject->getState();
+            $order->setState($state, $status, Mage::helper('adyen')->__('Payment is pre authorised waiting for capture'));
+
+            /**
+             * save the order this is needed for older magento version so that status is not reverted to state NEW
+             */
+            $order->save();
+            $order->sendOrderUpdateEmail((bool) $this->_getConfigData('send_update_mail', 'adyen_abstract', $order->getStoreId()));
+            $this->_debugData[$this->_count]['_setPrePaymentAuthorized'] = 'Order status is changed to Pre-authorised status, status is ' . $status;
+        } else {
+            $this->_debugData[$this->_count]['_setPrePaymentAuthorized'] = 'No pre-authorised status is used so ignore';
+        }
+    }
+
     /**
      * MODIFIED SO WE DON'T SEND DUPLICATE EMAIL ON ORDER CREATION, ONLY ON ORDER CREATION
      * @param $order
