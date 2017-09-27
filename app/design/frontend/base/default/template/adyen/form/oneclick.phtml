@@ -75,7 +75,7 @@ $_recurringDetails = $this->getRecurringDetails();
                         <label><?php echo $this->__('Card Verification Number') ?></label>
                         <?php if($this->hasVerification()): ?>
                             <div class="cvc_block" id="cvc_block_<?php echo $_code;?>">
-                                <input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv required-entry <?php echo $class; ?>" id="<?php echo $_code ?>_cc_cid" <?php echo (!$this->isCseEnabled() ? "name=\"payment[oneclick_cid_".$_code."]\"" : "data-encrypted-name-oneclick-" . $_code ."=cvc"); ?> value="" size="7" maxlength="<?php echo $maxLenght; ?>" />
+                                <input type="text" pattern="[0-9]{3,}" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv required-entry <?php echo $class; ?>" id="<?php echo $_code ?>_cc_cid" <?php echo (!$this->isCseEnabled() ? "name=\"payment[oneclick_cid_".$_code."]\"" : "data-encrypted-name-oneclick-" . $_code ."=cvc"); ?> value="" size="7" maxlength="<?php echo $maxLenght; ?>" />
                                 <a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
                             </div>
                         <?php endif; ?>
@@ -128,20 +128,18 @@ $_recurringDetails = $this->getRecurringDetails();
                         var cseUpdateOneClick_<?php echo $_code ?> = function() {
 
                             try {
-                                if (payment.currentMethod && payment.currentMethod == '<?php echo $_code ?>') {
-                                    // get closest form element
-                                    var elementOneClick = $('payment_form_<?php echo $_code ?>');
-                                    var cse_form_oneclick =  elementOneClick.match('form') ? elementOneClick : elementOneClick.up('form');
-                                    // add this field to option
-                                    cse_options_oneclick_<?php echo $_code ?>.fieldNameAttribute = "data-encrypted-name-oneclick-<?php echo $_code ?>";
+                                // get closest form element
+                                var elementOneClick = $('payment_form_<?php echo $_code ?>');
+                                var cse_form_oneclick =  elementOneClick.match('form') ? elementOneClick : elementOneClick.up('form');
+                                // add this field to option
+                                cse_options_oneclick_<?php echo $_code ?>.fieldNameAttribute = "data-encrypted-name-oneclick-<?php echo $_code ?>";
 
-                                    // do not validate because number does not exists for oneclick
-                                    cse_options_oneclick_<?php echo $_code ?>.enableValidations = false;
+                                // do not validate because number does not exists for oneclick
+                                cse_options_oneclick_<?php echo $_code ?>.enableValidations = false;
 
-                                    var cseFormOneClick = adyen.encrypt.createEncryptedForm(cse_form_oneclick, cse_key_oneclick, cse_options_oneclick_<?php echo $_code ?>);
-                                    // encrypt data directly because submit button is not always on the page
-                                    cseFormOneClick.createEncryptedField(cseFormOneClick.encrypt());
-                                }
+                                cse_form_oneclick.cseFormOneClick = cse_form_oneclick.cseFormOneClick || adyen.encrypt.createEncryptedForm(cse_form_oneclick, cse_key_oneclick, cse_options_oneclick_<?php echo $_code ?>);
+                                // encrypt data directly because submit button is not always on the page
+                                cse_form_oneclick.cseFormOneClick.createEncryptedField(cse_form_oneclick.cseFormOneClick.encrypt());
                             } catch (e) {
                                 if (typeof console == "object") {
                                     console.error(e);
@@ -156,7 +154,7 @@ $_recurringDetails = $this->getRecurringDetails();
                             if (typeof adyen === 'undefined') {
                                 var script = document.createElement("script");
                                 script.type = "text/javascript";
-                                script.src = "<?php echo $this->getJsUrl('adyen/payment/adyen.encrypt_0_1_16.js'); ?>";
+                                script.src = "<?php echo $this->getJsUrl('adyen/payment/adyen.encrypt_0_1_18.js'); ?>";
                                 document.body.appendChild(script);
                             }
 

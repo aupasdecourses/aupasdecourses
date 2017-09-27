@@ -27,6 +27,11 @@
  */
 class Adyen_Payment_Helper_Data extends Mage_Payment_Helper_Data
 {
+
+    const KLARNA = "klarna";
+    const RATEPAY = "ratepay";
+    const AFTERPAY = "afterpay";
+
     /**
      * @return array
      */
@@ -385,7 +390,7 @@ class Adyen_Payment_Helper_Data extends Mage_Payment_Helper_Data
 
 
     /**
-     * Is th IP in the given range
+     * Is the IPv4/v6 IP address in the given range
      * @param $ip
      * @param $from
      * @param $to
@@ -394,14 +399,34 @@ class Adyen_Payment_Helper_Data extends Mage_Payment_Helper_Data
      */
     public function ipInRange($ip, $from, $to)
     {
-        $ip = ip2long($ip);
-        $lowIp = ip2long($from);
-        $highIp = ip2long($to);
+        $ip = $this->getIpNumberFromAddress($ip);
+        $from = $this->getIpNumberFromAddress($from);
+        $to = $this->getIpNumberFromAddress($to);
 
-        if ($ip <= $highIp && $lowIp <= $ip) {
-            return true;
+        return (!$ip || !$from || !$to) ? false : ($ip <= $to && $from <= $ip);
+    }
+
+    /**
+     * Converts any given IPv4/v6 address to a string representation of it's 32/128bit integer
+     * which may be used for comparison
+     *
+     * @param string $address
+     * @return string|bool
+     */
+    public function getIpNumberFromAddress($address)
+    {
+        // Unrecognised addresses cause PHP warnings, silence the warning and return a bool instead
+        $pton = @inet_pton($address);
+        if (!$pton) {
+            return false;
         }
-        return false;
+
+        $number = '';
+        foreach (unpack('C*', $pton) as $byte) {
+            $number .= str_pad(decbin($byte), 8, '0', STR_PAD_LEFT);
+        }
+
+        return base_convert(ltrim($number, '0'), 2, 10);
     }
 
 
@@ -486,5 +511,61 @@ class Adyen_Payment_Helper_Data extends Mage_Payment_Helper_Data
             $order->getStore()
         );
         return $calculation->getRate($request->setProductClassId($taxClass));
+    }
+    
+    /**
+     * @param null $storeId
+     * @return mixed
+     */
+    public function getApplePayMerchantIdentifier($storeId = null)
+    {
+        if ($this->getConfigDataDemoMode($storeId)) {
+            return $this->getConfigData('merchant_identifier_test', 'adyen_apple_pay', $storeId);
+        }
+        return $this->getConfigData('merchant_identifier_live', 'adyen_apple_pay', $storeId);
+    }
+    
+    /**
+     * @param null $storeId
+     * @return mixed
+     */
+    public function getApplePayFullPathLocationPEMFile($storeId = null)
+    {
+        if ($this->getConfigDataDemoMode($storeId)) {
+            return $this->getConfigData('full_path_location_pem_file_test', 'adyen_apple_pay', $storeId);
+        }
+        return $this->getConfigData('full_path_location_pem_file_live', 'adyen_apple_pay', $storeId);
+    }
+
+
+    /**
+     * Identifiy if payment method is an openinvoice payment method
+     *
+     * @param $paymentMethod
+     * @return bool
+     */
+    public function isOpenInvoice($paymentMethod)
+    {
+        if( strcmp($paymentMethod, self::KLARNA) === 0 ||
+            strcmp($paymentMethod, self::RATEPAY) === 0 ||
+            $this->isAfterPay($paymentMethod))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Identifiy if paymentMethod is afterpay
+     *
+     * @param $paymentMethod
+     * @return bool
+     */
+    public function isAfterPay($paymentMethod)
+    {
+        if(strcmp(substr($paymentMethod, 0, 8), self::AFTERPAY) === 0) {
+            return true;
+        }
+        return false;
     }
 }

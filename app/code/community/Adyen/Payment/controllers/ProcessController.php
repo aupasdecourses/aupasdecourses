@@ -181,6 +181,11 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
 
             // get payment details
             $payment = $order->getPayment();
+
+            if ($payment === false) {
+                throw new Exception('No payment information available');
+            }
+
             $paRequest = $payment->getAdditionalInformation('paRequest');
             $md = $payment->getAdditionalInformation('md');
             $issuerUrl = $payment->getAdditionalInformation('issuerUrl');
@@ -221,12 +226,18 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
                             $order->getPayment()->setAdditionalInformation('3d_successful', true);
                             $order->save();
 
-                            $this->_redirect('checkout/onepage/success');
+                            $this->_redirect('checkout/onepage/success',['utm_nooverride' => '1']);
                         }
                         else {
-                            $order->addStatusHistoryComment(Mage::helper('adyen')->__('3D-secure validation was unsuccessful.'))->save();
-                            $session->addException($e, Mage::helper('adyen')->__($e->getMessage()));
-                            $this->cancel();
+                            // only cancel if 3D secure was not already successful
+                            if(!$order->getPayment()->getAdditionalInformation('3d_successful')) {
+                                $order->addStatusHistoryComment(Mage::helper('adyen')->__('3D-secure validation was unsuccessful.'))->save();
+                                $session->addException($e, Mage::helper('adyen')->__($e->getMessage()));
+                                $this->cancel();
+                            } else {
+                                // already succesfull so turn back to the success page
+                                $this->_redirect('checkout/onepage/success',['utm_nooverride' => '1']);
+                            }
                         }
                     }
                     else {
@@ -259,13 +270,13 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
                 Adyen_Payment_Exception::throwException($errorMsg);
             }
         } catch (Exception $e) {
-            $alreadySuccessful = $order->getPayment()->getAdditionalInformation('3d_successful');
+            $alreadySuccessful = $order->getPayment() && $order->getPayment()->getAdditionalInformation('3d_successful');
             // ignore because 3d was already successful for this order
             if (!$alreadySuccessful)  {
                 Mage::logException($e);
                 $this->cancel();
             } else {
-                $this->_redirect('checkout/onepage/success');
+                $this->_redirect('checkout/onepage/success', ['utm_nooverride' => '1']);
             }
         }
     }
@@ -286,7 +297,7 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
                 $session->unsAdyenRealOrderId();
                 $session->setQuoteId($session->getAdyenQuoteId(true));
                 $session->getQuote()->setIsActive(false)->save();
-                $this->_redirect('checkout/onepage/success');
+                $this->_redirect('checkout/onepage/success' ,['utm_nooverride' => '1']);
             } else {
                 $this->cancel();
             }
@@ -306,7 +317,7 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
         $session->unsAdyenRealOrderId();
         $session->setQuoteId($session->getAdyenQuoteId(true));
         $session->getQuote()->setIsActive(false)->save();
-        $this->_redirect('checkout/onepage/success');
+        $this->_redirect('checkout/onepage/success', ['utm_nooverride' => '1']);
     }
 
     /**
@@ -532,7 +543,7 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
             $session->unsAdyenRealOrderId();
             $session->setQuoteId($session->getAdyenQuoteId(true));
             $session->getQuote()->setIsActive(false)->save();
-            $this->_redirect('checkout/onepage/success');
+            $this->_redirect('checkout/onepage/success', ['utm_nooverride' => '1']);
         } else {
             $this->cancel();
         }

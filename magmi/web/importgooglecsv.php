@@ -37,7 +37,7 @@
                     file_put_contents($filepath, file_get_contents('https://docs.google.com/spreadsheets/d/'.$key.'/export?gid='.$gid.'&format=csv&id='.$key, false, stream_context_create($arrContextOptions)));
                 $filesize = filesize($filepath);
                 //}
-                echo 'Fichier '.$name.' synchronisé! (taille='.round(floatval($filesize) / 1000, 0).'Ko / url: '.'https://docs.google.com/spreadsheets/d/'.$key.'/export?gid='.$gid.'&format=csv&id='.$key.')';
+                echo 'Fichier '.$name.' synchronisé! (taille='.round(floatval($filesize) / 1000, 0).'Ko )';
             } catch (Exception $e) {
                 echo 'Erreur!';
             }
