@@ -105,7 +105,7 @@ Mage_Checkout::"Based on your selection, you may be interested in the following 
 Pmainguet_CustomCheckout::Edit,Modifier,,
 Pmainguet_CustomCheckout::Loading next step...,Un instant s'il vous plaît ...,,
 Mage_Checkout::Loading next step...,Un instant s'il vous plaît ...,,
-Mage_Checkout::Submitting order information...,"Un instant, vous allez être redirigé vers Hipay...",,
+Mage_Checkout::Submitting order information...,"Un instant ...",,
 Mage_Bundle::Price as configured,Prix total,,
 "Mage_Customer::Log In","Se connecter",,
 "Mage_Customer::Sign up","S'inscrire",,

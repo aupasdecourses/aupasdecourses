@@ -27,7 +27,7 @@
 
 <div class="response-payment success">
     <h1><?php echo $this->__('Merci !') ?></h1>
-    <p><?php echo $this->__('Votre paiement a été réalisé avec succès.') ?></p>
+    <p><?php echo $this->__('Votre paiement a été réalisé avec succès, pour votre commande n°%s', $this->escapeHtml($this->getOrderId())); ?></p>
     <p><?php echo $this->__('Vous recevrez un mail de confirmation dans quelques secondes !') ?></p>
     <?php if ($error = $this->getErrorMessage()) : ?><p><?php echo $error ?></p><?php endif ?>
     <a href="<?php echo $this->getUrl() ?>" class="button button-green"><?php echo $this->__('Retour à la boutique') ?></a>

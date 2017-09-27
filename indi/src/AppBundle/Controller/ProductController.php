@@ -130,6 +130,8 @@ class ProductController extends AbstractController
                     return;
                 }
 
+                $origins=$this->getFilters();
+
                 $title = 'Appli V2 - Produit créé chez le commerçant avec l\'attribut commercant n° : '.$entity['commercant'];
                 $body  = 'Le produit suivant a été créé par '.$this->getUser()->getUsername()
                     .', le '.date("Y-m-d").' :'.PHP_EOL
@@ -144,7 +146,7 @@ class ProductController extends AbstractController
                     .'Poids portion : '.$entity['poids_portion'].PHP_EOL
                     .'Nombre portion : '.$entity['nbre_portion'].PHP_EOL
                     .'Tax : '.$entity['tax_class_id'].PHP_EOL
-                    .'Origin : '.$entity['origine'].PHP_EOL
+                    .'Origin : '.$origin['origine'][$entity['origine']].PHP_EOL
                     .'Bio : '.($entity['produit_biologique'] ? 'Oui' : 'Non').PHP_EOL
                     .'Notes du commerçant : '.$entity['notes_com'].PHP_EOL
                     .'Ids quartier : '.$entity['website_ids'].PHP_EOL
@@ -270,18 +272,20 @@ class ProductController extends AbstractController
                         ->getUriForPath('/' . $entity['image_tmp']);
                 }
 
+                $origins=$this->getFilters();
+
                 $bodyChanges = [
                     'name'                      => 'Nom : '.$entity['name'].' (ancienne valeur: '.$this->original['name'].')',
                     'reference_interne_magasin' => 'Référence : ' . $entity['reference_interne_magasin'].' (ancienne valeur: '.$this->original['reference_interne_magasin'].')',
-                    'status'                    => 'Disponible : ' . ($entity['status'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['status'] ? 'Oui' : 'Non').')',
-                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['on_selection'] ? 'Oui' : 'Non').')',
+                    'status'                    => 'Disponible : ' . ($entity['status']==1 ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['status']==1 ? 'Oui' : 'Non').')',
+                    'on_selection'              => 'Sélection APDC : ' . ($entity['on_selection']==1 ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['on_selection']==1 ? 'Oui' : 'Non').')',
                     'prix_public'                     => 'Prix : ' . $entity['prix_public'].' (ancienne valeur: '.$this->original['prix_public'].')',
                     'unite_prix'                => 'Unit : ' . $entity['unite_prix'].' (ancienne valeur: '.$this->original['unite_prix'].')',
                     'short_description'         => 'Description : ' . $entity['short_description'].' (ancienne valeur: '.$this->original['short_description'].')',
                     'poids_portion'             => 'Poids portion : ' . $entity['poids_portion'].' (ancienne valeur: '.$this->original['poids_portion'].')',
                     'nbre_portion'              => 'Nombre portion : ' . $entity['nbre_portion'].' (ancienne valeur: '.$this->original['nbre_portion'].')',
                     'tax_class_id'              => 'Tax Class Id : ' . $entity['tax_class_id'].' (ancienne valeur: '.$this->original['tax_class_id'].')',
-                    'origine'                   => 'Origine : ' . $entity['origine'].' (ancienne valeur: '.$this->original['origine'].')',
+                    'origine'                   => 'Origine : ' . $origins['origine'][$entity['origine']].' (ancienne valeur: '.$origins['origine'][$this->original['origine']].')',
                     'produit_biologique'        => 'Bio : ' . ($entity['produit_biologique'] ? 'Oui' : 'Non').' (ancienne valeur: '.($this->original['produit_biologique'] ? 'Oui' : 'Non').')',
                     'image_tmp'                 => 'Photo proposée par le commerçant : <a href="' . $photo.'">'.$photo.'</a>',
                     'notes_com'                 => 'Notes Commerçants : ' . $entity['notes_com'].' (ancienne valeur: '.$this->original['notes_com'].')',
