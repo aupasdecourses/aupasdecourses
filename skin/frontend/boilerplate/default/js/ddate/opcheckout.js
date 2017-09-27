@@ -952,11 +952,12 @@ Payment.prototype = {
                         Validation.ajaxError(field, response.error);
                     }
                 }
-                return;
+            } else {
+                alert('ERREUR (détails dans la console)');
+                console.log(response);    
             }
-            alert('ERREUR (détails dans la console)');
-			console.log(response);
-            return;
+            
+            return false;
         }
 
         checkout.setStepResponse(response);
