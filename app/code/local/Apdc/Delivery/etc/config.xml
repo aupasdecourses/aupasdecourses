@@ -68,12 +68,12 @@
 					</geocode_customers>
                 </entities>
             </delivery_resource>
-            <adyen_payment>
+            <adyen>
                 <rewrite>
-                    <processnotification>Apdc_Delivery_Model_Adyen_ProcessNotification</processnotification>
+                    <processNotification>Apdc_Delivery_Model_Adyen_ProcessNotification</processNotification>
                     <event>Apdc_Delivery_Model_Adyen_Event</event>
                 </rewrite>
-            </adyen_payment>
+            </adyen>
         </models>
         <helpers>
             <pmainguet_delivery>
