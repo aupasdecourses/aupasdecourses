@@ -53,7 +53,7 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
                 foreach ($slots as $slot) {
                     if($this->isEnabled($slot->getId(), $strDate)){
                         $hasSlot = true;
-                        $availableDaysAndSlots[$strDate]['slots'][$slot->getDtimeId()] = [
+                        $availableDaysAndSlots[$strDate]['slots'][$slot->getDtimesort()] = [
                             'dtime_id' => $slot->getDtimeId(),
                             'dtime' => $slot->getDtime()
                         ];
@@ -79,7 +79,7 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
                                 ]
                             ];
                         }
-                        $availableDaysAndSlots[$strDate]['slots'][$slot->getDtimeId()] = [
+                        $availableDaysAndSlots[$strDate]['slots'][$slot->getDtimesort()] = [
                             'dtime_id' => $slot->getDtimeId(),
                             'dtime' => $slot->getDtime()
                         ];
