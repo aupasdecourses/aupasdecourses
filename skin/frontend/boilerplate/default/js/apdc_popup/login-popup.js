@@ -61,6 +61,10 @@ function processLoginForm(elt) {
   })
     .done(function(response) {
       if (response.status === 'SUCCESS') {
+
+        // Google Tag Manager event
+        tagmanager_event('validationInscription',{});
+
         if(typeof response.redirect !== 'undefined'){
           window.location.href = response.redirect;
         } else {

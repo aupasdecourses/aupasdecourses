@@ -94,9 +94,27 @@ class Apdc_Customer_GoogleController extends Mage_Core_Controller_Front_Action
                                 $this->__('Your Google account is now connected to your new user account at our store. Now you can login using our Google Login button.')
                             );
 
+                            $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId(Mage::app()->getWebsite()->getId());
+                            if ($neighborhoods->count() > 0) {
+                                $neighborhood = $neighborhoods->getFirstItem();
+                                if ($neighborhood && $neighborhood->getId()) {
+                                    $customer = Mage::getSingleton('customer/session')->getCustomer();
+                                    $customer->setCustomerNeighborhood($neighborhood->getId())
+                                        ->save();
+
+                                    $response['redirect'] = $neighborhood->getStoreUrl();
+                                    Mage::getSingleton('core/session')->addSuccess(
+                                        $this->__('Vous êtes inscrit dans le <strong>quartier %s</strong>. Vous pouvez modifier votre choix en cliquant sur l\'icône <strong><i class="fa fa-home"></i> Quartier</strong> en haut de la page.', $neighborhood->getName())
+                                    );
+                                }
+                            }
+
                             $response['status'] = 'SUCCESS';
-                            $response['need_to_choose_neighborhood'] = 1;
-                            $response['html'] = $this->_getLayout('apdc_choose_neighborhood');
+                            $response['new_account'] = 1;
+                            if (!isset($response['redirect']) || $response['redirect'] == '') {
+                                $response['need_to_choose_neighborhood'] = 1;
+                                $response['html'] = $this->_getLayout('apdc_choose_neighborhood');
+                            }
                         }
                     }
                 }
