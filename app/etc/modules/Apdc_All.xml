@@ -88,6 +88,9 @@
         <Apdc_Delivery>
             <codePool>local</codePool>
             <active>true</active>
+            <depends>
+              <Adyen_Payment />
+            </depends>
         </Apdc_Delivery>
         <Apdc_Attributesqtoi>
             <active>true</active>
