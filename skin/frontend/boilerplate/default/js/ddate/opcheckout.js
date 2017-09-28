@@ -956,8 +956,8 @@ Payment.prototype = {
                 }
                 return;
             }
-            if (typeof(response.error_message) == 'string') {
-                alert(response.error_message);
+            if (typeof(response.error) == 'boolean') {
+                alert(response.error_messages);
             } else {
                 alert(response.error);
             }
