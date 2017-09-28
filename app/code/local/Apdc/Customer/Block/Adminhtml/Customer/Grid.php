@@ -90,7 +90,7 @@ class Apdc_Customer_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_C
         $this->addColumn(
             'facebook',
             [
-                'header' => Mage::helper('customer')->__('Facebook account linked'),
+                'header' => Mage::helper('customer')->__('Facebook'),
                 'align' => 'center',
                 'type' => 'options',
                 'options' => array(1 => Mage::helper('customer')->__('No'), 2 => Mage::helper('customer')->__('Yes')),
@@ -102,7 +102,7 @@ class Apdc_Customer_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_C
         $this->addColumn(
             'google',
             [
-                'header' => Mage::helper('customer')->__('Google account linked'),
+                'header' => Mage::helper('customer')->__('Google'),
                 'align' => 'center',
                 'type' => 'options',
                 'options' => array(1 => Mage::helper('customer')->__('No'), 2 => Mage::helper('customer')->__('Yes')),
