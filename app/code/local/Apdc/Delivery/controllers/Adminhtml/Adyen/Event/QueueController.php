@@ -6,7 +6,44 @@ class Apdc_Delivery_Adminhtml_Adyen_Event_QueueController extends Adyen_Payment_
 
     protected $_debugData = array();
     
-    private function _executeEventQueue($eventQueueId) {
+    /**
+     * This tries to process the notification again
+     */
+    public function executeAction() {
+        // get event queue id
+        $eventQueueId = $this->getRequest()->getParam('event_queue_id');
+        $this->_executeEventQueuenew($eventQueueId);
+
+        // return back to the view
+        $this->_redirect('*/*/');
+    }
+
+    public function massExecuteAction()
+    {
+        $queueIds = $this->getRequest()->getParam('queue_id');      // $this->getMassactionBlock()->setFormFieldName('queue_id'); from Adyen_Payment_Block_Adminhtml_Adyen_Event_Queue_Grid
+
+        if(!is_array($queueIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adyen')->__('Please select notification queue(s).'));
+        } else {
+            try {
+                $eventQueueModel = Mage::getModel('adyen/event_queue');
+                foreach ($queueIds as $queueId) {
+                    $this->_executeEventQueuenew($queueId);
+                }
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('adyen')->__(
+                        'Total of %d record(s) were deleted.', count($queueIds)
+                    )
+                );
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+        }
+
+        $this->_redirect('*/*/index');
+    }
+
+    private function _executeEventQueuenew($eventQueueId) {
 
         die();
 

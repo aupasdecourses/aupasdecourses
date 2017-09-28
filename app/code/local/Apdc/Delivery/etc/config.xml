@@ -21,7 +21,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <delivery before="Adyen_Payment_Adminhtml">Apdc_Delivery_Adminhtml</delivery>
+                        <delivery before="Adyen_Payment">Apdc_Delivery_Adminhtml</delivery>
                     </modules>
                 </args>
             </adminhtml>
