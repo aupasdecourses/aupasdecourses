@@ -53,7 +53,7 @@ class Apdc_Delivery_Adminhtml_Adyen_Event_QueueController extends Adyen_Payment_
 
         if(substr($incrementId,0,4)=="COM-"){
             $notif=Mage::getModel('adyen/processNotification')->storeNotificationPayout($varienObj);
-            //$eventQueue->delete();
+            $eventQueue->delete();
         }else{
             $orderExist = Mage::getResourceModel('adyen/order')->orderExist($incrementId);
             if (!empty($orderExist)) {
