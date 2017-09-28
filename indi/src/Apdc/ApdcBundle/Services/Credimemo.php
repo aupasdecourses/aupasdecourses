@@ -71,7 +71,8 @@ trait Credimemo
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
         $digest_status = $this->checkDigest($order->getId());
-        $refund = \Mage::getModel('adyen/event')->getEventById($id,Adyen_Payment_Model_Event::ADYEN_EVENT_REFUND);
+        $adyenmodel=\Mage::getModel('adyen/event');
+        $refund = $adyenmodel->getEventById($id,$adyenmodel->getPayoutConstant());
 
         if ($type == 'creditmemo') {
             if (is_null($digest_status)) {

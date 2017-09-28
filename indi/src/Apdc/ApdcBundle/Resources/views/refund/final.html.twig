@@ -23,11 +23,12 @@
 	{% for order, fields in orders %}
 		{% if fields.merchant_reference == id %}
 			{% set psp_reference = psp_reference + fields.pspreference %}
+		{% endif %}
 	{% endfor %}
 
 
 	<div class="row">
-		{% if psp_reference is not null %}
+		{% if psp_reference != 0 %}
 			{% include 'ApdcApdcBundle::refund/adyen.html.twig' %}
 		{% else %}
 			{% include 'ApdcApdcBundle::refund/hipay.html.twig' %}
