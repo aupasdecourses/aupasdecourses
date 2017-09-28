@@ -3,6 +3,25 @@
 class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_ProcessNotification {
 
     
+    protected function _declareCommonVariables($params)
+    {
+        //  declare the common parameters
+        $this->_pspReference = trim($params->getData('pspReference'));
+        $this->_originalReference = trim($params->getData('originalReference'));
+        $this->_merchantReference = trim($params->getData('merchantReference'));
+        $this->_eventCode = trim($params->getData('eventCode'));
+        $this->_success = trim($params->getData('success'));
+        $this->_paymentMethod = trim($params->getData('paymentMethod'));
+        $this->_reason = trim($params->getData('reason'));
+
+        $valueArray = $params->getData('amount');
+        if($valueArray && is_array($valueArray)) {
+            $this->_value = isset($valueArray['value']) ? $valueArray['value'] : "";
+        } elseif(is_object($valueArray)) {
+            $this->_value = $valueArray->value; // for soap
+        }
+    }
+
     /**
      * SAME AS ORIGINAL, COPY BECAUSE IT IS A PRIVATE FUNCTION
      * 
