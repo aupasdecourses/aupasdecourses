@@ -8,6 +8,8 @@ class Apdc_Delivery_Adminhtml_Adyen_Event_QueueController extends Adyen_Payment_
     
     private function _executeEventQueue($eventQueueId) {
 
+        die();
+
         $eventQueue = Mage::getModel('adyen/event_queue')->load($eventQueueId);
 
         $eventQueue->getAdyenEventQueue();

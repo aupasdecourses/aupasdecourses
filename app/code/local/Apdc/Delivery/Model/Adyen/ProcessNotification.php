@@ -87,7 +87,6 @@ class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_
                 'datetime' => true))
             ->addOrder('created_at', 'asc');
 
-
         $limit = (int)$this->_getConfigData('event_queue_limit');
         if ($limit > 0) {
             $collection->getSelect()->limit($limit);
@@ -139,7 +138,7 @@ class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_
                     } catch(Exception $e) {
                         Mage::logException($e);
                     }
-                } elseif($adyenEventCode==Adyen_Payment_Model_Event::ADYEN_EVENT_RECURRING_CONTRACT||$adyenEventCode==Adyen_Payment_Model_Event::ADYEN_EVENT_PAYOUT_THIRDPARTY){
+                } elseif(trim($params->getData('eventCode'))==Adyen_Payment_Model_Event::ADYEN_EVENT_RECURRING_CONTRACT||trim($params->getData('eventCode'))==Adyen_Payment_Model_Event::ADYEN_EVENT_PAYOUT_THIRDPARTY){
                     //Added to process PAYOUT_TOTHIRD_PARTY_EVENT into adyen_event table
                     $this->_storeNotification();
                 }else {
