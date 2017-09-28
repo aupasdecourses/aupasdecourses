@@ -13,6 +13,13 @@ function googleAjaxLogin(data)
     type: 'POST'
   })
     .done(function(response) {
+      if (typeof (response.status) !== 'undefined' && response.status === 'SUCCESS') {
+        if (typeof(response.new_account) !== 'undefined' && response.new_account === 1) {
+          // Google Tag Manager event
+          tagmanager_event('validationInscription',{});
+        }
+      }
+
       if (typeof(response.redirect) !== 'undefined' && response.redirect !== '') {
         window.location.href = response.redirect;
       } else if (typeof(response.html) !== 'undefined' && response.html !== '') {  
@@ -21,8 +28,8 @@ function googleAjaxLogin(data)
           jQuery('#account-login').remove();
           jQuery('#choose-my-district').show();
         }
+        apdcLoginPopup.initPopupHeight();
       }
-      apdcLoginPopup.initPopupHeight();
     })
     .fail(function() {
       console.log('failed');
