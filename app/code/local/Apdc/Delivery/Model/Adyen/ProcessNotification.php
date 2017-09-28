@@ -3,8 +3,10 @@
 class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_ProcessNotification {
 
     public function storeNotificationPayout($varienObj){
-        $this->_declareCommonVariables($varienObj);
-        $this->_storeNotification();
+        if(!$this->_isDuplicate($varienObj)) {
+            $this->_declareCommonVariables($varienObj);
+            $this->_storeNotification();
+        }
     }
 
     /**
@@ -62,11 +64,11 @@ class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_
 
         $_paymentCode = $this->_paymentMethodCode($order);
 
-        // for boleto confirmation mail is send on order creation
-        //if($payment_method != "adyen_boleto") {
-            // send order confirmation mail after invoice creation so merchant can add invoicePDF to this mail
-        //    $order->sendNewOrderEmail(); // send order email
-        //}
+        //for boleto confirmation mail is send on order creation
+        if($payment_method != "adyen_boleto" && !$order->getEmailSent()) {
+           //send order confirmation mail after invoice creation so merchant can add invoicePDF to this mail
+           $order->sendNewOrderEmail(); // send order email
+        }
 
         if(($payment_method == "c_cash" && $this->_getConfigData('create_shipment', 'adyen_cash', $order->getStoreId())) || ($this->_getConfigData('create_shipment', 'adyen_pos', $order->getStoreId()) && $_paymentCode == "adyen_pos"))
         {
