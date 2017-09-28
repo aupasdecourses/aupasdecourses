@@ -65,8 +65,6 @@ class Apdc_Delivery_Model_Adyen_ProcessNotification extends Adyen_Payment_Model_
         $_paymentCode = $this->_paymentMethodCode($order);
 
         //for boleto confirmation mail is send on order creation
-        Mage::log($order,null,"emaillog.log");
-        Mage::log($order->getEmailSent(),null,"emaillog.log");
         if($payment_method != "adyen_boleto" && !$order->getEmailSent()) {
            //send order confirmation mail after invoice creation so merchant can add invoicePDF to this mail
            $order->sendNewOrderEmail(); // send order email
