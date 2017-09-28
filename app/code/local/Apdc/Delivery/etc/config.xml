@@ -16,6 +16,17 @@
             </delivery>
         </routers>
     </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Apdc_Delivery before="Adyen_Payment_Adminhtml">Apdc_Delivery_Adminhtml</Apdc_Delivery>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <global>
         <resources>
             <delivery_setup>
@@ -110,15 +121,4 @@
             </email>
         </template>
 	</global>
-    <admin>
-        <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Apdc_Delivery before="Adyen_Payment">Apdc_Delivery</Apdc_Delivery>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers>
-    </admin>
 </config>
