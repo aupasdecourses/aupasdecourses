@@ -1,7 +1,7 @@
 (function($){
 
   $(document).ready(function() {
-    $('.header-neighborhood-container').on('click', '#neighborhood_ok', function() {
+    $(document).on('click', '#neighborhood_ok', function() {
       if (neighborhoodIUnderstoodUrl) {
         $('.neighborhood_informations').slideUp();
         $.post(
