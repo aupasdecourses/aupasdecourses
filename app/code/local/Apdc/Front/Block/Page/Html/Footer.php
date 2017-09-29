@@ -69,7 +69,6 @@ class Apdc_Front_Block_Page_Html_Footer extends Mage_Page_Block_Html_Footer
     public function setCopyright($copyright)
     {
         $this->_copyright = $copyright;
-        Mage::log("hello.log","hello");
         return $this;
     }
 
