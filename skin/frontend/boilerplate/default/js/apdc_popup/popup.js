@@ -33,7 +33,7 @@ ApdcPopup.prototype.cloneDefaultTemplate = function() {
     self.initActions();
     if (!self.populateTemplate) {
       if (self.onReady && typeof(self.onReady) === 'function') {
-        self.onReady();
+        self.onReady(jQuery('#' + self.id).find('.content'));
       }
       self.is_loaded = true;
     }
@@ -52,15 +52,17 @@ ApdcPopup.prototype.getTemplate = function() {
     })
     .done(function(response) {
       if (response.status === 'SUCCESS') {
+        var newContent = jQuery(response.html).find('.content').html();
         if (jQuery('#' + self.id).length > 0) {
-          var newContent = jQuery(response.html);
-          self.updateContent(newContent.find('.content').html());
+          if (!self.is_open) {
+            self.updateContent(newContent);
+          }
         } else {
           jQuery('body').append(response.html);
         }
         window.setTimeout(function() {
           if (self.onReady && typeof(self.onReady) === 'function') {
-            self.onReady();
+            self.onReady(newContent);
           }
           self.is_loaded = true;
         }, 0);

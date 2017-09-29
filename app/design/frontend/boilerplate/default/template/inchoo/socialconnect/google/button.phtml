@@ -1,1 +1,2 @@
-<a class="button button-social button-google" href="<?php echo $this->_getButtonUrl(); ?>" id="<?php echo $this->getButtonId(); ?>"><span></span><i class="fa fa-google-plus" aria-hidden="true"></i> Connexion avec Google<span></span></a>
+<?php $urls = $this->_getButtonUrls(); ?>
+<a class="button button-social button-google" href="<?php echo $urls['href']; ?>" data-ajax-url="<?php echo $urls['ajax_url']; ?>" id="<?php echo $this->getButtonId(); ?>"<?php echo ($this->mustHide() ? ' style="display:none;"' : ''); ?>><span></span><i class="fa fa-google-plus" aria-hidden="true"></i> <?php echo $this->_getButtonText(); ?><span></span></a>
