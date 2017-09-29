@@ -123,3 +123,4 @@ Apdc_Cart::All merchant's items have been removed successfully.,Tous les produit
 Apdc_Cart::"Can not remove the item.","Nous ne pouvons retirer le(s) produit(s) de votre panier."
 "Adyen_Payment::Invalid credit number card.","Le numéro de carte de crédit, le CVV et/ou la date de validité sont invalides. Merci de bien vouloir vérifier vos informations bancaires."
 "Adyen_Payment::The payment is REFUSED.","Votre paiement a été refusé. Il se peut que la date de validité de votre carte soit erronée, merci de bien vouloir vérifier les informations saisies. En cas de besoin, n'hésitez pas à nous contacter."
+"Apdc_Customer::Your Facebook account is now connected to your new user account at our store. Now you can login using our Facebook Login button.","Votre compte Facebook est désormais lié à votre nouveau compte utilisateur."

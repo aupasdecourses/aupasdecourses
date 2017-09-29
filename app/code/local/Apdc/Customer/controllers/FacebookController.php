@@ -126,8 +126,7 @@ class Apdc_Customer_FacebookController extends Mage_Core_Controller_Front_Action
                                 );
 
                                 Mage::getSingleton('core/session')->addSuccess(
-                                    $this->__('Your Facebook account is now connected to your new user account at our store.'.
-                                    ' Now you can login using our Facebook Login button.')
+                                    $this->__('Your Facebook account is now connected to your new user account at our store. Now you can login using our Facebook Login button.')
                                 );
 
                                 $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId(Mage::app()->getWebsite()->getId());
