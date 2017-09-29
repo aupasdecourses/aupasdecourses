@@ -33,12 +33,13 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
         $slots = $this->getSlots();
 
         $currentTime = Mage::getSingleton('core/date')->timestamp();
+        $currentTimeGMT = Mage::getSingleton('core/date')->gmtTimestamp();
         $cpt = 0;
         $day = 0;
         if ($withUnaivalableDays) {
             for ($day = 0; $day < 7; $day++) {
                 $strDate = date('Y-m-d', strtotime('+' . $day . ' day', $currentTime));
-                $date_FR = Mage::app()->getLocale()->date(strtotime('+' . $day . ' day', $currentTime));
+                $date_FR = Mage::app()->getLocale()->date(strtotime('+' . $day . ' day', $currentTimeGMT));
                 $hasSlot = false;
                 if (!isset($availableDaysAndSlots[$strDate])) {
                     $availableDaysAndSlots[$strDate] = [
@@ -64,7 +65,7 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
         } else {
             while($cpt < 7) {
                 $strDate = date('Y-m-d', strtotime('+' . $day . ' day', $currentTime));
-                $date_FR = Mage::app()->getLocale()->date(strtotime('+' . $day . ' day', $currentTime));
+                $date_FR = Mage::app()->getLocale()->date(strtotime('+' . $day . ' day', $currentTimeGMT));
                 $hasSlot = false;
                 foreach ($slots as $slot) {
                     if($this->isEnabled($slot->getId(), $strDate)){
