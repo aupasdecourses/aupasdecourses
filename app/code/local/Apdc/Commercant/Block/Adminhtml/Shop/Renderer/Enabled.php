@@ -6,7 +6,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Enabled extends Mage_Adminht
 	public function render(Varien_Object $row)
 	{
 		$input =  $row->getData($this->getColumn()->getIndex());
-		if($input=1){
+		if($input==1){
 			return $this->__("Oui");
 		} else {
 			return $this->__("Non");
