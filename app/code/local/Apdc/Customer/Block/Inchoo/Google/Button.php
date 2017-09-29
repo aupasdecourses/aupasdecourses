@@ -92,7 +92,7 @@ class Apdc_Customer_Block_Inchoo_Google_Button extends Mage_Core_Block_Template
                 $text = $this->__('Connexion avec Google');
             }
         } else {
-            $text = $this->__('Déconnection de Google');
+            $text = $this->__('Déconnexion de Google');
         }
 
         return $text;

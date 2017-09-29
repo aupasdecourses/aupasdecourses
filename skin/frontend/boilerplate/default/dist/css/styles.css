@@ -11485,6 +11485,7 @@ a:hover {
 
 .button.button-social {
   font-size: 1rem;
+  padding: 10px 20px;
   text-align: center;
   border-width: 1px;
   border-style: solid;

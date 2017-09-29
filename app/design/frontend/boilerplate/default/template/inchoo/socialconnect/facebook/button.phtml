@@ -1,2 +1,2 @@
 <?php $urls = $this->_getButtonUrls(); ?>
-<a class="button button-social button-fb" href="<?php echo $urls['href']; ?>" data-ajax-url="<?php echo $urls['ajax_url']; ?>" id="<?php echo $this->getButtonId(); ?>"<?php echo ($this->mustHide() ? ' style="display:none;"' : ''); ?>><span></span><i class="fa fa-facebook" aria-hidden="true"></i> <?php echo $this->_getButtonText(); ?><span></span></a>
+<a class="button button-social button-fb" href="<?php echo $urls['href']; ?>" data-ajax-url="<?php echo $urls['ajax_url']; ?>" id="<?php echo $this->getButtonId(); ?>"<?php echo ($this->mustHide() ? ' style="display:none;"' : ''); ?>><span></span><?php echo $this->_getButtonText(); ?> <i class="fa fa-facebook" aria-hidden="true"></i><span></span></a>

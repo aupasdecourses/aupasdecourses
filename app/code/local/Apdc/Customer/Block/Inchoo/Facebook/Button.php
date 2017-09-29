@@ -94,7 +94,7 @@ class Apdc_Customer_Block_Inchoo_Facebook_Button extends Mage_Core_Block_Templat
                 $text = $this->__('Connexion avec Facebook');
             }
         } else {
-            $text = $this->__('Déconnection de Facebook');
+            $text = $this->__('Déconnexion de Facebook');
         }
 
         return $text;
