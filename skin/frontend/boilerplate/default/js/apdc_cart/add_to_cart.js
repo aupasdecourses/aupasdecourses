@@ -128,6 +128,11 @@ if (typeof(apdcProductAddedToCart) === "undefined") {
       }
     });
 
+    $(document).on('keyup', '.apdc-cart-item-comment textarea[name="item_comment"]', function() {
+      var form = $(this).parents('form');
+      checkNeedUpdate(form);
+    });
+
     $(document).on('change', '.apdc-add-to-cart-form', function(event, init) {
       $('.advice-must-select-options').hide();
       var updateProductOptions = $(this).find('input[name="update_product_options"]');

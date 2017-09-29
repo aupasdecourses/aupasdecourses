@@ -57,6 +57,11 @@
         <Apdc_Customer>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+              <Mage_Customer />
+              <Mage_Adminhtml />
+              <Apdc_Neighborhood />
+            </depends>
         </Apdc_Customer>
     	<Apdc_Checkout>
     	    <codePool>local</codePool>
@@ -88,6 +93,9 @@
         <Apdc_Delivery>
             <codePool>local</codePool>
             <active>true</active>
+            <depends>
+              <Adyen_Payment />
+            </depends>
         </Apdc_Delivery>
         <Apdc_Attributesqtoi>
             <active>true</active>

@@ -22,6 +22,11 @@
                   <facebook_button>Apdc_Customer_Block_Inchoo_Facebook_Button</facebook_button>
                 </rewrite>
             </inchoo_socialconnect>
+            <adminhtml>
+              <rewrite>
+                <customer_grid>Apdc_Customer_Block_Adminhtml_Customer_Grid</customer_grid>
+              </rewrite>
+            </adminhtml>
         </blocks>
         <models>
             <apdccustomer>

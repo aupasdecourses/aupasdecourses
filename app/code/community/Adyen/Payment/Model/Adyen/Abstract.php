@@ -214,7 +214,24 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
         parent::authorize($payment, $amount);
         $payment->setLastTransId($this->getTransactionId())->setIsTransactionPending(true);
 
+        /** @var Mage_Sales_Model_Order $order */
         $order = $payment->getOrder();
+        $amount = $order->getGrandTotal();
+
+        // check if a zero auth should be done for this order
+        $useZeroAuth = (bool)Mage::helper('adyen')->getConfigData('use_zero_auth', null, $order->getStoreId());
+        $zeroAuthDateField = (bool)Mage::helper('adyen')->getConfigData('base_zero_auth_on_date', null, $order->getStoreId());
+        
+        if ($useZeroAuth) { // zero auth should be used
+
+            // only orders that are scheduled to be captured later than
+            // the auth valid period use zero auth
+            // the period is 7 days since this works for most payment methods
+            $scheduledDate = strtotime($order->getData($zeroAuthDateField));
+            if ($scheduledDate > strtotime("+7 days")) { // scheduled date is higher than now + 7 days
+                $amount = 0; // set amount to 0 for zero auth
+            }
+        }
 
         /*
          * ReserveOrderId for this quote so payment failed notification
@@ -241,7 +258,7 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
             $order->setCanSendNewEmailFlag(false);
         }
 
-        if ($this->getCode() == 'adyen_boleto' || $this->getCode() == 'adyen_cc' || substr($this->getCode(), 0, 14) == 'adyen_oneclick' || $this->getCode() == 'adyen_elv' || $this->getCode() == 'adyen_sepa') {
+        if ($this->getCode() == 'adyen_boleto' || $this->getCode() == 'adyen_cc' || substr($this->getCode(), 0, 14) == 'adyen_oneclick' || $this->getCode() == 'adyen_sepa' || $this->getCode() == 'adyen_apple_pay') {
 
             if(substr($this->getCode(), 0, 14) == 'adyen_oneclick') {
 
@@ -303,7 +320,7 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
 
     public function sendCaptureRequest(Varien_Object $payment, $amount, $pspReference) {
         if (empty($pspReference)) {
-            $this->writeLog('oops empty pspReference');
+            $this->writeLog('Missing pspReference');
             return $this;
         }
         $this->writeLog("sendCaptureRequest pspReference : $pspReference amount: $amount");
@@ -312,7 +329,7 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
 
     public function sendRefundRequest(Varien_Object $payment, $amount, $pspReference) {
         if (empty($pspReference)) {
-            $this->writeLog('oops empty pspReference');
+            $this->writeLog('Missing pspReference');
             return $this;
         }
         $this->writeLog("sendRefundRequest pspReference : $pspReference amount: $amount");
@@ -321,11 +338,20 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
 
     public function SendCancelOrRefund(Varien_Object $payment, $pspReference) {
         if (empty($pspReference)) {
-            $this->writeLog('oops empty pspReference');
+            $this->writeLog('Missing pspReference');
             return $this;
         }
         $this->writeLog("sendCancelOrRefundRequest pspReference : $pspReference");
         return $this->_processRequest($payment, null, "cancel_or_refund", $pspReference);
+    }
+
+    public function sendCancelRequest(Varien_Object $payment, $pspReference) {
+        if (empty($pspReference)) {
+            $this->writeLog('Missing pspReference');
+            return $this;
+        }
+        $this->writeLog("sendCancelRequest pspReference : $pspReference");
+        return $this->_processRequest($payment, null, "cancel", $pspReference);
     }
 
     /**
@@ -378,6 +404,11 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
                     break;
                 case "cancel_or_refund":
                     $response = $this->_service->cancelorrefund(array(
+                        'modificationRequest' => $requestData,
+                        'modificationResult' => $modificationResult));
+                    break;
+                case "cancel":
+                    $response = $this->_service->cancel(array(
                         'modificationRequest' => $requestData,
                         'modificationResult' => $modificationResult));
                     break;
@@ -455,6 +486,10 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
                 $responseCode = $response->cancelOrRefundResult->response;
                 $pspReference = $response->cancelOrRefundResult->pspReference;
                 break;
+            case "cancel":
+                $responseCode = $response->cancelResult->response;
+                $pspReference = $response->cancelResult->pspReference;
+                break;
             case "capture":
                 $responseCode = $response->captureResult->response;
                 $pspReference = $response->captureResult->pspReference;
@@ -512,6 +547,10 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
                     $errorMsg = Mage::helper('adyen')->__('The payment is REFUSED.');
                 }
 
+                $errorMsg = new Varien_Object(array('error_message' => $errorMsg));
+                Mage::dispatchEvent('adyen_payment_authorize_refused_error', array('responseResult' => $response->paymentResult, 'error' => $errorMsg));
+                $errorMsg = $errorMsg->getErrorMessage();
+
                 $this->resetReservedOrderId();
                 Adyen_Payment_Exception::throwException($errorMsg);
                 break;
@@ -530,6 +569,7 @@ abstract class Adyen_Payment_Model_Adyen_Abstract extends Mage_Payment_Model_Met
                 break;
             case '[capture-received]':
             case '[refund-received]':
+            case '[cancel-received]':
             case '[cancelOrRefund-received]':
                 $this->_addStatusHistory($payment, $responseCode, $pspReference, false, null, $originalPspReference);
                 break;

@@ -773,7 +773,7 @@ Payment.prototype = {
         this.form = form;
         this.saveUrl = saveUrl;
         this.onSave = this.nextStep.bindAsEventListener(this);
-        //this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
     },
 
     addBeforeInitFunction : function(code, func) {
@@ -913,7 +913,7 @@ Payment.prototype = {
         if (checkout.loadWaiting!=false) return;
         var validator = new Validation(this.form);
         if (this.validate() && validator.validate()) {
-            checkout.setLoadWaiting('payment',true);
+            checkout.setLoadWaiting('payment');
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
@@ -930,6 +930,8 @@ Payment.prototype = {
     resetLoadWaiting: function(){
         checkout.setLoadWaiting(false);
     },
+
+    
 
     nextStep: function(transport){
         if (transport && transport.responseText){
@@ -954,8 +956,11 @@ Payment.prototype = {
                 }
                 return;
             }
-            alert('ERREUR (détails dans la console)');
-			console.log(response);
+            if (typeof(response.error) == 'boolean') {
+                alert(response.error_messages);
+            } else {
+                alert(response.error);
+            }
             return;
         }
 
