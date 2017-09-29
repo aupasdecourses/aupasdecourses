@@ -18,7 +18,7 @@ class Apdc_Customer_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_C
             ->joinAttribute('billing_region', 'customer_address/region', 'default_billing', null, 'left')
             ->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left');
 
-        $collection->getSelect()->join(
+        $collection->getSelect()->joinLeft(
             ['neighborhood' => $collection->getTable('apdc_neighborhood')],
             'neighborhood.entity_id = at_customer_neighborhood.value',
             [

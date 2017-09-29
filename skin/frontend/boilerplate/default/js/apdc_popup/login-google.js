@@ -4,7 +4,7 @@ var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.google
 
 function googleAjaxLogin(data)
 {
-  var ajaxUrl = jQuery('#connect_with_google').attr('href');
+  var ajaxUrl = jQuery('#connect_with_google').data('ajax-url');
   apdcLoginPopup.showLoading();
   data.isAjax = 1;
   jQuery.ajax({
@@ -94,7 +94,7 @@ function initClient() {
     // Handle initial sign-in state. (Determine if user is already signed in.)
     var user = GoogleAuth.currentUser.get();
 
-    $(document).on('click', '#connect_with_google', function(e) {
+    jQuery(document).on('click', '#connect_with_google', function(e) {
       e.preventDefault();
       e.stopPropagation();
       googleHandleAuthClick();
@@ -102,6 +102,9 @@ function initClient() {
     }); 
   });
 }
+jQuery(document).ready(function() {
+  jQuery('#connect_with_google').show();
+});
 
 function googleHandleClientLoad() {
   // Load the API's client and auth2 modules.

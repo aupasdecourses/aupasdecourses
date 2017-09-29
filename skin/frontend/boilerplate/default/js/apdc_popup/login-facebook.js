@@ -6,7 +6,8 @@
         appId: apdcFbLoginAppiId,
         version: 'v2.9',
         xfbml:1
-      });     
+      });
+      jQuery('#connect_with_facebook').show();
 
       jQuery(document).on('click', '#connect_with_facebook', function(e) {
         e.preventDefault();
@@ -45,7 +46,7 @@
 
   function ajaxLogin(data)
   {
-    var ajaxUrl = jQuery('#connect_with_facebook').attr('href');
+    var ajaxUrl = jQuery('#connect_with_facebook').data('ajax-url');
     apdcLoginPopup.showLoading();
     data.isAjax = 1;
     jQuery.ajax({
