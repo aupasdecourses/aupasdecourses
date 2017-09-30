@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Mistral>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends></depends>
+        </Apdc_Mistral>
+    </modules>
+</config>
