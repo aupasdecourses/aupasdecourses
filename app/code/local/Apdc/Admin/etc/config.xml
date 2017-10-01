@@ -16,6 +16,11 @@
 	            </rewrite>
 	        </adminhtml>
         </blocks>
+        <models>
+            <apdcadmin>
+                <class>Apdc_Admin_Model</class>
+            </apdcadmin>
+        </models>
     </global>
     <adminhtml>
         <translate>

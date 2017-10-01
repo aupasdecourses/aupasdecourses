@@ -1,6 +1,6 @@
 <?php
 
-class Apdc_Mistral_Model_Api extends Mage_Core_Model_Abstract
+class Apdc_Dispatch_Model_Mistral_Api extends Mage_Core_Model_Abstract
 {
     protected $_api_url;
     protected $_request_url;
@@ -15,7 +15,7 @@ class Apdc_Mistral_Model_Api extends Mage_Core_Model_Abstract
     {
         $this->_api_url = 'https://backend.stars-services.com/WebServices/V1/';
         $this->_api_token = 'APDC2712A9B6';
-        $this->_api_key = '6AA0A660A6B647C39F4CE6CED09621A2';
+        $this->_api_key = '51A7E20A48854FD5BDCD6C7CEFD8F8E1';
         $this->_headers = array('Content-Type: application/json');
         $this->_config = array(
                     'timeout' => 2,
@@ -35,7 +35,7 @@ class Apdc_Mistral_Model_Api extends Mage_Core_Model_Abstract
             case 'getOrder':
                 $this->_api_verb = Zend_Http_Client::POST;
                 $this->_body = array(
-                    'ApiKey' => $this->_api_token,
+                    'ApiKey' => $this->_api_key,
                     'PartnerRef' => $data['PartnerRef'],
                     'OrderRef' => $data['OrderRef'],
                 );
@@ -43,7 +43,7 @@ class Apdc_Mistral_Model_Api extends Mage_Core_Model_Abstract
             case 'importOrder':
                 $this->_api_verb = Zend_Http_Client::POST;
                 $this->_body = array(
-                    'ApiKey' => $this->_api_token,
+                    'ApiKey' => $this->_api_key,
                     'PartnerRef' => $data['PartnerRef'],
                     'Order' => array(
                         'Items' => [],
@@ -70,7 +70,7 @@ class Apdc_Mistral_Model_Api extends Mage_Core_Model_Abstract
             case 'cancelOrder':
                 $this->_api_verb = Zend_Http_Client::POST;
                 $this->_body = array(
-                    'ApiKey' => $this->_api_token,
+                    'ApiKey' => $this->_api_key,
                     'PartnerRef' => $data['PartnerRef'],
                     'OrderRef' => $data['OrderRef'],
                 );
