@@ -6,6 +6,8 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 	protected $_host;
 	protected $_port;
 	protected $_ssl;
+	protected $_login;
+	protected $_pwd;
 	protected $_connection;
 
 	protected $_dos;
@@ -17,6 +19,9 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 		$this->_host = "ftporamtl.stars-services.com";
 		$this->_port = 21;
 		$this->_ssl = false;
+
+		$this->_login="ftpapdc";
+		$this->_pwd="ftp.1a";
 
 		$this->_path=Mage::getBaseDir()."/var/tmp/";
 
@@ -324,9 +329,9 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 				if (!$this->_connection){
 					throw new Exception("Couldn't connect to {$this->_host}:{$this->_port}.");
 				}else{
-					$this->_connection->pasv(false);
-		 			$this->_connection->login("ftpapdc", "ftp.1a");
-		 			$this->_connection->put("IN/{$fileName}", $tmpFileName);
+					$this->pasv(false);
+		 			$this->login($this->_login,$this->_pwd);
+		 			$this->put("IN/{$fileName}", $tmpFileName);
 				}
 			}
 	 	}
