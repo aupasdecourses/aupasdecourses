@@ -321,14 +321,13 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 
 	 		if(!is_null($this->_host)&&!is_null($this->_port)){
 				$this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
+				$this->_connection->pasv(false);
+	 			$this->_connection->login("ftpapdc", "ftp.1a");
+	 			$this->_connection->put("IN/{$fileName}", $tmpFileName);
 				if (!$this->_connection){
 					throw new Exception("Couldn't connect to {$this->_host}:{$this->_port}.");
 				}
 			}
-
-	 		$this->_connection->pasv(false);
-	 		$this->_connection->login("ftpapdc", "ftp.1a");
-	 		$this->_connection->put("IN/{$fileName}", $tmpFileName);
 	 	}
 	}
 
