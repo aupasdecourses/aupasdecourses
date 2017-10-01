@@ -21,4 +21,9 @@ class Apdc_Dispatch_IndexController extends Mage_Core_Controller_Front_Action {
 		return Mage::getModel("apdcdispatch/export")->processRequest($params);
 	}
 
+	public function processMailAction(){
+		$params["medium"] = "mail";
+		return Mage::getModel("apdcdispatch/export")->processRequest($params);
+	}
+
 }

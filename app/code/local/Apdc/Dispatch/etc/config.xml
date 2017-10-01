@@ -32,7 +32,7 @@
                 <use>standard</use>
                 <args>
                     <module>Apdc_Dispatch</module>
-                    <frontName>mistral</frontName>
+                    <frontName>dispatch</frontName>
                 </args>
             </apdcdispatch>
         </routers>
