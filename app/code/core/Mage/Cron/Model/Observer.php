@@ -263,16 +263,21 @@ class Mage_Cron_Model_Observer
     protected function _processAlwaysTask($jobCode, $jobConfig)
     {
         if (!$jobConfig || !$jobConfig->run) {
+                    Mage::log('A - processAlwaysTask - return '.$jobCode,null,"dispatch.log");
             return;
         }
 
         $cronExpr = isset($jobConfig->schedule->cron_expr)? (string) $jobConfig->schedule->cron_expr : '';
         if ($cronExpr != 'always') {
+                    Mage::log('B - processAlwaysTask - cron always  '.$jobCode,null,"dispatch.log");
             return;
         }
 
         $schedule = $this->_getAlwaysJobSchedule($jobCode);
+
         if ($schedule !== false) {
+                            Mage::log('C - processAlwaysTask - processJob - '.$jobCode,null,"dispatch.log");
+
             $this->_processJob($schedule, $jobConfig, true);
         }
 
@@ -290,6 +295,7 @@ class Mage_Cron_Model_Observer
     protected function _processJob($schedule, $jobConfig, $isAlways = false)
     {
         $runConfig = $jobConfig->run;
+        Mage::log('D - _processJob - runconfig - '.$runConfig,null,"dispatch.log");
         if (!$isAlways) {
             $scheduleLifetime = Mage::getStoreConfig(self::XML_PATH_SCHEDULE_LIFETIME) * 60;
             $now = time();
@@ -302,7 +308,9 @@ class Mage_Cron_Model_Observer
         $errorStatus = Mage_Cron_Model_Schedule::STATUS_ERROR;
         try {
             if (!$isAlways) {
+                 Mage::log('E - _processJob - check time IMPORTANT - ',null,"dispatch.log");
                 if ($time < $now - $scheduleLifetime) {
+                    Mage::log('E - _processJob - Missed ',null,"dispatch.log");
                     $errorStatus = Mage_Cron_Model_Schedule::STATUS_MISSED;
                     Mage::throwException(Mage::helper('cron')->__('Too late for the schedule.'));
                 }
