@@ -267,6 +267,9 @@ class Mage_Cron_Model_Observer
             return;
         }
 
+        Mage::log('B - processAlwaysTask - cronexpr  '.$jobCode,null,"dispatch.log");
+        Mage::log('B - processAlwaysTask - cronexpr  '.$jobConfig->schedule->cron_expr,null,"dispatch.log");
+
         $cronExpr = isset($jobConfig->schedule->cron_expr)? (string) $jobConfig->schedule->cron_expr : '';
         if ($cronExpr != 'always') {
                     Mage::log('B - processAlwaysTask - cron always  '.$jobCode,null,"dispatch.log");
