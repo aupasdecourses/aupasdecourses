@@ -56,19 +56,26 @@ class Mage_Cron_Model_Observer
      */
     public function dispatch($observer)
     {
+        Mage::log("start dispatch observer",null,"dispatch.log");
         $schedules = $this->getPendingSchedules();
         $jobsRoot = Mage::getConfig()->getNode('crontab/jobs');
         $defaultJobsRoot = Mage::getConfig()->getNode('default/crontab/jobs');
 
         /** @var $schedule Mage_Cron_Model_Schedule */
         foreach ($schedules->getIterator() as $schedule) {
+            Mage::log("schedule jobcode". $schedule->getJobCode(),null,"dispatch.log");
             $jobConfig = $jobsRoot->{$schedule->getJobCode()};
+            Mage::log('jobConfig: '.$jobConfig,null,"dispatch.log");
+            Mage::log('jobConfig->run: '.$jobConfig->run,null,"dispatch.log");
             if (!$jobConfig || !$jobConfig->run) {
                 $jobConfig = $defaultJobsRoot->{$schedule->getJobCode()};
+                Mage::log('if !jobConfig then: '.$jobConfig,null,"dispatch.log");
                 if (!$jobConfig || !$jobConfig->run) {
+                    Mage::log('jobConfig: continue',null,"dispatch.log");
                     continue;
                 }
             }
+            Mage::log('start ProcessJob',null,"dispatch.log");
             $this->_processJob($schedule, $jobConfig);
         }
 
@@ -84,15 +91,21 @@ class Mage_Cron_Model_Observer
     public function dispatchAlways($observer)
     {
         $jobsRoot = Mage::getConfig()->getNode('crontab/jobs');
+        Mage::log('jobRoots Always: '.$jobsRoot,null,"dispatch.log");
         if ($jobsRoot instanceof Varien_Simplexml_Element) {
+            Mage::log('Always - jobRoots is instanceof',null,"dispatch.log");
             foreach ($jobsRoot->children() as $jobCode => $jobConfig) {
+                Mage::log('Always - jobCodes'.$jobCode,null,"dispatch.log");
                 $this->_processAlwaysTask($jobCode, $jobConfig);
             }
         }
 
         $defaultJobsRoot = Mage::getConfig()->getNode('default/crontab/jobs');
+        Mage::log('Always - default jobRoots'.$defaultJobsRoot,null,"dispatch.log");
         if ($defaultJobsRoot instanceof Varien_Simplexml_Element) {
+            Mage::log('Always - defaultjobRoots is instanceof',null,"dispatch.log");
             foreach ($defaultJobsRoot->children() as $jobCode => $jobConfig) {
+                Mage::log('Always - defaultjobroots - jobCodes'.$jobCode,null,"dispatch.log");
                 $this->_processAlwaysTask($jobCode, $jobConfig);
             }
         }
