@@ -56,26 +56,19 @@ class Mage_Cron_Model_Observer
      */
     public function dispatch($observer)
     {
-        Mage::log("start dispatch observer",null,"dispatch.log");
         $schedules = $this->getPendingSchedules();
         $jobsRoot = Mage::getConfig()->getNode('crontab/jobs');
         $defaultJobsRoot = Mage::getConfig()->getNode('default/crontab/jobs');
 
         /** @var $schedule Mage_Cron_Model_Schedule */
         foreach ($schedules->getIterator() as $schedule) {
-            Mage::log("1 - schedule jobcode". $schedule->getJobCode(),null,"dispatch.log");
             $jobConfig = $jobsRoot->{$schedule->getJobCode()};
-            Mage::log('2 - jobConfig: '.$jobConfig,null,"dispatch.log");
-            Mage::log('3 - jobConfig->run: '.$jobConfig->run,null,"dispatch.log");
             if (!$jobConfig || !$jobConfig->run) {
                 $jobConfig = $defaultJobsRoot->{$schedule->getJobCode()};
-                Mage::log('4 - if !jobConfig then: '.$jobConfig,null,"dispatch.log");
                 if (!$jobConfig || !$jobConfig->run) {
-                    Mage::log('5 - jobConfig: continue',null,"dispatch.log");
                     continue;
                 }
             }
-            Mage::log('6 - start ProcessJob',null,"dispatch.log");
             $this->_processJob($schedule, $jobConfig);
         }
 
@@ -91,21 +84,15 @@ class Mage_Cron_Model_Observer
     public function dispatchAlways($observer)
     {
         $jobsRoot = Mage::getConfig()->getNode('crontab/jobs');
-        Mage::log('7 - jobRoots Always: '.$jobsRoot,null,"dispatch.log");
         if ($jobsRoot instanceof Varien_Simplexml_Element) {
-            Mage::log('8 - Always - jobRoots is instanceof',null,"dispatch.log");
             foreach ($jobsRoot->children() as $jobCode => $jobConfig) {
-                Mage::log('9 - Always - jobCodes'.$jobCode,null,"dispatch.log");
                 $this->_processAlwaysTask($jobCode, $jobConfig);
             }
         }
 
         $defaultJobsRoot = Mage::getConfig()->getNode('default/crontab/jobs');
-        Mage::log('10 - Always - default jobRoots'.$defaultJobsRoot,null,"dispatch.log");
         if ($defaultJobsRoot instanceof Varien_Simplexml_Element) {
-            Mage::log('11 - Always - defaultjobRoots is instanceof',null,"dispatch.log");
             foreach ($defaultJobsRoot->children() as $jobCode => $jobConfig) {
-                Mage::log('12 - Always - defaultjobroots - jobCodes'.$jobCode,null,"dispatch.log");
                 $this->_processAlwaysTask($jobCode, $jobConfig);
             }
         }
@@ -263,24 +250,16 @@ class Mage_Cron_Model_Observer
     protected function _processAlwaysTask($jobCode, $jobConfig)
     {
         if (!$jobConfig || !$jobConfig->run) {
-                    Mage::log('A - processAlwaysTask - return '.$jobCode,null,"dispatch.log");
             return;
         }
 
-        Mage::log('B - processAlwaysTask - cronexpr  '.$jobCode,null,"dispatch.log");
-        Mage::log('B - processAlwaysTask - cronexpr  '.$jobConfig->schedule->cron_expr,null,"dispatch.log");
-
         $cronExpr = isset($jobConfig->schedule->cron_expr)? (string) $jobConfig->schedule->cron_expr : '';
         if ($cronExpr != 'always') {
-                    Mage::log('B - processAlwaysTask - cron always  '.$jobCode,null,"dispatch.log");
             return;
         }
 
         $schedule = $this->_getAlwaysJobSchedule($jobCode);
-
         if ($schedule !== false) {
-                            Mage::log('C - processAlwaysTask - processJob - '.$jobCode,null,"dispatch.log");
-
             $this->_processJob($schedule, $jobConfig, true);
         }
 
@@ -298,7 +277,6 @@ class Mage_Cron_Model_Observer
     protected function _processJob($schedule, $jobConfig, $isAlways = false)
     {
         $runConfig = $jobConfig->run;
-        Mage::log('D - _processJob - runconfig - '.$runConfig,null,"dispatch.log");
         if (!$isAlways) {
             $scheduleLifetime = Mage::getStoreConfig(self::XML_PATH_SCHEDULE_LIFETIME) * 60;
             $now = time();
@@ -311,9 +289,7 @@ class Mage_Cron_Model_Observer
         $errorStatus = Mage_Cron_Model_Schedule::STATUS_ERROR;
         try {
             if (!$isAlways) {
-                 Mage::log('E - _processJob - check time IMPORTANT - ',null,"dispatch.log");
                 if ($time < $now - $scheduleLifetime) {
-                    Mage::log('E - _processJob - Missed ',null,"dispatch.log");
                     $errorStatus = Mage_Cron_Model_Schedule::STATUS_MISSED;
                     Mage::throwException(Mage::helper('cron')->__('Too late for the schedule.'));
                 }

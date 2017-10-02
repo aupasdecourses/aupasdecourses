@@ -25,17 +25,19 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 		$scheduleLifetime = Mage::getStoreConfig(self::XML_PATH_SCHEDULE_LIFETIME) * 60;
 		$now = time();
 		$jobsRoot = Mage::getConfig()->getNode('crontab/jobs');
-
+		Mage::log("start dispatch observer",null,"dispatch.log");
 		foreach ($schedules->getIterator() as $schedule) { /* @var $schedule Aoe_Scheduler_Model_Schedule */
 			try {
 				$errorStatus = Mage_Cron_Model_Schedule::STATUS_ERROR;
 				$errorMessage = Mage::helper('cron')->__('Unknown error.');
 
 				$jobConfig = $jobsRoot->{$schedule->getJobCode()};
+				Mage::log("1 - JobConfig: ".$jobConfig.' '.$schedule->getJobCode(),null,"dispatch.log");
 				if (!$jobConfig || !$jobConfig->run) {
 					Mage::throwException(Mage::helper('cron')->__('No valid configuration found.'));
 				}
 
+				Mage::log("2 - JobConfig->run: ".$schedule->getJobCode()." " .$jobConfig->run,null,"dispatch.log");
 				$runConfig = $jobConfig->run;
 				$time = strtotime($schedule->getScheduledAt());
 				if ($time > $now) {
@@ -48,18 +50,23 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				}
 
 				if ($runConfig->model) {
+					Mage::log("3 - runconfig->model: ".$schedule->getJobCode()." " .$runConfig->model,null,"dispatch.log");
+
 					if (!preg_match(self::REGEX_RUN_MODEL, (string)$runConfig->model, $run)) {
 						Mage::throwException(Mage::helper('cron')->__('Invalid model/method definition, expecting "model/class::method".'));
 					}
 					if (!($model = Mage::getModel($run[1])) || !method_exists($model, $run[2])) {
 						Mage::throwException(Mage::helper('cron')->__('Invalid callback: %s::%s does not exist', $run[1], $run[2]));
 					}
+					Mage::log("4 - callback / argument: ".$schedule->getJobCode(),null,"dispatch.log");
 					$callback = array($model, $run[2]);
 					$arguments = array($schedule);
 				}
 				if (empty($callback)) {
 					Mage::throwException(Mage::helper('cron')->__('No callbacks found'));
 				}
+
+				Mage::log("5 - Trylockjob: ".$schedule->getJobCode(),null,"dispatch.log");
 
 				if (!$schedule->tryLockJob()) {
 					// another cron started this job intermittently, so skip it
