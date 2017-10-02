@@ -51,7 +51,7 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 
 				if ($runConfig->model) {
 					Mage::log("3 - runconfig->model: ".$schedule->getJobCode()." " .$runConfig->model,null,"dispatch.log");
-
+					Mage::log("3.0 - pregmatch: ".$schedule->getJobCode()." " .preg_match(self::REGEX_RUN_MODEL, (string)$runConfig->model, $run),null,"dispatch.log");
 					if (!preg_match(self::REGEX_RUN_MODEL, (string)$runConfig->model, $run)) {
 						Mage::log("3.1 - runconfig->model invalid method: ".$schedule->getJobCode()." " .$runConfig->model,null,"dispatch.log");
 						Mage::throwException(Mage::helper('cron')->__('Invalid model/method definition, expecting "model/class::method".'));
