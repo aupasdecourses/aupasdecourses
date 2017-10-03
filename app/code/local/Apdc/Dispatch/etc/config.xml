@@ -39,14 +39,38 @@
     </frontend>
     <crontab>
         <jobs>
-            <apdcdispatch_week>
+            <apdcdispatch_mistral>
                 <schedule>
                     <cron_expr>15 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>apdcdispatch/export::processCronFtp</model>
+                    <model>apdcdispatch/export::processCronMistral</model>
                 </run>
-            </apdcdispatch_week>
+            </apdcdispatch_mistral>
+            <apdcdispatch_shops_afternoon>
+                <schedule>
+                    <cron_expr>15 15 * * 2-5</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/export::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_afternoon>
+            <apdcdispatch_shops_morning>
+                <schedule>
+                    <cron_expr>30 1 * * 2-6</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/export::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_morning>
+            <apdcdispatch_shops_saturday>
+                <schedule>
+                    <cron_expr>15 9 * * 6</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/export::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_saturday>
         </jobs>
     </crontab>
 </config>

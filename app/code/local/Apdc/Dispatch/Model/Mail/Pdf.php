@@ -74,7 +74,7 @@ class Apdc_Dispatch_Model_Mail_Pdf
         $this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
         $this->_summary[0]->setFont($this->_font, 12);
         $this->_summary[0]->drawText("A {$this->_commercant} pour le {$this->_orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
-        $logo= "https://www.aupasdecourses.com/logo_pdf.png";
+        $logo= Mage::getBaseDir('skin')."/frontend/boilerplate/default/dist/images/logo_pdf.png";
         $image = Zend_Pdf_Image::imageWithPath($logo);
         $this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         // <<==

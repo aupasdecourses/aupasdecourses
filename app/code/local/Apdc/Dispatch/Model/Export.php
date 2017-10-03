@@ -40,8 +40,13 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 		}
 	}
 
-	public function processCronFtp(){
+	public function processCronMistral(){
 		$params['medium']='ftp';
+		$this->processRequest($params);
+	}
+
+	public function processCronShops(){
+		$params['medium']='mail';
 		$this->processRequest($params);
 	}
 

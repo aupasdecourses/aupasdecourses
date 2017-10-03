@@ -26,12 +26,12 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
         if($infos['e1_email']<>''){$mails['e1_email']=$infos['e1_email'];}
         if($infos['e2_email']<>''){$mails['e2_email']=$infos['e2_email'];}
 
-        // return $mails;
+        return $mails;
 
-        return [
-            'm_email' => 'pierre@aupasdecourses.com',
-            'e1_email' => 'mainguetpierre@gmail.com',
-        ];
+        // return [
+        //     'm_email' => 'pierre@aupasdecourses.com',
+        //     'e1_email' => 'mainguetpierre@gmail.com',
+        // ];
 
     }
 
@@ -55,7 +55,7 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
                             $mail = new Mandrill_Message(Mage::getStoreConfig(Ebizmarts_Mandrill_Model_System_Config::APIKEY));
 
                             $mail->addTo($emails);
-                            $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
+                            //$mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
                             $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
                             $mail->setSubject("Au Pas De Courses {$pdf->getOrdersCount()} commandes le {$this->_c_date}");
                             $mail->setBodyHtml(
