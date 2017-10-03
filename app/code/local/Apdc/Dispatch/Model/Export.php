@@ -8,6 +8,8 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 	}	
 
 	public function processRequest($params){
+
+		Mage::log("Model Export - start process request",null,"export.log");
 		
 		if(!isset($params)||!isset($params['medium'])){
 			Mage::log("params are not set!", null, 'dispatch.log');
@@ -30,7 +32,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 
 			switch($params['medium']){
 				case "ftp":
-					Mage::log("Model Export - processRequestFtp",null,"disaptch.log");
+					Mage::log("Model Export - processRequestFtp",null,"export.log");
 					Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);
 					break;
 				case "api":
