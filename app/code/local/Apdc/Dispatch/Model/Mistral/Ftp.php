@@ -16,13 +16,32 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 
 	public function __construct() {
 
-		$this->_host = "ftporamtl.stars-services.com";
-		$this->_port = 21;
-		$this->_ssl = false;
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_host')<>''){
+			$this->_host = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_host');
+		}else{
+			$this->_host = "ftporamtl.stars-services.com";
+		}
 
-		$this->_login="ftpapdc";
-		$this->_pwd="ftp.1a";
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_port')<>''){
+			$this->_port = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_port');
+		}else{
+			$this->_port = 21;
+		}
 
+		$this->_ssl = Mage::getStoreConfig('apdcdispatch/ftp_mistral/use_ssl');	
+
+		
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_login')<>''){
+			$this->_login = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_login');
+		}
+
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_pwd')<>''){
+			$this->_pwd = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_pwd');
+		}
+
+		// $this->_login="ftpapdc";
+		// $this->_pwd="ftp.1a";
+		
 		$this->_path=Mage::getBaseDir()."/var/tmp/";
 
 		$dos=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
@@ -319,24 +338,23 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 		$c_time = date("His");
 		$fileName = str_replace("-", "", $params["c_date"]) . "_APDC_CDE_{$c_time}.csv";
 		$tmpFileName = $this->_path."tmp.csv";
-		Mage::log("Model Export - processRequestFtp - formatFTPMistral",null,"export.log");
 		$out= $this->formatFtpMistral($params["orders"]);
-		Mage::log("Model Export - processRequestFtp - formatFTPMistral done",null,"export.log");
+
 	 	if ($out <> "") {
 	 		file_put_contents($tmpFileName, $out);
-	 		Mage::log("Model Export - processRequestFtp - createfile done",null,"export.log");
 
-	 		if(!is_null($this->_host)&&!is_null($this->_port)){
-	 			Mage::log("Model Export - processRequestFtp - initiate ftp connect",null,"export.log");
-				$this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
-				if (!$this->_connection){
-					throw new Exception("Couldn't connect to {$this->_host}:{$this->_port}.");
-				}else{
-					Mage::log("Model Export - processRequestFtp - process request",null,"export.log");
-					$this->pasv(false);
-		 			$this->login($this->_login,$this->_pwd);
-		 			$this->put("IN/{$fileName}", $tmpFileName);
-		 			Mage::log("Model Export - processRequestFtp - request done",null,"export.log");
+	 		if(Mage::getStoreConfig('apdcdispatch/general/mode')){
+		 		if(!is_null($this->_host)&&!is_null($this->_port)){
+					$this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
+					if (!$this->_connection){
+						throw new Exception("Couldn't connect to {$this->_host}:{$this->_port}.");
+					}else{
+						Mage::log("Model Export - processRequestFtp - process request",null,"export.log");
+						$this->pasv(false);
+			 			$this->login($this->_login,$this->_pwd);
+			 			$this->put("IN/{$fileName}", $tmpFileName);
+			 			Mage::log("Model Export - processRequestFtp - request done",null,"export.log");
+					}
 				}
 			}
 	 	}

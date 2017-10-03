@@ -13,9 +13,18 @@ class Apdc_Dispatch_Model_Mistral_Api extends Mage_Core_Model_Abstract
 
     public function __construct()
     {
-        $this->_api_url = 'https://backend.stars-services.com/WebServices/V1/';
-        $this->_api_token = 'APDC2712A9B6';
-        $this->_api_key = '51A7E20A48854FD5BDCD6C7CEFD8F8E1';
+        
+        if(Mage::getStoreConfig('apdcdispatch/api_mistral/api_url')<>''){
+            $this->_api_url = Mage::getStoreConfig('apdcdispatch/api_mistral/api_url');
+        }
+        if(Mage::getStoreConfig('apdcdispatch/api_mistral/api_token')<>''){
+            $this->_api_url = Mage::getStoreConfig('apdcdispatch/api_mistral/api_token');
+        }
+        if(Mage::getStoreConfig('apdcdispatch/api_mistral/api_key')<>''){
+            $this->_api_url = Mage::getStoreConfig('apdcdispatch/api_mistral/api_key');
+        }
+        // $this->_api_token = 'APDC2712A9B6';
+        // $this->_api_key = '51A7E20A48854FD5BDCD6C7CEFD8F8E1';
         $this->_headers = array('Content-Type: application/json');
         $this->_config = array(
                     'timeout' => 2,
