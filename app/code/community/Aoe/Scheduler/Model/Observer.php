@@ -115,6 +115,7 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_after', array('schedule' => $schedule));
 
 			} catch (Exception $e) {
+				Mage::log("6 - Exception: ".$schedule->getJobCode()." ".$errorStatus." ".$e->__toString(),null,"dispatch.log");
 				$schedule->setStatus($errorStatus)
 					->setMessages($e->__toString());
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_exception', array('schedule' => $schedule, 'exception' => $e));
