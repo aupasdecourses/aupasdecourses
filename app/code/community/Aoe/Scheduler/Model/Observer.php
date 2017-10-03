@@ -75,6 +75,7 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				Mage::log("5 - Trylockjob: ".$schedule->getJobCode(),null,"dispatch.log");
 
 				if (!$schedule->tryLockJob()) {
+					Mage::log("6 - Skipjob: ".$schedule->getJobCode(),null,"dispatch.log");
 					// another cron started this job intermittently, so skip it
 					continue;
 				}
@@ -82,6 +83,7 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 					though running status is set in tryLockJob we must set it here because the object
 					was loaded with a pending status and will set it back to pending if we don't set it here
 				 */
+				Mage::log("7 - NoSkipjob: ".$schedule->getJobCode(),null,"dispatch.log");
 				$schedule
 					->setStatus(Mage_Cron_Model_Schedule::STATUS_RUNNING)
 					->setExecutedAt(strftime('%Y-%m-%d %H:%M:%S', time()))
@@ -89,6 +91,7 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_before', array('schedule' => $schedule));
 
+				Mage::log("8 - messages: ".$schedule->getJobCode(),null,"dispatch.log");
 				$messages = call_user_func_array($callback, $arguments);
 
 				// added by Fabrizio to also save messages when no exception was thrown
@@ -110,12 +113,12 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 					$schedule->setStatus(Mage_Cron_Model_Schedule::STATUS_SUCCESS);
 					Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_after_success', array('schedule' => $schedule));
 				}
-				
+				Mage::log("9 - beforesetfinished: ".$schedule->getJobCode(),null,"dispatch.log");
 				$schedule->setFinishedAt(strftime('%Y-%m-%d %H:%M:%S', time()));
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_after', array('schedule' => $schedule));
 
 			} catch (Exception $e) {
-				Mage::log("6 - Exception: ".$schedule->getJobCode()." ".$errorStatus." ".$e->__toString(),null,"dispatch.log");
+				Mage::log("10 - Exception: ".$schedule->getJobCode()." ".$errorStatus." ".$e->__toString(),null,"dispatch.log");
 				$schedule->setStatus($errorStatus)
 					->setMessages($e->__toString());
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_exception', array('schedule' => $schedule, 'exception' => $e));
@@ -123,12 +126,17 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				$this->sendErrorMail($schedule, $e->__toString());
 
 			}
+			Mage::log("10 - save: ".$schedule->getJobCode(),null,"dispatch.log");
 			$schedule->save();
 		}
 
+		Mage::log("11 - generate: ".$schedule->getJobCode(),null,"dispatch.log");
 		$this->generate();
+		Mage::log("12 - checkrunningjobs: ".$schedule->getJobCode(),null,"dispatch.log");
 		$this->checkRunningJobs();
+		Mage::log("13 - cleanup: ".$schedule->getJobCode(),null,"dispatch.log");
 		$this->cleanup();
+		Mage::log("14 - done: ".$schedule->getJobCode(),null,"dispatch.log");
 	}
 
 
