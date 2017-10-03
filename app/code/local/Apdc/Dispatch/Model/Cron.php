@@ -6,6 +6,7 @@ class Apdc_Dispatch_Model_Cron
 {
 	public function processCronFtp(){
 		Mage::log("Model Export - start processCrontFtp",null,"export.log");
+		$params["medium"] = "ftp";
 		try{
 			Mage::getModel("apdcdispatch/export")->processRequest($params);
 		}catch(Exception $e){

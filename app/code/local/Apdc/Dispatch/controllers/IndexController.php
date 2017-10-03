@@ -5,7 +5,10 @@ class Apdc_Dispatch_IndexController extends Mage_Core_Controller_Front_Action {
 	public function indexAction(){
 		$run[1]="apdcdispatch/cron";
 		$run[2]="processCronFtp";
-		var_dump(!($model = Mage::getModel($run[1])) || !method_exists($model, $run[2]));
+		$callback = array($model, $run[2]);
+		$arguments = array($schedule);
+
+		$messages = call_user_func_array($callback, $arguments);
 	}
 
 	public function processApiAction(){
