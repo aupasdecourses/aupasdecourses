@@ -22,7 +22,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 		$c_date = date("Y-m-d");
 		$to = date("Y-m-d",strtotime("+5 day"));
 
-		Mage::log("Model Export - query shops",null,"disaptch.log");
+		Mage::log("Model Export - query shops",null,"export.log");
 		$q = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date,$to);
 
 		try {
@@ -42,7 +42,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 					break;
 			}
 		} catch  (Exception $e) {
-			Mage::log($e, null, 'dispatch.log');
+			Mage::log($e, null, 'export.log');
 			Mage::getModel('apdcadmin/mail')->warnErrorMistral($e->getMessage());
 		}
 	}
