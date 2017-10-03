@@ -44,7 +44,7 @@
                     <cron_expr>15 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>apdcdispatch/export::processCronFtp</model>
+                    <model>apdcdispatch/cron::processCronFtp</model>
                 </run>
             </apdcdispatch_week>
         </jobs>

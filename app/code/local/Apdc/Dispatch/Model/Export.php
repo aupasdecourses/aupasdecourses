@@ -45,10 +45,4 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 		}
 	}
 
-	public function processCronFtp(){
-		Mage::log("Model Export - start processCrontFtp",null,"disaptch.log");
-		$params['medium']='ftp';
-		$this->processRequest($params);
-	}
-
 }
