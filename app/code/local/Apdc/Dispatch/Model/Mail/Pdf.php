@@ -1,6 +1,7 @@
 <?php
 
-class Apdc_Dispatch_Model_Mail_Pdf {
+class Apdc_Dispatch_Model_Mail_Pdf
+{
 
     private $_pdf;
 
@@ -38,13 +39,15 @@ class Apdc_Dispatch_Model_Mail_Pdf {
     private $_margin_horizontal = 50;
     private $_margin_vertical = 50;
 
-    private $_finalized = false;    
+    private $_finalized = false;
+
+    private $_commercant;
+    private $_orders_date;
 
     public function __construct($params)
     {
-
-        $commercant=$params[0];
-        $orders_date=$params[1];
+        $this->_commercant = $params[0];
+        $this->_orders_date = $params[1];
 
         $this->_pdf = new Zend_Pdf();
 
@@ -70,16 +73,17 @@ class Apdc_Dispatch_Model_Mail_Pdf {
         $this->_summary[0]->setFont($this->_font, 16);
         $this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
         $this->_summary[0]->setFont($this->_font, 12);
-        $this->_summary[0]->drawText("A {$commercant} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
-        //$image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__).'/logo.png');
-        //$this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
+        $this->_summary[0]->drawText("A {$this->_commercant} pour le {$this->_orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
+        $logo= "https://www.aupasdecourses.com/logo_pdf.png";
+        $image = Zend_Pdf_Image::imageWithPath($logo);
+        $this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         // <<==
 
         // create orders template page ==>>
         $this->_orders_template = $this->_pdf->newPage($this->_format);
 
         $this->_orders_template->setFont($this->_font, 8);
-        $this->_orders_template->drawText("Commande Au Pas De Courses - {$commercant} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - $this->_margin_vertical + 10);
+        $this->_orders_template->drawText("Commande Au Pas De Courses - {$this->_commercant} pour le {$this->_orders_date}", $this->_margin_horizontal, static::$_height - $this->_margin_vertical + 10);
         $this->_orders_template->setLineWidth(0.5);
         $this->_orders_template->drawLine($this->_margin_horizontal, static::$_height - $this->_margin_vertical, static::$_width - $this->_margin_horizontal, static::$_height - $this->_margin_vertical);
 
@@ -253,7 +257,8 @@ class Apdc_Dispatch_Model_Mail_Pdf {
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
     }
 
-    public function getOrdersCount(){
+    public function getOrdersCount()
+    {
         return $this->_orders_count;
     }
 
@@ -300,4 +305,19 @@ class Apdc_Dispatch_Model_Mail_Pdf {
         }
     }
 
+    public function save($filename)
+    {
+        if (!$this->_finalized) {
+            $this->_finalizePdf();
+        }
+        $this->_pdf->save($filename);
+    }
+
+    public function render()
+    {
+        if (!$this->_finalized) {
+            $this->_finalizePdf();
+        }
+        return $this->_pdf->render();
+    }
 }

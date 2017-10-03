@@ -10,11 +10,11 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 			break;
 		}
 
-		$c_date = date("Y-m-d",mktime(0, 0, 0, 2, 23, 2017));
-		$to = date("Y-m-d",strtotime("+5 day"));
-
-		//$c_date = date("Y-m-d");
+		//$c_date = date("Y-m-d",mktime(0, 0, 0, 2, 23, 2017));
 		//$to = date("Y-m-d",strtotime("+5 day"));
+
+		$c_date = date("Y-m-d");
+		$to = date("Y-m-d",strtotime("+5 day"));
 
 		try {
 			
@@ -28,15 +28,15 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 				case "api":
 					break;
 				case "mail":
-					$params["orders"] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date,$to);
+					//send only for current day
+					$params["orders"] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date,$c_date);
 					Mage::getModel('apdcdispatch/mail')->processRequestMail($params);
 				default:
 					break;
 			}
 		} catch  (Exception $e) {
 			Mage::log($e, null, 'dispatch.log');
-			var_dump($e->getMessage());
-			//Mage::getModel('apdcadmin/mail')->warnErrorMistral($e->getMessage());
+			Mage::getModel('apdcadmin/mail')->warnErrorMistral($e->getMessage());
 		}
 	}
 

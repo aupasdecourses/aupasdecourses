@@ -2,6 +2,8 @@
 
 class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
 
+    private $_transport;
+
     protected $_amasty_mw_date;
     protected $_c_date;
     protected $_status_no_display;
@@ -16,50 +18,21 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
         $this->_status_no_display=array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
         $this->_refund_id_limit=2016000249;
 
-    }    
+    }   
 
-    public function save($filename)
-    {
-        if (!$this->_finalized) {
-            $this->_finalizePdf();
-        }
-        $this->_pdf->save($filename);
-    }
+    public function getEmails($infos) {
+        
+        $mails['m_email']=$infos['m_email'];
+        if($infos['e1_email']<>''){$mails['e1_email']=$infos['e1_email'];}
+        if($infos['e2_email']<>''){$mails['e2_email']=$infos['e2_email'];}
 
-    public function send($smtp_host = 'smtp.mandrillapp.com', $smtp_config = ['auth' => 'login', 'username' => 'pierre@aupasdecourses.com', 'password' => 'suQMuVOzZHE5kc-wmH3oUA', 'port' => 2525, 'return-path' => 'contact@aupasdecourses.com'])
-    {
-        if (!$this->_finalized) {
-            $this->_finalizePdf();
-        }
-        $pdf = $this->_pdf->render();
-        // $tr = new Zend_Mail_Transport_Smtp($smtp_host, $smtp_config);
-        // $mail = new Zend_Mail('utf-8');
-        // $tmp = [];
-        // // foreach ($this->_mails as $m) {
-        // //     if ($m != '' && $m != '') {
-        // //         $tmp[] = $m;
-        // //     }
-        // // }
-        // //test $tmp="pierre@aupasdecourses.com";
-        // $mail->addTo($tmp);
-        // $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
-        // $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
-        // $mail->setSubject("Au Pas De Courses {$this->_orders_count} commandes le {$this->_date}");
-        // $mail->setBodyHtml(
-        //     Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
-        //     ->getProcessedTemplate(['commercant' => $this->_name, 'nbecommande' => $this->_orders_count])
-        // );
-        // $attach = new Zend_Mime_Part($pdf);
-        // $attach->type = 'application/pdf';
-        // $attach->disposition = Zend_Mime::DISPOSITION_ATTACHMENT;
-        // $attach->encoding = Zend_Mime::ENCODING_BASE64;
-        // $attach->filename = "{$this->_name}_{$this->_date}.pdf";
-        // $mail->addAttachment($attach);
-        // try {
-        //     $mail->send($tr);
-        // } catch (Exception $e) {
-        //     Mage::log($e, null, 'send_daily_order.log');
-        // }
+        // return $mails;
+
+        return [
+            'm_email' => 'pierre@aupasdecourses.com',
+            'e1_email' => 'mainguetpierre@gmail.com',
+        ];
+
     }
 
     public function processRequestMail($params){
@@ -75,9 +48,29 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
                             $pdf->addOrder($o);
                         }
                         if($pdf->getOrdersCount()!=0){
-                            var_dump("hello");
-                            //$pdf->save(Mage::getBaseDir()."/var/tmp/hello.pdf");
-                            //       $commercant_pdf->send();
+                            
+                            $attach=$pdf->render();
+                            $emails=$this->getEmails($shop['infos']);
+
+                            $mail = new Mandrill_Message(Mage::getStoreConfig(Ebizmarts_Mandrill_Model_System_Config::APIKEY));
+
+                            $mail->addTo($emails);
+                            $mail->addCc(Mage::getStoreConfig('trans_email/ident_general/email'));
+                            $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
+                            $mail->setSubject("Au Pas De Courses {$pdf->getOrdersCount()} commandes le {$this->_c_date}");
+                            $mail->setBodyHtml(
+                                Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
+                                ->getProcessedTemplate(['commercant' => $shop['infos']['name'], 'nbecommande' => $pdf->getOrdersCount()])
+                            );
+                            
+                            $mail->createAttachment($attach, 'application/pdf',Zend_Mime::DISPOSITION_ATTACHMENT, Zend_Mime::ENCODING_BASE64, "{$shop['infos']['name']} - {$this->_c_date}.pdf");
+
+                            try {
+                                $mail->send($this->_transport);
+                            } catch (Exception $e) {
+                                Mage::log($e->getMessage(), null, 'send_daily_order.log');
+                            }
+
                         }
                     }else{
                         $prods="";
@@ -92,6 +85,10 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract{
                     }
                 }
             }
+        }
+
+        if(isset($error)){
+            Mage::getModel('apdcadmin/mail')->warnErrorCommercantNeighborhood($error);
         }
 
     }
