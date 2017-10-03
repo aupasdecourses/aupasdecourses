@@ -92,12 +92,14 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_before', array('schedule' => $schedule));
 
 				Mage::log("8 - messages: ".$schedule->getJobCode(),null,"dispatch.log");
-				Mage::log("8.1 - messages - callback: ".$schedule->getJobCode()." ".print_r($callback),null,"dispatch.log");
-				Mage::log("8.1 - messages - arguments: ".$schedule->getJobCode().' '.print_r($arguments),null,"dispatch.log");
+				Mage::log($callback,null,"dispatch.log");
+				Mage::log($arguments,null,"dispatch.log");
+				Mage::log(call_user_func_array($callback, $arguments),null,"dispatch.log");
 				$messages = call_user_func_array($callback, $arguments);
 
 				// added by Fabrizio to also save messages when no exception was thrown
 				if (!empty($messages)) {
+					Mage::log("has messages: ".$schedule->getJobCode(),null,"dispatch.log");
 					if (is_object($messages)) {
 						$messages = get_class($messages);
 					} elseif (!is_scalar($messages)) {
@@ -106,12 +108,16 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 					$schedule->setMessages($messages);
 				}
 
+				Mage::log("8.bis - after messages: ".$schedule->getJobCode(),null,"dispatch.log");
+
 				// schedules can report an error state by returning a string that starts with "ERROR:"
 				if (is_string($messages) && strtoupper(substr($messages, 0, 6)) == 'ERROR:') {
+					Mage::log("8.ter - error: ".$schedule->getJobCode(),null,"dispatch.log");
 					$schedule->setStatus(Mage_Cron_Model_Schedule::STATUS_ERROR);
 					$this->sendErrorMail($schedule, $messages);
 					Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_after_error', array('schedule' => $schedule));
 				} else {
+					Mage::log("8.qar - success: ".$schedule->getJobCode(),null,"dispatch.log");
 					$schedule->setStatus(Mage_Cron_Model_Schedule::STATUS_SUCCESS);
 					Mage::dispatchEvent('cron_' . $schedule->getJobCode() . '_after_success', array('schedule' => $schedule));
 				}
