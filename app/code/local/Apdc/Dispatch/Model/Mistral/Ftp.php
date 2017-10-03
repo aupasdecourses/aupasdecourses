@@ -319,19 +319,24 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 		$c_time = date("His");
 		$fileName = str_replace("-", "", $params["c_date"]) . "_APDC_CDE_{$c_time}.csv";
 		$tmpFileName = $this->_path."tmp.csv";
+		Mage::log("Model Export - processRequestFtp - formatFTPMistral",null,"export.log");
 		$out= $this->formatFtpMistral($params["orders"]);
-
+		Mage::log("Model Export - processRequestFtp - formatFTPMistral done",null,"export.log");
 	 	if ($out <> "") {
 	 		file_put_contents($tmpFileName, $out);
+	 		Mage::log("Model Export - processRequestFtp - createfile done",null,"export.log");
 
 	 		if(!is_null($this->_host)&&!is_null($this->_port)){
+	 			Mage::log("Model Export - processRequestFtp - initiate ftp connect",null,"export.log");
 				$this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
 				if (!$this->_connection){
 					throw new Exception("Couldn't connect to {$this->_host}:{$this->_port}.");
 				}else{
+					Mage::log("Model Export - processRequestFtp - process request",null,"export.log");
 					$this->pasv(false);
 		 			$this->login($this->_login,$this->_pwd);
 		 			$this->put("IN/{$fileName}", $tmpFileName);
+		 			Mage::log("Model Export - processRequestFtp - request done",null,"export.log");
 				}
 			}
 	 	}
