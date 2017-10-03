@@ -94,7 +94,6 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 				Mage::log("8 - messages: ".$schedule->getJobCode(),null,"dispatch.log");
 				Mage::log($callback,null,"dispatch.log");
 				Mage::log($arguments,null,"dispatch.log");
-				Mage::log(call_user_func_array($callback, $arguments),null,"dispatch.log");
 				$messages = call_user_func_array($callback, $arguments);
 
 				// added by Fabrizio to also save messages when no exception was thrown

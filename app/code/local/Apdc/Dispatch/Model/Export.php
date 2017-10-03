@@ -13,7 +13,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 		
 		if(!isset($params)||!isset($params['medium'])){
 			Mage::log("params are not set!", null, 'dispatch.log');
-			break;
+			Mage::throwException(Mage::helper('cron')->__('params are not set in processRequest!'));
 		}
 
 		// $c_date = date("Y-m-d",mktime(0, 0, 0, 2, 23, 2017));
