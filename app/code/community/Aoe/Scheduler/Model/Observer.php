@@ -56,7 +56,9 @@ class Aoe_Scheduler_Model_Observer extends Mage_Cron_Model_Observer {
 						Mage::log("3.1 - runconfig->model invalid method: ".$schedule->getJobCode()." " .$runConfig->model,null,"dispatch.log");
 						Mage::throwException(Mage::helper('cron')->__('Invalid model/method definition, expecting "model/class::method".'));
 					}
-					Mage::log("3.2 - pregmatch: ".$schedule->getJobCode()." " .preg_match(self::REGEX_RUN_MODEL, (string)$runConfig->model, $run),null,"dispatch.log");
+					Mage::log("3.2 - $run[1]: ".$schedule->getJobCode()." " .$run[1],null,"dispatch.log");
+					Mage::log("3.2.2 - $run[1]: ".$schedule->getJobCode()." " .$run[2],null,"dispatch.log");
+					Mage::log("3.2.3 - $run[1]: ".$schedule->getJobCode()." " .	method_exists($model, $run[2]),null,"dispatch.log");
 					if (!($model = Mage::getModel($run[1])) || !method_exists($model, $run[2])) {
 						Mage::log("3.2 - runconfig->model invalid callback: ".$schedule->getJobCode()." " .$runConfig->model,null,"dispatch.log");
 						Mage::throwException(Mage::helper('cron')->__('Invalid callback: %s::%s does not exist', $run[1], $run[2]));
