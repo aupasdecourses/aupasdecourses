@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<adminhtml>
+    <acl>
+      <resources>
+        <admin>
+          <children>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <apdcdispatch translate="title" module="apdcdispatch">
+                      <title>Activation dispatch</title>
+                    </apdcdispatch>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+</adminhtml>
+

@@ -14,10 +14,20 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 
 	public function __construct() {
 
-		$this->_host = "ftporamtl.stars-services.com";
-		$this->_port = 21;
-		$this->_ssl = false;
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_host')<>''){
+			$this->_host = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_host');
+		}else{
+			$this->_host = "ftporamtl.stars-services.com";
+		}
 
+		if(Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_port')<>''){
+			$this->_port = Mage::getStoreConfig('apdcdispatch/ftp_mistral/ftp_port');
+		}else{
+			$this->_port = 21;
+		}
+
+		$this->_ssl = Mage::getStoreConfig('apdcdispatch/ftp_mistral/use_ssl');	
+		
 		$this->_path=Mage::getBaseDir()."/var/tmp/";
 
 		$dos=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
