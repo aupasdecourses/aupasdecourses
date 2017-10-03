@@ -127,7 +127,7 @@ class ResettingController extends BaseController
 //                    'form' => $form->createView(),
 //                ));
 
-                return $this->redirect('http://commercants.aupasdecourses.com/');
+                return $this->redirect('https://partenaires.aupasdecourses.com/');
             }
 
             $dispatcher->dispatch(FOSUserEvents::RESETTING_RESET_COMPLETED, new FilterUserResponseEvent($user, $request, $response));

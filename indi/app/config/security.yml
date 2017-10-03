@@ -25,6 +25,7 @@ security:
             id: fos_user.user_provider.username
 
     access_control:
+        - { path: ^/api/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     firewalls:
         dev:
