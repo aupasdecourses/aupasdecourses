@@ -20,6 +20,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 		$c_date = date("Y-m-d");
 		$to = date("Y-m-d",strtotime("+5 day"));
 
+		Mage::log("Model Export - query shops",null,"disaptch.log");
 		$q = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date,$to);
 
 		try {
@@ -29,6 +30,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 
 			switch($params['medium']){
 				case "ftp":
+					Mage::log("Model Export - processRequestFtp",null,"disaptch.log");
 					Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);
 					break;
 				case "api":
@@ -44,6 +46,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 	}
 
 	public function processCronFtp(){
+		Mage::log("Model Export - start processCrontFtp",null,"disaptch.log");
 		$params['medium']='ftp';
 		$this->processRequest($params);
 	}

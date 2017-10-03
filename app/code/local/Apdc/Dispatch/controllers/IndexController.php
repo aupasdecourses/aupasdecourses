@@ -18,7 +18,7 @@ class Apdc_Dispatch_IndexController extends Mage_Core_Controller_Front_Action {
 
 	public function processFtpAction(){
 		$params["medium"] = "ftp";
-		return Mage::getModel("apdcdispatch/export")->processRequest($params);
+		Mage::getModel("apdcdispatch/export")->processRequest($params);
 	}
 
 }
