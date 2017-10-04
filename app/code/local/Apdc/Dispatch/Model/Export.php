@@ -20,10 +20,10 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 
 		//Mode production ou test
 		if(Mage::getStoreConfig('apdcdispatch/general/mode')){
-        	$c_date=date('Y-m-d', strtotime($currentTime));
+        	$c_date=date('Y-m-d', $currentTime);
         	$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}else{
-			$c_date = date("Y-m-d",mktime(0, 0, 0, 2, 23, 2017));
+			$c_date = date("Y-m-d",mktime(0, 0, 0, 10, 3, 2017));
 			$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}
 
@@ -32,6 +32,12 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 
             switch ($params['medium']) {
                 case 'ftp':
+                    
+                    //Fix to remove order for the day after 4PM to remove errors in Mistral
+                    if((int)date('H',$currentTime)>=16){
+                       $c_date = date('Y-m-d',strtotime('+1 day', $currentTime)); 
+                    }
+
                     $params['orders'] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date, $to);
                     if (Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
                         Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);

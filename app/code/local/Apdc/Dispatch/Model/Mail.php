@@ -16,7 +16,7 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
         $this->_amasty_mw_date = date('Y-m-d', mktime(0, 0, 0, 1, 20, 2016));
 
         $currentTime = Mage::getSingleton('core/date')->timestamp();
-        $this->_c_date = date('Y-m-d', strtotime($currentTime));
+        $this->_c_date = date('Y-m-d', $currentTime);
 
         $this->_status_no_display = array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled');
         $this->_refund_id_limit = 2016000249;
