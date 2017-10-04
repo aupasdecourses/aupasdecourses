@@ -160,7 +160,7 @@ class generatePdf
         $this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
         $this->_summary[0]->setFont($this->_font, 12);
         $this->_summary[0]->drawText("A {$commercant['name']} pour le {$orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
-        $image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__).'/logo.png');
+        $image = Zend_Pdf_Image::imageWithPath(dirname(__FILE__).'/logo_pdf.png');
         $this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         // <<==
 
