@@ -48,6 +48,11 @@
           <observer>Apdc_Catalog_Model_Observer_CybageSwatches</observer>
         </rewrite>
       </swatches>
+      <sales>
+        <rewrite>
+          <quote_item>Apdc_Catalog_Model_Rewrite_Magento_Sales_Quote_Item</quote_item>
+        </rewrite>
+      </sales>
     </models>
 
     <resources>
