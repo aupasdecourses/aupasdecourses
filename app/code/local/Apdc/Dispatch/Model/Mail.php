@@ -29,10 +29,10 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
         Mage::log(Mage::getStoreConfig('apdcdispatch/general/mode'), null, 'export.log');
         if (Mage::getStoreConfig('apdcdispatch/general/mode')) {
             $mails['m_email'] = $infos['m_email'];
-            if ($infos['e1_email'] != '') {
+            if ($infos['e1_email'] != null) {
                 $mails['e1_email'] = $infos['e1_email'];
             }
-            if ($infos['e2_email'] != '') {
+            if ($infos['e2_email'] != null) {
                 $mails['e2_email'] = $infos['e2_email'];
             }
         } else {
