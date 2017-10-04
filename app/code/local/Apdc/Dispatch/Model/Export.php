@@ -16,14 +16,15 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
 			Mage::throwException(Mage::helper('cron')->__('params are not set in processRequest!'));
 		}
 
+		$currentTime = Mage::getSingleton('core/date')->timestamp();
 
 		//Mode production ou test
 		if(Mage::getStoreConfig('apdcdispatch/general/mode')){
-			$c_date = date('Y-m-d');
-        	$to = date('Y-m-d', strtotime('+5 day'));
+        	$c_date=date('Y-m-d', strtotime($currentTime));
+        	$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}else{
 			$c_date = date("Y-m-d",mktime(0, 0, 0, 2, 23, 2017));
-			$to = date('Y-m-d', strtotime('+5 day'));
+			$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}
 
         try {
