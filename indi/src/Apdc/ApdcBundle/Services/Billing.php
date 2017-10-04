@@ -707,10 +707,10 @@ class Billing
         $result = $data_summary['items'][0];
 
         //Get Form inputs
-        $result['discount_shop_HT'] = $data['discount_shop_HT'];
+        $result['discount_shop_HT'] = floatval(str_replace(",",".",$data['discount_shop_HT']));
         $result['discount_shop_TVA_percent'] = $data['discount_shop_TVA_percent'] / 100;
         $result['comments_discount_shop'] = $data['comments_discount_shop'];
-        $result['processing_fees_HT'] = $data['processing_fees_HT'];
+        $result['processing_fees_HT'] = floatval(str_replace(",",".",$data['processing_fees_HT']));
         $result['processing_fees_TVA_percent'] = $data['processing_fees_TVA_percent'] / 100;
 
         //Calcul du taux de TVA et TTC pour commission totale
