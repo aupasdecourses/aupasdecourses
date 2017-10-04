@@ -27,4 +27,26 @@ class Apdc_Catalog_Model_Product_Availability extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('apdc_catalog/product_availability');
     }
+
+    /**
+     * loadByIdDateWebsiteId 
+     * 
+     * @param int        $productId : productId 
+     * @param string     $date      : date 
+     * @param int | null $websiteId : websiteId 
+     * 
+     * @return Apdc_Catalog_Model_Product_Availability
+     */
+    public function loadByIdDateWebsiteId($productId, $date, $websiteId=null)
+    {
+        if (is_null($websiteId)) {
+            $websiteId = Mage::app()->getWebsite()->getId();
+        }
+        $collection = $this->getCollection()
+            ->addFieldToFilter('product_id', $productId)
+            ->addFieldToFilter('delivery_date', $date)
+            ->addFieldToFilter('website_id', $websiteId);
+
+        return $collection->getFirstItem();
+    }
 }

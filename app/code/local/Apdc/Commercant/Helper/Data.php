@@ -5,6 +5,12 @@
  */
 class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /**
+     * @var array
+     */
+    protected $infoShops = [];
+    protected $shopIdByCommercantId = [];
+
     public function getDays()
     {
         return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -100,71 +106,163 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return $filter;
     }
 	
-	public function getInfoShop($shopId = null)
+    protected function getDataByCurrentCategory()
     {
-        $shop_info = [];
-        $data = [];
+        $shop = null;
         $categoryShop = null;
-		if($shopId == null) {
-			$current_cat = Mage::registry('current_category');
-			$categoriesParent = $current_cat->getParentCategories();
-			foreach($categoriesParent as $categoryParent) {
-				if($categoryParent->getLevel() == 3) {
-					$categoryShop = $categoryParent;
-					break;
-				}
-			}
-            if ($categoryShop) {
-                $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-                $data = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem()->getData();
+
+        $current_cat = Mage::registry('current_category');
+        $categoriesParent = $current_cat->getParentCategories();
+        foreach($categoriesParent as $categoryParent) {
+            if($categoryParent->getLevel() == 3) {
+                $categoryShop = $categoryParent;
+                break;
             }
-		}
-		else {
-            $collection = Mage::getSingleton('apdc_commercant/shop')
-                ->getCollection()
-                ->addFieldToFilter('id_attribut_commercant', ['finset' => $shopId]);
-            if ($collection->count() > 0) {
-                $data = $collection->getFirstItem()->getData();
-                if (isset($data['id_category'])) {
-			        $categoryShop = Mage::getModel('catalog/category')->load($data['id_category'][0]);
-                }
-            }
-		}
-		
-        if (!empty($data) && $categoryShop && $categoryShop->getId()) {
-            $shop_info["name"]=$data["name"];
-            $shop_info["adresse"]=$data["street"]." ".$data["postcode"]." ".$data["city"];
-            $shop_info["url_adresse"]="https://www.google.fr/maps/place/".str_replace(" ","+", $shop_info["adresse"]);
-            $shop_info["phone"]=$data["phone"];
-            $shop_info["website"]=$data["website"];
-            $shop_info["closing_periods"]=$data["closing_periods"];
-            $shop_info["description"]=$categoryShop->getDescription();
-            $shop_info["delivery_days"] = $data["delivery_days"];
-            $shop_info["image"] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
-            $shop_info["thumbnail_image"] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
-            $shop_info["url"] = $categoryShop->getUrl();
-            
-            $html = "";
-            $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
-            foreach($data["timetable"] as $day=>$hours){
-                $hours=($hours=="")?"Fermé":$hours;
-                $hoursExplode = explode('-', $hours);
-                if(count($hoursExplode) > 3) {
-                    $hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
-                    $hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
-                    $hours = $hoursExplode1.' / '.$hoursExplode2;
-                }
-                $html.='<strong>'.$days[$day]."</strong> : ".$hours."</br>";
-            }
-            $shop_info["timetable"]=$html;
+        }
+        if ($categoryShop) {
+            $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
+            $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem();
         }
 
-        return $shop_info;
+        return [
+            'shop' => $shop,
+            'categoryShop' => $categoryShop
+        ];
+    }
+
+    public function getInfoShopByCommercantId($productCommercantId)
+    {
+        if (!isset($this->shopIdByCommercantId[$productCommercantId])) {
+            $shop = Mage::getModel('apdc_commercant/shop')->load($productCommercantId, 'id_attribut_commercant');
+            $shopId = null;
+            if ($shop && $shop->getId()) {
+                $shopId = $shop->getId();
+            }
+            $this->shopIdByCommercantId[$productCommercantId] = $shopId;
+        }
+        if (is_null($this->shopIdByCommercantId[$productCommercantId])) {
+            return [];
+        }
+        return $this->getInfoShop($this->shopIdByCommercantId[$productCommercantId]);
+    }
+
+	public function getInfoShop($shopId = null)
+    {
+        $shop = null;
+        $categoryShop = null;
+		if($shopId == null) {
+            $dataShop = $this->getDataByCurrentCategory();
+            $shop = $dataShop['shop'];
+            $categoryShop = $dataShop['categoryShop'];
+            $shopId = ($shop && $shop->getId() ? $shop->getId() : null);
+		}
+
+        if (is_null($shopId)) {
+            return [];
+        }
+
+        if (!isset($this->infoShops[$shopId])) {
+            $this->infoShops[$shopId] = [];
+            if (!($shop && $shop->getId()) && is_null($categoryShop)) {
+                $shop = Mage::getModel('apdc_commercant/shop')->load($shopId);
+                if ($shop && $shop->getId()) {
+                    $idCategory = $shop->getIdCategory();
+                    if (!empty($idCategory)) {
+                        $categoryShop = Mage::getModel('catalog/category')->load($idCategory[0]);
+                    }
+                }
+            }
+
+            if ($shop && $shop->getId() && $categoryShop && $categoryShop->getId()) {
+                $this->infoShops[$shopId] = $this->populateShopInfo($shop, $categoryShop);
+            }
+        }
+
+        if (Mage::getSingleton('core/session')->getDdate()) {
+            $date = Mage::getSingleton('core/session')->getDdate();
+            if (!empty($this->infoShops[$shopId]) && !isset($this->infoShops[$shopId]['availability'][$date])) {
+                $this->infoShops[$shopId]['availability'][$date] = $this->populateShopAvailability($this->infoShops[$shopId]);
+            }
+        }
+		
+        return $this->infoShops[$shopId];
+    }
+
+    protected function populateShopInfo($shop, $categoryShop)
+    {
+        $shopInfo = $shop->getData();
+        $shopInfo['availability'] = [];
+        $shopInfo['adresse'] = $shop->getStreet() . ' ' . $shop->getPostcode() . ' ' . $shop->getCity();
+        $shopInfo['url_adresse'] = 'https://www.google.fr/maps/place/' . str_replace(' ', '+', $shopInfo['adresse']);
+        $shopInfo['description'] = $categoryShop->getDescription();
+        $shopInfo['image'] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
+        $shopInfo['thumbnail_image'] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+        $shopInfo['url'] = $categoryShop->getUrl();
+
+        $html = '';
+        $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+        foreach ($shop->getTimetable() as $day => $hours) {
+            $hours = ($hours == '' ? 'Fermé' : $hours);
+            $hoursExplode = explode('-', $hours);
+            if (count($hoursExplode) > 3) {
+                $hoursExplode1 = $hoursExplode[0].'-'.$hoursExplode[1];
+                $hoursExplode2 = $hoursExplode[2].'-'.$hoursExplode[3];
+                $hours = $hoursExplode1.' / '.$hoursExplode2;
+            }
+            $html .= '<strong>'.$days[$day]."</strong> : ".$hours."</br>";
+        }
+        $shopInfo['timetable'] = $html;
+        return $shopInfo;
+    }
+
+    protected function populateShopAvailability($shopInfo)
+    {
+        $availability = [];
+        $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
+        $date = date('Y-m-d', $timestamp);
+        $day = date('w', $timestamp);
+
+        $status = 1;
+        $messageInfo = '';
+        if (!in_array($day, $shopInfo['delivery_days'])) {
+            $status = 3;
+        }
+        if (!empty($shopInfo['closing_periods'])) {
+            foreach ($shopInfo['closing_periods'] as $period) {
+                if ($date >= $period['start'] && $date <= $period['end']) {
+                    $start = $period['start'];
+                    $end = $period['end'];
+                    $status = 4;
+                    break;
+                }
+            }
+            if (isset($start) && isset($end)) {
+                $locale = Mage::getStoreConfig('general/locale/code');
+                setLocale(LC_TIME, $locale);
+                if ($start == $end) {
+                    $start = new DateTime($start);
+                    $messageInfo = $this->__('Fermé le %s', ucwords(strftime('%e %B', $start->getTimestamp())));
+                } else {
+                    $start = new DateTime($start);
+                    $end = new DateTime($end);
+                    $messageInfo = sprintf(
+                        $this->__('Fermé du %s au %s'),
+                        ucwords(strftime('%e %B', $start->getTimestamp())),
+                        ucwords(strftime('%e %B', $end->getTimestamp()))
+                    );
+                }
+            }
+        }
+        $availability = [
+            'status' => $status,
+            'message' => Mage::getSingleton('apdc_catalog/source_product_availability')->getOptionLabel($status),
+            'message_info' => $messageInfo
+        ];
+        return $availability;
     }
 
     public function getRandomShopImage($filter="all")
     {
-        $shop_info = [];
         $collection = Mage::getModel('apdc_commercant/shop')->getCollection()            
             ->addFieldtoFilter('enabled',1);
 

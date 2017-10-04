@@ -72,6 +72,26 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $this->addProductAvailabilities();
     }
 
+    public function generateProductsAvailabilitiesByShop(Apdc_Commercant_Model_Shop $shop)
+    {
+        $productIds = [];
+        $products = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->joinAttribute(
+                'commercant_id',
+                'catalog_product/commercant',
+                'entity_id'
+            );
+        $products->getSelect()->where('at_commercant_id.value = ?', $shop->getIdAttributCommercant());
+        $products->getSelect()->reset(Zend_Db_Select::COLUMNS);
+        $products->getSelect()->columns(['entity_id']);
+        $productIds = $products->getColumnValues('entity_id');           
+
+        if (!empty($productIds)) {
+            $this->generateProductsAvailabilities($productIds);
+        }
+    }
+
     /**
      * removeProductsAvailabilites 
      * 
@@ -197,6 +217,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 foreach ($productRelations as $product) {
                     $productIds[] = $product['child_id'];
                 }
+                array_unique($productIds);
                 $this->setProductIds($productIds);
             }
             $productCollection->addFieldToFilter('entity_id', ['in' => $this->getProductIds()]);
@@ -364,26 +385,35 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         // ]
         foreach ($this->getAllDays() as $time) {
             $day = date('w', $time);
+            $date = date('Y-m-d', $time);
             $status = 1;
             foreach ($neighborhoods as $websiteId => $neighborhood) {
-                $status = 1;
+                $neighborhoodStatus = $status;
                 if (!in_array($day, $neighborhood['opening_days'])) {
-                    $status = 2;
+                    $neighborhoodStatus = 2;
                 }
                 foreach ($shops as $commercantId => $shop) {
-                    if ($status == 1) {
+                    $finalStatus = $neighborhoodStatus;
+                    if ($neighborhoodStatus == 1) {
                         if (!in_array($day, $shop['delivery_days'])) {
-                            $status = 3;
+                            $finalStatus = 3;
                         }
-                        // @TODO : check holidays
+                        if (!empty($shop['closing_periods'])) {
+                            foreach ($shop['closing_periods'] as $period) {
+                                if ($date >= $period['start'] && $date <= $period['end']) {
+                                    $finalStatus = 4;
+                                    break;
+                                }
+                            }
+
+                        }
                     }
                     $availabilities[$day][$websiteId . '_' . $commercantId] = [
-                        'status' => $status,
+                        'status' => $finalStatus,
                         'neighborhood_id' => $neighborhood['entity_id'],
                         'website_id' => $websiteId,
                         'commercant_id' => $commercantId
                     ];
-
                 }
             }
         }

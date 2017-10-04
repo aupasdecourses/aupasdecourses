@@ -12,16 +12,20 @@
 		$formAjaxUrl = $this->helper('apdccart')->getAjaxAddUrl($product);
 	}
 	$uniqidCard = uniqid('card-');
-    $isAvailable = $this->isAvailable();
-
+    $availability = $this->getAvailability();
 ?>
-<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$isAvailable ? ' notavailable' : ''); ?>" style="margin-bottom: 0px;">
+<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$availability['is_available'] ? ' notavailable' : ''); ?>" style="margin-bottom: 0px;">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
 		  id="product_addtocart_form_<?php echo $product->getId().$uniqidCard; ?>"
 		  data-product-id="<?php echo $product->getId(); ?>"
 		  data-ajax-action="<?php echo $formAjaxUrl; ?>">
+
+        <?php $productAvailabilityMessage = $this->getChild('product_availability_message'); ?>
+        <?php if ($productAvailabilityMessage) : ?>
+            <?php echo $productAvailabilityMessage->setData('product', $product)->toHtml(); ?>
+        <?php endif; ?>
 		<a href="<?php echo $productUrl; ?>"
 		   title="<?php echo $strippedName; ?>"
 		   class="show-product-popup product-image"

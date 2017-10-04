@@ -113,6 +113,42 @@
                     color: #ddd;
                 }
             }
+					
+						.shop-availability {
+                background-color:$color-dark-orange;
+                margin-top:10px;
+                border-radius:3px;
+                box-shadow:1px 1px 10px -1px rgba(0, 0, 0, 0.51);
+                .shop-availability-container {
+                  margin:0 auto;
+                  display:table;
+                  .cell {
+                    display:table-cell;
+                    vertical-align:middle;
+                    padding:10px 10px 5px 10px;
+                  }
+                  .shop-availability-icon {
+                    color:$color-white;
+                    font-size:30px;
+                  }
+                  .shop-availability-content {
+                    span {
+                      color:$color-white;
+                      font-size:13px;
+                    }
+                    p {
+                      color:$color-white;
+                      &.shop-availability-message {
+                        font-weight:bold;
+                        font-size: 19px;
+                      }
+                      &.shop-availability-message-info {
+                        font-style:italic;
+                      }
+                    }
+                  }
+                }
+						}
         }
         .collapse-wrapper{
             display: none;

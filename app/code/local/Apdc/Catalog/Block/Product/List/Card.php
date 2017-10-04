@@ -25,11 +25,11 @@ class Apdc_Catalog_Block_Product_List_Card extends Mage_Catalog_Block_Product_Ab
     /**
      * isAvailable 
      * 
-     * @return boolean
+     * @return array
      */
-    public function isAvailable()
+    public function getAvailability()
     {
-        return (boolean) Mage::helper('apdc_catalog/product_available')->isAvailable($this->getProduct());
+        return Mage::helper('apdc_catalog/product_availability')->getAvailability($this->getProduct());
     }
 
     public function isCategoryPage(){

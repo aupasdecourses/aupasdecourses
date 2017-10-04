@@ -96,6 +96,17 @@
         </Apdc_Catalog>
       </modules>
     </translate>
+    <events>
+      <catalog_product_collection_load_before>
+        <observers>
+          <apdc_catalog_join_product_availability>
+            <type>singleton</type>
+            <class>apdc_catalog/observer_productAvailability</class>
+            <method>joinProductAvailabilty</method>
+          </apdc_catalog_join_product_availability>
+        </observers>
+      </catalog_product_collection_load_before>
+    </events>
   </frontend>
   <admin>
     <routers>
@@ -137,13 +148,22 @@
       </adminhtml_catalog_category_edit_prepare_form>
       <catalog_product_save_after>
         <observers>
-          <apdc_catalog>
+          <apdc_catalog_update_product_availability>
             <type>singleton</type>
-            <class>apdc_catalog/observer_productAvailability</class>
+            <class>apdc_catalog/adminhtml_observer_productAvailability</class>
             <method>updateProductAvailability</method>
-          </apdc_catalog>
+          </apdc_catalog_update_product_availability>
         </observers>
       </catalog_product_save_after>
+      <apdc_commercant_shop_save_after>
+        <observers>
+          <apdc_catalog_update_product_availability>
+            <type>singleton</type>
+            <class>apdc_catalog/adminhtml_observer_productAvailability</class>
+            <method>updateProductAvailabilityByShop</method>
+          </apdc_catalog_update_product_availability>
+        </observers>
+      </apdc_commercant_shop_save_after>
     </events>
   </adminhtml>
 
@@ -154,7 +174,7 @@
           <cron_expr>0 1 * * *</cron_expr> <!-- Every day at 1:00am -->
         </schedule>
         <run>
-          <model>apdc_catalog/product_availability_manager::generateProductsAvailabilities</model>
+          <model>apdc_catalog/adminhtml_observer_productAvailability::cronDailyUpdateProductAvailability</model>
         </run>
       </apdc_catalog_generate_product_availability>
     </jobs>

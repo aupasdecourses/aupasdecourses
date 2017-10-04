@@ -115,7 +115,8 @@ class Apdc_Catalog_Model_Resource_Product_Availability_Manager extends Mage_Core
         if (!empty($productIds)) {
             $adapter = $this->_getReadAdapter();
             $select = $adapter->select()->from($this->getTableName('catalog/product_relation'))
-                ->where('parent_id in(?)', implode(',', $productIds));
+                ->where('parent_id in(?)', $productIds)
+                ->orWhere('child_id in(?)', $productIds);
             return $adapter->fetchAll($select);
         }
         return [];
