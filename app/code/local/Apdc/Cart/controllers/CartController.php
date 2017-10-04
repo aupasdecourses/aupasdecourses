@@ -47,6 +47,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['error'] = $this->__('Can not remove the item.');
             }
         }
+        if (!Mage::getSingleton('core/session')->getDdate()) {
+            $result['need_to_select_delivery_days'] = true;
+        }
 
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
@@ -158,6 +161,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['error'] = $this->__('Can not save item.');
             }
         }
+        if (!Mage::getSingleton('core/session')->getDdate()) {
+            $result['need_to_select_delivery_days'] = true;
+        }
 
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
@@ -256,6 +262,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['status'] = 'ERROR';
                 $result['message'] = $this->__('Cannot update the item.');
                 Mage::logException($e);
+            }
+            if (!Mage::getSingleton('core/session')->getDdate()) {
+                $result['need_to_select_delivery_days'] = true;
             }
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));

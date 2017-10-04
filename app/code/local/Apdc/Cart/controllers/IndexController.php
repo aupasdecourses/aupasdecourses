@@ -83,6 +83,9 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $result['message'] = $this->__('Cannot add the item to shopping cart.');
                 Mage::logException($e);
             }
+            if (!Mage::getSingleton('core/session')->getDdate()) {
+                $result['need_to_select_delivery_days'] = true;
+            }
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
             return;
@@ -146,6 +149,9 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $result['message'] = $this->__('Cannot add the item to shopping cart.');
                 Mage::logException($e);
             }
+            if (!Mage::getSingleton('core/session')->getDdate()) {
+                $result['need_to_select_delivery_days'] = true;
+            }
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
             return;
@@ -204,6 +210,9 @@ class Apdc_Cart_IndexController extends Mage_Checkout_CartController{
                 $result['status'] = 'ERROR';
                 $result['message'] = $this->__('Cannot add your comment to the item.');
                 Mage::logException($e);
+            }
+            if (!Mage::getSingleton('core/session')->getDdate()) {
+                $result['need_to_select_delivery_days'] = true;
             }
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));

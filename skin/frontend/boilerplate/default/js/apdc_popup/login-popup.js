@@ -164,6 +164,12 @@ function initLoginPopup() {
         }
       }
     });
+    jQuery(document).on('checkDeliveryDays', function(event, result) {
+      if (result.need_to_select_delivery_days) {
+        apdcDeliveryPopup.show();
+        apdcDeliveryPopup.initPopupHeight();
+      }
+    });
   }
 
   if (jQuery('#header-neighborhood-link').length > 0) {
