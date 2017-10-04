@@ -71,6 +71,8 @@ trait Credimemo
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
         $digest_status = $this->checkDigest($order->getId());
+        $adyenmodel=\Mage::getModel('adyen/event');
+        $refund = $adyenmodel->getEventById($id,$adyenmodel->getPayoutConstant());
 
         if ($type == 'creditmemo') {
             if (is_null($digest_status)) {
@@ -82,7 +84,17 @@ trait Credimemo
             if (!$order->hasCreditmemos() && is_null($digest_status)) {
                 return false;
             } else {
-                return !($order->getStatus() == 'complete');
+                if($order->getStatus() == 'complete'){
+                    return false;
+                }else{
+                    if (!is_null($refund)&&$refund->getSuccess()<>1){
+                        //2 for disabled button
+                        return 2;
+                    } else {
+                        return true;
+                    }
+                }
+
             }
         }
     }

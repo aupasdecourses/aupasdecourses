@@ -20,23 +20,64 @@
  * @license  All right reserved to Garden Media Studio VN Company Limited
  * @link     http://www.garden-media.fr
  */
-class Apdc_Customer_Block_Inchoo_Google_Button extends Inchoo_SocialConnect_Block_Google_Button
+class Apdc_Customer_Block_Inchoo_Google_Button extends Mage_Core_Block_Template
 {
     /**
-     * _getButtonUrl 
-     * 
-     * @return string
+     *
+     * @var Inchoo_SocialConnect_Model_Facebook_Oauth2_Client
      */
-    protected function _getButtonUrl()
+    protected $client = null;
+
+    /**
+     *
+     * @var Inchoo_SocialConnect_Model_Facebook_Info_User
+     */
+    protected $userInfo = null;
+
+    protected function _construct() {
+        parent::_construct();
+
+        $this->client = Mage::getSingleton('inchoo_socialconnect/google_oauth2_client');
+        if(!($this->client->isEnabled())) {
+            return;
+        }
+
+        $this->userInfo = Mage::registry('inchoo_socialconnect_google_userinfo');
+
+        // CSRF protection
+        $csrf = Mage::getSingleton('core/session')->getGoogleCsrf();
+        if (!$csrf) {
+            Mage::getSingleton('core/session')->setGoogleCsrf($csrf = md5(uniqid(rand(), true)));
+        }
+        $this->client->setState($csrf);
+
+        if (!$this->isCurrentUrlAjax()) {
+            Mage::getSingleton('customer/session')->setSocialConnectRedirect(Mage::helper('core/url')->getCurrentUrl());
+        }
+
+        $this->setTemplate('inchoo/socialconnect/google/button.phtml');
+    }
+    /**
+     * _getButtonUrls 
+     * 
+     * @return array
+     */
+    protected function _getButtonUrls()
     {
+        $urls = [
+            'href' => '#',
+            'ajax_url' => '#'
+        ];
         if(is_null($this->userInfo) || !$this->userInfo->hasData()) {
             if ($this->getCurrentControllerPath() == 'socialconnect/account/google') {
-                return $this->client->createAuthUrl();
+                $urls['href'] = $this->client->createAuthUrl();
+            } else {
+                $urls['ajax_url'] = $this->getUrl('apdc_customer/google/ajaxLogin');
             }
-            return $this->getUrl('apdc_customer/google/ajaxLogin');
         } else {
-            return $this->getUrl('socialconnect/google/disconnect');
+            $urls['href'] = $this->getUrl('socialconnect/google/disconnect');
         }
+        return $urls;
     }
 
     /**
@@ -48,10 +89,10 @@ class Apdc_Customer_Block_Inchoo_Google_Button extends Inchoo_SocialConnect_Bloc
     {
         if(is_null($this->userInfo) || !$this->userInfo->hasData()) {
             if(!($text = Mage::registry('inchoo_socialconnect_button_text'))){
-                $text = $this->__('Se Connecter');
+                $text = $this->__('Connexion avec Google');
             }
         } else {
-            $text = $this->__('Se Déconnecter');
+            $text = $this->__('Déconnexion de Google');
         }
 
         return $text;
@@ -90,5 +131,26 @@ class Apdc_Customer_Block_Inchoo_Google_Button extends Inchoo_SocialConnect_Bloc
         return Mage::app()->getRequest()->getModuleName() . '/' .
             Mage::app()->getRequest()->getControllerName() . '/' .
             Mage::app()->getRequest()->getActionName();
+    }
+
+    protected function isCurrentUrlAjax()
+    {
+        if (Mage::app()->getRequest()->getParam('isAjax', false)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * mustHide 
+     * 
+     * @return boolean
+     */
+    public function mustHide()
+    {
+        if (!$this->isCurrentUrlAjax() && $this->getCurrentControllerPath() != 'socialconnect/account/google') {
+            return true;
+        }
+        return false;
     }
 }

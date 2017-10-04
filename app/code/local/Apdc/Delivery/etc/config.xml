@@ -16,6 +16,17 @@
             </delivery>
         </routers>
     </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <delivery before="Adyen_Payment">Apdc_Delivery_Adminhtml</delivery>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <global>
         <resources>
             <delivery_setup>
@@ -68,6 +79,12 @@
 					</geocode_customers>
                 </entities>
             </delivery_resource>
+            <adyen>
+                <rewrite>
+                    <processNotification>Apdc_Delivery_Model_Adyen_ProcessNotification</processNotification>
+                    <event>Apdc_Delivery_Model_Adyen_Event</event>
+                </rewrite>
+            </adyen>
         </models>
         <helpers>
             <pmainguet_delivery>

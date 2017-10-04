@@ -448,7 +448,8 @@ getOrders($commercants, $orders_date);
      foreach ($commercant['orders'] as $order) {
          $commercant_pdf->addOrder($order);
      }
-     if($commercant_pdf->getOrdersCount()!=0 || $current_hour>12){
+     //if($commercant_pdf->getOrdersCount()!=0 || $current_hour>12){
+     if($commercant_pdf->getOrdersCount()!=0){
         echo $commercant['name']."1\n";
          $commercant_pdf->send();
          Mage::log($orders_date.' - '.$commercant['name'].': '.$commercant_pdf->getOrdersCount().' commandes - envoi réalisé.', null, 'send_daily_order.log');

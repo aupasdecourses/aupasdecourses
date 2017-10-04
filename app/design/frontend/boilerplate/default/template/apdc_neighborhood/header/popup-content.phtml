@@ -13,7 +13,10 @@
 
             <?php elseif ($informationType == 'no_neighborhood') : ?>
                 <div class="neighborhood_informations_title"><?php echo $this->__('Warning!'); ?></div>
-                <p><?php echo $this->__('You have not set your neighborhood yet. Please choose your neighborhood by clicking on %s icon', '<i class="fa fa-save"></i>'); ?></p>
+                <p><?php echo $this->__('You have not set your neighborhood yet. Please choose your neighborhood by clicking on %s icon within the list or choose the current neighborhood clicking the button below.', '<i class="fa fa-save"></i>'); ?></p>
+                <div class="neighborhood_ok">
+                    <a href="<?php echo $this->getSaveVisitUrl(); ?>" class="button button-green"><i class="fa fa-save"></i> <?php echo $this->__('Choose %s', $this->getVisitingNeighborhood()->getName()); ?></a>
+                </div>
             <?php elseif ($informationType == 'not_same_website') : ?>
                 <div class="neighborhood_informations_title"><?php echo Mage::helper('apdc_neighborhood')->UserName(); ?></div>
                 <p>

@@ -61,6 +61,10 @@ function processLoginForm(elt) {
   })
     .done(function(response) {
       if (response.status === 'SUCCESS') {
+
+        // Google Tag Manager event
+        tagmanager_event('validationInscription',{});
+
         if(typeof response.redirect !== 'undefined'){
           window.location.href = response.redirect;
         } else {
@@ -87,8 +91,8 @@ function initLoginPopup() {
         id: 'login-form',
         autoHeightPopup:true,
         getTemplate:true,
-        onReady: function() {
-          accountPopup.apdc_login_view = jQuery('#' + apdcLoginPopup.id).find('.content').html();
+        onReady: function(newHtml) {
+          accountPopup.apdc_login_view = newHtml;
         }
       });
     }

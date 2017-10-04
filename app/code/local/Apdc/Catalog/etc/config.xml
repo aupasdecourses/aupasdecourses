@@ -29,7 +29,6 @@
       </catalog>
     </helpers>
 
-
     <models>
       <apdc_catalog>
         <class>Apdc_Catalog_Model</class>

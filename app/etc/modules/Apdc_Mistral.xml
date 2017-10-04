@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Dispatch>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends></depends>
+        </Apdc_Dispatch>
+    </modules>
+</config>

@@ -18,7 +18,7 @@ class Chapagain_GoogleTagManager_Block_Gtm extends Mage_Core_Block_Template
 	
 	public function getIsOrderSuccessPage()
 	{
-		if (strpos(Mage::app()->getRequest()->getPathInfo(), '/checkout/onepage/success') !== false) {
+		if (strpos(Mage::app()->getRequest()->getPathInfo(), '/checkout/onepage/success') !== false||strpos(Mage::app()->getRequest()->getPathInfo(), '/votre-commande/checkout_onepage/success') !== false||strpos(Mage::app()->getRequest()->getPathInfo(), '/checkouttester/index/success') !== false) {
 			return true;
 		}
 		return false;

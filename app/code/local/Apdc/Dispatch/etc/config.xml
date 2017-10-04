@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Apdc_Dispatch>
+            <version>1.0.0</version>
+        </Apdc_Dispatch>
+    </modules>
+    <global>
+        <blocks>
+        </blocks>
+        <helpers>
+          <apdcdispatch>
+            <class>Apdc_Dispatch_Helper</class>
+          </apdcdispatch>
+        </helpers>
+        <models>
+            <apdcdispatch>
+                <class>Apdc_Dispatch_Model</class>
+            </apdcdispatch>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <apdcdispatch>
+                    <file>apdc_mistral.xml</file>
+                </apdcdispatch>
+            </updates>
+        </layout>
+        <routers>
+            <apdcdispatch>
+                <use>standard</use>
+                <args>
+                    <module>Apdc_Dispatch</module>
+                    <frontName>apdcdispatch</frontName>
+                </args>
+            </apdcdispatch>
+        </routers>
+    </frontend>
+    <crontab>
+        <jobs>
+            <apdcdispatch_mistral>
+                <schedule>
+                    <cron_expr>15 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/cron::processCronMistral</model>
+                </run>
+            </apdcdispatch_mistral>
+            <apdcdispatch_shops_afternoon>
+                <schedule>
+                    <cron_expr>15 15 * * 2-5</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/cron::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_afternoon>
+            <apdcdispatch_shops_morning>
+                <schedule>
+                    <cron_expr>30 1 * * 2-6</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/cron::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_morning>
+            <apdcdispatch_shops_saturday>
+                <schedule>
+                    <cron_expr>15 9 * * 6</cron_expr>
+                </schedule>
+                <run>
+                    <model>apdcdispatch/cron::processCronShops</model>
+                </run>
+            </apdcdispatch_shops_saturday>
+        </jobs>
+    </crontab>
+</config>
