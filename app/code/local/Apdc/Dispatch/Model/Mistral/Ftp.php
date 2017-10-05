@@ -335,7 +335,8 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
     }
 
 	protected function _processRequestFtp($params){
-		$c_time = date("His");
+		$currentTime = Mage::getSingleton('core/date')->timestamp();
+		$c_time = date("His",strtotime($currentTime));
 		$fileName = str_replace("-", "", $params["c_date"]) . "_APDC_CDE_{$c_time}.csv";
 		$tmpFileName = $this->_path."tmp.csv";
 		$out= $this->formatFtpMistral($params["orders"]);

@@ -2,7 +2,6 @@
 
 class Apdc_Dispatch_Model_Mail_Pdf
 {
-
     private $_pdf;
 
     private $_font;
@@ -74,7 +73,7 @@ class Apdc_Dispatch_Model_Mail_Pdf
         $this->_summary[0]->drawText('Commandes AU PAS DE COURSES', $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 5));
         $this->_summary[0]->setFont($this->_font, 12);
         $this->_summary[0]->drawText("A {$this->_commercant} pour le {$this->_orders_date}", $this->_margin_horizontal, static::$_height - ($this->_summary_lineHeight * 6));
-        $logo= Mage::getBaseDir('skin')."/frontend/boilerplate/default/dist/images/logo_pdf.png";
+        $logo = Mage::getBaseDir('skin').'/frontend/boilerplate/default/dist/images/logo_pdf.png';
         $image = Zend_Pdf_Image::imageWithPath($logo);
         $this->_summary[0]->drawImage($image, static::$_width - $this->_margin_horizontal - $image->getPixelWidth(), static::$_height - $image->getPixelHeight() - ($this->_orders_lineHeight * 6), static::$_width - $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         // <<==
@@ -89,7 +88,9 @@ class Apdc_Dispatch_Model_Mail_Pdf
 
         $this->_orders_template->drawLine($this->_margin_horizontal, $this->_margin_vertical, static::$_width - $this->_margin_horizontal, $this->_margin_vertical);
         $this->_orders_template->setFont($this->_font, 8);
-        $this->_orders_template->drawText('Genere le: '.date('r'), $this->_margin_horizontal, $this->_margin_vertical - 10);
+
+        $currentTime = Mage::getSingleton('core/date')->timestamp();
+        $this->_orders_template->drawText('Généré le: '.date('r', strtotime($currentTime)), $this->_margin_horizontal, $this->_margin_vertical - 10);
         // <<==
     }
 
@@ -203,7 +204,7 @@ class Apdc_Dispatch_Model_Mail_Pdf
         if ($product['qty_ordered'] > 1) {
             $page->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
         }
-        $page->drawText("{$product['qty_ordered']} x", $this->_margin_horizontal + static::$_orders_table_column_set[1] + 15, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+        $page->drawText(round($product['qty_ordered'], 0).' x', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 15, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
         $page->setFont($this->_font, 10);
 
@@ -211,10 +212,10 @@ class Apdc_Dispatch_Model_Mail_Pdf
         $this->_textPrint($description, $page, static::$_orders_table_column_set[2]);
 
         $page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[3] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[3] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
-        $page->drawText($product['price_incl_tax']."€ ({$product['prix_kilo_site']})", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+        $page->drawText(round($product['price_incl_tax'], 2)."€ ({$product['prix_kilo_site']})", $this->_margin_horizontal + static::$_orders_table_column_set[3], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
 
         $page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[4] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[4] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
-        $page->drawText("{$product['row_total_incl_tax']}€", $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
+        $page->drawText(round($product['row_total_incl_tax'], 2).'€', $this->_margin_horizontal + static::$_orders_table_column_set[4], static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + 0.75)));
 
         $page->drawLine($this->_margin_horizontal + static::$_orders_table_column_set[5] - 5, static::$_height - ($this->_orders_lineHeight * $this->_orders_lineOffset), $this->_margin_horizontal + static::$_orders_table_column_set[5] - 5, static::$_height - ($this->_orders_lineHeight * ($this->_orders_lineOffset + $max_height)));
         $page->setFont($this->_font_bold, 10);
@@ -274,19 +275,21 @@ class Apdc_Dispatch_Model_Mail_Pdf
         $pages[0]->setFont($this->_font, 12);
         $pages[0]->drawText("Nom du client: {$order['first_name']} {$order['last_name']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 6));
         $pages[0]->drawText("Date de Prise de Commande: {$order['order_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 7));
+        $pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
         $pages[0]->drawText("Date de Livraison: {$order['delivery_date']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 8));
+        $pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 //        $pages[0]->drawText("Creneau de Livraison: {$order['delivery_time']}", $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 9));
-        $pages[0]->drawText('Remplacement equivalent: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));    // <===
+        $pages[0]->drawText('Remplacement équivalent: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 10));    // <===
+        $pages[0]->setFont($this->_font_bold, 12);
         if ($order['equivalent_replacement']) {
-            $pages[0]->drawText('oui', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
+            $pages[0]->drawText('OUI / En cas de doute, nous appeler au 09.72.50.90.69 avant 16h30.', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
         } else {
-            $pages[0]->setFont($this->_font_bold, 12);
             $pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-            $pages[0]->drawText('non', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
+            $pages[0]->drawText('NON / Si plusieurs produits sont indisponibles, nous appeler au 09.72.50.90.69 avant 16h30.', $this->_margin_horizontal + static::$_orders_table_column_set[1] + 50, static::$_height - ($this->_orders_lineHeight * 10));
             $pages[0]->setFont($this->_font, 12);
             $pages[0]->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
         }
-        $pages[0]->drawText('Liste des produits commandes: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 11));
+        $pages[0]->drawText('Liste des produits commandés: ', $this->_margin_horizontal, static::$_height - ($this->_orders_lineHeight * 11));
 
         $this->_orders_lineOffset = $this->_orders_startLineOffset_first;
 
@@ -318,6 +321,7 @@ class Apdc_Dispatch_Model_Mail_Pdf
         if (!$this->_finalized) {
             $this->_finalizePdf();
         }
+
         return $this->_pdf->render();
     }
 }
