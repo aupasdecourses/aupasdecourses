@@ -182,11 +182,11 @@
 		</div>
         <ul>
             <li class="control fields">
-                <input type="checkbox" name="billing[same_as_shipping]" id="billing:same_as_shipping" value="1"<?php if($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?> title="<?php echo $this->__('Use Shipping Address') ?>" onclick="billing.setSameAsShipping(this.checked, 'billing-address-row')" class="checkbox" /><label for="billing:same_as_shipping"><?php echo $this->__('L\'adresse de facturation est la même que l\'adresse d\'expédition') ?></label>
+                <input type="checkbox" name="billing[same_as_shipping]" id="billing:same_as_shipping" value="1" checked="checked" title="<?php echo $this->__('Use Shipping Address') ?>" onclick="billing.setSameAsShipping(this.checked, 'billing-address-row')" class="checkbox" /><label for="billing:same_as_shipping"><?php echo $this->__('L\'adresse de facturation est la même que l\'adresse d\'expédition') ?></label>
             </li>
         </ul>
 	</div>	
-	<div class="row" id="billing-address-row">	
+	<div class="row hide" id="billing-address-row">	
 		<div class="col-sm-6">
 			<fieldset>
 				<ul class="form-list">

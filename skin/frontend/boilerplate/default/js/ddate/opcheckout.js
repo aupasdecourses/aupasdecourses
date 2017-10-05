@@ -497,7 +497,7 @@ Billing.prototype = {
             arrElements = Form.getElements(this.form);
             for (var elemIndex in arrElements) {
                 if (arrElements[elemIndex].id) {
-                    var sourceField = $(arrElements[elemIndex].id.replace(/^billing:/, 'shipping:'));
+                    var sourceField = $(arrElements[elemIndex].id.replace(/^billing/, 'shipping'));
                     if (sourceField){
                         arrElements[elemIndex].value = sourceField.value;
                     }
