@@ -795,18 +795,36 @@
 }
 
 #warning_days{
-    margin-bottom: 50px;
-    .warning{
-        margin-top: 50px;
-    }
-    .warning, ul{
-        font-size: 1rem;
-        color: $color-main-grey;
-        opacity: 1;
-        strong{
-            color: $color-main-green;
+    margin:0 0 50px 0;
+    text-align:center;
+    .warning-container {
+        display:inline-block;
+        text-align:left;
+        .warning{
+            margin-top: 50px;
+        }
+        .warning, ul{
+            font-size: 1rem;
+            color: $color-main-grey;
+            opacity: 1;
+            strong{
+                color: $color-main-green;
+            }
+        }
+        ul {
+            list-style:none;
+            padding:0;
+            margin:0;
         }
     }
+}
+#delivery-popup-content {
+  #warning_days {
+    margin:0;
+    .warning {
+      margin:0;
+    }
+  }
 }
 
 .response-payment{

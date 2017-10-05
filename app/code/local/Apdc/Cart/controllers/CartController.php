@@ -31,6 +31,8 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $quote->getItemsCollection()->load();
                 $this->_getCart()->setQuote($quote);
 
+                $this->_getSession()->setCartWasUpdated(true);
+
                 $result['qty'] = $this->_getCart()->getSummaryQty();
                 $result['product_id'] = $productId;
 
@@ -82,6 +84,8 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
             $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
             $quote->getItemsCollection()->load();
             $this->_getCart()->setQuote($quote);
+
+            $this->_getSession()->setCartWasUpdated(true);
 
             $result['qty'] = $this->_getCart()->getSummaryQty();
             $result['product_ids'] = $productIds;

@@ -244,6 +244,9 @@
 	</div>
 	<div class="clear"><span></span></div>
 
+
+    <?php echo $this->getChildHtml('deliverycheck') ?>
+
 	<script type="text/javascript">
 		//<![CDATA[
 		var ddate = new Ddate('co-ddate-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveDdate') ?>');
