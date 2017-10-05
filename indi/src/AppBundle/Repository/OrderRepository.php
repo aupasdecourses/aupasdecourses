@@ -68,6 +68,8 @@ class OrderRepository extends AbstractMageRepository
             ]
         )->group('main_table.entity_id')
         ;
+
+        $this->model->addFieldToFilter('main_table.status', array('nin' => array('complete', 'pending_payment', 'payment_review', 'holded', 'closed', 'canceled')));
     }
 
     /**
@@ -76,7 +78,20 @@ class OrderRepository extends AbstractMageRepository
     public function find($id)
     {
         $result = parent::find($id);
-        $result['items'] = $this->entity->getItemsCollection()->toArray()['items'];
+        
+        $collection = $this->entity->getItemsCollection();
+        $collection->getSelect()->join(
+            'eav_attribute_option_value',
+            'eav_attribute_option_value.option_id=main_table.commercant',
+            [
+                'commercant_name' => 'eav_attribute_option_value.value'
+            ]
+        );
+        $collection->addFilterToMap('commercant_name', 'eav_attribute_option_value.value');
+
+        \Mage::log($collection,null,"find.log");
+
+        $result['items']=$collection->toArray()['items'];
 
         return $result;
     }
