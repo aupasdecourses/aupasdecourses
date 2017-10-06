@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ebizmarts_Autoresponder>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Ebizmarts_Autoresponder>
     </modules>
