@@ -362,6 +362,24 @@
                         </code_dash>
                     </fields>
                 </rewards>
+                <special translate="label" module="gm_sponsorship">
+                    <label>Réglages Spéciaux</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <code_client>
+                            <label>Liste client avec autorisation parrainage (problème avec première commande)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Ex:925,342 ...</comment>
+                        </code_client>
+                    </fields>
+                </special>
             </groups>
         </gm_sponsorship>
     </sections>

@@ -128,6 +128,9 @@ class GardenMedia_Sponsorship_Block_Dashboard extends Mage_Core_Block_Template
      */
     public function hasAlreadyOrdered()
     {
+
+        $check=explode(",",Mage::getStoreConfig('gm_sponsorship/special/code_client'));
+
         $invoices = Mage::getModel('sales/order_invoice')->getCollection();
         $invoices->getSelect()->join(
             array('orders' => $invoices->getTable('sales/order')),
@@ -136,6 +139,10 @@ class GardenMedia_Sponsorship_Block_Dashboard extends Mage_Core_Block_Template
         );
         $invoices->getSelect()->limit(1);
 
-        return (bool) $invoices->count();
+        if(in_array(Mage::getSingleton('customer/session')->getId(),$check)||(bool) $invoices->count()){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
