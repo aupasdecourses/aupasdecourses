@@ -14284,6 +14284,19 @@ section .section-description {
   transform: translate3d(0, 0, 0);
 }
 
+.cms-content {
+  margin-top: 0;
+}
+
+.cms-content .content {
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.cms-content .content h2 {
+  margin: 30px auto;
+}
+
 footer {
   padding: 20px 0;
   background-color: #3ab64b;

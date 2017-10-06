@@ -1287,3 +1287,14 @@ section {
     bottom: 0;
     padding:30px;
 }
+
+.cms-content{
+    margin-top: 0;
+    .content{
+        padding-left:40px;
+        padding-right:40px;
+        h2{
+            margin: 30px auto;
+        }
+    }
+}
