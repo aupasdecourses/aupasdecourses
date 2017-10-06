@@ -13817,6 +13817,11 @@ section .section-description {
   height: 250px;
 }
 
+.commercants-block .products-grid .owl-item .commercant-info-img:hover,
+.commercants-block .products-grid .owl-item .commercant-img-info:hover {
+  cursor: pointer;
+}
+
 .commercants-block .products-grid .owl-item .commercant-img {
   float: left;
   width: 50%;

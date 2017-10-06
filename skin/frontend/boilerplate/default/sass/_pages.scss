@@ -865,6 +865,9 @@ section {
             .commercant-info-img,
             .commercant-img-info{
                 height: 250px;
+                &:hover{
+                    cursor:pointer;
+                }
             }
             .commercant-img{
                 float: left;
