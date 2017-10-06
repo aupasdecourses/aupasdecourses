@@ -47,6 +47,18 @@ class Apdc_Search_Block_Result_List extends Mage_Catalog_Block_Product_List
             }
             $orderedCommercants[$product->getCommercant()][] = $product;
         }
+
+        // Unavailable comemrcant are placed at the end of the array.
+        if (Mage::getSingleton('core/session')->getDdate()) {
+            $date = Mage::getSingleton('core/session')->getDdate();
+            foreach ($orderedCommercants as $commercantId => $products) {
+                $shopInfo = Mage::helper('apdc_commercant')->getInfoShopByCommercantId($commercantId);
+                if (isset($shopInfo['availability'][$date]) && $shopInfo['availability'][$date]['status'] > 1) {
+                    unset($orderedCommercants[$commercantId]);
+                    $orderedCommercants[$commercantId] = $products;
+                }
+            }
+        }
         return $orderedCommercants;
     }
 
@@ -107,6 +119,7 @@ class Apdc_Search_Block_Result_List extends Mage_Catalog_Block_Product_List
                 $commercantIds[$commercantByNbProduct['commercant']] = array();
             }
         }
+
         return $commercantIds;
     }
 

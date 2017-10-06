@@ -53,10 +53,17 @@
                     <div class="header-delivery-container skip-container">
                         <a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
                             <i class="fa fa-list-ul"></i>
-                            <?php if (Mage::getSingleton('core/session')->getHeaderDdate()) : ?>
-                                <span class="label"><?php echo Mage::getSingleton('core/session')->getHeaderDdate(); ?> <i class="fa fa-angle-down"></i></span>
+                            <?php if ($headerDdate = Mage::helper('apdc_checkout')->getHeaderDdate()) : ?>
+                                <span class="label"><?php echo $headerDdate; ?> <i class="fa fa-angle-down"></i></span>
                             <?php else : ?>
                                 <span class="label"><?php echo $this->__('Créneaux') ?></span>
+                                <?php if (Mage::getSingleton('core/session')->getNeedToSelectDeliveryDays()) : ?>
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function() {
+                                            jQuery(document).trigger('checkDeliveryDays', [{need_to_select_delivery_days: true}]);
+                                        });
+                                    </script>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </a>
                     </div>

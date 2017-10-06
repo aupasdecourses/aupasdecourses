@@ -1,6 +1,13 @@
+<?php $ddate = Mage::getSingleton('core/session')->getDdate(); ?>
+<?php $currentDate = date('Y-m-d'); ?>
 <div id="apdc-child">
 	<div id="co-ddate-form">
 		<h3><?php echo $this->__('Choisissez votre créneau de livraison');?></h3>
+        <?php if (!$ddate) : ?>
+            <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Vous n\'avez pas encore sélectionné votre créneau de liraison.'); ?></span></li></ul></li></ul>
+        <?php elseif ($ddate < $currentDate) : ?>
+            <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Le créneau que vous aviez sélectionné n\'est plus disponible. Merci de choisir un nouveau créneau.'); ?></span></li></ul></li></ul>
+        <?php endif; ?>
 		<fieldset class="group-select">
 			<div class="input-box">
                 <input type="hidden" id="ddate:date" name="ddate[date]" value="" title="<?php echo $this->__('Delivery Date') ?>" class="input-text" />
@@ -236,6 +243,9 @@
 		</fieldset>
 	</div>
 	<div class="clear"><span></span></div>
+
+
+    <?php echo $this->getChildHtml('deliverycheck') ?>
 
 	<script type="text/javascript">
 		//<![CDATA[

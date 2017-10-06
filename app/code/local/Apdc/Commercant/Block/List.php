@@ -98,4 +98,18 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
     {
         return Mage::helper('apdc_commercant')->getInfoShop($shopId);
     }
+
+    public function getShopAvailability()
+    {
+        $shopAvailability = [];
+        if (Mage::getSingleton('core/session')->getDdate()) {
+            $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
+            $date = date('Y-m-d', $timestamp);
+            $shopInfo = $this->getInfoShop();
+            if (isset($shopInfo['availability']) && isset($shopInfo['availability'][$date])) {
+                $shopAvailability = $shopInfo['availability'][$date];
+            }
+        }
+        return $shopAvailability;
+    }
 }

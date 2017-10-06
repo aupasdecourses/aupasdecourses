@@ -13462,12 +13462,49 @@ section .section-description {
   margin: 0;
 }
 
-.apdc-products-grid .product-info.notavailable form {
+.apdc-products-grid .product-info.notavailable form .product-image img,
+.apdc-products-grid .product-info.notavailable form .product-info,
+.apdc-products-grid .product-info.notavailable form .display-hover {
   filter: grayscale(100%);
 }
 
 .apdc-products-grid .product-info.notavailable form .product-name {
   color: #333;
+}
+
+.apdc-products-grid .product-info.notavailable .product_availability_message {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 240px;
+}
+
+.apdc-products-grid .product-info.notavailable .product_availability_message p {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  left: 5px;
+  padding: 10px 3px;
+  transform: translate(0, -50%);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.apdc-products-grid .product-info.notavailable .product_availability_message p .tooltip-product-availability {
+  font-size: 16px;
+}
+
+.apdc-products-grid .product-info.notavailable .product_availability_message p .tooltip-product-availability i {
+  color: #3ab64b;
+}
+
+.apdc-products-grid .product-info.notavailable .product_availability_message p .tooltip-product-availability + div.tooltip .tooltip-inner {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
 }
 
 .apdc-products-grid .product-info.notavailable .btn-cart:before,
@@ -15244,23 +15281,43 @@ footer .social-list .btn-social-icon {
 }
 
 #warning_days {
-  margin-bottom: 50px;
+  margin: 0 0 50px 0;
+  text-align: center;
 }
 
-#warning_days .warning {
+#warning_days .warning-container {
+  display: inline-block;
+  text-align: left;
+}
+
+#warning_days .warning-container .warning {
   margin-top: 50px;
 }
 
-#warning_days .warning,
-#warning_days ul {
+#warning_days .warning-container .warning,
+#warning_days .warning-container ul {
   font-size: 1rem;
   opacity: 1;
   color: rgba(0, 0, 0, .84);
 }
 
-#warning_days .warning strong,
-#warning_days ul strong {
+#warning_days .warning-container .warning strong,
+#warning_days .warning-container ul strong {
   color: #3ab64b;
+}
+
+#warning_days .warning-container ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#delivery-popup-content #warning_days {
+  margin: 0;
+}
+
+#delivery-popup-content #warning_days .warning {
+  margin: 0;
 }
 
 .response-payment {
@@ -15458,6 +15515,47 @@ footer .social-list .btn-social-icon {
 .catalog-category-view .commercant-collapse .commercant-info .open-collapse i {
   font-size: 2.25rem;
   color: #ddd;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability {
+  margin-top: 10px;
+  border-radius: 3px;
+  background-color: #f57320;
+  box-shadow: 1px 1px 10px -1px rgba(0, 0, 0, .51);
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container {
+  display: table;
+  margin: 0 auto;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .cell {
+  display: table-cell;
+  padding: 10px 10px 5px 10px;
+  vertical-align: middle;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-icon {
+  font-size: 30px;
+  color: #fff;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content span {
+  font-size: 13px;
+  color: #fff;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content p {
+  color: #fff;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content p.shop-availability-message {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content p.shop-availability-message-info {
+  font-style: italic;
 }
 
 .catalog-category-view .commercant-collapse .collapse-wrapper {
