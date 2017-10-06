@@ -100,6 +100,7 @@ class Magento
                         'closing_periods' => $closed_periods,
                         'delivery_days' => $delivery_days,
                         'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
+                        'blacklist' => $shop->getBlacklist(),
                     ];
             }
         }
@@ -681,6 +682,7 @@ class Magento
                         'closing_periods' => $closed_periods,
                         'delivery_days' => $delivery_days,
                         'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
+                        'blacklist' => $shop->getBlacklist(),
                     ];
             }
         }
