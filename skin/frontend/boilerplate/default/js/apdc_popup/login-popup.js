@@ -3,7 +3,7 @@ Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
 });
 
 var accountPopup = [];
-var deliveryPopup = [];
+var deliveryPopup = null;
 var neighborhoodPopup = [];
 var apdcLoginPopup = null;
 var apdcDeliveryPopup = null;
@@ -93,6 +93,9 @@ function initLoginPopup() {
         getTemplate:true,
         onReady: function(newHtml) {
           accountPopup.apdc_login_view = newHtml;
+          if (apdcLoginPopup.isOpen()) {
+            apdcLoginPopup.updateContent(newHtml);
+          }
         }
       });
     }
@@ -153,7 +156,12 @@ function initLoginPopup() {
       apdcDeliveryPopup = new ApdcPopup({
         id: 'delivery',
         autoHeightPopup:true,
-        getTemplate:true
+        getTemplate:true,
+        onReady: function(newHtml) {
+          if (apdcDeliveryPopup.isOpen()) {
+            apdcDeliveryPopup.updateContent(newHtml);
+          }
+        }
       });
     }
     jQuery('#header-delivery-link').on('click', function(e) {
@@ -175,7 +183,13 @@ function initLoginPopup() {
       apdcNeighborhoodPopup = new ApdcPopup({
         autoHeightPopup:true,
         id: 'neighborhood',
-        getTemplate: true
+        getTemplate: true,
+        onReady: function(newHtml) {
+          if (apdcNeighborhoodPopup.isOpen()) {
+            apdcNeighborhoodPopup.updateContent(newHtml);
+          }
+        }
+
       });
     }
     jQuery('#header-neighborhood-link').on('click', function(e) {
