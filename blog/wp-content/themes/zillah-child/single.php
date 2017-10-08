@@ -145,12 +145,6 @@ get_header(); ?>
             <div class="six-random-articles-wrapper">
                 <?php
                 
-                /* Do not display articles already displayed above */
-                /*global $displayed_articles;
-                echo '<!-- displayed_articles = ';
-                print_r ($displayed_articles);
-                echo '-->';*/
-                
                 global $current_category_slug;
                 
                 $args = array (
@@ -199,9 +193,6 @@ get_header(); ?>
                                         }
                                         /*.= allows us to add onto a variable instead of overwriting it*/
                                         $output .= '<span class="'.$span_class.'">'.$category->cat_name.'</span>' . $separator;
-
-                                        /* TODO - exclure articles déjà affichés plus haut sur la page */
-
                                     }
 
                                     echo trim($output, $separator); /*trim off the last , at the end of the list*/
@@ -231,8 +222,6 @@ get_header(); ?>
         <div class="col-md-12">
             <h2 id="instagram-title" class="text-center">Sur Instagram</h2>
             <?php echo wdi_feed(array('id'=>'1')); ?>
-            <!-- Instagram Feed Widget Area -->
-            <?php /*dynamic_sidebar( 'instagram-widget-area' );*/ ?>
         </div> <!-- end column -->
     </div> <!-- end .row Instagram feed -->
     

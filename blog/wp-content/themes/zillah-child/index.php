@@ -43,9 +43,6 @@ $displayed_articles = array();
                         /* Add the post ID to a list of posts to not show below in the 6 random articles section */
                         global $displayed_articles;
                         $displayed_articles[] = get_the_ID();/*this adds the current post ID to the array*/
-                        /*echo '<!-- displayed_articles = ';
-                        print_r ($displayed_articles);
-                        echo '-->';*/
                         
                         echo '<a class="post-wrapper" href="'.get_permalink().'">';
 
@@ -230,7 +227,6 @@ $displayed_articles = array();
                                         ?>
                                     </div>
                                 </div> <!-- end .category-and-title-wrapper -->
-                            <!--</div>--> 
                         </a><!-- end .six-random-articles-single-wrapper -->
                     <?php
                     endwhile;
@@ -264,7 +260,6 @@ $displayed_articles = array();
                     echo '<a href="'.get_permalink().'">';
 
                         echo '<div id="dossier-content-wrapper" style="background-image:url('. get_the_post_thumbnail_url().');background-size:cover;background-repeat:no-repeat;background-position:center center;">';
-                            /*the_post_thumbnail();*/
                             echo '<div id="dossier-text">';
                                 echo '<h2>Dossier</h2>';
                                 echo '<h2 id="dossier-title">'.get_the_title().'</h2>';

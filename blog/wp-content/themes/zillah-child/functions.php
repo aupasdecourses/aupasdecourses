@@ -110,13 +110,6 @@ function zillah_child_widgets_init() {
         'before_widget' => '<div id="footer-social-icons-widget" class="widget %2$s">',
 		'after_widget'  => '</div>'
 	) );
-    register_sidebar( array(
-		'name'          => esc_html__( 'Instagram widget area', 'zillah' ),
-		'id'            => 'instagram-widget-area',
-		'description'   => esc_html__( 'Dedicated to the Instagram feed', 'zillah' ),
-        'before_widget' => '<div id="instagram-widget-area" class="widget %2$s">',
-		'after_widget'  => '</div>'
-	) );
 }
 add_action('widgets_init', 'zillah_child_widgets_init');
 

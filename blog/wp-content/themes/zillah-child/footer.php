@@ -105,48 +105,28 @@
             var offsetOfIconWrapper = $("#article-sharing-icon-wrapper").offset().top;
             var heightOfIconWrapper = $("#article-sharing-icon-wrapper").outerHeight();
             var bottomOfIconWrapper = offsetOfIconWrapper + heightOfIconWrapper;
-            /*console.log("offsetOfIconWrapper = " + offsetOfIconWrapper);
-            console.log("heightOfIconWrapper = " + heightOfIconWrapper);
-            console.log("bottomOfIconWrapper = " + bottomOfIconWrapper);*/
 
             var offsetOfArticleContent = $(".article-content").offset().top;
             var heightOfArticleContent = $(".article-content").outerHeight();
             var bottomOfArticleContent = offsetOfArticleContent + heightOfArticleContent;
-            /*console.log("offsetOfArticleContent = " + offsetOfArticleContent);
-            console.log("heightOfArticleContent = " + heightOfArticleContent);
-            console.log("bottomOfArticleContent = " + bottomOfArticleContent);*/
-
             
             function scrollIconWrapper() {
                 /* recalculate bottomOfHorizontalMenu */
                 offsetOfHorizontalMenu = $("#top-menu-fixed-wrapper").offset().top;
                 bottomOfHorizontalMenu = offsetOfHorizontalMenu + heightOfHorizontalMenu;
                 
-                /*console.log("====function======");
-                console.log("function -> bottomOfHorizontalMenu = " + bottomOfHorizontalMenu);
-                console.log("function -> offsetOfArticleContent = " + offsetOfArticleContent);*/
-                
                 /* if we have scrolled below the beginning of the article content */
                 if ( offsetOfArticleContent < bottomOfHorizontalMenu ){
-                    /*console.log("========if #1==========");*/
+                
                     /* recalculate current bottomOfIconWrapper */
                     offsetOfIconWrapper = $("#article-sharing-icon-wrapper").offset().top;
-                    /*console.log("offsetOfIconWrapper = " + offsetOfIconWrapper);
-                    console.log("heightOfIconWrapper = " + heightOfIconWrapper);*/
                     
                     bottomOfIconWrapper = offsetOfIconWrapper + heightOfIconWrapper;
-                    /*console.log("if #1 -> bottomOfIconWrapper = " + bottomOfIconWrapper);
-                    console.log("if #1 -> bottomOfArticleContent = " + bottomOfArticleContent);*/
                     
                     /* if bottomOfIconWrapper is still above bottomOfArticleContent */
                     if (bottomOfIconWrapper <= bottomOfArticleContent){
-                        /*console.log("============if #2==============");
-                        console.log("if #2 -> offsetOfHorizontalMenu = " + offsetOfHorizontalMenu);
-                        console.log("if #2 -> offsetOfArticleContent = " + offsetOfArticleContent);
-                        console.log("if #2 -> offsetOfHorizontalMenu - offsetOfArticleContent = " + (offsetOfHorizontalMenu - offsetOfArticleContent));*/
                         $("#article-sharing-icon-wrapper").css("top",bottomOfHorizontalMenu - offsetOfArticleContent);
                     }else if ( bottomOfIconWrapper > bottomOfArticleContent && (bottomOfHorizontalMenu + heightOfIconWrapper) < bottomOfArticleContent ){
-                        /*console.log("================else if #3==================");*/
                         $("#article-sharing-icon-wrapper").css("top",bottomOfHorizontalMenu - offsetOfArticleContent);
                     }
                 }
