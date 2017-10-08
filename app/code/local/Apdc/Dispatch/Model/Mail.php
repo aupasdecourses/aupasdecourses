@@ -59,7 +59,7 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
                                 $attach = $pdf->render();
                                 $emails = $this->getEmails($shop['infos']);
 
-                                $mail = new Mandrill_Message(Mage::getStoreConfig(Ebizmarts_Mandrill_Model_System_Config::APIKEY));
+                                $mail = new Mandrill_Message(Mage::getStoreConfig('mandrill/general/apikey'));
 
                                 $mail->addTo($emails);
                                 //$mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
@@ -104,7 +104,7 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
                             $attach = $pdf->render();
                             $emails = $this->getEmails($shop['infos']);
 
-                            $mail = new Mandrill_Message(Mage::getStoreConfig(Ebizmarts_Mandrill_Model_System_Config::APIKEY));
+                            $mail = new Mandrill_Message(Mage::getStoreConfig('mandrill/general/apikey'));
 
                             $mail->addTo($emails);
                             $mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
