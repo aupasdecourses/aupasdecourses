@@ -88,7 +88,7 @@ $displayed_articles = array();
                 ?>
                 
                 <div class="button-container">
-                    <a href="https://dev.pmainguet.aupasdecourses.com/blog/archives/">
+                    <a href="https://pmainguet.dev.aupasdecourses.com/blog/archives/">
                         <button id="all-articles">Voir tous les articles</button>
                     </a>
                 </div>
