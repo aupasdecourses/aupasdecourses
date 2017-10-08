@@ -52,6 +52,9 @@
                 padding:10px;
                 width:100%
             }
+            #newsletter-form input[type="submit"]{
+                text-transform:none;
+            }
             #mc_embed_signup input{
                 border-radius:0px;
             }
