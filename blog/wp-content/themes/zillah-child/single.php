@@ -135,7 +135,7 @@ get_header(); ?>
     
             
     <!-- Fruit banner -->
-    <img class="fruit-banner" src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
+    <img class="fruit-banner" src="https://dev.pmainguet.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
     <!-- End fruit banner -->
 
    
