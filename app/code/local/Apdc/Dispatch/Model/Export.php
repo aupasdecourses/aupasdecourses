@@ -23,7 +23,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
         	$c_date=date('Y-m-d', $currentTime);
         	$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}else{
-			$c_date = date("Y-m-d",mktime(0, 0, 0, 10, 3, 2017));
+			$c_date = date("Y-m-d",mktime(0, 0, 0, 10, 10, 2017));
 			$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}
 
@@ -33,8 +33,8 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
             switch ($params['medium']) {
                 case 'ftp':
                     
-                    //Fix to remove order for the day after 4PM to remove errors in Mistral
-                    if((int)date('H',$currentTime)>=16){
+                    //Fix to remove order for the day after 4PM (10AM for Saturdays) to remove errors in Mistral
+                    if((int)date('H',$currentTime)>=16||(date('D',$currentTime)=="Sat"&&(int)date('H',$currentTime)>=10)){
                        $c_date = date('Y-m-d',strtotime('+1 day', $currentTime)); 
                     }
 
@@ -50,9 +50,9 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
                     break;
                 case 'mail':
                     //send only for current day
-                    $params['orders'] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date, $c_date);
+                    $params['orders'] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date, $c_date,false);
                     if (Mage::getStoreConfig('apdcdispatch/general/mail_active')) {
-                        Mage::getModel('apdcdispatch/mail')->processRequestMail($params);
+                        Mage::getModel('apdcdispatch/mail')->processRequestMail($params,false);
                     } else {
                         Mage::log('Envoi par mail des commerçants est désactivé', null, 'export.log');
                         Mage::getModel('apdcadmin/mail')->warnMailShopDeactivated();

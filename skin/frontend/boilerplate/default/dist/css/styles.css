@@ -13817,6 +13817,11 @@ section .section-description {
   height: 250px;
 }
 
+.commercants-block .products-grid .owl-item .commercant-info-img:hover,
+.commercants-block .products-grid .owl-item .commercant-img-info:hover {
+  cursor: pointer;
+}
+
 .commercants-block .products-grid .owl-item .commercant-img {
   float: left;
   width: 50%;
@@ -14277,6 +14282,19 @@ section .section-description {
   margin: auto;
   padding: 30px;
   transform: translate3d(0, 0, 0);
+}
+
+.cms-content {
+  margin-top: 0;
+}
+
+.cms-content .content {
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.cms-content .content h2 {
+  margin: 30px auto;
 }
 
 footer {
