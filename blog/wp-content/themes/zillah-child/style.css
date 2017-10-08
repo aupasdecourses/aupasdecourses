@@ -2,128 +2,1699 @@
  Theme Name:   Zillah Child
  Theme URI:    http://example.com
  Description:  Zillah Child Theme for APDC blog
- Author:       Pierre Mainguet
- Author URI:   http://example.com
+ Author:       Daniel & Delphine STICKNEY - Creative Duo
+ Author URI:   http://www.creative-duo.com
  Template:     zillah
- Version:      1.0.0
+ Version:      2.0.0
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
  Tags:           right-sidebar, one-column, custom-background, custom-colors, featured-image-header, featured-images, sticky-post, translation-ready, threaded-comments, rtl-language-support, theme-options
  Text Domain:  zillah-child
+
+Color palette
+Au Pas De Courses : RVB 0, 89, 94  #00595e
+
+fruit & légumes : RVB 42, 167, 69  #2aa745
+boulangerie : RVB 240, 128, 29  #f0801d
+épicerie fine : RVB 42, 72, 153  #2a4899
+poisson : RVB 74, 151, 211  #4a97d3
+boucherie : RVB 255, 125, 115  #ff7d73
+fromager : RVB 255, 186, 68  #ffba44
+vin : RVB 198, 48, 77  #c6304d
+traiteur : RVB 51, 53, 59  #33353b
 */
+
+@font-face {
+    font-family: 'OpenSans-Light';
+    src: url('fonts/opensans-light.woff2') format('woff2'),
+         url('fonts/opensans-light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OpenSans-SemiBold';
+    src: url('fonts/opensans-semibold.woff2') format('woff2'),
+         url('fonts/opensans-semibold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HoneyScript-Light';
+    src: url('fonts/honeyscript-light.woff2') format('woff2'),
+         url('fonts/honeyscript-light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'HoneyScript-SemiBold';
+    src: url('fonts/honeyscript-semibold.woff2') format('woff2'),
+         url('fonts/honeyscript-semibold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 /*Modification CSS pour avoir même visuel que Zillah parent*/
 
 body, button, input, select, textarea {
-    color: #6f6e6b;
-    font-family: 'Merriweather', Georgia, serif;
-    font-size: 16px;
-    line-height: 1.75;
-    background: #f6f6f6;
+    color: #00595e;
+    font-family: 'OpenSans-Light', sans-serif !important;
+    font-size: 18px !important;
+    line-height: 1.7;
+    background: #ffffff;
+}
+body{
+    padding-top:0px !important; /* get rid of Zillah's padding on body */
 }
 
 a,a:visited {
-    color: #7fcaad;
+    color: inherit !important;
 }
 
 a:hover, a:active {
     outline: 0;
 }
 a:hover, a:focus, a:active {
-    color: #628d7c;
+    color: #00595e;
     text-decoration: none;
 }
 
-.color-overlay{
-    height: 100%;
-    padding: 124px 0;
-    background: -webkit-linear-gradient(90deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
-    background: -moz-linear-gradient(0deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
-    background: linear-gradient(0deg, rgba(0,0,0,0.60) 0, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.2) 100%);
-    background-position: 50% 50%;
-    -webkit-background-origin: padding-box;
-    background-origin: padding-box;
-    -webkit-background-clip: border-box;
-    background-clip: border-box;
-    -webkit-background-size: auto auto;
-    background-size: auto auto;
+h1,h2,h3,h4,h5,h6{
+    text-transform:none;
+}
+h1{
+    font-size:72px;
+}
+h2{
+    font-size:52px;
+}
+h3{
+    font-size:44px;
+}
+h4{
+    font-size:38px;
+}
+h5{
+    font-size:34px;
+}
+h6{
+    font-size:28px;
+}
+p, div.article-content{
+    color:#00595e;
 }
 
-.site-title a {
-    color: #6ca790;
-    opacity: 1;
+.ghost-button, .ghost-button:active, .ghost-button:visited{
+    background: rgba(0,0,0,0.4);
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 5px 40px;
+    font-weight: 600;
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+.ghost-button:hover{
+    background-color: #fff!important;
+    color: #6f6e6b;
+}
+
+.border-red{ border:1px solid red; box-sizing:border-box;}
+.border-blue{ border:1px solid blue; box-sizing:border-box;}
+.border-purple{ border:1px solid purple; box-sizing:border-box;}
+.border-green{border:1px solid green; box-sizing:border-box;}
+
+
+/*============================
+           HEADER 
+==============================*/
+/* Menu responsive */
+#menu-label-bars {
+    cursor:pointer;
+    display:inline-block;
+    position:absolute; /* needed for z-index and overlap of menu icons */
+    top: 0px;
+    right: 0px;
+    width: 36px;
+    height: auto;
+    z-index:100; /* keep menu icon button above menu so it is visible and clickable */
+    opacity:1; /* show menu icon bars when menu closed */
+    -webkit-transition: all .4s ease;
+    transition:all .4s ease;
+}
+
+#menu-label-x {
+    cursor:pointer;
+    display:inline-block;
+    position:absolute; /* needed for z-index and overlap of menu icons */
+    
+    top: 0px;
+    right: 0px;
+    width: 26px;
+    height: auto;
+    z-index:100; /* keep menu icon button above menu so it is visible and clickable */
+    opacity:0; /* hide menu icon X while menu closed */
+    -webkit-transition: all .4s ease;
+    transition:all .4s ease;
+}
+
+.menu-button-bars, .menu-button-x {
+    width:1.5em; /* set dimensions, which are also used for line-height */
+    height:1.5em;
+    cursor:pointer;
+}
+
+.menu-text {
+    line-height:1.5em; /* vertically center MENU text */
+    position:absolute; /* pos absolute within menu-container to vertically align image and text*/
+    padding-left:.2em; /* spacing between icon and text */
+}
+
+#menuToggle {
+    display:none; /* Hide the checkbox */
+}
+
+#sliding-menu {
+    background-color:#fff;
+    padding:75px 0px 0px 0px;
+    position:fixed;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    height: 100vh; /* fullfill the entiere screen */
+    -webkit-transition: all .4s ease;
+    transition:all .4s ease; /* animation of the opening menu */
+    z-index:50; /* the menu is above the content of the page */
+    opacity:0;
+    visibility:hidden; /* Elements that are visibility:hidden are transparent to clicks and hover events */
+    text-align:center; /* center the links */
+}
+
+/* Suppress the bullets on this list */
+ul#primary-menu.menu{
+    list-style-type: none!important;
+    list-style: none!important;
+    padding-left: 0px!important;
+}
+
+/* Styling the links in the menu */
+#sliding-menu a {
+    display:inline-block;
+    padding:10px 0px;
+    font-weight:bold;
+    font-size:1.2em;
+    -webkit-transition: all .4s linear;
+    transition:all .4s linear;
+    
+}
+
+#menuToggle:checked ~ #sliding-menu {
+    left:0px;
+    opacity:1;
+    visibility:visible;
+}
+
+#menuToggle:checked ~ .menu-container #menu-label-bars {
+    opacity:0; /* hide menu bars icon */
+}
+
+#menuToggle:checked ~ .menu-container #menu-label-x {
+    opacity:1; /* show menu X icon */
+}
+
+#sliding-menu .top-menu-element-social-responsive a{
+    display: inline-block;
+    padding:10px 25px;
+}
+
+/* The widget takes the entire width of the screen */
+#sliding-menu #social-icons-widget{
+    width: 100%;
+}
+
+#sliding-menu #social-icons-widget ul{
+    padding-left: 0px; /* to center the icons */
+    margin-top: 20px; /* to create more space between the menu links and the social icons */
+}
+
+#blog-logo-wrapper-responsive-menu{
+    margin-bottom: 20px;
+    text-align:center;
+}
+#blog-logo-wrapper-responsive-menu img{
+    max-width: 150px;
+}
+/* End menu responsive */
+
+
+header{
+    margin-bottom:300px;
+}
+
+#header-wrapper{
+    padding-top:20px;
+    height:300px;
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.header-inner-top{ background:rgba(255,255,255,0);/*transparent background*/
+}
+
+#top-menu-fixed-wrapper{
+    position:fixed;
+    z-index:50;
+    left:0;
+    right:0;
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+#top-menu-container{
+    padding:0px 0px;
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+#top-menu-flex-parent{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+    -webkit-box-pack:justify;
+    -ms-flex-pack:justify;
+    justify-content:space-between;
+    padding:10px;
+}
+
+.opaque-menu-bg{
+    background-color:white;
+    box-shadow:0px 5px 8px rgba(25,25,25,.25);
+}
+
+.top-menu-element-apdc-logo,
+.top-menu-element-menu,
+.top-menu-element-social{
+    display:inline-block;
+    height:100%;
+}
+.top-menu-element-apdc-logo{
+    width:20%;
+    position: relative;
+    z-index: 60;
+}
+.top-menu-element-menu{
+    width:60%;
+    position: relative; /* lets us position menu icon as absolute within this element */
+    height: 35px;
+}
+
+.top-menu-element-social{ width:20%; }
+
+/* Hide this social menu on smartphone when there is the responsive menu */
+.top-menu-element-social{
+    display: none;
+}
+
+#primary-menu{
+    margin-bottom:0;
+}
+
+#logo-apdc{
+    width:100px; /* width on smartphone */
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+.logo-apdc-small{
+    width:80px !important;
+}
+
+/* Header sidebar for social network icons */
+#social-icons-widget{
+    display:inline-block;
+    float:right;
+    margin-bottom:0;
+}
+
+#main-menu{
+    text-align:center;
+    display: none; /* the nav #main-menu was taking space above button .menu-toggle-button-wrap, it was a problem for the layout on smartphone, will be in display: block from resolution 768px and above */
+}
+
+#main-menu ul{
+    list-style:none;
+}
+#main-menu .menu-item-object-category{
+    display:inline;
+    padding:25px 10px;
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+
+/* Menu item Recettes */
+#main-menu .menu-item-object-category:nth-child(1):hover{
+    background:#2aa745;
+    color:white;
+}
+
+/* Menu item Marché */
+#main-menu .menu-item-object-category:nth-child(2):hover{
+    background:#c6304d;
+    color:white;
+}
+/* Menu item Astuces */
+#main-menu .menu-item-object-category:nth-child(3):hover{
+    background:#ffba44;
+    color:white;
+}
+/* Menu item Découverte */
+#main-menu .menu-item-object-category:nth-child(4):hover{
+    background:#4a97d3;
+    color:white;
+}
+
+.menu-item-object-category a{
+    font-family: 'OpenSans-SemiBold', sans-serif;
+    border-bottom:2px solid rgba(255,255,255,0);/* invisible when not hovered */
+}
+.menu-item-object-category a:hover{
+    border-bottom:2px solid rgba(255,255,255,1);
+}
+
+/* Currently displayed menu page is distinguished from others */
+.current-menu-item{
+    color:white;
+}
+.current-menu-item a{
+    border-bottom:2px solid rgba(255,255,255,1);
+}
+.current-menu-item.menu-item-object-category:nth-child(1){background:#2aa745;}
+.current-menu-item.menu-item-object-category:nth-child(2){background:#c6304d;}
+.current-menu-item.menu-item-object-category:nth-child(3){background:#ffba44;}
+.current-menu-item.menu-item-object-category:nth-child(4){background:#4a97d3;}
+
+a.genericon, a.genericon:visited{
+/*.top-menu-element-social{*/
+    text-shadow:1px 1px 4px white, -1px -1px 4px white;
+    color:#00595e !important;
+}
+
+.widget_wpcom_social_media_icons_widget .genericon{
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+.widget_wpcom_social_media_icons_widget .genericon:hover{
+    color: #00595e !important;
+    -webkit-transform:scale(1.1);
+    transform:scale(1.1);
+}
+a.genericon, a.genericon:visited{
+    font-size:32px;
+}
+
+#blog-logo-wrapper{
+    margin-top:100px;
+    text-align:center;
+}
+#blog-logo-wrapper img{
+    max-width: 250px;
+}
+
+#header-categories-wrapper{
+    position:relative;
+    margin-top:40px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    
+    -ms-flex-wrap: wrap; /* to allow the wrap on mobil */
+    flex-wrap: wrap;
+}
+
+.header-single-category-wrapper{
+    position:relative; /* to allow absolute positioning of category labels */
+    border:5px solid white;
+    text-align:center;
+    
+    width: 50%;
+    box-sizing: border-box;
+}
+.header-single-category-wrapper:first-child{
+    margin-left:0px;
+}
+.header-single-category-wrapper:last-child{
+    margin-right:0px;
+}
+
+#header-single-category-recettes,
+#header-single-category-astuces,
+#header-single-category-marche,
+#header-single-category-decouverte{
+    position:absolute;
+    top:50%;
+    left:50%;
+    -webkit-transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%);
+    width:90%;
+    text-align:center;
+    font-family: 'OpenSans-SemiBold', sans-serif;
+    font-size:18px;
+    color:white;
+    padding:5px;
+}
+#header-single-category-recettes{ background-color: #2aa745; }
+#header-single-category-astuces{ background-color: #ffba44; }
+#header-single-category-marche{ background-color: #c6304d; }
+#header-single-category-decouverte{ background-color: #4a97d3; }
+
+
+/*============================
+          END HEADER 
+==============================*/
+
+/*============================
+             BODY
+==============================*/
+#article-column, #aside-column{
+    padding:0;
+}
+
+.article-wrapper{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -ms-flex-wrap:wrap;
+    flex-wrap:wrap;
+}
+
+a.post-wrapper{
+    max-width:50%;
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%; /* for Safari flexbox bug #136041 */
+    text-align:center;
+    /*border:1px solid purple;*/
+}
+
+a.post-wrapper:nth-child(odd){
+    padding-right:10px;
+}
+a.post-wrapper:nth-child(even){
+    padding-left:10px;
+}
+
+a.post-wrapper img{
+    display:block;
+    width:100%;
+}
+
+.category-wrapper{
+    position:relative;
+}
+
+.category-box{
+    display:inline-block;
+    position:absolute;
+    top:0;
+    left:50%;
+    -webkit-transform:translate(-50%,-75%);
+    transform:translate(-50%,-75%);
+    color:white;
+    padding:7px 10px;
+    margin:0px;
+    text-transform: capitalize;
+}
+
+h2.post-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    font-size: 38px;
+    line-height: 34px;
+    text-transform: none !important;
+    letter-spacing: normal;
+    color:#00595e;
+    padding:15px 10px 0px 10px;
+}
+h4.post-title{
+    color:#00595e;
+}
+
+p.post-excerpt{
+    position:relative;
+    text-align:left;
+    font-size:17px;
+    line-height:140%;
+    padding:0px 10px 10px 10px;
+}
+
+/* The colors for each of the 6 categories */
+.category-label-recettes{ background-color:#2aa745; }
+.category-label-astuces{ background-color:#ffba44; }
+.category-label-marche{ background-color:#c6304d; }
+.category-label-decouverte{ background-color:#4a97d3; }
+.category-label-portrait{ background-color:#005952; }
+.category-label-coupdefood{ background-color:#2a4899; }
+.category-label-dossier{ background-color:#2a4899; }
+
+/* Container button : Voir tous les articles */
+.button-container{
+    text-align: center; /* center the button on small resolutions */
+    width: 100%;
+    margin-bottom: 60px;
+}
+/* Button : Voir tous les articles */
+#all-articles{
+    border:2px solid #00595e;
+    background-color:white;
+    padding:15px;
+    margin-top:20px;
+    font-family: 'OpenSans-SemiBold', sans-serif !important;
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+#all-articles:hover{
+    background-color:#00595e;
+    color:white;
 }
 
 
-.entry-title-blog a {
-    font-size: 24px;
-    font-size: 1em;
-    color: #575756;
-    margin: 0;
+/* ########## Coup de Food banner ########## */
+#coup-de-food-banner{
+    background-color: #2a4899;
+    margin:80px 0px;
+    overflow:visible;
+    padding:20px;
+    
+    height: 600px; /* just on smartphone */
+}
+#coup-de-food-banner .post-title, #coup-de-food-banner .post-excerpt{
+    color:white !important;
+}
+#coup-de-food-banner .post-title{
+    font-family: 'OpenSans-Light', sans-serif !important;
+    font-size:38px !important;
+    line-height:38px !important;
+}
+#coup-de-food-section-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    color:white;
+    font-size:66px;
+    padding-left:10px;
+    margin-bottom: 0px;
+}
+#coup-de-food-title-excerpt{
+    display:inline-block;
+    width:100%;
+}
+#coup-de-food-image{
+    display:inline-block;
+    width: 100%; /* on smartphone only */
+    text-align: center; /* on smartphone only */
+}
+#coup-de-food-image img{
+    position:relative;
+    top: 0;
+    border:1px solid #ccc;
+}
+/* ########## end Coup de Food banner ########## */
+
+/* ########## 6 random articles ########## */
+.six-random-articles-wrapper{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -ms-flex-wrap:wrap;
+    flex-wrap:wrap;
+    margin-top:40px;
+    padding-bottom:60px;
+    padding-left: 0; /* smartphone only */
+    padding-right: 0; /* smartphone only */
 }
 
-.header-inner-site-branding {
-        padding: 0 0 !important;
+.six-random-articles-single-wrapper{
+    width:calc(100% - 0px);
+    margin-bottom:20px;
+}
+
+.six-random-articles-single-wrapper .category-and-title-wrapper{
+    font-size: 16px;
+}
+
+.category-and-title-wrapper, .six-random-articles-single-wrapper img{
+    display:inline-block;
+    width:50%;
+    vertical-align:top;/*default bootstrap value of middle causes incorrect alignment. need value top to align
+    elements as in the mockups*/
+}
+.category-and-title-wrapper{
+    padding:0px 10px;
+}
+
+h4.post-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    font-size: 28px;
+    line-height: 24px;
+    text-transform: none !important;
+    letter-spacing: normal;
+}
+
+.category-text-recettes{ color:#2aa745 !important; }
+.category-text-astuces{ color:#ffba44 !important; }
+.category-text-marche{ color:#c6304d !important; }
+.category-text-decouverte{ color:#4a97d3 !important; }
+.category-text-portrait{ color:#005952 !important; }
+.category-text-coupdefood{ color:#2a4899 !important; }
+
+/* ########## End 6 random articles ########## */
+
+/* ########## Dossier article ########## */
+#dossier-content-wrapper{
+    position:relative;
+    margin-bottom:60px;
+    
+    padding:20px;
+}
+#dossier-content-wrapper #dossier-text {
+    color:white;
+    text-shadow:3px 3px 4px black;
+}
+#dossier-content-wrapper #dossier-text h2{
+    margin:0px 0px 20px 0px;
+}
+#dossier-content-wrapper #dossier-text #dossier-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+}
+/* ########## End Dossier article ########## */
+
+/* ########## Instagram ########## */
+#instagram-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    color:#00595e;
+}
+.wdi_feed_main_container{
+    margin:60px 0px;
+    width:90%!important;
+    margin-left:auto;
+    margin-right:auto;
+}
+.wdi_photo_wrap_inner{
+    border:none !important;/* remove white border around images */
+}
+.wdi_feed_item{
+    box-sizing:border-box;
+}
+.wdi_layout_th .wdi_feed_item, .wdi_layout_th .wdi_photo_wrap {
+    overflow:visible !important;
+}
+.wdi_feed_item[wdi_index="0"] {
+}
+.wdi_feed_item[wdi_index="1"] {
+    position:relative;
+}
+.wdi_feed_item[wdi_index="1"] div div.wdi_photo_wrap_inner {
+    -webkit-transform:scale(.8) translateY(-25px);
+    transform:scale(.8) translateY(-25px);
+}
+.wdi_feed_item[wdi_index="2"] {
+    position:relative;
+}
+.wdi_feed_item[wdi_index="2"] div div.wdi_photo_wrap_inner {
+    -webkit-transform:scale(.9);
+    transform:scale(.9);
+    -webkit-transform:translate(-25px, -25px);
+    transform:translate(-25px, -25px);
+}
+.wdi_feed_item[wdi_index="3"] {
+    position:relative;
+}
+.wdi_feed_item[wdi_index="3"] div div.wdi_photo_wrap_inner {
+    -webkit-transform:scale(.7) translateY(-40px);
+    transform:scale(.7) translateY(-40px);
+    -webkit-transform-origin:top right;
+    transform-origin:top right;
+}
+.wdi_feed_item[wdi_index="4"] {
+    position:relative;
+}
+.wdi_feed_item[wdi_index="4"] div div.wdi_photo_wrap_inner {
+    -webkit-transform:translateY(-30px) scale(1.25);
+    transform:translateY(-30px) scale(1.25);
+}
+.wdi_feed_item[wdi_index="5"] {
+    position:relative;
+}
+.wdi_feed_item[wdi_index="5"] div div.wdi_photo_wrap_inner {
+    -webkit-transform:translateY(-30px) scale(.85);
+    transform:translateY(-30px) scale(.85);
+    -webkit-transform-origin:top right;
+    transform-origin:top right;
+}
+/* ########## End Instagram ########## */
+
+
+
+/* ########## Aside ########## */
+.article-wrapper-aside{
+    max-width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* First article in the aside */
+.background-article-portrait{
+    background-color: #f0801d;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    color: #fff;
+}
+
+.background-article-portrait h2{
+    margin-top: 0;
+    text-align: center;
+    color:white;
+}
+.background-article-portrait p{
+    color:white;
+}
+
+#random-article-wrapper-aside{
+    position: relative; /* to position the category tag of the random post */
+    margin-top: 60px;
+}
+
+.post-wrapper-aside img{
+    border:1px solid #ccc;
+}
+
+/* Positionning the category tag for the random posts */
+.category-box-random{
+    position:absolute;
+    top:20px;
+    left: 15px;
+    color:white;
+    padding:7px 10px;
+    margin:0px;
+}
+
+.title-random-post{
+    position:absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, 0%);
+    transform: translate(0%, -50%);
+    
+    /*top: 20%;*/
+    text-align: center;
+    width: 100%;
+}
+
+#random-post-title{
+    color: #fff;
+    text-shadow: 2px 2px 4px black;
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#button-random-post{
+    position: absolute;
+    bottom: 20px;
+    width:200px;
+    left:50%;
+    margin-left:-100px;
+    -webkit-transition: all .3s ease;
+    transition:all .3s ease;
+}
+
+/* Aside visible on category pages */
+.four-random-articles-wrapper, .title-favorite-articles{
+    max-width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.four-random-articles-single-wrapper{
+    display: block;
+    margin-bottom: 20px;
+}
+
+.four-random-articles-single-wrapper img{
+    display: inline-block;
+    width: 50%;
+}
+
+.title-favorite-articles{
+    color:#00595e;
+    font-size: 34px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+/* End aside visible on category pages */
+
+/* ########## End aside ########## */
+
+
+
+
+/*============================
+            FOOTER
+==============================*/
+footer{
+    margin-top:60px;
+}
+
+.site-footer{
+    background:#2aa745;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#footer-copyright-and-icons a.genericon, #footer-copyright-and-icons a.genericon:visited{
+    text-shadow:none; /* no need for shadow in the footer */
+}
+
+.site-info{
+    background-color: #2aa745;
+    color: #fff;
+    padding: 10px 0;
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+    letter-spacing:normal;
+    font-size:15px;
+}
+.site-info a{
+    font-weight:bold !important;
+}
+
+.container-footer-info{
+    text-align: center;
+    position: relative;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+    
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal; 
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.container-footer-info a{
+    font-family: 'OpenSans-Light', sans-serif !important;
+}
+
+.container-footer-info div a{
+    padding-right: 15px;
+    font-size: 12px;
+}
+
+.logo-blog{
+    display: inline-block;
+    width: 150px;
+    
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#footer-copyright-and-icons{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+    
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+#footer-social-icons-widget{
+    display:inline-block;
+    margin-bottom:0;
+    margin-left:30px;
+    padding-bottom:0px;
+    
+    margin-left: 0;
+    margin-top: 20px;
+}
+#footer-social-icons-widget a{
+    font-size:32px;
+    font-family:Genericons !important;
+    padding-right:5px;
+}
+#footer-social-icons-widget ul{
+    padding-left: 0px;
+}
+
+.logo-site{
+    display: none;
+    /*width: 120px;*/
+}
+/*============================
+            END FOOTER
+==============================*/
+
+
+
+
+/*============================
+            ARCHIVE PAGE
+==============================*/
+.archive-category-wrapper{
+    color: #fff;
+    padding: 40px;
+    margin-bottom: 60px;
+}
+
+.archive-category-wrapper p{
+    color: #fff!important;
+}
+
+.archive-category-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    text-align: center;
+    text-transform:capitalize;
+    margin-top: 0;
+}
+
+ul.page-numbers{
+    margin:20px 0px 60px 0px;
+    padding-left:0px;
+}
+ul.page-numbers li{
+    list-style:none; /*remove bullet points from page list */
+    display:inline-block; /* keep them on the same line */
+    padding:0 10px;
+}
+/*============================
+            END ARCHIVE PAGE
+==============================*/
+
+
+
+/*============================
+            ARTICLE PAGE
+==============================*/
+.no-padding{
+    padding:0;
+}
+/* Store */
+.display-none-xs{
+    display: none;
+}
+.display-none-sm{
+    display: none;
+}
+
+#storefront-blocks{
+    margin-bottom:60px;
+}
+.block{
+    background-color: #00595e;
+    width:50%;
+    height:100px;
+}
+/* End store */
+
+/* Sharing icons */
+#article-sharing-icon-wrapper{
+    position:relative;
+}
+.article-sharing-icon{
+    text-align:center;
+    margin-bottom:20px;
+}
+.article-sharing-icon a.genericon{
+    font-size: 30px;
+}
+/* End sharing icons */
+
+/* Display flex for the header of the article */
+.flex-introduction-article{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+.introduction-article-wrapper{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+}
+
+#post-thumbnail-wrapper{
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+}
+
+/* Design of the category tag */
+.category-box-article{
+    color:white;
+    margin:5px;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 18px;
+    padding:1px 15px;
+}
+
+/* Design of the category title */
+.article-title{
+    font-family: 'HoneyScript-SemiBold', sans-serif !important;
+    color: #00595e;
+    font-size: 85px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+    font-size: 60px;
+    line-height: 50px;
+}
+
+/* Design of the article's publication date */
+.publication-date{
+    color: #999;
+    margin-top: 15px;
+    display: inline-block;
+    
+    font-size: 15px;
+}
+
+/* Style of the category line */
+.border{
+    position:relative;
+    left:-20px;
+    padding: 30px 0px 30px 20px;
+    margin-top: 40px;
+}
+
+.category-border-recettes{border-left: 3px solid #2aa745;} /*8px on desktop*/
+.category-border-astuces{border-left: 3px solid #ffba44;}
+.category-border-marche{border-left: 3px solid #c6304d;}
+.category-border-decouverte{border-left: 3px solid #4a97d3;}
+.category-border-portrait{border-left: 3px solid #005952;}
+.category-border-coupdefood{border-left: 3px solid #2a4899;}
+.category-border-dossier{border-left: 3px solid #2a4899;}
+
+/* Spacing between paragraphs */
+.article-content p{
+    margin-bottom: 20px;
+}
+
+.fruit-banner{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+/*============================
+            END ARTICLE PAGE
+==============================*/
+
+/*============================
+            PAGE-ARCHIVES
+==============================*/
+ul.page-numbers li a.page-numbers{
+    font-weight:bold;
+}
+/*============================
+        END PAGE-ARCHIVES
+==============================*/
+
+
+/*####################################################################*/
+/*######################## Début adaptation ##########################*/
+/*####################################################################*/
+/* Adaptations for IE, not Edge */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (min-width:992px) {
+	/*============================
+                HEADER
+    ==============================*/
+    .header-single-category-wrapper{
+        width:100% !important;
+    }
+}
+
+/*########### > 360px #############*/
+@media screen and (min-width:360px){
+    /*============================
+                HEADER
+    ==============================*/
+    /* Responsive menu */
+    /* Styling the links in the menu */
+    #sliding-menu a {
+        padding:15px 0px;
+    }
+    /* End responsive menu */
+    /*============================
+                END HEADER
+    ==============================*/
+}
+
+/*########### > 400px #############*/
+@media screen and (min-width:400px){
+    /*============================
+                HEADER
+    ==============================*/
+    header{
+        margin-bottom:400px;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+}
+    
+
+/*########### > 440px #############*/
+@media screen and (min-width:440px){
+    /*============================
+                HEADER
+    ==============================*/
+    header{
+        margin-bottom:450px;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    /* ########## Coup de Food banner ########## */
+    #coup-de-food-banner{
+        height: 650px;
+    }
+    /*============================
+                END LANDING PAGE
+    ==============================*/
+}
+
+/*########### > 530px #############*/
+@media screen and (min-width:530px){
+    /*============================
+                HEADER
+    ==============================*/
+    header{
+        margin-bottom:540px;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                ARTICLE PAGE
+    ==============================*/
+    /* Sharing icons */
+    .article-sharing-icon a.genericon{
+        font-size: 45px;
+    }
+    /* End sharing icons */
+    }
+    /*============================
+                END ARTICLE PAGE
+    ==============================*/
+
+/*########### > 600px #############*/
+@media screen and (min-width:600px){
+    /*============================
+                HEADER
+    ==============================*/
+    header{
+        margin-bottom:630px;
+    }
+    
+     #header-wrapper{
+        padding-top:20px;
+        height:400px;
+    }
+    #header-categories-wrapper{
+        margin-top: 60px;
+    }
+    /* Logo blog */
+    #blog-logo-wrapper{
+        margin-top:120px;
+    }
+    #blog-logo-wrapper img{
+        max-width: 380px;
+    }
+    
+    #header-single-category-recettes,
+    #header-single-category-astuces,
+    #header-single-category-marche,
+    #header-single-category-decouverte{
+        width:60%;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    /* ########## 6 random articles ########## */
+    .six-random-articles-wrapper{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+       .six-random-articles-single-wrapper{
+        width:calc(50% - 30px);
+        margin:15px;
+    }
+    
+    h4.post-title{
+        font-size: 30px;
+        line-height: 26px;
+    }
+    /* ########## End 6 random articles ########## */
+    /*============================
+                END LANDING PAGE
+    ==============================*/
+}
+
+/*########### > 700px #############*/
+@media screen and (min-width:700px){
+    /*============================
+                HEADER
+    ==============================*/
+    header{
+        margin-bottom:730px;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    #dossier-content-wrapper #dossier-text {
+        display: inline-block;
+        position: relative;
+        left: 50%;
+    }
+    /*============================
+                END LANDING PAGE
+    ==============================*/
+}
+
+/*########### Repère bootstrap SM (tablettes) > 768px #############*/
+@media screen and (min-width:768px){
+    /*============================
+                HEADER
+    ==============================*/
+    .container{
+        width:auto;
+    }
+    /* Menu responsive */
+    #blog-logo-wrapper-responsive-menu{
+        margin-top:20px;
+        margin-bottom: 20px;
+        text-align:center;
+    }
+    #blog-logo-wrapper-responsive-menu img{
+        max-width: 250px;
+    }
+    
+    /* Styling the links in the menu */
+    #sliding-menu a {
+        padding:20px 0px;
+        font-size: 25px;
+    }
+    
+    #sliding-menu #social-icons-widget ul{
+        margin-top: 40px; /* to create more space between the menu links and the social icons */
+    }
+    /* End menu responsive */
+    
+    header{
+        margin-bottom:780px;
+    }
+    
+    #top-menu-flex-parent{
+        padding:20px;
+    }
+    
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    .button-container{
+        text-align: left; /* align the button on the left from this resolution */
+        width: auto;
+        /*margin-bottom: 0px;*/
+    }
+    
+    /* ########## Coup de Food banner ########## */
+    #coup-de-food-banner{
+        height: auto;
+    }
+    #coup-de-food-title-excerpt{
+        display:inline-block;
+        width: 40%;/*50%;*/
+    }
+    #coup-de-food-image{
+        display:inline-block;
+        width:40%;
+        text-align: left;
+    }
+    #coup-de-food-image img{
+        position:absolute;
+        top:50%;
+        -webkit-transform:translateY(-50%);
+        transform:translateY(-50%);
+        border:1px solid #ccc;
+    }
+    /* ########## End Coup de Food banner ########## */
+    /*============================
+                END LANDING PAGE
+    ==============================*/
+    
+    /*============================
+                ARTICLE PAGE
+    ==============================*/
+    /* Store */
+    .display-none-xs{
+        display: block;
+    }
+    
+    /* Sharing icons */
+    .article-sharing-icon a.genericon{
+        font-size:45px;
+    }
+    /* End sharing icons */
+    
+    /* Design of the category tag */
+    .category-box-article{
+        margin-top: 20px;
+    }
+    
+    /* Design of the category tag */
+    .category-box-article{
+        padding:3px 20px;
+        font-size: 30px;
     }
 
-@media screen and (min-width: 1200px) {
+    /* Design of the category title */
+    .article-title{
+        font-size: 85px;
+        line-height:1em;
+    }
 
+    
+    .category-border-recettes{border-left: 8px solid #2aa745;}
+    .category-border-astuces{border-left: 8px solid #ffba44;}
+    .category-border-marche{border-left: 8px solid #c6304d;}
+    .category-border-decouverte{border-left: 8px solid #4a97d3;}
+    .category-border-portrait{border-left: 8px solid #005952;}
+    .category-border-coupdefood{border-left: 8px solid #2a4899;}
+    .category-border-dossier{border-left: 8px solid #2a4899;}
+    /*============================
+                END ARTICLE PAGE
+    ==============================*/
+}
+
+/*########### Repère bootstrap MD (desktop) 992px #############*/
+@media screen and (min-width:992px){
+    /*============================
+                HEADER
+    ==============================*/
+    /* Responsive menu */
+    .menu-container{
+        display: none;
+    }
+    /* End responsive menu */
+    
+    header{
+        margin-bottom:200px;
+    }
+    
+    /* The header becomes like on destop at this resolution */
+    #header-wrapper{
+        padding-top:20px;
+        height:500px;
+        background-attachment: fixed;
+        background-position:center center;
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
+    
+    #top-menu-container{
+        padding:10px 0px;
+    }
+    
+    #top-menu-flex-parent{
+        padding:0px;
+    }
+    
+    #logo-apdc{
+        width:200px;
+        -webkit-transition: all .3s ease;
+        transition:all .3s ease;
+    }
+    .logo-apdc-small{
+        width:100px !important;
+    }
+    
+    /* Menu responsive */
+    #sliding-menu{
+        display: none;
+    }
+    /* End menu responsive */
+    
+    /* Menu */
+    #main-menu{
+        display: block;
+    }
+    
+    /* Hide this social menu on smartphone when there is the responsive menu */
+    .top-menu-element-social{
+        display: inline-block;
+    }
+    
+    /* Logo blog */
+    #blog-logo-wrapper{
+        margin-top:140px;
+        text-align:center;
+    }
+    #blog-logo-wrapper img{
+        max-width: 500px;
+    }
+    
+    /* Stop the wrap of the 4 categories images */
+    #header-categories-wrapper{
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    }
+    .header-single-category-wrapper{
+        margin:0 10px;
+        border:10px solid white;
+        width: auto;
+        box-sizing: border-box;
+    }
+    
+    #header-single-category-recettes,
+    #header-single-category-astuces,
+    #header-single-category-marche,
+    #header-single-category-decouverte{
+        font-size:24px;
+        padding:10px;
+        width:90%;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    .button-container{
+        margin-bottom: 0px;
+    }
+    /* ########## Coup de Food banner ########## */
+    #coup-de-food-title-excerpt{
+        width: 50%;
+    }
+    /* ########## end Coup de Food banner ########## */
+    
+    /* ########## 6 random articles ########## */
+       .six-random-articles-single-wrapper{
+        width:calc(33% - 30px);
+    }
+    /* ########## End 6 random articles ########## */
+    
+    /* ########## Dossier article ########## */
+    #dossier-content-wrapper{
+        padding:40px;
+    }
+    /* ########## End Dossier article ########## */
+    /*============================
+                END LANDING PAGE
+    ==============================*/
+    
+    /*============================
+                ARTICLE PAGE
+    ==============================*/
+    /* Store */
+    .display-none-sm{
+        display: block;
+    }
+    
+    /* Display flex for the header of the article */
+    .flex-introduction-article{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    .introduction-article-wrapper{
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-align:center;
+        -ms-flex-align:center;
+        align-items:center;
+    }
+    
+    /*============================
+                END ARTICLE PAGE
+    ==============================*/
+    
+    /*============================
+                ASIDE
+    ==============================*/
+    .article-wrapper-aside, .four-random-articles-wrapper, .title-favorite-articles{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    
+    /*============================
+                END ASIDE
+    ==============================*/
+    
+    /*============================
+                FOOTER
+    ==============================*/
+    .container-footer-info{
+        -webkit-box-pack:justify;
+        -ms-flex-pack:justify;
+        justify-content:space-between;
+        -webkit-box-align:center;
+        -ms-flex-align:center;
+        align-items:center;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    
+    #footer-copyright-and-icons{
+        -webkit-box-align:center;
+        -ms-flex-align:center;
+        align-items:center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    
+    .logo-site{
+        display: inline-block;
+        width: 120px;
+    }
+    
+    #footer-social-icons-widget{
+        margin-left:30px;
+        margin-top: 0px;
+    }
+    #footer-social-icons-widget ul{
+    padding-left: 40px;
+}
+    /*============================
+                END FOOTER
+    ==============================*/
+}
+
+/*########### Repère bootstrap LG (large desktop) 1200px #############*/
+@media screen and (min-width:1200px){
     .container {
         width: 970px;
     }
-
+    
+    /*============================
+                HEADER
+    ==============================*/
+    #blog-logo-wrapper img{
+        max-width: none;
+    }
+    /*============================
+                END HEADER
+    ==============================*/
 }
-
+/*###########  > 1600px #############*/
 @media screen and (min-width: 1600px) {
-
     .container {
         width: 1200px;
     }
-
-    .entry-content {
-        font-size: 16px;
-        font-size: 1em;
+    
+    /*============================
+                HEADER
+    ==============================*/
+    #header-wrapper{
+        padding-top:20px;
+        height:auto;
+        background-attachment: fixed;
+        background-position:center center;
+        background-size:cover;
     }
-
-    .main-navigation li a {
-        padding: 5px 17px;
+    
+    #header-categories-wrapper{
+        -webkit-transform:translateY(25%);
+        transform:translateY(25%);
     }
-
-    .social-navigation a {
-        margin-right: 20px;
+    /*============================
+                END HEADER
+    ==============================*/
+    
+    /*============================
+                LANDING PAGE
+    ==============================*/
+    #dossier-content-wrapper #dossier-text{
+        left: 60%;
     }
-
-    .header-inner-site-branding {
-        padding: 0 0 !important;
-    }
-
-    .content-inner-wrap,
-    .comments-area-wrap .comments-area {
-        max-width: 840px;
-    }
-
+    /*============================
+                END LANDING PAGE
+    ==============================*/
 }
-
-
-@media screen and (max-width: 600px) {
-
-    body {
-        font-size: 15px;
-    }
-
-    .comment-content {
-        font-size: 15px;
-        font-size: 1em;
-    }
-
-    .comment-author .fn, .comment-author .fn a, .comment-metadata, .comment-metadata a {
-        letter-spacing: 0.5px;
-    }
-
-    .container {
-        padding-right: 0;
-        padding-left: 0;
-    }
-}
-
-/*Autres modifications*/
+/*######################## Fin adaptation ##########################*/
