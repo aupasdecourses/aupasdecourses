@@ -72,6 +72,22 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $this->addProductAvailabilities();
     }
 
+    public function generateProductsAvailabilitiesByNeighborhood(Apdc_Neighborhood_Model_Neighborhood $neighborhood)
+    {
+        $websiteId = $neighborhood->getWebsiteId();
+        $productIds = [];
+        $products = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addWebsiteFilter($websiteId);
+        $products->getSelect()->reset(Zend_Db_Select::COLUMNS);
+        $products->getSelect()->columns(['entity_id']);
+        $productIds = $products->getColumnValues('entity_id');           
+
+        if (!empty($productIds)) {
+            $this->generateProductsAvailabilities($productIds);
+        }
+    }
+
     public function generateProductsAvailabilitiesByShop(Apdc_Commercant_Model_Shop $shop)
     {
         $productIds = [];
@@ -145,6 +161,11 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                             $errors[$productId . $key] = $product['entity_id'] . ' / website : ' . $product['website_id'] . ' / commercant ; ' . $product['commercant_id'];
                         }
                         continue;
+                    } else if ($availabilities[$day][$key]['status'] == -1) {
+                        if (!isset($warnings[$productId . $key])) {
+                            $warnings[$product['website_id']] = 'Les produits ne sont plus disponible pour le website : ' . (int) $product['website_id'];
+                        }
+                        continue;
                     }
                     $available = $availabilities[$day][$key];
                 }
@@ -168,6 +189,11 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             foreach ($errors as $error) {
                 $error = 'Erreur lors de la regénération des disponibilités produits avec le produit : ' . $error;
                 Mage::getSingleton('adminhtml/session')->addError($error);
+            }
+        }
+        if (!empty($warnings)) {
+            foreach ($warnings as $warning) {
+                Mage::getSingleton('adminhtml/session')->addWarning($warning);
             }
         }
     }
@@ -323,7 +349,8 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 'an.website_id = pw.website_id',
                 [
                     'an.entity_id',
-                    'an.website_id'
+                    'an.website_id',
+                    'an.is_active'
                 ]
             );
             $collection->getSelect()->group('an.entity_id');
@@ -374,6 +401,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $shops = $this->getShopsAvailability();
 
         // [
+        //      -1 => neighborhood is not activated
         //      1 => available,
         //      2 => Service not available
         //      3 => shop not available for delivery
@@ -384,12 +412,22 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             $date = date('Y-m-d', $time);
             $status = 1;
             foreach ($neighborhoods as $websiteId => $neighborhood) {
-                $serviceStatus = $status;
-                $specialDays = $this->getSpecialDays($websiteId);
-                if (in_array($date, $specialDays)) {
-                    $serviceStatus = 2;
+                if ($neighborhood['is_active']) {
+                    $serviceStatus = $status;
+                    $specialDays = $this->getSpecialDays($websiteId);
+                    if (in_array($date, $specialDays)) {
+                        $serviceStatus = 2;
+                    }
+                } else {
+                    $serviceStatus = -1;
                 }
                 foreach ($shops as $commercantId => $shop) {
+                    if ($serviceStatus == -1) {
+                        $availabilities[$day][$websiteId . '_' . $commercantId] = [
+                            'status' => -1
+                        ];
+                        continue;
+                    }
                     $finalStatus = $serviceStatus;
                     if ($serviceStatus == 1) {
                         if (!empty($shop['closing_periods'])) {
@@ -438,7 +476,6 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             }
         }
 
-        Mage::log($specialDays);
         return $specialDays;
     }
 }

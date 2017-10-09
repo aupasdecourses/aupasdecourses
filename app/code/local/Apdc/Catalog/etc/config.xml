@@ -168,6 +168,15 @@
           </apdc_catalog_update_product_availability>
         </observers>
       </apdc_commercant_shop_save_after>
+      <apdc_neighborhood_save_after>
+        <observers>
+          <apdc_catalog_update_product_availability>
+            <type>singleton</type>
+            <class>apdc_catalog/adminhtml_observer_productAvailability</class>
+            <method>updateProductAvailabilityByNeighborhood</method>
+          </apdc_catalog_update_product_availability>
+        </observers>
+      </apdc_neighborhood_save_after>
     </events>
   </adminhtml>
 
