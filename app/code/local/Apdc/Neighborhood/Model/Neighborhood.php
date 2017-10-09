@@ -37,13 +37,4 @@ class Apdc_Neighborhood_Model_Neighborhood extends Mage_Core_Model_Abstract
     {
         return Mage::app()->getWebsite($this->getWebsiteId())->getDefaultStore()->getUrl();
     }
-
-    public function isOpen()
-    {
-        $currentDay = date('N');
-        if (in_array($currentDay, $this->getOpeningDays())) {
-            return true;
-        }
-        return false;
-    }
 }

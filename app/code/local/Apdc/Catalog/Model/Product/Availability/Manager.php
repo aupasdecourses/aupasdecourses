@@ -323,7 +323,6 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 'an.website_id = pw.website_id',
                 [
                     'an.entity_id',
-                    'an.opening_days',
                     'an.website_id'
                 ]
             );
@@ -332,7 +331,6 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             foreach ($collection as $neighborhood) {
                 $id = $neighborhood->getWebsiteId();
                 $this->neighborhoods[$id] = $neighborhood->getData();
-                $this->neighborhoods[$id]['opening_days'] = unserialize($neighborhood->getOpeningDays());
                 if (isset($this->neighborhoods[$id]['stock_item'])) {
                     unset($this->neighborhoods[$id]['stock_item']);
                 }
@@ -354,9 +352,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 $date->getTimestamp()
             ];
 
-            // @TODO
-            //$nbDays = Mage::getStoreConfig('');
-            $nbDays = 7;
+            $nbDays = 7 * (int) Mage::getStoreConfig('ddate/info/weeks');
             for ($cpt=1; $cpt < $nbDays; ++$cpt)
             {
                 $date->add(new DateInterval('P1D'));
@@ -379,7 +375,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
 
         // [
         //      1 => available,
-        //      2 => neighborhood not available for delivery
+        //      2 => Service not available
         //      3 => shop not available for delivery
         //      4 => shop in holidays
         // ]
@@ -388,16 +384,14 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             $date = date('Y-m-d', $time);
             $status = 1;
             foreach ($neighborhoods as $websiteId => $neighborhood) {
-                $neighborhoodStatus = $status;
-                if (!in_array($day, $neighborhood['opening_days'])) {
-                    $neighborhoodStatus = 2;
+                $serviceStatus = $status;
+                $specialDays = $this->getSpecialDays($websiteId);
+                if (in_array($date, $specialDays)) {
+                    $serviceStatus = 2;
                 }
                 foreach ($shops as $commercantId => $shop) {
-                    $finalStatus = $neighborhoodStatus;
-                    if ($neighborhoodStatus == 1) {
-                        if (!in_array($day, $shop['delivery_days'])) {
-                            $finalStatus = 3;
-                        }
+                    $finalStatus = $serviceStatus;
+                    if ($serviceStatus == 1) {
                         if (!empty($shop['closing_periods'])) {
                             foreach ($shop['closing_periods'] as $period) {
                                 if ($date >= $period['start'] && $date <= $period['end']) {
@@ -406,6 +400,8 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                                 }
                             }
 
+                        } else if (!in_array($day, $shop['delivery_days'])) {
+                            $finalStatus = 3;
                         }
                     }
                     $availabilities[$day][$websiteId . '_' . $commercantId] = [
@@ -419,5 +415,30 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         }
 
         return $availabilities;
+    }
+
+    /**
+     * getSpecialDays 
+     * 
+     * @param int $websiteId websiteId 
+     * 
+     * @return array
+     */
+    protected function getSpecialDays($websiteId)
+    {
+        $website = Mage::getModel('core/website')->load($websiteId);
+        $specialDays = [];
+        $list = trim(Mage::getStoreConfig('ddate/info/special_days', $website->getDefaultStore()->getId()));
+        if ($list) {
+            $list = explode(';', $list);
+            foreach ($list as $date) {
+                if ($date) {
+                    $specialDays[] = Mage::helper('ddate')->validateDate($date);
+                }
+            }
+        }
+
+        Mage::log($specialDays);
+        return $specialDays;
     }
 }
