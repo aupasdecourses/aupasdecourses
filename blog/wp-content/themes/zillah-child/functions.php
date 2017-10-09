@@ -206,7 +206,7 @@ if( !function_exists( 'theme_pagination' ) ) {
 	        'mid_size'     => 2,
 		'type' => 'list',
 		'next_text' => 'suiv.',
-		'prev_text' => 'prev.'
+		'prev_text' => 'préc.'
 	);
 	
 	if( $wp_rewrite->using_permalinks() )
