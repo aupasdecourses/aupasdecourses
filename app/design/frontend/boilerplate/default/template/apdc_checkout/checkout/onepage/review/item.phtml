@@ -27,14 +27,11 @@
 <?php $_item = $this->getItem();
 $_product = Mage::getModel('catalog/product')->load($_item->getProductId());
 $commercants = Mage::registry('commercants_spotty');
+$name = Mage::helper('apdc_checkout')->getCommercantname($this);
+
 if(isset($_SESSION['ddate'])){
     $timestamp = strtotime($_SESSION['ddate']);
     $day = date('w', $timestamp);
-}
-$name = Mage::helper('apdc_checkout')->getCommercantname($this);
-
-$availability = Mage::helper('apdc_catalog/product_availability')->getAvailability($_product);
-if(isset($_SESSION['ddate'])){
 	if(is_array($commercants) && array_key_exists($name,$commercants)){
 		if(!in_array($day,$commercants[$name])){
 			if(count($commercants[$name]) < 4){
@@ -45,7 +42,7 @@ if(isset($_SESSION['ddate'])){
 }
 
 ?>
-<tr class="checkout-review-table-collapse <?php if(!$availability['is_available']) echo 'no-dispo'; ?>">
+<tr class="checkout-review-table-collapse">
     <td class="product-name">
         <div class="crop">
             <img class="thumb_review" src="<?php echo Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75, 75); ?>" alt="<?php echo $this->htmlEscape($_item->getName()); ?>" border="0" width="75" />
@@ -176,28 +173,17 @@ if(isset($_SESSION['ddate'])){
         <?php endif; ?>
     </td>
     <?php endif; ?>
-    <td class="availibility text-center">
-		<?php if($availability['is_available']) { ?>
-			<i class="fa fa-check"></i>
-		<?php } else { ?>
-			<i class="fa fa-close"></i>
-		<?php } ?>
+    <td class="comments text-center">
+        <div class="action-loading" style="display: none;">
+            <div class="loader"></div>
+        </div>
+        <input type="text" id="comment-<?php echo $_item->getId(); ?>" placeholder="Votre commentaire..." value="<?php if ($_item->getItemComment()) echo $_item->getItemComment(); ?>" />
+        <a href="#" onclick="saveCommentInCheckcart(event, <?php echo $_item->getId(); ?>);" class="button button-green" >Ok</a>
     </td>
-	<?php if($availability['is_available']) { ?>
-		<td class="comments text-center">
-            <div class="action-loading" style="display: none;">
-                <div class="loader"></div>
-            </div>
-			<input type="text" id="comment-<?php echo $_item->getId(); ?>" placeholder="Votre commentaire..." value="<?php if ($_item->getItemComment()) echo $_item->getItemComment(); ?>" />
-			<a href="#" onclick="saveCommentInCheckcart(event, <?php echo $_item->getId(); ?>);" class="button button-green" >Ok</a>
-		</td>
-		<td class="delete text-center">
-            <div class="action-loading" style="display: none;">
-                <div class="loader"></div>
-            </div>
-			<a href="#" onclick="deleteProductInCheckcart(event, <?php echo $_item->getId(); ?>);" title="Supprimer"><i class="fa fa-trash-o"></i></a>
-		</td>
-	<?php } else { ?>
-		<td colspan="2"></td>
-	<?php } ?>
+    <td class="delete text-center">
+        <div class="action-loading" style="display: none;">
+            <div class="loader"></div>
+        </div>
+        <a href="#" onclick="deleteProductInCheckcart(event, <?php echo $_item->getId(); ?>);" title="Supprimer"><i class="fa fa-trash-o"></i></a>
+    </td>
 </tr>
