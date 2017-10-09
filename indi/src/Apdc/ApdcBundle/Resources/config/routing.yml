@@ -170,6 +170,10 @@ mapCustomers:
     path: /map/customers/
     defaults: { _controller: ApdcApdcBundle:Map:customers}
 
+accountingIndex:
+    path: /accounting/
+    defaults: { _controller: ApdcApdcBundle:Accounting:index}
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
