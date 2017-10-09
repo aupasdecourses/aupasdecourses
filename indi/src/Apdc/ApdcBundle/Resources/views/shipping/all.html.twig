@@ -3,8 +3,13 @@
 
 {% block body %}
 	<div class="container">
-		<h1> Livraisons </h1><br/>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<h1> Livraisons </h1><br/>
+	<div class="row">	
+		<div class="col-md-6">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-5">{% include 'ApdcApdcBundle::tool/lpr_info.html.twig' %}</div>
+	</div>
+
 		<hr>
 		{% for store, orders in stores %}
 			<table style="width: 100%">
