@@ -26,7 +26,7 @@
 class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Template
 {
     protected $allProductLabels = array();
-    protected $maxProductLabels = 4;
+    protected $maxProductLabels = 3;
     protected $months;
     protected $authorizedBio;
     protected $authorizeLabels;
@@ -204,7 +204,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             if (array_key_exists($attributeValue, $this->authorizeOrigine)) {
 
                 $productOrigine = array(
-                    'text' => $attributeValue,
+                    'text' => "Origine: ".$attributeValue,
                     'icon' => $this->getSkinUrl($this->authorizeOrigine[$attributeValue]),
                 );
             }
