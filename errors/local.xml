@@ -26,11 +26,11 @@
  */
 -->
 <config>
-    <skin>commis</skin>
+    <skin>default</skin>
     <report>
         <action>email</action>
         <subject>Information d'erreur sur le site Au Pas De Courses</subject>
-        <email_address>pierre@aupasdecourses.com</email_address>
+        <email_address>000nimda0814@aupasdecourses.com</email_address>
         <trash>leave</trash>
     </report>
 </config>

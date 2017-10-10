@@ -17,7 +17,6 @@
     <div id="apdc_checkout_checkcart_info">
 	    <?php echo $this->getChildHtml('checkout.onepage.checkcart.info'); ?>
     </div>
-	<p class="text-right warning-no-dispo">En cliquant sur continuer les produits non disponibles seront supprimés.</p>
 	<div class="buttons-set clearfix" id="checkcart-buttons-container">
 		<p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
 		<button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="checkcart.save()"><?php echo $this->__('Continuer') ?> <i class="fa fa-angle-right"></i></button>
@@ -29,11 +28,5 @@
 <script type="text/javascript">
     //<![CDATA[
     var checkcart = new Checkcart('co-checkcart-form', '<?php echo $this->getUrl('checkout/onepage/saveCheckcart') ?>');
-    //var ddateForm = new VarienForm('co-ddate-form');
-    if (jQuery('#checkout-review-table .no-dispo').length > 0) {
-        jQuery('#co-checkcart-form .warning-no-dispo').show();
-    } else {
-        jQuery('#co-checkcart-form .warning-no-dispo').hide();
-    }
     //]]>
 </script>
