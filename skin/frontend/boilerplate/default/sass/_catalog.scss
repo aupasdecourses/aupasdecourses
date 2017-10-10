@@ -573,6 +573,19 @@
             font-size: 0.75rem;
             color: $color-main-grey;
         }
+        .product-labels{
+            li{
+                list-style: none;
+                margin-left: -30px;
+            }
+            .label-icon{
+                margin-bottom: 2px;
+                font-size:14px;
+                img{
+                    margin-right: 10px;
+                }
+            }
+        }
     }
     .long-description{
         margin: 20px 0;

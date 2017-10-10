@@ -11,7 +11,7 @@ class Apdc_Admin_Model_Mail extends Mage_Core_Model_Abstract
     {
         parent::__construct();
 
-        $this->_mail = new Mandrill_Message(Mage::getStoreConfig(Ebizmarts_Mandrill_Model_System_Config::APIKEY));
+        $this->_mail = new Mandrill_Message(Mage::getStoreConfig('mandrill/general/apikey'));
         $this->_mail->addTo(['pierre@aupasdecourses.com'])
                     ->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'));
     }

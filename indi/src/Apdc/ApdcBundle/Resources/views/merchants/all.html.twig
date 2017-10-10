@@ -21,7 +21,14 @@
 							{% set commandes_msg %}<div style="color:red">{{ nb_commandes_commercant ~ " commande(s) "}}</div>{% endset %}
 						{% endif %}
 
-						<div style="display:inline-block"><h2><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}</a></h2></div>
+						<div style="display:inline-block">
+							<h2>
+								{% if merchant.blacklist %}
+									<i class="fa fa-wheelchair-alt" aria-hidden="true" title="Historique de problèmes sur la préparation de commande, à appeler systématiquement si commandes." style="color:red;"></i>
+								{% endif %}
+								<a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}</a>
+							</h2>
+						</div>
 						<div style="display:inline-block; margin-left:8px;"><a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) ~ "horaires" }}" data-toggle="collapse"><i class="fa fa-calendar" aria-hidden="true"></i></a></div>
 						<div><h4>{{ commandes_msg }}</h4></div>
 					</th>

@@ -901,6 +901,9 @@ section {
             .commercant-info-img,
             .commercant-img-info{
                 height: 250px;
+                &:hover{
+                    cursor:pointer;
+                }
             }
             .commercant-img{
                 float: left;
@@ -1319,4 +1322,15 @@ section {
     top: 0;
     bottom: 0;
     padding:30px;
+}
+
+.cms-content{
+    margin-top: 0;
+    .content{
+        padding-left:40px;
+        padding-right:40px;
+        h2{
+            margin: 30px auto;
+        }
+    }
 }

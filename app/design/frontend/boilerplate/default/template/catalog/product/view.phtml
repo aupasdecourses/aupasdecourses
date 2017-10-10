@@ -68,35 +68,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <?php echo $this->getChildHtml('media') ?>
-                        <div class="product-secondaryinfos">
-                            <?php $attributes = $_product->getAttributes();
-                                $tags=['origine'=>'origine','produit_biologique'=>'bio','producteur'=>'producteur','produit_de_saison'=>'De saison','labels_produits'=>'labels'];
-                            ?>
-                            <div class="tags-product">
-                                <?php
-                                    foreach ($tags as $tag=>$label) {
-                                        $attributeValue=$attributes[$tag]->getFrontEnd()->getValue($_product);
-                                        if (!in_array($attributeValue,['Non','',' ','N/A',null])){?>
-                                            <div class='tags-wrapper'>
-                                            <?php if($tag=='producteur'){?>
-                                                    <a href="<?php echo $attributes['lien_producteur']->getFrontEnd()->getValue($_product)?>"><div class="value-tag tag_<?php echo $tag?>"><span><?php echo $attributeValue?></span></div></a>
-
-                                                <?php }elseif($tag=='origine'){?>
-                                                    <?php if (substr($attributeValue, 0, 6) == "France"){?>
-                                                        <div class="value-tag tag_<?php echo $label;?>"><span>Origine : </span> <img class="origine_flag" src="<?php echo $this->getSkinUrl('images/france_flag_icon.png');?>"/><span><?php echo $attributeValue;?></span></div>
-                                                    <?php }else{?>
-                                                        <div class="value-tag tag_<?php echo $tag;?>"><span>Produit de saison : <?php echo $attributeValue;?></span></div>
-                                                    <?php } ?>
-                                            <?php }elseif($tag=='produit_biologique'){?>
-                                                    <img src="<?php echo $this->getSkinUrl("images/logo_ab_moyen.png");?>"/>
-                                            <?php } else{?>
-                                                    <div class="value-tag tag_<?php echo $tag;?>"><span>Labels : <?php echo $attributeValue;?></span></div>
-                                            <?php } ?>
-                                            </div>
-                                    <?php }}
-                                ?>
-                            </div>
-                        </div>
+                        <?php echo $this->getChild('product_labels')->setData('product', $_product)->toHtml(); ?>
                     </div>
                     <div class="col-xs-12 col-sm-8">
                         <div class="row">

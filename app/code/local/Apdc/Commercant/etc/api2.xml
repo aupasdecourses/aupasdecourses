@@ -38,6 +38,7 @@
                     <hq_postcode>HQ Postcode</hq_postcode>
                     <hq_city>HQ City</hq_city>
                     <hq_country>HQ Country</hq_country>
+                    <blacklist>Blacklist</blacklist>
                 </attributes>
                 <routes>
                     <route_entity>
