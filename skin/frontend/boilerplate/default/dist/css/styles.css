@@ -15570,6 +15570,7 @@ footer .social-list .btn-social-icon {
 .catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content p.shop-availability-message {
   font-size: 19px;
   font-weight: bold;
+  margin-bottom: 0;
 }
 
 .catalog-category-view .commercant-collapse .commercant-info .shop-availability .shop-availability-container .shop-availability-content p.shop-availability-message-info {

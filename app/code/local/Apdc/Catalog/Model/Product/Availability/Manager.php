@@ -438,7 +438,9 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                                 }
                             }
 
-                        } else if (!in_array($day, $shop['delivery_days'])) {
+                        }
+
+                        if ($finalStatus<>4 && !in_array($day, $shop['delivery_days'])) {
                             $finalStatus = 3;
                         }
                     }
@@ -451,7 +453,6 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 }
             }
         }
-
         return $availabilities;
     }
 

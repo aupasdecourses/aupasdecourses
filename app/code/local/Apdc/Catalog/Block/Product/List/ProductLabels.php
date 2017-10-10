@@ -201,7 +201,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($this->getProduct()->getData('origine')) {
             $attributeValue = $this->getAttributeValue('origine');
 
-            if (array_key_exists($attributeValue, $this->authorizeOrigine)&&$this->authorizeOrigine[$attributeValue]<>"") {
+            if ($attributeValue <> false && array_key_exists($attributeValue, $this->authorizeOrigine)&&$this->authorizeOrigine[$attributeValue]<>"") {
                 $productOrigine = array(
                     'text' => "Origine: ".$attributeValue,
                     'icon' => $this->getSkinUrl($this->authorizeOrigine[$attributeValue]),
@@ -223,7 +223,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             $labelBio = array();
             $attributeValue = $this->getAttributeValue('produit_biologique');
 
-            if (in_array($attributeValue, $this->authorizedBio)) {
+            if ($attributeValue <> false && in_array($attributeValue, $this->authorizedBio)) {
                 $labelBio = array(
                      'text' => 'Produit Biologique',
                      'icon' => $this->getSkinUrl('images/labels/bio.png'),
@@ -244,7 +244,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($this->getProduct()->getData('labels_produits')) {
             $productLabel = array();
             $attributeValue = $this->getAttributeValue('labels_produits');
-            if (array_key_exists($attributeValue, $this->authorizeLabels)) {
+            if ($attributeValue <> false && array_key_exists($attributeValue, $this->authorizeLabels)) {
                 $productLabel = array(
                     'text' => $attributeValue,
                     'icon' => $this->getSkinUrl($this->authorizeLabels[$attributeValue]),
@@ -331,6 +331,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
      */
     protected function getAttributeValue($attributeCode)
     {
+
         return Mage::getResourceSingleton('catalog/product')
             ->getAttribute($attributeCode)
             ->getSource()
