@@ -1,39 +1,38 @@
 <?php
 if (defined("COMPILER_INCLUDE_PATH")) {
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Templates.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Exports.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Users.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Rejects.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Inbound.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Tags.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Messages.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Whitelists.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Ips.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Internal.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Subaccounts.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Urls.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Webhooks.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Senders.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Metadata.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Mandrill/Exceptions.php');
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Templates.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Exports.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Users.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Rejects.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Inbound.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Tags.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Messages.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Whitelists.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Ips.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Internal.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Subaccounts.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Urls.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Webhooks.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Senders.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Metadata.php';
+    include_once dirname(__FILE__) . '/Mandrill/Mandrill/Exceptions.php';
 } else {
-    require_once(dirname(__FILE__) . '/Mandrill/Templates.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Exports.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Users.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Rejects.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Inbound.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Tags.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Messages.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Whitelists.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Ips.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Internal.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Subaccounts.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Urls.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Webhooks.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Senders.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Metadata.php');
-    require_once(dirname(__FILE__) . '/Mandrill/Exceptions.php');
-
+    include_once dirname(__FILE__) . '/Mandrill/Templates.php';
+    include_once dirname(__FILE__) . '/Mandrill/Exports.php';
+    include_once dirname(__FILE__) . '/Mandrill/Users.php';
+    include_once dirname(__FILE__) . '/Mandrill/Rejects.php';
+    include_once dirname(__FILE__) . '/Mandrill/Inbound.php';
+    include_once dirname(__FILE__) . '/Mandrill/Tags.php';
+    include_once dirname(__FILE__) . '/Mandrill/Messages.php';
+    include_once dirname(__FILE__) . '/Mandrill/Whitelists.php';
+    include_once dirname(__FILE__) . '/Mandrill/Ips.php';
+    include_once dirname(__FILE__) . '/Mandrill/Internal.php';
+    include_once dirname(__FILE__) . '/Mandrill/Subaccounts.php';
+    include_once dirname(__FILE__) . '/Mandrill/Urls.php';
+    include_once dirname(__FILE__) . '/Mandrill/Webhooks.php';
+    include_once dirname(__FILE__) . '/Mandrill/Senders.php';
+    include_once dirname(__FILE__) . '/Mandrill/Metadata.php';
+    include_once dirname(__FILE__) . '/Mandrill/Exceptions.php';
 }
 
 class Mandrill_Mandrill
@@ -44,7 +43,7 @@ class Mandrill_Mandrill
     public $root = 'https://mandrillapp.com/api/1.0';
     public $debug = false;
 
-    public static $errorMap = array(
+    public static $error_map = array(
         "ValidationError" => "Mandrill_ValidationError",
         "Invalid_Key" => "Mandrill_Invalid_Key",
         "PaymentRequired" => "Mandrill_PaymentRequired",
@@ -78,9 +77,12 @@ class Mandrill_Mandrill
 
     public function __construct($apikey = null)
     {
-        if (!$apikey) $apikey = getenv('MANDRILL_APIKEY');
-        if (!$apikey) $apikey = $this->readConfigs();
-        if (!$apikey) throw new Mandrill_Error('You must provide a Mandrill API key');
+        if (!$apikey) { $apikey = getenv('MANDRILL_APIKEY');
+        }
+        if (!$apikey) { $apikey = $this->readConfigs();
+        }
+        if (!$apikey) { throw new Mandrill_Error('You must provide a Mandrill API key');
+        }
         $this->apikey = $apikey;
 
         $this->ch = curl_init();
@@ -89,6 +91,7 @@ class Mandrill_Mandrill
         if (!ini_get('open_basedir')) {
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
         }
+
         curl_setopt($this->ch, CURLOPT_HEADER, false);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -132,27 +135,29 @@ class Mandrill_Mandrill
         $start = microtime(true);
         $this->log('Call to ' . $this->root . $url . '.json: ' . $params);
         if ($this->debug) {
-            $curlBuffer = fopen('php://memory', 'w+');
-            curl_setopt($ch, CURLOPT_STDERR, $curlBuffer);
+            $curl_buffer = fopen('php://memory', 'w+');
+            curl_setopt($ch, CURLOPT_STDERR, $curl_buffer);
         }
 
-        $responseBody = curl_exec($ch);
+        $response_body = curl_exec($ch);
         $info = curl_getinfo($ch);
         $time = microtime(true) - $start;
         if ($this->debug) {
-            rewind($curlBuffer);
-            $this->log(stream_get_contents($curlBuffer));
-            fclose($curlBuffer);
+            rewind($curl_buffer);
+            $this->log(stream_get_contents($curl_buffer));
+            fclose($curl_buffer);
         }
+
         $this->log('Completed in ' . number_format($time * 1000, 2) . 'ms');
-        $this->log('Got response: ' . $responseBody);
+        $this->log('Got response: ' . $response_body);
 
         if (curl_error($ch)) {
             throw new Mandrill_HttpError("API call to $url failed: " . curl_error($ch));
         }
 
-        $result = json_decode($responseBody, true);
-        if ($result === null) throw new Mandrill_Error('We were unable to decode the JSON response from the Mandrill API: ' . $responseBody);
+        $result = json_decode($response_body, true);
+        if ($result === null) { throw new Mandrill_Error('We were unable to decode the JSON response from the Mandrill API: ' . $response_body);
+        }
 
         try {
             if (floor($info['http_code'] / 100) >= 4) {
@@ -171,23 +176,27 @@ class Mandrill_Mandrill
         foreach ($paths as $path) {
             if (file_exists($path)) {
                 $apikey = trim(file_get_contents($path));
-                if ($apikey) return $apikey;
+                if ($apikey) { return $apikey;
+                }
             }
         }
+
         return false;
     }
 
     public function castError($result)
     {
-        if ($result['status'] !== 'error' || !$result['name']) throw new Mandrill_Error('We received an unexpected error: ' . json_encode($result));
+        if ($result['status'] !== 'error' || !$result['name']) { throw new Mandrill_Error('We received an unexpected error: ' . json_encode($result));
+        }
 
-        $class = (isset(self::$errorMap[$result['name']])) ? self::$errorMap[$result['name']] : 'Mandrill_Error';
+        $class = (isset(self::$error_map[$result['name']])) ? self::$error_map[$result['name']] : 'Mandrill_Error';
         return new $class($result['message'], $result['code']);
     }
 
     public function log($msg)
     {
-        if ($this->debug) error_log($msg);
+        if ($this->debug) { error_log($msg);
+        }
     }
 }
 

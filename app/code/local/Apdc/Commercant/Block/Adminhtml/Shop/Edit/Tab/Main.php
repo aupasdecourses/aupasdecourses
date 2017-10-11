@@ -138,6 +138,16 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'note' => $this->__('L\'option correspondant au magasin doit avoir été créé au préalable dans Catalogue > Attributs. La valeur de l\'option doit être identique - casse comprise - au nom du magasin (et pas du commerçant, entité légale!)'),
             'disabled' => $isElementDisabled
         ]);
+
+        $fieldset->addField('blacklist', 'select', [
+            'name' => 'blacklist',
+            'label' => $this->__('Dans Blacklist'),
+            'note' => $this->__('Historique de problèmes de préparation de commandes, si oui, à appeler systématiquement pour vérification.'),
+            'required' => false,
+            'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
+            'disabled' => $isElementDisabled,
+        ]);
+
         if (Mage::getSingleton('adminhtml/session')->getFormData()) {
             $form->setValues(Mage::getSingleton('adminhtml/session')->getFormData());
         } else {

@@ -50,17 +50,4 @@
             </controller_action_layout_load_before>
         </events>
     </global>
-    <!-- A bouger ? -->
-    <crontab>
-        <jobs>
-            <ebizmarts_autoresponder>
-                <schedule>
-                    <cron_expr>6 * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>ebizmarts_autoresponder/cron::autoresponder</model>
-                </run>
-            </ebizmarts_autoresponder>
-        </jobs>
-    </crontab>
 </config>

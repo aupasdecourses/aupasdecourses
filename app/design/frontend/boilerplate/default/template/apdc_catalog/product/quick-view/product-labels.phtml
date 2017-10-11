@@ -1,0 +1,23 @@
+<div class="product-secondaryinfos">
+	<?php if ($this->getProduct()) : ?>
+	    <?php $productLabels = $this->getAllProductLabels(); ?>
+	    <?php if (!empty($productLabels)) : ?>
+	        <ul class="product-labels">
+	            <?php $cpt=0; foreach ($productLabels as $label) : ?>
+	                <li>
+	                    <?php if (isset($label['icon'])) :?>
+	                        <div class="label-icon">
+	                            <img src="<?php echo $label['icon']; ?>" alt="<?php echo $label['text']; ?>" title="<?php echo $label['text']; ?>" /><?php echo $label['text']; ?>
+	                        </div>
+	                    <?php else : ?>
+	                         <div class="label-text">
+	                            <?php echo $label['text']; ?>
+	                        </div>
+	                    <?php endif; ?>
+	                </li>
+	            <?php endforeach; ?>
+	        </ul>
+
+	    <?php endif; ?>
+	<?php endif; ?>
+</div>

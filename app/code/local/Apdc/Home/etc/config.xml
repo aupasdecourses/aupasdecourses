@@ -74,6 +74,11 @@
                     <template>page/landingpage_boulanger.phtml</template>
                     <layout_handle>landing_page_boulanger</layout_handle>
                 </landingpage_boulanger>
+                <cmsdefault translate="label">
+                    <label>CMS Default</label>
+                    <template>page/cms-default.phtml</template>
+                    <layout_handle>cms_default</layout_handle>
+                </cmsdefault>
             </layouts>
         </page>
     </global>
