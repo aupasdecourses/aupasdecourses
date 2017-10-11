@@ -177,10 +177,14 @@ function initLoginPopup() {
       }
     });
     jQuery(document).on('checkDeliveryDays', function(event, result) {
-      if (result.need_to_select_delivery_days) {
-        apdcDeliveryPopup.show();
-        apdcDeliveryPopup.initPopupHeight();
-      }
+      apdcDeliveryPopup.onReady = function(newHtml) {
+        apdcDeliveryPopup.updateContent(newHtml);
+        if (result.need_to_select_delivery_days) {
+          apdcDeliveryPopup.show();
+          apdcDeliveryPopup.initPopupHeight();
+        }
+      };
+      apdcDeliveryPopup.getTemplate();
     });
   }
 
