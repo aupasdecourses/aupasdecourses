@@ -103,13 +103,13 @@ class Apdc_Catalog_Model_Resource_Product_Availability_Manager extends Mage_Core
     }
 
     /**
-     * getProductRelations
+     * getChildPerParent
      * 
      * @param Apdc_Catalog_Model_Product_Availability_Manager $manager manager 
      * 
      * @return array
      */
-    public function getProductRelations(Apdc_Catalog_Model_Product_Availability_Manager $manager)
+    public function getChildPerParent(Apdc_Catalog_Model_Product_Availability_Manager $manager)
     {
         $productIds = $manager->getProductIds();
         if (!empty($productIds)) {
@@ -117,6 +117,26 @@ class Apdc_Catalog_Model_Resource_Product_Availability_Manager extends Mage_Core
             $select = $adapter->select()->from($this->getTableName('catalog/product_relation'))
                 ->where('parent_id in(?)', $productIds)
                 ->orWhere('child_id in(?)', $productIds);
+            return $adapter->fetchAll($select);
+        }
+        return [];
+    }
+
+    /**
+     * getParentPerChild
+     * 
+     * @param Apdc_Catalog_Model_Product_Availability_Manager $manager manager 
+     * 
+     * @return array
+     */
+    public function getParentPerChild(Apdc_Catalog_Model_Product_Availability_Manager $manager)
+    {
+        $productIds = $manager->getProductIds();
+        if (!empty($productIds)) {
+            $adapter = $this->_getReadAdapter();
+            $select = $adapter->select()->from($this->getTableName('catalog/product_relation'))
+                ->where('child_id in(?)', $productIds)
+                ->orWhere('parent_id in(?)', $productIds);
             return $adapter->fetchAll($select);
         }
         return [];

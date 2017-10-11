@@ -26,8 +26,8 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
     protected $shops = null;
     protected $neighborhoods = null;
     protected $allDays = null;
-    protected $productRelations = null;
-    protected $childPerParent = [];
+    protected $childPerParent = null;
+    protected $parentPerChild = null;
 
     public function _construct()
     {
@@ -238,38 +238,28 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         );
         if (!empty($this->getProductIds())) {
             $productIds = $this->getProductIds();
-            $productRelations = $this->getProductRelations();
-            if (!empty($productRelations)) {
-                foreach ($productRelations as $product) {
-                    $productIds[] = $product['child_id'];
+            $parentPerChild = $this->getParentPerChild();
+            if (!empty($parentPerChild)) {
+                foreach ($parentPerChild as $parents) {
+                    $productIds = array_merge($productIds, $parents);
                 }
                 array_unique($productIds);
                 $this->setProductIds($productIds);
             }
+
+            $childPerParent = $this->getChildPerParent();
+            if (!empty($childPerParent)) {
+                foreach ($childPerParent as $childs) {
+                    $productIds = array_merge($productIds, $childs);
+                }
+                array_unique($productIds);
+                $this->setProductIds($productIds);
+            }
+
             $productCollection->addFieldToFilter('entity_id', ['in' => $this->getProductIds()]);
         }
 
         return $productCollection;
-    }
-
-    /**
-     * getProductRelations
-     * 
-     * @return array
-     */
-    protected function getProductRelations()
-    {
-        if (is_null($this->productRelations)) {
-            $this->productRelations = $this->getResource()->getProductRelations($this);
-            $this->childPerParent = [];
-            foreach ($this->productRelations as $relation) {
-                if (!isset($this->childPerParent[$relation['parent_id']])) {
-                    $this->childPerParent[$relation['parent_id']] = [];
-                }
-                $this->childPerParent[$relation['parent_id']][] = $relation['child_id'];
-            }
-        }
-        return $this->productRelations;
     }
 
     /**
@@ -282,7 +272,13 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
     protected function getChildPerParent($productId=null)
     {
         if (is_null($this->childPerParent)) {
-            $this->getProductRelations();
+            $childPerParent = $this->getResource()->getChildPerParent($this);
+            foreach ($childPerParent as $relation) {
+                if (!isset($this->childPerParent[$relation['parent_id']])) {
+                    $this->childPerParent[$relation['parent_id']] = [];
+                }
+                $this->childPerParent[$relation['parent_id']][] = $relation['child_id'];
+            }
         }
         if ($productId && (int)$productId > 0) {
             if (isset($this->childPerParent[(int)$productId])) {
@@ -290,6 +286,25 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             }
         }
         return $this->childPerParent;
+    }
+
+    /**
+     * getParentPerChild 
+     * 
+     * @return array
+     */
+    protected function getParentPerChild()
+    {
+        if (is_null($this->parentPerChild)) {
+            $parentPerChild = $this->getResource()->getParentPerChild($this);
+            foreach ($parentPerChild as $relation) {
+                if (!isset($this->parentPerChild[$relation['child_id']])) {
+                    $this->parentPerChild[$relation['child_id']] = [];
+                }
+                $this->parentPerChild[$relation['child_id']][] = $relation['parent_id'];
+            }
+        }
+        return $this->parentPerChild;
     }
 
     /**
