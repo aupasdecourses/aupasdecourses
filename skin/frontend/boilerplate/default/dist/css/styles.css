@@ -16780,6 +16780,14 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.widget_avisverifie {
+  margin-top: 10px;
+}
+
+.widget_avisverifie > blockquote {
+  font-family: 'Open Sans';
+}
+
 .apdc-notation-index-index {
   height: 100%;
   margin: 0;
