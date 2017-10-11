@@ -1,3 +1,11 @@
+.widget_avisverifie{
+  margin-top:10px;
+  &>blockquote{
+    font-family:"Open Sans";
+  }
+}
+
+
 .apdc-notation-index-index {
   height: 100%;
   margin: 0;
@@ -48,3 +56,4 @@
   }
 
 }
+
