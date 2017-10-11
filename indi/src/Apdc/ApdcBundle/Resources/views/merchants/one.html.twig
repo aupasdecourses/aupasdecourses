@@ -5,9 +5,12 @@
 {% block body %}
 	<div class="container">
 	<h1> Liste des commandes par magasins </h1><br>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<div class="row">
+		<div class="col-md-8">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+		<div class="col-md-4">{% include 'ApdcApdcBundle::tool/lpr_info.html.twig' %}</div>
+	</div>
 	{#{ form(formPDF) }#}
-
+		<hr/>
 		{% for store_name, mercs in merchants %}
 			{% for merchant_id, merchant in mercs %}
 				<div class="merchant">

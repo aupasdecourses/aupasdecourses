@@ -530,7 +530,8 @@ class RefundController extends Controller
             'form' => $form->createView(),
             'refund_diff' => $refund_diff,
             'id' => $id,
-            'orders' => $orders,
+			'orders' => $orders,
+			'order'	=> $order,
         ]);
     }
 
