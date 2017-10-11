@@ -23,7 +23,7 @@
     <apdc_catalog_product_list>
       <reference name="content">
         <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
-          <block type="apdc_catalog/product_availability" name="product_availability_shop_delivery_days" template="apdc_catalog/product/availability/shop/delivery-days.phtml"/>
+          <block type="apdc_catalog/shop_availability" name="apdc_catalog_shop_availability" template="apdc_catalog/product/availability/shop/availability.phtml"/>
           <block type="apdc_catalog/selection" name="blockselection" as="blockselection" template="apdc_catalog/selection/selection_commercant.phtml">
             <block type="apdc_catalog/product_list_card" name="commercant.list.card-product" as="card-product" template="apdc_catalog/product/card.phtml">
               <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
@@ -166,7 +166,7 @@
       <remove name="product.info.simple.extra" />
       <remove name="product.info.availability" />
       <reference name="product.info">
-        <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability/shop/delivery-days.phtml"/>
+        <block type="apdc_catalog/shop_availability" name="apdc_catalog_shop_availability" template="apdc_catalog/product/availability/shop/availability.phtml"/>
       </reference>
     </PRODUCT_TYPE_simple>
 

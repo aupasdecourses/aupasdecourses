@@ -12,7 +12,6 @@
                 ?>
                 <div class="commercant-search-result">
                 <?php if (!empty($shop_info)) : ?>
-                    <?php $delivery_days = $shop_info['delivery_days']; ?>
                     <div class="title-block row">
                         <div class="col-lg-6 col-md-12 text-left">
                             <div class="photo-commercant">
@@ -21,9 +20,9 @@
                             <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
                         </div>
                         <div class="col-lg-6 col-md-12 text-right delivery-days">
-                            <?php $availability = $this->getChild('product_availability'); ?>
+                            <?php $availability = $this->getChild('apdc_catalog_shop_availability'); ?>
                             <?php if ($availability) : ?>
-                                <?php echo $availability->setAvailability($delivery_days)
+                                <?php echo $availability->setShopInfo($shop_info)
                                         ->toHtml(); ?>
                             <?php endif; ?>
                         </div>

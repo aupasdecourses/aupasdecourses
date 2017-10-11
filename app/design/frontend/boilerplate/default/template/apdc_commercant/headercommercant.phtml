@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-md-5 text-right">
-                    <?php echo $this->getChildHtml('product_availability_shop_delivery_days'); ?>
+                    <?php echo $this->getChildHtml('apdc_catalog_shop_availability'); ?>
                 </div>
                 <div class="col-md-1 text-right text-center">
                     <div class="open-collapse">
@@ -31,11 +31,8 @@
                                 <i class="fa fa-info-circle"></i>
                             </div>
                             <div class="shop-availability-content cell">
-                                <span><?php echo $this->__('Commerçant non disponible pour le créneaux horaire que vous avez sélectionné'); ?></span>
                                 <p class="shop-availability-message"><?php echo $shopAvailability['message']; ?></p>
-                                <?php if ($shopAvailability['message_info'] != '') : ?>
-                                    <p class="shop-availability-message-info"><?php echo $shopAvailability['message_info']; ?></p>
-                                <?php endif; ?>
+                                <span><?php echo $this->__('Commerçant non disponible pour le créneaux horaire que vous avez sélectionné'); ?></span>
                             </div>
                         </div>
                     </div>

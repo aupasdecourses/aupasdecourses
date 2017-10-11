@@ -55,7 +55,7 @@
 			
 			<block type="apdc_search/result" name="apdc_search_result" template="catalogsearch/result.phtml">
 				<block type="apdc_search/result_list" name="apdc_search_result_list" as="apdc_search_result_list" template="apdc_search/result/list.phtml">
-          <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability/shop/delivery-days.phtml" />
+          <block type="apdc_catalog/shop_availability" name="apdc_catalog_shop_availability" template="apdc_catalog/product/availability/shop/availability.phtml" />
 					<block type="apdc_catalog/product_list_card" name="card-product" as="card-product" template="apdc_catalog/product/card.phtml">
             <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
             <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />

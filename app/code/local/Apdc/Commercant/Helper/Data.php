@@ -212,6 +212,38 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $html .= '<strong>'.$days[$day]."</strong> : ".$hours."</br>";
         }
         $shopInfo['timetable'] = $html;
+
+
+        if (!empty($shopInfo['closing_periods'])) {
+            $today = new DateTime();
+            $nextWeek = new DateTime();
+            $nextWeek->add(new DateInterval('P7D'));
+            $locale = Mage::getStoreConfig('general/locale/code');
+            setLocale(LC_TIME, $locale);
+            foreach ($shopInfo['closing_periods'] as $period) {
+                $start = new DateTime($period['start']);
+                $end = new DateTime($period['end']);
+                if ($end <= $today) {
+                    continue;
+                }
+                if ($today >= $start && $nextWeek <= $end) {
+                    $shopInfo['is_closed'] = [
+                        'message' => $this->__('La boutique du commerçant est fermée jusqu\'au %s', '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>')
+                    ];
+                }
+                $diff = $today->diff($start);
+                if ($diff->format('%a') < 10) {
+                    $shopInfo['next_closed'] = [
+                        'message' => sprintf(
+                            $this->__('La boutique du commerçant sera fermée du %s au %s'),
+                            '<strong>' . ucwords(strftime('%e %B', $start->getTimestamp())) . '</strong>',
+                            '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>'
+                        )
+                    ];
+                }
+            }
+        }
+
         return $shopInfo;
     }
 
