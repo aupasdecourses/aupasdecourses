@@ -52,7 +52,7 @@
 		    
 			<div class="container-footer-info">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-                        <img class="logo-blog" src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-blog-blanc-150x32.png" alt="Logo du Blog d'AuPasDeCourses"/>
+                        <img class="logo-blog" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/logo-blog-blanc-150x32.png" alt="Logo du Blog d'AuPasDeCourses"/>
                     </a>
                 
                     <span id="footer-copyright-and-icons">
@@ -64,8 +64,8 @@
                        </span>
                     </span>
                 
-                    <a href="https://www.aupasdecourses.com">
-                        <img class="logo-site" src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
+                    <a href="https://www.aupasdecourses.com" target="_blank">
+                        <img class="logo-site" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
                     </a>
                  
 			</div>

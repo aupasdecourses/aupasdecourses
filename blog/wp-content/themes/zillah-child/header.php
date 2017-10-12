@@ -92,7 +92,7 @@
                         <div id="top-menu-flex-parent">
                             <div class="top-menu-element-apdc-logo">
                                 <!-- APDC logo -->    
-                                <a href="https://www.aupasdecourses.com">
+                                <a href="https://www.aupasdecourses.com" target="_blank">
                                     <img id="logo-apdc" src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
                                 </a>
                             </div><!--

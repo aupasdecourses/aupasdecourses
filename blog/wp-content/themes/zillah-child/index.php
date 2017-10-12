@@ -114,12 +114,6 @@ $displayed_articles = array();
             );
 
             $latest_food_post = new WP_Query( $args );
-            
-            echo '<a href="'.get_permalink().'">';
-            echo '<div class="col-xs-12">';
-            echo '<div id="coup-de-food-banner">';
-            
-                echo '<h2 id="coup-de-food-section-title">Coup de Food</h2>';
                 
                 if($latest_food_post->have_posts()) :
                     while ($latest_food_post->have_posts()) : $latest_food_post->the_post();
@@ -127,10 +121,12 @@ $displayed_articles = array();
                         /* Add the post ID to a list of posts to not show below in the 6 random articles section */
                         global $displayed_articles;
                         $displayed_articles[] = get_the_ID();/*this adds the current post ID to the array*/
-                        echo '<!-- displayed_articles = ';
-                        print_r ($displayed_articles);
-                        echo '-->';
                         
+                        echo '<a href="'.get_permalink().'">';
+                        echo '<div class="col-xs-12">';
+                        echo '<div id="coup-de-food-banner">';
+                        echo '<h2 id="coup-de-food-section-title">Coup de Food</h2>';
+        
                         echo '<div id="coup-de-food-title-excerpt">';
             
                         echo '<h2 class="post-title">'.get_the_title().'</h2>';
@@ -144,7 +140,10 @@ $displayed_articles = array();
                         echo '<div id="coup-de-food-image">';
                             the_post_thumbnail('article-large-thumbnail');
                         echo '</div>';
-            
+                        
+                        echo '</div> <!-- end #coup-de-food-banner -->';
+                        echo '</div> <!-- end col-xs-12 -->';
+                        echo '</a>';
                         
                     endwhile;
                 else :
@@ -152,10 +151,7 @@ $displayed_articles = array();
                 endif;
                 
             wp_reset_query();
-        
-            echo '</div> <!-- end #coup-de-food-banner -->';
-            echo '</div> <!-- end col-xs-12 -->';
-            echo '</a>';
+            
         ?>
     </div> <!-- end .row coup-de-food -->
     
