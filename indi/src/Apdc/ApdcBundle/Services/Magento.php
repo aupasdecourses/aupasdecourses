@@ -904,4 +904,32 @@ class Magento
 		return $history;
 	}
 
+	/** Affiche les commandes par clients */
+    public function getOrdersByCustomer($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
+    {
+        if (!isset($dfrom)) {
+            $dfrom = date('Y-m-d');
+        }
+        if (!isset($dto)) {
+            $dto = $dfrom;
+        }
+        $dfrom .=  ' 00:00:00';
+        $dto .=  ' 00:00:00';
+        $orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $orderId);
+        $rsl = [];
+        foreach ($orders as $order) {
+            $orderHeader = $this->OrderHeaderParsing($order);
+            $products = $order->getAllItems();
+            foreach ($products as $product) {
+                $prod_data = $this->ProductParsing($product, $orderId);
+                $orderHeader['products'][] = $prod_data;
+                $orderHeader['total_quantite'] += $prod_data['quantite'];
+                $orderHeader['total_prix'] += $prod_data['prix_total'];
+            }
+            $rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
+        }
+
+        return $rsl;
+    }
+
 }
