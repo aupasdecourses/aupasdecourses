@@ -65,10 +65,12 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                 $S[$id]['store_id'] = $id;
                 $S[$id]['id'] = $app->getStore($id)->getRootCategoryId();
                 $S[$id]['name'] = $app->getStore($id)->getName();
+                $S[$id]['key'] = $app->getStore($id)->getCode();
             } else {
                 $S[$app->getStore($id)->getRootCategoryId()]['store_id'] = $id;
                 $S[$app->getStore($id)->getRootCategoryId()]['id'] = $app->getStore($id)->getRootCategoryId();
                 $S[$app->getStore($id)->getRootCategoryId()]['name'] = $app->getStore($id)->getName();
+                $S[$app->getStore($id)->getRootCategoryId()]['code'] = $app->getStore($id)->getCode();
             }
         }
         return $S;
@@ -197,7 +199,9 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         $shopInfo['description'] = $categoryShop->getDescription();
         $shopInfo['image'] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
         $shopInfo['thumbnail_image'] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
-        $shopInfo['url'] = $categoryShop->getUrl();
+        $stores=$this->getStoresArray();
+        $rootId=explode("/",$categoryShop->getPath())[1];
+        $shopInfo['url'] = Mage::getUrl($categoryShop->getUrlPath(), array('_store'=>$stores[$rootId]['code']));
 
         $html = '';
         $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
