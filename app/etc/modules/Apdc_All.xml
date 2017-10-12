@@ -174,10 +174,10 @@
           <codePool>local</codePool>
         </Apdc_Shipping>
         <Apdc_Avisverifies>
-          <active>true</active>
+          <active>false</active>
           <codePool>local</codePool>
           <depends>
-                <Netreviews_Pla/>
+              <Netreviews_Pla/>
           </depends> 
         </Apdc_Avisverifies>
     </modules>
