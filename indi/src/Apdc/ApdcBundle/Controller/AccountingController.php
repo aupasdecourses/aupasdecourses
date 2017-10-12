@@ -9,13 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccountingController extends Controller
 {
-    public function indexAction(Request $request)
+    public function customersOrdersAction(Request $request)
     {
 		if(!$this->isGranted('ROLE_INDI_COMPTABILITE')) {
 			return $this->redirectToRoute('root');
 		}
 
-		return $this->render('ApdcApdcBundle::accounting/index.html.twig', [
+		$accounting = $this->container->get('apdc_apdc.accounting');
+
+		$orders = $accounting->getOrdersByCustomer();
+
+		return $this->render('ApdcApdcBundle::accounting/customers_orders.html.twig', [
+			'orders' => $orders,
 		]);
     }
 }

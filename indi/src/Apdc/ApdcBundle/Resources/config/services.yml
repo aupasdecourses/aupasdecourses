@@ -42,3 +42,6 @@ services:
         class: AppBundle\Repository\OrderRepository
         arguments:
             - '@apdc_apdc.magento'
+
+    apdc_apdc.accounting:
+        class: Apdc\ApdcBundle\Services\Accounting
