@@ -50,20 +50,74 @@
 			</div>
             <div id="search_neighborhoods">
                 <div class="input-box apdc-form">
-                    <input id='GoogleAutoCompleteInput' class='form-control' placeholder='Entrez votre adresse' type='text' name='input_addr' />
-                    <input id='GoogleAutoCompleteZipcode' class='form-control' name="zipcode" />
-                    <button id='GoogleAutoCompleteSubmit' data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="btn btn-lg btn-success" type="submit">OK</button>
+                    <label><?php echo $this->__('Your postcode:'); ?></label>
+                    <input type="text" id="search_neighborhoods_postcode" class="input-text" placeholder="<?php echo $this->__('Search for your neighborhood'); ?>" />
                 </div>
             </div>
-            <div class="row text-center" id="error_neighborhood">
-                <p><?php echo $this->__('Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.'); ?></p> 
-            </div>
-            <div class="row text-center" id="no_neighborhood">
-                <p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p>
-                <a class="button button-green" href="#" id="newsletter-popup" data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role="button" title="Inscrivez-vous à notre newsletter">Inscrivez-vous à notre newsletter !
-                </a>
-            </div>
 		</div>
+		<div class="row" id="neighborhood-list">
+            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
+            <?php $nbQuartiers = $quartiers->count(); ?>
+
+            <?php $mdNbFullLines = (floor($nbQuartiers / 4) * 4); ?>
+            <?php $mdNbLeave = $nbQuartiers - $mdNbFullLines; ?>
+
+            <?php $smNbFullLines = (floor($nbQuartiers / 3) * 3); ?>
+            <?php $smNbLeave = $nbQuartiers - $smNbFullLines; ?>
+
+            <?php $xsNbFullLines = (floor($nbQuartiers / 2) * 2); ?>
+            <?php $xsNbLeave = $nbQuartiers - $xsNbFullLines; ?>
+
+            <?php $cpt = 1; foreach ($quartiers as $quartier) : ?>
+                <?php 
+                    if ($cpt <= $mdNbFullLines) {
+                        $classMd = 'col-md-3';
+                    } else {
+                        switch($mdNbLeave) {
+                        case 3:
+                            $classMd = 'col-md-4';
+                            break;
+                        case 2:
+                            $classMd = 'col-md-6';
+                            break;
+                        default:
+                            $classMd = 'col-md-12';
+                        }
+                    }
+
+                    if ($cpt <= $smNbFullLines) {
+                        $classSm = 'col-sm-4';
+                    } else {
+                        switch($smNbLeave) {
+                        case 2:
+                            $classSm = 'col-sm-6';
+                            break;
+                        default:
+                            $classSm = 'col-sm-12';
+                        }
+                    }
+                    if ($cpt <= $xsNbFullLines) {
+                        $classXs = 'col-xs-6';
+                    } else {
+                        $classXs = 'col-xs-12';
+                    }
+                ?>
+
+
+                    <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>" data-postcodes="<?php echo implode(',', unserialize($quartier->getPostcodes())); ?>">
+                    <a href="<?php echo $quartier->getStoreUrl();?>">
+                        <img src="<?php echo Mage::helper('apdc_neighborhood/media')->getMediaUrl($quartier->getImage(), array('width' => 200, 'height' => 200));?>" alt="Au Pas De Courses - <?php echo $quartier->getName(); ?>" class="img-circle"/>
+                        <span class="button"><?php echo $quartier->getName(); ?></span>
+                    </a>
+                </div>
+
+            <?php $cpt++; endforeach; ?>
+        </div>
+        <div class="row text-center" id="no_neighborhood">
+            <p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p>
+            <a class="button button-green" href="#" id="newsletter-popup" data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role="button" title="Inscrivez-vous à notre newsletter">Inscrivez-vous à notre newsletter !
+            </a>
+        </div>
 	</div>
 </section>
 <div class="container">
@@ -213,11 +267,6 @@
 </footer>
 	<?php echo $this->getChildHtml('footer') ?>
 	<?php echo $this->getChildHtml('before_body_end') ?>
-    <?php
-        $key = Mage::getStoreConfig('api_key/google/google_nav');
-        $quartiers = Mage::helper('apdc_neighborhood')->getAllZipCode(true);
-        echo "var zipcodes=".$quartiers.";"
-    ?>
     <!-- Credits
     Coin icon by Madebyoliver - http://www.flaticon.com/free-icon/coin_134652
     Scale icon by Madebyoliver - http://www.flaticon.com/free-icon/scale_135529
@@ -228,48 +277,4 @@
     Sausage icon by Madebyolivder - http://www.flaticon.com/free-icon/sausage_135419
     -->
 </body>
-<script type="text/javascript">
-
-    <?php 
-        echo "var zipcodes=".$quartiers.";"
-    ?>
-
-    $j('#GoogleAutoCompleteSubmit').click(function(event){
-        $j("#error_neighborhood").hide();
-        $j("#no_neighborhood").hide();
-        var zipcode = $j('#GoogleAutoCompleteZipcode').val();
-
-        var inarray=$j.map(zipcodes, function(obj,i) {
-          if(i== parseInt(zipcode)){
-            return true;
-          } 
-        });
-
-        if(inarray[0]){ 
-            $j.ajax( {
-                url : $j('#GoogleAutoCompleteSubmit').attr('data-ajax-url'),
-                dataType : 'json',
-                type : 'post',
-                data : {
-                    isAjax:1,
-                    zipcode:zipcode
-                },
-                success: function(data) {
-                  if(data.redirect) {
-                    window.location = data.redirectURL;
-                  }
-                },
-            });
-        }else if (zipcode==""){
-            $j("#error_neighborhood").show();
-            return;
-        } else{
-            $j("#no_neighborhood").show();
-            return;
-        }
-    });
-</script>
-<script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
-<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&libraries=places&callback=GoogleApiLandingpage' async defer></script>
-<!-- End Google Auto Complete -->
 </html>

@@ -56,4 +56,23 @@ class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 			Mage::app()->getResponse()->setRedirect($refererUrl);
 		}
 	}
+
+	public function redirectAjaxAction()
+    {
+		$data = $this->getRequest()->getPost();
+
+		$response=array();
+
+		if(isset($data['isAjax'])&&$data['isAjax']==1){
+			if (isset($data['zipcode'])) {
+				$response['status']=1;
+				$response['redirect']=1;
+				$response['redirectUrl']="gfdgfd";
+			}else{
+			}
+		}
+
+		$this->getResponse()->setHeader('Content-type', 'application/json', true);
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+	}
 }

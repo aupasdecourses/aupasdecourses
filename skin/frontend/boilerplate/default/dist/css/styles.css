@@ -12953,15 +12953,18 @@ section#districts #search_neighborhoods input::-webkit-input-placeholder {
   font-size: 1.125rem;
 }
 
+section#districts #error_neighborhood,
 section#districts #no_neighborhood {
   display: none;
   margin-bottom: -40px;
 }
 
+section#districts #error_neighborhood p,
 section#districts #no_neighborhood p {
   font-size: 1rem;
 }
 
+section#districts #error_neighborhood i,
 section#districts #no_neighborhood i {
   font-size: 60px;
   animation: bounce 1.2s ease 0s infinite;

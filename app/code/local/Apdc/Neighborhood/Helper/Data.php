@@ -186,4 +186,30 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::logException($e);
         }
     }
+
+    public function getAllZipCode($json=false){
+        $data=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->toArray(array('postcodes','website_id','name'))['items'];
+        $result=array();
+        foreach($data as $row){
+            $tmp_zip=unserialize($row['postcodes']);
+            foreach($tmp_zip as $zipcode){
+                if(!array_key_exists($zipcode,$result)){
+                    $result[(int)$zipcode]=array(
+                        0 =>
+                        array('name'=>$row['name'],'website_id'=>$row['website_id'])
+                    );
+                }else{
+                    array_push($result[(int)$zipcode],array('name'=>$row['name'],'website_id'=>$row['website_id']));
+                }
+            }
+        }
+
+        asort($result);
+
+        if($json){
+            return json_encode($result);
+        }else{
+            return $result;
+        }
+    }
 }
