@@ -2,6 +2,23 @@
 
 class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 {
+    private function getDateFirstItem($idcommercant){
+        $date_firstproduct=Mage::getModel('catalog/product')->getCollection()
+                ->addAttributetoSelect(array('commercant','created_at'))
+                ->addAttributetoFilter('commercant',$idcommercant)
+                ->addAttributeToSort('created_at', 'asc')
+                ->getFirstItem()->getCreatedAt();
+
+        $creation=new Zend_Date($date_firstproduct,'YYYY-MM-dd');
+        $now=new Zend_Date(now(),'YYYY-MM-dd');
+        $diff = $now->sub($creation)->toValue();
+        $days = ceil($diff/60/60/24) +1;
+
+        $new=($days <= Mage::getStoreConfig('apdc_general/display/commercant_new'))?true:false;
+
+        return $new;
+    }
+
     public function getListShops($filter="store",$random=false)
     {
 
@@ -61,7 +78,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                         continue;
                     }
                 }
+
 			}
+
+            $new=$this->getDateFirstItem($shop['id_attribut_commercant']);
 
             $sub = [
                 'name' => (isset($shop['name'])) ? $shop['name'] : '',
@@ -71,6 +91,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                 'src' => (isset($shop['category_image'])) ? Mage::getBaseUrl('media').$shop['category_image'] : Mage::getBaseUrl('media').'resource/commerçant_dummy.png',
                 'url' => $url,
                 'type' => $type,
+                'new' => $new,
             ];
 
 			if($i == 1) {

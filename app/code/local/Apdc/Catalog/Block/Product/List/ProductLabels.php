@@ -30,11 +30,13 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
     protected $months;
     protected $authorizedBio;
     protected $authorizeLabels;
-    protected $maxNewDays = 25;
+    protected $maxNewDays;
 
     public function __construct()
     {
         parent::_construct();
+
+        $this->maxNewDays= Mage::getStoreConfig('apdc_general/display/product_new');
 
         $this->months = array(
             1 => 1,
