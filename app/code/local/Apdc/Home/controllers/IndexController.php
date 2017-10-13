@@ -65,9 +65,10 @@ class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 
 		if(isset($data['isAjax'])&&$data['isAjax']==1){
 			if (isset($data['zipcode'])) {
+				$url=Mage::app()->getStore($data['website'])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
 				$response['status']=1;
 				$response['redirect']=1;
-				$response['redirectUrl']="gfdgfd";
+				$response['redirectURL']=$url;
 			}else{
 			}
 		}
