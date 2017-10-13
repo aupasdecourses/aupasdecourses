@@ -55,7 +55,6 @@ function GoogleApiLandingpage() {
 
 		if (zipcode != 'not found') {
 			$j('#GoogleAutoCompleteZipcode').val(zipcode);
-			$j('#form-quartier').submit();
 		} else {
 			$j('#GoogleAutoCompleteZipcode').val('');
 		}

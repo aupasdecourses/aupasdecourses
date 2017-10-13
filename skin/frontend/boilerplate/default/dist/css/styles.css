@@ -12923,11 +12923,6 @@ section#districts .button-district img {
   filter: brightness(60%);
 }
 
-section#districts .button {
-  margin-top: 0;
-  margin-bottom: 50px;
-}
-
 section#districts #search_neighborhoods {
   margin: 0 auto -40px auto;
   text-align: center;
@@ -12944,7 +12939,7 @@ section#districts #search_neighborhoods label {
 
 section#districts #search_neighborhoods input {
   font-size: 1.25rem;
-  width: 120px;
+  width: 60%;
   padding: 10px 10px;
   text-align: center;
 }

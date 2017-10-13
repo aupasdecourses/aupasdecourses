@@ -1,0 +1,17 @@
+<div id='address-bar' class="input-box apdc-form">
+    <input id="GoogleAutoCompleteInput" class='input-text' placeholder='Entrez votre adresse' type='text' name='input_address' />
+    <button id="disambiguation-neighborhood" data-disambiguation-view="<?php echo $this->getUrl('customhome/index/ajaxPopupView');?>" data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="button button-green" type="submit">OK</button>
+    <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden"/>
+    <div class="row text-center" name="messages"></div>
+    <a class='button button-green' href='#' id='newsletter-popup' data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role='button' title='Inscrivez-vous à notre newsletter' style="display:none;">Inscrivez-vous à notre newsletter !</a>
+</div>
+<script type="text/javascript">
+    <?php 
+        $key = Mage::getStoreConfig('api_key/google/google_nav');
+        $quartiers = Mage::helper('apdc_neighborhood')->getAllZipCode(true);
+        echo "var zipcodes=".$quartiers.";";
+    ?>
+</script>
+<script type='text/javascript' src='/js/apdc/address.js'></script>
+<script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&libraries=places&callback=GoogleApiLandingpage'></script>

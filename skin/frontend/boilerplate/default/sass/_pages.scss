@@ -94,10 +94,6 @@ section {
                 transition: all 200ms ease-in;
             }
         }
-        .button {
-            margin-top: 0;
-            margin-bottom: 50px;
-        }
         #search_neighborhoods {
           text-align:center;
           margin:0 auto -40px auto;
@@ -112,7 +108,7 @@ section {
 
           input {
                 font-size: 1.25rem;
-                width: 120px;
+                width: 60%;
                 padding: 10px 10px;
                 text-align: center;
             &::-webkit-input-placeholder{
