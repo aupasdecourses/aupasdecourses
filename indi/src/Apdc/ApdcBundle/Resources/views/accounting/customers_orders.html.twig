@@ -12,19 +12,20 @@
 		</div>
 
 		<hr/>
-		<table class="table table-striped">
+		<table id="accountingCustomersOrdersTable" class="table table-striped">
 			<thead>
 				<tr>
-					<td>Cree le</td>
-					<td># Commande</td>
-					<td>Nom client</td>
-					<td>Total produits HT</td>
-					<td>Total produits TVA</td>
-					<td>Total produits TTC</td>
-					<td>Frais livraison HT</td>
-					<td>Frais livraison TVA</td>
-					<td>Discount</td>
-					<td>Total commande TTC</td>
+					<th>Cree le</th>
+					<th># Commande</th>
+					<th>Nom client</th>
+					<th>Total produits HT</th>
+					<th>Total produits TVA</th>
+					<th>Total produits TTC</th>
+					<th>Frais livraison HT</th>
+					<th>Frais livraison TVA</th>
+					<th>Frais livraison TTC</th>
+					<th>Discount</th>
+					<th>Total commande TTC</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,6 +39,7 @@
 					<td>{{ order.total_produits_TTC }}</td>
 					<td>{{ order.frais_livraison_HT }}</td>
 					<td>{{ order.frais_livraison_TVA }}</td>
+					<td>{{ order.frais_livraison_TTC }}</td>
 					<td>{{ order.discount }}</td>
 					<td>{{ order.total_commande_TTC }}</td>
 				</tr>
@@ -79,6 +81,15 @@
 				window.location='{{ path('accountingCustomersOrders') }}?date_debut='+this.value;
 			});
 		});
+
+		$(document).ready(function() {
+			var table=$('#accountingCustomersOrdersTable').DataTable({
+				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+				"pageLength": -1,
+				"order": [[ 1, 'dsc' ], [ 0, 'asc' ]]
+			} );
+		});
+
 
 	</script>
 {% endblock %}

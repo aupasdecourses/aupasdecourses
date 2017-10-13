@@ -136,7 +136,7 @@ class BillingController extends Controller
 
     public function detailsAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_COMPTABILITE')) {
             return $this->redirectToRoute('root');
         }
 

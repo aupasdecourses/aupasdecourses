@@ -929,6 +929,7 @@ class Magento
 				'total_produits_TTC'	=> round($order->getData('subtotal_incl_tax'), 2),
 				'frais_livraison_HT'	=> round($order->getData('shipping_amount'), 2),
 				'frais_livraison_TVA'	=> round($order->getData('shipping_tax_amount'), 2),
+				'frais_livraison_TTC'	=> round($order->getData('shipping_incl_tax'), 2),
 				'discount'				=> round($order->getData('discount_amount'), 2),
 				'total_commande_TTC'	=> round($order->getData('grand_total'), 2),
 			]);
