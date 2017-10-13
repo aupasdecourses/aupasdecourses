@@ -211,7 +211,11 @@ class Billing
             $nom_client = $order->getCustomerName();
             $ddate=$order->getDdate();
             $hascreditmemos=$order->hasCreditmemos();
-
+		
+			$sum_shipping_HT	= $order->getData('shipping_amount');
+			$sum_shipping_TVA	= $order->getData('shipping_tax_amount');
+			$sum_shipping_TTC	= $order->getData('shipping_incl_tax');	// == HT + TVA
+ 
             //Create Invoices Items collection
             $invoices = $order->getInvoiceCollection();
             foreach ($invoices as $invoice) {
@@ -241,7 +245,12 @@ class Billing
                     $do['nb_products']+=floatval($item->getQtyOrdered());
                     $do['sum_items']+=floatval($item->getRowTotalInclTax());
                     $do['sum_items_HT']+=floatval($item->getRowTotal());
-                    $do['creation_date'] = date('d/m/Y', strtotime($order->getCreatedAt()));
+					$do['creation_date'] = date('d/m/Y', strtotime($order->getCreatedAt()));
+
+					$do['sum_shipping_HT']	= floatval($sum_shipping_HT);
+					$do['sum_shipping_TVA'] = floatval($sum_shipping_TVA);
+					$do['sum_shipping_TTC'] = floatval($sum_shipping_TTC);
+
                     if (!is_null($ddate)) {
                         $do['delivery_date'] = date('d/m/Y', strtotime($ddate));
                     } else {
@@ -296,10 +305,11 @@ class Billing
                 $do['sum_ticket_HT'] = $do['sum_items_HT'] - $do['sum_items_credit_HT'];
                 $do['sum_ticket'] = $do['sum_items'] - $do['sum_items_credit'];
                 $do['sum_due_HT'] = $do['sum_items_invoice_HT'] - $do['sum_items_credit_HT'] - $do['sum_commission_HT'];
+				$do['sum_commission_TVA'] = ($do['sum_commission_HT'] * 0.2);
 
                 $data_order[$incrementid][$itcom]=$do;
-            }
-        }//end foreach orders
+			}
+       }//end foreach orders
 
         //Reformat and round numbers
         $data_details=array();
@@ -548,8 +558,12 @@ class Billing
                 'remboursements' => 0,
                 'sum_ticket_HT' => 0,
                 'sum_ticket' => 0,
-                'sum_commission_HT' => 0,
-                'sum_due_HT' => 0,
+				'sum_commission_HT' => 0,
+				'sum_commission_TVA' => 0,
+				'sum_due_HT' => 0,
+				'sum_shipping_HT' => 0,
+				'sum_shipping_TVA' => 0,
+				'sum_shipping_TTC' => 0,	
             ];
 
             foreach ($data_facturation as $row) {

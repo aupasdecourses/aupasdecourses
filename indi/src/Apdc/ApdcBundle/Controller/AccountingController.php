@@ -47,6 +47,7 @@ class AccountingController extends Controller
 						'Total produits TTC',
 						'Frais livraison HT',
 						'Frais livraison TVA',
+						'Frais livraison TTC',
 						'Discount',
 						'Total commande TTC'
 					),';');
@@ -61,6 +62,7 @@ class AccountingController extends Controller
 							$order['total_produits_TTC'],
 							$order['frais_livraison_HT'],
 							$order['frais_livraison_TVA'],
+							$order['frais_livraison_TTC'],
 							$order['discount'],
 							$order['total_commande_TTC']
 						),';');

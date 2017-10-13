@@ -136,7 +136,7 @@ class BillingController extends Controller
 
     public function detailsAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_COMPTABILITE')) {
             return $this->redirectToRoute('root');
         }
 
@@ -174,8 +174,12 @@ class BillingController extends Controller
                         'Avoir TTC',
                         'Valeur Ticket HT',
                         'Valeur Ticket TTC',
-                        'Commission APDC (HT)',
-                        'Versement Commercant (HT)'
+						'Commission APDC (HT)',
+						'TVA',
+						'Versement Commercant (HT)',
+						'Frais livraison (HT)',
+						'Frais livraison (TVA)',
+						'Frais livraison (TTC)'
                     ),';');
 
                     foreach ($bill as $order) {
@@ -192,8 +196,12 @@ class BillingController extends Controller
                             $order['sum_items_credit'],
                             $order['sum_ticket_HT'],
                             $order['sum_ticket'],
-                            $order['sum_commission_HT'],
-                            $order['sum_due_HT']
+							$order['sum_commission_HT'],
+							$order['sum_commission_TVA'],
+							$order['sum_due_HT'],
+							$order['sum_shipping_HT'],
+							$order['sum_shipping_TVA'],
+							$order['sum_shipping_TTC']
                         ),';');
                     }
 
