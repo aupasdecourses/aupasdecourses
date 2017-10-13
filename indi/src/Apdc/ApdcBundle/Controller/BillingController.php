@@ -174,7 +174,8 @@ class BillingController extends Controller
                         'Avoir TTC',
                         'Valeur Ticket HT',
                         'Valeur Ticket TTC',
-                        'Commission APDC (HT)',
+						'Commission APDC (HT)',
+						'TVA',
                         'Versement Commercant (HT)'
                     ),';');
 
@@ -192,7 +193,8 @@ class BillingController extends Controller
                             $order['sum_items_credit'],
                             $order['sum_ticket_HT'],
                             $order['sum_ticket'],
-                            $order['sum_commission_HT'],
+							$order['sum_commission_HT'],
+							$order['sum_commission_TVA'],
                             $order['sum_due_HT']
                         ),';');
                     }

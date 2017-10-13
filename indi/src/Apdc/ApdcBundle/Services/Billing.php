@@ -296,6 +296,7 @@ class Billing
                 $do['sum_ticket_HT'] = $do['sum_items_HT'] - $do['sum_items_credit_HT'];
                 $do['sum_ticket'] = $do['sum_items'] - $do['sum_items_credit'];
                 $do['sum_due_HT'] = $do['sum_items_invoice_HT'] - $do['sum_items_credit_HT'] - $do['sum_commission_HT'];
+				$do['sum_commission_TVA'] = ($do['sum_commission_HT'] * 0.2);
 
                 $data_order[$incrementid][$itcom]=$do;
             }
@@ -548,7 +549,8 @@ class Billing
                 'remboursements' => 0,
                 'sum_ticket_HT' => 0,
                 'sum_ticket' => 0,
-                'sum_commission_HT' => 0,
+				'sum_commission_HT' => 0,
+				'sum_commission_TVA' => 0,
                 'sum_due_HT' => 0,
             ];
 
