@@ -905,31 +905,48 @@ class Magento
 	}
 
 	/** Affiche les commandes par clients */
-    public function getOrdersByCustomer($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
-    {
-        if (!isset($dfrom)) {
-            $dfrom = date('Y-m-d');
-        }
-        if (!isset($dto)) {
-            $dto = $dfrom;
-        }
-        $dfrom .=  ' 00:00:00';
-        $dto .=  ' 00:00:00';
-        $orders = $this->OrdersQuery($dfrom, $dto, $commercantId, $orderId);
-        $rsl = [];
-        foreach ($orders as $order) {
-            $orderHeader = $this->OrderHeaderParsing($order);
-            $products = $order->getAllItems();
-            foreach ($products as $product) {
-                $prod_data = $this->ProductParsing($product, $orderId);
-                $orderHeader['products'][] = $prod_data;
-                $orderHeader['total_quantite'] += $prod_data['quantite'];
-                $orderHeader['total_prix'] += $prod_data['prix_total'];
-            }
-            $rsl[$orderHeader['store']][$orderHeader['id']] = $orderHeader;
-        }
+    public function getOrdersByCustomer($debut = null, $fin = null)
+	{
+		$data = [];
+		$debut	= date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
 
-        return $rsl;
-    }
+		$orders = \Mage::getModel('sales/order_invoice')->getCollection();
+		$orders->addFilterToMap('created_at', 'main_table.created_at')
+			   ->addFilterToMap('increment_id', 'main_table.increment_id');
 
+		$orders->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
+			   ->addAttributeToSort('increment_id', 'DESC');
+		
+		$orders->getSelect()->join('sales_flat_order', 'main_table.order_id = sales_flat_order.entity_id');
+
+		foreach ($orders as $order) {
+			array_push($data, [
+				'created_at'			=> $order->getData('created_at'),
+				'numero_commande'		=> $order->getIncrementId(),
+				'nom_client'			=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
+				'total_produits_HT'		=> $order->getData('subtotal'),
+				'total_produits_TVA'	=> $order->getData('tax_amount'),
+				'total_produits_TTC'	=> $order->getData('subtotal_incl_tax'),
+				'frais_livraison_HT'	=> $order->getData('shipping_amount'),
+				'frais_livraison_TVA'	=> $order->getData('shipping_tax_amount'),
+				'discount'				=> $order->getData('discount_amount'),
+				'total_commande_TTC'	=> $order->getData('grand_total'),
+			]);
+		}
+
+		return $data;
+	}
+	/*
+		SELECT i.created_at, 
+		i.increment_id as numero_commande, 
+		CONCAT(s.customer_firstname,' ',s.customer_lastname) as nom_client, 
+		i.subtotal as total_produits_HT, 
+		i.tax_amount as total_produits_TVA, 
+		i.subtotal_incl_tax as total_produits_TTC, 
+		i.shipping_amount as frais_livraison_HT, 
+		i.shipping_tax_amount as frais_livraison_TVA, 
+		i.discount_amount as discount, 
+		i.grand_total as total_commande_TTC 
+		FROM db_sturquier.sales_flat_invoice as i INNER JOIN db_sturquier.sales_flat_order as s ON s.entity_id = i.order_id;
+	 */
 }

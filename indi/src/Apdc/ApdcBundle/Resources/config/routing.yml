@@ -170,19 +170,9 @@ mapCustomers:
     path: /map/customers/
     defaults: { _controller: ApdcApdcBundle:Map:customers}
 
-accountingCustomersIndex:
-    path: /accounting/customers/index/
-    defaults: { _controller: ApdcApdcBundle:Accounting:customersIndex}
-
-accountingCustomersOne:
-  path:   /accounting/customers/{id}/{from}/{to}
-  defaults:   { _controller: ApdcApdcBundle:Accounting:customersOne, to: null, from: null}
-  requirements: {id: "[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
-
-accountingCustomersAll:
-  path:   /accounting/customers/{from}/{to}
-  defaults:   { _controller: ApdcApdcBundle:Accounting:customersAll, to: null}
-  requirements: {from: "[0-9]{4}-[0-9]{2}-[0-9]{2}", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+accountingCustomersOrders:
+  path:   /accounting/customers_orders
+  defaults:   { _controller: ApdcApdcBundle:Accounting:customersOrders}
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
