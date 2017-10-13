@@ -53,9 +53,9 @@
                     <input class='form-control' placeholder='Entrez votre adresse' type='text' name='input_address' />
                     <input class='form-control' name="input_zipcode" />
                     <button data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="btn btn-lg btn-success" type="submit">OK</button>
+                    <div class="row text-center" name="messages"></div>
                 </div>
             </div>
-            <div class="row text-center" id="message_neighborhood"></div>
 		</div>
 	</div>
 </section>
@@ -228,35 +228,54 @@
     ?>
 
     function AddressBar(options) {
-        this.ajaxUrl = '';
-        this.is_loaded = false;
-        this.is_open = false;
-        this.onReady = options.onReady || false;
         
-        if (typeof(options.ajaxUrl) !== 'undefined') {
-            this.ajaxUrl = options.ajaxUrl;
-        }
-        //this.init();
+        this.root = options.root;
+        this.zipcode = '';
+        this.ajaxUrl = '';
+        this.init();
     }
 
     AddressBar.prototype.init = function() {
-        $j("#message_neighborhood").html("");
-        var zipcode = $j('#GoogleAutoCompleteZipcode').val();
+        this.clearMessage();
+        this.setUrl();
+        this.setZipcode();
     };
 
-
-    ApdcPopup.prototype.isLoaded = function() {
+    AddressBar.prototype.isLoaded = function() {
       return this.is_loaded;
     };
+
+    AddressBar.prototype.showLoading = function() {
+      $j(this.root+" div[name='messages']").html("loading ...");
+      $j(this.root + ' button').attr( "disabled", true );
+    };
+
+    AddressBar.prototype.hideLoading = function() {
+      $j(this.root+" div[name='messages']").html("");
+      $j(this.root + ' button').attr( "disabled", false );
+    };
+
+    AddressBar.prototype.setZipcode = function() {
+      this.zipcode = $j(this.root+' input[name="input_zipcode"]').val();
+    };
+
+    AddressBar.prototype.clearMessage = function() {
+        $j(this.root+" div[name='messages']").html("");
+    };
+
+    AddressBar.prototype.setUrl = function() {
+      this.ajaxUrl = $j(this.root+' button').attr('data-ajax-url');
+    };
+
     AddressBar.prototype.initActions = function() {
       var self = this;
-      jQuery(document).on('click', '#' + self.id + ' .apdc-popup-overlay', function() {
+      $j(document).on('click', '#' + self.id + ' .apdc-popup-overlay', function() {
         self.close();
       });
-      jQuery(document).on('click', '#' + self.id + ' .apdc-popup-close', function() {
+      $j(document).on('click', '#' + self.id + ' .apdc-popup-close', function() {
         self.close();
       });
-      jQuery(document).keyup(function(e) {
+      $j(document).keyup(function(e) {
         if (e.keyCode === 27) {
           self.close();
         }
@@ -264,76 +283,77 @@
     };
 
     AddressBar.prototype.show = function() {
-      jQuery('#' + this.id).fadeIn('fast');
+      $j('#' + this.id).fadeIn('fast');
       this.is_open = true;
     };
 
     AddressBar.prototype.close = function() {
-      jQuery('#' + this.id).fadeOut('fast');
+      $j('#' + this.id).fadeOut('fast');
       this.is_open = false;
     };
 
-    AddressBar.prototype.showLoading = function() {
-      jQuery('#' + this.id + ' .apdc-popup-loading').show();
-      this.show();
-    };
 
-    AddressBar.prototype.hideLoading = function() {
-      jQuery('#' + this.id + ' .apdc-popup-loading').hide();
-    };
+    //if (lpAddressBar === null) {
+      lpAddressBar = new AddressBar({
+            root: '#address-bar',
+        // onReady: function(newHtml) {
+        //   accountPopup.apdc_login_view = newHtml;
+        //   if (apdcLoginPopup.isOpen()) {
+        //     apdcLoginPopup.updateContent(newHtml);
+        //   }
+        // }
+      });
+    //}
 
-
-    $j('#address-bar').siblings('button[type="submit"]').click(function(event){
-        console.log("true");
-
-        if (lpAddressBar === null) {
-          lpAddressBar = new AddressBar({
-            onReady: function(newHtml) {
-              accountPopup.apdc_login_view = newHtml;
-              if (apdcLoginPopup.isOpen()) {
-                apdcLoginPopup.updateContent(newHtml);
-              }
-            }
-          });
-        }
-
-        var inarray=$j.map(zipcodes, function(obj,i) {
-          if(i== parseInt(zipcode)){
-            return true;
-          } 
-        });
-
-        if(inarray[0]){ 
-            var website = zipcodes[zipcode][0].website_id;
-            var name = zipcodes[zipcode][0].name;
-            $j.ajax( {
-                url : $j('#GoogleAutoCompleteSubmit').attr('data-ajax-url'),
-                dataType : 'json',
-                type : 'post',
-                data : {
-                    isAjax:1,
-                    zipcode:zipcode,
-                    website:website,
-                    name:name,
-                },
-                success: function(data) {
-                  if(data.redirect) {
-                    window.location = data.redirectURL;
-                  }
-                },
+    $j('#address-bar button[type="submit"]').on('click',function(e){      
+        e.preventDefault();
+        e.stopPropagation();
+        if (lpAddressBar) {
+            //lpAddressBar.showLoading();
+            lpAddressBar.setZipcode();
+            var inarray=$j.map(zipcodes, function(obj,i) {
+                if(i== parseInt(lpAddressBar.zipcode)){
+                    return true;
+                } 
             });
-        }else if (zipcode==""){
-            message="<p><?php echo $this->__('Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.'); ?></p></div>";
-            $j("#message_neighborhood").html(message);
-            return;
-        } else{
-            message="<p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p><a class='button button-green' href='#' id='newsletter-popup' data-newsletter-view='<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>' role='button' title='Inscrivez-vous à notre newsletter'>Inscrivez-vous à notre newsletter !</a>";
-            $j("#message_neighborhood").html(message);
-            return;
+
+            if(inarray[0]){ 
+                var website = zipcodes[zipcode][0].website_id;
+                var name = zipcodes[zipcode][0].name;
+                $j.ajax( {
+                    url : lpAddressBar.ajaxUrl,
+                    dataType : 'json',
+                    type : 'post',
+                    data : {
+                        isAjax:1,
+                        zipcode:zipcode,
+                        website:website,
+                        name:name,
+                    },
+                    success: function(data) {
+                      if(data.redirect) {
+                        window.location = data.redirectURL;
+                      }
+                    },
+                });
+            }else if (lpAddressBar.zipcode==""){
+                message="<p><?php echo $this->__('Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.'); ?></p></div>";
+                $j("#message_neighborhood").html(message);
+                return;
+            } else{
+                message="<p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p><a class='button button-green' href='#' id='newsletter-popup' data-newsletter-view='<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>' role='button' title='Inscrivez-vous à notre newsletter'>Inscrivez-vous à notre newsletter !</a>";
+                $j("#message_neighborhood").html(message);
+                return;
+            }
+
+            // } else {
+            //   //lpAddressBar.showLoading();
+            // }
         }
+
     });
 </script>
-<script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
-<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&libraries=places&callback=GoogleApiLandingpage' async defer></script>
+<!-- <script type='text/javascript' src='/js/GoogleApi/GoogleApi.js'></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&libraries=places&callback=GoogleApiLandingpage'></script>
 <!-- End Google Auto Complete -->
 </html>
