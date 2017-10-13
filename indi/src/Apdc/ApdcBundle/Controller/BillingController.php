@@ -176,7 +176,10 @@ class BillingController extends Controller
                         'Valeur Ticket TTC',
 						'Commission APDC (HT)',
 						'TVA',
-                        'Versement Commercant (HT)'
+						'Versement Commercant (HT)',
+						'Frais livraison (HT)',
+						'Frais livraison (TVA)',
+						'Frais livraison (TTC)'
                     ),';');
 
                     foreach ($bill as $order) {
@@ -195,7 +198,10 @@ class BillingController extends Controller
                             $order['sum_ticket'],
 							$order['sum_commission_HT'],
 							$order['sum_commission_TVA'],
-                            $order['sum_due_HT']
+							$order['sum_due_HT'],
+							$order['sum_shipping_HT'],
+							$order['sum_shipping_TVA'],
+							$order['sum_shipping_TTC']
                         ),';');
                     }
 
