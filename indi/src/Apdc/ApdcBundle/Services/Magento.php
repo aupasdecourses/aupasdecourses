@@ -917,20 +917,20 @@ class Magento
 		$orders->addFilterToMap('increment_id', 'sales_flat_invoice.increment_id');
 
 		$orders->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
-			   ->addAttributeToSort('increment_id', 'ASC');
+			   ->addAttributeToSort('created_at', 'ASC');
 		
 		foreach ($orders as $order) {
 			array_push($data, [
 				'created_at'			=> $order->getData('created_at'),
 				'numero_commande'		=> $order->getData('increment_id'),
 				'nom_client'			=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
-				'total_produits_HT'		=> $order->getData('subtotal'),
-				'total_produits_TVA'	=> $order->getData('tax_amount'),
-				'total_produits_TTC'	=> $order->getData('subtotal_incl_tax'),
-				'frais_livraison_HT'	=> $order->getData('shipping_amount'),
-				'frais_livraison_TVA'	=> $order->getData('shipping_tax_amount'),
-				'discount'				=> $order->getData('discount_amount'),
-				'total_commande_TTC'	=> $order->getData('grand_total'),
+				'total_produits_HT'		=> round($order->getData('subtotal'), 2),
+				'total_produits_TVA'	=> round($order->getData('tax_amount'), 2),
+				'total_produits_TTC'	=> round($order->getData('subtotal_incl_tax'), 2),
+				'frais_livraison_HT'	=> round($order->getData('shipping_amount'), 2),
+				'frais_livraison_TVA'	=> round($order->getData('shipping_tax_amount'), 2),
+				'discount'				=> round($order->getData('discount_amount'), 2),
+				'total_commande_TTC'	=> round($order->getData('grand_total'), 2),
 			]);
 		}
 
