@@ -49,10 +49,10 @@
 				 Les meilleurs commerçants de Paris livrés chez vous
 			</div>
             <div id="search_neighborhoods">
-                <div class="input-box apdc-form">
-                    <input id='GoogleAutoCompleteInput' class='form-control' placeholder='Entrez votre adresse' type='text' name='input_addr' />
-                    <input id='GoogleAutoCompleteZipcode' class='form-control' name="zipcode" />
-                    <button id='GoogleAutoCompleteSubmit' data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="btn btn-lg btn-success" type="submit">OK</button>
+                <div id='address-bar' class="input-box apdc-form">
+                    <input class='form-control' placeholder='Entrez votre adresse' type='text' name='input_address' />
+                    <input class='form-control' name="input_zipcode" />
+                    <button data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="btn btn-lg btn-success" type="submit">OK</button>
                 </div>
             </div>
             <div class="row text-center" id="message_neighborhood"></div>
@@ -240,22 +240,62 @@
     }
 
     AddressBar.prototype.init = function() {
-      
+        $j("#message_neighborhood").html("");
+        var zipcode = $j('#GoogleAutoCompleteZipcode').val();
     };
 
+
+    ApdcPopup.prototype.isLoaded = function() {
+      return this.is_loaded;
+    };
+    AddressBar.prototype.initActions = function() {
+      var self = this;
+      jQuery(document).on('click', '#' + self.id + ' .apdc-popup-overlay', function() {
+        self.close();
+      });
+      jQuery(document).on('click', '#' + self.id + ' .apdc-popup-close', function() {
+        self.close();
+      });
+      jQuery(document).keyup(function(e) {
+        if (e.keyCode === 27) {
+          self.close();
+        }
+      });
+    };
+
+    AddressBar.prototype.show = function() {
+      jQuery('#' + this.id).fadeIn('fast');
+      this.is_open = true;
+    };
+
+    AddressBar.prototype.close = function() {
+      jQuery('#' + this.id).fadeOut('fast');
+      this.is_open = false;
+    };
 
     AddressBar.prototype.showLoading = function() {
       jQuery('#' + this.id + ' .apdc-popup-loading').show();
       this.show();
     };
 
-    ApdcPopup.prototype.hideLoading = function() {
+    AddressBar.prototype.hideLoading = function() {
       jQuery('#' + this.id + ' .apdc-popup-loading').hide();
     };
 
-    $j('#GoogleAutoCompleteSubmit').click(function(event){
-        $j("#message_neighborhood").html("");
-        var zipcode = $j('#GoogleAutoCompleteZipcode').val();
+
+    $j('#address-bar').siblings('button[type="submit"]').click(function(event){
+        console.log("true");
+
+        if (lpAddressBar === null) {
+          lpAddressBar = new AddressBar({
+            onReady: function(newHtml) {
+              accountPopup.apdc_login_view = newHtml;
+              if (apdcLoginPopup.isOpen()) {
+                apdcLoginPopup.updateContent(newHtml);
+              }
+            }
+          });
+        }
 
         var inarray=$j.map(zipcodes, function(obj,i) {
           if(i== parseInt(zipcode)){
