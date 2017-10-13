@@ -5,7 +5,10 @@
 {% block body %}
 <div class="container">
 <h1> Commandes </h1><br>
-	{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+	<div class="row">
+		<div class="col-md-8">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+		<div class="col-md-4">{% include 'ApdcApdcBundle::tool/lpr_info.html.twig' %}</div>
+	</div>
 </div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}

@@ -22,7 +22,7 @@
 		<tbody>
 			{% for payout in payout_list %}
 			<tr>
-				<td>{{ payout.date|date('d-m-Y H:i:s') }}</td>
+				<td>{{ payout.date|date('d M Y H:i:s') }}</td>
 				<td>{{ payout.reference }}</td>
 				<td>{{ payout.value/100 ~ " € " }}</td>
 				<td>{{ payout.ownerName }}</td>

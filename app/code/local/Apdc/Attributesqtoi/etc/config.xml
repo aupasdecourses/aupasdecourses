@@ -73,14 +73,6 @@
                     </pmainguet_attributesqtoi>
                 </observers>
             </sales_quote_item_set_product>
-            <sales_convert_quote_item_to_order_item>
-                <observers>
-                    <pmainguet_attributesqtoi>
-                        <class>pmainguet_attributesqtoi/observer</class>
-                        <method>deliverycheck</method>
-                    </pmainguet_attributesqtoi>
-                </observers>
-            </sales_convert_quote_item_to_order_item>
         </events>
         <helpers>
             <pmainguet_attributesqtoi>

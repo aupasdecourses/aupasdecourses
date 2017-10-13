@@ -32,7 +32,6 @@
 		
 		
 		<reference name="product_list.name.after">
-			<!--<block type="apdc_catalog/product_list_availability" name="product_availability" template="apdc_catalog/product/list/availability.phtml" />-->
 			<block type="apdc_catalog/product_list_options" name="product_options" template="apdc_catalog/product/list/options.phtml">
 				<block type="catalog/product_view_type_configurable" name="product_options.configurable" template="apdc_catalog/product/list/options/configurable.phtml" />
 				<block type="core/template" name="options_js" template="catalog/product/view/options/js.phtml"/>

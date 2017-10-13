@@ -37,7 +37,6 @@
 
         <reference name="checkout.onepage.shipping_method">
             <action method="setTemplate"><template>apdc_checkout/checkout/onepage/shipping_method.phtml</template></action>
-            <block type="apdc_checkout/deliverycheck_check" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
         </reference>
         <remove name="header.delivery"/>
         

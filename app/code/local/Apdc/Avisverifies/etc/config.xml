@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Apdc_Avisverifies>
+            <version>0.0.1</version>
+        </Apdc_Avisverifies>
+    </modules>
+    <global>
+        <helpers>
+            <avisverifies>
+                <rewrite>
+                    <Export>Apdc_Avisverifies_Helper_Export</Export>
+                </rewrite>
+            </avisverifies>
+            <apdc_avisverifies>
+                <class>Apdc_Avisverifies_Helper</class>
+            </apdc_avisverifies>
+        </helpers>
+    </global>
+</config>

@@ -29,11 +29,12 @@
     $hasError = $_item->getHasError();
     $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+    $availablility = $_item->getAvailability();
 ?>
-<li class="item" xmlns="http://www.w3.org/1999/html">
+<li class="item<?php echo (!$availablility['is_available'] ? ' notavailable' : ''); ?>" xmlns="http://www.w3.org/1999/html">
     <div class="item-row">
         <div class="item-cell item-image">
-        <?php if ($hasError) : ?>
+        <?php if ($hasError && $availablility['is_available']) : ?>
             <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
             <img src="<?php echo $this->getProductThumbnail()->resize(50, 50)->setWatermarkSize('30x10'); ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
             </a>
@@ -46,7 +47,7 @@
         <?php endif; ?>
         </div>
         <div class="item-cell item-name">
-            <?php if ($hasError) : ?>
+            <?php if ($hasError && $availablility['is_available']) : ?>
                 <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
             <?php elseif ($this->hasProductUrl()) : ?>
                 <a href="<?php echo $this->getProductUrl() ?>">
@@ -123,11 +124,13 @@
         <div class="item-cell item-actions">
 
             <?php if ($isVisibleProduct): ?>
+                <?php if ($availablility['is_available']) : ?>
                 <div>
                 <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
                     <i class="fa fa-pencil"></i>
                 </a>
                 </div>
+                <?php endif; ?>
                 <?php if (!$this->isOnCheckoutPage()): ?>
                     <div>
                     <a href="<?php echo $this->helper('apdccart')->getAjaxDeleteUrl($_item) ?>" title="<?php echo $this->__('Remove This Item') ?>"
@@ -151,9 +154,9 @@
     <?php endforeach; ?>
     <?php endif; ?>
 </li>
-
 <script type="text/javascript">
-	jQuery(document).ready(function(){
-        jQuery('a[data-toggle=tooltip]').tooltip();
+    jQuery(document).ready(function() {
+        $j('.minicart-wrapper a[data-toggle=tooltip]').tooltip();
     });
 </script>
+

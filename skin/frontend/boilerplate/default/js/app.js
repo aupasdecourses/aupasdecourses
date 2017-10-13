@@ -1282,4 +1282,5 @@ var ProductMediaManager = {
 
 $j(document).ready(function() {
     ProductMediaManager.init();
+    $j('a[data-toggle=tooltip]').tooltip();
 });

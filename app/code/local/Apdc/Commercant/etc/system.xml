@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<config>
+    <sections>
+        <apdc_general>
+            <groups>
+                <display translate="label">
+                    <label>Affichage Nouveauté</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment></comment>
+                    <fields>
+                        <product_new translate="label" module="apdc_commercant">
+                          <label>Durée nouveauté produits</label>
+                          <frontend_type>text</frontend_type>
+                          <sort_order>10</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>0</show_in_website>
+                          <show_in_store>0</show_in_store>
+                          <comment>Durée (en jours) à partir duquel on considère qu'un produit n'est plus nouveau</comment>
+                        </product_new>
+                        <commercant_new translate="label" module="apdc_commercant">
+                          <label>Durée nouveauté commerçant</label>
+                          <frontend_type>text</frontend_type>
+                          <sort_order>10</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>0</show_in_website>
+                          <show_in_store>0</show_in_store>
+                          <comment>Durée (en jours) à partir duquel on considère qu'un commerçant n'est plus nouveau (calculé à partir de la date de création du premier produit pour ce commerçant)</comment>
+                        </commercant_new>
+                      </fields>
+                </display>
+            </groups>
+        </apdc_general>
+    </sections>
+</config>

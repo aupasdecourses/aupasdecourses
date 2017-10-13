@@ -23,13 +23,14 @@
     <apdc_catalog_product_list>
       <reference name="content">
         <block type="apdc_commercant/list" template="apdc_commercant/headercommercant.phtml" name="headercommercant" before="category.product">
-          <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability.phtml"/>
+          <block type="apdc_catalog/shop_availability" name="apdc_catalog_shop_availability" template="apdc_catalog/product/availability/shop/availability.phtml"/>
           <block type="apdc_catalog/selection" name="blockselection" as="blockselection" template="apdc_catalog/selection/selection_commercant.phtml">
             <block type="apdc_catalog/product_list_card" name="commercant.list.card-product" as="card-product" template="apdc_catalog/product/card.phtml">
               <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
               <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
               <block type="core/text_list" name="product_list.name.after" as="name.after" />
               <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+              <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
             </block>
           </block>
           <!--<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />-->
@@ -43,6 +44,7 @@
               <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
               <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
               <block type="core/text_list" name="product_list.name.after2" as="name.after2" />
+              <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
               <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
             </block>
             <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
@@ -164,7 +166,7 @@
       <remove name="product.info.simple.extra" />
       <remove name="product.info.availability" />
       <reference name="product.info">
-          <block type="apdc_catalog/product_availability" name="product_availability" template="apdc_catalog/product/availability.phtml"/>
+        <block type="apdc_catalog/shop_availability" name="apdc_catalog_shop_availability" template="apdc_catalog/product/availability/shop/availability.phtml"/>
       </reference>
     </PRODUCT_TYPE_simple>
 
