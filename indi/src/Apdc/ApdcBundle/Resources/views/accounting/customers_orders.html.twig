@@ -2,13 +2,42 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-	<div class="container">
+	<div class="container-fluid">
 		<h1> Liste des commandes par clients </h1><br>
 			<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
-	
-		{% for order in orders %}
-			{{ dump(order) }}
-		{% endfor %}
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>Cree le</td>
+					<td># Commande</td>
+					<td>Nom client</td>
+					<td>Total produits HT</td>
+					<td>Total produits TVA</td>
+					<td>Total produits TTC</td>
+					<td>Frais livraison HT</td>
+					<td>Frais livraison TVA</td>
+					<td>Discount</td>
+					<td>Total commande TTC</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+				<tr>
+					<td>{{ order.created_at }}</td>
+					<td>{{ order.numero_commande }}</td>
+					<td>{{ order.nom_client }}</td>
+					<td>{{ order.total_produits_HT }}</td>
+					<td>{{ order.total_produits_TVA }}</td>
+					<td>{{ order.total_produits_TTC }}</td>
+					<td>{{ order.frais_livraison_HT }}</td>
+					<td>{{ order.frais_livraison_TVA }}</td>
+					<td>{{ order.discount }}</td>
+					<td>{{ order.total_commande_TTC }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
 	</div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}

@@ -908,21 +908,21 @@ class Magento
     public function getOrdersByCustomer($debut = null, $fin = null)
 	{
 		$data = [];
-		$debut	= date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
 
-		$orders = \Mage::getModel('sales/order_invoice')->getCollection();
-		$orders->addFilterToMap('created_at', 'main_table.created_at')
-			   ->addFilterToMap('increment_id', 'main_table.increment_id');
+		$orders = \Mage::getModel('sales/order')->getCollection();
+	
+		$orders->getSelect()->join('sales_flat_invoice', 'sales_flat_invoice.order_id = main_table.entity_id');
+		$orders->addFilterToMap('created_at', 'sales_flat_invoice.created_at');
+		$orders->addFilterToMap('increment_id', 'sales_flat_invoice.increment_id');
 
 		$orders->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
-			   ->addAttributeToSort('increment_id', 'DESC');
+			   ->addAttributeToSort('increment_id', 'ASC');
 		
-		$orders->getSelect()->join('sales_flat_order', 'main_table.order_id = sales_flat_order.entity_id');
-
 		foreach ($orders as $order) {
 			array_push($data, [
 				'created_at'			=> $order->getData('created_at'),
-				'numero_commande'		=> $order->getIncrementId(),
+				'numero_commande'		=> $order->getData('increment_id'),
 				'nom_client'			=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
 				'total_produits_HT'		=> $order->getData('subtotal'),
 				'total_produits_TVA'	=> $order->getData('tax_amount'),
@@ -936,17 +936,4 @@ class Magento
 
 		return $data;
 	}
-	/*
-		SELECT i.created_at, 
-		i.increment_id as numero_commande, 
-		CONCAT(s.customer_firstname,' ',s.customer_lastname) as nom_client, 
-		i.subtotal as total_produits_HT, 
-		i.tax_amount as total_produits_TVA, 
-		i.subtotal_incl_tax as total_produits_TTC, 
-		i.shipping_amount as frais_livraison_HT, 
-		i.shipping_tax_amount as frais_livraison_TVA, 
-		i.discount_amount as discount, 
-		i.grand_total as total_commande_TTC 
-		FROM db_sturquier.sales_flat_invoice as i INNER JOIN db_sturquier.sales_flat_order as s ON s.entity_id = i.order_id;
-	 */
 }
