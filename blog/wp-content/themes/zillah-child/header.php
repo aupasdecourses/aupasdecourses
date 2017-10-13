@@ -52,6 +52,9 @@
                 padding:10px;
                 width:100%
             }
+            #newsletter-form input[type="submit"]{
+                text-transform:none;
+            }
             #mc_embed_signup input{
                 border-radius:0px;
             }
@@ -89,8 +92,8 @@
                         <div id="top-menu-flex-parent">
                             <div class="top-menu-element-apdc-logo">
                                 <!-- APDC logo -->    
-                                <a href="https://www.aupasdecourses.com">
-                                    <img id="logo-apdc" src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
+                                <a href="https://www.aupasdecourses.com" target="_blank">
+                                    <img id="logo-apdc" src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
                                 </a>
                             </div><!--
                             --><div class="top-menu-element-menu">
@@ -110,16 +113,16 @@
                                 <input type="checkbox" id="menuToggle"/> <!-- sibling of #sliding-menu -->
                                 <div class="menu-container"><!--
                                  --><label for="menuToggle" id="menu-label-bars">
-                                        <img src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/menu-bars.png" alt="Ouvrir menu">
+                                        <img src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/menu-bars.png" alt="Ouvrir menu">
                                  </label><!--
                                  --><label for="menuToggle" id="menu-label-x">
-                                        <img src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/menu-x.png" alt="Fermer menu">
+                                        <img src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/menu-x.png" alt="Fermer menu">
                                  </label>
                                 </div>
                                 
                                 <nav id="sliding-menu" role="navigation">
                                    <div id="blog-logo-wrapper-responsive-menu">
-                                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-blog.png" alt="Logo du Blog d'AuPasDeCourses"/></a>
+                                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-blog.png" alt="Logo du Blog d'AuPasDeCourses"/></a>
                                     </div>
                                    
                                     <?php
@@ -153,32 +156,32 @@
                         <!-- LOGO BLOG -->
                         <div class="row">
                             <div id="blog-logo-wrapper">
-                                <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-blog.png" alt="Logo du Blog d'AuPasDeCourses"/></a>
+                                <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="https://www.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/logo-blog.png" alt="Logo du Blog d'AuPasDeCourses"/></a>
                             </div>
                         </div>
                         <div class="row">
                             <div>
                                 <div id="header-categories-wrapper">
                                     <div class="header-single-category-wrapper">
-                                        <a href="https://pmainguet.dev.aupasdecourses.com/blog/category/recettes/">
+                                        <a href="https://www.aupasdecourses.com/blog/category/recettes/">
                                             <img src="<?php echo get_theme_mod('recettes_category_image', ''); ?>" alt="Cagégorie Recettes"/>
                                             <div id="header-single-category-recettes">Recettes</div>
                                         </a>
                                     </div>
                                     <div class="header-single-category-wrapper">
-                                        <a href="https://pmainguet.dev.aupasdecourses.com/blog/category/marche/">
+                                        <a href="https://www.aupasdecourses.com/blog/category/marche/">
                                             <img src="<?php echo get_theme_mod('marche_category_image', ''); ?>" alt="Cagégorie Marché"/>
                                             <div id="header-single-category-marche">Marché</div>
                                         </a>
                                     </div>
                                     <div class="header-single-category-wrapper">
-                                        <a href="https://pmainguet.dev.aupasdecourses.com/blog/category/astuces/">
+                                        <a href="https://www.aupasdecourses.com/blog/category/astuces/">
                                             <img src="<?php echo get_theme_mod('astuces_category_image', ''); ?>" alt="Cagégorie Astuces"/>
                                             <div id="header-single-category-astuces">Astuces</div>
                                         </a>
                                     </div>
                                     <div class="header-single-category-wrapper">
-                                        <a href="https://pmainguet.dev.aupasdecourses.com/blog/category/decouverte/">
+                                        <a href="https://www.aupasdecourses.com/blog/category/decouverte/">
                                             <img src="<?php echo get_theme_mod('decouverte_category_image', ''); ?>" alt="Cagégorie Découverte"/>
                                             <div id="header-single-category-decouverte">Découverte</div>
                                         </a>

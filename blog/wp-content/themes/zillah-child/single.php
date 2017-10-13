@@ -36,7 +36,12 @@ get_header(); ?>
                         $single_post_categories = get_the_category();
                         if ($single_post_categories) { /*if there is content in the single_post_categories array*/
                             foreach ($single_post_categories as $category) { /*for each item in the $single_post_categories array, identify the current item as the variable $category*/
-
+                                
+                                global $current_category_name;
+                                $current_category_name = $category->cat_name;
+                                global $current_category_link;
+                                $current_category_link = get_category_link($category->term_id);
+                                
                                 /* Assign a CSS class for each category */
                                 switch ($category->slug) {
                                     case "recettes":
@@ -215,7 +220,15 @@ get_header(); ?>
                 ?>
             </div> <!-- end .six-random-articles-wrapper -->
         </div> <!-- end columns 6 random articles -->
+        <div class="col-xs-12">
+            <div class="button-container" id="single-article-category-archives">
+                <a href="<?php echo $current_category_link ?>">
+                    <button id="all-articles">Tous les articles <span><?php echo $current_category_name; ?></span></button>
+                </a>
+            </div>
+        </div>
     </div> <!-- end .row 6 random articles -->
+    
     
     <!-- Instagram Feed Photos -->
     <div class="row">

@@ -32,20 +32,18 @@ traiteur : RVB 51, 53, 59  #33353b
     font-style: normal;
 }
 @font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('fonts/opensans-regular.woff2') format('woff2'),
+         url('fonts/opensans-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
     font-family: 'OpenSans-SemiBold';
     src: url('fonts/opensans-semibold.woff2') format('woff2'),
          url('fonts/opensans-semibold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
-    font-family: 'HoneyScript-Light';
-    src: url('fonts/honeyscript-light.woff2') format('woff2'),
-         url('fonts/honeyscript-light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
 }
 @font-face {
     font-family: 'HoneyScript-SemiBold';
@@ -60,7 +58,7 @@ traiteur : RVB 51, 53, 59  #33353b
 
 body, button, input, select, textarea {
     color: #00595e;
-    font-family: 'OpenSans-Light', sans-serif !important;
+    font-family: 'OpenSans-Regular', sans-serif !important;
     font-size: 18px !important;
     line-height: 1.7;
     background: #ffffff;
@@ -438,7 +436,6 @@ a.genericon, a.genericon:visited{
     position:relative; /* to allow absolute positioning of category labels */
     border:5px solid white;
     text-align:center;
-    
     width: 50%;
     box-sizing: border-box;
 }
@@ -460,8 +457,9 @@ a.genericon, a.genericon:visited{
     transform:translate(-50%,-50%);
     width:90%;
     text-align:center;
-    font-family: 'OpenSans-SemiBold', sans-serif;
-    font-size:18px;
+    text-transform:uppercase;
+    font-family: 'OpenSans-Regular', sans-serif;
+    font-size:16px;
     color:white;
     padding:5px;
 }
@@ -524,7 +522,8 @@ a.post-wrapper img{
     color:white;
     padding:7px 10px;
     margin:0px;
-    text-transform: capitalize;
+    text-transform: uppercase;
+    font-size: 16px;
 }
 
 h2.post-title{
@@ -553,7 +552,7 @@ p.post-excerpt{
 .category-label-astuces{ background-color:#ffba44; }
 .category-label-marche{ background-color:#c6304d; }
 .category-label-decouverte{ background-color:#4a97d3; }
-.category-label-portrait{ background-color:#005952; }
+.category-label-portrait{ background-color:#005952; text-align:center;}
 .category-label-coupdefood{ background-color:#2a4899; }
 .category-label-dossier{ background-color:#2a4899; }
 
@@ -652,11 +651,13 @@ p.post-excerpt{
 }
 
 h4.post-title{
-    font-family: 'HoneyScript-SemiBold', sans-serif !important;
-    font-size: 28px;
-    line-height: 24px;
+    font-family: 'OpenSans-Regular', sans-serif !important;
+    font-size: 18px;
+    line-height: 20px;
     text-transform: none !important;
+    text-align:left !important;
     letter-spacing: normal;
+    margin-top:5px;
 }
 
 .category-text-recettes{ color:#2aa745 !important; }
@@ -795,6 +796,8 @@ h4.post-title{
     color:white;
     padding:7px 10px;
     margin:0px;
+    text-transform:uppercase;
+    text-align:center;
 }
 
 .title-random-post{
@@ -908,7 +911,7 @@ footer{
 }
 
 .container-footer-info a{
-    font-family: 'OpenSans-Light', sans-serif !important;
+    font-family: 'OpenSans-Regular', sans-serif !important;
 }
 
 .container-footer-info div a{
@@ -1077,8 +1080,9 @@ ul.page-numbers li{
     margin:5px;
     margin-top: 10px;
     display: inline-block;
-    font-size: 18px;
+    font-size: 16px;
     padding:1px 15px;
+    text-transform:uppercase;
 }
 
 /* Design of the category title */
@@ -1121,6 +1125,14 @@ ul.page-numbers li{
 /* Spacing between paragraphs */
 .article-content p{
     margin-bottom: 20px;
+}
+
+#single-article-category-archives{
+    text-align:center;
+    margin-bottom:60px;
+}
+#single-article-category-archives button span{
+    text-transform:capitalize;
 }
 
 .fruit-banner{
@@ -1262,7 +1274,7 @@ ul.page-numbers li a.page-numbers{
     #header-single-category-astuces,
     #header-single-category-marche,
     #header-single-category-decouverte{
-        width:60%;
+        width:50%;
     }
     /*============================
                 END HEADER
@@ -1281,10 +1293,6 @@ ul.page-numbers li a.page-numbers{
         margin:15px;
     }
     
-    h4.post-title{
-        font-size: 30px;
-        line-height: 26px;
-    }
     /* ########## End 6 random articles ########## */
     /*============================
                 END LANDING PAGE
@@ -1408,14 +1416,10 @@ ul.page-numbers li a.page-numbers{
     /* Design of the category tag */
     .category-box-article{
         margin-top: 20px;
+        /*padding:3px 20px;
+        font-size: 30px;*/
     }
     
-    /* Design of the category tag */
-    .category-box-article{
-        padding:3px 20px;
-        font-size: 30px;
-    }
-
     /* Design of the category title */
     .article-title{
         font-size: 85px;
@@ -1518,9 +1522,9 @@ ul.page-numbers li a.page-numbers{
     #header-single-category-astuces,
     #header-single-category-marche,
     #header-single-category-decouverte{
-        font-size:24px;
-        padding:10px;
-        width:90%;
+        font-size: 16px;
+        padding:12px 10px;
+        min-width: 150px;
     }
     /*============================
                 END HEADER
@@ -1532,6 +1536,15 @@ ul.page-numbers li a.page-numbers{
     .button-container{
         margin-bottom: 0px;
     }
+    
+    .category-box,
+    .category-box-random{
+        /*min-width:240px;
+        font-size:24px;*/
+        font-size: 16px;
+        padding:12px 10px;
+        min-width: 150px;
+    }
     /* ########## Coup de Food banner ########## */
     #coup-de-food-title-excerpt{
         width: 50%;
@@ -1539,7 +1552,7 @@ ul.page-numbers li a.page-numbers{
     /* ########## end Coup de Food banner ########## */
     
     /* ########## 6 random articles ########## */
-       .six-random-articles-single-wrapper{
+    .six-random-articles-single-wrapper{
         width:calc(33% - 30px);
     }
     /* ########## End 6 random articles ########## */
@@ -1582,6 +1595,12 @@ ul.page-numbers li a.page-numbers{
         -webkit-box-align:center;
         -ms-flex-align:center;
         align-items:center;
+    }
+    
+    .category-box-article{
+        padding:12px 10px;
+        min-width: 150px;
+        text-align:center;
     }
     
     /*============================
