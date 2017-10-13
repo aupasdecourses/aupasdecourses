@@ -17,6 +17,7 @@ get_header(); ?>
            <?php
             global $current_category_name;
             global $current_category_id;
+            global $current_category_visible_name;
             $current_category_name = get_query_var('category_name');
             $current_category_id = get_query_var('cat');
             $current_category_visible_name = get_category( $current_category_id )->name;
@@ -117,7 +118,7 @@ get_header(); ?>
                             }
                             
                             echo '<p class="category-wrapper">
-                                    <span class="category-box '.$span_class.'">'.$current_category_name.'</span>
+                                    <span class="category-box '.$span_class.'">'.$current_category_visible_name.'</span>
                                 </p>';
                             
                             echo '<h2 class="post-title">'.get_the_title().'</h2>';

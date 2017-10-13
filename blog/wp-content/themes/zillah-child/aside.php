@@ -18,10 +18,7 @@
                         /* Add the post ID to a list of posts to not show below in the 6 random articles section */
                         global $displayed_articles;
                         $displayed_articles[] = get_the_ID();/*this adds the current post ID to the array*/
-                        echo '<!-- displayed_articles = ';
-                        print_r ($displayed_articles);
-                        echo '-->';
-            
+                        
                         echo '<a class="post-wrapper-aside" href="'.get_permalink().'">';
 
                             the_post_thumbnail('article-large-thumbnail');
@@ -101,9 +98,7 @@
                         /* Add the post ID to a list of posts to not show below in the 6 random articles section */
                         global $displayed_articles;
                         $displayed_articles[] = get_the_ID();/*this adds the current post ID to the array*/
-                        echo '<!-- displayed_articles = ';
-                        print_r ($displayed_articles);
-                        echo '-->';
+                        
                 
                         echo '<a class="post-wrapper-aside" href="'.get_permalink().'">';
                             
@@ -188,6 +183,7 @@
             /* Only on the category archive pages we show 4 random articles from the current category */
             /* Use the global variable $current_category_slug which we defined in archive.php which contains the current category slug */
             global $current_category_name;
+            global $current_category_visible_name;
 
             if (is_category()){
                 $args = array (
@@ -235,7 +231,7 @@
                                         break;
                                 }
 
-                                echo '<span class="'.$span_class.'">'.$current_category_name.'</span>';
+                                echo '<span class="'.$span_class.'">'.$current_category_visible_name.'</span>';
                                     
                                 ?> 
                                 <div>
