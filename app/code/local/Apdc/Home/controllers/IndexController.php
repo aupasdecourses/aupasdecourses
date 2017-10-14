@@ -2,7 +2,21 @@
 
 class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 {
-	public function ajaxPopupViewAction()
+	protected function _getLayout($id)
+    {
+        $this->getLayout()->getUpdate()->addHandle(array('default', $id));
+
+        $this->loadLayout();
+
+        $this->getLayout()->removeOutputBlock('root')->addOutputBlock('content');
+        $this->_initLayoutMessages('core/session');
+        $this->_initLayoutMessages('customer/session');
+        $this->renderLayout();
+
+        return $this->getLayout()->getOutput();
+    }
+
+    public function ajaxPopupViewAction()
     {
         $params = $this->getRequest()->getPost();
         if ($params['isAjax'] == 1) {
@@ -40,12 +54,16 @@ class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 		$response=array();
 
 		if(isset($data['isAjax'])&&$data['isAjax']==1){
-			if (isset($data['zipcode'])) {
+			if ($data['medium']=='zipcode'&&isset($data['zipcode'])) {
 				$url=Mage::app()->getStore($data['website'])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
 				$response['status']=1;
 				$response['redirect']=1;
 				$response['redirectURL']=$url;
-			}else{
+			}elseif($data['medium']=='select'){
+                $url=Mage::app()->getStore($data['website'])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
+                $response['status']=1;
+                $response['redirect']=1;
+                $response['redirectURL']=$url;
 			}
 		}
 

@@ -50,13 +50,13 @@ function GoogleApiCustomcheck() {
 function GoogleApiLandingpage() {
     autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoCompleteInput')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_landingpage.addListener('place_changed', function(){
-		var place = autocomplete_landingpage.getPlace();
-		var	zipcode = getPlaceKey(place, 'postal_code');
-
-		if (zipcode != 'not found') {
-			$j('#GoogleAutoCompleteZipcode').val(zipcode);
-		} else {
-			$j('#GoogleAutoCompleteZipcode').val('');
-		}
-	})
+        $j('#GoogleAutoCompleteInput').siblings('button').show();
+        var place = autocomplete_landingpage.getPlace();
+        var zipcode = getPlaceKey(place, 'postal_code');
+        if (zipcode != 'not found') {
+            $j('#GoogleAutoCompleteZipcode').val(zipcode);
+        } else {
+            $j('#GoogleAutoCompleteZipcode').val('');
+        }
+    });
 }

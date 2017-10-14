@@ -116,6 +116,13 @@ jQuery(document).ready(function() {
         });
     }
 
+    $j('#GoogleAutoCompleteInput').on('keydown',function(e){  
+        $e=$j(this);
+        if($e.val()!=''){
+            $e.siblings('button').hide();
+        }
+    });
+
     lpAddressBar = new AddressBar({root: '#address-bar',zipcodes: zipcodes});
 
     $j('#address-bar button[type="submit"]').on('click',function(e){      
@@ -132,6 +139,7 @@ jQuery(document).ready(function() {
                         type : 'post',
                         data : {
                             isAjax:1,
+                            medium:'zipcode',
                             zipcode:lpAddressBar.zipcode,
                             website:website_ids,
                             name:lpAddressBar.getData('name'),
@@ -161,4 +169,26 @@ jQuery(document).ready(function() {
         }
 
     });
-    });
+   
+    $j('#address-bar select[name="website-list"]').on('change',function(e){ 
+        var $elt=$j(this).children('option:selected');
+        $j.ajax( {
+            url : lpAddressBar.ajaxUrl,
+            dataType : 'json',
+            type : 'post',
+            data : {
+                isAjax:1,
+                medium:'select',
+                website:$elt.attr('value'),
+                name:$elt.attr('name'),
+            },
+            success: function(data) {
+              if(data.redirect) {
+                window.location = data.redirectURL;
+              }
+            },
+        });
+    });    
+
+
+});

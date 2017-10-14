@@ -1,7 +1,7 @@
 <?php
 
 
-class Apdc_Front_Block_Newsletter_Form extends Ebizmarts_MailChimp_Block_Checkout_Subscribe
+class Apdc_Front_Block_Newsletter_Form extends Mage_Core_Block_Template
 {
     private $_listcustom = [
             'Paris 1er',

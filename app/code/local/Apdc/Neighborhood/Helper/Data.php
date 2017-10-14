@@ -206,10 +206,28 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
 
         asort($result);
 
-        if($json){
-            return json_encode($result);
-        }else{
-            return $result;
+        return $result;
+    }
+
+    public function getAllWebsites(){
+        $data=Mage::app()->getStores();
+        $result=array();
+        $tmp=array();
+
+        $order=[19,20,16,17,12,15,9,21,10,4,11,14,5,7,13,1,18,23,22];
+
+        foreach($data as $d){
+            if($d->getWebsite()->getId()<>2){
+                $tmp[$d->getWebsite()->getId()]=$d->getName();
+            }
         }
+
+        foreach($order as $key){
+            if(isset($tmp[$key])){
+                $result[$key]=$tmp[$key];
+            }
+        }      
+
+        return $result;
     }
 }
