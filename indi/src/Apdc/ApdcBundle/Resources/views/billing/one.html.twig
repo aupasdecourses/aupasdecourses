@@ -11,25 +11,41 @@
 	{% if bill.summary[0].date_finalized is null %}
 		{% include 'ApdcApdcBundle::forms/versement.html.twig' %}
 	{% endif %}
-	{% if bill.summary[0].date_finalized != NULL %}
-		<h2>Régler, télécharger et envoyer le PDF</h2>
-		{{ form_start(form_payout) }}
-		{{ form_start(form_download) }}
-		{{ form_start(form_send) }}
-		<div class="btn-group btn-group-lg" role="group" aria-label="">
-			{% if bill.summary[0].date_payout is null%}
-				<button type="submit" name="submit" value='payout' class="btn btn-danger btn-lg">Régler</button>
-			{% endif %}
-			<button type="submit" name="submit" value='download' class="btn btn-success btn-lg">Generate PDF</button>
-			{% if check_file %}
-				<a href="{{ path('download_route', {'filename': bill.summary[0].increment_id ~ '.pdf'}) }}" target="_blank" class="btn btn-info btn-lg">Lien vers PDF</a>
-			{% endif %}
-			<button type="submit" name="submit" value='send' class="btn btn-success btn-lg">Envoyer PDF</button>
+
+	<div class="row">
+		<div class="col-md-6">
+		{% if bill.summary[0].date_finalized != NULL %}
+			<h2>Régler, télécharger et envoyer le PDF</h2>
+			{{ form_start(form_payout) }}
+			{{ form_start(form_download) }}
+			{{ form_start(form_send) }}
+			<div class="btn-group btn-group-lg" role="group" aria-label="">
+				{% if bill.summary[0].date_payout is null%}
+					<button type="submit" name="submit" value='payout' class="btn btn-danger btn-lg">Régler</button>
+				{% endif %}
+				<button type="submit" name="submit" value='download' class="btn btn-success btn-lg">Generate PDF</button>
+				{% if check_file %}
+					<a href="{{ path('download_route', {'filename': bill.summary[0].increment_id ~ '.pdf'}) }}" target="_blank" class="btn btn-info btn-lg">Lien vers PDF</a>
+				{% endif %}
+				<button type="submit" name="submit" value='send' class="btn btn-success btn-lg">Envoyer PDF</button>
+			</div>
+			{{ form_end(form_send) }}
+			{{ form_end(form_download) }}
+			{{ form_end(form_payout) }}
+		{% endif %}
 		</div>
-		{{ form_end(form_send) }}
-		{{ form_end(form_download) }}
-		{{ form_end(form_payout) }}
-	{% endif %}
+		<div class="col-md-4">
+			{{ form_start(comment_form) }}
+			<div class="form-group" style="display:flex; flex-direction:column;">
+				<label for="merchant_bill_comment">Commentaires commercant</label>
+				<textarea rows="3" cols="50" name="form[merchant_bill_comment]">{{ bill.summary[0].merchant_bill_comment }}</textarea>
+			</div>
+			<div style="display:inline-block"><button type="submit" name="submit" value="comment" class="btn btn-success btn-lg">Enregistrer commentaire</button></div>
+			<button type="submit" name="view_merchant_bill_comments" value="view_merchant_bill_comments" class="btn btn-info btn-lg">Historique commentaires</button>
+			{{ form_end(comment_form) }}
+		</div>
+		<div class="col-md-2"></div>
+	</div>
 
 	<h2> Synthèse de la facture commerçant</h2></br>
 	<div id="billing-summary" class="order">

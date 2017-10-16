@@ -42,4 +42,16 @@ $table = $installer->getConnection()
 		'comment'		=> 'Frais livraison TTC',
 	));
 
+$summaryTable = $installer->getTable('pmainguet_delivery/indi_billingsummary');
+
+/* Commentaires factu commercants */
+$table = $installer->getConnection()
+	->addColumn($summaryTable, 'merchant_bill_comment', array(
+		'type'			=> Varien_Db_Ddl_Table::TYPE_TEXT,
+		'length'		=> 255,
+		'nullable'		=> true,
+		'default'		=> null,
+		'comment'		=> 'Commentaire commercant',
+	));
+
 $installer->endSetup();
