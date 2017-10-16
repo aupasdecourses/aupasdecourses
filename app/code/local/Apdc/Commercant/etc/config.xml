@@ -98,4 +98,11 @@
       </events>
 
     </adminhtml>
+    <default>
+      <apdc_general>
+        <availability>
+          <closing_message_delay>10</closing_message_delay>
+        </availability>
+      </apdc_general>
+    </default>
 </config>

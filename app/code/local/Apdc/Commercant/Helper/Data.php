@@ -236,7 +236,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                     ];
                 }
                 $diff = $today->diff($start);
-                if ($diff->format('%a') < 10) {
+                if ($diff->format('%a') < $this->getClosingMessageDelay()) {
                     $shopInfo['next_closed'] = [
                         'message' => sprintf(
                             $this->__('La boutique du commerçant sera fermée du %s au %s'),
@@ -318,4 +318,13 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * getClosingMessageDelay 
+     * 
+     * @return string
+     */
+    public function getClosingMessageDelay()
+    {
+        return Mage::getStoreConfig('apdc_general/availability/closing_message_delay');
+    }
 }
