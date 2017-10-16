@@ -1,0 +1,18 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	
+	<div class="container">
+		<h1>Historique des commentaires facturation</h1>
+		{{ dump() }}
+
+		{% for comment in comments %}
+			{% if comment.id_attribut_commercant == id %}
+				{{ dump(comment) }}
+			{% endif %}
+		{% endfor %}
+
+	</div>
+
+{% endblock %}

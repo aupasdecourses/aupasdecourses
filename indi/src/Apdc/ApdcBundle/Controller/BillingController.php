@@ -460,6 +460,18 @@ class BillingController extends Controller
 			'comment_form'	=> $comment_form->createView(),
         ]);
     }
+	
+	public function billingCommentsHistoryAction($id)
+	{
+		$bill = $this->container->get('apdc_apdc.billing');
+
+		$comments = $bill->getDataFactuNoTimeLimit('indi_billingsummary');
+
+		return $this->render('ApdcApdcBundle::billing/comments_history.html.twig', [
+			'id'		=> $id,
+			'comments'	=> $comments,
+		]);
+	}
 
     public function payoutHistoryAction(Request $request)
     {
