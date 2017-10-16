@@ -688,6 +688,18 @@ class Billing
 		return $return['items'];
 	}
 
+	/**
+	 * Sans limite de temps
+	 */
+	public function getDataFactuNoTimeLimit($model)
+	{
+		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
+
+		$return = $model->toArray();
+
+		return $return['items'];
+	}
+
     /**
      * [getOneBilling description].
      *
