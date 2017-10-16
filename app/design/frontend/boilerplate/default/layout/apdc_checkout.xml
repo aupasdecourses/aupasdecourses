@@ -98,7 +98,6 @@
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
                 <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>apdc_checkout/checkout/onepage/review/item.phtml</template></action>
-                <block type="apdc_checkout/deliverycheck_check" name="deliverycheck_review"/>
                 <block type="checkout/cart_totals" after="deliverycheck_review" name="checkout.onepage.review.info.totals" as="totals" template="apdc_checkout/checkout/onepage/review/totals.phtml"/>
             </block>
         </block>
@@ -145,7 +144,6 @@
             <action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>apdc_checkout/email/order/items/order/default.phtml</template></action>
             <action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>apdc_checkout/email/order/items/order/default.phtml</template></action>
             <action method="addItemRender"><type>bundle</type><block>bundle/sales_order_items_renderer</block><template>apdc_checkout/bundle/email/order/items/order/default.phtml</template></action>
-            <block type="apdc_checkout/deliverycheck_check" name="deliverycheck_review"/>
         </reference>
         <reference name="order_totals">
             <action method="setTemplate"><template>apdc_checkout/email/order/totals.phtml</template></action>

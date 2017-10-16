@@ -135,11 +135,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     public function getInfoShopByCommercantId($productCommercantId)
     {
         if (!isset($this->shopIdByCommercantId[$productCommercantId])) {
-            $shop = Mage::getModel('apdc_commercant/shop')->load($productCommercantId, 'id_attribut_commercant');
-            $shopId = null;
-            if ($shop && $shop->getId()) {
-                $shopId = $shop->getId();
-            }
+            $shopId = $this->getShopIdFromProductCommecantId($productCommercantId);
             $this->shopIdByCommercantId[$productCommercantId] = $shopId;
         }
         if (is_null($this->shopIdByCommercantId[$productCommercantId])) {
@@ -245,6 +241,15 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                         )
                     ];
                 }
+                if ($diff->format('%a') <= 7) {
+                    $shopInfo['next_closed_this_week'] = [
+                        'message' => sprintf(
+                            $this->__('La boutique du commerçant sera fermée du %s au %s'),
+                            '<strong>' . ucwords(strftime('%e %B', $start->getTimestamp())) . '</strong>',
+                            '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>'
+                        )
+                    ];
+                }
             }
         }
 
@@ -326,5 +331,24 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     public function getClosingMessageDelay()
     {
         return Mage::getStoreConfig('apdc_general/availability/closing_message_delay');
+    }
+
+    /**
+     * getShopIdFromProductCommecantId
+     * 
+     * @param int $productCommercantId productCommercantId 
+     * 
+     * @return int | null
+     */
+    public function getShopIdFromProductCommecantId($productCommercantId)
+    {
+        $resource = Mage::getSingleton('core/resource');
+	    $readConnection = $resource->getConnection('core_read');
+        $sql = 'SELECT id_shop FROM ' . $resource->getTableName('apdc_shop') . ' WHERE id_attribut_commercant = ' . (int) $productCommercantId;
+        $result = $readConnection->fetchCol($sql);
+        if (!empty($result)) {
+            return $result[0];
+        }
+        return null;
     }
 }
