@@ -26,6 +26,7 @@
 		{% endif %}
 	{% endfor %}
 
+	{% set customer_name = order[-1]["order"]["first_name"] ~ " " ~ order[-1]["order"]["last_name"] %}
 
 	<div class="row">
 		{% if psp_reference != 0 %}

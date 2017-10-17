@@ -174,10 +174,12 @@ class RefundController extends Controller
                         if ($name != 'All') {
                             $file .= "-{$merchant_id}";
                             $filename .= "-{$merchant_id}";
-                        }
-                        $file .= $extentions[1];
-                        $filename .= $extentions[1];
-                        try {
+						}
+                        //$file .= $extentions[1];
+                        //$filename .= $extentions[1];
+						$file .= ".jpeg";
+						$filename .= ".jpeg";
+						try {
                             copy($tmp_file, $file);
                         } catch (Exception $e) {
                         }
@@ -530,7 +532,8 @@ class RefundController extends Controller
             'form' => $form->createView(),
             'refund_diff' => $refund_diff,
             'id' => $id,
-            'orders' => $orders,
+			'orders' => $orders,
+			'order'	=> $order,
         ]);
     }
 
