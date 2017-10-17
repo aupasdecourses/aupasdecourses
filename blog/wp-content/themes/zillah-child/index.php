@@ -88,7 +88,7 @@ $displayed_articles = array();
                 ?>
                 
                 <div class="button-container">
-                    <a href="https://www.aupasdecourses.com/blog/archives/">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>archives/">
                         <button id="all-articles">Voir tous les articles</button>
                     </a>
                 </div>
