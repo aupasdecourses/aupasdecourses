@@ -28,7 +28,9 @@
 				<th colspan="2">Avoir</th>
 				<th colspan="2">Valeur Ticket</th>
 				<th>Commission APDC</th>
+				<th>TVA</th>
 				<th>Versement Commercant</th>
+				<th colspan="3">Frais livraison</th>
 			</tr>
 			<tr>
 				<th>Création</th>
@@ -44,7 +46,11 @@
 				<th class="float">HT</th>
 				<th class="float">TTC</th>
 				<th class="float">HT</th>
+				<th></th>
 				<th class="float">HT</th>
+				<th class="float">HT</th>
+				<th class="float">TVA</th>
+				<th class="float">TTC</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,13 +69,21 @@
 					<td>{{ order.sum_ticket_HT }}</td>
 					<td>{{ order.sum_ticket }}</td>
 					<td>{{ order.sum_commission_HT }}</td>
+					<td>{{ order.sum_commission_TVA }}</td>
 					<td>{{ order.sum_due_HT }}</td>
+					<td>{{ order.sum_shipping_HT }}</td>
+					<td>{{ order.sum_shipping_TVA }}</td>
+					<td>{{ order.sum_shipping_TTC }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 		<tfoot>
 			<tr>
 				<th colspan="5">Total</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>

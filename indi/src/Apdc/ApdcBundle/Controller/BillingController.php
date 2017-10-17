@@ -136,7 +136,7 @@ class BillingController extends Controller
 
     public function detailsAction(Request $request)
     {
-        if (!$this->isGranted('ROLE_INDI_ADMIN')) {
+        if (!$this->isGranted('ROLE_INDI_COMPTABILITE')) {
             return $this->redirectToRoute('root');
         }
 
@@ -174,8 +174,12 @@ class BillingController extends Controller
                         'Avoir TTC',
                         'Valeur Ticket HT',
                         'Valeur Ticket TTC',
-                        'Commission APDC (HT)',
-                        'Versement Commercant (HT)'
+						'Commission APDC (HT)',
+						'TVA',
+						'Versement Commercant (HT)',
+						'Frais livraison (HT)',
+						'Frais livraison (TVA)',
+						'Frais livraison (TTC)'
                     ),';');
 
                     foreach ($bill as $order) {
@@ -192,8 +196,12 @@ class BillingController extends Controller
                             $order['sum_items_credit'],
                             $order['sum_ticket_HT'],
                             $order['sum_ticket'],
-                            $order['sum_commission_HT'],
-                            $order['sum_due_HT']
+							$order['sum_commission_HT'],
+							$order['sum_commission_TVA'],
+							$order['sum_due_HT'],
+							$order['sum_shipping_HT'],
+							$order['sum_shipping_TVA'],
+							$order['sum_shipping_TTC']
                         ),';');
                     }
 
@@ -356,6 +364,11 @@ class BillingController extends Controller
 
         $bill = $factu->getOneBilling($id);
         $file_path = $billing_path.$id.'.pdf';
+		
+		// Merchant comment form
+		$data_comment = array('message' => 'Enregistrer commentaire commercant');
+		$comment_form = $this->createFormBuilder($data_comment)->getForm();
+		$comment_form->handleRequest($request);
 
         if (isset($_POST['submit'])) {
             switch ($_POST['submit']) {
@@ -399,8 +412,17 @@ class BillingController extends Controller
                     } catch (Exception $e) {
                         $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
                     }
-                    break;
-            }
+					break;
+				case 'comment':
+					try {
+						$mage->updateEntryToBillingSummary(['increment_id' => $id], ['merchant_bill_comment' => $_POST['form']['merchant_bill_comment']]);
+						$session->getFlashBag()->add('success', 'Commentaire commercant bien enregistré');
+						return $this->redirectToRoute('billingOne', ['id' => $id]);
+					} catch (Exception $e) {
+						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement du commentaire');
+					}
+					break;
+            }	
         }
 
         $check_date = (strtotime(str_replace('/', '-', $bill['summary'][0]['billing_month'])) < strtotime('2017/01/01')) ? 1 : 0;
@@ -424,8 +446,7 @@ class BillingController extends Controller
 			$session->set('sum_payout', $bill['summary'][0]['sum_payout']);
 			return $this->redirectToRoute('billingPayoutSubmit', ['id' => $bill['summary'][0]['id_attribut_commercant']]);
 		}
-
-		// NE PAS CONFONDRE FORM_PAYOUT ET PAYOUT_FORM
+	
         return $this->render('ApdcApdcBundle::billing/one.html.twig', [
             'forms' => [$form_id->createView()],
             'billing_form' => $form_billing->createView(),
@@ -436,8 +457,20 @@ class BillingController extends Controller
             'check_date' => $check_date,
 			'check_file' => $check_file,
 			'payout_form' => $payout_form->createView(),
+			'comment_form'	=> $comment_form->createView(),
         ]);
     }
+	
+	public function billingCommentsHistoryAction($id_attribut_commercant)
+	{
+		$factu = $this->container->get('apdc_apdc.billing');
+
+		$bill = $factu->getDataFactuNoTimeLimit('indi_billingsummary', $id_attribut_commercant);
+
+		return $this->render('ApdcApdcBundle::billing/comments_history.html.twig', [
+			'bill'	=> $bill,
+		]);
+	}
 
     public function payoutHistoryAction(Request $request)
     {
