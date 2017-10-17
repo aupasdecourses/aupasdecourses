@@ -691,11 +691,12 @@ class Billing
 	/**
 	 * Sans limite de temps
 	 */
-	public function getDataFactuNoTimeLimit($model)
+	public function getDataFactuNoTimeLimit($model, $id_attribut_commercant)
 	{
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
 
-		$return = $model->toArray();
+		$return = $model->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant);	
+		$return = $return->toArray();
 
 		return $return['items'];
 	}

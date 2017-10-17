@@ -131,7 +131,7 @@ billingPayoutSubmit:
   requirements: { id:"[0-9]+" }
 
 billingCommentsHistory:
-  path: /billing/{id}/comments_history/
+  path: /billing/{id_attribut_commercant}/comments_history/
   defaults: { _controller: ApdcApdcBundle:Billing:billingCommentsHistory }
 
 toolProduct:
