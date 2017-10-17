@@ -16,7 +16,7 @@ class RefundController extends Controller
     const    SUCCESS = 1;
     const    WARNING = 2;
 
-    public function indexAction(Request $request, $from, $to)
+    public function indexAction(Request $request, $id, $from, $to)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -24,29 +24,38 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $entity_fromto = new\Apdc\ApdcBundle\Entity\FromTo();
+        $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
+		$form_fromto->handleRequest($request);
 
-        $form_fromto->handleRequest($request);
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id);
+		$form_id->handleRequest($request);
 
-        if ($form_fromto->isValid()) {
-            return $this->redirectToRoute('refundIndex', [
-                'from' => $entity_fromto->from,
-                'to' => $entity_fromto->to,
+		if ($form_fromto->isValid()) {
+			return $this->redirectToRoute('refundIndex', [
+				'from' => $entity_fromto->from,
+				'to' => $entity_fromto->to,
+				'id' => -1,
             ]);
-        }
-        if (!isset($from) && (!isset($to))) {
-            return $this->redirectToRoute('refundIndex', ['from' => date('Y-m-d', strtotime('now'))]);
-        }
+		} elseif ($form_id->isSubmitted() && $form_id->isValid()) {
+			return $this->redirectToRoute('refundIndex', [
+				'id' => $entity_id->id,
+			]);
+		}
 
         $form_fromto->get('from')->setData($from);
         $form_fromto->get('to')->setData($to);
+		$form_id->get('id')->setData($id);
 
-        $orders = $mage->getOrders($from, $to);
+		$orders = $mage->getOrders($from, $to, -1, $id);
 
-        return $this->render('ApdcApdcBundle::refund/index.html.twig', [
-            'forms' => [$form_fromto->createView()],
-            'orders' => $orders,
+		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
+			'forms' => [
+				$form_fromto->createView(),
+				$form_id->createView()
+			],
+			'orders' => $orders,
         ]);
     }
 
