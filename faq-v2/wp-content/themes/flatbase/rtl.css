@@ -1,0 +1,8 @@
+/*
+Support for language written in a Right To Left (RTL) direction
+*/
+
+body {
+	direction: rtl;
+	unicode-bidi: embed;
+}
