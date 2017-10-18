@@ -15,7 +15,7 @@
 					<th>Upload tickets</th>
 					<th>Saisie ticket</th>
 					<th>Validation Credit Memo</th>
-					<th>Remboursement Adyen</th>
+					<th>Remboursement</th>
 					<th>Cloture et recapitulatif</th>
 				</tr>
 			</thead>
@@ -56,8 +56,10 @@
 						{% if order.digest != '' %}
 							{% if order.refund == '' %}
 								<a href='{{ path('refundFinal', {id: order.id}) }}' class='error' target="_blank">A faire</a>
-							{% elseif order.refund == 'done'%}
-								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK</a>
+							{% elseif order.refund == 'done_with_adyen' %}
+								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK via Adyen</a>
+							{% elseif order.refund == 'done_with_hipay' %}
+								<a href='{{ path('refundFinal', {id: order.id}) }}' class='success' target="_blank">OK via Hipay</a>
 							{% elseif order.refund == 'no_refund' %}
 								<span class="disabled">Pas de remboursement</span>
 							{% endif %}

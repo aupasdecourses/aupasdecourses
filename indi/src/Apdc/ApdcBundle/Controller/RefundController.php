@@ -529,12 +529,30 @@ class RefundController extends Controller
                 echo $e->getMessage();
             }
 
-            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done']);
+            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done_with_adyen']);
 
             $session->getFlashBag()->add('success', 'Remboursement via Adyen effectué.');
 
             return $this->redirectToRoute('refundClosure', ['id' => $id]);
-        }
+		}
+
+		// Si Hipay, MAJ BDD lorsqu'on clique sur le bouton "cloturer >>"
+		$data_hipay_refund = array('message' => 'Cloturer >>');
+		$hipay_refund_form = $this->createFormBuilder($data_hipay_refund)
+			->add('submit', SubmitType::class, array(
+				'label'	=> 'Cloturer >>',
+				'attr' => array(
+					'style'	=> 'margin-left:70px;',
+				),
+			))
+			->getForm();
+		$hipay_refund_form->handleRequest($request);
+
+		if ($hipay_refund_form->isSubmitted() && $hipay_refund_form->isValid()) {
+			$mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done_with_hipay']);
+			
+			return $this->redirectToRoute('refundClosure', ['id' => $id]);
+		}
 
         return $this->render('ApdcApdcBundle::refund/final.html.twig', [
             'form' => $form->createView(),
@@ -542,6 +560,7 @@ class RefundController extends Controller
             'id' => $id,
 			'orders' => $orders,
 			'order'	=> $order,
+			'hipay_refund_form' => $hipay_refund_form->createView(),
         ]);
     }
 
