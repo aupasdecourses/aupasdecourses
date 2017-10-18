@@ -289,31 +289,30 @@ class RefundController extends Controller
 
             $diff = array_diff_assoc($temp, $results);
 
-            // Convert base64 into real img, add imgs into medi/attachments & update DBB
+            // Convert base64 into real img, add imgs into media/attachments & update DBB
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
                     $mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $merchant_id);
-                    // Update DDB
                 }
             }
 
-            if (!empty($diff)) {
-                foreach ($diff as $merchant_id => $merchant) {
-                    $session->getFlashBag()->add('error', 'Image non uploadée pour '.$merchant_id.' Veuillez uploader manuellement ');
+			if (!empty($diff)) {
+				$intersect = array_intersect_assoc($order, $diff);
+                foreach ($intersect as $merchant_id => $merchant) {
+                    $session->getFlashBag()->add('error', 'Image non uploadée pour '.$merchant['merchant']['name'].'. Veuillez l\'uploader manuellement ');
                 }
 
                 return $this->redirectToRoute('refundUpload', ['id' => $id]);
-            } else {
+			} else {
+				$mage->updateEntryToOrderField(
+					['order_id'	=> $results['order_mid']],
+					['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]
+				);	
+
                 $session->getFlashBag()->add('success', 'Images uploadées via Mistral');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             }
-
-            /*
-                $mage->updateEntryToOrderField(
-                    ['order_id' => $results['order_mid']],
-                    ['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]);
-            }*/
         }
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
