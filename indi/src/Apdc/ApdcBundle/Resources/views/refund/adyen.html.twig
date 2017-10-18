@@ -1,28 +1,43 @@
-<div class="row">
-	<div class="col-sm-12">
-		<h1>#{{ id ~ " / " ~ customer_name }}<small> Rembourser via Adyen</small></h1>
+<div class ="container">
+	<div class="row">
+		<div class="col-sm-2">
+			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default"><< Retour</a>
+		</div>
+		<div class="progress col-sm-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+		    	<span>Adyen</span>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right">Cloturer >></a>
+		</div>
 	</div>
-</div>
 
-<hr/>
-{{ form_start(form)}}
-	<h4><b> Reference PSP </b></h4>
-		{{ form_widget(form.originalReference, {'attr': {'value': psp_reference} }) }}
-	<hr>
-	<h4><b>Montant à rembourser : </b>{{ refund_diff ~  " € "}}</h4>
-		{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ " € "} }) }}
-	<br/>
-{{form_errors(form)}}
-{{form_rest(form)}}
-{{form_end(form)}}
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>#{{ id ~ " / " ~ customer_name }}<small> Rembourser via Adyen</small></h1>
+		</div>
+	</div>
 
-<hr/>	
+	<hr/>
+	{{ form_start(form)}}
+		<h4><b> Reference PSP </b></h4>
+			{{ form_widget(form.originalReference, {'attr': {'value': psp_reference} }) }}
+		<hr>
+		<h4><b>Montant à rembourser : </b>{{ refund_diff ~  " € "}}</h4>
+			{{ form_widget(form.value, {'attr': {'placeholder': refund_diff ~ " € "} }) }}
+		<br/>
+	{{form_errors(form)}}
+	{{form_rest(form)}}
+	{{form_end(form)}}
+	<hr/>	
 
-<div>
-	Pas assez d'infos sur la commande ?
 	<div>
-		<a href={{ adyen_platform_first_part ~ psp_reference ~ adyen_platform_second_part }} target="_blank">
-			<input type="button" class="btn btn-success" value="Plateforme Adyen"/>
-		</a>
+	Pas assez d'infos sur la commande ?
+		<div>
+			<a href={{ adyen_platform_first_part ~ psp_reference ~ adyen_platform_second_part }} target="_blank">
+				<input type="button" class="btn btn-success" value="Plateforme Adyen"/>
+			</a>
+		</div>
 	</div>
 </div>
