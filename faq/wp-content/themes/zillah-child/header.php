@@ -31,7 +31,7 @@
                             <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4" id="logo-wrapper">
                                 <!-- APDC logo -->
                                 <a href="https://www.aupasdecourses.com">
-                                    <img src="https://www.aupasdecourses.com/faq/wp-content/uploads/2016/09/bitmap.png" alt="Logo Au Pas de Courses"/>
+                                    <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2016/09/bitmap.png" alt="Logo Au Pas de Courses"/>
                                 </a>
                             </div> <!-- end columns-->
                         </div> <!-- end row -->

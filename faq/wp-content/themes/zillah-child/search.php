@@ -11,7 +11,7 @@ get_header(); /* insert the Wordpress header code from header.php */
         endwhile;
 
     else :
-        echo '<p>No content found</p>';
+        echo '<p>Aucun résultat trouvé</p>';
     endif;
 
 get_footer(); /* insert the Wordpress footer code from footer.php */
