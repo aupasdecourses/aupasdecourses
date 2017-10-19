@@ -43,6 +43,8 @@
               <Apdc_Popup />
               <Cybage_Swatches />
               <Apdc_Media />
+              <Apdc_Neighborhood />
+              <Apdc_Commercant />
             </depends>
         </Apdc_Catalog>
         <Apdc_Cart>
@@ -167,5 +169,16 @@
             <Mage_Catalog />
           </depends>
         </Apdc_Dataflow>
+        <Apdc_Shipping>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Shipping>
+        <Apdc_Avisverifies>
+          <active>false</active>
+          <codePool>local</codePool>
+          <depends>
+              <Netreviews_Pla/>
+          </depends> 
+        </Apdc_Avisverifies>
     </modules>
 </config>

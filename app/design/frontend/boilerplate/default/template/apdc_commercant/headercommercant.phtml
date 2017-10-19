@@ -1,4 +1,5 @@
 <?php $shop_info = $this->getInfoShop(); ?>
+<?php $shopAvailability = $this->getShopAvailability(); ?>
 <?php if (!empty($shop_info)) : ?>
 <div class="container-fluid commercant-collapse">
     <div class="row">
@@ -14,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-md-5 text-right">
-                    <?php echo $this->getChildHtml('product_availability'); ?>
+                    <?php echo $this->getChildHtml('apdc_catalog_shop_availability'); ?>
                 </div>
                 <div class="col-md-1 text-right text-center">
                     <div class="open-collapse">
@@ -22,6 +23,21 @@
                     </div>
                 </div>
             </div>
+            <?php if (!empty($shopAvailability) && $shopAvailability['status'] > 1) : ?>
+                <div class="row shop-availability">
+                    <div class="col-xs-12 text-center">
+                        <div class="shop-availability-container">
+                            <div class="shop-availability-icon cell">
+                                <i class="fa fa-info-circle"></i>
+                            </div>
+                            <div class="shop-availability-content cell">
+                                <p class="shop-availability-message"><?php echo $shopAvailability['message']; ?></p>
+                                <span><?php echo $this->__('Commerçant non disponible pour le créneau que vous avez sélectionné'); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-md-12 collapse-wrapper">
             <div class="row">

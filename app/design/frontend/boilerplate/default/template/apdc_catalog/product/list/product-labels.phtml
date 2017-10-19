@@ -3,9 +3,8 @@
     <?php if (!empty($productLabels)) : ?>
         <ul class="product-labels">
             <?php $cpt=0; foreach ($productLabels as $label) : ?>
-
                 <li>
-                    <?php if (isset($label['icon'])) : ?>
+                    <?php if (isset($label['icon'])) :?>
                         <div class="label-icon">
                             <img src="<?php echo $label['icon']; ?>" alt="<?php echo $label['text']; ?>" title="<?php echo $label['text']; ?>" />
                         </div>
@@ -15,10 +14,6 @@
                         </div>
                     <?php endif; ?>
                 </li>
-
-
-
-
             <?php $cpt++; ?>
             <?php if ($cpt >= $this->getMaxProductLabels()) : ?>
                 <?php break; ?>

@@ -40,9 +40,7 @@
     <div id="ddate_calendar">
         <?php echo $this->getChildHtml('ddate') ?>
     </div>
-    <div id="warning_days" class="row">
-        <?php echo $this->getChildHtml('deliverycheck') ?>
-    </div>
+
     <div class="buttons-set clearfix" id="shipping-method-buttons-container">
         <p class="back-link"><a href="#" onclick="checkout.back(); return false;" class="button button-grey"><i class="fa fa-angle-left"></i> <?php echo $this->__('Revenir') ?></a></p>
         <button type="button" class="button button-green pull-right" onclick="shippingMethod.save()"><?php echo $this->__('Continue') ?> <i class="fa fa-angle-right"></i></button>

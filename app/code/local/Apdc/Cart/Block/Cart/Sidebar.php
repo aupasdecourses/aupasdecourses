@@ -201,4 +201,17 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
     {
         return $this->getLayout()->createBlock('core/messages', 'minicart_messages');
     }
+
+    /**
+     * getQuote 
+     * 
+     * @return Mage_Sales_Model_Quote
+     */
+    public function getQuote()
+    {
+        if (Mage::getSingleton('checkout/session')->getCartWasUpdated()) {
+            $this->_quote = Mage::getSingleton('checkout/cart')->getQuote();
+        }
+        return parent::getQuote();
+    }
 }

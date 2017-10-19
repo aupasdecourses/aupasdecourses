@@ -23,8 +23,7 @@
 class Apdc_Neighborhood_Model_Resource_Neighborhood extends Mage_Core_Model_Resource_Db_Abstract
 {
     protected $_serializableFields = array(
-        'postcodes' =>  array('', array()),
-        'opening_days' =>  array('', array())
+        'postcodes' =>  array('', array())
     );
 
     /**

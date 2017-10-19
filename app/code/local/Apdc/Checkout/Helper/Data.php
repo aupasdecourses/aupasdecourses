@@ -74,6 +74,26 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         $_SESSION['dtime'] = $dtime;
     }
 
+    /**
+     * getHeaderDdate 
+     * 
+     * @return string | false
+     */
+    public function getHeaderDdate()
+    {
+        Mage::getSingleton('core/session')->setNeedToSelectDeliveryDays(false);
+        if (Mage::getSingleton('core/session')->getDdate()) {
+            $date = Mage::getSingleton('core/session')->getDdate();
+            $currentDate = date('Y-m-d');
+            if ($date < $currentDate) {
+                Mage::getSingleton('core/session')->setNeedToSelectDeliveryDays(true);
+                return false;
+            }
+            return Mage::getSingleton('core/session')->getHeaderDdate();
+        }
+        return false;
+    }
+
     public function getCommercantname($object){
         $name=$object->getProduct()->getAttributeText('commercant');
 

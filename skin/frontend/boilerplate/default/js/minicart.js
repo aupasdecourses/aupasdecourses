@@ -232,7 +232,7 @@ Minicart.prototype = {
     },
 
     updateContentOnUpdate: function(result) {
-		$j(this.selectors.container).parent().html(result.content);
+		    $j(this.selectors.container).parent().html(result.content);
         this.showMessage(result);
     },
 
@@ -260,6 +260,7 @@ Minicart.prototype = {
     },
 
     showMessage: function(result) {
+        $j(document).trigger('checkDeliveryDays', [result]);
         if (typeof result.notice !== 'undefined') {
             this.showError(result.notice);
         } else if (typeof result.error !== 'undefined') {

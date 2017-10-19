@@ -113,6 +113,44 @@
                     color: #ddd;
                 }
             }
+					
+						.shop-availability {
+                background-color:$color-dark-orange;
+                margin-top:10px;
+                border-radius:3px;
+                box-shadow:1px 1px 10px -1px rgba(0, 0, 0, 0.51);
+                .shop-availability-container {
+                  margin:0 auto;
+                  display:table;
+                  .cell {
+                    display:table-cell;
+                    vertical-align:middle;
+                    padding:1px 10px 5px 10px;
+                  }
+                  .shop-availability-icon {
+                    color:$color-white;
+                    font-size:30px;
+                  }
+                  .shop-availability-content {
+                    span {
+                      color:$color-white;
+                      font-size:13px;
+                    }
+                    p {
+                      color:$color-white;
+                      margin:0;
+                      &.shop-availability-message {
+                        font-weight:bold;
+                        font-size: 19px;
+                        margin-bottom:0px;
+                      }
+                      &.shop-availability-message-info {
+                        font-style:italic;
+                      }
+                    }
+                  }
+                }
+						}
         }
         .collapse-wrapper{
             display: none;
@@ -536,6 +574,19 @@
         span{
             font-size: 0.75rem;
             color: $color-main-grey;
+        }
+        .product-labels{
+            li{
+                list-style: none;
+                margin-left: -30px;
+            }
+            .label-icon{
+                margin-bottom: 2px;
+                font-size:14px;
+                img{
+                    margin-right: 10px;
+                }
+            }
         }
     }
     .long-description{

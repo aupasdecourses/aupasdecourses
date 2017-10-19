@@ -31,6 +31,8 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $quote->getItemsCollection()->load();
                 $this->_getCart()->setQuote($quote);
 
+                $this->_getSession()->setCartWasUpdated(true);
+
                 $result['qty'] = $this->_getCart()->getSummaryQty();
                 $result['product_id'] = $productId;
 
@@ -46,6 +48,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['success'] = 0;
                 $result['error'] = $this->__('Can not remove the item.');
             }
+        }
+        if (!Mage::getSingleton('core/session')->getDdate()) {
+            $result['need_to_select_delivery_days'] = true;
         }
 
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -79,6 +84,8 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
             $quote = Mage::getModel('sales/quote')->load($this->_getCart()->getQuote()->getId());
             $quote->getItemsCollection()->load();
             $this->_getCart()->setQuote($quote);
+
+            $this->_getSession()->setCartWasUpdated(true);
 
             $result['qty'] = $this->_getCart()->getSummaryQty();
             $result['product_ids'] = $productIds;
@@ -157,6 +164,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['success'] = 0;
                 $result['error'] = $this->__('Can not save item.');
             }
+        }
+        if (!Mage::getSingleton('core/session')->getDdate()) {
+            $result['need_to_select_delivery_days'] = true;
         }
 
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -256,6 +266,9 @@ class Apdc_Cart_CartController extends Mage_Checkout_CartController
                 $result['status'] = 'ERROR';
                 $result['message'] = $this->__('Cannot update the item.');
                 Mage::logException($e);
+            }
+            if (!Mage::getSingleton('core/session')->getDdate()) {
+                $result['need_to_select_delivery_days'] = true;
             }
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));

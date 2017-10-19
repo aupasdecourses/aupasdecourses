@@ -26,6 +26,7 @@
 ?>
 <?php $_product = $this->getProduct(); ?>
 <?php if($_product->isSaleable()): ?>
+<?php $availablility = $this->helper('apdc_catalog/product_availability')->getAvailability($_product); ?>
 <?php $isEditMode = ($_product->getConfigureMode() == true && $_product->getCartItemId() && $_product->getCartItemId() > 0); ?>
 <div class="actions add-to-cart">
     <div class="action-group">
@@ -34,7 +35,7 @@
         </div>
 
         <div class="pull-right">
-			<?php if($this->helper('apdc_catalog/product_available')->isAvailable($_product)) { ?>
+			<?php if($availablility['is_available']) { ?>
 				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
                 <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button<?php echo ($isEditMode ? ' hide' : ''); ?>"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
 				<div class="qty-buttons">

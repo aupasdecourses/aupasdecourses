@@ -1,11 +1,11 @@
 <?php $_product = $this->getProduct(); ?>
-<?php $isAvailable = Mage::helper('apdc_catalog/product_available')->isAvailable($_product); ?>
+<?php $availablility = Mage::helper('apdc_catalog/product_availability')->getAvailability($_product); ?>
 <div class="actions add-to-cart">
     <div class="action-group">
         <div class="action-loading">
             <div class="loader"></div>
         </div>
-        <?php if ($isAvailable) : ?>
+        <?php if ($availablility['is_available']) : ?>
             <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $_product->isGrouped()) : ?>
                 <div class="pull-right">
                     <a title="<?php echo $this->quoteEscape($this->__('Modifier')) ?>" class="col-xs-12 button button-green btn btn-cart-edit show-product-popup" href="<?php echo $_product->getProductUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>"><i class="fa fa-edit"></i> <?php echo $this->__('Modifier') ?></a>
