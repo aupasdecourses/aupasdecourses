@@ -23,6 +23,7 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+		$mistral = $this->container->get('apdc_apdc.mistral');
 
         $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
@@ -49,6 +50,28 @@ class RefundController extends Controller
 		$form_id->get('id')->setData($id);
 
 		$orders = $mage->getOrders($from, $to, -1, $id);
+
+		// MISTRAL RETARDS DE LIVRAISON
+		$neighborhood = $mistral->getApdcNeighborhood();
+		$tmp = [];
+
+		foreach ($neighborhood as $neigh) {
+			foreach ($orders as $order_id => $order) {
+				if ($neigh['store_id'] == $order['store_id']) {
+					$tmp[$order_id] = [
+						'order_id'		=> $order_id,
+						'partner_ref'	=> $neigh['partner_ref'],
+						'merchant_id'	=> [],
+					];
+
+					foreach ($order['products'] as $product) {
+						$tmp[$order_id]['merchant_id'][] = $product['commercant_id'];
+					}
+				}
+			}
+		}
+
+		dump($tmp);
 
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
