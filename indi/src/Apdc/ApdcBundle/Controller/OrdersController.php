@@ -82,7 +82,6 @@ class OrdersController extends Controller
 		}
 		
 		$mage = $this->container->get('apdc_apdc.magento');
-		$mistral = $this->container->get('apdc_apdc.mistral');
 
 		$entity_fromto	= new \Apdc\ApdcBundle\Entity\FromTo();
 		$form_fromto	= $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
