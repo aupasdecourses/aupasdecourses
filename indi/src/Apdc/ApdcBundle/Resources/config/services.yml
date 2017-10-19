@@ -26,7 +26,7 @@ services:
 
     apdc_apdc.mistral:
         class: Apdc\ApdcBundle\Services\Mistral
-        arguments: [ '%stars_services_api_url%' , '%stars_services_api_token%' ]
+        arguments: [ '%stars_services_api_getorder_url%' , '%stars_services_api_getpictures_url%', '%stars_services_api_token%', '%stars_services_api_key%' ]
 
     twig.extension.sortbyfield:
         class: Snilius\Twig\SortByFieldExtension

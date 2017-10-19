@@ -32,8 +32,11 @@ parameters:
   adyen_platform_first_part:      'https://ca-test.adyen.com/ca/ca/accounts/showTx.shtml?txType=Payment&pspReference='
   adyen_platform_second_part:     '&accountKey=MerchantAccount.AuPasDeCoursesFR'
 
-  stars_services_api_url:         'https://backend-recette.stars-services.com/WebServices/V1/getpictures'
+  stars_services_api_getorder_url: 'https://backend-recette.stars-services.com/WebServices/V1/getOrder'
+  stars_services_api_getpictures_url: 'https://backend-recette.stars-services.com/WebServices/V1/getpictures'
   stars_services_api_token:		  'APDC2712A9B6'
+  stars_services_api_key: '51A7E20A48854FD5BDCD6C7CEFD8F8E1'
+
   from_email: contact@aupasdecourses.com
   sender_name: L'Equipe Au Pas De Courses
   to_email: prix@aupasdecourses.com

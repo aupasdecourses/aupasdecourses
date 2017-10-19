@@ -8,17 +8,22 @@ class Mistral
 {
 	private $_ch;
 
-	private $stars_services_api_url;
+	private $stars_services_api_getorder_url;
+	private $stars_services_api_getpictures_url;
 	private $stars_services_api_token;
+	private $stars_services_api_key;
 
-	public function __construct($stars_services_api_url, $stars_services_api_token)
+	public function __construct($stars_services_api_getorder_url, $stars_services_api_getpictures_url, $stars_services_api_token, $stars_services_api_key)
 	{
 		\Mage::app();	
 
 		$this->_ch = curl_init();
 
-		$this->stars_services_api_url	= $stars_services_api_url;
-		$this->stars_services_api_token = $stars_services_api_token;
+		$this->stars_services_api_getorder_url		= $stars_services_api_getorder_url;
+		$this->stars_services_api_getpictures_url	= $stars_services_api_getpictures_url;
+		$this->stars_services_api_token				= $stars_services_api_token;
+		$this->stars_services_api_key				= $stars_services_api_key;
+
 
 		if ($this->_ch === false) {
 			throw new \Exception('Mistral: curl_init() error:'.curl_error($this->_ch));
@@ -39,6 +44,32 @@ class Mistral
         return realpath(__DIR__.'/../../../../../media');
     }
 
+	public function getOrder($partner_ref, $order_id, $merchant_id)
+	{
+		$array = array(
+			'ApiKey'		=> $this->stars_services_api_key,
+			'PartnerRef'	=> $partner_ref,
+			'OrderRef'		=> $order_id."-".$merchant_id,
+		);
+
+		$json_array = json_encode($array);
+
+		curl_setopt($this->_ch, CURLOPT_URL, $this->stars_services_api_getorder_url);
+		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $json_array);
+
+		$result = curl_exec($this->_ch);
+
+		if (curl_errno($this->_ch))
+			throw new \Exception('Refund Curl Error'.curl_error($this->_ch));
+
+		if(strstr($result,"Authentification invalide"))
+			throw new \Exception('Authentification invalide');
+
+		$json_result = json_decode($result, true);
+
+		return $json_result;	
+	}
+
 	public function getPictures($partner_ref, $order_id, $merchant_id)
 	{
 		
@@ -51,7 +82,7 @@ class Mistral
 
 		$json_array = json_encode($array);
 
-		curl_setopt($this->_ch, CURLOPT_URL, $this->stars_services_api_url);
+		curl_setopt($this->_ch, CURLOPT_URL, $this->stars_services_api_getpictures_url);
 		curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $json_array);
 
 		$result = curl_exec($this->_ch);
@@ -105,6 +136,4 @@ class Mistral
 
 		}
 	}	
-
-
 }
