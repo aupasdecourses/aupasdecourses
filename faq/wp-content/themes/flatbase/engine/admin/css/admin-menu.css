@@ -1,0 +1,257 @@
+/*-------------------------------------------------------------------------------------------*/
+/* Nice Admin Menu Styles */
+/*-------------------------------------------------------------------------------------------*/
+
+/* backward compability */
+
+.branch-3-3 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-article div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-service div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.branch-3-3 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: block; }
+
+.branch-3-3 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-article div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-faq div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-feedback div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-infobox div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-service div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-staff div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-portfolio div.wp-menu-image:before,
+.branch-3-3 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	content: '';
+}
+
+.branch-3-4 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-article div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-service div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.branch-3-4 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: block; }
+
+.branch-3-4 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-article div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-faq div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-feedback div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-infobox div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-service div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-staff div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-portfolio div.wp-menu-image:before,
+.branch-3-4 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	content: '';
+}
+
+.branch-3-5 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-article div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-service div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.branch-3-5 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: block; }
+
+.branch-3-5 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-article div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-faq div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-feedback div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-infobox div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-service div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-staff div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-portfolio div.wp-menu-image:before,
+.branch-3-5 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	content: '';
+}
+
+.branch-3-6 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-article div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-service div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.branch-3-6 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: block; }
+
+.branch-3-6 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-article div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-faq div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-feedback div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-infobox div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-service div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-staff div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-portfolio div.wp-menu-image:before,
+.branch-3-6 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	content: '';
+}
+
+.branch-3-7 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-article div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-service div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.branch-3-7 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: block; }
+
+.branch-3-7 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-article div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-faq div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-feedback div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-infobox div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-service div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-staff div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-slide div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-portfolio div.wp-menu-image:before,
+.branch-3-7 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	content: '';
+}
+
+.branch-3-3 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img,
+.branch-3-4 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img,
+.branch-3-5 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img,
+.branch-3-6 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img,
+.branch-3-7 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img{
+	opacity: 0.6;
+}
+
+.branch-3-3 #adminmenu .toplevel_page_nicethemes:hover div.wp-menu-image img,
+.branch-3-4 #adminmenu .toplevel_page_nicethemes:hover div.wp-menu-image img,
+.branch-3-5 #adminmenu .toplevel_page_nicethemes:hover div.wp-menu-image img,
+.branch-3-6 #adminmenu .toplevel_page_nicethemes:hover div.wp-menu-image img,
+.branch-3-7 #adminmenu .toplevel_page_nicethemes:hover div.wp-menu-image img{
+	opacity: 1;
+}
+
+/* MP6 */
+
+.mp6 #adminmenu .menu-icon-slide div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-article div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-faq div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-feedback div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-infobox div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-service div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-staff div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-portfolio div.wp-menu-image img,
+.mp6 #adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: none; }
+
+.mp6 #adminmenu .toplevel_page_nicethemes div.wp-menu-image img{
+	opacity: 1;
+}
+
+.mp6 #adminmenu .menu-icon-slide div.wp-menu-image:before{
+	content: '\f161';
+}
+
+.mp6 #adminmenu .menu-icon-article div.wp-menu-image:before{
+	content: '\f123';
+}
+
+.mp6 #adminmenu .menu-icon-faq div.wp-menu-image:before{
+	content: '\f223';
+}
+
+.mp6 #adminmenu .menu-icon-feedback div.wp-menu-image:before{
+	content: '\f122';
+}
+
+.mp6 #adminmenu .menu-icon-infobox div.wp-menu-image:before{
+	content: '\f180';
+}
+
+.mp6 #adminmenu .menu-icon-service div.wp-menu-image:before{
+	content: '\f111';
+}
+
+.mp6 #adminmenu .menu-icon-staff div.wp-menu-image:before{
+	content: '\f338';
+}
+
+.mp6 #adminmenu .menu-icon-slide div.wp-menu-image:before{
+	content: '\f161';
+}
+
+.mp6 #adminmenu .menu-icon-portfolio div.wp-menu-image:before{
+	content: '\f309';
+}
+
+.mp6 #adminmenu .menu-icon-menu div.wp-menu-image:before{
+	font: 16px 'niceadmin' !important;
+	content: '\e800';
+}
+
+/* Admin menu icons */
+
+#adminmenu .menu-icon-slide div.wp-menu-image img,
+#adminmenu .menu-icon-article div.wp-menu-image img,
+#adminmenu .menu-icon-faq div.wp-menu-image img,
+#adminmenu .menu-icon-feedback div.wp-menu-image img,
+#adminmenu .menu-icon-infobox div.wp-menu-image img,
+#adminmenu .menu-icon-service div.wp-menu-image img,
+#adminmenu .menu-icon-staff div.wp-menu-image img,
+#adminmenu .menu-icon-portfolio div.wp-menu-image img,
+#adminmenu .menu-icon-menu div.wp-menu-image img
+{ display: none; }
+
+#adminmenu .toplevel_page_nicethemes div.wp-menu-image img{
+	opacity: 1;
+}
+
+#adminmenu .menu-icon-slide div.wp-menu-image:before{
+	content: '\f161';
+}
+
+#adminmenu .menu-icon-article div.wp-menu-image:before{
+	content: '\f123';
+}
+
+#adminmenu .menu-icon-faq div.wp-menu-image:before{
+	content: '\f223';
+}
+
+#adminmenu .menu-icon-feedback div.wp-menu-image:before{
+	content: '\f122';
+}
+
+#adminmenu .menu-icon-infobox div.wp-menu-image:before{
+	content: '\f180';
+}
+
+#adminmenu .menu-icon-service div.wp-menu-image:before{
+	content: '\f111';
+}
+
+#adminmenu .menu-icon-staff div.wp-menu-image:before{
+	content: '\f338';
+}
+
+#adminmenu .menu-icon-slide div.wp-menu-image:before{
+	content: '\f161';
+}
+
+#adminmenu .menu-icon-portfolio div.wp-menu-image:before{
+	content: '\f309';
+}
+
+#adminmenu .menu-icon-menu div.wp-menu-image:before{
+	font: 16px 'niceadmin' !important;
+	content: '\e800';
+}
