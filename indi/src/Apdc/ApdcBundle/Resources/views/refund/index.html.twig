@@ -12,22 +12,16 @@
 			<div class="col-md-4 alert alert-info">
 				<div class="space-between">
 					<div class="flex-start">
-						<div><b>Picking hatif :</b></div>
-						<div class="square early-pick"></div>
+						<div><b>Trop tot :</b></div>
+						<div class="square early-delivery"></div>
 					</div>
 					<div class="flex-start">
-						<div><b>Picking tardif :</b></div>
-						<div class="square late-pick"></div>
-					</div>
-				</div>
-				<div class="space-between">
-					<div class="flex-start">
-						<div><b>Livraison hative :</b></div>
-						<div class="square early-ship"></div>
+						<div><b>A l'heure :</b></div>
+						<div class="square on-time-delivery"></div>
 					</div>
 					<div class="flex-start">
-						<div><b>Livraison tardive :</b></div>
-						<div class="square late-ship"></div>
+						<div><b>Trop tard :</b></div>
+						<div class="square late-delivery"></div>
 					</div>
 				</div>
 				<br/>
@@ -45,6 +39,7 @@
 					<th>Validation Credit Memo</th>
 					<th>Remboursement</th>
 					<th>Cloture et recapitulatif</th>
+					<th>Statuts Mistral</th>
 				</tr>
 			</thead>
 			{% for order in orders %}
@@ -105,6 +100,16 @@
 						{% else %}
 							<span class="disabled">A faire</span>
 						{% endif %}
+					</td>
+					<td>
+						<div class="space-between">
+							<div>Picking</div>
+							<div class="square early-delivery"></div>
+						</div>
+						<div class="space-between">
+							<div>Livraison</div>
+							<div class="square late-delivery"></div>
+						</div>
 					</td>
 				</tr>
 			{% endfor %}

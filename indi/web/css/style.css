@@ -301,24 +301,20 @@ input#datepickerAccountingCustomers
 .square {
 	width: 20px;
 	height: 20px;
-	margin: 5px;
+	margin: 3px;
 	border: 1px solid black;
 }
 
-.early-pick {
-	background: #1A237E;
+.early-delivery {
+	background: rgb(255, 153, 0);
 }
 
-.late-pick {
-	background: #1B5E20;
+.on-time-delivery {
+	background: rgb(51, 204, 51);
 }
 
-.early-ship {
-	background: #F57F17;
-}
-
-.late-ship {
-	background: #b71c1c;
+.late-delivery {
+	background: rgb(255, 0, 0);
 }
 
 .space-between {
@@ -329,4 +325,9 @@ input#datepickerAccountingCustomers
 .flex-start {
 	display:flex;
 	align-content: flex-start;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
 }
