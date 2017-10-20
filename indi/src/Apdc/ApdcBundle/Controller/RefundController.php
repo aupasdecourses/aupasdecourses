@@ -16,7 +16,7 @@ class RefundController extends Controller
     const    SUCCESS = 1;
     const    WARNING = 2;
 
-    public function indexAction(Request $request, $from, $to)
+    public function indexAction(Request $request, $id, $from, $to)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
             return $this->redirectToRoute('root');
@@ -24,29 +24,38 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $entity_fromto = new\Apdc\ApdcBundle\Entity\FromTo();
+        $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
+		$form_fromto->handleRequest($request);
 
-        $form_fromto->handleRequest($request);
+		$entity_id = new \Apdc\ApdcBundle\Entity\OrderId();
+		$form_id = $this->createForm(\Apdc\ApdcBundle\Form\OrderId::class, $entity_id);
+		$form_id->handleRequest($request);
 
-        if ($form_fromto->isValid()) {
-            return $this->redirectToRoute('refundIndex', [
-                'from' => $entity_fromto->from,
-                'to' => $entity_fromto->to,
+		if ($form_fromto->isValid()) {
+			return $this->redirectToRoute('refundIndex', [
+				'from' => $entity_fromto->from,
+				'to' => $entity_fromto->to,
+				'id' => -1,
             ]);
-        }
-        if (!isset($from) && (!isset($to))) {
-            return $this->redirectToRoute('refundIndex', ['from' => date('Y-m-d', strtotime('now'))]);
-        }
+		} elseif ($form_id->isSubmitted() && $form_id->isValid()) {
+			return $this->redirectToRoute('refundIndex', [
+				'id' => $entity_id->id,
+			]);
+		}
 
         $form_fromto->get('from')->setData($from);
         $form_fromto->get('to')->setData($to);
+		$form_id->get('id')->setData($id);
 
-        $orders = $mage->getOrders($from, $to);
+		$orders = $mage->getOrders($from, $to, -1, $id);
 
-        return $this->render('ApdcApdcBundle::refund/index.html.twig', [
-            'forms' => [$form_fromto->createView()],
-            'orders' => $orders,
+		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
+			'forms' => [
+				$form_fromto->createView(),
+				$form_id->createView()
+			],
+			'orders' => $orders,
         ]);
     }
 
@@ -280,31 +289,30 @@ class RefundController extends Controller
 
             $diff = array_diff_assoc($temp, $results);
 
-            // Convert base64 into real img, add imgs into medi/attachments & update DBB
+            // Convert base64 into real img, add imgs into media/attachments & update DBB
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
                     $mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $merchant_id);
-                    // Update DDB
                 }
             }
 
-            if (!empty($diff)) {
-                foreach ($diff as $merchant_id => $merchant) {
-                    $session->getFlashBag()->add('error', 'Image non uploadée pour '.$merchant_id.' Veuillez uploader manuellement ');
+			if (!empty($diff)) {
+				$intersect = array_intersect_assoc($order, $diff);
+                foreach ($intersect as $merchant_id => $merchant) {
+                    $session->getFlashBag()->add('error', 'Image non uploadée pour '.$merchant['merchant']['name'].'. Veuillez l\'uploader manuellement ');
                 }
 
                 return $this->redirectToRoute('refundUpload', ['id' => $id]);
-            } else {
+			} else {
+				$mage->updateEntryToOrderField(
+					['order_id'	=> $results['order_mid']],
+					['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]
+				);	
+
                 $session->getFlashBag()->add('success', 'Images uploadées via Mistral');
 
                 return $this->redirectToRoute('refundInput', ['id' => $id]);
             }
-
-            /*
-                $mage->updateEntryToOrderField(
-                    ['order_id' => $results['order_mid']],
-                    ['upload'	=> 'done', 'ticket_commercant' => $results['ticket_com']]);
-            }*/
         }
 
         return $this->render('ApdcApdcBundle::refund/upload.html.twig', [
@@ -521,12 +529,30 @@ class RefundController extends Controller
                 echo $e->getMessage();
             }
 
-            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done']);
+            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done_with_adyen']);
 
             $session->getFlashBag()->add('success', 'Remboursement via Adyen effectué.');
 
             return $this->redirectToRoute('refundClosure', ['id' => $id]);
-        }
+		}
+
+		// Si Hipay, MAJ BDD lorsqu'on clique sur le bouton "cloturer >>"
+		$data_hipay_refund = array('message' => 'Cloturer >>');
+		$hipay_refund_form = $this->createFormBuilder($data_hipay_refund)
+			->add('submit', SubmitType::class, array(
+				'label'	=> 'Cloturer >>',
+				'attr' => array(
+					'style'	=> 'margin-left:70px;',
+				),
+			))
+			->getForm();
+		$hipay_refund_form->handleRequest($request);
+
+		if ($hipay_refund_form->isSubmitted() && $hipay_refund_form->isValid()) {
+			$mage->updateEntryToOrderField(['order_id' => $order_mid], ['refund' => 'done_with_hipay']);
+			
+			return $this->redirectToRoute('refundClosure', ['id' => $id]);
+		}
 
         return $this->render('ApdcApdcBundle::refund/final.html.twig', [
             'form' => $form->createView(),
@@ -534,6 +560,7 @@ class RefundController extends Controller
             'id' => $id,
 			'orders' => $orders,
 			'order'	=> $order,
+			'hipay_refund_form' => $hipay_refund_form->createView(),
         ]);
     }
 
