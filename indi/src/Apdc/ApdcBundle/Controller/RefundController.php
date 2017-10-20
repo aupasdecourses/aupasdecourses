@@ -52,26 +52,34 @@ class RefundController extends Controller
 		$orders = $mage->getOrders($from, $to, -1, $id);
 
 		// MISTRAL RETARDS DE LIVRAISON
-		$neighborhood = $mistral->getApdcNeighborhood();
-		$tmp = [];
+//		$neighborhood = $mistral->getApdcNeighborhood();
+//		$tmp = [];
 
-		foreach ($neighborhood as $neigh) {
-			foreach ($orders as $order_id => $order) {
-				if ($neigh['store_id'] == $order['store_id']) {
-					$tmp[$order_id] = [
-						'order_id'		=> $order_id,
-						'partner_ref'	=> $neigh['partner_ref'],
-						'merchant_id'	=> [],
-					];
+//		foreach ($neighborhood as $neigh) {
+//			foreach ($orders as $order_id => $order) {
+//				if ($neigh['store_id'] == $order['store_id']) {
+//					$tmp[$order_id] = [
+//						'order_id'		=> $order_id,
+//						'partner_ref'	=> $neigh['partner_ref'],
+//						'merchant_id'	=> [],
+//					];
 
-					foreach ($order['products'] as $product) {
-						$tmp[$order_id]['merchant_id'][] = $product['commercant_id'];
-					}
-				}
-			}
-		}
+//					foreach ($order['products'] as $product) {
+//						$tmp[$order_id]['merchant_id'][] = $product['commercant_id'];
+//					}
 
-		dump($tmp);
+//					$tmp[$order_id]['merchant_id'] = array_unique($tmp[$order_id]['merchant_id']);
+//				}
+//			}
+//		}
+
+//		dump($tmp);
+
+		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1241));
+		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1108));
+		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1329));
+		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1116));
+
 
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
