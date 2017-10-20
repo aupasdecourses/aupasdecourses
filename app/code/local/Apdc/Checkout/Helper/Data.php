@@ -104,19 +104,25 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
-    public function getDaysCommercants($number){
+    public function getCommercantInCart()
+    {
         $items = Mage::getSingleton('checkout/session')->getQuote()->getAllItems();
         $commercants=array();
 
         foreach ($items as $item) {
-            $com=$this->getCommercantname($item);
-            $id_attribut_commercant=$item->getCommercant();
-            if(empty($commercants[$com])){
-                $commercants[$com]=$id_attribut_commercant;
+            $com = $this->getCommercantname($item);
+            $id_attribut_commercant = $item->getCommercant();
+            if (empty($commercants[$com])) {
+                $commercants[$com] = $id_attribut_commercant;
             }
         }
+        return $commercants;
+    }
+
+    public function getDaysCommercants($number){
+        $commercants = $this->getCommercantInCart();
         $data=array();
-        foreach ($commercants as $com =>$id){
+        foreach ($commercants as $com => $id){
             $shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();
             $delivery_days=$shop->getDeliveryDays();
 			if(count($delivery_days)<4 && $delivery_days<>NULL){
@@ -139,4 +145,32 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         return $data;
     }
 
+    public function getUnaivalableCommercantInfos()
+    {
+        $commercants = $this->getCommercantInCart();
+        $datas = [];
+        foreach ($commercants as $name => $id) {
+            $shopInfo = Mage::helper('apdc_commercant')->getInfoShopByCommercantId($id);
+            $datas[$name] = [
+                'delivery_days' => [],
+                'is_closed' => null,
+                'next_closed_this_week' => null
+            ];
+            $deliveryDays = $shopInfo['delivery_days'];
+			if (count($deliveryDays) < 4 && !is_null($deliveryDays)) {
+                $tmp = Mage::helper('apdc_commercant')->getDays();
+                foreach($deliveryDays as $key => $day){
+                    $deliveryDays[$key] = $tmp[$day-1];
+                }
+                $datas[$name]['delivery_days'] = $deliveryDays;
+            }
+            if (isset($shopInfo['is_closed']) && !empty($shopInfo['is_closed'])) {
+                $datas[$name]['is_closed'] = $shopInfo['is_closed'];
+            }
+            if (isset($shopInfo['next_closed_this_week']) && !empty($shopInfo['next_closed_this_week'])) {
+                $datas[$name]['next_closed_this_week'] = $shopInfo['next_closed_this_week'];
+            }
+        }
+        return $datas;
+    }
 }

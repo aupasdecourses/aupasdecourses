@@ -32,6 +32,24 @@
                         </commercant_new>
                       </fields>
                 </display>
+                <availability translate="label comment">
+                  <label>Disponibilité</label>
+                  <sort_order>30</sort_order>
+                  <show_in_default>1</show_in_default>
+                  <show_in_website>0</show_in_website>
+                  <show_in_store>0</show_in_store>
+                  <fields>
+                    <closing_message_delay translate="label" module="apdc_commercant">
+                      <label>Prévenir la fermeture du magasin avnt X jours</label>
+                      <comment><![CDATA[Un message sera affiché dans l'encart du commercant pour prévenir de la fermeture de son magasin X jours avant. (ex : 10)]]></comment>
+                      <frontend_type>text</frontend_type>
+                      <sort_order>20</sort_order>
+                      <show_in_default>1</show_in_default>
+                      <show_in_website>0</show_in_website>
+                      <show_in_store>0</show_in_store>
+                    </closing_message_delay>
+                  </fields>
+                </availability>
             </groups>
         </apdc_general>
     </sections>

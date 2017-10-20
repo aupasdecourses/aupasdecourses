@@ -1,20 +1,27 @@
 <?php
-$commercants=Mage::helper('apdc_checkout')->getSpottyCom();
+$commercants = Mage::helper('apdc_checkout')->getUnaivalableCommercantInfos();
 if($commercants):?>
     <div id="warning_days">
         <div class="warning-container">
-            <p class="warning"><strong>ATTENTION !</strong><br />Des commerçants ne sont pas disponibles certains jours de la semaine:</p>
+            <p class="warning"><strong><?php echo $this->__('ATTENTION !'); ?></strong><br /><?php echo $this->__('Des commerçants ne sont pas disponibles certains jours de la semaine :'); ?></p>
             <ul id="list_commercants_days">
-            <?php foreach($commercants as $name=>$days):?>
+            <?php foreach($commercants as $name => $unavailability):?>
                 <li>
-                    <?php if(empty($days)):?>
-                        <span><b><?php echo $name;?>: </b>Pas de livraison cette semaine</span>;
-                    <?php elseif(count($days)<4):?>
-                        <span><b><?php echo $name;?></b>:<br />Livraison uniquement
-                            <?php foreach($days as $d){
-                            echo $d.', ';
-                            }?></span>
-                    <?php endif;?>
+                    <span><b><?php echo $name;?>: </b>
+                    <?php if ($unavailability['is_closed']) : ?>
+                        <?php echo $unavailability['is_closed']['message']; ?>
+                    <?php elseif(empty($unavailability['delivery_days'])):?>
+                        <?php echo $this->__('Pas de livraison cette semaine'); ?>
+                    <?php else : ?>
+                        <?php if(count($unavailability['delivery_days']) < 4):?>
+                            <?php echo $this->__('Livraison uniquement '); ?>
+                            <?php echo implode(', ', $unavailability['delivery_days']) . '.'; ?>
+                        <?php endif;?>
+                        <?php if ($unavailability['next_closed_this_week']) : ?>
+                            <?php echo $unavailability['next_closed_this_week']['message']; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    </span>
                 </li>
             <?php endforeach;?>
             </ul>
