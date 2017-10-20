@@ -1,0 +1,61 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	
+	<div class="container">
+
+		{% set merchant_name = '' %}
+		{% for b in bill %}
+				{% set merchant_name = b.shop %}
+		{% endfor %}
+
+		<h1>Commentaires facturation de {{ merchant_name }}</h1>
+		<hr/>
+
+		<table id="billCommentsTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Mois de facturation</th>
+					<th>Commentaire</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for b in bill %}
+				<tr>
+					<td>{{ b.billing_month }}</td>
+					<td>{{ b.merchant_bill_comment }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block css_bill_comments %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_bill_comments %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function() {
+	$('#billCommentsTable').DataTable( {
+		"order": [[ 0, 'dsc' ]],
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+		}
+	} );
+} );
+	</script>
+{% endblock %}
