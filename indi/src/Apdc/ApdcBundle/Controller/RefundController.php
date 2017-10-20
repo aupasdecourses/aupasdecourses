@@ -52,34 +52,80 @@ class RefundController extends Controller
 		$orders = $mage->getOrders($from, $to, -1, $id);
 
 		// MISTRAL RETARDS DE LIVRAISON
-//		$neighborhood = $mistral->getApdcNeighborhood();
-//		$tmp = [];
+		$neighborhood = $mistral->getApdcNeighborhood();
+		$mistral_results = [];
 
-//		foreach ($neighborhood as $neigh) {
-//			foreach ($orders as $order_id => $order) {
-//				if ($neigh['store_id'] == $order['store_id']) {
-//					$tmp[$order_id] = [
-//						'order_id'		=> $order_id,
-//						'partner_ref'	=> $neigh['partner_ref'],
-//						'merchant_id'	=> [],
-//					];
+		// Construct results[]
+		foreach ($neighborhood as $neigh) {
+			foreach ($orders as $order_id => $order) {
+				if ($neigh['store_id'] == $order['store_id']) {
+					$mistral_results[$order_id] = [
+						'partner_ref'			=> $neigh['partner_ref'],
+						'merchant_id'			=> [],
+						'real_hour_picking'		=> '',
+						'slot_start_picking'	=> '',
+						'slot_end_picking'		=> '',
+						'real_hour_shipping'	=> '',
+						'slot_start_shipping'	=> '',
+						'slot_end_shipping'		=> '',
+					];
 
-//					foreach ($order['products'] as $product) {
-//						$tmp[$order_id]['merchant_id'][] = $product['commercant_id'];
-//					}
+					foreach ($order['products'] as $product) {
+						$mistral_results[$order_id]['merchant_id'][] = $product['commercant_id'];
+					}
 
-//					$tmp[$order_id]['merchant_id'] = array_unique($tmp[$order_id]['merchant_id']);
-//				}
-//			}
-//		}
+					$mistral_results[$order_id]['merchant_id'] = array_unique($mistral_results[$order_id]['merchant_id']);
+				}
+			}
+		}
+		
+		// Store mistral data in tmp[]
+		foreach ($mistral_results as $order_id => $mistral_data) {
+			foreach ($mistral_data['merchant_id'] as $key => $merch_id) {
+				$tmp[$order_id][$merch_id] = $mistral->getOrderWarehouse($mistral_data['partner_ref'], $order_id, $merch_id); 
+			}
+		}
 
-//		dump($tmp);
+		// Clean up tmp[]
+		foreach ($tmp as $order_id => $order_data) {
+			foreach ($order_data as $merch_id => $mistral_result) {
+				if (is_numeric($merch_id)) {
+					if (isset($mistral_result['Message'])) { // Commande inconnue
+						unset($tmp[$order_id]);
+					} 
+					if ($mistral_result['StatusCode'] == 'EA') { // En acheminement
+						unset($tmp[$order_id][$merch_id]);
+					}
+				}
+			}
 
-		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1241));
-		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1108));
-		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1329));
-		dump($mistral->getOrderWarehouse('APDC5540', 2017000694, 1116));
+			if(empty($tmp[$order_id])) { // manque d'infos Mistral
+				unset($tmp[$order_id]);
+			}
+		}
 
+		// Store mistral hours in mistral_results[]
+		foreach ($mistral_results as $order_id => $data) {
+			foreach ($tmp as $o_id => $order_data) {
+				foreach ($order_data as $merch_id => $result) {
+					if ($order_id == $o_id) {
+						$mistral_results[$order_id]['real_hour_picking']	= $result['Pick']['RealHour'];
+						$mistral_results[$order_id]['slot_start_picking']	= $result['Pick']['SlotStart'];
+						$mistral_results[$order_id]['slot_end_picking']		= $result['Pick']['SlotEnd'];
+						$mistral_results[$order_id]['real_hour_shipping']	= $result['Delivery']['RealHour'];
+						$mistral_results[$order_id]['slot_start_shipping']	= $result['Delivery']['SlotStart'];
+						$mistral_results[$order_id]['slot_end_shipping']	= $result['Delivery']['SlotEnd'];
+					}
+				}
+			}
+
+			unset($mistral_results[$order_id]['partner_ref'], $mistral_results[$order_id]['merchant_id']);
+		}
+
+		unset($tmp);
+
+		ksort($mistral_results);
+		dump($mistral_results);
 
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
