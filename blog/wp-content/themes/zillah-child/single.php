@@ -140,7 +140,7 @@ get_header(); ?>
     
             
     <!-- Fruit banner -->
-    <img class="fruit-banner" src="https://pmainguet.dev.aupasdecourses.com/blog/wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
+    <img class="fruit-banner" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
     <!-- End fruit banner -->
 
    
