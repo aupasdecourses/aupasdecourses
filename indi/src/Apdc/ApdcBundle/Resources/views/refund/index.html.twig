@@ -6,7 +6,35 @@
 <div class="container">
 	<h1> Remboursement </h1>
 	<div class="row">
-		{% include 'ApdcApdcBundle::forms/default.html.twig' %}
+		
+		<div class="row">
+			<div class="col-md-8">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+			<div class="col-md-4 alert alert-info">
+				<div class="space-between">
+					<div class="flex-start">
+						<div><b>Picking hatif :</b></div>
+						<div class="square early-pick"></div>
+					</div>
+					<div class="flex-start">
+						<div><b>Picking tardif :</b></div>
+						<div class="square late-pick"></div>
+					</div>
+				</div>
+				<div class="space-between">
+					<div class="flex-start">
+						<div><b>Livraison hative :</b></div>
+						<div class="square early-ship"></div>
+					</div>
+					<div class="flex-start">
+						<div><b>Livraison tardive :</b></div>
+						<div class="square late-ship"></div>
+					</div>
+				</div>
+				<br/>
+				<div style="margin-bottom: -20px;">{{ form(mistral_late_orders_form) }}</div>
+			</div>
+		</div>
+
 		<table class='table'>
 			<thead>
 				<tr>

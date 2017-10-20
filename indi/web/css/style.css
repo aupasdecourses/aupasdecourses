@@ -296,3 +296,37 @@ input#datepickerAccountingCustomers
 	right: 20px;
 	z-index: 4;
 }
+
+/* Code couleur picking / shipping Mistral */
+.square {
+	width: 20px;
+	height: 20px;
+	margin: 5px;
+	border: 1px solid black;
+}
+
+.early-pick {
+	background: #1A237E;
+}
+
+.late-pick {
+	background: #1B5E20;
+}
+
+.early-ship {
+	background: #F57F17;
+}
+
+.late-ship {
+	background: #b71c1c;
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between;
+}
+
+.flex-start {
+	display:flex;
+	align-content: flex-start;
+}
