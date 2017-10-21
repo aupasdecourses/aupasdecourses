@@ -1,28 +1,34 @@
 <?php
-$commercants = Mage::helper('apdc_checkout')->getUnaivalableCommercantInfos();
+$commercants = Mage::helper('apdc_checkout')->getUnaivalableCommercantInfosPopup();
 if($commercants):?>
     <div id="warning_days">
         <div class="warning-container">
             <p class="warning"><strong><?php echo $this->__('ATTENTION !'); ?></strong><br /><?php echo $this->__('Des commerçants ne sont pas disponibles certains jours de la semaine :'); ?></p>
             <ul id="list_commercants_days">
-            <?php foreach($commercants as $name => $unavailability):?>
-                <li>
-                    <span><b><?php echo $name;?>: </b>
-                    <?php if ($unavailability['is_closed']) : ?>
-                        <?php echo $unavailability['is_closed']['message']; ?>
-                    <?php elseif(empty($unavailability['delivery_days'])):?>
-                        <?php echo $this->__('Pas de livraison cette semaine'); ?>
-                    <?php else : ?>
-                        <?php if(count($unavailability['delivery_days']) < 4):?>
-                            <?php echo $this->__('Livraison uniquement '); ?>
-                            <?php echo implode(', ', $unavailability['delivery_days']) . '.'; ?>
-                        <?php endif;?>
-                        <?php if ($unavailability['next_closed_this_week']) : ?>
-                            <?php echo $unavailability['next_closed_this_week']['message']; ?>
+            <?php foreach($commercants as $name => $data):?>
+                <?php if(!empty($data['unavailability'])||!is_null($data['next_closed_this_week'])||!is_null($data['is_closed'])): ?>
+                    <li>
+                        <span><b><?php echo $name;?>: </b>
+                        <?php if ($data['is_closed']) : ?>
+                            <?php echo $data['is_closed']['message']; ?>
+                        <?php elseif(empty($data['delivery_days'])):?>
+                            <?php echo $this->__('Pas de livraison cette semaine'); ?>
+                        <?php else : ?>
+                            <?php if(count($data['unavailability']) == 1):?>
+                                <?php echo $this->__('Pas de livraison '); ?>
+                                <?php echo implode(', ', $data['unavailability']) . '.'; ?>
+                            <?php endif;?>
+                            <?php if(count($data['unavailability']) > 1):?>
+                                <?php echo $this->__('Livraison uniquement '); ?>
+                                <?php echo implode(', ', $data['delivery_days']) . '.'; ?>
+                            <?php endif;?>
+                            <?php if ($data['next_closed_this_week']) : ?>
+                                <?php echo $data['next_closed_this_week']['message']; ?>
+                            <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
-                    </span>
-                </li>
+                        </span>
+                    </li>
+                <?php endif;?>
             <?php endforeach;?>
             </ul>
         </div>

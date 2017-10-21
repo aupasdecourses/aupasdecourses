@@ -145,9 +145,41 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         return $data;
     }
 
-    public function getUnaivalableCommercantInfos()
+    public function SaturdayEnable(){
+        $store=Mage::app()->getStore();
+        $storeid = $store->getId();
+        $data=Mage::helper("ddate")->getDtime($storeid)->load()->toArray(array('sat'))['items'];
+        foreach($data as $key => $value){
+            if((int)$value['sat']){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function AvailUnavail($days)
     {
-        $commercants = $this->getCommercantInCart();
+        $tmp = Mage::helper('apdc_commercant')->getDays();
+        $result=array();
+        //Unset Lundi et Dimanche
+        unset($tmp[0]);
+        unset($tmp[6]);
+        //Unset Samedi si non actif
+        if(!$this->SaturdayEnable()){
+            unset($tmp[5]);
+        }
+        //Unset every missing delivery days
+        foreach($days as $day){
+            $result[]=$tmp[$day-1];
+            unset($tmp[$day-1]);
+        }
+
+        return array('unavailability'=>$tmp,'availability'=>$result);
+    }
+
+    public function getUnaivalableCommercantInfosPopup()
+    {
+        $commercants = Mage::helper('apdc_commercant')->getShops("store");
         $datas = [];
         foreach ($commercants as $name => $id) {
             $shopInfo = Mage::helper('apdc_commercant')->getInfoShopByCommercantId($id);
@@ -156,14 +188,14 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
                 'is_closed' => null,
                 'next_closed_this_week' => null
             ];
+
             $deliveryDays = $shopInfo['delivery_days'];
-			if (count($deliveryDays) < 4 && !is_null($deliveryDays)) {
-                $tmp = Mage::helper('apdc_commercant')->getDays();
-                foreach($deliveryDays as $key => $day){
-                    $deliveryDays[$key] = $tmp[$day-1];
-                }
-                $datas[$name]['delivery_days'] = $deliveryDays;
-            }
+            $data = $this->AvailUnavail($deliveryDays);
+            $unavailability= $data['unavailability'];
+            $deliveryDays = $data['availability'];
+
+            $datas[$name]['delivery_days'] = $deliveryDays;
+            $datas[$name]['unavailability'] = $unavailability;
             if (isset($shopInfo['is_closed']) && !empty($shopInfo['is_closed'])) {
                 $datas[$name]['is_closed'] = $shopInfo['is_closed'];
             }

@@ -226,7 +226,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                 if ($end <= $today) {
                     continue;
                 }
-                if ($today >= $start && $nextWeek <= $end) {
+                if ($today >= $start && $today <= $end) {
                     $shopInfo['is_closed'] = [
                         'message' => $this->__('La boutique du commerçant est fermée jusqu\'au %s', '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>')
                     ];
@@ -350,5 +350,32 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             return $result[0];
         }
         return null;
+    }
+
+    public function getShops($filter="store",$random=false)
+    {
+        $shops = Mage::getModel('apdc_commercant/shop')->getCollection()            
+            ->addFieldtoFilter('enabled',1);
+        $store=Mage::app()->getStore();
+        $storeid = $store->getId();
+        $storecode = $store->getCode();
+        $storerootid=$store->getRootCategoryId();
+
+        if($filter=="store"){
+            $shops->addFieldToFilter('stores', array('finset' =>$storeid));
+        }
+
+        if($random){
+            $shops->getSelect()->order('rand()');
+        }
+
+        $commercants=array();
+
+        foreach ($shops as $shop) {
+            if (empty($commercants[$shop->getName()])) {
+                $commercants[$shop->getName()] = $shop->getIdAttributCommercant();
+            }
+        }
+        return $commercants;
     }
 }
