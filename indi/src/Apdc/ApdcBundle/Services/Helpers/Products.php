@@ -1,6 +1,6 @@
 <?php
 
-namespace Apdc\ApdcBundle\Services;
+namespace Apdc\ApdcBundle\Services\Helpers;
 
 trait Products
 {
@@ -231,7 +231,7 @@ trait Products
         try {
 
             //find websiteId
-            $data_commercant = $this->getMerchants($data['commercant']);
+            $data_commercant = $this->getMerchantsByStore($data['commercant']);
             $websiteIds = array();
             $datas = array();
             foreach ($data_commercant as $store_id => $data) {

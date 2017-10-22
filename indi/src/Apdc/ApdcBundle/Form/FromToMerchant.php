@@ -32,7 +32,7 @@ class FromToMerchant extends AbstractType
 			]
 		]);
 		$choices = [];
-		foreach ($merchants->getMerchants() as $storeid => $merchant) {
+		foreach ($merchants->getMerchantsByStore() as $storeid => $merchant) {
 			foreach ($merchant as $com_id => $merch) {
 				// $choices[$merch['name'].' - '.$merch['store']] = $com_id;
 				$choices[$merch['name']] = $com_id;

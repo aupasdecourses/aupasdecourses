@@ -85,27 +85,21 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return $cat_array;
     }
 
-    public function getCategoriesInfos($rootId){
-        $filter=array();
-        $categories = Mage::getModel('catalog/category')
-                         ->getCollection()
-                         ->addAttributeToSelect(array('image', 'url_path'))
-                         ->addIsActiveFilter()
-                         ->addFieldToFilter('path', array('like' => "1/$rootId/%"))
-                         ->addAttributeToFilter('level', array('eq' => 3))
-                         //70 est la value_id de l'option du select, correspondant à 'Oui'                        
-                         ->addAttributeToFilter('estcom_commercant', 70)
-                         ->load();
-
-        foreach ($categories as $cat) {
-            $filter[$cat->getId()] = [
-                'store_id' => $cat->getStoreId(),
-                'url_path' => $cat->getUrlPath(),
-                'src' => Mage::helper('apdc_catalog/category')->getImageUrl($cat),
-            ];
+    //Voir si on ne peut pas refactoriser les fonctions utilisant getCategoriesArray avec cette fonction
+    public function getCategoriesCommercant(){
+        $cats=Mage::getModel('apdc_commercant/shop')->getCollection()->load()->toArray(array('id_category'));
+        $result=array();
+        foreach($cats as $cat){
+            $result=array_merge($result,$cat['id_category']);
         }
 
-        return $filter;
+        $cats=Mage::getModel('catalog/category')
+            ->getCollection()
+            ->setOrder('name')
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('entity_id', array('in' => $result));
+
+        return $cats;
     }
 	
     protected function getDataByCurrentCategory()

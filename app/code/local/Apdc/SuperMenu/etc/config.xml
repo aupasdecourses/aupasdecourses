@@ -77,7 +77,6 @@
           <menu_static_block1 />
           <thumbnail />
           <is_clickable />
-          <estcom_commercant />
           <show_in_navigation />
         </attributes>
       </collection>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Apdc\ApdcBundle\Services;
+namespace Apdc\ApdcBundle\Services\Helpers;
 
 trait Credimemo
 {
@@ -71,8 +71,8 @@ trait Credimemo
     {
         $order = \Mage::getModel('sales/order')->loadbyIncrementId($id);
         $digest_status = $this->checkDigest($order->getId());
-        $adyenmodel=\Mage::getModel('adyen/event');
-        $refund = $adyenmodel->getEventById($id,$adyenmodel->getPayoutConstant());
+        $adyenmodel = \Mage::getModel('adyen/event');
+        $refund = $adyenmodel->getEventById($id, $adyenmodel->getPayoutConstant());
 
         if ($type == 'creditmemo') {
             if (is_null($digest_status)) {
@@ -84,17 +84,16 @@ trait Credimemo
             if (!$order->hasCreditmemos() && is_null($digest_status)) {
                 return false;
             } else {
-                if($order->getStatus() == 'complete'){
+                if ($order->getStatus() == 'complete') {
                     return false;
-                }else{
-                    if (!is_null($refund)&&$refund->getSuccess()<>1){
+                } else {
+                    if (!is_null($refund) && $refund->getSuccess() != 1) {
                         //2 for disabled button
                         return 2;
                     } else {
                         return true;
                     }
                 }
-
             }
         }
     }
@@ -119,10 +118,10 @@ trait Credimemo
 
         //check if $creditmemo_id exist
         $check = $refund_order->getCollection()->addFieldToFilter(
-			'creditmemo_id',
-			[
+            'creditmemo_id',
+            [
                 'in' => $creditmemo_id,
-			])->getFirstItem()->getId();
+            ])->getFirstItem()->getId();
         if (is_null($check)) {
             $refund_order->setData($data);
             $refund_order->save();
@@ -361,7 +360,7 @@ trait Credimemo
         $order = \Mage::getSingleton('sales/order')->loadByIncrementId($id);
         $base_url = \Mage::getBaseUrl(\Mage_Core_Model_Store::URL_TYPE_WEB);
         $storecode = $base_url.\Mage::app()->getStore($order->getStoreId())->getCode();
-        $id=$order->getId();
+        $id = $order->getId();
         $nameTo = $order->getCustomerFirstname();
         $emailTo = $order->getCustomerEmail();
         $vars = array(

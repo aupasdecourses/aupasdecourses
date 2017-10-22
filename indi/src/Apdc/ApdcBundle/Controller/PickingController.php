@@ -52,7 +52,7 @@ class PickingController extends Controller
 
 		return $this->render('ApdcApdcBundle::picking/all.html.twig', [
 				'forms'		=> [ $form_from->createView() ],
-				'stores'	=> $mage->getMerchantsOrdersByStore(-1, $from)
+				'stores'	=> $mage->getOrdersByStoreByMerchants(-1, $from)
 		]);
     }
 }

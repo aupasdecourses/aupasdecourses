@@ -638,7 +638,6 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
                         $category->setIsActive(1);
                         $category->setIsAnchor(1);
                         $category->setIsClickable(1);
-                        $category->setData('estcom_commercant', 70);
                         $category->setStoreId($storeid);
                         $parentCategory = Mage::getModel('catalog/category')->load($parentId);
                         $category->setPath($parentCategory->getPath());

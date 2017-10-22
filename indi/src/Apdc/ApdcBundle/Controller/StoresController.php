@@ -57,7 +57,7 @@ class StoresController extends Controller
 			'forms' => [
 				$form_fromto->createView(),
 			],
-			'stores' 		=> $mage->getMerchantsOrdersByStore(-1, $from, $to),
+			'stores' 		=> $mage->getOrdersByStoreByMerchants(-1, $from, $to),
 			'shop_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_shop/edit/id_shop/',
 			'manager_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_contact/edit/id_contact/',
 

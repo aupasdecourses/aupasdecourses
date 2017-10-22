@@ -39,15 +39,5 @@
                 </rewrite>
             </core>  
         </models>
-        <events>
-            <controller_action_layout_load_before>
-                <observers>
-                    <apdc_admin_customhandles>
-                        <class>apdcconfig/observer</class>
-                        <method>addCustomhandle</method>
-                    </apdc_admin_customhandles>
-                </observers>
-            </controller_action_layout_load_before>
-        </events>
     </global>
 </config>
