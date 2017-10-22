@@ -15,7 +15,7 @@ class Magento
     use Helpers\Media;
 
     const AUTHORIZED_GROUP = ['Administrators'];
-    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison','tax_class_id');
+    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison', 'tax_class_id');
     const CLASS_TAX_IDS = array(5 => '5.5%', 9 => '10%', 10 => '20%');
 
     public function __construct()
@@ -50,7 +50,7 @@ class Magento
     }
 
     //Récupère toutes les commandes
-    
+
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -101,7 +101,7 @@ class Magento
 
                 $shop_manager = \Mage::getModel('apdc_commercant/contact')->getCollection()->addFieldToFilter('id_contact', $shop->getIdContactManager())->getFirstItem();
 
-                if(!isset($commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')])){
+                if (!isset($commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')])) {
                     $commercants[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
                             'active' => $shop->getData('enabled'),
                             'id' => $shop->getData('id_attribut_commercant'),
@@ -119,7 +119,7 @@ class Magento
                             'mobile' => $shop_manager->getPhone(),
                             'manager_id' => $shop_manager->getIdContact(),
                             'orders' => [],
-                            'timetable' => implode("<br/>", $shop->getTimetable()),
+                            'timetable' => implode('<br/>', $shop->getTimetable()),
                             'closing_periods' => $closed_periods,
                             'delivery_days' => $delivery_days,
                             'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
@@ -209,8 +209,6 @@ class Magento
             $rsl[$S[$storeid]['name']] = $commercant;
         }
 
-        dump($rsl);
-
         return $rsl;
     }
 
@@ -219,7 +217,6 @@ class Magento
     //  Récupère tous les commerçants
     public function getMerchants($commercantId = -1)
     {
-
         $commercants = [];
 
         $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
@@ -248,7 +245,7 @@ class Magento
                     'mobile' => $shop_manager->getPhone(),
                     'manager_id' => $shop_manager->getIdContact(),
                     'orders' => [],
-                    'timetable' => implode("<br/>", $shop->getTimetable()),
+                    'timetable' => implode('<br/>', $shop->getTimetable()),
                     'closing_periods' => $closed_periods,
                     'delivery_days' => $delivery_days,
                     'warning_days' => $this->getWarningDays($delivery_days, $closed_periods),
@@ -263,7 +260,7 @@ class Magento
 
             return false;
         });
-       
+
         return $commercants;
     }
 
@@ -374,18 +371,16 @@ class Magento
             $rsl[$storeid] = $commercant;
         }
 
-        usort($rsl, function($a, $b) {
+        usort($rsl, function ($a, $b) {
             return strcmp($a['name'], $b['name']);
         });
 
         return $rsl;
-
     }
 
     /** ------- **/
     /** REFUNDS **/
     /** ------- **/
-
     public function getRefunds($orderId)
     {
         $merchants = $this->getMerchantsByStore();
@@ -452,19 +447,19 @@ class Magento
         return $rsl;
     }
 
-	/**	
-	 *	Retourne le contenu de la table adyen/order_payment trié par n° de commande
+    /**	
+     *	Retourne le contenu de la table adyen/order_payment trié par n° de commande.
      */
     public function getAdyenPaymentByMerchRef()
     {
-		$collection = \Mage::getModel('adyen/order_payment')->getCollection();
-		$collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
+        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+        $collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
 
         $ref = [];
         $cpt = 1;
         foreach ($collection as $fields) {
-			$ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
-			$ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
+            $ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
+            $ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
             $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
             $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
             $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
@@ -475,8 +470,8 @@ class Magento
         return $ref;
     }
 
-	/**	
-	 *	Retourne le contenu de la table adyen/order_payment
+    /**	
+     *	Retourne le contenu de la table adyen/order_payment.
      */
     public function getAdyenPaymentByPsp()
     {
@@ -498,7 +493,6 @@ class Magento
     /* Retourne la marge arriere par commercant */
     public function getMargin()
     {
-
         $data = [];
         $products = \Mage::getModel('catalog/product')->getCollection();
         $products->addAttributeToSelect('commercant')
@@ -506,13 +500,11 @@ class Magento
                  ->addAttributeToSelect('marge_arriere');
 
         foreach ($products as $product) {
-
             if (($product->getData('commercant') != null) && ($product->getData('marge_arriere') != '#DIV/0!')) {
-
-                $data[$product->getAttributeText('commercant')]['nb_products']   = count($data[$product->getAttributeText('commercant')]['products']);
-                $data[$product->getAttributeText('commercant')]['total_marge']   = array_sum($data[$product->getAttributeText('commercant')]['products']);
-                $data[$product->getAttributeText('commercant')]['max_marge']     = 100 * max($data[$product->getAttributeText('commercant')]['products']);
-                $data[$product->getAttributeText('commercant')]['min_marge']     = 100 * min($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['nb_products'] = count($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['total_marge'] = array_sum($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['max_marge'] = 100 * max($data[$product->getAttributeText('commercant')]['products']);
+                $data[$product->getAttributeText('commercant')]['min_marge'] = 100 * min($data[$product->getAttributeText('commercant')]['products']);
                 $data[$product->getAttributeText('commercant')]['marge_moyenne'] = 100 * ($data[$product->getAttributeText('commercant')]['total_marge'] / $data[$product->getAttributeText('commercant')]['nb_products']);
 
                 $data[$product->getAttributeText('commercant')]['products'][$product->getData('name')] = $product->getData('marge_arriere');
@@ -520,54 +512,54 @@ class Magento
         }
 
         ksort($data);
+
         return $data;
     }
-	
-	/* Affiche les infos relatifs à l'historique de la commande */
-	public function getOrderHistory($order_id)
-	{
-		$order = \Mage::getModel('sales/order')->loadByIncrementId($order_id);
-		$history = $order->getStatusHistoryCollection();
 
-		return $history;
-	}
+    /* Affiche les infos relatifs à l'historique de la commande */
+    public function getOrderHistory($order_id)
+    {
+        $order = \Mage::getModel('sales/order')->loadByIncrementId($order_id);
+        $history = $order->getStatusHistoryCollection();
 
+        return $history;
+    }
 
     /** ------- **/
     /** CUSTOMERS **/
     /** ------- **/
 
-	/** Affiche les commandes par clients */
+    /** Affiche les commandes par clients */
     public function getOrdersByCustomer($debut = null, $fin = null)
-	{
-		$data = [];
-		$debut	= date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
+    {
+        $data = [];
+        $debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $debut)));
 
-		$orders = \Mage::getModel('sales/order')->getCollection();
-	
-		$orders->getSelect()->join('sales_flat_invoice', 'sales_flat_invoice.order_id = main_table.entity_id');
-		$orders->addFilterToMap('created_at', 'sales_flat_invoice.created_at');
-		$orders->addFilterToMap('increment_id', 'sales_flat_invoice.increment_id');
+        $orders = \Mage::getModel('sales/order')->getCollection();
 
-		$orders->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
-			   ->addAttributeToSort('created_at', 'ASC');
-		
-		foreach ($orders as $order) {
-			array_push($data, [
-				'created_at'			=> $order->getData('created_at'),
-				'numero_commande'		=> $order->getData('increment_id'),
-				'nom_client'			=> $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
-				'total_produits_HT'		=> round($order->getData('subtotal'), 2),
-				'total_produits_TVA'	=> round($order->getData('tax_amount'), 2),
-				'total_produits_TTC'	=> round($order->getData('subtotal_incl_tax'), 2),
-				'frais_livraison_HT'	=> round($order->getData('shipping_amount'), 2),
-				'frais_livraison_TVA'	=> round($order->getData('shipping_tax_amount'), 2),
-				'frais_livraison_TTC'	=> round($order->getData('shipping_incl_tax'), 2),
-				'discount'				=> round($order->getData('discount_amount'), 2),
-				'total_commande_TTC'	=> round($order->getData('grand_total'), 2),
-			]);
-		}
+        $orders->getSelect()->join('sales_flat_invoice', 'sales_flat_invoice.order_id = main_table.entity_id');
+        $orders->addFilterToMap('created_at', 'sales_flat_invoice.created_at');
+        $orders->addFilterToMap('increment_id', 'sales_flat_invoice.increment_id');
 
-		return $data;
-	}
+        $orders->addAttributeToFilter('created_at', array('from' => $debut, 'to' => $fin))
+               ->addAttributeToSort('created_at', 'ASC');
+
+        foreach ($orders as $order) {
+            array_push($data, [
+                'created_at' => $order->getData('created_at'),
+                'numero_commande' => $order->getData('increment_id'),
+                'nom_client' => $order->getData('customer_firstname').' '.$order->getData('customer_lastname'),
+                'total_produits_HT' => round($order->getData('subtotal'), 2),
+                'total_produits_TVA' => round($order->getData('tax_amount'), 2),
+                'total_produits_TTC' => round($order->getData('subtotal_incl_tax'), 2),
+                'frais_livraison_HT' => round($order->getData('shipping_amount'), 2),
+                'frais_livraison_TVA' => round($order->getData('shipping_tax_amount'), 2),
+                'frais_livraison_TTC' => round($order->getData('shipping_incl_tax'), 2),
+                'discount' => round($order->getData('discount_amount'), 2),
+                'total_commande_TTC' => round($order->getData('grand_total'), 2),
+            ]);
+        }
+
+        return $data;
+    }
 }
