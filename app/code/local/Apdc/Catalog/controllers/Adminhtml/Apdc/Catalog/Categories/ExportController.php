@@ -105,7 +105,6 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
                         'name'=>$category->getName(),
                         'thumb'=>$category->getThumbnail(),
                         'full'=>$category->getImage(),
-                        'estcom_commercant'=>$category->getEstcomCommercant(),
                         'is_active'=>$category->getIsActive(),
                         'meta_title'=>html_entity_decode(str_replace('"','',$category->getMetaTitle())),
                         'description'=>html_entity_decode(str_replace('"','',$category->getDescription())),

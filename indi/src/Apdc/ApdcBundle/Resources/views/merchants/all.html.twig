@@ -28,7 +28,7 @@
 						<div style="display:inline-block">
 							<h2>
 								{% if merchant.blacklist %}
-									<i class="fa fa-wheelchair-alt" aria-hidden="true" title="Historique de problèmes sur la préparation de commande, à appeler systématiquement si commandes." style="color:red;"></i>
+									<i class="fa fa-exclamation-circle" aria-hidden="true" title="Historique de problèmes sur la préparation de commande, à appeler systématiquement si commandes." style="color:red;"></i>
 								{% endif %}
 								<a href="#{{ merchant_id|replace({' ': '_', "'": '_', '&': '_'}) }}" data-toggle="collapse">{{ merchant.name }}</a>
 							</h2>

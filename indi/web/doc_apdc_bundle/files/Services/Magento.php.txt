@@ -512,7 +512,7 @@ class Magento
     }
 
 	/** Mettre dans trait Order **/
-    public function getMerchantsOrdersByStore($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
+    public function getOrdersByStoreByMerchants($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
             $dfrom = date('Y-m-d');

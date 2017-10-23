@@ -1,0 +1,95 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+	<div class="container-fluid">
+		<h1> Liste au mois des commandes par clients </h1><br>
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut }}"> au {{ date_fin|date('d/m/Y') }}</h2>
+			</div>
+			<div class="col-md-6">{{ form(formCSV) }}</div>
+		</div>
+
+		<hr/>
+		<table id="accountingCustomersOrdersTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Cree le</th>
+					<th># Commande</th>
+					<th>Nom client</th>
+					<th>Total produits HT</th>
+					<th>Total produits TVA</th>
+					<th>Total produits TTC</th>
+					<th>Frais livraison HT</th>
+					<th>Frais livraison TVA</th>
+					<th>Frais livraison TTC</th>
+					<th>Discount</th>
+					<th>Total commande TTC</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+				<tr>
+					<td>{{ order.created_at|date('d/m/Y H:i') }}</td>
+					<td>{{ order.numero_commande }}</td>
+					<td>{{ order.nom_client }}</td>
+					<td>{{ order.total_produits_HT }}</td>
+					<td>{{ order.total_produits_TVA }}</td>
+					<td>{{ order.total_produits_TTC }}</td>
+					<td>{{ order.frais_livraison_HT }}</td>
+					<td>{{ order.frais_livraison_TVA }}</td>
+					<td>{{ order.frais_livraison_TTC }}</td>
+					<td>{{ order.discount }}</td>
+					<td>{{ order.total_commande_TTC }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block css_accounting_customers %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+
+{% block javascript_accounting_customers %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script>
+		$(function() {
+			$( "#datepickerAccountingCustomers" ).datepicker({
+				altField: "#datepickerAccountingCustomers",
+				closeText: 'Fermer',
+				prevText: 'Précédent',
+				nextText: 'Suivant',
+				currentText: 'Aujourd\'hui',
+				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+				weekHeader: 'Sem.',
+				dateFormat: 'dd/mm/yy',
+			});
+		});
+		
+		$(function(){
+			$("#datepickerAccountingCustomers").change(function(){
+				window.location='{{ path('accountingCustomersOrders') }}?date_debut='+this.value;
+			});
+		});
+
+		$(document).ready(function() {
+			var table=$('#accountingCustomersOrdersTable').DataTable({
+				"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+				"pageLength": -1,
+				"order": [[ 1, 'dsc' ], [ 0, 'asc' ]]
+			} );
+		});
+
+
+	</script>
+{% endblock %}

@@ -15342,7 +15342,7 @@ footer .social-list .btn-social-icon {
 
 #warning_days .warning-container .warning,
 #warning_days .warning-container ul {
-  font-size: 1rem;
+  font-size: .85rem;
   opacity: 1;
   color: rgba(0, 0, 0, .84);
 }

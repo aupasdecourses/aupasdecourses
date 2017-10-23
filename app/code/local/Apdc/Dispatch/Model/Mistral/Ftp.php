@@ -110,10 +110,10 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 
 		$this->_creneaux=[
 			"debut" => [
-				"Tue"=>'16:00',
-				"Wed"=>'16:00',
-				"Thu"=>'16:00',
-				"Fri"=>'16:00',
+				"Tue"=>'17:00',
+				"Wed"=>'17:00',
+				"Thu"=>'17:00',
+				"Fri"=>'17:00',
 				"Sat"=>"11:00",
 			],
 			"fin" 	=> [
@@ -173,7 +173,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 				1 => 'OL',
 				2 => $do,
 				3 => '',
-				4 => $order['customer_id'],
+				4 => 'CLI-'.$order['customer_id'],
 				5 => '',
 				6 => "{$order['first_name']} {$order['last_name']}",
 				7 => '',
@@ -244,7 +244,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 			1 => 'OE',
 			2 => $do,
 			3 => '',
-			4 => $merchant['id_attribut_commercant'],
+			4 => 'COM-'.$merchant['id_attribut_commercant'],
 			5 => $merchant['name'],
 			6 => $merchant['name'],
 			7 => '',

@@ -270,7 +270,8 @@ input#datepickerLoyalty,
 input#datepickerEndLoyalty,
 input#datepickerVoucher,
 input#datepickerEndVoucher,
-input#datepickerNote
+input#datepickerNote,
+input#datepickerAccountingCustomers
 {
     display: inline;
 
