@@ -235,33 +235,34 @@ footer .social-icons .fa{
     color:white!important;
 }
 footer .copyright{
-    margin-bottom:0;
+    margin-bottom:10px;
 }
 footer .apdc-liens{
     font-family: 'OpenSans-Bold',sans-serif;
     font-weight:bold;
 }
 footer .apdc-liens li{
-    padding:0 10px;
+    padding:0 10px 5px 10px;
 }
 footer .apdc-liens,
 footer .copyright{
-    font-size:.75rem;
+    font-size:12px;
     padding:0;
 }
 
 /* .social-icons */
 footer ul{
-    padding:0 0 0 15px;
+    padding:0;
     list-style-type:none;
     text-align:center;
 }
-footer ul li{
+footer .social-icons li{
     display:inline-block;
     padding:0 5px 0 0;
 }
 footer .social-icons .fa{
     font-size:18px;
+    -webkit-transition: all .3s ease;
     transition:all .3s ease;
 }
 footer .social-icons .fa:hover{
@@ -289,56 +290,36 @@ _::-webkit-full-page-media, _:future, :root div[id*="ajaxsearchliteres"] .result
 
 /*########### Repère bootstrap SM (tablettes) > 768px #############*/
 @media screen and (min-width:768px){
-    
+    ul{
+        margin-bottom:0;
+    }
+    footer .apdc-liens li{
+        display:inline-block;
+        padding-bottom:0;
+    }
+    footer .copyright{
+        margin-bottom:0;
+    }
 }
 
 /*########### Repère bootstrap MD (desktop) 992px #############*/
 @media screen and (min-width:992px){
     
-    
-    /*============================
-                FOOTER
-    ==============================*/
-    .container-footer-info{
-        -webkit-box-pack:justify;
-        -ms-flex-pack:justify;
-        justify-content:space-between;
-        -webkit-box-align:center;
-        -ms-flex-align:center;
-        align-items:center;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-        flex-direction: row;
-    }
-    
-    #footer-copyright-and-icons{
-        -webkit-box-align:center;
-        -ms-flex-align:center;
-        align-items:center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-        flex-direction: row;
-    }
-    
-    .logo-site{
-        display: inline-block;
-        width: 120px;
-    }
-    
 }
-    /*============================
-                END FOOTER
-    ==============================*/
-}
+    
+
 
 /*########### Repère bootstrap LG (large desktop) 1200px #############*/
 @media screen and (min-width:1200px){
-    
+    /*============================
+                FOOTER
+    ==============================*/
+    footer ul{
+        padding:0 0 0 25px;
+    }
+    /*============================
+                END FOOTER
+    ==============================*/
 }
 /*###########  > 1600px #############*/
 @media screen and (min-width: 1600px) {
