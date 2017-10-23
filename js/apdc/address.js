@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
     };
 
     AddressBar.prototype.showLoading = function() {
-      this.addMessage("<p style='margin-top:15px;'>Veuillez patientier ...</p>");
+      this.addMessage("<p style='margin-top:15px;'>Veuillez patienter ...</p>");
       $j(this.root + ' button').attr( "disabled", true );
     };
 
