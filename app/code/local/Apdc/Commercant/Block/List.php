@@ -55,7 +55,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                     $path = Mage::getModel('catalog/category')->load($id)->getPath();
                     $rootcat = explode('/', $path)[1];
                     if ($rootcat == $storerootid) {
-                        continue;
+                        break;
                     }
                 }
 
