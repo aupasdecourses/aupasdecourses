@@ -14,25 +14,30 @@
 		</div><!-- .container -->
 	</div><!-- #content -->
 
-	<footer class="site-footer" role="contentinfo">
-
-		<div class="site-info">
-		    
-			<div class="container-footer-info">
-                    
-                    <p>&copy; Au Pas De Courses <?= getdate()[year]?>. Tous droits réservés.</p>
-                    <a href="https://www.aupasdecourses.com/batignolles/nos-engagements/" target="_blank">NOS ENGAGEMENTS</a>
-                    <a href="https://www.aupasdecourses.com/batignolles/mentions-legales-cgv/" target="_blank">MENTIONS LÉGALES &amp; CGV</a>
-                    <a href="https://www.aupasdecourses.com/batignolles/politique-confidentialite-restriction-cookie/" target="_blank">POLITIQUE DE CONFIDENTIALITÉ</a>
-                    <a href="https://www.aupasdecourses.com">
-                        AUPASDECOURSES.com
-                    </a>
-                    <a href="https://www.aupasdecourses.com/blog">BLOG</a>
-                 
-			</div><!-- end .container-footer-info-->
-		</div><!-- end .site-info -->
-
-	</footer>
+	<footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="social-icons">
+                        <li><a href="https://www.facebook.com/aupasdecourses" title="Facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="https://twitter.com/aupasdecourses" title="Twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="https://instagram.com/aupasdecourses/" title="Instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <p class="copyright text-center">
+                        ©<?= getdate()[year]?> Au Pas De Courses, tous droits réservés.
+                    </p>
+                    <ul class="apdc-liens text-center" role="navigation">
+                        <li><a href="https://www.aupasdecourses.com/accueil/../faq" title="Mentions légales">Mentions légales</a></li>
+                        <li><a href="https://www.aupasdecourses.com/accueil/../faq" title="Conditions générales d'utilisation">Conditions générales d'utilisation</a></li>
+                        <li><a href="https://www.aupasdecourses.com/accueil/../faq" title="Tarifs">Tarifs</a></li>
+                        <li><a href="https://www.aupasdecourses.com/accueil/../blog" title="Blog">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div><!-- #page -->
 
 <script type="text/javascript">

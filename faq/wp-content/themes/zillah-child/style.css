@@ -39,6 +39,13 @@ Texte gris : rgba(0, 0, 0, .54)
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('fonts/opensans-bold.woff2') format('woff2'),
+         url('fonts/opensans-bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 /*Modification CSS pour avoir même visuel que Zillah parent*/
@@ -217,74 +224,48 @@ underline the hovered links */
 ==============================*/
 footer{
     margin-top:60px;
+    padding:20px 0px;
+    background-color: #3ab64b;
+}
+footer .copyright,
+footer a,
+footer a:hover,
+footer a:active,
+footer .social-icons .fa{
+    color:white!important;
+}
+footer .copyright{
+    margin-bottom:0;
+}
+footer .apdc-liens{
+    font-family: 'OpenSans-Bold',sans-serif;
+    font-weight:bold;
+}
+footer .apdc-liens li{
+    padding:0 10px;
+}
+footer .apdc-liens,
+footer .copyright{
+    font-size:.75rem;
+    padding:0;
 }
 
-.site-footer{
-    background:#2aa745;
-    padding-left: 10px;
-    padding-right: 10px;
+/* .social-icons */
+footer ul{
+    padding:0 0 0 15px;
+    list-style-type:none;
+    text-align:center;
 }
-
-
-.site-info{
-    background-color: #2aa745;
-    color: #fff;
-    padding: 20px 0;
-    max-width:1200px;
-    margin-left:auto;
-    margin-right:auto;
-    letter-spacing:normal;
-    font-size:15px;
+footer ul li{
+    display:inline-block;
+    padding:0 5px 0 0;
 }
-
-.container-footer-info{
-    text-align: center;
-    position: relative;
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-    -webkit-box-align:center;
-    -ms-flex-align:center;
-    align-items:center;
-    
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal; 
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+footer .social-icons .fa{
+    font-size:18px;
+    transition:all .3s ease;
 }
-
-.container-footer-info a,
-.container-footer-info p
-{
-    font-family: 'OpenSans-Regular', sans-serif !important;
-    color: #fff;
-    padding:0px;
-    margin:5px;
-}
-
-.container-footer-info div a{
-    padding-right: 15px;
-    font-size: 12px;
-}
-
-#footer-copyright-and-icons{
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-    -webkit-box-align:center;
-    -ms-flex-align:center;
-    align-items:center;
-    
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+footer .social-icons .fa:hover{
+    color:#00595e!important;
 }
 
 /*============================
@@ -349,12 +330,6 @@ _::-webkit-full-page-media, _:future, :root div[id*="ajaxsearchliteres"] .result
         width: 120px;
     }
     
-    #footer-social-icons-widget{
-        margin-left:30px;
-        margin-top: 0px;
-    }
-    #footer-social-icons-widget ul{
-    padding-left: 40px;
 }
     /*============================
                 END FOOTER
