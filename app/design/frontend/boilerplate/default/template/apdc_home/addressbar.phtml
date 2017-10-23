@@ -7,14 +7,14 @@
     ?>
 </script>
 <div id='address-bar' class="input-box apdc-form">
-    <input id="GoogleAutoCompleteInput" class='input-text' placeholder='Entrez et sélectionnez votre adresse' type='text' name='input_address' />
+    <input id="GoogleAutoCompleteInput" class='input-text' placeholder='Entrez votre adresse' type='text' name='input_address' />
     <button id="disambiguation-neighborhood" data-disambiguation-view="<?php echo $this->getUrl('customhome/index/ajaxPopupView');?>" data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="button button-green" type="submit" style="display:none;margin:0;">OK</button>
     <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden"/>
     <div class="row text-center" name="messages" style="margin-top: 15px;"></div>
     <a class='button button-green' href='#' id='newsletter-popup' data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role='button' title='Inscrivez-vous à notre newsletter' style="display:none;">Inscrivez-vous à notre newsletter !</a>
-    <p class="separator">ou</p>
-    <p>Sélectionnez votre quartier</p>
-    <select name="website-list" style='width:150px;'>
+    <p class="separator" style="margin-bottom:20px;">ou</p>
+    <select name="website-list" style='width:60%;font-size: 1.1rem;color: rgba(0, 0, 0, .62);text-align-last: center;'>
+        <option selected="true" disabled="disabled">Sélectionnez votre quartier</option>
       <?php foreach($websites as $id => $name):?>
         <option value="<?=$id?>"><?=$name?></option>
     <?php endforeach;?>

@@ -44,17 +44,22 @@
 	<div class="container">
 	    <div class="border-container"></div>
 		<div class="section-header">
-			<h2>Mon quartier</h2>
-			<div class="section-description">
-				 Les meilleurs commerçants de Paris livrés chez vous
-			</div>
+			<h2>Commandez dès maintenant</h2>
             <div id="search_neighborhoods">
                 <?php echo $this->getChildHtml('address-bar');?>
             </div>
 		</div>
 	</div>
 </section>
-<div class="container">
+<section id="carroussel-commercants">
+    <div class="section-header">
+        <h2>Vos commerçants ont du talent !</h2>
+    </div>
+    <div class="container-fluid">
+        <?php echo $this->getChildHtml("liste_commercant_all");?>
+    </div>
+</section>
+<div id="model" class="container">
     <div class="row">
         <section class="packages col-sm-6" id="concept">
             <div class="section-header">
@@ -105,10 +110,10 @@
             </div>
             <div class="item row">
                 <div class="col-md-3">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/weight.png')?>" alt="Nous vous remboursons les écarts de poids">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/weight.png')?>" alt="Nous vous remboursons les écarts de poids, après la livraison">
                 </div>
                 <div class="col-md-9">
-                    <p class="package-feature">Nous vous remboursons les écarts de poids</p>
+                    <p class="package-feature">Nous vous remboursons les écarts de poids, après la livraison</p>
                 </div>
             </div>
             <div class="item row">
@@ -122,9 +127,53 @@
         </section>
     </div>
 </div>
-
+<section id="cards">
+    <div class="container">
+        <div class="section-header">
+            <h2>Ils parlent de nous!</h2>
+            <div class="section-description">
+                 Vos voisins sont déjà accros !
+            </div>
+            <div id="widget_avisverifie" class="row">
+                <iframe id='AV_widget_iframe' frameBorder="0" width="100%" height="100%" src="//cl.avis-verifies.com/fr/cache/c/c/a/cca6e31a-87d7-89e4-e5ea-084a148ff055/widget4/cca6e31a-87d7-89e4-e5ea-084a148ff055horizontal_index.html"></iframe>
+            </div>
+            <div class="section-description" style="margin-bottom:20px;">
+                 Vos commerçants nous adorent !
+            </div>
+            <div id="commercants" class="row">
+                <div class="col-md-5 clients">
+                    <img src="https://www.aupasdecourses.com/media/wysiwyg/full-merchant_2__17.jpg" alt="Nos commerçants">
+                    <p class="quote">"Lorem Ipsum fdjgdflkgj dflkgjdflkgjdflkgjfdl gkjfdgkljfdglkfjdg lkdfjglkfd jklgjfdkl glkfdj."</p>
+                    <p class="quote-author">Jean Michel Michel, gérant.</p>
+                </div>
+                <div class="col-md-5 col-md-offset-2 partners">
+                    <img src="https://www.aupasdecourses.com/media/catalog/category/full-merchant.jpg" alt="Nos commerçants partenaires">
+                    <p class="quote">"Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses !"</p>
+                    <p class="quote-author">Michel Vaidie, Boucherie des Moines, Paris 17.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="section-description">
+             Et le Tout Paris en parle !
+        </div>
+        <div id="presse" class="row">
+            <ul>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/lebonbon.png');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/hello-paris17.png');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/20minutes.png');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/Elle.png');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/frenchweb.jpg');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/lepoint.jpg');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/logo75.jpg');?>" alt="" /></li>
+                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/vivreparis.jpg');?>" alt="" /></li>
+            </ul>
+        </div>
+    </div>
+</section>
 <section id="missions" class="container-fluid">
-    <h2>Ce que nous aimons</h2>
+    <h2>Ce que nous proposons</h2>
     <div class="row">
         <div class="col-md-4 item-mission mission-1">
             <div>
@@ -146,30 +195,7 @@
         </div>
     </div>
 </section>
-
-<section id="cards" class="container">
-    <div class="row">
-        <div class="col-md-5 clients">
-            <img src="<?php echo $this->getSkinUrl('dist/images/photo/sandrine.jpg')?>" alt="Nos clients">
-            <p class="quote">"Ce qui m'a séduite, c'est de pouvoir me faire livrer des produits sains et de qualité le soir, même lorsque je finis tard."</p>
-            <p class="quote-author">Sandrine G., cliente fidèle.</p>
-        </div>
-        <div class="col-md-5 col-md-offset-2 partners">
-            <img src="<?php echo $this->getSkinUrl('dist/images/photo/bdm2.jpg')?>" alt="Nos commerçants partenaires">
-            <p class="quote">"Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses !"</p>
-            <p class="quote-author">Michel Vaidie, Boucherie des Moines, Paris 17.</p>
-        </div>
-    </div>
-     <div class="row widget_avisverifie">
-        <iframe id='AV_widget_iframe' frameBorder="0" width="100%" height="100%" src="//cl.avis-verifies.com/fr/cache/c/c/a/cca6e31a-87d7-89e4-e5ea-084a148ff055/widget4/cca6e31a-87d7-89e4-e5ea-084a148ff055horizontal_index.html"></iframe>
-    </div>
-</section>
-<?php $nous = $this->getLayout()->createBlock('cms/block')->setBlockId('ils-parlent-de-nous'); ?>
-<?php if ($nous) : ?>
-<?php echo $nous->toHtml(); ?>
-<?php endif; ?>
 <?php echo $this->getChildHtml('reassurance');?>
-
 <footer>
     <div class="container">
         <div class="row">

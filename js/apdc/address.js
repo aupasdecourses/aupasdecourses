@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
     };
 
     AddressBar.prototype.showLoading = function() {
-      this.addMessage("<p style='margin-top:15px;'>Veuillez patientiez ...</p>");
+      this.addMessage("<p style='margin-top:15px;'>Veuillez patientier ...</p>");
       $j(this.root + ' button').attr( "disabled", true );
     };
 
@@ -160,7 +160,7 @@ jQuery(document).ready(function() {
                 lpAddressBar.addMessage(message);
                 return;
             }else{
-                message="<p style='margin-top:15px;'>Désolé, aucun quartier ne correspond à votre recherche.</p>";
+                message="<p style='margin-top:15px;'>Pas encore chez vous ? On arrive bientôt !</p>";
                 lpAddressBar.hideLoading();
                 lpAddressBar.addMessage(message);
                 lpAddressBar.displayNewsletter();
