@@ -472,7 +472,7 @@ class Magento
 	public function updateEntryToMistralDelivery(array $filters, array $updatedFields)
 	{
 		$model = \Mage::getModel('indi_mistraldelivery');
-		$check = $this->checkEntryToModel($model, $filters);
+		/*$check = $this->checkEntryToModel($model, $filters);
 		if ($check) {
 			$this->updateEntryToModel(
 				$model,
@@ -485,7 +485,7 @@ class Magento
 				$filters,
 				$updatedFields
 			);
-		}
+		}*/ dump($model);
 	}
 
     /** Mettre dans trait Order **/
