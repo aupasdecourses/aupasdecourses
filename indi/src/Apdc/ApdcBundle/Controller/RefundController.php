@@ -51,6 +51,7 @@ class RefundController extends Controller
 		$form_id->get('id')->setData($id);
 
 		$orders = $mage->getOrders($from, $to, -1, $id);
+		$mistral_hours = $mage->getMistralDelivery(); 
 
 		// MISTRAL RETARDS DE LIVRAISON
 		$mistral_late_orders_data = array('message' => 'Retards de picking/shipping');
@@ -142,12 +143,12 @@ class RefundController extends Controller
 			foreach ($mistral_results as $order_id => $data) {
 				$mage->updateEntryToMistralDelivery(
 					['order_id' => $order_id],
-					['real_hour_picking' => $data['real_hour_picking'], 
-					'slot_start_picking' => $data['slot_start_picking'], 
-					'slot_end_picking' => $data['slot_end_picking'],
-					'real_hour_shipping' => $data['real_hour_shipping'],
-					'slot_start_shipping' => $data['slot_start_shipping'],
-					'slot_end_shipping' => $data['slot_end_shipping']
+					['real_hour_picking' => date('H:i', strtotime($data['real_hour_picking'])), 
+					'slot_start_picking' => date('H:i', strtotime($data['slot_start_picking'])), 
+					'slot_end_picking' => date('H:i', strtotime($data['slot_end_picking'])),
+					'real_hour_shipping' => date('H:i', strtotime($data['real_hour_shipping'])),
+					'slot_start_shipping' => date('H:i', strtotime($data['slot_start_shipping'])),
+					'slot_end_shipping' => date('H:i', strtotime($data['slot_end_shipping']))
 				]);
 			}
 
@@ -159,7 +160,6 @@ class RefundController extends Controller
 			]);
 		}
 
-
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
 				$form_fromto->createView(),
@@ -167,6 +167,7 @@ class RefundController extends Controller
 			],
 			'orders' => $orders,
 			'mistral_late_orders_form'	=> $mistral_late_orders_form->createView(),
+			'mistral_hours'	=> $mistral_hours,
         ]);
     }
 

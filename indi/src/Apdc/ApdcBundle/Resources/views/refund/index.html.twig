@@ -104,11 +104,35 @@
 					<td>
 						<div class="space-between">
 							<div>Picking</div>
-							<div class="square early-delivery"></div>
+							{% for m in mistral_hours %}
+								{% if m.order_id == order.id %}
+									{% if m.real_hour_picking|date('H:i') < m.slot_start_picking|date('H:i') %}
+										<div class="square early-delivery"></div>
+									{% else %}
+										{% if m.real_hour_picking|date('H:i') > m.slot_end_picking|date('H:i') %}
+											<div class="square late-delivery"></div>
+										{% else %}
+											<div class="square on-time-delivery"></div>
+										{% endif %}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
 						</div>
 						<div class="space-between">
 							<div>Livraison</div>
-							<div class="square late-delivery"></div>
+							{% for m in mistral_hours %}
+								{% if m.order_id == order.id %}
+									{% if m.real_hour_shipping|date('H:i') < m.slot_start_shipping|date('H:i') %}
+										<div class="square early-delivery"></div>
+									{% else %}
+										{% if m.real_hour_shipping|date('H:i') > m.slot_end_shipping|date('H:i') %}
+											<div class="square late-delivery"></div>
+										{% else %}
+											<div class="square on-time-delivery"></div>
+										{% endif %}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
 						</div>
 					</td>
 				</tr>

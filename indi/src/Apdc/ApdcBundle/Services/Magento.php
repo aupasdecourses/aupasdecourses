@@ -466,13 +466,13 @@ class Magento
 
 	public function addEntryToMistralDelivery(array $data)
 	{
-		$this->addEntryToModel(\Mage::getModel('indi_mistraldelivery'), $data);
+		$this->addEntryToModel(\Mage::getModel('pmainguet_delivery/indi_mistraldelivery'), $data);
 	}
 
 	public function updateEntryToMistralDelivery(array $filters, array $updatedFields)
 	{
-		$model = \Mage::getModel('indi_mistraldelivery');
-		/*$check = $this->checkEntryToModel($model, $filters);
+		$model = \Mage::getModel('pmainguet_delivery/indi_mistraldelivery');
+		$check = $this->checkEntryToModel($model, $filters);
 		if ($check) {
 			$this->updateEntryToModel(
 				$model,
@@ -485,8 +485,15 @@ class Magento
 				$filters,
 				$updatedFields
 			);
-		}*/ dump($model);
+		}
 	}
+
+	public function getMistralDelivery()
+	{
+		$collection = \Mage::getModel('pmainguet_delivery/indi_mistraldelivery')->getCollection();
+		return $collection;
+	}
+	
 
     /** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
