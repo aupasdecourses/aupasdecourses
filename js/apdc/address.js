@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
     };
 
     AddressBar.prototype.showLoading = function() {
-      this.addMessage("Veuillez patentiez ...");
+      this.addMessage("<p style='margin-top:15px;'>Veuillez patientiez ...</p>");
       $j(this.root + ' button').attr( "disabled", true );
     };
 
@@ -155,12 +155,12 @@ jQuery(document).ready(function() {
                     lpAddressBar.hideLoading();
                 }
             }else if (lpAddressBar.zipcode==""||lpAddressBar.zipcode.length!=5||isNaN(parseInt(lpAddressBar.zipcode))){
-                message="<p>Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.</p>";
+                message="<p style='margin-top:15px;'>Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.</p>";
                 lpAddressBar.hideLoading();
                 lpAddressBar.addMessage(message);
                 return;
             }else{
-                message="<p>Désolé, aucun quartier ne correspond à votre recherche.</p>";
+                message="<p style='margin-top:15px;'>Désolé, aucun quartier ne correspond à votre recherche.</p>";
                 lpAddressBar.hideLoading();
                 lpAddressBar.addMessage(message);
                 lpAddressBar.displayNewsletter();
