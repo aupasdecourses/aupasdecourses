@@ -116,7 +116,6 @@ class RefundController extends Controller
 					unset($tmp[$order_id]);
 				}
 			}
-			dump($tmp);
 
 			// Store mistral hours in mistral_results[]
 			foreach ($mistral_results as $order_id => $data) {
