@@ -462,7 +462,31 @@ class Magento
                 $updatedFields
             );
         }
-    }
+	}
+
+	public function addEntryToMistralDelivery(array $data)
+	{
+		$this->addEntryToModel(\Mage::getModel('indi_mistraldelivery'), $data);
+	}
+
+	public function updateEntryToMistralDelivery(array $filters, array $updatedFields)
+	{
+		$model = \Mage::getModel('indi_mistraldelivery');
+		$check = $this->checkEntryToModel($model, $filters);
+		if ($check) {
+			$this->updateEntryToModel(
+				$model,
+				$filters,
+				$updatedFields
+			);
+		} else {
+			$this->addEntryToModel(
+				$model,
+				$filters,
+				$updatedFields
+			);
+		}
+	}
 
     /** Mettre dans trait Order **/
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)

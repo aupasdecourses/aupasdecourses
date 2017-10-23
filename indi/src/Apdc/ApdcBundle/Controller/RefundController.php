@@ -24,6 +24,7 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
 		$mistral = $this->container->get('apdc_apdc.mistral');
+		$session = $request->getSession();
 
         $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
@@ -137,8 +138,25 @@ class RefundController extends Controller
 
 			unset($tmp);
 
-			ksort($mistral_results);
-			dump($mistral_results);
+			// Update DDB
+			foreach ($mistral_results as $order_id => $data) {
+				$mage->updateEntryToMistralDelivery(
+					['order_id' => $order_id],
+					['real_hour_picking' => $data['real_hour_picking'], 
+					'slot_start_picking' => $data['slot_start_picking'], 
+					'slot_end_picking' => $data['slot_end_picking'],
+					'real_hour_shipping' => $data['real_hour_shipping'],
+					'slot_start_shipping' => $data['slot_start_shipping'],
+					'slot_end_shipping' => $data['slot_end_shipping']
+				]);
+			}
+
+			$session->getFlashBag()->add('success', 'Status Mistral mis a jour');
+			return $this->redirectToRoute('refundIndex', [
+				'id' => $id, 
+				'from' => $from, 
+				'to' => $to
+			]);
 		}
 
 
