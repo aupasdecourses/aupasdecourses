@@ -22,6 +22,7 @@ get_header(); ?>
         <div class="col-xs-1 display-none-sm no-padding"><div class="block"></div></div>
     </div> <!-- end .row -->
     
+    <!-- Article header -->
     <div class="row">
         <div class="col-sm-12">
             <div class="flex-introduction-article">
@@ -105,9 +106,10 @@ get_header(); ?>
                     <?php the_post_thumbnail('article-large-thumbnail'); ?>
                 </div>
             </div> <!-- end .flex-introduction-article -->
-        </div><!-- end column -->
-    </div> <!-- end .row -->
+        </div><!-- end column Article header -->
+    </div> <!-- end .row Article header -->
     
+    <!-- Article content and sharing buttons -->
     <div class="row">
         <div class="col-xs-10">
             <div class="article-content">
@@ -125,8 +127,8 @@ get_header(); ?>
                     <a href="https://twitter.com/home?status=<?php echo get_the_permalink() ?>" class="genericon genericon-twitter" target="_blank"></a>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> <!-- end sharing buttons --> 
+    </div> <!-- end .row Article content -->
     
     <?php
     endwhile;
@@ -137,12 +139,14 @@ get_header(); ?>
     endif;
     ?>
     <!-- End article information and content -->
-    
-            
-    <!-- Fruit banner -->
-    <img class="fruit-banner" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
-    <!-- End fruit banner -->
+</main>
 
+<!-- Fruit banner, random articles, Instagram -->
+<div class="container">
+    <!-- Fruit banner -->
+    <div class="row">
+        <img class="fruit-banner" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/fruit-banner.png" alt="Bannière de fruits"/>
+    </div>
    
     <!-- 6 random articles from the same category -->
     <div class="row">
@@ -238,7 +242,7 @@ get_header(); ?>
         </div> <!-- end column -->
     </div> <!-- end .row Instagram feed -->
     
-</main>
+</div> <!-- end .container fruit banner, random articles, Instagram -->
 
 <?php
 get_footer();
