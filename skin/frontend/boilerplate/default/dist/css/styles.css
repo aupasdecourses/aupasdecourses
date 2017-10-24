@@ -13161,10 +13161,22 @@ section#cards .container-fluid {
   background-color: white;
 }
 
+section#cards #commercants {
+  margin-bottom: 30px;
+}
+
 section#cards #commercants img {
   display: block;
   width: 100%;
   margin-bottom: 30px;
+}
+
+section#cards #commercants .clients {
+  padding: 0 10px 0 20px;
+}
+
+section#cards #commercants .partners {
+  padding: 0 20px 0 10px;
 }
 
 section#cards #presse {
@@ -17263,6 +17275,11 @@ h1.account-title {
   section#prices,
     section#concept {
     min-height: 800px;
+  }
+
+  section#cards .clients,
+    section#cards .partners {
+    padding: 0 20px !important;
   }
 
   section#cards .clients {

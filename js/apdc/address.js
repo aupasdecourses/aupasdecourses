@@ -16,11 +16,15 @@ jQuery(document).ready(function() {
     AddressBar.prototype.showLoading = function() {
       this.addMessage("<p style='margin-top:15px;'>Veuillez patienter ...</p>");
       $j(this.root + ' button').attr( "disabled", true );
+      $j(this.root + ' input').attr( "disabled", true );
+      $j(this.root + ' select').attr( "disabled", true );
     };
 
     AddressBar.prototype.hideLoading = function() {
       this.clearMessage();
       $j(this.root + ' button').attr( "disabled", false );
+      $j(this.root + ' input').attr( "disabled", false );
+      $j(this.root + ' select').attr( "disabled", false );
     };
 
     AddressBar.prototype.setZipcode = function() {
@@ -171,6 +175,7 @@ jQuery(document).ready(function() {
     });
    
     $j('#address-bar select[name="website-list"]').on('change',function(e){ 
+        lpAddressBar.showLoading();
         var $elt=$j(this).children('option:selected');
         $j.ajax( {
             url : lpAddressBar.ajaxUrl,

@@ -295,10 +295,17 @@ section {
             background-color:white;
         }
         #commercants{
+            margin-bottom:30px;
             img {
                 display: block;
                 width: 100%;
                 margin-bottom: 30px;
+            }
+            .clients{
+                padding:0 10px 0 20px;
+            }
+            .partners{
+                padding:0 20px 0 10px;
             }
         }
         #presse {
