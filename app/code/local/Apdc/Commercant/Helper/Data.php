@@ -85,27 +85,21 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return $cat_array;
     }
 
-    public function getCategoriesInfos($rootId){
-        $filter=array();
-        $categories = Mage::getModel('catalog/category')
-                         ->getCollection()
-                         ->addAttributeToSelect(array('image', 'url_path'))
-                         ->addIsActiveFilter()
-                         ->addFieldToFilter('path', array('like' => "1/$rootId/%"))
-                         ->addAttributeToFilter('level', array('eq' => 3))
-                         //70 est la value_id de l'option du select, correspondant à 'Oui'                        
-                         ->addAttributeToFilter('estcom_commercant', 70)
-                         ->load();
-
-        foreach ($categories as $cat) {
-            $filter[$cat->getId()] = [
-                'store_id' => $cat->getStoreId(),
-                'url_path' => $cat->getUrlPath(),
-                'src' => Mage::helper('apdc_catalog/category')->getImageUrl($cat),
-            ];
+    //Voir si on ne peut pas refactoriser les fonctions utilisant getCategoriesArray avec cette fonction
+    public function getCategoriesCommercant(){
+        $cats=Mage::getModel('apdc_commercant/shop')->getCollection()->load()->toArray(array('id_category'));
+        $result=array();
+        foreach($cats as $cat){
+            $result=array_merge($result,$cat['id_category']);
         }
 
-        return $filter;
+        $cats=Mage::getModel('catalog/category')
+            ->getCollection()
+            ->setOrder('name')
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('entity_id', array('in' => $result));
+
+        return $cats;
     }
 	
     protected function getDataByCurrentCategory()
@@ -135,11 +129,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     public function getInfoShopByCommercantId($productCommercantId)
     {
         if (!isset($this->shopIdByCommercantId[$productCommercantId])) {
-            $shop = Mage::getModel('apdc_commercant/shop')->load($productCommercantId, 'id_attribut_commercant');
-            $shopId = null;
-            if ($shop && $shop->getId()) {
-                $shopId = $shop->getId();
-            }
+            $shopId = $this->getShopIdFromProductCommecantId($productCommercantId);
             $this->shopIdByCommercantId[$productCommercantId] = $shopId;
         }
         if (is_null($this->shopIdByCommercantId[$productCommercantId])) {
@@ -230,14 +220,23 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                 if ($end <= $today) {
                     continue;
                 }
-                if ($today >= $start && $nextWeek <= $end) {
+                if ($today >= $start && $today <= $end) {
                     $shopInfo['is_closed'] = [
                         'message' => $this->__('La boutique du commerçant est fermée jusqu\'au %s', '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>')
                     ];
                 }
                 $diff = $today->diff($start);
-                if ($diff->format('%a') < 10) {
+                if ($diff->format('%a') < $this->getClosingMessageDelay()) {
                     $shopInfo['next_closed'] = [
+                        'message' => sprintf(
+                            $this->__('La boutique du commerçant sera fermée du %s au %s'),
+                            '<strong>' . ucwords(strftime('%e %B', $start->getTimestamp())) . '</strong>',
+                            '<strong>' . ucwords(strftime('%e %B', $end->getTimestamp())) . '</strong>'
+                        )
+                    ];
+                }
+                if ($diff->format('%a') <= 7) {
+                    $shopInfo['next_closed_this_week'] = [
                         'message' => sprintf(
                             $this->__('La boutique du commerçant sera fermée du %s au %s'),
                             '<strong>' . ucwords(strftime('%e %B', $start->getTimestamp())) . '</strong>',
@@ -318,4 +317,59 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * getClosingMessageDelay 
+     * 
+     * @return string
+     */
+    public function getClosingMessageDelay()
+    {
+        return Mage::getStoreConfig('apdc_general/availability/closing_message_delay');
+    }
+
+    /**
+     * getShopIdFromProductCommecantId
+     * 
+     * @param int $productCommercantId productCommercantId 
+     * 
+     * @return int | null
+     */
+    public function getShopIdFromProductCommecantId($productCommercantId)
+    {
+        $resource = Mage::getSingleton('core/resource');
+	    $readConnection = $resource->getConnection('core_read');
+        $sql = 'SELECT id_shop FROM ' . $resource->getTableName('apdc_shop') . ' WHERE id_attribut_commercant = ' . (int) $productCommercantId;
+        $result = $readConnection->fetchCol($sql);
+        if (!empty($result)) {
+            return $result[0];
+        }
+        return null;
+    }
+
+    public function getShops($filter="store",$random=false)
+    {
+        $shops = Mage::getModel('apdc_commercant/shop')->getCollection()            
+            ->addFieldtoFilter('enabled',1);
+        $store=Mage::app()->getStore();
+        $storeid = $store->getId();
+        $storecode = $store->getCode();
+        $storerootid=$store->getRootCategoryId();
+
+        if($filter=="store"){
+            $shops->addFieldToFilter('stores', array('finset' =>$storeid));
+        }
+
+        if($random){
+            $shops->getSelect()->order('rand()');
+        }
+
+        $commercants=array();
+
+        foreach ($shops as $shop) {
+            if (empty($commercants[$shop->getName()])) {
+                $commercants[$shop->getName()] = $shop->getIdAttributCommercant();
+            }
+        }
+        return $commercants;
+    }
 }

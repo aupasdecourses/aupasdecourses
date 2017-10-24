@@ -30,7 +30,6 @@ class Apdc_SuperMenu_Model_Observer
     public function loadCustomCategoryAttributes(Varien_Event_Observer $observer)
     {
         $select = $observer->getEvent()->getSelect();
-        $select->columns('estcom_commercant');
         $select->columns('menu_bg_color');
         $select->columns('menu_text_color');
         $select->columns('menu_template');
@@ -91,7 +90,6 @@ class Apdc_SuperMenu_Model_Observer
                 'menu_static_block1' => $category->getMenuStaticBlock1(),
                 'thumbnail' => $category->getThumbnail(),
                 'is_clickable' => $category->getIsClickable(),
-                'is_commercant' => $category->getData('estcom_commercant'),
                 'show_in_navigation' => $category->getData('show_in_navigation')
             );
 

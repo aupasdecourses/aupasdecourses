@@ -97,15 +97,14 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
         $this->_shopsids = $collection->getColumnValues('id_attribut_commercant');
     }
 
-    public function getShops($getByStore=true)
+    public function getShops($getByStore = true)
     {
         $commercant = [];
         $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
         $sql = 'SELECT main_table.*, apdc_commercant_contact.lastname AS m_lastname, apdc_commercant_contact.firstname AS m_firstname, apdc_commercant_contact.email AS m_email, apdc_commercant_contact.phone AS m_phone, apdc_commercant_contact_2.lastname AS e1_lastname, apdc_commercant_contact_2.firstname AS e1_firstname, apdc_commercant_contact_2.email AS e1_email, apdc_commercant_contact_2.phone AS e1_phone, apdc_commercant_contact_3.lastname AS e2_lastname, apdc_commercant_contact_3.firstname AS e2_firstname, apdc_commercant_contact_3.email AS e2_email, apdc_commercant_contact_3.phone AS e2_phone FROM apdc_shop AS main_table LEFT JOIN apdc_commercant_contact ON main_table.id_contact_manager=apdc_commercant_contact.id_contact LEFT JOIN apdc_commercant_contact AS apdc_commercant_contact_2 ON main_table.id_contact_employee=apdc_commercant_contact_2.id_contact LEFT JOIN apdc_commercant_contact AS apdc_commercant_contact_3 ON main_table.id_contact_employee_bis=apdc_commercant_contact_3.id_contact';
         $shops = $connection->fetchAll($sql);
 
-        
-        if($getByStore){
+        if ($getByStore) {
             $cat_array = Mage::helper('apdc_commercant')->getCategoriesArray();
             $S = Mage::helper('apdc_commercant')->getStoresArray();
 
@@ -113,11 +112,13 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
                 $cats = explode(',', $shop['id_category']);
                 foreach ($cats as $cat) {
                     $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
-                    $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['infos'] = $shop;
-                    $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['orders'] = [];
+                    if (!isset($commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']])) {
+                        $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['infos'] = $shop;
+                        $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['orders'] = [];
+                    }
                 }
             }
-        }else{
+        } else {
             foreach ($shops as $shop) {
                 $commercants[$shop['id_attribut_commercant']]['infos'] = $shop;
                 $commercants[$shop['id_attribut_commercant']]['orders'] = [];
@@ -211,7 +212,7 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
         return in_array($commercant, $this->_shopsids);
     }
 
-    public function getShopsOrdersAction($dfrom = null, $dto = null,$getByStore = true)
+    public function getShopsOrdersAction($dfrom = null, $dto = null, $getByStore = true)
     {
         if (!isset($dfrom)) {
             $dfrom = date('Y-m-d');
@@ -231,22 +232,22 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
             if ($this->checkItem($item->getCommercant())) {
                 $orderHeader = $this->OrderHeaderParsing($item);
 
-                if($getByStore){
+                if ($getByStore) {
                     if (!isset($shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']])) {
                         $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']] = $orderHeader;
                     }
                     $item = $item->toArray(
-                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile','name','short_description','price_incl_tax','prix_kilo_site','item_comment')
+                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment')
                     );
                     $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']]['products'][] = $item;
                     $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']]['Total quantite'] += round($item['qty_ordered'], 0);
                     $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']]['Total prix'] += round($item['row_total_incl_tax'], 2);
-                }else{
+                } else {
                     if (!isset($shops[$item['commercant']]['orders'][$orderHeader['increment_id']])) {
                         $shops[$item['commercant']]['orders'][$orderHeader['increment_id']] = $orderHeader;
                     }
                     $item = $item->toArray(
-                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile','name','short_description','price_incl_tax','prix_kilo_site','item_comment')
+                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment')
                     );
                     $shops[$item['commercant']]['orders'][$orderHeader['increment_id']]['products'][] = $item;
                     $shops[$item['commercant']]['orders'][$orderHeader['increment_id']]['Total quantite'] += round($item['qty_ordered'], 0);

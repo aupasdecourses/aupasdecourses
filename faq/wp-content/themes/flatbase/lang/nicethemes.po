@@ -1,0 +1,2526 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-21 16:58-0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juanfra Aldasoro <juan@nicethemes.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: archive.php:16
+msgid "Category Archives"
+msgstr ""
+
+#: archive.php:16
+msgid "RSS feed for this section"
+msgstr ""
+
+#: archive.php:18
+msgid "Daily Archives"
+msgstr ""
+
+#: archive.php:21
+msgid "Monthly Archives"
+msgstr ""
+
+#: archive.php:24
+msgid "Yearly Archives"
+msgstr ""
+
+#: archive.php:27
+msgid "Archive by Author"
+msgstr ""
+
+#: archive.php:30
+msgid "Tag Archives"
+msgstr ""
+
+#: archive.php:41 index.php:18 index.php:27 search.php:66
+#: taxonomy-article-category.php:24 taxonomy-article-tag.php:24
+#: template-blog-masonry copy.php:43 copy.php:51 copy.php:61
+#: template-blog-masonry.php:43 template-blog-masonry.php:51
+#: template-blog-masonry.php:61 template-blog.php:26 template-blog.php:35
+#: includes/functions.php:679 includes/functions.php:687
+#: includes/functions.php:702 includes/functions.php:886
+#: includes/functions.php:1110 includes/functions.php:1131
+#: includes/functions.php:1158
+#, php-format
+msgid "Permanent Link to %s"
+msgstr ""
+
+#: archive.php:64 index.php:47 search.php:88 taxonomy-article-category.php:44
+#: taxonomy-article-tag.php:41 template-blog-masonry copy.php:77
+#: template-blog-masonry.php:77 template-blog.php:55
+msgid "Sorry, no posts matched your criteria."
+msgstr ""
+
+#: bbpress.php:29 page.php:25 single-faq.php:23 single.php:40
+#: template-contact.php:39 template-gallery.php:23 template-sitemap.php:24
+msgid "Continue reading"
+msgstr ""
+
+#: bbpress.php:31 page.php:27 template-full-width.php:26
+msgid "Pages:"
+msgstr ""
+
+#: bbpress.php:42 page.php:39 template-contact.php:73
+#: template-faq-scroll.php:80 template-faq.php:79 template-full-width.php:37
+#: template-gallery.php:33 template-knowledgebase.php:35
+#: template-sitemap.php:115
+msgid "Not Found"
+msgstr ""
+
+#: bbpress.php:45 page.php:42 template-contact.php:75
+#: template-faq-scroll.php:82 template-faq.php:81 template-full-width.php:39
+#: template-gallery.php:35 template-knowledgebase.php:37
+#: template-sitemap.php:117
+msgid "Sorry, but you are looking for something that isn't here."
+msgstr ""
+
+#: comments.php:35 comments.php:54
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:36 comments.php:55
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: comments.php:37 comments.php:56
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: comments.php:61
+msgid "Comments are closed."
+msgstr ""
+
+#: header.php:120
+msgid "Have a question? Ask or enter a search term."
+msgstr ""
+
+#: search.php:43
+msgid "Sorry, no posts were found."
+msgstr ""
+
+#: search.php:56
+msgid "Search Results"
+msgstr ""
+
+#: single-article.php:74
+msgid "Related Articles"
+msgstr ""
+
+#: template-blog-masonry copy.php:61 template-blog-masonry.php:61
+#: includes/functions.php:702
+msgid "Read More"
+msgstr ""
+
+#: template-blog-masonry copy.php:82 template-blog-masonry.php:82
+msgid "Load More.."
+msgstr ""
+
+#: template-contact.php:43 includes/functions.php:356
+msgid "Thank you for leaving a message."
+msgstr ""
+
+#: template-contact.php:47 template-contact.php:48
+msgid "Your Name"
+msgstr ""
+
+#: template-contact.php:48
+msgid "* Please enter your Full Name"
+msgstr ""
+
+#: template-contact.php:51 template-contact.php:52
+msgid "Subject"
+msgstr ""
+
+#: template-contact.php:52
+msgid "* Please enter the subject"
+msgstr ""
+
+#: template-contact.php:55 template-contact.php:56
+msgid "Your E-Mail"
+msgstr ""
+
+#: template-contact.php:56
+msgid "* Please enter your email"
+msgstr ""
+
+#: template-contact.php:59 template-contact.php:60
+msgid "Your Message"
+msgstr ""
+
+#: template-contact.php:60
+msgid "* Please enter a message"
+msgstr ""
+
+#: template-contact.php:63 bbpress/form-forum.php:136
+#: bbpress/form-reply-move.php:70 bbpress/form-reply.php:133
+#: bbpress/form-topic-merge.php:91 bbpress/form-topic-split.php:95
+#: bbpress/form-topic.php:201
+msgid "Submit"
+msgstr ""
+
+#: template-sitemap.php:35
+msgid "Pages"
+msgstr ""
+
+#: template-sitemap.php:42
+msgid "Article Categories"
+msgstr ""
+
+#: template-sitemap.php:73
+msgid "Posts per category"
+msgstr ""
+
+#: template-sitemap.php:84
+msgid "Comments"
+msgstr ""
+
+#: template-sitemap.php:90 includes/custom-post-types/faq.php:14
+msgid "FAQ"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:68
+msgid "bbPress Default"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:251
+msgid "favorites"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:252
+msgid "?"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:253
+msgid "This topic is one of your %favLinkYes% [%favDel%]"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:254
+msgid "%favAdd% (%favLinkNo%)"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:255
+msgid "&times;"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:256
+msgid "Add this topic to your favorites"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:265 bbpress/loop-replies.php:23
+msgid "Subscribe"
+msgstr ""
+
+#: bbpress/bbpress-functions.php:266 bbpress/loop-replies.php:24
+msgid "Unsubscribe"
+msgstr ""
+
+#: bbpress/content-single-topic-lead.php:18
+#: bbpress/content-single-topic-lead.php:90
+msgid "Creator"
+msgstr ""
+
+#: bbpress/content-single-topic-lead.php:22
+#: bbpress/content-single-topic-lead.php:94
+msgid "Topic"
+msgstr ""
+
+#: bbpress/content-statistics.php:17
+msgid "Registered Users"
+msgstr ""
+
+#: bbpress/content-statistics.php:22
+msgid "Forums"
+msgstr ""
+
+#: bbpress/content-statistics.php:27
+msgid "Topics"
+msgstr ""
+
+#: bbpress/content-statistics.php:32
+msgid "Replies"
+msgstr ""
+
+#: bbpress/content-statistics.php:37
+msgid "Topic Tags"
+msgstr ""
+
+#: bbpress/content-statistics.php:44
+msgid "Empty Topic Tags"
+msgstr ""
+
+#: bbpress/content-statistics.php:53
+msgid "Hidden Topics"
+msgstr ""
+
+#: bbpress/content-statistics.php:64
+msgid "Hidden Replies"
+msgstr ""
+
+#: bbpress/feedback-logged-in.php:13
+msgid "You are already logged in."
+msgstr ""
+
+#: bbpress/feedback-no-access.php:13
+msgid "Private"
+msgstr ""
+
+#: bbpress/feedback-no-access.php:16
+msgid "You do not have permission to view this forum."
+msgstr ""
+
+#: bbpress/feedback-no-forums.php:13
+msgid "Oh bother! No forums were found here!"
+msgstr ""
+
+#: bbpress/feedback-no-replies.php:13
+msgid "Oh bother! No replies were found here!"
+msgstr ""
+
+#: bbpress/feedback-no-search.php:13
+msgid "Oh bother! No search results were found here!"
+msgstr ""
+
+#: bbpress/feedback-no-topics.php:13
+msgid "Oh bother! No topics were found here!"
+msgstr ""
+
+#: bbpress/form-anonymous.php:17
+msgid "Author Information"
+msgstr ""
+
+#: bbpress/form-anonymous.php:17
+msgid "Your information:"
+msgstr ""
+
+#: bbpress/form-anonymous.php:22
+msgid "Name (required):"
+msgstr ""
+
+#: bbpress/form-anonymous.php:27
+msgid "Mail (will not be published) (required):"
+msgstr ""
+
+#: bbpress/form-anonymous.php:32
+msgid "Website:"
+msgstr ""
+
+#: bbpress/form-forum.php:33 bbpress/form-topic.php:39
+#, php-format
+msgid "Now Editing &ldquo;%s&rdquo;"
+msgstr ""
+
+#: bbpress/form-forum.php:35
+#, php-format
+msgid "Create New Forum in &ldquo;%s&rdquo;"
+msgstr ""
+
+#: bbpress/form-forum.php:35
+msgid "Create New Forum"
+msgstr ""
+
+#: bbpress/form-forum.php:45
+msgid ""
+"This forum is closed to new content, however your account still allows you "
+"to do so."
+msgstr ""
+
+#: bbpress/form-forum.php:53 bbpress/form-reply.php:42
+#: bbpress/form-topic.php:59
+msgid "Your account has the ability to post unrestricted HTML content."
+msgstr ""
+
+#: bbpress/form-forum.php:65
+#, php-format
+msgid "Forum Name (Maximum Length: %d):"
+msgstr ""
+
+#: bbpress/form-forum.php:80 bbpress/form-reply.php:62
+#: bbpress/form-topic.php:88
+msgid ""
+"You may use these <abbr title=\"HyperText Markup Language\">HTML</abbr> tags "
+"and attributes:"
+msgstr ""
+
+#: bbpress/form-forum.php:89
+msgid "Forum Type:"
+msgstr ""
+
+#: bbpress/form-forum.php:98
+msgid "Status:"
+msgstr ""
+
+#: bbpress/form-forum.php:107
+msgid "Visibility:"
+msgstr ""
+
+#: bbpress/form-forum.php:116
+msgid "Parent Forum:"
+msgstr ""
+
+#: bbpress/form-forum.php:121
+msgid "(No Parent)"
+msgstr ""
+
+#: bbpress/form-forum.php:159
+#, php-format
+msgid "The forum &#8216;%s&#8217; is closed to new content."
+msgstr ""
+
+#: bbpress/form-forum.php:167
+msgid "You cannot create new forums."
+msgstr ""
+
+#: bbpress/form-forum.php:167
+msgid "You must be logged in to create new forums."
+msgstr ""
+
+#: bbpress/form-protected.php:14
+msgid "Protected"
+msgstr ""
+
+#: bbpress/form-reply-move.php:22
+#, php-format
+msgid "Move reply \"%s\""
+msgstr ""
+
+#: bbpress/form-reply-move.php:27
+msgid ""
+"You can either make this reply a new topic with a new title, or merge it "
+"into an existing topic."
+msgstr ""
+
+#: bbpress/form-reply-move.php:31
+msgid ""
+"If you choose an existing topic, replies will be ordered by the time and "
+"date they were created."
+msgstr ""
+
+#: bbpress/form-reply-move.php:35
+msgid "Move Method"
+msgstr ""
+
+#: bbpress/form-reply-move.php:39 bbpress/form-topic-split.php:39
+#, php-format
+msgid "New topic in <strong>%s</strong> titled:"
+msgstr ""
+
+#: bbpress/form-reply-move.php:40
+#, php-format
+msgid "Moved: %s"
+msgstr ""
+
+#: bbpress/form-reply-move.php:47 bbpress/form-topic-split.php:47
+msgid "Use an existing topic in this forum:"
+msgstr ""
+
+#: bbpress/form-reply-move.php:66 bbpress/form-topic-merge.php:87
+#: bbpress/form-topic-split.php:91
+msgid "<strong>WARNING:</strong> This process cannot be undone."
+msgstr ""
+
+#: bbpress/form-reply-move.php:83
+msgid "You do not have the permissions to edit this reply!"
+msgstr ""
+
+#: bbpress/form-reply-move.php:83
+msgid "You cannot edit this reply."
+msgstr ""
+
+#: bbpress/form-reply.php:27
+#, php-format
+msgid "Reply To: %s"
+msgstr ""
+
+#: bbpress/form-reply.php:34
+msgid ""
+"This topic is marked as closed to new replies, however your posting "
+"capabilities still allow you to do so."
+msgstr ""
+
+#: bbpress/form-reply.php:73
+msgid "Tags:"
+msgstr ""
+
+#: bbpress/form-reply.php:91 bbpress/form-topic.php:162
+msgid "Notify the author of follow-up replies via email"
+msgstr ""
+
+#: bbpress/form-reply.php:95 bbpress/form-topic.php:166
+msgid "Notify me of follow-up replies via email"
+msgstr ""
+
+#: bbpress/form-reply.php:112 bbpress/form-topic.php:182
+msgid "Keep a log of this edit:"
+msgstr ""
+
+#: bbpress/form-reply.php:116 bbpress/form-topic.php:186
+msgid "Optional reason for editing:"
+msgstr ""
+
+#: bbpress/form-reply.php:156
+#, php-format
+msgid "The topic &#8216;%s&#8217; is closed to new replies."
+msgstr ""
+
+#: bbpress/form-reply.php:164 bbpress/form-topic.php:224
+#, php-format
+msgid "The forum &#8216;%s&#8217; is closed to new topics and replies."
+msgstr ""
+
+#: bbpress/form-reply.php:172
+msgid "You cannot reply to this topic."
+msgstr ""
+
+#: bbpress/form-reply.php:172
+msgid "You must be logged in to reply to this topic."
+msgstr ""
+
+#: bbpress/form-search.php:14
+msgid "Search for:"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:22
+#, php-format
+msgid "Merge topic \"%s\""
+msgstr ""
+
+#: bbpress/form-topic-merge.php:27
+msgid ""
+"Select the topic to merge this one into. The destination topic will remain "
+"the lead topic, and this one will change into a reply."
+msgstr ""
+
+#: bbpress/form-topic-merge.php:28
+msgid ""
+"To keep this topic as the lead, go to the other topic and use the merge tool "
+"from there instead."
+msgstr ""
+
+#: bbpress/form-topic-merge.php:32
+msgid ""
+"All replies within both topics will be merged chronologically. The order of "
+"the merged replies is based on the time and date they were posted. If the "
+"destination topic was created after this one, it's post date will be updated "
+"to second earlier than this one."
+msgstr ""
+
+#: bbpress/form-topic-merge.php:36
+msgid "Destination"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:40
+msgid "Merge with this topic:"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:54
+msgid "There are no other topics in this forum to merge with."
+msgstr ""
+
+#: bbpress/form-topic-merge.php:62 bbpress/form-topic-split.php:66
+msgid "Topic Extras"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:69
+msgid "Merge topic subscribers"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:74
+msgid "Merge topic favoriters"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:79
+msgid "Merge topic tags"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:104 bbpress/form-topic-split.php:108
+msgid "You do not have the permissions to edit this topic!"
+msgstr ""
+
+#: bbpress/form-topic-merge.php:104 bbpress/form-topic-split.php:108
+msgid "You cannot edit this topic."
+msgstr ""
+
+#: bbpress/form-topic-split.php:22
+#, php-format
+msgid "Split topic \"%s\""
+msgstr ""
+
+#: bbpress/form-topic-split.php:27
+msgid ""
+"When you split a topic, you are slicing it in half starting with the reply "
+"you just selected. Choose to use that reply as a new topic with a new title, "
+"or merge those replies into an existing topic."
+msgstr ""
+
+#: bbpress/form-topic-split.php:31
+msgid ""
+"If you use the existing topic option, replies within both topics will be "
+"merged chronologically. The order of the merged replies is based on the time "
+"and date they were posted."
+msgstr ""
+
+#: bbpress/form-topic-split.php:35
+msgid "Split Method"
+msgstr ""
+
+#: bbpress/form-topic-split.php:40
+#, php-format
+msgid "Split: %s"
+msgstr ""
+
+#: bbpress/form-topic-split.php:73
+msgid "Copy subscribers to the new topic"
+msgstr ""
+
+#: bbpress/form-topic-split.php:78
+msgid "Copy favoriters to the new topic"
+msgstr ""
+
+#: bbpress/form-topic-split.php:83
+msgid "Copy topic tags to the new topic"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:18
+#, php-format
+msgid "Manage Tag: \"%s\""
+msgstr ""
+
+#: bbpress/form-topic-tag.php:22
+msgid "Rename"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:25
+msgid "Leave the slug empty to have one automatically generated."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:29
+msgid ""
+"Changing the slug affects its permalink. Any links to the old slug will stop "
+"working."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:35
+msgid "Name:"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:40
+msgid "Slug:"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:59
+msgid "Merge"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:62
+msgid "Merging tags together cannot be undone."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:68
+msgid "Existing tag:"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:73
+#, php-format
+msgid ""
+"Are you sure you want to merge the \"%s\" tag into the tag you specified?"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:88
+msgid "Delete"
+msgstr ""
+
+#: bbpress/form-topic-tag.php:91
+msgid "This does not delete your topics. Only the tag itself is deleted."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:94
+msgid "Deleting a tag cannot be undone."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:95
+msgid "Any links to this tag will no longer function."
+msgstr ""
+
+#: bbpress/form-topic-tag.php:101
+#, php-format
+msgid ""
+"Are you sure you want to delete the \"%s\" tag? This is permanent and cannot "
+"be undone."
+msgstr ""
+
+#: bbpress/form-topic.php:41
+#, php-format
+msgid "Create New Topic in &ldquo;%s&rdquo;"
+msgstr ""
+
+#: bbpress/form-topic.php:41
+msgid "Create New Topic"
+msgstr ""
+
+#: bbpress/form-topic.php:51
+msgid ""
+"This forum is marked as closed to new topics, however your posting "
+"capabilities still allow you to do so."
+msgstr ""
+
+#: bbpress/form-topic.php:73
+#, php-format
+msgid "Topic Title (Maximum Length: %d):"
+msgstr ""
+
+#: bbpress/form-topic.php:99
+msgid "Topic Tags:"
+msgstr ""
+
+#: bbpress/form-topic.php:112
+msgid "Forum:"
+msgstr ""
+
+#: bbpress/form-topic.php:115
+msgid "(No Forum)"
+msgstr ""
+
+#: bbpress/form-topic.php:131
+msgid "Topic Type:"
+msgstr ""
+
+#: bbpress/form-topic.php:143
+msgid "Topic Status:"
+msgstr ""
+
+#: bbpress/form-topic.php:232
+msgid "You cannot create new topics."
+msgstr ""
+
+#: bbpress/form-topic.php:232
+msgid "You must be logged in to create new topics."
+msgstr ""
+
+#: bbpress/form-user-edit.php:14 bbpress/form-user-edit.php:19
+msgid "Name"
+msgstr ""
+
+#: bbpress/form-user-edit.php:24
+msgid "First Name"
+msgstr ""
+
+#: bbpress/form-user-edit.php:29
+msgid "Last Name"
+msgstr ""
+
+#: bbpress/form-user-edit.php:34
+msgid "Nickname"
+msgstr ""
+
+#: bbpress/form-user-edit.php:39
+msgid "Display Name"
+msgstr ""
+
+#: bbpress/form-user-edit.php:49 bbpress/form-user-edit.php:52
+msgid "Contact Info"
+msgstr ""
+
+#: bbpress/form-user-edit.php:57
+msgid "Website"
+msgstr ""
+
+#: bbpress/form-user-edit.php:74 bbpress/form-user-edit.php:77
+msgid "About Yourself"
+msgstr ""
+
+#: bbpress/form-user-edit.php:74 bbpress/form-user-edit.php:77
+msgid "About the user"
+msgstr ""
+
+#: bbpress/form-user-edit.php:82
+msgid "Biographical Info"
+msgstr ""
+
+#: bbpress/form-user-edit.php:90 bbpress/form-user-edit.php:93
+msgid "Account"
+msgstr ""
+
+#: bbpress/form-user-edit.php:98 bbpress/form-user-login.php:17
+#: bbpress/form-user-register.php:23 includes/widgets/widget-twitter.php:140
+msgid "Username"
+msgstr ""
+
+#: bbpress/form-user-edit.php:103 bbpress/form-user-register.php:28
+msgid "Email"
+msgstr ""
+
+#: bbpress/form-user-edit.php:115
+#, php-format
+msgid ""
+"There is a pending email address change to <code>%1$s</code>. <a href=\"%2$s"
+"\">Cancel</a>"
+msgstr ""
+
+#: bbpress/form-user-edit.php:124
+msgid "New Password"
+msgstr ""
+
+#: bbpress/form-user-edit.php:127
+msgid ""
+"If you would like to change the password type a new one. Otherwise leave "
+"this blank."
+msgstr ""
+
+#: bbpress/form-user-edit.php:130
+msgid "Type your new password again."
+msgstr ""
+
+#: bbpress/form-user-edit.php:133
+msgid ""
+"Your password should be at least ten characters long. Use upper and lower "
+"case letters, numbers, and symbols to make it even stronger."
+msgstr ""
+
+#: bbpress/form-user-edit.php:143 bbpress/form-user-edit.php:146
+msgid "User Role"
+msgstr ""
+
+#: bbpress/form-user-edit.php:153
+msgid "Network Role"
+msgstr ""
+
+#: bbpress/form-user-edit.php:156
+msgid "Grant this user super admin privileges for the Network."
+msgstr ""
+
+#: bbpress/form-user-edit.php:173
+msgid "Save Changes"
+msgstr ""
+
+#: bbpress/form-user-edit.php:178
+msgid "Update Profile"
+msgstr ""
+
+#: bbpress/form-user-edit.php:178
+msgid "Update User"
+msgstr ""
+
+#: bbpress/form-user-login.php:14 bbpress/form-user-login.php:35
+msgid "Log In"
+msgstr ""
+
+#: bbpress/form-user-login.php:22
+msgid "Password"
+msgstr ""
+
+#: bbpress/form-user-login.php:28
+msgid "Keep me signed in"
+msgstr ""
+
+#: bbpress/form-user-lost-pass.php:14
+msgid "Lost Password"
+msgstr ""
+
+#: bbpress/form-user-lost-pass.php:18
+msgid "Username or Email"
+msgstr ""
+
+#: bbpress/form-user-lost-pass.php:27
+msgid "Reset My Password"
+msgstr ""
+
+#: bbpress/form-user-register.php:14
+msgid "Create an Account"
+msgstr ""
+
+#: bbpress/form-user-register.php:17
+msgid "Your username must be unique, and cannot be changed later."
+msgstr ""
+
+#: bbpress/form-user-register.php:18
+msgid ""
+"We use your email address to email you a secure password and verify your "
+"account."
+msgstr ""
+
+#: bbpress/form-user-register.php:36
+msgid "Register"
+msgstr ""
+
+#: bbpress/form-user-roles.php:13
+msgid "Blog Role"
+msgstr ""
+
+#: bbpress/form-user-roles.php:20
+msgid "Forum Role"
+msgstr ""
+
+#: bbpress/loop-search-forum.php:16
+#, php-format
+msgid "Last updated %s"
+msgstr ""
+
+#: bbpress/loop-search-forum.php:26
+msgid "Forum: "
+msgstr ""
+
+#: bbpress/loop-search-reply.php:24
+msgid "In reply to: "
+msgstr ""
+
+#: bbpress/loop-search-topic.php:18
+msgid "Topic: "
+msgstr ""
+
+#: bbpress/loop-search-topic.php:25
+msgid "in group forum "
+msgstr ""
+
+#: bbpress/loop-search-topic.php:29
+msgid "in forum "
+msgstr ""
+
+#: bbpress/loop-single-topic.php:60
+#, php-format
+msgid "Started by %1$s"
+msgstr ""
+
+#: bbpress/loop-single-topic.php:68
+#, php-format
+msgid "in: <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: bbpress/user-details.php:29 bbpress/user-profile.php:15
+msgid "Profile"
+msgstr ""
+
+#: bbpress/user-details.php:35
+msgid "Topics Started"
+msgstr ""
+
+#: bbpress/user-details.php:41
+msgid "Replies Created"
+msgstr ""
+
+#: bbpress/user-details.php:48
+msgid "Favorites"
+msgstr ""
+
+#: bbpress/user-details.php:58
+msgid "Subscriptions"
+msgstr ""
+
+#: bbpress/user-details.php:65 includes/functions.php:82
+#: includes/functions.php:105 includes/functions.php:150
+msgid "Edit"
+msgstr ""
+
+#: bbpress/user-favorites.php:15
+msgid "Favorite Forum Topics"
+msgstr ""
+
+#: bbpress/user-favorites.php:26
+msgid "You currently have no favorite topics."
+msgstr ""
+
+#: bbpress/user-favorites.php:26
+msgid "This user has no favorite topics."
+msgstr ""
+
+#: bbpress/user-profile.php:24
+#, php-format
+msgid "Forum Role: %s"
+msgstr ""
+
+#: bbpress/user-profile.php:25
+#, php-format
+msgid "Topics Started: %s"
+msgstr ""
+
+#: bbpress/user-profile.php:26
+#, php-format
+msgid "Replies Created: %s"
+msgstr ""
+
+#: bbpress/user-replies-created.php:15
+msgid "Forum Replies Created"
+msgstr ""
+
+#: bbpress/user-replies-created.php:26
+msgid "You have not replied to any topics."
+msgstr ""
+
+#: bbpress/user-replies-created.php:26
+msgid "This user has not replied to any topics."
+msgstr ""
+
+#: bbpress/user-subscriptions.php:19
+msgid "Subscribed Forums"
+msgstr ""
+
+#: bbpress/user-subscriptions.php:28
+msgid "You are not currently subscribed to any forums."
+msgstr ""
+
+#: bbpress/user-subscriptions.php:28
+msgid "This user is not currently subscribed to any forums."
+msgstr ""
+
+#: bbpress/user-subscriptions.php:34
+msgid "Subscribed Topics"
+msgstr ""
+
+#: bbpress/user-subscriptions.php:45
+msgid "You are not currently subscribed to any topics."
+msgstr ""
+
+#: bbpress/user-subscriptions.php:45
+msgid "This user is not currently subscribed to any topics."
+msgstr ""
+
+#: bbpress/user-topics-created.php:15
+msgid "Forum Topics Started"
+msgstr ""
+
+#: bbpress/user-topics-created.php:26
+msgid "You have not created any topics."
+msgstr ""
+
+#: bbpress/user-topics-created.php:26
+msgid "This user has not created any topics."
+msgstr ""
+
+#: bbpress-templates/page-forum-statistics.php:22
+msgid "<p>Here are the statistics and popular topics of our forums.</p>"
+msgstr ""
+
+#: bbpress-templates/page-forum-statistics.php:34
+msgid "Popular Topics"
+msgstr ""
+
+#: bbpress-templates/page-topic-tags.php:22
+msgid ""
+"<p>This is a collection of tags that are currently popular on our forums.</p>"
+msgstr ""
+
+#: bbpress-templates/taxonomy-topic-tag-edit.php:17
+#: bbpress-templates/taxonomy-topic-tag.php:17
+#, php-format
+msgid "Topic Tag: %s"
+msgstr ""
+
+#: engine/admin/medialibrary.php:81
+msgid "Houdini Post Type"
+msgstr ""
+
+#: engine/admin/metaboxes.php:389
+#, php-format
+msgid "%s Settings"
+msgstr ""
+
+#: engine/admin/options.php:62
+msgid "Help"
+msgstr ""
+
+#: engine/admin/options.php:309
+msgid "Upload Image"
+msgstr ""
+
+#: engine/admin/options.php:315
+msgid "Remove Image"
+msgstr ""
+
+#: engine/admin/options.php:592
+msgid "Google Fonts"
+msgstr ""
+
+#: engine/admin/panel.php:27 engine/admin/panel.php:30
+msgid "Theme Options"
+msgstr ""
+
+#: engine/admin/panel.php:33
+msgid "NiceThemes Updates"
+msgstr ""
+
+#: engine/admin/panel.php:33
+msgid "Updates"
+msgstr ""
+
+#: engine/admin/panel.php:36
+msgid "Support Forums"
+msgstr ""
+
+#: engine/admin/panel.php:36
+msgid "Support"
+msgstr ""
+
+#: engine/admin/panel.php:39
+msgid "More Themes"
+msgstr ""
+
+#: engine/admin/panel.php:370
+msgid "Changes saved successfully"
+msgstr ""
+
+#: engine/admin/panel.php:685
+msgid "Themes by NiceThemes.com"
+msgstr ""
+
+#: engine/admin/panel.php:699
+msgid "More Info"
+msgstr ""
+
+#: engine/admin/panel.php:706
+msgid "<p>Error: Error when fetching themes.</p>"
+msgstr ""
+
+#: engine/admin/panel.php:731
+msgid "NiceThemes.com Support"
+msgstr ""
+
+#: engine/admin/version.php:96
+msgid "Nice Updates"
+msgstr ""
+
+#: engine/admin/version.php:124
+msgid "Framework Updates"
+msgstr ""
+
+#: engine/admin/version.php:141
+#, php-format
+msgid ""
+"<strong>There's a new Framework version(%s) available</strong>, please "
+"update."
+msgstr ""
+
+#: engine/admin/version.php:144
+#, php-format
+msgid "You're currently running the NiceFramework version %s"
+msgstr ""
+
+#: engine/admin/version.php:146
+msgid ""
+"By clicking the &quot;Update&quot; button, our latest NiceFramework version "
+"will be downloaded and extracted to your current theme's <code>/engine/</"
+"code> folder."
+msgstr ""
+
+#: engine/admin/version.php:148
+msgid ""
+"Please make a backup copy of your theme files and update WordPress to its "
+"latest version before updating the Framework."
+msgstr ""
+
+#: engine/admin/version.php:149
+msgid ""
+"Update your version now to ensure continued improvements and bug fixing."
+msgstr ""
+
+#: engine/admin/version.php:157
+msgid "NOTE: Please make sure your theme folder is writable"
+msgstr ""
+
+#: engine/admin/version.php:161
+msgid "Yey, Nice! Your NiceThemes framework is up to date."
+msgstr ""
+
+#: engine/admin/version.php:162
+msgid "Your Framework version for this site:"
+msgstr ""
+
+#: engine/admin/version.php:169
+msgid "Theme Updates"
+msgstr ""
+
+#: engine/admin/version.php:172
+msgid "You are running the theme:"
+msgstr ""
+
+#: engine/admin/version.php:173
+msgid "Version:"
+msgstr ""
+
+#: engine/admin/version.php:182
+#, php-format
+msgid ""
+"<strong>There's a new Theme version(%s) available</strong>, please update."
+msgstr ""
+
+#: engine/admin/version.php:186
+msgid "Update Download and Instructions"
+msgstr ""
+
+#: engine/admin/version.php:194
+msgid ""
+"If you didn't make any changes to the theme files, you are free to overwrite "
+"them with the new files without risk of losing theme settings, pages, posts, "
+"etc, and backwards compatibility is guaranteed."
+msgstr ""
+
+#: engine/admin/version.php:196
+msgid ""
+"If you have made changes to the theme files, you will need to compare your "
+"changed files to the new files listed in the changelog below and merge them "
+"together."
+msgstr ""
+
+#: engine/admin/version.php:204
+msgid "Your theme is up to date."
+msgstr ""
+
+#: engine/admin/version.php:263
+msgid "Failed: Invalid URL Provided"
+msgstr ""
+
+#: engine/theming/functions.php:157
+msgid "Home"
+msgstr ""
+
+#: engine/theming/theming.php:93
+msgid "minutes ago"
+msgstr ""
+
+#: engine/theming/theming.php:97
+msgid "hours ago"
+msgstr ""
+
+#: engine/theming/theming.php:101
+msgid "days ago"
+msgstr ""
+
+#: includes/custom-fields.php:27
+msgid "Page Information"
+msgstr ""
+
+#: includes/custom-fields.php:29
+msgid ""
+"<p>You can select the page template from the \"Template\" dropdown on the "
+"\"Page Attributes\" box.</p><p>If you are using the \"Gallery Template\" "
+"plase be sure to upload images from the \"Add Media\" button at the top of "
+"this page. (Don't insert the gallery in the page content, just add the "
+"images).</p>"
+msgstr ""
+
+#: includes/custom-fields.php:40 includes/custom-fields.php:53
+msgid "Video Embed Code"
+msgstr ""
+
+#: includes/custom-fields.php:42 includes/custom-fields.php:55
+msgid "Enter the video embed code for your video (YouTube, Vimeo or similar)."
+msgstr ""
+
+#: includes/custom-fields.php:65
+msgid "Info Box Image"
+msgstr ""
+
+#: includes/custom-fields.php:67
+msgid ""
+"Info Boxes Items use the WordPress featured image as the feedback image. "
+"Don't know what featured images are? How to use them? <a href=\"http://en."
+"support.wordpress.com/featured-images/#setting-a-featured-image\">Take a "
+"look at WordPress docs on Featured Images</a>."
+msgstr ""
+
+#: includes/custom-fields.php:73
+msgid "\"Read more\" URL"
+msgstr ""
+
+#: includes/custom-fields.php:75
+msgid ""
+"Add an URL for your Read More button in your Info Box on homepage (optional)"
+msgstr ""
+
+#: includes/custom-fields.php:81
+msgid "\"Read more\" Text"
+msgstr ""
+
+#: includes/custom-fields.php:83
+msgid "Add the anchor text for the \"Read More\" link."
+msgstr ""
+
+#: includes/custom-fields.php:89
+msgid "Open in a new window/tab"
+msgstr ""
+
+#: includes/custom-fields.php:91
+msgid ""
+"Tick this option if you want your link to be opened in a new window/tab "
+"(optional)"
+msgstr ""
+
+#: includes/customizer.php:76 includes/options.php:92
+msgid "Design & Styles"
+msgstr ""
+
+#: includes/customizer.php:96 includes/options.php:96
+msgid "Accent Color"
+msgstr ""
+
+#: includes/customizer.php:119 includes/options.php:142
+msgid "Background Color"
+msgstr ""
+
+#: includes/customizer.php:138 includes/options.php:103
+msgid "Background Image"
+msgstr ""
+
+#: includes/customizer.php:155 includes/options.php:109
+msgid "Background Image Repeat"
+msgstr ""
+
+#: includes/customizer.php:159 includes/customizer.php:271
+#: includes/options.php:116 includes/options.php:234
+msgid "No Repeat"
+msgstr ""
+
+#: includes/customizer.php:160 includes/customizer.php:272
+#: includes/options.php:117 includes/options.php:235
+msgid "Repeat"
+msgstr ""
+
+#: includes/customizer.php:161 includes/customizer.php:273
+#: includes/options.php:118 includes/options.php:236
+msgid "Repeat horizontally"
+msgstr ""
+
+#: includes/customizer.php:162 includes/customizer.php:274
+#: includes/options.php:119 includes/options.php:237
+msgid "Repeat vertically"
+msgstr ""
+
+#: includes/customizer.php:177 includes/options.php:123
+msgid "Background Image Position"
+msgstr ""
+
+#: includes/customizer.php:181 includes/customizer.php:293
+#: includes/options.php:130 includes/options.php:248
+msgid "Center Top"
+msgstr ""
+
+#: includes/customizer.php:182 includes/customizer.php:294
+#: includes/options.php:131 includes/options.php:249
+msgid "Center Center"
+msgstr ""
+
+#: includes/customizer.php:183 includes/customizer.php:295
+#: includes/options.php:132 includes/options.php:250
+msgid "Center Bottom"
+msgstr ""
+
+#: includes/customizer.php:184 includes/customizer.php:296
+#: includes/options.php:133 includes/options.php:251
+msgid "Left Top"
+msgstr ""
+
+#: includes/customizer.php:185 includes/customizer.php:297
+#: includes/options.php:134 includes/options.php:252
+msgid "Left Center"
+msgstr ""
+
+#: includes/customizer.php:186 includes/customizer.php:298
+#: includes/options.php:135 includes/options.php:253
+msgid "Left Bottom"
+msgstr ""
+
+#: includes/customizer.php:187 includes/customizer.php:299
+#: includes/options.php:136 includes/options.php:254
+msgid "Right Top"
+msgstr ""
+
+#: includes/customizer.php:188 includes/customizer.php:300
+#: includes/options.php:137 includes/options.php:255
+msgid "Right Center"
+msgstr ""
+
+#: includes/customizer.php:189 includes/customizer.php:301
+#: includes/options.php:138 includes/options.php:256
+msgid "Right Bottom"
+msgstr ""
+
+#: includes/customizer.php:206 includes/options.php:148
+msgid "Layout Type"
+msgstr ""
+
+#: includes/customizer.php:210 includes/options.php:156
+msgid "Full Width"
+msgstr ""
+
+#: includes/customizer.php:211 includes/options.php:155
+msgid "Boxed"
+msgstr ""
+
+#: includes/customizer.php:220 includes/options.php:180
+msgid "Header"
+msgstr ""
+
+#: includes/customizer.php:235
+msgid "Logo"
+msgstr ""
+
+#: includes/customizer.php:251
+msgid "Header Background Image"
+msgstr ""
+
+#: includes/customizer.php:267
+msgid "Header Background Image Repeat"
+msgstr ""
+
+#: includes/customizer.php:289
+msgid "Header Background Image Position"
+msgstr ""
+
+#: includes/customizer.php:318 includes/options.php:214
+msgid "Header Background Color"
+msgstr ""
+
+#: includes/customizer.php:328 includes/options.php:260
+msgid "Footer"
+msgstr ""
+
+#: includes/customizer.php:342 includes/options.php:263
+msgid "Enable Custom Copyright"
+msgstr ""
+
+#: includes/customizer.php:346
+msgid "Yes"
+msgstr ""
+
+#: includes/customizer.php:347
+msgid "No"
+msgstr ""
+
+#: includes/customizer.php:359 includes/options.php:270
+msgid "Custom Copyright Text"
+msgstr ""
+
+#: includes/functions.php:52
+msgid "Older posts"
+msgstr ""
+
+#: includes/functions.php:53
+msgid "Newer posts"
+msgstr ""
+
+#: includes/functions.php:81
+msgid "No Comments"
+msgstr ""
+
+#: includes/functions.php:81
+msgid "1 Comment"
+msgstr ""
+
+#: includes/functions.php:81
+msgid "% Comments"
+msgstr ""
+
+#: includes/functions.php:142
+msgid "Like this"
+msgstr ""
+
+#: includes/functions.php:182
+#, php-format
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: includes/functions.php:208
+msgid "Related Posts"
+msgstr ""
+
+#: includes/functions.php:332
+msgid "Please tell us your name"
+msgstr ""
+
+#: includes/functions.php:335
+msgid "Please tell us your E-Mail address"
+msgstr ""
+
+#: includes/functions.php:338
+msgid "Please add a message"
+msgstr ""
+
+#: includes/functions.php:343
+msgid "New contact form received"
+msgstr ""
+
+#: includes/functions.php:345
+msgid "Name: "
+msgstr ""
+
+#: includes/functions.php:347
+msgid "Subject: "
+msgstr ""
+
+#: includes/functions.php:349
+msgid "Email: "
+msgstr ""
+
+#: includes/functions.php:349
+msgid "Comments: "
+msgstr ""
+
+#: includes/functions.php:351
+msgid "From: "
+msgstr ""
+
+#: includes/functions.php:352
+msgid "Reply-To: "
+msgstr ""
+
+#: includes/functions.php:358
+msgid "There has been an error, please try again."
+msgstr ""
+
+#: includes/functions.php:583
+msgid "Less than a minute"
+msgstr ""
+
+#: includes/functions.php:711
+msgid "No More Posts Found."
+msgstr ""
+
+#: includes/functions.php:1163
+msgid "Read more"
+msgstr ""
+
+#: includes/functions.php:1218
+msgid "Video Library"
+msgstr ""
+
+#: includes/functions.php:1423
+msgid "There are no images for this gallery"
+msgstr ""
+
+#: includes/nav-menus.php:7
+msgid "Navigation Menu"
+msgstr ""
+
+#: includes/nav-menus.php:8
+msgid "Footer Menu"
+msgstr ""
+
+#: includes/options.php:29
+msgid "General Settings"
+msgstr ""
+
+#: includes/options.php:32
+msgid "Favicon"
+msgstr ""
+
+#: includes/options.php:33
+msgid "Upload a favicon."
+msgstr ""
+
+#: includes/options.php:38
+msgid "Sidebar Position"
+msgstr ""
+
+#: includes/options.php:39
+msgid "Select if you want to show the full content or the excerpt on posts."
+msgstr ""
+
+#: includes/options.php:44
+msgid "Sidebar on right side"
+msgstr ""
+
+#: includes/options.php:45
+msgid "Sidebar on left side"
+msgstr ""
+
+#: includes/options.php:49
+msgid "Display Back To Top Button"
+msgstr ""
+
+#: includes/options.php:50
+msgid ""
+"Enable if you want the \"Back To Top button\" to be displayed in the bottom "
+"right corner of the site."
+msgstr ""
+
+#: includes/options.php:56
+msgid "Post Author Box"
+msgstr ""
+
+#: includes/options.php:57
+msgid ""
+"This will enable the post author box on the single posts page. Edit "
+"description in Users > Your Profile."
+msgstr ""
+
+#: includes/options.php:63
+msgid "Call to Action Text"
+msgstr ""
+
+#: includes/options.php:64
+msgid ""
+"Add the text that you would like to appear in the global call to action "
+"section."
+msgstr ""
+
+#: includes/options.php:70
+msgid "Call to Action Button Link URL"
+msgstr ""
+
+#: includes/options.php:71
+msgid "Please enter the URL for the call to action section here."
+msgstr ""
+
+#: includes/options.php:77
+msgid "Call to Action Button Text"
+msgstr ""
+
+#: includes/options.php:78
+msgid ""
+"If you would like a button to be the link in the global call to action "
+"section, please enter the text for it here."
+msgstr ""
+
+#: includes/options.php:84
+msgid "Tracking Code"
+msgstr ""
+
+#: includes/options.php:85
+msgid "Insert the code if you have one. Google analytics, etc."
+msgstr ""
+
+#: includes/options.php:104
+msgid "Upload or choose the background image."
+msgstr ""
+
+#: includes/options.php:143
+msgid "Choose the background color."
+msgstr ""
+
+#: includes/options.php:149
+msgid "Select the layout type."
+msgstr ""
+
+#: includes/options.php:160
+msgid "Masonry Blog Posts Load Method"
+msgstr ""
+
+#: includes/options.php:161
+msgid "Select the method for loading masonry blog posts."
+msgstr ""
+
+#: includes/options.php:167
+msgid "On Scroll"
+msgstr ""
+
+#: includes/options.php:168
+msgid "On Clicking Button"
+msgstr ""
+
+#: includes/options.php:172
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/options.php:173
+msgid "Quickly add some CSS to your theme by adding it to this block."
+msgstr ""
+
+#: includes/options.php:183
+msgid "Custom Logo"
+msgstr ""
+
+#: includes/options.php:184
+msgid "Upload a custom logo."
+msgstr ""
+
+#: includes/options.php:189
+msgid "Custom Logo (Retina)"
+msgstr ""
+
+#: includes/options.php:190
+msgid ""
+"Upload a custom logo for retina displays. Upload at exactly 2x the size of "
+"your standard logo."
+msgstr ""
+
+#: includes/options.php:195
+msgid "Logo Height"
+msgstr ""
+
+#: includes/options.php:196
+msgid ""
+"Change the logo height. This setting will standarize the logo height for "
+"retina devices."
+msgstr ""
+
+#: includes/options.php:202
+msgid "Text Title"
+msgstr ""
+
+#: includes/options.php:203
+msgid ""
+"Enable if you want Blog Title and Tagline to be text-based. Setup title/"
+"tagline in WP -> Settings -> General."
+msgstr ""
+
+#: includes/options.php:208
+msgid "Site Title Typography"
+msgstr ""
+
+#: includes/options.php:209
+msgid "Change the site title typography. ( Only if Text Title is enabled )"
+msgstr ""
+
+#: includes/options.php:221
+msgid "Header background Image"
+msgstr ""
+
+#: includes/options.php:222
+msgid "Upload or choose the header background image."
+msgstr ""
+
+#: includes/options.php:227
+msgid "Header background image repeat"
+msgstr ""
+
+#: includes/options.php:241
+msgid "Header background image position"
+msgstr ""
+
+#: includes/options.php:264
+msgid "Enable if you want to write your own copyright text."
+msgstr ""
+
+#: includes/options.php:271
+msgid ""
+"Please enter the copyright section text. e.g. All Rights Reserved, Nice "
+"Themes."
+msgstr ""
+
+#: includes/options.php:278
+msgid "Footer Columns"
+msgstr ""
+
+#: includes/options.php:286
+msgid "Home Options"
+msgstr ""
+
+#: includes/options.php:289
+msgid "Display Live Search"
+msgstr ""
+
+#: includes/options.php:290
+msgid "This will enable the live search block on the home page."
+msgstr ""
+
+#: includes/options.php:296 includes/options.php:399
+msgid "Live Search Tagline"
+msgstr ""
+
+#: includes/options.php:297
+msgid "Insert the text that will appear above the search bar."
+msgstr ""
+
+#: includes/options.php:303 includes/options.php:405
+msgid "Live Search Tagline (extended)"
+msgstr ""
+
+#: includes/options.php:304
+msgid "Insert the text that will appear below the Live Search Text.."
+msgstr ""
+
+#: includes/options.php:310
+msgid "Enable Info Boxes"
+msgstr ""
+
+#: includes/options.php:311
+msgid "This will enable the info boxes to be shown in the home page."
+msgstr ""
+
+#: includes/options.php:317
+msgid "Info Boxes Order"
+msgstr ""
+
+#: includes/options.php:318
+msgid ""
+"Select the view order you wish to set for the info boxes items on the home "
+"page."
+msgstr ""
+
+#: includes/options.php:323 includes/options.php:351
+msgid "Date"
+msgstr ""
+
+#: includes/options.php:323 includes/options.php:351
+msgid "Page Order"
+msgstr ""
+
+#: includes/options.php:323 includes/options.php:351
+#: includes/widgets/widget-twitter.php:112
+msgid "Title"
+msgstr ""
+
+#: includes/options.php:323 includes/options.php:351
+#: includes/widgets/widget-flickr.php:68
+msgid "Random"
+msgstr ""
+
+#: includes/options.php:325
+msgid "Number of Articles per Category"
+msgstr ""
+
+#: includes/options.php:326
+msgid ""
+"Select the number of articles entries that should appear per category in the "
+"home page .(Default is 5)"
+msgstr ""
+
+#: includes/options.php:331
+msgid "Enable Videos"
+msgstr ""
+
+#: includes/options.php:332
+msgid "This will enable the videos section to be shown in the home page."
+msgstr ""
+
+#: includes/options.php:339
+msgid "Number of Videos to Show"
+msgstr ""
+
+#: includes/options.php:340
+msgid ""
+"Select the number of video entries that should appear in the home page ."
+"(Default is 5)"
+msgstr ""
+
+#: includes/options.php:345
+msgid "Videos Order"
+msgstr ""
+
+#: includes/options.php:346
+msgid ""
+"Select the view order you wish to set for the videos items on the home page."
+msgstr ""
+
+#: includes/options.php:354
+msgid "Typography"
+msgstr ""
+
+#: includes/options.php:357
+msgid "Enable Custom Typography"
+msgstr ""
+
+#: includes/options.php:358
+msgid "Enable if you want to pick your fonts."
+msgstr ""
+
+#: includes/options.php:363
+msgid "General Typography"
+msgstr ""
+
+#: includes/options.php:364
+msgid "Change the general font."
+msgstr ""
+
+#: includes/options.php:369
+msgid "Navigation"
+msgstr ""
+
+#: includes/options.php:370
+msgid "Change the navigation font."
+msgstr ""
+
+#: includes/options.php:375
+msgid "Sub Navigation (Submenus)"
+msgstr ""
+
+#: includes/options.php:376
+msgid "Change the navigation submenu font."
+msgstr ""
+
+#: includes/options.php:381
+msgid "Headings"
+msgstr ""
+
+#: includes/options.php:382
+msgid "Change the headings font and style."
+msgstr ""
+
+#: includes/options.php:387
+msgid "Infoboxes Title"
+msgstr ""
+
+#: includes/options.php:388 includes/options.php:394
+msgid "Change the infoboxes font."
+msgstr ""
+
+#: includes/options.php:393
+msgid "Infoboxes Content"
+msgstr ""
+
+#: includes/options.php:400
+msgid "Change the live search tagline font."
+msgstr ""
+
+#: includes/options.php:406
+msgid "Change the extended live search tagline font."
+msgstr ""
+
+#: includes/options.php:413
+msgid "Knowledgebase"
+msgstr ""
+
+#: includes/options.php:416
+msgid "Display Views"
+msgstr ""
+
+#: includes/options.php:417
+msgid "Enable to display the amount of article views below the article title."
+msgstr ""
+
+#: includes/options.php:423
+msgid "Display Likes"
+msgstr ""
+
+#: includes/options.php:424
+msgid "Enable to display the amount of likes below the article title."
+msgstr ""
+
+#: includes/options.php:430
+msgid "Display Reading Time"
+msgstr ""
+
+#: includes/options.php:431
+msgid "Enable to display the reading time below the article title."
+msgstr ""
+
+#: includes/options.php:437
+msgid "Display Article Author"
+msgstr ""
+
+#: includes/options.php:438
+msgid ""
+"This will enable the display of the article author information below the "
+"content."
+msgstr ""
+
+#: includes/options.php:444
+msgid "Display Related Articles"
+msgstr ""
+
+#: includes/options.php:445
+msgid "This will enable display of the related articles below the content."
+msgstr ""
+
+#: includes/options.php:453
+msgid "Contact Information"
+msgstr ""
+
+#: includes/options.php:457
+msgid "Contact Form Email Address"
+msgstr ""
+
+#: includes/options.php:458
+msgid ""
+"Enter the email address where you'd like to receive emails from the contact "
+"form, or leave blank to use admin email."
+msgstr ""
+
+#: includes/options.php:465
+msgid "Google Maps Embed Code"
+msgstr ""
+
+#: includes/options.php:466
+msgid "Insert the Google Map embed code for the contact template."
+msgstr ""
+
+#: includes/options.php:473
+msgid "Images"
+msgstr ""
+
+#: includes/options.php:476
+msgid "WP Resize Cropping"
+msgstr ""
+
+#: includes/options.php:477
+msgid "The post thumbnail will be cropped to match the target aspect ratio."
+msgstr ""
+
+#: includes/options.php:483
+msgid "JPEG Quality"
+msgstr ""
+
+#: includes/options.php:484
+msgid ""
+"Change the JPEG compression-level of uploaded images and thumbnails.(Default "
+"is 90)"
+msgstr ""
+
+#: includes/options.php:490
+msgid "Social Media"
+msgstr ""
+
+#: includes/options.php:493
+msgid "Facebook URL"
+msgstr ""
+
+#: includes/options.php:500
+msgid "Twitter URL"
+msgstr ""
+
+#: includes/options.php:507
+msgid "Instagram URL"
+msgstr ""
+
+#: includes/options.php:514
+msgid "Google+ URL"
+msgstr ""
+
+#: includes/options.php:521
+msgid "Dribbble URL"
+msgstr ""
+
+#: includes/options.php:528
+msgid "Vimeo URL"
+msgstr ""
+
+#: includes/options.php:535
+msgid "Tumblr URL"
+msgstr ""
+
+#: includes/options.php:542
+msgid "Flickr URL"
+msgstr ""
+
+#: includes/options.php:549
+msgid "Youtube URL"
+msgstr ""
+
+#: includes/options.php:556
+msgid "Linkedin URL"
+msgstr ""
+
+#: includes/options.php:563
+msgid "Dropbox URL"
+msgstr ""
+
+#: includes/options.php:570
+msgid "Foursquare URL"
+msgstr ""
+
+#: includes/options.php:577
+msgid "Pinterest URL"
+msgstr ""
+
+#: includes/options.php:584
+msgid "Quora URL"
+msgstr ""
+
+#: includes/options.php:591
+msgid "Skype URL"
+msgstr ""
+
+#: includes/options.php:598
+msgid "BitBucket URL"
+msgstr ""
+
+#: includes/options.php:605
+msgid "Github URL"
+msgstr ""
+
+#: includes/options.php:612
+msgid "Stack Exchange URL"
+msgstr ""
+
+#: includes/options.php:619
+msgid "Stack Overflow URL"
+msgstr ""
+
+#: includes/options.php:626
+msgid "Trello URL"
+msgstr ""
+
+#: includes/sidebars.php:15
+msgid "Appears in the blog section of the site."
+msgstr ""
+
+#: includes/sidebars.php:26
+msgid "Appears in the sidebar of the default page template."
+msgstr ""
+
+#: includes/sidebars.php:37
+msgid "Appears in the sidebar of the FAQ templates."
+msgstr ""
+
+#: includes/sidebars.php:48
+msgid "Appears in the sidebar of the knowledgebase articles."
+msgstr ""
+
+#: includes/sidebars.php:59
+msgid "Appears in the pre footer section of the site, the first column."
+msgstr ""
+
+#: includes/sidebars.php:70
+msgid "Appears in the pre footer section of the site, the second column."
+msgstr ""
+
+#: includes/sidebars.php:85
+msgid "Appears in the pre footer section of the site, the third column."
+msgstr ""
+
+#: includes/sidebars.php:99
+msgid "Appears in the pre footer section of the site, the fourth column."
+msgstr ""
+
+#: includes/sidebars.php:112
+msgid "Appears in the footer section of the site, the first column."
+msgstr ""
+
+#: includes/sidebars.php:123
+msgid "Appears in the footer section of the site, the second column."
+msgstr ""
+
+#: includes/sidebars.php:136
+msgid "Appears in the footer section of the site, the third column."
+msgstr ""
+
+#: includes/sidebars.php:151
+msgid "Appears in the footer section of the site, the fourth column."
+msgstr ""
+
+#: includes/sidebars.php:164
+msgid "Appears in the sidebar of the forum templates."
+msgstr ""
+
+#: includes/theming.php:73
+#, php-format
+msgid "by %s"
+msgstr ""
+
+#: includes/theming.php:73
+#, php-format
+msgid "Powered by %s"
+msgstr ""
+
+#: includes/custom-post-types/article.php:13
+msgid "Articles"
+msgstr ""
+
+#: includes/custom-post-types/article.php:14
+msgid "Article"
+msgstr ""
+
+#: includes/custom-post-types/article.php:15
+#: includes/custom-post-types/faq.php:15
+#: includes/custom-post-types/infobox.php:15
+msgid "Add New"
+msgstr ""
+
+#: includes/custom-post-types/article.php:16
+msgid "Add New Article"
+msgstr ""
+
+#: includes/custom-post-types/article.php:17
+msgid "Edit Article"
+msgstr ""
+
+#: includes/custom-post-types/article.php:18
+msgid "New Article"
+msgstr ""
+
+#: includes/custom-post-types/article.php:19
+msgid "View Article"
+msgstr ""
+
+#: includes/custom-post-types/article.php:20
+msgid "Search Articles"
+msgstr ""
+
+#: includes/custom-post-types/article.php:21
+msgid "No Articles found"
+msgstr ""
+
+#: includes/custom-post-types/article.php:22
+msgid "No Articles found in Trash"
+msgstr ""
+
+#: includes/custom-post-types/article.php:50
+#: includes/custom-post-types/article.php:52
+msgid "Categories"
+msgstr ""
+
+#: includes/custom-post-types/article.php:51
+msgid "Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:53
+msgid "All Categories"
+msgstr ""
+
+#: includes/custom-post-types/article.php:54
+msgid "Parent Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:55
+msgid "Parent Category:"
+msgstr ""
+
+#: includes/custom-post-types/article.php:56
+msgid "Edit Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:57
+msgid "Update Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:58
+msgid "Add New Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:59
+msgid "New Category"
+msgstr ""
+
+#: includes/custom-post-types/article.php:73
+#: includes/custom-post-types/article.php:75
+msgid "Tags"
+msgstr ""
+
+#: includes/custom-post-types/article.php:74
+msgid "Tag"
+msgstr ""
+
+#: includes/custom-post-types/article.php:76
+msgid "All Tags"
+msgstr ""
+
+#: includes/custom-post-types/article.php:77
+msgid "Parent Tag"
+msgstr ""
+
+#: includes/custom-post-types/article.php:78
+msgid "Parent Tag:"
+msgstr ""
+
+#: includes/custom-post-types/article.php:79
+msgid "Edit Tag"
+msgstr ""
+
+#: includes/custom-post-types/article.php:80
+msgid "Update Tag"
+msgstr ""
+
+#: includes/custom-post-types/article.php:81
+msgid "Add New Tag"
+msgstr ""
+
+#: includes/custom-post-types/article.php:82
+msgid "New Tag"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:13
+msgid "FAQs"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:16
+msgid "Add New FAQ"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:17
+msgid "Edit FAQ"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:18
+msgid "New FAQ"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:19
+msgid "View FAQ"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:20
+msgid "Search FAQs"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:21
+msgid "No FAQs found"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:22
+msgid "No FAQs found in Trash"
+msgstr ""
+
+#: includes/custom-post-types/faq.php:53
+msgid "Enter the FAQ question"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:13
+msgid "Info Boxes"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:14
+msgid "Info Box"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:16
+msgid "Add New Info Box"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:17
+msgid "Edit Info Box"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:18
+msgid "New Info Box"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:19
+msgid "View Info Box"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:20
+msgid "Search Info Boxes"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:21
+msgid "No Info Boxes found"
+msgstr ""
+
+#: includes/custom-post-types/infobox.php:22
+msgid "No Info Boxes found in Trash"
+msgstr ""
+
+#: includes/widgets/widget-article-categories.php:11
+msgid "(NiceThemes) Article Categories"
+msgstr ""
+
+#: includes/widgets/widget-article-categories.php:57
+#, php-format
+msgid "View all posts in %s"
+msgstr ""
+
+#: includes/widgets/widget-article-categories.php:92
+#: includes/widgets/widget-blog-author.php:93
+#: includes/widgets/widget-popular-articles.php:126
+msgid "Title:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:11
+msgid "(NiceThemes) Blog Author"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:11
+msgid "This widget includes Blog Author Info."
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:54
+msgid "Follow me on twitter"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:97
+msgid "Bio:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:101
+msgid "<a href=\"http://twitter.com/\">Twitter</a> Username:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:105
+msgid "<a href=\"http://www.gravatar.com/\">Gravatar</a> E-mail:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:109
+msgid "Gravatar Size:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:113
+msgid "Gravatar Alignment:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:115
+msgid "Left"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:116
+msgid "Right"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:120
+msgid "Read More Text (optional):"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:124
+msgid "Read More URL (optional):"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:128
+msgid "Visible Pages:"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:130
+msgid "All"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:131
+msgid "Home only"
+msgstr ""
+
+#: includes/widgets/widget-blog-author.php:132
+msgid "Single only"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:9
+msgid "(NiceThemes) Flickr"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:23
+msgid "Photos on <span>flick<span>r</span></span>"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:46
+msgid "Flickr ID (<a href=\"http://www.idgettr.com\">idGettr</a>):"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:50
+#: includes/widgets/widget-popular-articles.php:131
+msgid "Number:"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:58
+msgid "Type:"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:60
+msgid "User"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:61
+msgid "Group"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:65
+msgid "Sorting:"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:67
+msgid "Latest"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:72
+msgid "Size:"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:74
+msgid "Square"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:75
+msgid "Medium"
+msgstr ""
+
+#: includes/widgets/widget-flickr.php:76
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:11
+msgid "(NiceThemes) Popular Articles"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:11
+msgid "A widget that displays your most popular articles."
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:136
+msgid "Order By:"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:138
+msgid "Views"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:139
+msgid "Likes"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:144
+msgid "Hide Views"
+msgstr ""
+
+#: includes/widgets/widget-popular-articles.php:148
+msgid "Hide Likes"
+msgstr ""
+
+#: includes/widgets/widget-social.php:9
+msgid ""
+"Add your social links with this widget. (Note: To set the social links you "
+"have to do it on the theme options panel.)"
+msgstr ""
+
+#: includes/widgets/widget-social.php:10
+msgid "(NiceThemes) Social Widget"
+msgstr ""
+
+#: includes/widgets/widget-social.php:110
+msgid "Title (optional):"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:16
+msgid "(NiceThemes) Twitter"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:16
+msgid "Add your Twitter feed with this widget."
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:30
+msgid ""
+"No tweets found. Please make sure your twitter widget settings are correct."
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:81
+msgid "Follow"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:81
+msgid "on Twitter"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:112
+msgid "optional"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:116
+msgid "Consumer Key"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:120
+msgid "Consumer Secret"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:124
+msgid "Access Token"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:128
+msgid "Access Token Secret"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:133
+msgid "Include Retweets"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:137
+msgid "Exclude Replies"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:140
+msgid "without @"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:144
+msgid "Number of tweets to show:"
+msgstr ""
+
+#: includes/widgets/widget-twitter.php:146
+msgid "by default, 1"
+msgstr ""

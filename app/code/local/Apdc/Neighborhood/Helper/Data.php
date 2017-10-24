@@ -186,4 +186,48 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::logException($e);
         }
     }
+
+    public function getAllZipCode($json=false){
+        $data=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->toArray(array('postcodes','website_id','name'))['items'];
+        $result=array();
+        foreach($data as $row){
+            $tmp_zip=unserialize($row['postcodes']);
+            foreach($tmp_zip as $zipcode){
+                if(!array_key_exists($zipcode,$result)){
+                    $result[(int)$zipcode]=array(
+                        0 =>
+                        array('name'=>$row['name'],'website_id'=>$row['website_id'])
+                    );
+                }else{
+                    array_push($result[(int)$zipcode],array('name'=>$row['name'],'website_id'=>$row['website_id']));
+                }
+            }
+        }
+
+        asort($result);
+
+        return $result;
+    }
+
+    public function getAllWebsites(){
+        $data=Mage::app()->getStores();
+        $result=array();
+        $tmp=array();
+
+        $order=[19,20,16,17,12,15,9,21,10,4,11,14,5,7,13,1,18,23,22];
+
+        foreach($data as $d){
+            if($d->getWebsite()->getId()<>2){
+                $tmp[$d->getWebsite()->getId()]=$d->getName();
+            }
+        }
+
+        foreach($order as $key){
+            if(isset($tmp[$key])){
+                $result[$key]=$tmp[$key];
+            }
+        }      
+
+        return $result;
+    }
 }

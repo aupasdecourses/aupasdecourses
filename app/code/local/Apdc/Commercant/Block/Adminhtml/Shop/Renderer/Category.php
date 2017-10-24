@@ -10,11 +10,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category extends Mage_Adminh
     {
         parent::_construct();
 
-        $this->_commercantCategories = Mage::getModel('catalog/category')
-            ->getCollection()
-            ->setOrder('name')
-            ->addAttributeToSelect('name')
-            ->addAttributeToFilter('estcom_commercant', 70);
+        $this->_commercantCategories = Mage::helper('apdc_commercant')->getCategoriesCommercant();
         $this->_ShopsArray = Mage::helper('apdc_commercant')->getStoresArray();
 
     }

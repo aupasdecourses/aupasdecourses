@@ -1,23 +1,7 @@
 {% extends 'ApdcApdcBundle::base.html.twig' %}
-
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-<div class ="container">
-	<div class="row">
-		<div class="col-sm-2">
-			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default"><< Retour</a>
-		</div>
-		<div class="progress col-sm-8">
-			<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-		    	<span>Adyen</span>
-			</div>
-		</div>
-		<div class="col-sm-2">
-			<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right">Cloturer >></a>
-		</div>
-	</div>
-
 	{% set psp_reference = 0 %}
 
 	{% for order, fields in orders %}
@@ -35,5 +19,6 @@
 			{% include 'ApdcApdcBundle::refund/hipay.html.twig' %}
 		{% endif %}
 	</div>
+
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}

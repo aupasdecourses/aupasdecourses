@@ -1,8 +1,23 @@
-<div class="row">
-	<div class="col-sm-12">
-		<h1>#{{ id ~ " / " ~ customer_name }}<small> Rembourser via HiPay</small></h1>
-		<div><h4>Montant à rembourser : {{ refund_diff ~ " € " }}</h4></div>
-		<a href="http://www.hipaywallet.com" target="_blank">
-			<input type="button" class="btn btn-success" value="Plateforme Hipay"/>
-		</a>
+<div class ="container">
+	<div class="row">
+		<div class="col-sm-2">
+			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default"><< Retour</a>
+		</div>
+		<div class="progress col-sm-8">
+			<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+		    	<span>Hipay</span>
+			</div>
+		</div>
+		<div class="col-sm-2">{{ form(hipay_refund_form) }}</div>
 	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>#{{ id ~ " / " ~ customer_name }}<small> Rembourser via HiPay</small></h1>
+			<div><h4>Montant à rembourser : {{ refund_diff ~ " € " }}</h4></div>
+			<a href="http://www.hipaywallet.com" target="_blank">
+				<input type="button" class="btn btn-success" value="Plateforme Hipay"/>
+			</a>
+		</div>
+	</div>
+</div>

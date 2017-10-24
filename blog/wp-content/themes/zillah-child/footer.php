@@ -67,7 +67,6 @@
                     <a href="https://www.aupasdecourses.com" target="_blank">
                         <img class="logo-site" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/themes/zillah-child/img/logo-APDC.png" alt="Logo Au Pas de Courses">
                     </a>
-                 
 			</div>
 		</div><!-- .site-info -->
 

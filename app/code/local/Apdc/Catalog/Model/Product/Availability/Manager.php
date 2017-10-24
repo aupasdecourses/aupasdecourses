@@ -141,14 +141,16 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             foreach ($productDatas as $product) {
                 if (in_array($product['type_id'], ['bundle', 'grouped'])) {
                     $childs = $this->getChildPerParent($product['entity_id']);
-                    foreach ($childs as $childId) {
-                        $childKey = $childId . '_' . $product['website_id'];
-                        if (isset($productDatas[$childKey])) {
-                            $childData = $productDatas[$childKey];
-                            $key = $childData['website_id'] . '_' . $childData['commercant_id'];
-                            $available = $availabilities[$day][$key];
-                            if ($available['status'] > 1) {
-                                break;
+                    if($childs<>null){
+                        foreach ($childs as $childId) {
+                            $childKey = $childId . '_' . $product['website_id'];
+                            if (isset($productDatas[$childKey])) {
+                                $childData = $productDatas[$childKey];
+                                $key = $childData['website_id'] . '_' . $childData['commercant_id'];
+                                $available = $availabilities[$day][$key];
+                                if ($available['status'] > 1) {
+                                    break;
+                                }
                             }
                         }
                     }

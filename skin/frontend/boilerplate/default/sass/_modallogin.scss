@@ -1,9 +1,6 @@
 /* LOGIN FORM */
 
-#login-form-popup-container,
-#newsletter-form-popup-container,
-#delivery-popup-container,
-#neighborhood-popup-container {
+.apdc-popup-container {
     display: block;
     position: absolute;
     background: white;

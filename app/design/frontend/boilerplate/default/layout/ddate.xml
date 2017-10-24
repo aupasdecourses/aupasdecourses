@@ -65,7 +65,7 @@
 
     <reference name="checkout.onepage.shipping_method">
       <block type="checkout/onepage_ddate" name="checkout.onepage.ddate" as="ddate" template="apdc_checkout/checkout/onepage/ddate.phtml">
-        <block type="apdc_checkout/deliverycheck_check" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
+        <block type="core/template" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
       </block>
     </reference>
     <reference name="header.delivery" remove="true" />
@@ -136,7 +136,7 @@
 
   <apdc_popup_index_templateajax>
     <block type="checkout/onepage_ddate"  name="delivery_popup_apdc_popup_child" template="apdc_checkout/checkout/onepage/ddate.phtml">
-      <block type="apdc_checkout/deliverycheck_check" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
+      <block type="core/template" name="deliverycheck" template="apdc_checkout/deliverycheck/check.phtml"/>
     </block>
   </apdc_popup_index_templateajax>
 

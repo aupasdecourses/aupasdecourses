@@ -1,0 +1,24 @@
+=== Flatbase Changelog ===
+
+= 1.0.2 (2015.04.15) =
+ * Added revisions support for Articles.
+ * Updated Font Awesome to version 4.3
+ * Added Buttons as a typography option.
+ * Fixed bug for typography selection on input fields and buttons.
+ * Added arguments for order and orderby in nicethemes_knowledgebase()
+ * Added filter for nice_options
+ * Added tags and categories on the single post page.
+
+= 1.0.1 (2014.09.18) =
+ * Updated Font Awesome to version 4.2
+ * Updated Twitter oAuth to avoid object duplication.
+ * Added filter to enable/disable the contact form.
+ * Added author field for articles.
+ * Fixed bug for checkboxes and radio fields in Chrome.
+ * Modified the order for the FAQs template.
+ * Added filter nice_faq_order to set an order for the FAQs templates.
+ * Added filter nice_live_search_post_type in order to programatically add or remove post types for the live search functionality.
+ * Fixed the "Less than a minute" reading time issue.
+
+= 1.0.0 (2014.04.03) =
+ * First Logged release

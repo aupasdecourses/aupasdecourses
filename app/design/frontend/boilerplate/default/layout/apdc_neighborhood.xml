@@ -32,4 +32,10 @@
     </reference>
   </apdc_choose_neighborhood>
 
+  <apdc_disambiguation_neighborhood>
+    <reference name="content">
+      <block type="apdc_neighborhood/header_menu" name="neighborhood_disambiguation" template="apdc_neighborhood/disambiguation.phtml" />
+    </reference>
+  </apdc_disambiguation_neighborhood>
+
 </layout>
