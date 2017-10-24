@@ -1,3 +1,6 @@
+#model{
+    padding:60px 0;
+}
 section {
     & > .container {
         background-color: #fff;
@@ -15,13 +18,9 @@ section {
     }
     &#districts {
         & > .container {
-            background: url(../images/picto/bandeau.png), #fff;
-            background-repeat: no-repeat;
-            background-position: center bottom;
-            background-size: auto;
-            padding-bottom: 120px;
             h2 {
                 color: $color-main-green;
+                margin-bottom: 20px;
                 &.soon {
                     font-family: $font-text;
                     font-size: 1.5rem;
@@ -30,6 +29,9 @@ section {
                     margin-top: 50px;
                 }
             }
+        }
+        .section-header{
+            padding-top: 30px;
         }
         .section-description {
             margin-bottom: 20px;
@@ -94,10 +96,6 @@ section {
                 transition: all 200ms ease-in;
             }
         }
-        .button {
-            margin-top: 0;
-            margin-bottom: 50px;
-        }
         #search_neighborhoods {
           text-align:center;
           margin:0 auto -40px auto;
@@ -112,7 +110,7 @@ section {
 
           input {
                 font-size: 1.25rem;
-                width: 120px;
+                width: 60%;
                 padding: 10px 10px;
                 text-align: center;
             &::-webkit-input-placeholder{
@@ -120,7 +118,7 @@ section {
             }
           }
         }
-        #no_neighborhood {
+        #error_neighborhood, #no_neighborhood {
           display:none;
           margin-bottom:-40px;
           p {
@@ -139,6 +137,17 @@ section {
           0%, 100% {
             transform: translateY(10px);
           }
+        }
+    }
+    &#carroussel-commercants{
+        .section-header{
+            margin-bottom: 30px;
+            h2{
+                color:#c62753;
+            }
+        }
+        .container-fluid{
+            box-shadow: 0 0 40px -20px black;
         }
     }
     &#concept {
@@ -204,6 +213,10 @@ section {
         }
     }
     &#missions {
+        padding-bottom: 100px;
+        background: url(../images/bg-cards.png);
+        background-repeat: no-repeat;
+        background-position: center bottom;
         h2 {
             color: $color-dark-blue;
             margin: 50px auto;
@@ -244,11 +257,12 @@ section {
         }
     }
     &#cards {
-        padding-top: 100px;
-        padding-bottom: 100px;
-        background: url(../images/bg-cards.png);
-        background-repeat: no-repeat;
-        background-position: center bottom;
+        .section-header{
+            margin-bottom:0px;
+        }
+        h2{
+            color:#f57320;
+        }
         h3 {
             font-family: $font-text;
             font-weight: 700;
@@ -264,74 +278,57 @@ section {
             color: $color-black;
             opacity: $opacity-main-black-oncolor;
         }
-        img {
-            display: block;
-            width: 100%;
-            margin-bottom: 30px;
-        }
         .clients,
         .partners {
             background-color: #fff;
             padding: 0 0 30px;
         }
-    }
-    &#ils-parlent-de-nous {
-      .arrow_box {
-        position: relative;
-        background: #3ab64b;
-        border: 2px solid #3ab64b;
-      }
-      .arrow_box:after, .arrow_box:before {
-        top: 100%;
-        left: 50%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-      }
-
-      .arrow_box:after {
-        border-color: rgba(58, 182, 75, 0);
-        border-top-color: #3ab64b;
-        border-width: 20px;
-        margin-left: -20px;
-      }
-      .arrow_box:before {
-        border-color: rgba(58, 182, 75, 0);
-        border-top-color: #3ab64b;
-        border-width: 24px;
-        margin-left: -24px;
-      }
-
-      .container-fluid {
-        background-color: white;
-        padding: 35px 0;
-        box-shadow: 0px 0px 40px -20px rgb(0, 0, 0);
-        h2 {
-          color:#3ab64b;
-          margin-bottom:15px;
-        }
-        ul {
-          list-style:none;
-          padding:0px;
-          margin:0px;
-          text-align:center;
-          li {
-            display:inline-block;
-            margin: 10px 0;
-            padding:0 10px;
-            height:50px;
-            img {
-              height:100%;
-            }
+        #widget_avisverifie{
+            padding: 0 20px;
+          margin-top: 20px;
+          margin-bottom: 30px;
+          &>blockquote{
+            font-family:"Open Sans";
           }
         }
-      }
+        .container-fluid{
+            background-color:white;
+        }
+        #commercants{
+            margin-bottom:30px;
+            img {
+                display: block;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            .clients{
+                padding:0 10px 0 20px;
+            }
+            .partners{
+                padding:0 20px 0 10px;
+            }
+        }
+        #presse {
+            padding:20px 0 40px 0;
+            ul {
+              list-style:none;
+              padding:0px;
+              margin:0px;
+              text-align:center;
+              li {
+                display:inline-block;
+                margin: 10px 0;
+                padding:0 10px;
+                height:50px;
+                img {
+                  height:100%;
+                }
+              }
+            }
+        }
     }
     &#advantages {
-        padding: 20px 0;
+        padding-bottom: 10px;
         .container {
             background: none;
         }
@@ -1359,5 +1356,34 @@ section {
         h2{
             margin: 30px auto;
         }
+    }
+}
+
+.arrow_box {
+    position: relative;
+    background: #3ab64b;
+    border: 2px solid #3ab64b;
+    margin-bottom: 30px;
+    &:after, &:before {
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after{
+        border-color: rgba(58, 182, 75, 0);
+        border-top-color: #3ab64b;
+        border-width: 20px;
+        margin-left: -20px;
+    }
+    &:before {
+        border-color: rgba(58, 182, 75, 0);
+        border-top-color: #3ab64b;
+        border-width: 24px;
+        margin-left: -24px;
     }
 }

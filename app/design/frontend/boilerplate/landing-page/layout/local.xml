@@ -4,6 +4,8 @@
         <reference name="root">
             <action method="setTemplate"><template>page/empty.phtml</template></action>
             <block type="page/html_head" name="head" as="head"/>
+            <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
+            <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
             <block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
         </reference>
@@ -135,8 +137,7 @@
 
     <apdc_newsletter_view>
       <reference name="content">
-            <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml">
-            </block>
+            <block type="apdc_front/newsletter_form" name="newsletter_form" template="page/newsletterform.phtml" />
         </reference>
     </apdc_newsletter_view>
 

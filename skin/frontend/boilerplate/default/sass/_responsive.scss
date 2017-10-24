@@ -379,6 +379,9 @@
             min-height:800px;
         }
         &#cards{
+            .clients, .partners{
+                padding:0 20px !important;
+            }
             .clients{
                 margin-bottom: 30px;
             }

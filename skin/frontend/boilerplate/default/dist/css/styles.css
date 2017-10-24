@@ -12827,6 +12827,10 @@ input.validation-failed {
   border: 1px solid #df280a !important;
 }
 
+#model {
+  padding: 60px 0;
+}
+
 section > .container {
   background-color: #fff;
 }
@@ -12840,15 +12844,8 @@ section#commercants > .container h2 {
   color: #3ab64b;
 }
 
-section#districts > .container {
-  padding-bottom: 120px;
-  background: url(../images/picto/bandeau.png), #fff;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: auto;
-}
-
 section#districts > .container h2 {
+  margin-bottom: 20px;
   color: #3ab64b;
 }
 
@@ -12858,6 +12855,10 @@ section#districts > .container h2.soon {
   font-weight: 400;
   margin-top: 50px;
   color: rgba(0, 0, 0, .54);
+}
+
+section#districts .section-header {
+  padding-top: 30px;
 }
 
 section#districts .section-description {
@@ -12923,11 +12924,6 @@ section#districts .button-district img {
   filter: brightness(60%);
 }
 
-section#districts .button {
-  margin-top: 0;
-  margin-bottom: 50px;
-}
-
 section#districts #search_neighborhoods {
   margin: 0 auto -40px auto;
   text-align: center;
@@ -12944,7 +12940,7 @@ section#districts #search_neighborhoods label {
 
 section#districts #search_neighborhoods input {
   font-size: 1.25rem;
-  width: 120px;
+  width: 60%;
   padding: 10px 10px;
   text-align: center;
 }
@@ -12953,15 +12949,18 @@ section#districts #search_neighborhoods input::-webkit-input-placeholder {
   font-size: 1.125rem;
 }
 
+section#districts #error_neighborhood,
 section#districts #no_neighborhood {
   display: none;
   margin-bottom: -40px;
 }
 
+section#districts #error_neighborhood p,
 section#districts #no_neighborhood p {
   font-size: 1rem;
 }
 
+section#districts #error_neighborhood i,
 section#districts #no_neighborhood i {
   font-size: 60px;
   animation: bounce 1.2s ease 0s infinite;
@@ -12977,6 +12976,18 @@ section#districts #no_neighborhood i {
     100% {
     transform: translateY(10px);
   }
+}
+
+section#carroussel-commercants .section-header {
+  margin-bottom: 30px;
+}
+
+section#carroussel-commercants .section-header h2 {
+  color: #c62753;
+}
+
+section#carroussel-commercants .container-fluid {
+  box-shadow: 0 0 40px -20px black;
 }
 
 section#concept {
@@ -13050,6 +13061,13 @@ section.packages .item p {
   color: #fff;
 }
 
+section#missions {
+  padding-bottom: 100px;
+  background: url(../images/bg-cards.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+
 section#missions h2 {
   margin: 50px auto;
   color: #2f4da8;
@@ -13097,12 +13115,12 @@ section#missions .mission-3 {
   background-size: cover;
 }
 
-section#cards {
-  padding-top: 100px;
-  padding-bottom: 100px;
-  background: url(../images/bg-cards.png);
-  background-repeat: no-repeat;
-  background-position: center bottom;
+section#cards .section-header {
+  margin-bottom: 0;
+}
+
+section#cards h2 {
+  color: #f57320;
 }
 
 section#cards h3 {
@@ -13123,81 +13141,68 @@ section#cards p {
   color: #000;
 }
 
-section#cards img {
-  display: block;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
 section#cards .clients,
 section#cards .partners {
   padding: 0 0 30px;
   background-color: #fff;
 }
 
-section#ils-parlent-de-nous .arrow_box {
-  position: relative;
-  border: 2px solid #3ab64b;
-  background: #3ab64b;
+section#cards #widget_avisverifie {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 0 20px;
 }
 
-section#ils-parlent-de-nous .arrow_box:after,
-section#ils-parlent-de-nous .arrow_box:before {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  content: ' ';
-  pointer-events: none;
-  border: solid transparent;
+section#cards #widget_avisverifie > blockquote {
+  font-family: 'Open Sans';
 }
 
-section#ils-parlent-de-nous .arrow_box:after {
-  margin-left: -20px;
-  border-width: 20px;
-  border-color: rgba(58, 182, 75, 0);
-  border-top-color: #3ab64b;
-}
-
-section#ils-parlent-de-nous .arrow_box:before {
-  margin-left: -24px;
-  border-width: 24px;
-  border-color: rgba(58, 182, 75, 0);
-  border-top-color: #3ab64b;
-}
-
-section#ils-parlent-de-nous .container-fluid {
-  padding: 35px 0;
+section#cards .container-fluid {
   background-color: white;
-  box-shadow: 0 0 40px -20px black;
 }
 
-section#ils-parlent-de-nous .container-fluid h2 {
-  margin-bottom: 15px;
-  color: #3ab64b;
+section#cards #commercants {
+  margin-bottom: 30px;
 }
 
-section#ils-parlent-de-nous .container-fluid ul {
+section#cards #commercants img {
+  display: block;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+section#cards #commercants .clients {
+  padding: 0 10px 0 20px;
+}
+
+section#cards #commercants .partners {
+  padding: 0 20px 0 10px;
+}
+
+section#cards #presse {
+  padding: 20px 0 40px 0;
+}
+
+section#cards #presse ul {
   margin: 0;
   padding: 0;
   list-style: none;
   text-align: center;
 }
 
-section#ils-parlent-de-nous .container-fluid ul li {
+section#cards #presse ul li {
   display: inline-block;
   height: 50px;
   margin: 10px 0;
   padding: 0 10px;
 }
 
-section#ils-parlent-de-nous .container-fluid ul li img {
+section#cards #presse ul li img {
   height: 100%;
 }
 
 section#advantages {
-  padding: 20px 0;
+  padding-bottom: 10px;
 }
 
 section#advantages .container {
@@ -14362,6 +14367,39 @@ section .section-description {
 
 .cms-content .content h2 {
   margin: 30px auto;
+}
+
+.arrow_box {
+  position: relative;
+  margin-bottom: 30px;
+  border: 2px solid #3ab64b;
+  background: #3ab64b;
+}
+
+.arrow_box:after,
+.arrow_box:before {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  content: ' ';
+  pointer-events: none;
+  border: solid transparent;
+}
+
+.arrow_box:after {
+  margin-left: -20px;
+  border-width: 20px;
+  border-color: rgba(58, 182, 75, 0);
+  border-top-color: #3ab64b;
+}
+
+.arrow_box:before {
+  margin-left: -24px;
+  border-width: 24px;
+  border-color: rgba(58, 182, 75, 0);
+  border-top-color: #3ab64b;
 }
 
 footer {
@@ -16811,14 +16849,6 @@ h1.account-title {
   color: #3ab64b;
 }
 
-.widget_avisverifie {
-  margin-top: 10px;
-}
-
-.widget_avisverifie > blockquote {
-  font-family: 'Open Sans';
-}
-
 .apdc-notation-index-index {
   height: 100%;
   margin: 0;
@@ -17245,6 +17275,11 @@ h1.account-title {
   section#prices,
     section#concept {
     min-height: 800px;
+  }
+
+  section#cards .clients,
+    section#cards .partners {
+    padding: 0 20px !important;
   }
 
   section#cards .clients {
@@ -17919,10 +17954,7 @@ h1.account-title {
 }
 
 /* LOGIN FORM */
-#login-form-popup-container,
-#newsletter-form-popup-container,
-#delivery-popup-container,
-#neighborhood-popup-container {
+.apdc-popup-container {
   position: absolute;
     /*top: 50%;*/
   z-index: 10000;
@@ -17943,24 +17975,15 @@ h1.account-title {
   filter: alpha(opacity=100);
 }
 
-#login-form-popup-container .back-link,
-#newsletter-form-popup-container .back-link,
-#delivery-popup-container .back-link,
-#neighborhood-popup-container .back-link {
+.apdc-popup-container .back-link {
   text-align: left;
 }
 
-#login-form-popup-container h1,
-#newsletter-form-popup-container h1,
-#delivery-popup-container h1,
-#neighborhood-popup-container h1 {
+.apdc-popup-container h1 {
   margin-top: 0;
 }
 
-#login-form-popup-container .form-group:last-child,
-#newsletter-form-popup-container .form-group:last-child,
-#delivery-popup-container .form-group:last-child,
-#neighborhood-popup-container .form-group:last-child {
+.apdc-popup-container .form-group:last-child {
   margin-bottom: 0;
 }
 

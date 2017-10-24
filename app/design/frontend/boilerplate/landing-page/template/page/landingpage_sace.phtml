@@ -44,22 +44,83 @@
 	<div class="container">
 	    <div class="border-container"></div>
 		<div class="section-header">
-			<h2>Commandez dès maintenant</h2>
+			<h2>Mon quartier</h2>
+			<div class="section-description">
+				 Les meilleurs commerçants de Paris livrés chez vous
+			</div>
             <div id="search_neighborhoods">
-                <?php echo $this->getChildHtml('address-bar');?>
+                <div class="input-box apdc-form">
+                    <label><?php echo $this->__('Your postcode:'); ?></label>
+                    <input type="text" id="search_neighborhoods_postcode" class="input-text" placeholder="<?php echo $this->__('Search for your neighborhood'); ?>" />
+                </div>
             </div>
 		</div>
+		<div class="row" id="neighborhood-list">
+            <?php $quartiers = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->setOrder('sort_order','ASC');?>
+            <?php $nbQuartiers = $quartiers->count(); ?>
+
+            <?php $mdNbFullLines = (floor($nbQuartiers / 4) * 4); ?>
+            <?php $mdNbLeave = $nbQuartiers - $mdNbFullLines; ?>
+
+            <?php $smNbFullLines = (floor($nbQuartiers / 3) * 3); ?>
+            <?php $smNbLeave = $nbQuartiers - $smNbFullLines; ?>
+
+            <?php $xsNbFullLines = (floor($nbQuartiers / 2) * 2); ?>
+            <?php $xsNbLeave = $nbQuartiers - $xsNbFullLines; ?>
+
+            <?php $cpt = 1; foreach ($quartiers as $quartier) : ?>
+                <?php 
+                    if ($cpt <= $mdNbFullLines) {
+                        $classMd = 'col-md-3';
+                    } else {
+                        switch($mdNbLeave) {
+                        case 3:
+                            $classMd = 'col-md-4';
+                            break;
+                        case 2:
+                            $classMd = 'col-md-6';
+                            break;
+                        default:
+                            $classMd = 'col-md-12';
+                        }
+                    }
+
+                    if ($cpt <= $smNbFullLines) {
+                        $classSm = 'col-sm-4';
+                    } else {
+                        switch($smNbLeave) {
+                        case 2:
+                            $classSm = 'col-sm-6';
+                            break;
+                        default:
+                            $classSm = 'col-sm-12';
+                        }
+                    }
+                    if ($cpt <= $xsNbFullLines) {
+                        $classXs = 'col-xs-6';
+                    } else {
+                        $classXs = 'col-xs-12';
+                    }
+                ?>
+
+
+                    <div class="button-district <?php echo $classXs . ' ' . $classSm . ' ' . $classMd; ?>" data-postcodes="<?php echo implode(',', unserialize($quartier->getPostcodes())); ?>">
+                    <a href="<?php echo $quartier->getStoreUrl();?>">
+                        <img src="<?php echo Mage::helper('apdc_neighborhood/media')->getMediaUrl($quartier->getImage(), array('width' => 200, 'height' => 200));?>" alt="Au Pas De Courses - <?php echo $quartier->getName(); ?>" class="img-circle"/>
+                        <span class="button"><?php echo $quartier->getName(); ?></span>
+                    </a>
+                </div>
+
+            <?php $cpt++; endforeach; ?>
+        </div>
+        <div class="row text-center" id="no_neighborhood">
+            <p><?php echo $this->__('Désolé, aucun quartier ne correspond à votre recherche.'); ?></p>
+            <a class="button button-green" href="#" id="newsletter-popup" data-newsletter-view="<?php echo $this->getUrl('apdc-front/newsletter/ajaxPopupView');?>" role="button" title="Inscrivez-vous à notre newsletter">Inscrivez-vous à notre newsletter !
+            </a>
+        </div>
 	</div>
 </section>
-<section id="carroussel-commercants">
-    <div class="section-header">
-        <h2>Les meilleurs commerçants livrés chez vous !</h2>
-    </div>
-    <div class="container-fluid">
-        <?php echo $this->getChildHtml("liste_commercant_all");?>
-    </div>
-</section>
-<div id="model" class="container">
+<div class="container">
     <div class="row">
         <section class="packages col-sm-6" id="concept">
             <div class="section-header">
@@ -99,6 +160,11 @@
                 <div class="section-description">
                      Un service juste </br> au centime près !
                 </div>
+                <!-- <div class="row">
+                    <div class="col-sm-4 price-tag"><span>9 €</span><br> Commande &#60;45 €</div>
+                    <div class="col-sm-4 price-tag"><span>6 €</span><br> Commande &#60;90 €</div>
+                    <div class="col-sm-4 price-tag"><span>3 €</span><br> Commande &#62;90 €</div>
+                </div> -->
             </div>
             <div class="item row">
                 <div class="col-md-3">
@@ -110,10 +176,10 @@
             </div>
             <div class="item row">
                 <div class="col-md-3">
-                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/weight.png')?>" alt="Nous vous remboursons les écarts de poids, après la livraison">
+                    <img src="<?php echo $this->getSkinUrl('dist/images/picto/weight.png')?>" alt="Nous vous remboursons les écarts de poids">
                 </div>
                 <div class="col-md-9">
-                    <p class="package-feature">Nous vous remboursons les écarts de poids, après la livraison</p>
+                    <p class="package-feature">Nous vous remboursons les écarts de poids</p>
                 </div>
             </div>
             <div class="item row">
@@ -127,55 +193,9 @@
         </section>
     </div>
 </div>
-<section id="cards">
-    <div class="container">
-        <div class="section-header">
-            <h2>Ils parlent de nous !</h2>
-            <div class="section-description">
-                 Vos voisins sont déjà accros !
-            </div>
-            <div id="widget_avisverifie" class="row">
-                <iframe id='AV_widget_iframe' frameBorder="0" width="100%" height="100%" src="//cl.avis-verifies.com/fr/cache/c/c/a/cca6e31a-87d7-89e4-e5ea-084a148ff055/widget4/cca6e31a-87d7-89e4-e5ea-084a148ff055horizontal_index.html"></iframe>
-            </div>
-            <div class="section-description" style="margin-bottom:20px;">
-                 Vos commerçants nous adorent !
-            </div>
-            <div id="commercants" class="row">
-                <div class="col-md-6 clients">
-                    <img src="https://www.aupasdecourses.com/media/wysiwyg/full-merchant_2__17.jpg" alt="Nos commerçants">
-                    <p class="quote">"Grâce à Au Pas De Courses, ma boutique est dorénavant en ligne et mes clients réguliers peuvent ainsi trouver mes produits quand ils le souhaitent, directement chez eux ou en magasin."</p>
-                    <p class="quote-author">Olivier, Poissonnerie Vent d'Ouest Marée, Paris 15.</p>
-                </div>
-                <div class="col-md-6 partners">
-                    <img src="https://www.aupasdecourses.com/media/catalog/category/full-merchant.jpg" alt="Nos commerçants partenaires">
-                    <p class="quote">"Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses !"</p>
-                    <p class="quote-author">Michel, Boucherie des Moines, Paris 17.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="section-description">
-             Et le Tout Paris en parle !
-        </div>
-        <div id="presse" class="row">
-            <ul>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/Elle.png');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/logo75.jpg');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/vivreparis.jpg');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/stylist.png');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/cnews.jpg');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/lebonbon.png');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/hello-paris17.png');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/20minutes.png');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/frenchweb.jpg');?>" alt="" /></li>
-                <li><img src="<?php echo $this->getSkinUrl('dist/images/presse/lepoint.jpg');?>" alt="" /></li>
-            </ul>
-        </div>
-    </div>
-</section>
+
 <section id="missions" class="container-fluid">
-    <h2>Ce que nous proposons</h2>
+    <h2>Ce que nous aimons</h2>
     <div class="row">
         <div class="col-md-4 item-mission mission-1">
             <div>
@@ -197,7 +217,30 @@
         </div>
     </div>
 </section>
+
+<section id="cards" class="container">
+    <div class="row">
+        <div class="col-md-5 clients">
+            <img src="<?php echo $this->getSkinUrl('dist/images/photo/sandrine.jpg')?>" alt="Nos clients">
+            <p class="quote">"Ce qui m'a séduite, c'est de pouvoir me faire livrer des produits sains et de qualité le soir, même lorsque je finis tard."</p>
+            <p class="quote-author">Sandrine G., cliente fidèle.</p>
+        </div>
+        <div class="col-md-5 col-md-offset-2 partners">
+            <img src="<?php echo $this->getSkinUrl('dist/images/photo/bdm2.jpg')?>" alt="Nos commerçants partenaires">
+            <p class="quote">"Ce service existe chez les grandes enseignes, nous pouvons maintenant faire la même chose avec Au Pas De Courses !"</p>
+            <p class="quote-author">Michel Vaidie, Boucherie des Moines, Paris 17.</p>
+        </div>
+    </div>
+     <div class="row widget_avisverifie">
+        <iframe id='AV_widget_iframe' frameBorder="0" width="100%" height="100%" src="//cl.avis-verifies.com/fr/cache/c/c/a/cca6e31a-87d7-89e4-e5ea-084a148ff055/widget4/cca6e31a-87d7-89e4-e5ea-084a148ff055horizontal_index.html"></iframe>
+    </div>
+</section>
+<?php $nous = $this->getLayout()->createBlock('cms/block')->setBlockId('ils-parlent-de-nous'); ?>
+<?php if ($nous) : ?>
+<?php echo $nous->toHtml(); ?>
+<?php endif; ?>
 <?php echo $this->getChildHtml('reassurance');?>
+
 <footer>
     <div class="container">
         <div class="row">
@@ -224,9 +267,6 @@
 </footer>
 	<?php echo $this->getChildHtml('footer') ?>
 	<?php echo $this->getChildHtml('before_body_end') ?>
-    <?php
-        
-    ?>
     <!-- Credits
     Coin icon by Madebyoliver - http://www.flaticon.com/free-icon/coin_134652
     Scale icon by Madebyoliver - http://www.flaticon.com/free-icon/scale_135529
