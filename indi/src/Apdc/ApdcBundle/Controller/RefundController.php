@@ -152,7 +152,7 @@ class RefundController extends Controller
 				]);
 			}
 
-			$session->getFlashBag()->add('success', 'Status Mistral mis a jour');
+			$session->getFlashBag()->add('success', 'Statuts Mistral mis a jour');
 			return $this->redirectToRoute('refundIndex', [
 				'id' => $id, 
 				'from' => $from, 

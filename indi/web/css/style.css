@@ -317,6 +317,10 @@ input#datepickerAccountingCustomers
 	background: rgb(255, 0, 0);
 }
 
+.no-info-delivery {
+	background: rgb(0, 0, 0);
+}
+
 .space-between {
 	display: flex;
 	justify-content: space-between;

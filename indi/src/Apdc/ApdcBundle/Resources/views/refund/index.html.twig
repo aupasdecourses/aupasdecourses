@@ -10,22 +10,34 @@
 		<div class="row">
 			<div class="col-md-8">{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
 			<div class="col-md-4 alert alert-info">
-				<div class="space-between">
-					<div class="flex-start">
-						<div><b>Trop tot :</b></div>
-						<div class="square early-delivery"></div>
+				<div class="row">
+					<div class="col-md-6 flex-column">
+						<div><h3>Statuts Mistral</h3></div>
+						<div>{{ form(mistral_late_orders_form) }}</div>
 					</div>
-					<div class="flex-start">
-						<div><b>A l'heure :</b></div>
-						<div class="square on-time-delivery"></div>
-					</div>
-					<div class="flex-start">
-						<div><b>Trop tard :</b></div>
-						<div class="square late-delivery"></div>
+					<div class="col-md-6 flex-column">
+						<div class="flex-start">
+							<div class="square early-delivery"></div>
+							<div><b>Trop tot </b></div>
+						</div>			
+						<div class="flex-start">
+							<div class="square late-delivery"></div>
+							<div><b>Trop tard </b></div>
+						</div>
+						<div class="flex-start">
+							<div class="square on-time-delivery"></div>
+							<div><b>A l'heure </b></div>
+						</div>
+						<div class="flex-start">
+							<div class="square no-info-delivery"></div>
+							<div><b>Pas d'info Mistral</b></div>
+						</div>
 					</div>
 				</div>
-				<br/>
-				<div style="margin-bottom: -20px;">{{ form(mistral_late_orders_form) }}</div>
+				<div class="row">
+					<div class="col-md-4"><b>P : Picking </b></div>
+					<div class="col-md-8"><b>L : Livraison</b></div>
+				</div>
 			</div>
 		</div>
 
@@ -39,7 +51,7 @@
 					<th>Validation Credit Memo</th>
 					<th>Remboursement</th>
 					<th>Cloture et recapitulatif</th>
-					<th>Statuts Mistral</th>
+					<th>P & L</th>
 				</tr>
 			</thead>
 			{% for order in orders %}
@@ -103,33 +115,37 @@
 					</td>
 					<td>
 						<div class="space-between">
-							<div>Picking</div>
 							{% for m in mistral_hours %}
 								{% if m.order_id == order.id %}
-									{% if m.real_hour_picking|date('H:i') < m.slot_start_picking|date('H:i') %}
-										<div class="square early-delivery"></div>
-									{% else %}
-										{% if m.real_hour_picking|date('H:i') > m.slot_end_picking|date('H:i') %}
-											<div class="square late-delivery"></div>
+									{% if m.real_hour_picking != 0 %}
+										{% if m.real_hour_picking|date('H:i') < m.slot_start_picking|date('H:i') %}
+											<div class="square early-delivery"></div>
 										{% else %}
-											<div class="square on-time-delivery"></div>
+											{% if m.real_hour_picking|date('H:i') > m.slot_end_picking|date('H:i') %}
+												<div class="square late-delivery"></div>
+											{% else %}
+												<div class="square on-time-delivery"></div>
+											{% endif %}
 										{% endif %}
+									{% else %}
+										<div class="square no-info-delivery"></div>
 									{% endif %}
 								{% endif %}
 							{% endfor %}
-						</div>
-						<div class="space-between">
-							<div>Livraison</div>
 							{% for m in mistral_hours %}
 								{% if m.order_id == order.id %}
-									{% if m.real_hour_shipping|date('H:i') < m.slot_start_shipping|date('H:i') %}
-										<div class="square early-delivery"></div>
-									{% else %}
-										{% if m.real_hour_shipping|date('H:i') > m.slot_end_shipping|date('H:i') %}
-											<div class="square late-delivery"></div>
+									{% if m.real_hour_shipping != 0 %}
+										{% if m.real_hour_shipping|date('H:i') < m.slot_start_shipping|date('H:i') %}
+											<div class="square early-delivery"></div>
 										{% else %}
-											<div class="square on-time-delivery"></div>
+											{% if m.real_hour_shipping|date('H:i') > m.slot_end_shipping|date('H:i') %}
+												<div class="square late-delivery"></div>
+											{% else %}
+												<div class="square on-time-delivery"></div>
+											{% endif %}
 										{% endif %}
+									{% else %}
+										<div class="square no-info-delivery"></div>
 									{% endif %}
 								{% endif %}
 							{% endfor %}
