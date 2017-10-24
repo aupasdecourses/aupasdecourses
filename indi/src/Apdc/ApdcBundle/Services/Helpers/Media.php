@@ -7,7 +7,7 @@ trait Media
 
 	public function mediaPath()
     {
-        return realpath(__DIR__.'/../../../../../media');
+        return \Mage::getBaseDir('media');
     }
 
     public function mediaUrl()

@@ -175,6 +175,8 @@ class RefundController extends Controller
                             mkdir($folder, 0777, true);
                             umask($oldmask);
                         } catch (Exception $e) {
+                            \Mage::log("cannot create ".$folder);
+                            \Mage::log($e->getMessage());
                         }
                     }
                     if (file_exists($folder)) {
