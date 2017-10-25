@@ -37,6 +37,7 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
                 'customer_id' => 'sales_flat_order.customer_id',
                 'created_at' => 'sales_flat_order.created_at',
                 'produit_equivalent' => 'sales_flat_order.produit_equivalent',
+                'shipping_method' => 'sales_flat_order.shipping_method',
             ]
         )
         ->join(
@@ -179,6 +180,7 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
         $orderHeader['delivery_date'] = $order->getData('ddate');
         $orderHeader['delivery_time'] = $order->getData('dtime');
         $orderHeader['equivalent_replacement'] = $order->getData('produit_equivalent');
+        $orderHeader['shipping_method'] = $order->getData('shipping_method');
         $orderHeader['Total quantite'] = 0;
         $orderHeader['Total prix'] = 0.0;
         $orderHeader['products'] = [];

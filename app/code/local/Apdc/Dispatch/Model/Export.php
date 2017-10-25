@@ -23,8 +23,8 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
         	$c_date=date('Y-m-d', $currentTime);
         	$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}else{
-			//$c_date=date('Y-m-d', $currentTime);
-            $c_date = date("Y-m-d",mktime(0, 0, 0, 10, 10, 2017));
+			$c_date=date('Y-m-d', $currentTime);
+            //$c_date = date("Y-m-d",mktime(0, 0, 0, 10, 10, 2017));
 			$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}
 
@@ -40,7 +40,15 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
                     }
 
                     $params['orders'] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date, $to);
-                    if (Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
+                    /*foreach($params['orders'] as $website => $array){
+                        foreach($array as $id => $shop){
+                            if($shop['orders']<>array()){
+                                var_dump($shop);
+                            }
+                        }
+                    }
+                    die();*/
+                    if (Mage::getStoreConfig('apdcdispatch/general/mode')) {
                         Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);
                     } else {
                         Mage::log('Export via FTP est désactivé', null, 'export.log');
