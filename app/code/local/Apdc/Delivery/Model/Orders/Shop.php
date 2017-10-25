@@ -22,6 +22,8 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
                     ->addAttributeToSelect('produit_fragile')
                     ->addAttributeToSelect('sku')
                     ->addAttributeToSelect('item_comment')
+                    ->addAttributeToSelect('product_options')
+                    ->addAttributeToSelect('product_type')
                     ->addFieldToFilter('main_table.product_type', array('nin' => array('bundle')));
         $collection->getSelect()->join(
             'sales_flat_order',
@@ -227,7 +229,6 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
         $this->filterQuery($dfrom, $dto);
 
         $items = $this->_collection;
-
         foreach ($items as $item) {
             if ($this->checkItem($item->getCommercant())) {
                 $orderHeader = $this->OrderHeaderParsing($item);
@@ -237,7 +238,7 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
                         $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']] = $orderHeader;
                     }
                     $item = $item->toArray(
-                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment')
+                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment','product_options','product_type','produit_fragile')
                     );
                     $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']]['products'][] = $item;
                     $shops[$orderHeader['store_id']][$item['commercant']]['orders'][$orderHeader['increment_id']]['Total quantite'] += round($item['qty_ordered'], 0);
@@ -247,8 +248,14 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
                         $shops[$item['commercant']]['orders'][$orderHeader['increment_id']] = $orderHeader;
                     }
                     $item = $item->toArray(
-                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment')
+                        array('commercant', 'item_id', 'qty_ordered', 'row_total_incl_tax', 'produit_fragile', 'name', 'short_description', 'price_incl_tax', 'prix_kilo_site', 'item_comment','product_options','product_type','produit_fragile')
                     );
+                    $options=unserialize($item['product_options']);
+                    if(isset($options['options'])){
+                        foreach($options['options'] as $o){
+                            $item['item_options'][]=array("label"=>$o['label'],"value"=>$o['print_value']);
+                        }
+                    }
                     $shops[$item['commercant']]['orders'][$orderHeader['increment_id']]['products'][] = $item;
                     $shops[$item['commercant']]['orders'][$orderHeader['increment_id']]['Total quantite'] += round($item['qty_ordered'], 0);
                     $shops[$item['commercant']]['orders'][$orderHeader['increment_id']]['Total prix'] += round($item['row_total_incl_tax'], 2);

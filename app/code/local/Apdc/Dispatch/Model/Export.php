@@ -23,7 +23,8 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
         	$c_date=date('Y-m-d', $currentTime);
         	$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}else{
-			$c_date = date("Y-m-d",mktime(0, 0, 0, 10, 10, 2017));
+			//$c_date=date('Y-m-d', $currentTime);
+            $c_date = date("Y-m-d",mktime(0, 0, 0, 10, 10, 2017));
 			$to = date('Y-m-d',strtotime('+5 day', $currentTime));
 		}
 

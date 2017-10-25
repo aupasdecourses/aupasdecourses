@@ -62,7 +62,7 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
                                 $mail = new Mandrill_Message(Mage::getStoreConfig('mandrill/general/apikey'));
 
                                 $mail->addTo($emails);
-                                //$mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
+                                $mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
                                 $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
                                 $mail->setSubject("Au Pas De Courses {$pdf->getOrdersCount()} commandes le {$this->_c_date}");
                                 $mail->setBodyHtml(

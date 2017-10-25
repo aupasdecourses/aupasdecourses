@@ -188,7 +188,14 @@ class Apdc_Dispatch_Model_Mail_Pdf
 
         $title = static::_lineSplit($product['name'], 21);
         $description = static::_lineSplit($product['short_description'], 20);
-        $comment = static::_lineSplit($product['item_comment'], 50);
+        $options="";
+        if(isset($product['item_options'])){
+            foreach($product['item_options'] as $o){
+                $options.=" | ".$o['label'].": ". $o['value'];
+            }
+        }
+        $produit_fragile = ($product['produit_fragile'])?"Attention, produit fragile ! | ":"";
+        $comment = static::_lineSplit($produit_fragile.$options.$product['item_comment'], 50);
 
         $max_height = max([1, count($title), count($description), count($comment)]);
         $page->setFillColor($color);
