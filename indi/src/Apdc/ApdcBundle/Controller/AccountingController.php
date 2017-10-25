@@ -30,7 +30,8 @@ class AccountingController extends Controller
 		
 		if (isset($_GET['date_debut'])) {
 			$date_debut = $_GET['date_debut'];
-			$date_fin	= $bill->end_month($date_debut);
+			$date_fin	= $_GET['date_fin'];
+			$date_fin = date('Y-m-d', strtotime(str_replace('/', '-', $date_fin)));
 			$orders		= $mage->getOrdersByCustomer($date_debut, $date_fin);
 
 			if ($formCSV->isSubmitted() && $formCSV->isValid()) {
