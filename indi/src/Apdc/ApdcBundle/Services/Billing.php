@@ -676,7 +676,6 @@ class Billing
 
 	/**
 	 * Surcharge avec ajout de @param string $fin
-	 * Permettant l'affichage des X derniers mois
 	 */
 	public function getDataFactu($model, $debut, $fin)
 	{
@@ -689,13 +688,23 @@ class Billing
 	}
 
 	/**
-	 * Sans limite de temps
+	 * Surcharge avec ajout de @param string $id_attribut_commercant
 	 */
 	public function getDataFactuNoTimeLimit($model, $id_attribut_commercant)
 	{
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
 
 		$return = $model->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant);	
+		$return = $return->toArray();
+
+		return $return['items'];
+	}
+
+	public function getBillingDetailsByDeliveryDate($debut, $fin)
+	{
+		$billing_details = \Mage::getModel('pmainguet_delivery/indi_billingdetails')->getCollection();
+		
+		$return = $billing_details->addFieldToFilter('delivery_date', ['from' => $debut, 'to' => $fin]);
 		$return = $return->toArray();
 
 		return $return['items'];

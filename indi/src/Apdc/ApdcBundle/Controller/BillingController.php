@@ -151,9 +151,9 @@ class BillingController extends Controller
         $formCSV->handleRequest($request);
 
         if (isset($_GET['date_debut'])) {
-            $date_debut = $_GET['date_debut'];
-            $date_fin = $factu->end_month($date_debut);
-            $bill = $factu->getDataFacturation('indi_billingdetails', $date_debut);
+			$date_debut = $_GET['date_debut'];
+			$date_fin = $_GET['date_fin'];
+			$bill = $factu->getBillingDetailsByDeliveryDate($date_debut, $date_fin);
 
             /***** Export CSV des commandes facturées *****/
             if ($formCSV->isSubmitted() && $formCSV->isValid()) {
