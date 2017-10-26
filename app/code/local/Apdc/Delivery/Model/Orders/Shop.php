@@ -106,18 +106,18 @@ class Apdc_Delivery_Model_Orders_Shop extends Mage_Sales_Model_Order_Item
         $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
         $sql = 'SELECT main_table.*, apdc_commercant_contact.lastname AS m_lastname, apdc_commercant_contact.firstname AS m_firstname, apdc_commercant_contact.email AS m_email, apdc_commercant_contact.phone AS m_phone, apdc_commercant_contact_2.lastname AS e1_lastname, apdc_commercant_contact_2.firstname AS e1_firstname, apdc_commercant_contact_2.email AS e1_email, apdc_commercant_contact_2.phone AS e1_phone, apdc_commercant_contact_3.lastname AS e2_lastname, apdc_commercant_contact_3.firstname AS e2_firstname, apdc_commercant_contact_3.email AS e2_email, apdc_commercant_contact_3.phone AS e2_phone FROM apdc_shop AS main_table LEFT JOIN apdc_commercant_contact ON main_table.id_contact_manager=apdc_commercant_contact.id_contact LEFT JOIN apdc_commercant_contact AS apdc_commercant_contact_2 ON main_table.id_contact_employee=apdc_commercant_contact_2.id_contact LEFT JOIN apdc_commercant_contact AS apdc_commercant_contact_3 ON main_table.id_contact_employee_bis=apdc_commercant_contact_3.id_contact';
         $shops = $connection->fetchAll($sql);
-
         if ($getByStore) {
             $cat_array = Mage::helper('apdc_commercant')->getCategoriesArray();
             $S = Mage::helper('apdc_commercant')->getStoresArray();
-
             foreach ($shops as $shop) {
-                $cats = explode(',', $shop['id_category']);
-                foreach ($cats as $cat) {
-                    $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
-                    if (!isset($commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']])) {
-                        $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['infos'] = $shop;
-                        $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['orders'] = [];
+                if($shop['enabled']){
+                    $cats = explode(',', $shop['id_category']);
+                    foreach ($cats as $cat) {
+                        $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
+                        if (!isset($commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']])) {
+                            $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['infos'] = $shop;
+                            $commercants[$storeinfo['store_id']][$shop['id_attribut_commercant']]['orders'] = [];
+                        }
                     }
                 }
             }
