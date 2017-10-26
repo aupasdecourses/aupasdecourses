@@ -13,8 +13,8 @@
     <p class="separator" style="margin: 10px 0;">ou</p>
     <select name="website-list" style='width:60%;font-size: 1.1rem;color: rgba(0, 0, 0, .62);text-align-last: center;'>
         <option selected="true" disabled="disabled">Sélectionnez votre quartier</option>
-      <?php foreach($websites as $id => $name):?>
-        <option value="<?=$id?>"><?=$name?></option>
+      <?php foreach($websites as $order => $data):?>
+        <option value="<?=$data['website_id']?>"><?=$data['name']?></option>
     <?php endforeach;?>
     </select>
     <div class="row text-center" name="messages" style="margin-top: 15px;"></div>
