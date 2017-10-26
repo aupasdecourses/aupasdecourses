@@ -7,7 +7,8 @@ var itemShowedInPopup = {};
 	$(document).ready(function() {
 		if (apdcProductQuickViewPopup === null) {
 			apdcProductQuickViewPopup = new ApdcPopup({
-			  id:'product-quick-view'
+			  id:'product-quick-view',
+			  autoHeightPopup: true,
 			});
 		}
 	});

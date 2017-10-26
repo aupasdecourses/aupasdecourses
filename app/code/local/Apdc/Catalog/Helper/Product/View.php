@@ -53,10 +53,10 @@ class Apdc_Catalog_Helper_Product_View extends Mage_Catalog_Helper_Product_View
 
         $controller->getLayout()->getUpdate()->addHandle(array(
             'default',
-            'apdc_quickview_onload',
             'catalog_product_view',
             'PRODUCT_TYPE_' . $product->getTypeId(),
-            'PRODUCT_' . $product->getId()
+            'PRODUCT_' . $product->getId(),
+            'apdc_quickview_onload',
         ));
         $buyRequest = $params->getBuyRequest();
         if ($buyRequest) {

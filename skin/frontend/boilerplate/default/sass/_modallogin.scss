@@ -12,14 +12,12 @@
     text-align: center;
     border-radius: 10px;
     border: 1px solid lightgrey;
-    width: 500px;
-    height:100px;
     min-height: 100px;
+    height:200px;
     max-height:95%;
     padding: 20px;
     overflow:hidden;
     transition:height 0.3s ease;
-
     .back-link {
       text-align:left;
     }
@@ -29,6 +27,9 @@
     .form-group:last-child {
       margin-bottom:0px;
     }
+}
+#login-form-popup-container,#newsletter-form-popup-container,#neighborhood-popup-container{
+    width: 500px;
 }
 #delivery-popup-container {
     max-width:670px;

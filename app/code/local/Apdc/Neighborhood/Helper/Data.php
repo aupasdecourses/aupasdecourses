@@ -210,23 +210,15 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getAllWebsites(){
-        $data=Mage::app()->getStores();
+        $data=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1);
         $result=array();
-        $tmp=array();
-
-        $order=[19,20,16,17,12,15,9,21,10,4,11,14,5,7,13,1,18,23,22];
-
         foreach($data as $d){
-            if($d->getWebsite()->getId()<>2){
-                $tmp[$d->getWebsite()->getId()]=$d->getName();
+            if($d->getWebsiteId()<>2){
+                $result[$d->getSortOrder()]=array('website_id'=>$d->getWebsiteId(),'name'=>$d->getName());
             }
         }
 
-        foreach($order as $key){
-            if(isset($tmp[$key])){
-                $result[$key]=$tmp[$key];
-            }
-        }      
+        ksort($result);
 
         return $result;
     }
