@@ -314,23 +314,18 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
         $dos = $this->_dos;
         $out = '';
         foreach ($shops as $store_id => $store) {
+            Mage::log("Model Export - format FTP Store ".$store_id,null,"export.log");
             foreach ($store as $id => $shop) {
+                Mage::log("Model Export - format FTP Shop ".$id,null,"export.log");
                 foreach ($shop['orders'] as $i => $o) {
+                    Mage::log("Model Export - format FTP Order ".$i,null,"export.log");
                     if (isset($shop['infos'])) {
                         $code = split('_', $o['shipping_method'])[0];
                         $datetime = DateTime::createFromFormat('Y-m-d', $o['delivery_date']);
                         $o['delivery_date'] = $datetime->format('d/m/Y');
                         $day = $datetime->format('D');
-                        if ($code == $this->_methodfortournees) {
-                            $o['transporter'] = 'LPR';
-                            $o['enlevement_debut'] = $this->_creneaux['debut'][$day];
-                            $o['enlevement_fin'] = $this->_creneaux['fin'][$day];
-                            $o['livraison_debut'] = preg_split('/-/', $o['delivery_time'])[0];
-                            $o['livraison_fin'] = preg_split('/-/', $o['delivery_time'])[1];
-                            $out .= $this->oe($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
-                            $out .= $this->ol($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
-                            $out .= $this->co($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
-                        } else {
+                        if ($code == $this->_methodforcitycourses) {
+                            Mage::log("Model Export - format FTP Citycourses order ".$i,null,"export.log");
                             $o['transporter'] = 'STARDOM';
                             $o['enlevement_debut'] = '11:00';
                             $o['enlevement_fin'] = '12:00';
@@ -339,6 +334,16 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                             $out .= $this->oe($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;
                             $out .= $this->ol($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;
                             $out .= $this->co($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;
+                        } else {
+                            Mage::log("Model Export - format FTP APDC Tournées order ".$i,null,"export.log");
+                            $o['transporter'] = 'LPR';
+                            $o['enlevement_debut'] = $this->_creneaux['debut'][$day];
+                            $o['enlevement_fin'] = $this->_creneaux['fin'][$day];
+                            $o['livraison_debut'] = preg_split('/-/', $o['delivery_time'])[0];
+                            $o['livraison_fin'] = preg_split('/-/', $o['delivery_time'])[1];
+                            $out .= $this->oe($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
+                            $out .= $this->ol($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
+                            $out .= $this->co($dos[$store_id], $shop['infos'], $o).';0'.PHP_EOL;
                         }
                     } else {
                         $prods = '';
