@@ -245,14 +245,14 @@ class Billing
                     $do['nb_products']+=floatval($item->getQtyOrdered());
                     $do['sum_items']+=floatval($item->getRowTotalInclTax());
                     $do['sum_items_HT']+=floatval($item->getRowTotal());
-					$do['creation_date'] = date('d/m/Y', strtotime($order->getCreatedAt()));
+					$do['creation_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $order->getCreatedAt())));
 
 					$do['sum_shipping_HT']	= floatval($sum_shipping_HT);
 					$do['sum_shipping_TVA'] = floatval($sum_shipping_TVA);
 					$do['sum_shipping_TTC'] = floatval($sum_shipping_TTC);
 
                     if (!is_null($ddate)) {
-                        $do['delivery_date'] = date('d/m/Y', strtotime($ddate));
+                        $do['delivery_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $ddate)));
                     } else {
                         $do['delivery_date'] = $do['billing_month'] = 'Non Dispo';
                     }
