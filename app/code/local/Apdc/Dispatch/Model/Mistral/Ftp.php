@@ -372,7 +372,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
         if ($out != '') {
             file_put_contents($tmpFileName, $out);
 
-            if (Mage::getStoreConfig('apdcdispatch/general/mode') && Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
+            if (Mage::getStoreConfig('apdcdispatch/general/mode')&&Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
                 Mage::log("Model Export - start send to Mistral",null,"export.log");
                 if (!is_null($this->_host) && !is_null($this->_port)) {
                     $this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
