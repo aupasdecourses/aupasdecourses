@@ -310,6 +310,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
 
     protected function formatFtpMistral($shops)
     {
+        Mage::log("Model Export - start format FTP Mistral",null,"export.log");
         $dos = $this->_dos;
         $out = '';
         foreach ($shops as $store_id => $store) {
@@ -372,6 +373,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
             file_put_contents($tmpFileName, $out);
 
             if (Mage::getStoreConfig('apdcdispatch/general/mode') && Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
+                Mage::log("Model Export - start send to Mistral",null,"export.log");
                 if (!is_null($this->_host) && !is_null($this->_port)) {
                     $this->_connection = (!$this->_ssl) ? ftp_connect($this->_host, $this->_port) : ftp_ssl_connect($this->_host, $this->_port);
                     if (!$this->_connection) {

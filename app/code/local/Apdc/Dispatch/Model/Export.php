@@ -39,6 +39,8 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
                     }
                     $params['orders'] = Mage::getModel('pmainguet_delivery/orders_shop')->getShopsOrdersAction($c_date, $to);
                     if (Mage::getStoreConfig('apdcdispatch/general/mistral_active')) {
+                        Mage::log("Model Export - start process request FTP",null,"export.log");
+                        Mage::log($params['orders'],null,"export.log");
                         Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);
                     } else {
                         Mage::log('Export via FTP est désactivé', null, 'export.log');
