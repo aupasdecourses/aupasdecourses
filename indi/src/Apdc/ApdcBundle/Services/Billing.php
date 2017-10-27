@@ -700,11 +700,15 @@ class Billing
 		return $return['items'];
 	}
 
+
 	public function getBillingDetailsByDeliveryDate($debut, $fin)
 	{
-		$billing_details = \Mage::getModel('pmainguet_delivery/indi_billingdetails')->getCollection();
+		$from = date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$to = date('Y-m-d', strtotime(str_replace('/', '-', $fin)));
 		
-		$return = $billing_details->addFieldToFilter('delivery_date', ['from' => $debut, 'to' => $fin]);
+		$billing_details = \Mage::getModel('pmainguet_delivery/indi_billingdetails')->getCollection();
+
+		$return = $billing_details->addFieldToFilter('delivery_date', ['from' => $from, 'to' => $to]);
 		$return = $return->toArray();
 
 		return $return['items'];
