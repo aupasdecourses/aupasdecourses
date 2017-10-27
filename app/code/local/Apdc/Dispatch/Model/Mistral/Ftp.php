@@ -321,9 +321,13 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                     Mage::log("Model Export - format FTP Order ".$i,null,"export.log");
                     if (isset($shop['infos'])) {
                         $code = split('_', $o['shipping_method'])[0];
+                        Mage::log($code,null,"export.log");
                         $datetime = DateTime::createFromFormat('Y-m-d', $o['delivery_date']);
+                        Mage::log($datetime,null,"export.log");
                         $o['delivery_date'] = $datetime->format('d/m/Y');
+                        Mage::log($o['delivery_date'],null,"export.log");
                         $day = $datetime->format('D');
+                        Mage::log($day,null,"export.log");
                         if ($code == $this->_methodforcitycourses) {
                             Mage::log("Model Export - format FTP Citycourses order ".$i,null,"export.log");
                             $o['transporter'] = 'STARDOM';
