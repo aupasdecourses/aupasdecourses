@@ -174,7 +174,7 @@
           <codePool>local</codePool>
         </Apdc_Shipping>
         <Apdc_Avisverifies>
-          <active>false</active>
+          <active>true</active>
           <codePool>local</codePool>
           <depends>
               <Netreviews_Pla/>
