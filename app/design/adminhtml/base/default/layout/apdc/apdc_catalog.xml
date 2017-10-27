@@ -41,4 +41,11 @@
     </reference>
   </adminhtml_apdc_catalog_categories_toggle_index>
 
+  <adminhtml_apdc_scripts_clean_index>
+    <update handle="editor" />
+    <reference name="content">
+      <block type="apdc_catalog/adminhtml_catalog_scripts_clean" name="scripts_clean" />
+    </reference>
+  </adminhtml_apdc_scripts_clean_index>
+
 </layout>

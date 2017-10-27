@@ -20,6 +20,11 @@
               <sort_order>30</sort_order>
               <action>adminhtml/apdc_catalog_categories_toggle/index</action>
             </toggle>
+            <scripts>
+              <title>Scripts de checkup et nettoyage du catalogue</title>
+              <sort_order>30</sort_order>
+              <action>adminhtml/apdc_scripts_clean/index</action>
+            </scripts>
           </children>
         </categories>
       </children>
