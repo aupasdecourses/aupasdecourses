@@ -184,8 +184,8 @@ class BillingController extends Controller
 
                     foreach ($bill as $order) {
                         fputcsv($handle, array(
-                            $order['creation_date'],
-                            $order['delivery_date'],
+                            date('d/m/Y', strtotime(str_replace('-', '/', $order['creation_date']))),
+                            date('d/m/Y', strtotime(str_replace('-', '/', $order['delivery_date']))),
                             $order['increment_id'],
                             $order['id_billing'],
                             $order['customer_name'],
@@ -210,7 +210,7 @@ class BillingController extends Controller
 
                 $response->setStatusCode(200);
                 $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-                $response->headers->set('Content-Disposition','attachment; filename="commandes-facturees"'.$date_debut.'".csv"');
+                $response->headers->set('Content-Disposition','attachment; filename="commandes-facturees-par-commercants-du"'.$date_debut.'"au"'.$date_fin.'".csv"');
       
                 return $response;
             } // Fin export CSV 
