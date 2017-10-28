@@ -46,9 +46,13 @@ class Apdc_Catalog_Block_Product_Availability_Message extends Mage_Core_Block_Te
     public function getSpecificMessages()
     {
         $availability = $this->getAvailability();
-        switch($availability['product_availability']) {
-        case 4:
-            return $this->getShopHolidaysSpecificMessage();
+        if (!$availability['is_available']) {
+            switch($availability['product_availability']) {
+            case 4:
+                return $this->getShopHolidaysSpecificMessage();
+            }
+        } else if (!$availability['can_order']) {
+            return $this->getCanOrderDaysMessage($availability['can_order_days']);
         }
         return '';
     }
@@ -72,6 +76,30 @@ class Apdc_Catalog_Block_Product_Availability_Message extends Mage_Core_Block_Te
                 $this->shopHolidays[$product->getCommercant() . '_' . $date] = $message;
             }
             return $this->shopHolidays[$product->getCommercant() . '_' . $date];
+        }
+        return '';
+    }
+
+    /**
+     * getCanOrderDaysMessage 
+     * 
+     * @param string $canOrderDays canOrderDays 
+     * 
+     * @return string
+     */
+    protected function getCanOrderDaysMessage($canOrderDays)
+    {
+        $canOrderDays = explode(',', $canOrderDays);
+        $orderDays = [];
+        foreach ($canOrderDays as $dayId) {
+            $orderDays[] = Mage::getSingleton('apdc_catalog/source_product_days')->getOptionLabel($dayId);
+        }
+        if (!empty($orderDays)) {
+            if (count($orderDays) > 1) {
+                return Mage::helper('apdc_catalog')->__('Vous pouvez commander ce produit les : %s', implode(', ', $orderDays));
+            } else {
+                return Mage::helper('apdc_catalog')->__('Vous pouvez commander ce produit uniquement le : %s', implode(', ', $orderDays));
+            }
         }
         return '';
     }

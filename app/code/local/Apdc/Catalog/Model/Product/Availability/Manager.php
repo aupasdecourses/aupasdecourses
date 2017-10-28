@@ -170,6 +170,14 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                         continue;
                     }
                     $available = $availabilities[$day][$key];
+
+                    // Check product availability_days
+                    if ($product['availability_days']) {
+                        $productDays = explode(',', $product['availability_days']);
+                        if (empty($productDays) || !in_array($day, $productDays)) {
+                            $available['status'] = 5;
+                        }
+                    }
                 }
                 $datas[] = [
                     'product_id' => $product['entity_id'],
@@ -232,6 +240,13 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             'commercant_id',
             'catalog_product/commercant',
             'entity_id'
+        );
+        $productCollection->joinAttribute(
+            'availability_days',
+            'catalog_product/availability_days',
+            'entity_id',
+            null,
+            'left'
         );
         $productCollection->getSelect()->join(
             ['pw' => $this->getResource()->getTableName('catalog/product_website')],
@@ -423,6 +438,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         //      2 => Service not available
         //      3 => shop not available for delivery
         //      4 => shop in holidays
+        //      5 => product not available for delivery
         // ]
         foreach ($this->getAllDays() as $time) {
             $day = date('w', $time);

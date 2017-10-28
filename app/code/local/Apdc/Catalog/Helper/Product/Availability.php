@@ -58,11 +58,15 @@ class Apdc_Catalog_Helper_Product_Availability extends Mage_Core_Helper_Abstract
             default:
                 $isAvailable = false;
             }
-            $this->productAvailability[$product->getId()] = [
+             $productAvailability = [
+                'can_order' => $product->getCanOrder(),
+                'can_order_days' => (!is_null($product->getCanOrderDays()) ? $product->getCanOrderDays() : '1,2,3,4,5,6,7'),
                 'is_available' => $isAvailable,
-                'message' => $this->getAvailabilityMessage($availablilityId),
+                'is_available_for_sale' => ($isAvailable && $product->getCanOrder()),
                 'product_availability' => $availablilityId
             ];
+            $productAvailability['message'] = $this->getAvailabilityMessage($productAvailability);
+            $this->productAvailability[$product->getId()] = $productAvailability;
         }
         return $this->productAvailability[$product->getId()];
     }
@@ -90,12 +94,15 @@ class Apdc_Catalog_Helper_Product_Availability extends Mage_Core_Helper_Abstract
     /**
      * getAvailabilityMessage 
      * 
-     * @param int $availablilityId availablilityId 
+     * @param array $productAvailability : product availablility from Apdc_Catalog_Helper_Product_Availability getAvailability
      * 
      * @return string
      */
-    protected function getAvailabilityMessage($availablilityId)
+    protected function getAvailabilityMessage($productAvailability)
     {
-        return Mage::getSingleton('apdc_catalog/source_product_availability')->getOptionLabel($availablilityId);
+        if (!$productAvailability['can_order']) {
+            return Mage::helper('apdc_catalog')->__('Produit non disponible à la commande aujourd\'hui');
+        }
+        return Mage::getSingleton('apdc_catalog/source_product_availability')->getOptionLabel($productAvailability['product_availability']);
     }
 }

@@ -14,7 +14,7 @@
 	$uniqidCard = uniqid('card-');
     $availability = $this->getAvailability();
 ?>
-<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$availability['is_available'] ? ' notavailable' : ''); ?>" style="margin-bottom: 0px;">
+<div class="product-info row item <?php echo ($this->isCategoryPage() ? ' col-xs-6 col-sm-12' : ''); ?> <?php echo (!$availability['is_available_for_sale'] ? ' notavailable' : ''); ?>" style="margin-bottom: 0px;">
 	<form action="<?php echo $productUrl; ?>"
 		  method="post"
 		  class="product-item-info apdc-add-to-cart-form product_addtocart_form_<?php echo $product->getId(); ?>"
