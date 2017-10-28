@@ -3,7 +3,13 @@
 class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
 {    
     //get saved Attribute Value for Amasty Order Attribute module
-    function getSavedAttrValue($attributecode){
+    public function getSavedAttrValue($attributecode){
+        $session = Mage::getSingleton('checkout/type_onepage')->getCheckout();
+        $orderAttributes = $session->getAmastyOrderAttributes();
+        if (isset($orderAttributes[$attributecode])) {
+            return $orderAttributes[$attributecode];
+        }
+
         //Get value if customer has already set it up
         if (Mage::getSingleton('customer/session')->isLoggedIn())
         {
