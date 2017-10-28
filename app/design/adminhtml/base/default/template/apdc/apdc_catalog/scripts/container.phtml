@@ -1,6 +1,0 @@
-<?php
-$resource = Mage::getSingleton('core/resource');
-$connection=$resource->getConnection('core_read');
-$sql = 'SELECT COUNT(sku), sku FROM catalog_product_entity GROUP BY sku HAVING COUNT(sku) >1';
-$result = $connection->fetchAll($sql);
-var_dump($result);

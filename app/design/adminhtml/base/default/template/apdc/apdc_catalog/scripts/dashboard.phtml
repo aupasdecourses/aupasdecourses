@@ -1,0 +1,22 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo $this->getHeaderText() ?></h3></td>
+<!--             <td class="form-buttons">
+                <?php echo $this->getButtonsHtml() ?>
+            </td> -->
+        </tr>
+    </table>
+</div>
+<?php foreach($this->getSqlRequests() as $sql):
+	$count = count($this->mySqlRequest($sql));
+?>
+	<div style="width:18%;display:inline-block;min-height:65px;vertical-align:top;margin-bottom:10px;padding:10px;border:1px solid #eee2be;">
+		<p style="font-weight:bold;"><?= $this->getSqlLabel($sql)?></p>
+		<p><?= $this->getSqlHint($sql)?></p>
+		<p>Count: <?= $count ?></p>
+		<?php if($count>0):?>
+			<p><a href="<?= $this->getSqlUrl($sql);?>">Voir détails</a></p>
+		<?php endif;?>
+	</div>
+<?php endforeach;?>
