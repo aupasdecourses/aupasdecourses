@@ -38,14 +38,19 @@ class Apdc_Catalog_Block_Adminhtml_Catalog_Scripts_Details_Grid extends Mage_Adm
                     'index' => 'sku',
                ));
 
-       // $this->addColumn('name',
-       //         array(
-       //              'header' => 'name',
-       //              'align' =>'left',
-       //              'index' => 'name',
-       //        ));
+       $this->addColumn('name',
+               array(
+                    'header' => 'name',
+                    'align' =>'left',
+                    'index' => 'name',
+              ));
 
          return parent::_prepareColumns();
+    }
+
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('adminhtml/catalog_product/edit', array('id' => $row->getId()));
     }
 
 }
