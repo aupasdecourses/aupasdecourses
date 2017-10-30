@@ -100,20 +100,19 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
                 }
             }
 
-            if (isset($data['id_category'])) {
-                if (!empty($data['id_category'])) {
-                    if ($data['id_category'] != -1) {
-                        $data['id_category'] = explode(',', $data['id_category']);
-                        $data['id_category'] = array_unique($data['id_category']);
+            if (isset($data['category_ids'])) {
+                if (!empty($data['category_ids'])) {
+                    if ($data['category_ids'] != -1) {
+                        $data['category_ids'] = explode(',', $data['category_ids']);
+                        $data['category_ids'] = array_unique($data['category_ids']);
                     }
 
                 } else {
-                    $data['id_category'] = [];
+                    $data['category_ids'] = [];
                 }
             }
 
-
-            $model->setData($data);
+            $model->addData($data);
             $model->save();
             if ($updateCategories) {
                 $this->updateCategories($model);
@@ -145,10 +144,7 @@ class Apdc_Commercant_Adminhtml_Commercant_ShopController extends Mage_Adminhtml
      */
     protected function updateCategories($model)
     {
-        $categoryIds = ($model->getIdCategory() ? $model->getIdCategory() : array());
-        if ($categoryIds && !is_array($categoryIds)) {
-            $categoryIds = explode(',', $categoryIds);
-        }
+        $categoryIds = ($model->getCategoryIds() ? $model->getCategoryIds() : []);
         if (!empty($categoryIds)) {
             foreach ($categoryIds as $categoryId) {
                 $category = Mage::getModel('catalog/category')->load($categoryId);

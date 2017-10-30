@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.6.5</version>
+            <version>0.7.0</version>
         </Apdc_Commercant>
     </modules>
     <global>
@@ -30,6 +30,9 @@
                     <shop>
                         <table>apdc_shop</table>
                     </shop>
+                    <shop_categories>
+                        <table>apdc_shop_categories</table>
+                    </shop_categories>
                     <contact>
                         <table>apdc_commercant_contact</table>
                     </contact>
@@ -85,17 +88,6 @@
           </Apdc_Commercant>
         </modules>
       </translate>
-      <events>
-        <catalog_category_delete_before>
-          <observers>
-            <apdc_commercant>
-              <type>singleton</type>
-              <class>apdc_commercant/observer</class>
-              <method>cleanShopCategory</method>
-            </apdc_commercant>
-          </observers>
-        </catalog_category_delete_before>
-      </events>
 
     </adminhtml>
     <default>

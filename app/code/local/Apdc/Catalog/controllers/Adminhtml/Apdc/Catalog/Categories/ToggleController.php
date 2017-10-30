@@ -55,7 +55,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ToggleController extends Ma
     public function toggleAction()
     {
         $disable = (boolean)$this->getRequest()->getParam('disable', false);
-        $idCategories = $this->getRequest()->getPost('id_category', null);
+        $idCategories = $this->getRequest()->getPost('category_ids', null);
         try {
             if ($idCategories) {
                 if ($disable) {
@@ -70,7 +70,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ToggleController extends Ma
             }
         } catch (Exception $e) {
             Mage::logException($e);
-            $this->_getSession()->setFormData(['id_category' => $idCategories]);
+            $this->_getSession()->setFormData(['category_ids' => $idCategories]);
             $this->_getSession()->addError($this->getHelper()->__('Impossible de mettre à jour les catégories (veuillez vérifier les logs)'));
         }
         return $this->_redirect('*/*/');
@@ -118,7 +118,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ToggleController extends Ma
      */
     protected function getAllChildrens()
     {
-        $idCategories = $this->getRequest()->getPost('id_category', null);
+        $idCategories = $this->getRequest()->getPost('category_ids', null);
         if ($idCategories) {
             $idCategories = explode(',', trim($idCategories));
         }

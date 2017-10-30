@@ -72,7 +72,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     $name = $product->setCommercant($commercant);
 					$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $commercant)->getFirstItem();
 					if($shop) {
-						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
+						$category = Mage::getModel('catalog/category')->load($shop['category_ids'][0]);
 						if($category && $category->getParentCategory()) {
 							$color = $category->getParentCategory()->getData('menu_bg_color');
 						}

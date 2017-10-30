@@ -63,7 +63,7 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	public function info_commercant($id,$type="attcomid")
 	{
 	    	if($type=="catid") {
-	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', $id)->getFirstItem();   
+	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addCategoryFilter($id)->getFirstItem();   
 	    	} else {
 	    		$shop=Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $id)->getFirstItem();   
 	    	}

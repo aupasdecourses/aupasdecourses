@@ -127,7 +127,7 @@
                     <closing_periods>Closing Periods</closing_periods>
                     <id_contact_manager>Contact Manager</id_contact_manager>
                     <id_contact_employee>Contact Employee</id_contact_employee>
-                    <id_category>Category</id_category>
+                    <category_ids>Category</category_ids>
                     <google_id>Google id</google_id>
                     <google_key>Google key</google_key>
                 </attributes>

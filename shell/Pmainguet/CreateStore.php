@@ -688,7 +688,7 @@ class Pmainguet_CreateStore extends Mage_Shell_Abstract
                             'name' => $childcat,
                             'id_commercant' => Mage::getSingleton('apdc_commercant/commercant')->getCollection()->addFieldToFilter('name', $namecommercant)->getFirstItem()->getId(),
                             'id_contact_manager' => $id_contact,
-                            'id_category' => array($category->getId()),
+                            'category_ids' => array($category->getId()),
                             'stores' => array($S[explode('/', $category->getPath())[1]]['store_id']),
                             'id_attribut_commercant' => $id_attribut_commercant,
                             'delivery_days' => array(2, 3, 4, 5),

@@ -49,9 +49,9 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
             'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Enabled',
         ]);
 
-        $this->addColumn('id_category', [
+        $this->addColumn('category_ids', [
             'header' => $this->__('Catégorie'),
-            'index' => 'id_category',
+            'index' => 'category_ids',
             'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Category',
         ]);
 

@@ -87,13 +87,13 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
     //Voir si on ne peut pas refactoriser les fonctions utilisant getCategoriesArray avec cette fonction
     public function getCategoriesCommercant(){
-        $cats=Mage::getModel('apdc_commercant/shop')->getCollection()->load()->toArray(array('id_category'));
-        $result=array();
+        $cats = Mage::getModel('apdc_commercant/shop')->getCollection()->load();
+        $result = array();
         foreach($cats as $cat){
-            $result=array_merge($result,$cat['id_category']);
+            $result = array_merge($result, $cat->getCategoryIds());
         }
 
-        $cats=Mage::getModel('catalog/category')
+        $cats = Mage::getModel('catalog/category')
             ->getCollection()
             ->setOrder('name')
             ->addAttributeToSelect('name')
@@ -117,7 +117,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         }
         if ($categoryShop) {
             $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-            $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem();
+            $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addCategoryFilter($categoryShop->getId())->getFirstItem();
         }
 
         return [
@@ -158,9 +158,9 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             if (!($shop && $shop->getId()) && is_null($categoryShop)) {
                 $shop = Mage::getModel('apdc_commercant/shop')->load($shopId);
                 if ($shop && $shop->getId()) {
-                    $idCategory = $shop->getIdCategory();
-                    if (!empty($idCategory)) {
-                        $categoryShop = Mage::getModel('catalog/category')->load($idCategory[0]);
+                    $categoryIds = $shop->getCategoryIds();
+                    if (!empty($categoryIds)) {
+                        $categoryShop = Mage::getModel('catalog/category')->load($categoryIds[0]);
                     }
                 }
             }
