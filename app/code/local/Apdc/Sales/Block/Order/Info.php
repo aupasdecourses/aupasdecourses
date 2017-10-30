@@ -35,6 +35,8 @@
 class Apdc_Sales_Block_Order_Info extends Mage_Core_Block_Template
 {
     protected $_links = array();
+    protected $websiteId = null;
+    protected $neighborhood = null;
 
     protected function _construct()
     {
@@ -107,10 +109,16 @@ class Apdc_Sales_Block_Order_Info extends Mage_Core_Block_Template
      */
     public function getReorderUrl($order)
     {
-        if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
-            return $this->getUrl('sales/guest/reorder', array('order_id' => $order->getId()));
+        $params = [
+            'order_id' => $order->getId()
+        ];
+        if (!$this->isSameNeighborhoodAsCurrent($order)) {
+            $params['neighborhood_id'] = $this->getNeighborhood($order)->getId();
         }
-        return $this->getUrl('sales/order/reorder', array('order_id' => $order->getId()));
+        if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
+            return $this->getUrl('sales/guest/reorder', $params);
+        }
+        return $this->getUrl('sales/order/reorder', $params);
     }
 
     /**
@@ -128,4 +136,65 @@ class Apdc_Sales_Block_Order_Info extends Mage_Core_Block_Template
         return $this->getUrl('sales/order/print', array('order_id' => $order->getId()));
     }
 
+    /**
+     * getNeighborhood 
+     * 
+     * @param Mage_Sales_Model_Order $order order 
+     * 
+     * @return string
+     */
+    public function getNeighborhoodName($order)
+    {
+        $neighborhood = $this->getNeighborhood($order);
+        return $neighborhood->getName();
+    }
+
+    /**
+     * getNeighborhood 
+     * 
+     * @param Mage_Sales_Model_Order $order order 
+     * 
+     * @return Apdc_Neighborhood_Model_Neighborhood
+     */
+    public function getNeighborhood($order)
+    {
+        $websiteId = $this->getWebsiteIdByStoreId($order->getStoreId());
+        if (is_null($this->neighborhood)) {
+            $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId($websiteId);
+            $this->neighborhood = $neighborhoods->getFirstItem();
+        }
+        return $this->neighborhood;
+    }
+
+    /**
+     * getWebsiteIdByStoreId 
+     * 
+     * @param int $storeId storeId 
+     * 
+     * @return int
+     */
+    protected function getWebsiteIdByStoreId($storeId)
+    {
+        if (is_null($this->websiteId)) {
+            $this->websiteId = Mage::getModel('core/store')->load($storeId)->getWebsite()->getId();
+        }
+        return $this->websiteId;
+    }
+
+    /**
+     * isSameNeighborhoodAsCurrent 
+     * 
+     * @param Mage_Sales_Model_Order $order order 
+     * 
+     * @return boolean
+     */
+    public function isSameNeighborhoodAsCurrent($order)
+    {
+        if (Mage::helper('apdc_neighborhood')->getCurrentNeighborhood() && 
+            $this->getNeighborhood($order)->getId() == Mage::helper('apdc_neighborhood')->getCurrentNeighborhood()->getId()
+        ) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -75,6 +75,12 @@ h1.account-title{
                     color: $color-main-green;
                     margin-top: 5px;
                     margin-bottom: 50px;
+
+                    .order-neighborhood {
+                      font-weight:normal;
+                      color:initial;
+                      font-style:italic;
+                    }
                 }
                 strong{
                     display: block;

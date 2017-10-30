@@ -1,6 +1,6 @@
 <?php
 
-class Apdc_Customer_Block_Lastorder extends Mage_Core_Block_Template
+class Apdc_Customer_Block_Lastorder extends Apdc_Sales_Block_Order_Abstract
 {
     public function getLastOrdersByCustomer() {
 		$orders = Mage::getResourceModel('sales/order_collection')

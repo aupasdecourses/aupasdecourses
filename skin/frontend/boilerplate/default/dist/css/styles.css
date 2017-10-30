@@ -16454,6 +16454,12 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.my-account .box-account.detail-order p.order-ref .order-neighborhood {
+  font-weight: normal;
+  font-style: italic;
+  color: initial;
+}
+
 .my-account .box-account.detail-order p strong {
   font-weight: normal;
   display: block;

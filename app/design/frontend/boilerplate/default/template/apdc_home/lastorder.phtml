@@ -10,12 +10,16 @@
 					<h3><strong>Ma commande </strong>du <?php echo $this->formatDate($order->getCreatedAt(),Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM); ?></h3>
 					<p><?php echo Mage::helper('core')->currency($order->getGrandTotal(), true, false); ?></p>
 					<a class="link" href="<?php echo Mage::getUrl('sales/order/view', array('order_id' => $order->getId())); ?>">Voir la commande</a>
-                    <a class="button button-green" href="<?php echo Mage::getUrl('sales/order/reorder', array('order_id' => $order->getId())); ?>">
-                        Recommander
-                        <div class="action-loading" style="display: none;">
-                            <div class="loader"></div>
-                        </div>
-                    </a>
+                    <?php if ($this->isSameNeighborhoodAsCurrent($order)) : ?>
+                        <a class="button button-green" href="<?php echo $this->getReorderUrl($order); ?>">
+                            Recommander
+                            <div class="action-loading" style="display: none;">
+                                <div class="loader"></div>
+                            </div>
+                        </a>
+                    <?php else : ?>
+                        <a class="need_change_neighbordhood button button-green" href="<?php echo $this->getReorderUrl($order, $this->getNeighborhood($order)->getId()); ?>" data-neighborhood-name="<?php echo $this->getNeighborhoodName($order); ?>" id="reorder-<?php echo $order->getId(); ?>">Recommander</a>
+                    <?php endif; ?>
 				</article>
 			<?php } ?>
 		</div>
@@ -27,4 +31,37 @@
     jQuery('.block-lastorder a.button-green').on('click', function() {
         jQuery(this).parents('article').find('.action-loading').show();
     });
+    if (jQuery('.need_change_neighbordhood').length > 0) {
+        var msgTemplate = '';
+        var currentReorderId = null;
+        apdcReorderPopup = new ApdcPopup({
+            id: 'sales-history-reorder',
+            autoHeightPopup:true,
+            getTemplate:true,
+            onReady: function(newHtml) {
+                msgTemplate = jQuery(newHtml).find('#confirm-message').html();
+                if (apdcReorderPopup.isOpen()) {
+                    apdcReorderPopup.updateContent(newHtml);
+                    prepareReorderPopup();
+                }
+            }
+        });
+        jQuery('.need_change_neighbordhood').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            currentReorderId = jQuery(this).attr('id').replace('reorder-', '');
+            apdcReorderPopup.show();
+            apdcReorderPopup.initPopupHeight();
+            prepareReorderPopup();
+        });
+
+        function prepareReorderPopup()
+        {
+            if (msgTemplate && currentReorderId) {
+                var neighborhoodName = jQuery('#reorder-' + currentReorderId).data('neighborhood-name');
+                jQuery('#reorder-confirm-popup-content #confirm-message').html(msgTemplate.replace('{{neighborhood}}', neighborhoodName)); 
+                jQuery('#reorder-confirm-popup-content #reorder_confirm_popup_order_id').val(currentReorderId);
+            }
+        }
+    }
 </script>
