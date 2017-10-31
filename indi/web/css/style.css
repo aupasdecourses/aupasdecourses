@@ -296,3 +296,21 @@ input#datepickerAccountingCustomers
 	right: 20px;
 	z-index: 4;
 }
+
+.rectangle {
+	width: 80px;
+	height: 20px;
+	margin-left: 5px;
+	margin-top: 3px;
+	border: 1px solid black;
+}
+
+.flex-start {
+	display:flex;
+	align-content: flex-start;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
