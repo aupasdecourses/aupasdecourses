@@ -13,7 +13,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
     protected $_shippingmethods;
     protected $_methodfortournees = 'tablerate';
     protected $_methodforcitycourses = 'flatrate';
-    protected $_doforcitycourses = 'DCS28';
+    protected $_doforcitycourses = 'APDC5923';
     protected $_dos;
     protected $_maxlengths;
     protected $_creneaux;
