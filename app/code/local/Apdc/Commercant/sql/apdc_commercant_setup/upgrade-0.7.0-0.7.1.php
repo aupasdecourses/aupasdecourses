@@ -7,7 +7,7 @@ $tableName = $installer->getTable('apdc_commercant/shop');
 
 $installer->getConnection()->addColumn(
     $tableName,
-    'main_category_label',
+    'shop_type',
     [
         'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
         'after' => 'id_contact_employee_bis',
@@ -38,7 +38,7 @@ $shopTable = $installer->getTable('apdc_commercant/shop');
 foreach ($catByShopId as $shopId => $catName) {
     $installer->getConnection()->update(
         $shopTable,
-        ['main_category_label' => $catName],
+        ['shop_type' => $catName],
         'id_shop = ' . (int) $shopId
     );
 }

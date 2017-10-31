@@ -3,7 +3,7 @@
 
 	<modules>
 		<Apdc_SuperMenu>
-			<version>0.1.2</version>
+			<version>0.2.0</version>
 		</Apdc_SuperMenu>
 	</modules>
 
@@ -72,7 +72,6 @@
         <attributes>
           <menu_bg_color />
           <menu_text_color />
-          <menu_template />
           <menu_main_static_block />
           <menu_static_block1 />
           <thumbnail />

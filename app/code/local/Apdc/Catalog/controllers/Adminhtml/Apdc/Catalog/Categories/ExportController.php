@@ -117,7 +117,6 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
                         'landing_page'=>$category->getLandingPage(),
                         'menu_bg_color'=>$category->getMenuBgColor(),
                         'menu_text_color'=>$category->getMenuTextColor(),
-                        'menu_template'=>$category->getMenuTemplate(),
                         'menu_main_static_block'=>$category->getMenuMainStaticBlock(),
                         'menu_static_block1'=>$category->getMenuStaticBlock1(),
                         'product_count'=>$category->getProductCount(),

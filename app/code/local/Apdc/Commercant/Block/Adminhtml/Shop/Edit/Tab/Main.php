@@ -79,6 +79,19 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'disabled' => $isElementDisabled
         ]);
 
+        $shopTypes = Mage::getSingleton('apdc_commercant/source_shop_types')->toOptionArray();
+        $fieldset->addField(
+            'shop_type',
+            'select',
+            [
+                'name' => 'shop_type',
+                'label' => $this->__('Type de commerce'),
+                'required' => true,
+                'values' => $shopTypes
+            ]
+        );
+
+
         $fieldset->addField('siret', 'text', [
             'name' => 'siret',
             'label' => $this->__('SIRET'),

@@ -1,6 +1,24 @@
 <?php
 
-class Apdc_Commercant_Model_Source_Shop_MainCategoryLabel
+/**
+ * This file is part of the GardenMedia Mission Project 
+ * 
+ * @category Apdc
+ * @package  Commercant
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
+/**
+ * Apdc_Commercant_Model_Source_Shop_Types 
+ * 
+ * @category Apdc
+ * @package  Commercant
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
+class Apdc_Commercant_Model_Source_Shop_Types
 {
     protected $options=null;
 

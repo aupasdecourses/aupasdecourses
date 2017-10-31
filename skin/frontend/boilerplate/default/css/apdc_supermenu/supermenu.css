@@ -121,14 +121,14 @@
     padding: 0;
     vertical-align: middle;
     border-radius: 50%;
+    margin: 0 10px;
 }
 
 
 #supermenu li.level1> a img.thumbnail_commercant, .cat-thumbnail {
-  border-radius:50%;
-  transform: translate(5px, 4px);
-  display: inline-block;
+  display: block;
   vertical-align: middle;
+  margin: 0 auto 5px auto;
 }
 
 #supermenu li.level1> a img.thumbnail_commercant{
@@ -139,16 +139,17 @@
 
 .template-column .cat-thumbnail{
     width: 20%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
+
 
 #supermenu li.level1> a span {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 15px;
-    width: 130px;
-    font-size: 1.125 rem;
-    font-weight: 700;
-    color: #1e555a;
+    font-size: 0.85rem;
     opacity:1;
     transition:opacity 0.2s ease;
 }
@@ -222,7 +223,6 @@ a.level2:visited {
     margin: 0 auto;
     text-align: center;
     display: block;
-    height: 65px;
     line-height: 22px;
 }
 
@@ -266,16 +266,34 @@ a.level3:hover {
     transform: translateY(300px);
   }
   #supermenu li a.column-commercant {
-    width: 270px;
     display: block;
     position: relative;
+    margin: 0;
+    color: inherit;
   }
+
+
+  #supermenu li.level1.open:after {
+      position: absolute;
+      top: 98%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      margin-left: -15px;
+      content: ' ';
+      pointer-events: none;
+      border: solid transparent;
+      border-width: 15px;
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: inherit;
+  }
+
+
+
   #supermenu div.level0,
   #supermenu ul.level0 {
-    height: 300px;
-    overflow: hidden;
     z-index: 97;
-    padding-top: 20px;
+    padding-top: 0px;
     border-radius: 0;
     border: 1px solid #dcdcdc;
     box-shadow: 2px 2px 15px -4px rgba(0, 0, 0, 0.33);
@@ -284,17 +302,19 @@ a.level3:hover {
     padding-bottom: 0;
   }
   #supermenu div.level0>ul:not(.menu-template-content) {
-    float:left;
-    width:280px;
-    overflow-x:hidden;
-    overflow-y: auto;
-    height: 100%;
+    width: 100%;
     list-style-type: none;
-    padding-left: 20px;
     border-right: 1px solid #eee;
+    padding: 10px 10px 0 10px;
+    display: table;
   }
   #supermenu div.level0>ul:not(.menu-template-content)>li{
       margin-bottom: 10px;
+      display: table-cell;
+      text-align: center;
+      padding-bottom: 10px;
+      position: relative;
+      border-color: inherit;
   }
   #supermenu div.level0{
       border: 0;
@@ -317,14 +337,10 @@ a.level3:hover {
     color:#333333;
   }
   #supermenu .menu-template-content {
-    display: inline-block;
-    float:right;
-    width:calc(100% - 280px);
-    height: 100%;
-    overflow: auto;
-    padding:0;
-    list-style:none;
-    margin:0;
+    display: block;
+    width: 100%;
+    min-height: 260px;
+    padding: 20px 0 0 0;
   }
 
 
@@ -333,7 +349,7 @@ a.level3:hover {
     display:none;
   }
   #supermenu .column-commercant .deploy-menu-button {
-    display:block;
+    display: none;
     color:#ccc;
   }
   #supermenu li.open>.column-commercant .deploy-menu-button {
@@ -375,38 +391,54 @@ a.level3:hover {
   .dropdown-submenu.open>.dropdown-menu-template {
     display:none;
   }
+  #supermenu .template-line {
+    display:block;
+    width:100%;
+  }
+  #supermenu .template-line ul {
+    display: block;
+    width:100%;
+  }
+  #supermenu .template-line ul li {
+    display: inline-block;
+    vertical-align:middle;
+    text-align:center;
+  }
+  #supermenu .template-line.common-links ul {
+    display: table;
+  }
+  #supermenu .template-line.common-links ul li {
+    display: table-cell;
+  }
+  #supermenu .template-line.separator {
+    display:block;
+    width: 90%;
+    margin: 15px auto;
+    border:1px solid green;
+    height: 1px;
+    overflow: hidden;
+  }
   #supermenu .template-column {
-    width: 50%;
+    width: 25%;
     padding: 0 15px;
-    float: left;
-    border-right: 1px solid #eee;
-    max-height: 90%;
-      margin-bottom: 20px;
+    margin-bottom: 20px;
   }
   #supermenu .template-column > ul{
       padding-left: 0;
   }
-  #supermenu .template-column:nth-child(odd) {
-    clear:left;
-  }
-  #supermenu .template-column:nth-child(even) {
-    clear:none;
-  }
   #supermenu .template-column .cat-thumbnail img {
     position: relative;
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 100px;
+    max-height: 100px;
+    height: 100px;
   }
 
   #supermenu .template-column .cat-name {
-    width: 80%;
-    display: inline-block;
+    display: block;
     vertical-align: middle;
-    padding-left: 20px;
-    text-align: left;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: normal;
     color: #3ab64b;
   }
 
@@ -416,41 +448,7 @@ a.level3:hover {
   }
 
 }
-@media (min-width: 800px) {
-  #supermenu .template-column {
-    width: 33.3333%;
-  }
-  #supermenu .template-column:nth-child(1n+0) {
-    clear:none;
-  }
-  #supermenu .template-column:nth-child(3n+1) {
-    clear:left;
-  }
-}
 
-@media (min-width: 992px) {
-  #supermenu .template-column {
-    width: 25%;
-  }
-  #supermenu .template-column:nth-child(1n+0) {
-    clear:none;
-  }
-  #supermenu .template-column:nth-child(4n+1) {
-    clear:left;
-  }
-}
-@media (min-width: 1100px) {
-  #supermenu .template-column {
-    width: 20%;
-      min-width: 238px;
-  }
-  #supermenu .template-column:nth-child(1n+0) {
-    clear:none;
-  }
-  #supermenu .template-column:nth-child(5n+1) {
-    clear:left;
-  }
-}
 @media screen and (max-width: 1200px) {
       a.level2:link,
     a.level2:visited {
@@ -499,11 +497,24 @@ a.level3:hover {
     #supermenu .template-column .cat-thumbnail {
       display:none;
     }
-    #supermenu ul.level1>li {
-      display:block;
+    #supermenu div.level0>ul:not(.menu-template-content){
+      background-color:white!important;
+      border-color:white!important;
+    }
+
+    #supermenu ul.level1 .template-line ul>li {
+      display: block;
       border-bottom:1px solid lightgrey;
       padding: 0 0px 0 15px;
     }
+    #supermenu ul.level1 .template-line {
+      display:block;
+    }
+    #supermenu ul.level1 li.separator,
+    #supermenu ul.level1 li.common-links {
+      display:none;
+    }
+
     #supermenu ul.level1 li>a {
       background-color:#ffffff;
     }
@@ -521,7 +532,7 @@ a.level3:hover {
     #supermenu ul.level2>li {
       height:30px;
     }
-    #supermenu li > ul {
+    #supermenu li:not(.template-line) > ul {
       display:block;
       max-height:0;
       transition:max-height 0.5s ease, opacity 0s ease 0.5s;
@@ -534,5 +545,3 @@ a.level3:hover {
       transition-delay:0s;
       max-width: 100%;
     }
-
-}

@@ -28,7 +28,7 @@
 <config>
     <modules>
         <Webcomm_MagentoBoilerplate>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Webcomm_MagentoBoilerplate>
     </modules>

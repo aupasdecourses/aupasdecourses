@@ -69,7 +69,6 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'landing_page'=>$category->getLandingPage(),
                         'menu_bg_color'=>$category->getMenuBgColor(),
                         'menu_text_color'=>$category->getMenuTextColor(),
-                        'menu_template'=>$category->getMenuTemplate(),
                         'menu_main_static_block'=>$category->getMenuMainStaticBlock(),
                         'menu_static_block1'=>$category->getMenuStaticBlock1(),
                         'product_count'=>$category->getProductCount(),
@@ -125,7 +124,6 @@ class Pmainguet_Batchcat extends Mage_Shell_Abstract
                         'landing_page'=>$line[17],
                         'menu_bg_color'=>$line[18],
                         'menu_text_color'=>$line[19],
-                        'menu_template'=>$line[20],
                         'menu_main_static_block'=>$line[21],
                         'menu_static_block1'=>$line[22],
                     ];

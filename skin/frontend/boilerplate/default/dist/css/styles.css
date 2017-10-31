@@ -12371,17 +12371,6 @@ header .top-nav li a a:visited {
   background: #3ab64b;
 }
 
-.dropdown-menu .template-column .cat-thumbnail {
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.dropdown-menu .template-column .cat-thumbnail img {
-  height: 40px;
-}
-
 /**::-ms-backdrop, .header-minicart #header-cart .block-subtitle {
     right:-360px!important;
 }
