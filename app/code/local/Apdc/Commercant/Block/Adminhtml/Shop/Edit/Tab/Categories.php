@@ -36,6 +36,17 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Categories
             'categories',
             ['legend' => $this->__('Informations sur les catégories')]
         );
+        $mainCategoryLabel = Mage::getSingleton('apdc_commercant/source_shop_mainCategoryLabel')->toOptionArray();
+        $fieldset->addField(
+            'main_category_label',
+            'select',
+            [
+                'name' => 'main_category_label',
+                'label' => $this->__('Libellé de la catégorie principale'),
+                'required' => true,
+                'values' => $mainCategoryLabel
+            ]
+        );
 
         $fieldset->addType('image_browser', 'Apdc_Media_Model_Data_Form_Element_ImageBrowser');
 
