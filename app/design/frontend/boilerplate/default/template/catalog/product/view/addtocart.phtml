@@ -35,7 +35,7 @@
         </div>
 
         <div class="pull-right">
-			<?php if($availablility['is_available']) { ?>
+			<?php if($availablility['is_available_for_sale']) { ?>
 				<input type="hidden" class="selected-optionKey-<?php echo $_product->getId(); ?>" />
                 <button type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button button-green btn-cart simple-add-to-cart-button<?php echo ($isEditMode ? ' hide' : ''); ?>"><span><span><img src="<?php echo $this->getSkinUrl('dist/images/icon-shopping.png') ?>" alt=""> <?php echo $this->__('Add to Cart') ?></span></span></button>
 				<div class="qty-buttons">

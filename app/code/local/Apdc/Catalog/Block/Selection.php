@@ -35,6 +35,7 @@ class Apdc_Catalog_Block_Selection extends Mage_Catalog_Block_Product_Abstract
         if (Mage::getSingleton('core/session')->getDdate()) {
             $collection->getSelect()->having('product_availability = 1');
         }
+        $collection->getSelect()->having('can_order = 1');
         //$collection->setPageSize(20);
 
 		$row1 = array();
