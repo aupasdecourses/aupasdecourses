@@ -84,6 +84,12 @@ Customer account home dashboard layout
             <!--<block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>-->
         </reference>
     </sales_order_history>
+
+    <apdc_popup_index_templateajax>
+      <block type="core/template"
+        name="sales_history_reorder_popup_apdc_popup_child"
+        template="apdc_customer/account/order/reorder-confirm-popup.phtml" />
+    </apdc_popup_index_templateajax>
 	
 	<sales_order_ongoing translate="label">
         <label>Customer My Account Order ongoing</label>

@@ -32,9 +32,8 @@
  * @author      Magento Core Team <core@magentocommerce.com>
  */
 
-class Apdc_Sales_Block_Order_Ongoing extends Mage_Core_Block_Template
+class Apdc_Sales_Block_Order_Ongoing extends Apdc_Sales_Block_Order_Abstract
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -63,28 +62,4 @@ class Apdc_Sales_Block_Order_Ongoing extends Mage_Core_Block_Template
         return $this;
     }
 
-    public function getPagerHtml()
-    {
-        return $this->getChildHtml('pager');
-    }
-
-    public function getViewUrl($order)
-    {
-        return $this->getUrl('*/*/view', array('order_id' => $order->getId()));
-    }
-
-    public function getTrackUrl($order)
-    {
-        return $this->getUrl('*/*/track', array('order_id' => $order->getId()));
-    }
-
-    public function getReorderUrl($order)
-    {
-        return $this->getUrl('*/*/reorder', array('order_id' => $order->getId()));
-    }
-
-    public function getBackUrl()
-    {
-        return $this->getUrl('customer/account/');
-    }
 }

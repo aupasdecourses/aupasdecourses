@@ -16,6 +16,7 @@
                 <th class="date"><?php echo $this->__('Date') ?></th>
                 <th class="total"><span class="nobr"><?php echo $this->__('Total') ?></span></th>
                 <th class="status"><span class="nobr"><?php echo $this->__('Statut') ?></span></th>
+                <th class="neighborhood"><span class="nobr"><?php echo $this->__('Neighborhood') ?></span></th>
                 <th class="view">&nbsp;</th>
             </tr>
         </thead>
@@ -27,9 +28,14 @@
                 <td class="date"><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
                 <td class="total"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
                 <td class="status"><?php echo $_order->getStatusLabel() ?></td>
+                <td class="neighborhood"><?php echo $this->getNeighborhoodName($_order); ?></td>
                 <td class="text-center view">
 					<?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
-						<a href="<?php echo $this->getReorderUrl($_order) ?>" class="button button-green"><i class="fa fa-arrow-right"></i> <?php echo $this->__('Commander à nouveau') ?></a>
+                        <?php if ($this->isSameNeighborhoodAsCurrent($_order)) : ?>
+						    <a href="<?php echo $this->getReorderUrl($_order) ?>" class="button button-green"><i class="fa fa-arrow-right"></i> <?php echo $this->__('Commander à nouveau') ?></a>
+                        <?php else : ?>
+                            <a href="<?php echo $this->getReorderUrl($_order, $this->getNeighborhood($_order)->getId()) ?>" class="button button-green need_change_neighbordhood" id="reorder-<?php echo $_order->getId(); ?>" data-neighborhood-name="<?php echo $this->getNeighborhoodName($_order) ?>"><i class="fa fa-arrow-right"></i> <?php echo $this->__('Commander à nouveau') ?></a>
+                        <?php endif; ?>
 					<?php endif ?>
                     <a href="<?php echo $this->getViewUrl($_order) ?>" class="view-order"><i class="fa fa-eye"></i> <?php echo $this->__('Voir la commande') ?></a>
                 </td>
@@ -38,6 +44,41 @@
         </tbody>
     </table>
     <script type="text/javascript">decorateTable('my-orders-table');</script>
+    <script type="text/javascript">
+        if (jQuery('.need_change_neighbordhood').length > 0) {
+            var msgTemplate = '';
+            var currentReorderId = null;
+            apdcReorderPopup = new ApdcPopup({
+                id: 'sales-history-reorder',
+                autoHeightPopup:true,
+                getTemplate:true,
+                onReady: function(newHtml) {
+                    msgTemplate = jQuery(newHtml).find('#confirm-message').html();
+                    if (apdcReorderPopup.isOpen()) {
+                        apdcReorderPopup.updateContent(newHtml);
+                        prepareReorderPopup();
+                    }
+                }
+            });
+            jQuery('.need_change_neighbordhood').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                currentReorderId = jQuery(this).attr('id').replace('reorder-', '');
+                apdcReorderPopup.show();
+                apdcReorderPopup.initPopupHeight();
+                prepareReorderPopup();
+            });
+
+            function prepareReorderPopup()
+            {
+                if (msgTemplate && currentReorderId) {
+                    var neighborhoodName = jQuery('#reorder-' + currentReorderId).data('neighborhood-name');
+                    jQuery('#reorder-confirm-popup-content #confirm-message').html(msgTemplate.replace('{{neighborhood}}', neighborhoodName)); 
+                    jQuery('#reorder-confirm-popup-content #reorder_confirm_popup_order_id').val(currentReorderId);
+                }
+            }
+        }
+    </script>
     <?php echo $this->getPagerHtml(); ?>
     <?php else: ?>
         <p><?php echo $this->__('You have placed no orders.'); ?></p>

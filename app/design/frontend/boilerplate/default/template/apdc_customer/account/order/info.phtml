@@ -2,8 +2,8 @@
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <h2 class="table-caption"><?php echo $this->__('Ma commande') ?></h2>
-<p class="order-ref">#<?php echo $_order->getRealOrderId() ?></p>
-<a href="<?php echo $this->getReorderUrl($_order) ?>" class="button button-green reorder-link"><i class="fa fa-credit-card"></i> Commander à nouveau</a>
+<p class="order-ref">#<?php echo $_order->getRealOrderId() ?><span class="order-neighborhood"> - <?php echo $this->getNeighborhoodName($_order); ?></span></p>
+<a href="<?php echo $this->getReorderUrl($_order) ?>" id="reorder-<?php echo $_order->getId(); ?>" data-neighborhood-name="<?php echo $this->getNeighborhoodName($_order); ?>" class="button button-green reorder-link"><i class="fa fa-arrow-right"></i> Commander à nouveau</a>
 <h3><?php echo $this->__('Mes informations générales') ?></h3>
 <div class="row">
     <div class="col-sm-6">
@@ -22,3 +22,38 @@
         <p><strong><?php echo $this->__('Votre adresse de facturation') ?></strong> <?php echo $_order->getBillingAddress()->format('string') ?></p>
     </div>
 </div>
+<?php if (!$this->isSameNeighborhoodAsCurrent($_order)) : ?>
+<script type="text/javascript">
+    var msgTemplate = '';
+    var currentReorderId = null;
+    apdcReorderPopup = new ApdcPopup({
+        id: 'sales-history-reorder',
+        autoHeightPopup:true,
+        getTemplate:true,
+        onReady: function(newHtml) {
+            msgTemplate = jQuery(newHtml).find('#confirm-message').html();
+            if (apdcReorderPopup.isOpen()) {
+                apdcReorderPopup.updateContent(newHtml);
+                prepareReorderPopup();
+            }
+        }
+    });
+    jQuery('#reorder-<?php echo $_order->getId(); ?>').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentReorderId = jQuery(this).attr('id').replace('reorder-', '');
+        apdcReorderPopup.show();
+        apdcReorderPopup.initPopupHeight();
+        prepareReorderPopup();
+    });
+
+    function prepareReorderPopup()
+    {
+        if (msgTemplate && currentReorderId) {
+            var neighborhoodName = jQuery('#reorder-' + currentReorderId).data('neighborhood-name');
+            jQuery('#reorder-confirm-popup-content #confirm-message').html(msgTemplate.replace('{{neighborhood}}', neighborhoodName)); 
+            jQuery('#reorder-confirm-popup-content #reorder_confirm_popup_order_id').val(currentReorderId);
+        }
+    }
+</script>
+<?php endif; ?>
