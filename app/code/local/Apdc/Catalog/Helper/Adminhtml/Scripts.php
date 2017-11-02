@@ -63,7 +63,7 @@ class Apdc_Catalog_Helper_Adminhtml_Scripts extends Mage_Catalog_Helper_Data
                 'label' => 'Nb produits par catégories',
                 'hint' => 'Liste toutes les catégories et compte le nombre de produits dans la catégorie (avec une limite en commentaire)',
                 'grid'=>'',
-                'sql' => 'SELECT cat.category_id, COUNT(a.entity_id) as nb_produits FROM  catalog_product_entity AS a INNER JOIN catalog_category_product AS cat ON a.entity_id=cat.product_id GROUP BY cat.category_id ORDER BY nb_produits',
+                'sql' => 'SELECT cat.category_id, COUNT(a.entity_id) as nb_produits FROM  catalog_product_entity AS a INNER JOIN catalog_category_product AS cat ON a.entity_id=cat.product_id INNER JOIN  eav_attribute AS attribute ON attribute.attribute_code =  "is_active" LEFT JOIN  catalog_category_entity_int AS b ON cat.category_id = b.entity_id AND b.attribute_id = attribute.attribute_id WHERE b.store_id=0 AND b.value=1 GROUP BY cat.category_id ORDER BY nb_produits',
              ],
             'plural_products' => [
                 'label' => 'Produits au pluriel',

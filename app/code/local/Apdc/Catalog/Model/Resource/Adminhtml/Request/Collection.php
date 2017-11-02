@@ -116,6 +116,9 @@ class Apdc_Catalog_Model_Resource_Adminhtml_Request_Collection extends Mage_Eav_
         $this->_select=$this->getConnection()->select()
         ->from(array('a' => 'catalog_product_entity'),array('cat.category_id','nb_produits'=>'COUNT(a.entity_id)'))
         ->join(array('cat'=>'catalog_category_product'),'a.entity_id=cat.product_id',array('cat.category_id'))
+        ->join(array('attribute'=>'eav_attribute'),'attribute.attribute_code =  "is_active"',array())
+        ->joinLeft(array('b'=>'catalog_category_entity_int'),"cat.category_id = b.entity_id AND b.attribute_id = attribute.attribute_id",array())
+        ->where('b.store_id=0 AND b.value=1')
         ->group('cat.category_id')
         ->order('nb_produits');
     }
