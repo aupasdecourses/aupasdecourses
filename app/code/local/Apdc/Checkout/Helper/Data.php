@@ -3,7 +3,13 @@
 class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
 {    
     //get saved Attribute Value for Amasty Order Attribute module
-    function getSavedAttrValue($attributecode){
+    public function getSavedAttrValue($attributecode){
+        $session = Mage::getSingleton('checkout/type_onepage')->getCheckout();
+        $orderAttributes = $session->getAmastyOrderAttributes();
+        if (isset($orderAttributes[$attributecode])) {
+            return $orderAttributes[$attributecode];
+        }
+
         //Get value if customer has already set it up
         if (Mage::getSingleton('customer/session')->isLoggedIn())
         {
@@ -51,17 +57,18 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
      * saveDdate 
      * 
      * @param string $ddate ddate 
-     * @param string $dtime dtime 
+     * @param string $dtimeId dtimeId 
      * @param string $ddatei ddatei 
      * 
      * @return void
      */
-    public function saveDdate($ddate, $dtime, $ddatei)
+    public function saveDdate($ddate, $dtimeId, $ddatei)
     {
-        $dtime = Mage::getModel('ddate/dtime')->load($dtime)->getDtime();
+        $dtime = Mage::getModel('ddate/dtime')->load($dtimeId)->getDtime();
 
         Mage::getSingleton('core/session')->setDdate($ddate);
         Mage::getSingleton('core/session')->setDtime($dtime);
+        Mage::getSingleton('core/session')->setDtimeId($dtimeId);
         Mage::getSingleton('core/session')->setDdatei($ddatei);
 
         $ddate_array=explode("-",$ddate);
@@ -72,6 +79,15 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         Mage::getSingleton('core/session')->setHeaderDdate($formatedDate . ' ' . $dtime);
         $_SESSION['ddate'] = $ddate;
         $_SESSION['dtime'] = $dtime;
+    }
+
+    public function cleanDdate()
+    {
+        Mage::getSingleton('core/session')->unsDdate();
+        Mage::getSingleton('core/session')->unsDtime();
+        Mage::getSingleton('core/session')->unsDtimeId();
+        Mage::getSingleton('core/session')->unsDdatei();
+        Mage::getSingleton('core/session')->unsHeaderDdate();
     }
 
     /**

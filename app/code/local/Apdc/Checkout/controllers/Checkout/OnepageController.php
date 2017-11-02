@@ -8,6 +8,30 @@ require_once 'MW/Ddate/controllers/Checkout/OnepageController.php';
 
 class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_OnepageController
 {
+    protected function _ddateIsNotAvailable()
+    {
+        $ddate = Mage::getSingleton('core/session')->getDdate();
+        if ($ddate) {
+            $hasError = false;
+            if ($ddate >= date('Y-m-d')) {
+                $dtimeId = Mage::getSingleton('core/session')->getDtimeId();
+                $block = new MW_Ddate_Block_Onepage_Ddate();
+                if (!$block->isEnabled($dtimeId, $ddate)) {
+                    $hasError = true;
+                }
+            } else {
+                $hasError = true;
+            }
+            if ($hasError) {
+                Mage::helper('apdc_checkout')->cleanDdate();
+                Mage::getSingleton('checkout/session')->addError($this->__('Votre créneau horaire n\'est plus valide. Veuillez en sélectionner un autre.'));
+                $this->_ajaxRedirectResponse();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function indexAction()
     {
 		Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
@@ -19,6 +43,16 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         } else {
             parent::indexAction();
         }
+    }
+
+    protected function _expireAjax()
+    {
+        $isNotValide = parent::_expireAjax();
+        if (!$isNotValide) {
+            $isNotValide = $this->_ddateIsNotAvailable();
+        }
+
+        return $isNotValide;
     }
 
     /**
