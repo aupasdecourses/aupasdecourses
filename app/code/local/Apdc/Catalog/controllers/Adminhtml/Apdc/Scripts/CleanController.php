@@ -35,6 +35,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Scripts_CleanController extends Mage_Adminhtml
         $sql=$this->getRequest()->getParam('sql');
         $this->initActions();
         $this->loadLayout(array('default', 'adminhtml_apdc_scripts_clean_details'));
+        $this->getLayout()->getBlock('adminhtml_catalog_scripts_details')->setData('sql', $sql);
         $this->getLayout()->getBlock('adminhtml_catalog_scripts_details.grid')->setData('sql', $sql);
         $this->renderLayout();
     }

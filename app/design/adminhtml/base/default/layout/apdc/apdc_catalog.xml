@@ -51,7 +51,7 @@
   <adminhtml_apdc_scripts_clean_details>
     <update handle="editor" />
     <reference name="content">
-      <block type="apdc_catalog/adminhtml_catalog_scripts_details" name="scripts_details" />
+      <block type="apdc_catalog/adminhtml_catalog_scripts_details" name="adminhtml_catalog_scripts_details" />
     </reference>
   </adminhtml_apdc_scripts_clean_details>
 

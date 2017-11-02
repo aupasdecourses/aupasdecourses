@@ -26,6 +26,11 @@ class Apdc_Catalog_Model_Adminhtml_Request extends Mage_Core_Model_Abstract
         return $this->_sqlarray[$id]['hint'];
     }
 
+    public function getSqlGrid($id)
+    {
+        return $this->_sqlarray[$id]['grid'];
+    }
+
     public function getSqlUrl($id)
     {
         return Mage::helper("adminhtml")->getUrl('petitcommisadmin/apdc_scripts_clean/details/sql/'.$id);
@@ -39,10 +44,6 @@ class Apdc_Catalog_Model_Adminhtml_Request extends Mage_Core_Model_Abstract
         } else {
             return 'Erreur de nom de requête!';
         }
-    }
-
-    public function getIllegal(){
-        return Mage::getModel('catalog/product')->getCollection();
     }
 
 }

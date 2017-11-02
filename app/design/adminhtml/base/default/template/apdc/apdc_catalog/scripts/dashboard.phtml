@@ -11,11 +11,11 @@
 <?php 
 	$request=Mage::getModel("apdc_catalog/adminhtml_request");
 	foreach($request->getSqlRequests() as $sql):
-	$collection = Mage::getModel("apdc_catalog/adminhtml_request")->mySqlRequest($sql);
-	$count=0;
-	foreach($collection as $item){
-		$count++;
-	}
+		$collection = Mage::getModel("apdc_catalog/adminhtml_request")->mySqlRequest($sql);
+		$count=0;
+		foreach($collection as $item){
+			$count++;
+		}
 ?>
 	<div style="width:18%;display:inline-block;min-height:65px;vertical-align:top;margin-bottom:10px;padding:10px;border:1px solid #eee2be;">
 		<p style="font-weight:bold;"><?= $request->getSqlLabel($sql)?></p>
