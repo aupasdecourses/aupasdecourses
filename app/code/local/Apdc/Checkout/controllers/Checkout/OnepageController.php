@@ -34,7 +34,6 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
 
     public function indexAction()
     {
-		Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
         $payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
         if (!$payment_activated) {
             Mage::getSingleton('core/session')->setData('main_popup', 'false');
@@ -128,9 +127,7 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
                                   'quote' => $this->getOnepage()->getQuote(), ));
                         $this->getOnepage()->getQuote()->collectTotals();
                         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-						
-                        Mage::register('commercants_spotty', Mage::helper('apdc_checkout')->getSpottyCom());
-						
+												
                         /*$result['goto_section'] = 'payment';
                         $result['update_section'] = array(
                             'name' => 'payment-method',
