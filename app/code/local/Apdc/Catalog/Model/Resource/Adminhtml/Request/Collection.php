@@ -106,8 +106,8 @@ class Apdc_Catalog_Model_Resource_Adminhtml_Request_Collection extends Mage_Eav_
         ->join(array('b'=>'catalog_product_entity'),'child.product_id = b.entity_id',array('b.sku'))
         ->join(array('attribute'=>'eav_attribute'),"attribute.attribute_code =  'status'",array())
         ->joinLeft(array('c'=>'catalog_product_entity_int'),"b.entity_id = c.entity_id AND c.attribute_id = attribute.attribute_id",array('c.value'))
-        ->where("a.type_id='bundle'")
-        ->columns(array('nbe produits total'=>'count(b.sku)','a.sku','nbe produits desactives'=>'sum(c.value)','percent'=>'sum(c.value)/count(b.sku)'))
+        ->where("a.type_id='bundle' AND attribute.entity_type_id=4")
+        ->columns(array('nbe produits total'=>'count(b.sku)','a.sku','nbe produits desactives'=>'sum(case when c.value = 2 then 1 else 0 end)','percent'=>'sum(case when c.value = 2 then 1 else 0 end)/count(b.sku)'))
         ->group('a.sku')
         ->order('percent DESC');
     }

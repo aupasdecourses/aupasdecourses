@@ -57,7 +57,7 @@ class Apdc_Catalog_Helper_Adminhtml_Scripts extends Mage_Catalog_Helper_Data
                 'label' => 'Bundles',
                 'hint' => 'Liste les bundles et indique le nombre total de produits liés, le nombre de produits liés désactivés et le rapport des deux',
                 'grid'=>'',
-                'sql' => "SELECT a.sku, count(b.sku) as 'nbe produits total',sum(c.value) as 'nbe produits desactives',sum(c.value)/count(b.sku) as percent FROM  catalog_product_entity AS a INNER JOIN  catalog_product_bundle_selection AS child ON child.parent_product_id = a.entity_id INNER JOIN  catalog_product_entity AS b ON child.product_id = b.entity_id INNER JOIN  eav_attribute AS attribute ON attribute.attribute_code =  'status' LEFT JOIN  catalog_product_entity_int AS c ON b.entity_id = c.entity_id AND c.attribute_id = attribute.attribute_id WHERE a.type_id='bundle' GROUP BY a.sku ORDER BY percent DESC",
+                'sql' => "SELECT a.sku, count(b.sku) as 'nbe produits total',sum(case when c.value = 2 then 1 else 0 end) as 'nbe produits desactives',sum(case when c.value = 2 then 1 else 0 end)/count(b.sku) as percent FROM  catalog_product_entity AS a INNER JOIN  catalog_product_bundle_selection AS child ON child.parent_product_id = a.entity_id INNER JOIN  catalog_product_entity AS b ON child.product_id = b.entity_id INNER JOIN  eav_attribute AS attribute ON attribute.attribute_code =  'status' LEFT JOIN  catalog_product_entity_int AS c ON b.entity_id = c.entity_id AND c.attribute_id = attribute.attribute_id WHERE a.type_id='bundle' AND attribute.entity_type_id=4 GROUP BY a.sku ORDER BY percent DESC",
              ],
             'cats_n_products' => [
                 'label' => 'Nb produits par catégories',
