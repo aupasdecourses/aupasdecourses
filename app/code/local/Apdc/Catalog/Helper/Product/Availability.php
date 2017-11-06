@@ -58,13 +58,13 @@ class Apdc_Catalog_Helper_Product_Availability extends Mage_Core_Helper_Abstract
             default:
                 $isAvailable = false;
             }
-             $productAvailability = [
-                'can_order' => $product->getCanOrder(),
-                'can_order_days' => (!is_null($product->getCanOrderDays()) ? $product->getCanOrderDays() : '1,2,3,4,5,6,7'),
+            $productAvailability = [
+                'can_order' => $this->getCanOrder($product),
+                'can_order_days' => $this->getCanOrderDays($product),
                 'is_available' => $isAvailable,
-                'is_available_for_sale' => ($isAvailable && $product->getCanOrder()),
                 'product_availability' => $availablilityId
             ];
+            $productAvailability['is_available_for_sale'] = $isAvailable && $productAvailability['can_order'];
             $productAvailability['message'] = $this->getAvailabilityMessage($productAvailability);
             $this->productAvailability[$product->getId()] = $productAvailability;
         }
@@ -104,5 +104,45 @@ class Apdc_Catalog_Helper_Product_Availability extends Mage_Core_Helper_Abstract
             return Mage::helper('apdc_catalog')->__('Produit non disponible à la commande aujourd\'hui');
         }
         return Mage::getSingleton('apdc_catalog/source_product_availability')->getOptionLabel($productAvailability['product_availability']);
+    }
+
+    /**
+     * getCanOrder
+     * 
+     * @param Mage_Catalog_Model_Product $product product 
+     * 
+     * @return boolean
+     */
+    protected function getCanOrder($product)
+    {
+        if (is_null($product->getCanOrder())) {
+            $canOrder = 1;
+            if (Mage::getSingleton('core/session')->getDdate()) {
+                $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
+                $day = date('w', $timestamp);
+                $canOrderDays = $this->getCanOrderDays($product);
+                if (!in_array($day, explode(',', $canOrderDays))) {
+                    $canOrder = 0;
+                }
+            } 
+        } else {
+            $canOrder = $product->getCanOrder();
+        }
+        return $canOrder;
+    }
+
+    /**
+     * getCanOrderDays
+     * 
+     * @param Mage_Catalog_Model_Product $product product 
+     * 
+     * @return string
+     */
+    protected function getCanOrderDays($product)
+    {
+        if (!is_null($product->getCanOrderDays())) {
+            return $product->getCanOrderDays();
+        }
+        return '1,2,3,4,5,6,7';
     }
 }
