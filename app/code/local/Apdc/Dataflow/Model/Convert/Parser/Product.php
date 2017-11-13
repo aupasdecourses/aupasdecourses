@@ -113,7 +113,7 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
                 if (!$attribute) {
                     continue;
                 }
-                if ($field == 'tax_class_id') {
+                if ($field == 'tax_class_id'||$field == 'produit_fragile'||$field == 'risque_rupture') {
                     $row[$field] = $value;
                 } else if ($field == 'status'){
                     $row[$field]=((int) $value)?"Activé":'0';
@@ -180,13 +180,22 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
             foreach ($this->_imageFields as $field) {
                 if (isset($row[$field])) {
                     if ($row[$field] == 'no_selection') {
-                        $row[$field] = null;
+                         $row[$field] = null;
                     } else {
                         $processedImageList[] = $row[$field];
                     }
                 }
             }
+
             $processedImageList = array_unique($processedImageList);
+
+            foreach ($productMediaGallery['images'] as $image) {
+                if (in_array($image['file'], $processedImageList)) {
+                    continue;
+                }
+
+                $row['image']=basename($image['file']);
+            }
 
             $batchModelId = $this->getBatchModel()->getId();
             $this->getBatchExportModel()
@@ -196,33 +205,33 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
                 ->setStatus(1)
                 ->save();
 
-            $baseRowData = array(
-                'store'     => $row['store'],
-                'website'   => $row['websites'],
-                'sku'       => $row['sku']
-            );
+            // $baseRowData = array(
+            //     'store'     => $row['store'],
+            //     'website'   => $row['websites'],
+            //     'sku'       => $row['sku']
+            // );
             unset($row);
 
-            foreach ($productMediaGallery['images'] as $image) {
-                if (in_array($image['file'], $processedImageList)) {
-                    continue;
-                }
+            // foreach ($productMediaGallery['images'] as $image) {
+            //     if (in_array($image['file'], $processedImageList)) {
+            //         continue;
+            //     }
 
-                $rowMediaGallery = array(
-                    '_media_image'          => basename($image['file']),
-                    '_media_label'          => $image['label'],
-                    '_media_position'       => $image['position'],
-                    '_media_is_disabled'    => $image['disabled']
-                );
-                $rowMediaGallery = array_merge($baseRowData, $rowMediaGallery);
+            //     $rowMediaGallery = array(
+            //         '_media_image'          => basename($image['file']),
+            //         '_media_label'          => $image['label'],
+            //         '_media_position'       => $image['position'],
+            //         '_media_is_disabled'    => $image['disabled']
+            //     );
+            //     $rowMediaGallery = array_merge($baseRowData, $rowMediaGallery);
 
-                $this->getBatchExportModel()
-                    ->setId(null)
-                    ->setBatchId($batchModelId)
-                    ->setBatchData($rowMediaGallery)
-                    ->setStatus(1)
-                    ->save();
-            }
+            //     $this->getBatchExportModel()
+            //         ->setId(null)
+            //         ->setBatchId($batchModelId)
+            //         ->setBatchData($rowMediaGallery)
+            //         ->setStatus(1)
+            //         ->save();
+            // }
         }
 
         return $this;

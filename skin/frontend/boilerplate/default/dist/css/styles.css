@@ -16443,6 +16443,12 @@ h1.account-title {
   color: #3ab64b;
 }
 
+.my-account .box-account.detail-order p.order-ref .order-neighborhood {
+  font-weight: normal;
+  font-style: italic;
+  color: initial;
+}
+
 .my-account .box-account.detail-order p strong {
   font-weight: normal;
   display: block;
@@ -17959,10 +17965,9 @@ h1.account-title {
   max-height: 95%;
   padding: 20px;
   transition: height .3s ease;
-    /*left: 50%;*/
-  text-align: center;
   opacity: 1;
   border: 1px solid lightgrey;
+    /*left: 50%;*/
   border-radius: 10px;
   background: white;
   filter: alpha(opacity=100);
@@ -17984,6 +17989,7 @@ h1.account-title {
 #newsletter-form-popup-container,
 #neighborhood-popup-container {
   width: 500px;
+  text-align: center;
 }
 
 #delivery-popup-container {

@@ -51,6 +51,16 @@ class Apdc_Neighborhood_Model_Neighborhood extends Mage_Core_Model_Abstract
      */
     public function getStoreUrl()
     {
-        return Mage::app()->getWebsite($this->getWebsiteId())->getDefaultStore()->getUrl();
+        return $this->getStore()->getUrl();
+    }
+
+    /**
+     * getStore 
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getStore()
+    {
+        return Mage::app()->getWebsite($this->getWebsiteId())->getDefaultStore();
     }
 }

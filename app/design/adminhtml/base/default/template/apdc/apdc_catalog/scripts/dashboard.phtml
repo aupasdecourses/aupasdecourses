@@ -1,0 +1,28 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo $this->getHeaderText() ?></h3></td>
+<!--             <td class="form-buttons">
+                <?php echo $this->getButtonsHtml() ?>
+            </td> -->
+        </tr>
+    </table>
+</div>
+<?php 
+	$request=Mage::getModel("apdc_catalog/adminhtml_request");
+	foreach($request->getSqlRequests() as $sql):
+		$collection = Mage::getModel("apdc_catalog/adminhtml_request")->mySqlRequest($sql);
+		$count=0;
+		foreach($collection as $item){
+			$count++;
+		}
+?>
+	<div style="width:18%;display:inline-block;min-height:65px;vertical-align:top;margin-bottom:10px;padding:10px;border:1px solid #eee2be;">
+		<p style="font-weight:bold;"><?= $request->getSqlLabel($sql)?></p>
+		<p><?= $request->getSqlHint($sql)?></p>
+		<p>Count: <?= $count ?></p>
+		<?php if($count>0):?>
+			<p><a href="<?= $request->getSqlUrl($sql);?>">Voir détails</a></p>
+		<?php endif;?>
+	</div>
+<?php endforeach;?>

@@ -62,6 +62,10 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             'IGP' => 'images/labels/AOC.png',
             'Demeter' => 'images/labels/demeter.png',
             'Label Rouge' => 'images/labels/labelrouge.png',
+            'Bleu blanc coeur' => 'images/labels/bleublanccoeur.png',
+            'Bleu Blanc Coeur' => 'images/labels/bleublanccoeur.png',
+            'Commerce équitable' => 'images/labels/fairtrade.png',
+            'Commerce Equitable' => 'images/labels/fairtrade.png',
             'Casher' => 'images/labels/casher.png',
             'Kasher' => 'images/labels/casher.png',
             'Halal' => 'images/labels/halal.png',
@@ -238,6 +242,18 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         }
     }
 
+    protected function buildProductLabel($attributeValue){
+        if ($attributeValue <> false && array_key_exists($attributeValue, $this->authorizeLabels)) {
+            $productLabel = array(
+                'text' => $attributeValue,
+                'icon' => $this->getSkinUrl($this->authorizeLabels[$attributeValue]),
+            );
+        }
+        if (!empty($productLabel)) {
+            $this->allProductLabels[] = $productLabel;
+        }
+    }
+
     /**
      * populateProductLabel.
      */
@@ -246,15 +262,12 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($this->getProduct()->getData('labels_produits')) {
             $productLabel = array();
             $attributeValue = $this->getAttributeValue('labels_produits');
-            if ($attributeValue <> false && array_key_exists($attributeValue, $this->authorizeLabels)) {
-                $productLabel = array(
-                    'text' => $attributeValue,
-                    'icon' => $this->getSkinUrl($this->authorizeLabels[$attributeValue]),
-                );
-            }
-
-            if (!empty($productLabel)) {
-                $this->allProductLabels[] = $productLabel;
+            if(!is_array($attributeValue)){
+                $this->buildProductLabel($attributeValue);
+            }else{
+                foreach($attributeValue as $att){
+                    $this->buildProductLabel($att);
+                }
             }
         }
     }

@@ -1,0 +1,25 @@
+<div id="reorder-confirm-popup-content">
+    <input type="hidden" name="reorder_id" id="reorder_confirm_popup_order_id" />
+    <h2><?php echo $this->__('Changement de quartier'); ?></h2>
+    <p id="confirm-message">
+        <?php echo $this->__('Vous avez passé cette commande dans un quartier différent. Vous allez être redirigé vers {{neighborhood}}'); ?>
+    </p>
+    <div class="actions">
+        <button id="reorder-popup-cancel" class="button button-orange left">
+            <span><?php echo $this->__('Cancel'); ?></span>
+        </button>
+        <button id="reorder-popup-ok" class="button button-green right">
+            <span><i class="fa fa-arrow-right"></i> <?php echo $this->__('Changer de quartier et commander'); ?></span>
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery('#reorder-popup-cancel').on('click', function() {
+        currentReorderId = null;
+        apdcReorderPopup.close();
+    });
+    jQuery('#reorder-popup-ok').on('click', function() {
+        var id = jQuery('#reorder-confirm-popup-content #reorder_confirm_popup_order_id').val();
+        window.location.href = jQuery('#reorder-' + id).attr('href');
+    });
+</script>

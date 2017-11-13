@@ -79,11 +79,10 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCustomerNeighborhood()
     {
-        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
-            $customer = Mage::getSingleton('customer/session')->getCustomer();
-            return $customer->getNeighborhoodUrl();
+        if ($this->getCustomer()) {
+            return $this->getCustomer()->getNeighborhoodUrl();
         }
-        return $this->getVisitingNeighborhood()->getStoreUrl();
+        return $this->getNeighborhoodVisiting()->getStoreUrl();
     }
 
     /**
@@ -141,8 +140,8 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function UserName()
     {
-        if (Mage::isInstalled() && Mage::getSingleton('customer/session')->isLoggedIn()) {
-            $name =  "Bonjour ".Mage::getSingleton('customer/session')->getCustomer()->getFirstname()."!";
+        if (Mage::isInstalled() && $this->getCustomer()) {
+            $name =  "Bonjour " . $this->getCustomer()->getFirstname()."!";
         } else {
             $name = "Bonjour!";
         }
@@ -221,5 +220,34 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         ksort($result);
 
         return $result;
+    }
+
+    /**
+     * getCurrentNeighborhood 
+     * 
+     * @return Apdc_Neighborhood_Model_Neighborhood | null
+     */
+    public function getCurrentNeighborhood()
+    {
+        $neighborhood = $this->getNeighborhoodVisiting();
+        if ($neighborhood && $neighborhood->getId()) {
+            return $neighborhood;
+        } elseif ($this->getCustomer() && $this->getCustomer()->getCustomerNeighborhood()) {
+            return Mage::getModel('apdc_neighborhood/neighborhood')->load($this->getCustomer()->getCustomerNeighborhood());
+        }
+        return null;
+    }
+
+    /**
+     * getCustomer 
+     * 
+     * @return Mage_Customer_Model_Customer | null
+     */
+    public function getCustomer()
+    {
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            return Mage::getSingleton('customer/session')->getCustomer();
+        }
+        return null;
     }
 }

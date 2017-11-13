@@ -27,21 +27,7 @@
 <?php
 $_item = $this->getItem();
 $_product = Mage::getModel('catalog/product')->load($_item->getProductId());
-//Surement à nettoyer avec le reste du code et les fonctions afférentes dans le Helper
-//$commercants = Mage::registry('commercants_spotty');
 $name = Mage::helper('apdc_checkout')->getCommercantname($this);
-
-// if(isset($_SESSION['ddate'])){
-//     $timestamp = strtotime($_SESSION['ddate']);
-//     $day = date('w', $timestamp);
-// 	if(is_array($commercants) && array_key_exists($name,$commercants)){
-// 		if(!in_array($day,$commercants[$name])){
-// 			if(count($commercants[$name]) < 4){
-// 				echo '<input type="hidden" name="entity_id[]" value="'.$_item->getId().'" />';
-// 			}
-// 		}
-// 	}
-// }
 
 ?>
 <tr class="checkout-review-table-collapse">

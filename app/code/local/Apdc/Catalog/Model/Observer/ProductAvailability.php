@@ -29,11 +29,11 @@ class Apdc_Catalog_Model_Observer_ProductAvailability
      */
     public function joinProductAvailabilty(Varien_Event_Observer $observer)
     {
-        if(Mage::getSingleton('core/session')->getDdate()){
+        $collection = $observer->getEvent()->getCollection();
+        if(Mage::getSingleton('core/session')->getDdate()) {
             $timestamp = strtotime(Mage::getSingleton('core/session')->getDdate());
             $date = date('Y-m-d', $timestamp);
 
-            $collection = $observer->getEvent()->getCollection();
             $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
 
             $condition[] = 'availability.product_id = e.entity_id';
@@ -45,5 +45,27 @@ class Apdc_Catalog_Model_Observer_ProductAvailability
                 ['product_availability' => 'availability.status']
             );
         }
+        $collection->joinAttribute(
+            'can_order_days',
+            'catalog_product/can_order_days',
+            'entity_id',
+            null,
+            'left'
+        );
+        $collection->getSelect()->columns(
+            [
+                'can_order' => new Zend_Db_Expr('
+                    IF(
+                        at_can_order_days.value IS NULL,
+                        IF(
+                            at_can_order_days_default.value IS NULL,
+                            1,
+                            at_can_order_days_default.value REGEXP (WEEKDAY(NOW()) + 1)
+                        ), 
+                        at_can_order_days.value REGEXP (WEEKDAY(NOW()) + 1)
+                    )
+                ')
+            ]
+        );
     }
 }
