@@ -15506,6 +15506,33 @@ footer .social-list .btn-social-icon {
   color: rgba(0, 0, 0, .84);
 }
 
+.catalog-category-view .category_view_content {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.catalog-category-view .category_view_content .title-block {
+  margin-bottom: 50px;
+}
+
+.catalog-category-view .category_view_content .category_left_menu ul {
+  padding-left: 10px;
+  list-style: none;
+}
+
+.catalog-category-view .category_view_content .category_left_menu ul li {
+  font-weight: normal;
+}
+
+.catalog-category-view .category_view_content .category_left_menu ul li.active {
+  font-weight: bold;
+}
+
+.catalog-category-view .category_view_content .category_left_menu > ul ul {
+  padding-left: 20px;
+}
+
 .catalog-category-view .main-container {
   padding-bottom: 0;
   background: none;
@@ -15831,7 +15858,6 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .block_selection {
-  max-width: 1130px;
   margin: 0 auto;
   background-color: #fff;
 }
@@ -15956,12 +15982,6 @@ footer .social-list .btn-social-icon {
 }
 
 .toolbar-bottom {
-  position: fixed;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 999;
-  bottom: 0;
-  left: 0;
   width: 100%;
   padding: 0 10px;
   background: #fff;

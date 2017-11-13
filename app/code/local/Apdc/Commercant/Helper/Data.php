@@ -183,6 +183,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
     protected function populateShopInfo($shop, $categoryShop)
     {
         $shopInfo = $shop->getData();
+        $shopInfo['model'] = $shop;
         $shopInfo['availability'] = [];
         $shopInfo['adresse'] = $shop->getStreet() . ' ' . $shop->getPostcode() . ' ' . $shop->getCity();
         $shopInfo['url_adresse'] = 'https://www.google.fr/maps/place/' . str_replace(' ', '+', $shopInfo['adresse']);

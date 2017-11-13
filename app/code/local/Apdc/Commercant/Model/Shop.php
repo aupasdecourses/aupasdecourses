@@ -155,4 +155,14 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
         return $this->shopMainCategory;
     }
 
+    /**
+     * getRootCategoryId 
+     * 
+     * @return int
+     */
+    public function getRootCategoryId()
+    {
+        return $this->getShopMainCategory()->getId();
+    }
+
 }

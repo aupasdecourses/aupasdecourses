@@ -20,11 +20,6 @@
 #supermenu .menu-template-content li.template-column a:hover .cat-name {
   color:#028414;
 }
-.main-container,
-.footer-container,
-.copyright-cards-container {
-  transform:translate(0);
-}
 
 #supermenu a {
  color:rgba(0,0,0,0.87);

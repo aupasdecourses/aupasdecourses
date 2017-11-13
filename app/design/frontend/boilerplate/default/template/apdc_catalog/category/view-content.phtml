@@ -1,0 +1,13 @@
+<div class="container-fluid category_view_content">
+    <div class="arrow_box"></div>
+    <h2 class="title-block"><?php /*echo $this->__('Les produits du commerçant')*/ echo Mage::helper('apdc_front')->getCatTitle(); ?></h2>
+    <div class="col-md-3">
+        <?php echo $this->getChildHtml('col_filters'); ?>
+    </div>
+    <div class="col-md-9">
+        <?php echo $this->getChildHtml('product_list'); ?>
+    </div>
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>

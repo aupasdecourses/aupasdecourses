@@ -36,13 +36,11 @@
     $_productCollection=$this->getLoadedProductCollection();
     $_productCollection->addAttributeToSelect('has_options');
     $_helper = $this->helper('catalog/output');
-    $apdc_helper = Mage::helper('apdc_front');
 ?>
 <?php if(!$_productCollection->count()): ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
 <div class="category-products">
-    <h2 class="title-block"><?php /*echo $this->__('Les produits du commerçant')*/ echo $apdc_helper->getCatTitle(); ?></h2>
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
     <ul class="apdc-products-grid row">
@@ -68,9 +66,6 @@
 		});
     </script>
 
-</div>
-<div class="toolbar-bottom">
-    <?php echo $this->getToolbarHtml() ?>
 </div>
 <?php endif; ?>
 <?php
