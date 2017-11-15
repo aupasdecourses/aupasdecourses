@@ -187,7 +187,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                 6 => "{$order['first_name']} {$order['last_name']}",
                 7 => '',
                 8 => '',
-                9 => $order['street'],
+                9 => str_replace(array("\n\r", "\n", "\r",";"), "", $order['street']),
                 10 => $order['zipcode'],
                 11 => $order['city'],
                 12 => 'FR',
