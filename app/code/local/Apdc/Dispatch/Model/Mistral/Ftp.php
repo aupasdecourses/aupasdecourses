@@ -387,6 +387,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                         $this->pasv(false);
                         $this->login($this->_login, $this->_pwd);
                         $this->put("IN/{$fileName}", $tmpFileName);
+                        Mage::log('Model Export - sent file - {$fileName}', null, 'export.log');
                         Mage::log('Model Export - processRequestFtp - request done', null, 'export.log');
                     }
                 }
