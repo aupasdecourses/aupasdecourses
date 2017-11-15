@@ -66,6 +66,18 @@ class Apdc_Catalog_Model_Resource_Adminhtml_Request_Collection extends Mage_Eav_
         ->where('table3.value LIKE "%€%"');
     }
 
+    protected function selectPricesZero(){
+        $this->_select=$this->getConnection()->select()
+        ->distinct()
+        ->from(array('a' => 'catalog_product_entity'),'a.entity_id')
+        ->join(array('attribute'=>'eav_attribute'),'attribute.attribute_code="price"',array())
+        ->joinLeft(array('b'=>'catalog_product_entity_decimal'),'a.entity_id = b.entity_id AND b.attribute_id = attribute.attribute_id',array('b.value'))
+        ->join(array('attribute2'=>'eav_attribute'),'attribute2.attribute_code="status"',array())
+        ->joinLeft(array('c'=>'catalog_product_entity_int'),'b.entity_id = c.entity_id AND c.attribute_id = attribute2.attribute_id',array('c.value'))
+        ->columns(array('a.sku', 'b.value', 'c.value'))
+        ->where('c.value=1 AND (b.value=0 OR b.value IS NULL) AND attribute.entity_type_id=4');
+    }
+
     protected function selectNoRefCode(){
         $this->_select=$this->getConnection()->select()
         ->from(array('table1' => 'catalog_product_entity'),'table1.entity_id')
@@ -154,6 +166,9 @@ class Apdc_Catalog_Model_Resource_Adminhtml_Request_Collection extends Mage_Eav_
                         break;
                     case 'prices_with_euros':
                         $this->selectPricesWithEuros();
+                        break;
+                    case 'prices_zero':
+                        $this->selectPricesZero();
                         break;
                     case 'no_ref_code':
                         $this->selectNoRefCode();

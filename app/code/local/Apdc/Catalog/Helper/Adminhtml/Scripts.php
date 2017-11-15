@@ -35,6 +35,18 @@ class Apdc_Catalog_Helper_Adminhtml_Scripts extends Mage_Catalog_Helper_Data
                 'grid'=>'simple',
                 'sql' => "SELECT DISTINCT(a.entity_id), a.sku, b.value FROM  catalog_product_entity AS a INNER JOIN  eav_attribute AS attribute ON attribute.attribute_code =  'prix_public' LEFT JOIN  catalog_product_entity_varchar AS b ON a.entity_id = b.entity_id AND b.attribute_id = attribute.attribute_id WHERE b.value LIKE '%€%'",
              ],
+             'prices_zero' => [
+                'label' => 'prix site à 0',
+                'hint' => 'Trouver les produits activés avec prix nuls',
+                'grid'=>'simple',
+                'sql' => "SELECT DISTINCT(a.entity_id), a.sku, b.value, c.value
+                        FROM  catalog_product_entity AS a
+                        INNER JOIN  eav_attribute AS attribute ON attribute.attribute_code =  'price'
+                        LEFT JOIN  catalog_product_entity_decimal AS b ON a.entity_id = b.entity_id AND b.attribute_id = attribute.attribute_id
+                        INNER JOIN  eav_attribute AS attribute2 ON attribute2.attribute_code =  'status'
+                        LEFT JOIN  catalog_product_entity_int AS c ON b.entity_id = c.entity_id AND c.attribute_id = attribute2.attribute_id
+                        WHERE c.value=2 AND (b.value=0 OR b.value IS NULL) AND attribute.entity_type_id=4",
+             ],
             'no_ref_code' => [
                 'label' => 'Référentiel code manquant',
                 'hint' => 'Trouver les produits activés qui n’ont pas de code référentiel APDC (avec noms du commerçants)',
