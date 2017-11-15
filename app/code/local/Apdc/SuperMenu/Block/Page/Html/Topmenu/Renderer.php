@@ -311,7 +311,7 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         $imageResized =  $baseDirMedia . 'product' . DS . 'cache' . DS . 'cat_resized' . DS . $image;
         if (!file_exists($imageResized) && file_exists($imageUrl) || file_exists($imageUrl) && filemtime($imageUrl) > filemtime($imageResized)) {
             if (!file_exists($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized')) {
-                mkdir($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized');
+                mkdir($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized', 0777, true);
             }
             $imageObj = new Varien_Image($imageUrl);
             $imageObj->constrainOnly(true);
