@@ -151,7 +151,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
     protected function cleansemicolons($array)
     {
         foreach ($array as $key => $value) {
-            $array[$key] = str_replace(';', '', $value);
+            $array[$key] = str_replace(array("\n\r", "\n", "\r",";"), '', $value);
         }
 
         return $array;
@@ -187,7 +187,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                 6 => "{$order['first_name']} {$order['last_name']}",
                 7 => '',
                 8 => '',
-                9 => str_replace(array("\n\r", "\n", "\r",";"), "", $order['street']),
+                9 => $order['street'],
                 10 => $order['zipcode'],
                 11 => $order['city'],
                 12 => 'FR',
@@ -387,8 +387,6 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                         $this->pasv(false);
                         $this->login($this->_login, $this->_pwd);
                         $this->put("IN/{$fileName}", $tmpFileName);
-                        Mage::log('Model Export - '.$currentTime.' - '.$currentTime, null, 'export.log');
-                        Mage::log('Model Export - '.$c_time.' - '.$c_time, null, 'export.log');
                         Mage::log('Model Export - sent file - '.$fileName, null, 'export.log');
                         Mage::log('Model Export - processRequestFtp - request done', null, 'export.log');
                     }
