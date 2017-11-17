@@ -37,14 +37,19 @@ $actionsXml = '<action type="apdc_dataflow/catalog_convert_adapter_product" meth
         <map name="nom_catcommercant"><![CDATA[nom_catcommercant]]></map>
         <map name="nom_cat"><![CDATA[nom_cat]]></map>
         <map name="nom_sous_cat"><![CDATA[nom_sous_cat]]></map>
+        <map name="nom_cat_boucher"><![CDATA[nom_cat_boucher]]></map> 
+        <map name="nom_cat_boulanger"><![CDATA[nom_cat_boulanger]]></map> 
+        <map name="nom_cat_primeur"><![CDATA[nom_cat_primeur]]></map> 
+        <map name="nom_cat_fromager"><![CDATA[nom_cat_fromager]]></map> 
+        <map name="nom_cat_poissonnier"><![CDATA[nom_cat_poissonnier]]></map> 
         <map name="nom_cat_traiteur"><![CDATA[nom_cat_traiteur]]></map>
         <map name="nom_cat_epicerie"><![CDATA[nom_cat_epicerie]]></map>
-        <map name="nom_cat_epicerie"><![CDATA[nom_cat_type]]></map>
-        <map name="nom_cat_epicerie"><![CDATA[nom_cat_couleur]]></map>
-        <map name="nom_cat_epicerie"><![CDATA[nom_cat_contenant]]></map>
-        <map name="nom_cat_epicerie"><![CDATA[nom_cat_origine]]></map>
+        <map name="nom_cat_type"><![CDATA[nom_cat_type]]></map>
+        <map name="nom_cat_couleur"><![CDATA[nom_cat_couleur]]></map>
+        <map name="nom_cat_contenant"><![CDATA[nom_cat_contenant]]></map>
+        <map name="nom_cat_origine"><![CDATA[nom_cat_origine]]></map>
+        <map name="nom_cat_bio"><![CDATA[nom_cat_bio]]></map>
         <map name="special_cat"><![CDATA[special_cat]]></map>
-
         <map name="Maturité (choisir une option):drop_down:1"><![CDATA[Maturité (choisir une option):drop_down:1]]></map>
         <map name="Bouteille au frais (choisir une option):drop_down:1"><![CDATA[Bouteille au frais (choisir une option):drop_down:1]]></map>
         <map name="Produit détaillé/découpé ?:drop_down:1"><![CDATA[Produit détaillé/découpé ?:drop_down:1]]></map>
@@ -72,6 +77,8 @@ $actionsXml = '<action type="apdc_dataflow/catalog_convert_adapter_product" meth
         <map name="re_skus"><![CDATA[re_skus]]></map>
         <map name="cs_skus"><![CDATA[cs_skus]]></map>
         <map name="gr_skus"><![CDATA[gr_skus]]></map>
+        <map name="produit_fragile"><![CDATA[produit_fragile]]></map>
+        <map name="risque_rupture"><![CDATA[risque_rupture]]></map>
     </var>
     <var name="_only_specified">true</var>
 </action>
