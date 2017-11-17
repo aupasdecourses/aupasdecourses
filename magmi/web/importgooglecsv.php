@@ -26,8 +26,8 @@
             $gid = $google_csv['gid'];
         }else{
             $name = "met";
-            $key = "1Fwbc87dXCyvvkk7wWLknoCqIGl8MpNF8FVlJElelO80";
-            $gid = "2030347927";
+            $key=Mage::getStoreConfig('magmi/magmiconfig/met_key');
+            $gid=Mage::getStoreConfig('magmi/magmiconfig/met_id');
         }
         if (!is_null($key) && !is_null($gid)) {
             try {
@@ -42,6 +42,6 @@
                 echo 'Erreur!';
             }
         } else {
-            echo 'Key & gid vides! Vérifier les informations Google Sheets dans la catégorie correspondante.';
+            echo $key;
         }
     }
