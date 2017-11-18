@@ -36,12 +36,10 @@
 			<action method="addItem"><type>skin_js</type><file>dist/js/script.js</file></action>
 			
 			<!-- JQUERY -->
-			<action method="addJs"><script>prototype/prototype.js</script></action>
-            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-3.2.1.min.js</script></action>
 			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>
-            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
-                <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
-                <!-- IMPORTANT -->  
+            <action method="addJs"><script>prototype/prototype.js</script></action>
+            <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
 			<!-- =========================
 				 END SCRIPTS   
 			============================== -->

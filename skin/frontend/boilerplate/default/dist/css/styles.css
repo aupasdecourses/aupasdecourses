@@ -11639,7 +11639,7 @@ input[type=checkbox]:checked + label:before {
 
 #html-body header {
   position: relative;
-  margin-bottom: 200px;
+  margin-bottom: 41px;
 }
 
 #html-body #background_video_container {
@@ -11647,7 +11647,7 @@ input[type=checkbox]:checked + label:before {
   z-index: -1;
   overflow: hidden;
   width: 100%;
-  height: 600px;
+  height: 450px;
 }
 
 #html-body #background_video_container img.banner,
@@ -11659,12 +11659,18 @@ input[type=checkbox]:checked + label:before {
 }
 
 #html-body .intro-section {
-  margin-top: 160px;
+  margin-top: 100px;
   text-align: center;
 }
 
 #html-body .intro-section h1 {
   color: #fff;
+}
+
+#html-body .intro-section h1.subtitle {
+  font-size: 1.5rem;
+  margin-top: 13px;
+  text-transform: none;
 }
 
 .apdc-notation-index-index {
@@ -12828,10 +12834,6 @@ input.validation-failed {
   border: 1px solid #df280a !important;
 }
 
-#model {
-  padding: 60px 0;
-}
-
 section > .container {
   background-color: #fff;
 }
@@ -12856,10 +12858,6 @@ section#districts > .container h2.soon {
   font-weight: 400;
   margin-top: 50px;
   color: rgba(0, 0, 0, .54);
-}
-
-section#districts .section-header {
-  padding-top: 30px;
 }
 
 section#districts .section-description {
@@ -12939,15 +12937,26 @@ section#districts #search_neighborhoods label {
   color: rgba(0, 0, 0, .54);
 }
 
+section#districts #search_neighborhoods input,
+section#districts #search_neighborhoods select {
+  width: 60%;
+  border-color: #3ab64b;
+}
+
 section#districts #search_neighborhoods input {
   font-size: 1.25rem;
-  width: 60%;
   padding: 10px 10px;
   text-align: center;
 }
 
 section#districts #search_neighborhoods input::-webkit-input-placeholder {
   font-size: 1.125rem;
+}
+
+section#districts #search_neighborhoods select {
+  font-size: 1.1rem;
+  text-align-last: center;
+  color: rgba(0, 0, 0, .62);
 }
 
 section#districts #error_neighborhood,
@@ -17380,6 +17389,10 @@ h1.account-title {
     margin-top: 120px;
   }
 
+  #html-body .intro-section h1.subtitle {
+    display: none;
+  }
+
   #html-body #background_video_container {
     height: 600px;
     background: url(../images/header/7.jpg) no-repeat;
@@ -17805,12 +17818,22 @@ h1.account-title {
     top: 34%;
   }
 
+  section#districts #search_neighborhoods input,
+    section#districts #search_neighborhoods select {
+    width: 100%;
+  }
+
+  section#carroussel-commercants .section-header,
+    section#districts .section-header,
+    section#cards .section-header {
+    padding-top: 35px;
+  }
+
   .page-title h1 {
     font-size: 1.5rem;
   }
 
-  h2,
-    .commercants-block .title-block,
+  .commercants-block .title-block,
     .block-promos .inner-box h2,
     .block-reduction-apdc h2,
     .block-lastorder h2 {

@@ -83,7 +83,7 @@ gulp.task('sass', function () {
 // JS
 gulp.task('js', function() {
   var scripts = [
-    'node_modules/jquery/dist/jquery.js',
+   // 'node_modules/jquery/dist/jquery.js',
     'node_modules/bootstrap/js/transition.js',
     'node_modules/bootstrap/js/collapse.js',
     'node_modules/bootstrap/js/carousel.js',

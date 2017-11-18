@@ -20,7 +20,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         return $new;
     }
 
-    public function getListShops($filter = 'store', $random = false)
+    public function getListShops($filter = 'store', $random = false,$limit=0)
     {
         $row1 = array();
         $row2 = array();
@@ -40,6 +40,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 
         if ($random) {
             $shops->getSelect()->order('rand()');
+        }
+
+        if($limit>0){
+            $shops->getSelect()->limit($limit);
         }
 
         $nbShops = count($shops);
