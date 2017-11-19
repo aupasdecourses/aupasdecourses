@@ -74,7 +74,7 @@
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
-				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.2.js</file></action>
 				<!-- IMPORTANT -->
 				
 				<action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-options.css</file></action>
