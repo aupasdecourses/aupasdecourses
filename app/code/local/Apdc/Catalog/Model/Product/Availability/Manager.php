@@ -150,6 +150,9 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                                 $key = $childData['website_id'] . '_' . $childData['commercant_id'];
                                 $available = $availabilities[$day][$key];
                                 if ($available['status'] > 1) {
+                                    if (!isset($custom_errors[$product['entity_id']])) {
+                                        $custom_errors[$product['entity_id']] = "Produit enfant indisponible: ".$childId;
+                                    }
                                     break;
                                 }
                             }
@@ -181,7 +184,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                     }
 
                     //disable all products with price at 0 (autres check peuvent êtr implémenté ici)
-                    if($product['price']==0&&$product['type_id']=="simple"){
+                    if($product['price']==0){
                         $available['status'] = 5;
                         if (!isset($custom_errors[$product['entity_id']])) {
                             $custom_errors[$product['entity_id']] = "Prix nul";
@@ -269,7 +272,9 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $productCollection->joinAttribute(
             'price',
             'catalog_product/price',
-            'entity_id'
+            'entity_id',
+            null,
+            'left'
         );
         $productCollection->getSelect()->join(
             ['pw' => $this->getResource()->getTableName('catalog/product_website')],
