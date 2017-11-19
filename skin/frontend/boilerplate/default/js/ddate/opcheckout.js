@@ -773,7 +773,7 @@ Payment.prototype = {
         this.form = form;
         this.saveUrl = saveUrl;
         this.onSave = this.nextStep.bindAsEventListener(this);
-        this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        //this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
     },
 
     addBeforeInitFunction : function(code, func) {

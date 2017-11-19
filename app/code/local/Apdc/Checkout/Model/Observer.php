@@ -7,7 +7,7 @@ class Apdc_Checkout_Model_Observer extends Mage_Core_Model_Abstract
         $controllerAction = $observer->getEvent()->getControllerAction();
         $response = $controllerAction->getResponse();
         $paymentResponse = Mage::helper('core')->jsonDecode($response->getBody());
-        if (!isset($paymentResponse['error']) || !$paymentResponse['error']) {
+        if ($paymentResponse!=array() && (!isset($paymentResponse['error']) || !$paymentResponse['error'])) {
             $controllerAction->getRequest()->setParam('form_key', Mage::getSingleton('core/session')->getFormKey());
             $controllerAction->getRequest()->setPost('agreement', array_flip(Mage::helper('checkout')->getRequiredAgreementIds()));
             $controllerAction->saveOrderAction();

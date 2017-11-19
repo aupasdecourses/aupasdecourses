@@ -288,4 +288,82 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
     {
         return parent::_canShowForUnregisteredUsers() || $this->getRequest()->getActionName() == 'saveDdateAjax';
     }
+
+
+    public function savePaymentAction()
+    {
+        if(Mage::getModel('ddate/dtime')->getCollection()->count() > 0 && Mage::helper('ddate')->haveAnySlotAvailable()) {
+
+            if ($this->_expireAjax()) {
+                return;
+            }
+            if ($this->getRequest()->isPost()) {
+                $data = $this->getRequest()->getPost('payment', array());
+
+                /*
+                * first to check payment information entered is correct or not
+                */
+                try {
+                    $result = $this->getOnepage()->savePayment($data);
+                } catch (Mage_Payment_Exception $e) {
+                    if ($e->getFields()) {
+                        $result['fields'] = $e->getFields();
+                    }
+                    $result['error'] = $e->getMessage();
+                } catch (Exception $e) {
+                    $result['error'] = $e->getMessage();
+                }
+
+                $redirectUrl = $this->getOnePage()->getQuote()->getPayment()->getCheckoutRedirectUrl();
+                if (empty($result['error']) && !$redirectUrl) {
+                    $result['goto_section'] = 'ddate';
+                }
+
+                if ($redirectUrl) {
+                    $result['redirect'] = $redirectUrl;
+                }
+
+                $this->getResponse()->setBody(Zend_Json::encode($result));
+            }
+        } else {
+            if ($this->_expireAjax()) {
+                return;
+            }
+            try {
+                if (!$this->getRequest()->isPost()) {
+                    $this->_ajaxRedirectResponse();
+                    return;
+                }
+
+                $data = $this->getRequest()->getPost('payment', array());
+                $result = $this->getOnepage()->savePayment($data);
+
+                // get section and redirect data
+                $redirectUrl = $this->getOnepage()->getQuote()->getPayment()->getCheckoutRedirectUrl();
+                if (empty($result['error']) && !$redirectUrl) {
+                    $this->loadLayout('checkout_onepage_review');
+                    $result['goto_section'] = 'review';
+                    $result['update_section'] = array(
+                        'name' => 'review',
+                        'html' => $this->_getReviewHtml()
+                    );
+                }
+                if ($redirectUrl) {
+                    $result['redirect'] = $redirectUrl;
+                }
+            } catch (Mage_Payment_Exception $e) {
+                if ($e->getFields()) {
+                    $result['fields'] = $e->getFields();
+                }
+                $result['error'] = $e->getMessage();
+            } catch (Mage_Core_Exception $e) {
+                $result['error'] = $e->getMessage();
+            } catch (Exception $e) {
+                Mage::logException($e);
+                $result['error'] = $this->__('Unable to set Payment Method.');
+            }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
+    }
+
 }
