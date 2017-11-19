@@ -60,10 +60,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                         $path = Mage::getModel('catalog/category')->load($id)->getPath();
                         $rootcat = explode('/', $path)[1];
                         if (!empty($rootcat) && isset($rootcat[1])) {
-                        if ($rootcat[1] == $storerootid) {
-                            break;
+                            if ($rootcat == $storerootid) {
+                                break;
+                            }
                         }
-                    }
                     }
                 } else {
                     $current_cat = $shop['id_category'][0];
