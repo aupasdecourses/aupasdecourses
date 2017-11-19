@@ -79,6 +79,20 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'disabled' => $isElementDisabled
         ]);
 
+        $fieldset->addField('blacklist', 'select', [
+            'name' => 'blacklist',
+            'label' => $this->__('Dans Blacklist'),
+            'note' => $this->__('Historique de problèmes de préparation de commandes, si oui, à appeler systématiquement pour vérification.'),
+            'required' => false,
+            'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
+            'disabled' => $isElementDisabled,
+        ]);
+
+        $fieldset = $form->addFieldset(
+            'finance',
+            ['legend' => $this->__('Admin & Finance')]
+        );
+
         $fieldset->addField('siret', 'text', [
             'name' => 'siret',
             'label' => $this->__('SIRET'),
@@ -92,6 +106,25 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'required' => true,
             'disabled' => $isElementDisabled
         ]);
+
+        $fieldset->addField('cpte_hipay', 'text', [
+            'name' => 'cpte_hipay',
+            'label' => $this->__('N° Compte Hipay'),
+            'required' => false,
+            'disabled' => $isElementDisabled
+        ]);
+
+        $fieldset->addField('cpte_compta', 'text', [
+            'name' => 'cpte_compta',
+            'label' => $this->__('N° Compte dans Comptabilité APDC'),
+            'required' => false,
+            'disabled' => $isElementDisabled
+        ]);
+
+        $fieldset = $form->addFieldset(
+            'contacts',
+            ['legend' => $this->__('Contacts')]
+        );
 
         $availableManagers = Mage::getModel('apdc_commercant/contact')
             ->getCollection()
@@ -137,15 +170,6 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'values' => $values,
             'note' => $this->__('L\'option correspondant au magasin doit avoir été créé au préalable dans Catalogue > Attributs. La valeur de l\'option doit être identique - casse comprise - au nom du magasin (et pas du commerçant, entité légale!)'),
             'disabled' => $isElementDisabled
-        ]);
-
-        $fieldset->addField('blacklist', 'select', [
-            'name' => 'blacklist',
-            'label' => $this->__('Dans Blacklist'),
-            'note' => $this->__('Historique de problèmes de préparation de commandes, si oui, à appeler systématiquement pour vérification.'),
-            'required' => false,
-            'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
-            'disabled' => $isElementDisabled,
         ]);
 
         if (Mage::getSingleton('adminhtml/session')->getFormData()) {
