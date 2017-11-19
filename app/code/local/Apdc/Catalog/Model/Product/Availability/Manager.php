@@ -133,6 +133,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $availabilities = $this->getAvailabilities();
         $datas = [];
         $errors = [];
+        $custom_errors = [];
         $productDatas = $this->getProductDatas();
         foreach ($this->getAllDays() as $time) {
             $day = date('w', $time);
@@ -178,6 +179,15 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                             $available['status'] = 5;
                         }
                     }
+
+                    //disable all products with price at 0 (autres check peuvent êtr implémenté ici)
+                    if($product['price']==0){
+                        $available['status'] = 5;
+                        if (!isset($custom_errors[$product['entity_id']])) {
+                            $custom_errors[$product['entity_id']] = "Prix nul";
+                        }
+                    }
+
                 }
                 $datas[] = [
                     'product_id' => $product['entity_id'],
@@ -206,6 +216,14 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 Mage::getSingleton('adminhtml/session')->addWarning($warning);
             }
         }
+        if (!empty($custom_errors)) {
+            foreach ($custom_errors as $id => $error) {
+                $error = 'Le produit '.$id.' a généré l\'erreur suivante: '. $error;
+                Mage::getSingleton('adminhtml/session')->addError($error);
+            }
+            Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($custom_errors);
+        }
+
     }
 
     /**
@@ -247,6 +265,11 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             'entity_id',
             null,
             'left'
+        );
+        $productCollection->joinAttribute(
+            'price',
+            'catalog_product/price',
+            'entity_id'
         );
         $productCollection->getSelect()->join(
             ['pw' => $this->getResource()->getTableName('catalog/product_website')],
