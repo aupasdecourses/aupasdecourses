@@ -184,7 +184,7 @@
     <jobs>
       <apdc_catalog_generate_product_availability>
         <schedule>
-          <cron_expr>0 1 * * *</cron_expr> <!-- Every day at 1:00am -->
+          <cron_expr>0 * * * *</cron_expr> <!-- Every day at 1:00am -->
         </schedule>
         <run>
           <model>apdc_catalog/adminhtml_observer_productAvailability::cronDailyUpdateProductAvailability</model>
