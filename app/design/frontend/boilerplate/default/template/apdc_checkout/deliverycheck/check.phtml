@@ -1,11 +1,11 @@
 <?php
 $commercants = Mage::helper('apdc_checkout')->getUnaivalableCommercantInfosPopup();
-if($commercants):?>
+if($commercants["check"]):?>
     <div id="warning_days">
         <div class="warning-container">
-            <p class="warning"><strong><?php echo $this->__('ATTENTION !'); ?></strong><br /><?php echo $this->__('Des commerçants ne sont pas disponibles certains jours de la semaine :'); ?></p>
+            <p class="warning"><strong><?php echo $this->__('ATTENTION !'); ?></strong><br /><?php echo $this->__('Des commerçants ne sont pas disponibles certains jours :'); ?></p>
             <ul id="list_commercants_days">
-            <?php foreach($commercants as $name => $data):?>
+            <?php foreach($commercants["data"] as $name => $data):?>
                 <?php if(!empty($data['unavailability'])||!is_null($data['next_closed_this_week'])||!is_null($data['is_closed'])): ?>
                     <li>
                         <span><b><?php echo $name;?>: </b>
