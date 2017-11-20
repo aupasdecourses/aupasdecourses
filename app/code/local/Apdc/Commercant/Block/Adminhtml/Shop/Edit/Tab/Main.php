@@ -121,6 +121,20 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'disabled' => $isElementDisabled
         ]);
 
+        $fieldset->addField('email_hipay', 'text', [
+            'name' => 'email_hipay',
+            'label' => $this->__('Email Hipay'),
+            'required' => false,
+            'disabled' => $isElementDisabled
+        ]);
+
+        $fieldset->addField('mdp_hipay', 'text', [
+            'name' => 'mdp_hipay',
+            'label' => $this->__('Mot de Passe Hipay'),
+            'required' => false,
+            'disabled' => $isElementDisabled
+        ]);
+
         $fieldset = $form->addFieldset(
             'contacts',
             ['legend' => $this->__('Contacts')]
