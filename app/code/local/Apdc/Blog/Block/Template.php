@@ -4,7 +4,7 @@ class Apdc_Blog_Block_Template extends Mage_Core_Block_Template
 {
     public function getArticlesBlog() {
 		$articles = array();
-		$content = file_get_contents('https://www.aupasdecourses.com/blog/feed/');
+		$content = file_get_contents('https://www.aupasdecourses.com/blog/feed/?fsk=5a12fc2347833');
 		$x = new SimpleXmlElement($content);
 		if($content<>""){
 			$i = 0;

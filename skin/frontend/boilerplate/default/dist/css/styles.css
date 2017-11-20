@@ -16976,6 +16976,10 @@ h1.account-title {
   .button.button-social.button-fb {
     float: right;
   }
+
+  #carrousel-commercant-home .owl-buttons {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1324px) {

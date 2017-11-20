@@ -7,6 +7,7 @@
             <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
             <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
             <block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
+            <block type="core/template" name="footer_link" template="page/html/footer_link.phtml"/>
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
         </reference>
 
