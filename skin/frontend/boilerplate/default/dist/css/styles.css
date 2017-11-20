@@ -16977,7 +16977,7 @@ h1.account-title {
     float: right;
   }
 
-  #carrousel-commercant-home .owl-buttons {
+  section#carroussel-commercants #carrousel-commercant-home .owl-buttons {
     display: none;
   }
 }
