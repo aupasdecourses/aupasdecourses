@@ -245,14 +245,14 @@ class Billing
                     $do['nb_products']+=floatval($item->getQtyOrdered());
                     $do['sum_items']+=floatval($item->getRowTotalInclTax());
                     $do['sum_items_HT']+=floatval($item->getRowTotal());
-					$do['creation_date'] = date('d/m/Y', strtotime($order->getCreatedAt()));
+					$do['creation_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $order->getCreatedAt())));
 
 					$do['sum_shipping_HT']	= floatval($sum_shipping_HT);
 					$do['sum_shipping_TVA'] = floatval($sum_shipping_TVA);
 					$do['sum_shipping_TTC'] = floatval($sum_shipping_TTC);
 
                     if (!is_null($ddate)) {
-                        $do['delivery_date'] = date('d/m/Y', strtotime($ddate));
+                        $do['delivery_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $ddate)));
                     } else {
                         $do['delivery_date'] = $do['billing_month'] = 'Non Dispo';
                     }
@@ -676,7 +676,6 @@ class Billing
 
 	/**
 	 * Surcharge avec ajout de @param string $fin
-	 * Permettant l'affichage des X derniers mois
 	 */
 	public function getDataFactu($model, $debut, $fin)
 	{
@@ -689,13 +688,27 @@ class Billing
 	}
 
 	/**
-	 * Sans limite de temps
+	 * Surcharge avec ajout de @param string $id_attribut_commercant
 	 */
 	public function getDataFactuNoTimeLimit($model, $id_attribut_commercant)
 	{
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
 
 		$return = $model->addFieldToFilter('id_attribut_commercant', $id_attribut_commercant);	
+		$return = $return->toArray();
+
+		return $return['items'];
+	}
+
+
+	public function getBillingDetailsByDeliveryDate($debut, $fin)
+	{
+		$from = date('Y-m-d', strtotime(str_replace('/', '-', $debut)));
+		$to = date('Y-m-d', strtotime(str_replace('/', '-', $fin)));
+		
+		$billing_details = \Mage::getModel('pmainguet_delivery/indi_billingdetails')->getCollection();
+
+		$return = $billing_details->addFieldToFilter('delivery_date', ['from' => $from, 'to' => $to]);
 		$return = $return->toArray();
 
 		return $return['items'];

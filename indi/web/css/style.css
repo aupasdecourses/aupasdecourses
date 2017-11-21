@@ -266,12 +266,14 @@ div#pageNumero {
  */
 
 input#datepickerBill,
+input#datepickerEndBill,
 input#datepickerLoyalty,
 input#datepickerEndLoyalty,
 input#datepickerVoucher,
 input#datepickerEndVoucher,
 input#datepickerNote,
-input#datepickerAccountingCustomers
+input#datepickerAccountingCustomers,
+input#datepickerEndAccountingCustomers
 {
     display: inline;
 
