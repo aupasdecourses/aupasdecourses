@@ -19,7 +19,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     private function addEntryToModel($model, $data, $updatedFields)
     {
         foreach ($data as $k => $v) {
@@ -31,7 +30,6 @@ trait Model
         $model->save();
     }
 
-    /** Mettre dans trait Model **/
     private function updateEntryToModel($model, array $filters, array $updatedFields)
     {
         $entry = $model->getCollection();
@@ -49,7 +47,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     public function addEntryToOrderField(array $data)
     {
         $this->addEntryToModel(
@@ -58,7 +55,6 @@ trait Model
         );
     }
 
-    /** Mettre dans trait Model **/
     public function updateEntryToOrderField(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('amorderattach/order_field');
@@ -79,7 +75,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     public function addEntryToRefundItem(array $data)
     {
         $this->addEntryToModel(
@@ -88,7 +83,6 @@ trait Model
         );
     }
 
-    /** Mettre dans trait Model **/
     public function updateEntryToRefundItem(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/refund_items');
@@ -109,7 +103,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     public function addEntryToBillingDetails(array $data)
     {
         $this->addEntryToModel(
@@ -118,7 +111,6 @@ trait Model
         );
     }
 
-    /** Mettre dans trait Model **/
     public function updateEntryToBillingDetails(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/indi_billingdetails');
@@ -138,7 +130,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     public function addEntryToBillingSummary(array $data)
     {
         $this->addEntryToModel(
@@ -155,7 +146,6 @@ trait Model
         );
     }
 
-    /** Mettre dans trait Model **/
     public function updateEntryToBillingSummary(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/indi_billingsummary');
@@ -175,7 +165,6 @@ trait Model
         }
     }
 
-    /** Mettre dans trait Model **/
     public function updateEntryToGeocode(array $filters, array $updatedFields)
     {
         $model = \Mage::getModel('pmainguet_delivery/geocode_customers');
@@ -193,6 +182,35 @@ trait Model
                 $updatedFields
             );
         }
+    }
+
+    public function addEntryToMistralDelivery(array $data)
+    {
+        $this->addEntryToModel(\Mage::getModel('pmainguet_delivery/indi_mistraldelivery'), $data);
+    }
+    public function updateEntryToMistralDelivery(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_mistraldelivery');
+        $check = $this->checkEntryToModel($model, $filters);
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+    public function getMistralDelivery()
+    {
+        $collection = \Mage::getModel('pmainguet_delivery/indi_mistraldelivery')->getCollection();
+        return $collection;
     }
 	
 }

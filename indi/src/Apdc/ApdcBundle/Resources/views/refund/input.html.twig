@@ -152,5 +152,19 @@
 					});
 				});
 			});
+
+		// Replace ',' by '.' in input text
+		$(function() {
+			$(".ticket-input").on("keyup", function() {
+				if(!isNaN(this.value.replace(/,/g, ".")))
+					this.value = this.value.replace(/,/g, ".");
+			});
+		});
+		$(function() {
+			$(".ticket-input-commercant").on("keyup", function() {
+				if(!isNaN(this.value.replace(/,/g, ".")))
+					this.value = this.value.replace(/,/g, ".");
+			});
+		});
 	</script>
 {% endblock %}

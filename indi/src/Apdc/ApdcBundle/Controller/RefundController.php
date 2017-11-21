@@ -23,6 +23,8 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+		$mistral = $this->container->get('apdc_apdc.mistral');
+		$session = $request->getSession();
 
         $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
@@ -49,6 +51,114 @@ class RefundController extends Controller
 		$form_id->get('id')->setData($id);
 
 		$orders = $mage->getOrders($from, $to, -1, $id);
+		$mistral_hours = $mage->getMistralDelivery(); 
+
+		// MISTRAL RETARDS DE LIVRAISON
+		$mistral_late_orders_data = array('message' => 'Retards de picking/shipping');
+		$mistral_late_orders_form = $this->createFormBuilder($mistral_late_orders_data)
+			->add('submit', SubmitType::class, [
+				'label'	=> 'Verifier les retards',
+				'attr'	=> [
+					'class'	=> 'btn btn-lg btn-info',
+				],
+			])
+			->getForm();
+		$mistral_late_orders_form->handleRequest($request);
+
+		if ($mistral_late_orders_form->isSubmitted() && $mistral_late_orders_form->isValid()) {
+
+			$neighborhood = $mistral->getApdcNeighborhood();
+			$mistral_results = [];
+
+			// Construct results[]
+			foreach ($neighborhood as $neigh) {
+				foreach ($orders as $order_id => $order) {
+					if ($neigh['store_id'] == $order['store_id']) {
+						$mistral_results[$order_id] = [
+							'partner_ref'			=> $neigh['partner_ref'],
+							'merchant_id'			=> [],
+							'real_hour_picking'		=> '',
+							'slot_start_picking'	=> '',
+							'slot_end_picking'		=> '',
+							'real_hour_shipping'	=> '',
+							'slot_start_shipping'	=> '',
+							'slot_end_shipping'		=> '',
+						];
+
+						foreach ($order['products'] as $product) {
+							$mistral_results[$order_id]['merchant_id'][] = $product['commercant_id'];
+						}
+
+						$mistral_results[$order_id]['merchant_id'] = array_unique($mistral_results[$order_id]['merchant_id']);
+					}
+				}
+			}
+		
+			// Store mistral data in tmp[]
+			foreach ($mistral_results as $order_id => $mistral_data) {
+				foreach ($mistral_data['merchant_id'] as $key => $merch_id) {
+					$tmp[$order_id][$merch_id] = $mistral->getOrderWarehouse($mistral_data['partner_ref'], $order_id, $merch_id); 
+				}
+			}
+
+			// Clean up tmp[]
+			foreach ($tmp as $order_id => $order_data) {
+				foreach ($order_data as $merch_id => $mistral_result) {
+					if (is_numeric($merch_id)) {
+						if (isset($mistral_result['Message'])) { // Commande inconnue
+							unset($tmp[$order_id]);
+						} 
+						if ($mistral_result['StatusCode'] == 'EA' || $mistral_result['StatusCode'] == 'EEC') { // En acheminement ou en enlevement
+							unset($tmp[$order_id][$merch_id]);
+						}
+					}
+				}
+
+				if(empty($tmp[$order_id])) { // manque d'infos Mistral
+					unset($tmp[$order_id]);
+				}
+			}
+
+			// Store mistral hours in mistral_results[]
+			foreach ($mistral_results as $order_id => $data) {
+				foreach ($tmp as $o_id => $order_data) {
+					foreach ($order_data as $merch_id => $result) {
+						if ($order_id == $o_id) {
+							$mistral_results[$order_id]['real_hour_picking']	= $result['Pick']['RealHour'];
+							$mistral_results[$order_id]['slot_start_picking']	= $result['Pick']['SlotStart'];
+							$mistral_results[$order_id]['slot_end_picking']		= $result['Pick']['SlotEnd'];
+							$mistral_results[$order_id]['real_hour_shipping']	= $result['Delivery']['RealHour'];
+							$mistral_results[$order_id]['slot_start_shipping']	= $result['Delivery']['SlotStart'];
+							$mistral_results[$order_id]['slot_end_shipping']	= $result['Delivery']['SlotEnd'];
+						}
+					}
+				}
+
+				unset($mistral_results[$order_id]['partner_ref'], $mistral_results[$order_id]['merchant_id']);
+			}
+
+			unset($tmp);
+
+			// Update DDB
+			foreach ($mistral_results as $order_id => $data) {
+				$mage->updateEntryToMistralDelivery(
+					['order_id' => $order_id],
+					['real_hour_picking' => date('H:i', strtotime($data['real_hour_picking'])), 
+					'slot_start_picking' => date('H:i', strtotime($data['slot_start_picking'])), 
+					'slot_end_picking' => date('H:i', strtotime($data['slot_end_picking'])),
+					'real_hour_shipping' => date('H:i', strtotime($data['real_hour_shipping'])),
+					'slot_start_shipping' => date('H:i', strtotime($data['slot_start_shipping'])),
+					'slot_end_shipping' => date('H:i', strtotime($data['slot_end_shipping']))
+				]);
+			}
+
+			$session->getFlashBag()->add('success', 'Statuts Mistral mis a jour');
+			return $this->redirectToRoute('refundIndex', [
+				'id' => $id, 
+				'from' => $from, 
+				'to' => $to
+			]);
+		}
 
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
@@ -56,6 +166,8 @@ class RefundController extends Controller
 				$form_id->createView()
 			],
 			'orders' => $orders,
+			'mistral_late_orders_form'	=> $mistral_late_orders_form->createView(),
+			'mistral_hours'	=> $mistral_hours,
         ]);
     }
 
