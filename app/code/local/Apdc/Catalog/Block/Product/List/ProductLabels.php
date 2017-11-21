@@ -53,7 +53,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             12 => 'D',
         );
 
-        $this->authorizedBio = ['Oui', 'AB', 'Bio Européen', 'AB,Bio Européen'];
+        $this->authorizedBio = ['oui','Oui', 'AB', 'Bio Européen', 'AB,Bio Européen'];
         $this->authorizeLabels = [
             'AOC' => 'images/labels/AOC.png',
             'DOC' => 'images/labels/AOC.png',
