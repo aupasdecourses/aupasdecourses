@@ -15,10 +15,10 @@ class Pdforder
 
     public function sendPdfByMerchant($merchant)
     {   
-//      if (\Mage::getStoreConfig('apdcdispatch/general/mail_active')) {
+      if (\Mage::getStoreConfig('apdcdispatch/general/mail_active')) {
             \Mage::getModel('apdcdispatch/mail')->sendPdfByMerchant($merchant);
-//      } else {
-//          \Mage::log('L\'envoi par mail des commercants est désactivé', null, 'export.log');
-//      }
+      } else {
+          \Mage::log('L\'envoi par mail des commercants est désactivé', null, 'export.log');
+      }
     }   
 }

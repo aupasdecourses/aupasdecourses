@@ -56,11 +56,16 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
             foreach ($merch as $merchant_id => $m) {
                 $pdf = Mage::getModel('apdcdispatch/mail_pdf', [$m['name'], $this->_c_date]);
 
-                $mails = [ 
-                    $merch['mail3'],
-                    $merch['mailc'],
-                    $merc['mailp']
-                ];
+                Mage::log(Mage::getStoreConfig('apdcdispatch/general/mode'), null, 'export.log');
+                if (Mage::getStoreConfig('apdcdispatch/general/mode')) {
+                    $mails = [ 
+                        $merch['mail3'],
+                        $merch['mailc'],
+                        $merc['mailp']
+                    ];
+                }else {
+                    $mails = ['pierre@aupasdecourses.com'];
+                }
 
                 /* Ajout de champs a la volée car merchantsOneAction & le PDF n'ont pas exactement la meme syntaxe */
                 foreach ($m['orders'] as $order_id => &$order) {
