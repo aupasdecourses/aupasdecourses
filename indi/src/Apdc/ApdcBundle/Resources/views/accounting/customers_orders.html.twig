@@ -3,10 +3,10 @@
 
 {% block body %}
 	<div class="container-fluid">
-		<h1> Liste des commandes facturées par clients </h1><br>
+		<h1> Liste des commandes facturées par clients</h1><br>
 		<div class="row">
 			<div class="col-md-6">
-				<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut|date('d/m/Y') }}"> au <input type="text" class="form-control" id="datepickerEndAccountingCustomers" placeholder="Selectionner Date" value="{{ date_fin|date('d/m/Y') }}"></h2>
+				<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut|date('d/m/Y') }}"> au <input type="text" class="form-control" id="datepickerEndAccountingCustomers" placeholder="Selectionner Date" value="{{ date_fin|date('d/m/Y') }}"><small> (date d'émission de la facture client)</small></h2>
 			</div>
 			<div class="col-md-6">{{ form(formCSV) }}</div>
 		</div>
