@@ -345,3 +345,7 @@ input#datepickerEndAccountingCustomers
 	display: flex;
 	flex-direction: column;
 }
+
+.display_none {
+	display: none;
+}
