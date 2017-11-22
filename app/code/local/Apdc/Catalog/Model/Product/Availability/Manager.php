@@ -165,7 +165,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                     if (!isset($availabilities[$day][$key])) {
                         if (!isset($errors[$productId . $key])) {
                             $errors[$productId . $key] = $product['entity_id'] . ' / website : ' . $product['website_id'] . ' / commercant ; ' . $product['commercant_id'];
-                            $custom_errors[$product['entity_id']]= "Erreur au niveau du commerçant (a priori)."
+                            $custom_errors[$product['entity_id']]= "Erreur au niveau du commerçant (a priori).";
                         }
                         continue;
                     } else if ($availabilities[$day][$key]['status'] == -1) {
