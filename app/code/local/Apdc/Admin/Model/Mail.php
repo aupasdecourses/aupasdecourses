@@ -72,7 +72,7 @@ class Apdc_Admin_Model_Mail extends Mage_Core_Model_Abstract
 
     public function warnAvailableProductErrors($errors)
     {
-        $subject = "Attention - Produits disponibles avec prix nul et/ou marge arrière non renseignée";
+        $subject = "Attention - Produits disponibles avec erreur ou infos non renseignées";
         $body = "Lors de la mise à jour de disponibilités, nous avons détecté les erreurs suivantes:</br><ul>";
         foreach($errors as $id => $e){
             $body.="<li><a href='".Mage::getBaseUrl()."petitcommisadmin/catalog_product/edit/tab/product_info_tabs_group_8/id/".$id."'>Entity Id: ".$id." => ".$e."</a></li>";
