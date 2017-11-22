@@ -231,6 +231,9 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             }
             Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($custom_errors);
         }
+         if (!empty($errors)) {
+            Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($errors);
+        }
 
     }
 
