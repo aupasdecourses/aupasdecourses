@@ -183,11 +183,16 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                         }
                     }
 
-                    //disable all products with price at 0 (autres check peuvent êtr implémenté ici)
+                    //disable all products with price at 0 (autres check peuvent être implémenté ici)
                     if($product['price']==0){
                         $available['status'] = 5;
                         if (!isset($custom_errors[$product['entity_id']])) {
                             $custom_errors[$product['entity_id']] = "Prix nul";
+                        }
+                    }
+                    if($product['marge_arriere']==""){
+                        if (!isset($custom_errors[$product['entity_id']])) {
+                            $custom_errors[$product['entity_id']] = "Marge arrière non renseignée!";
                         }
                     }
 
@@ -272,6 +277,13 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $productCollection->joinAttribute(
             'price',
             'catalog_product/price',
+            'entity_id',
+            null,
+            'left'
+        );
+        $productCollection->joinAttribute(
+            'marge_arriere',
+            'catalog_product/marge_arriere',
             'entity_id',
             null,
             'left'
