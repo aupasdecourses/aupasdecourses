@@ -248,6 +248,7 @@ class RefundController extends Controller
         $session = $request->getSession();
 
         $order = $mage->getOrderByMerchants($id);
+		$mistral_hours = $mage->getMistralDelivery(); 
 
         $entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
         $form_upload = $this->createFormBuilder($entity_upload);
@@ -433,7 +434,8 @@ class RefundController extends Controller
             'forms' => [$form_upload->createView()],
             'order' => $order,
             'id' => $id,
-            'mistral_form' => $mistral_form->createView(),
+			'mistral_form' => $mistral_form->createView(),
+			'mistral_hours' => $mistral_hours,
         ]);
     }
 
@@ -448,6 +450,7 @@ class RefundController extends Controller
 
         $order = $mage->getRefunds($id);
         $files = $this->getUploadedFiles($id);
+		$mistral_hours = $mage->getMistralDelivery();
 
         foreach ($order as $merchant_id => $merchant_part) {
             if (isset($files[$merchant_id])) {
@@ -522,7 +525,8 @@ class RefundController extends Controller
             'refund_shipping' => $mage->checkRefundShipping($order_mid),
             'commentaire_client' => $commentaire_client,
             'commentaire_commercant' => $commentaire_commercant,
-            'customer_name' => $customer_name,
+			'customer_name' => $customer_name,
+			'mistral_hours' => $mistral_hours,
         ]);
     }
 

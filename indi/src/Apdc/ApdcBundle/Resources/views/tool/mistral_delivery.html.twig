@@ -1,0 +1,10 @@
+<div class="alert alert-info" style="padding-top:3px; padding-bottom:2px; margin-left:10px; margin-top: 30px; margin-bottom:0;">
+	{% for m in mistral_hours %}
+		{% if m.order_id == id %}
+		<div class="row">
+			<div class="square no-info-delivery" style="display:inline-block"></div>
+			<div class="square no-info-delivery" style="display:inline-block"></div>
+		</div>
+		{% endif %}
+	{% endfor %}
+</div>
