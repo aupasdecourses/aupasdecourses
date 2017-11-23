@@ -2,7 +2,21 @@
 	{% for m in mistral_hours %}
 		{% if m.order_id == id %}
 		<div class="row">
-			<div class="square no-info-delivery" style="display:inline-block"></div>
+			{% if m.real_hour_picking != 0 %}
+				{% if m.real_hour_picking|date('H:i') < m.slot_start_picking|date('H:i') %}
+					<div class="square early-delivery inline_block"></div>
+				{% else %}
+					{% if m.real_hour_picking|date('H:i') > m.slot_end_picking|date('H:i') %}
+						<div class="square late-delivery inline_block"></div>
+					{% else %}
+						<div class="square on-time-delivery"></div>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<div class="square no-info-delivery inline_block"></div>
+			{% endif %}
+			
+			
 			<div class="square no-info-delivery" style="display:inline-block"></div>
 		</div>
 		{% endif %}

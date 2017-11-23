@@ -349,3 +349,7 @@ input#datepickerEndAccountingCustomers
 .display_none {
 	display: none;
 }
+
+.inline_block {
+	display: inline-block;
+}

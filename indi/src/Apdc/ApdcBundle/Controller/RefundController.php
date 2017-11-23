@@ -538,7 +538,8 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
         $session = $request->getSession();
-        $order = $mage->getRefunds($id);
+		$order = $mage->getRefunds($id);
+		$mistral_hours = $mage->getMistralDelivery();
 
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
@@ -614,7 +615,8 @@ class RefundController extends Controller
             'order' => $order,
             'id' => $id,
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
-            'forms' => [$form_submit->createView()],
+			'forms' => [$form_submit->createView()],
+			'mistral_hours' => $mistral_hours,
         ]);
     }
 
