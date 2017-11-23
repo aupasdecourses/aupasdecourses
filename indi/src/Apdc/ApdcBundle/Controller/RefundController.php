@@ -51,7 +51,6 @@ class RefundController extends Controller
 		$form_id->get('id')->setData($id);
 
 		$orders = $mage->getOrders($from, $to, -1, $id);
-		$mistral_hours = $mage->getMistralDelivery(); 
 
 		// MISTRAL RETARDS DE LIVRAISON
 		$mistral_late_orders_data = array('message' => 'Retards de picking/shipping');
@@ -167,7 +166,7 @@ class RefundController extends Controller
 			],
 			'orders' => $orders,
 			'mistral_late_orders_form'	=> $mistral_late_orders_form->createView(),
-			'mistral_hours'	=> $mistral_hours,
+			'mistral_hours'	=> $mage->getMistralDelivery(),
         ]);
     }
 
@@ -248,7 +247,6 @@ class RefundController extends Controller
         $session = $request->getSession();
 
         $order = $mage->getOrderByMerchants($id);
-		$mistral_hours = $mage->getMistralDelivery(); 
 
         $entity_upload = new \Apdc\ApdcBundle\Entity\Upload();
         $form_upload = $this->createFormBuilder($entity_upload);
@@ -435,7 +433,7 @@ class RefundController extends Controller
             'order' => $order,
             'id' => $id,
 			'mistral_form' => $mistral_form->createView(),
-			'mistral_hours' => $mistral_hours,
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -450,7 +448,6 @@ class RefundController extends Controller
 
         $order = $mage->getRefunds($id);
         $files = $this->getUploadedFiles($id);
-		$mistral_hours = $mage->getMistralDelivery();
 
         foreach ($order as $merchant_id => $merchant_part) {
             if (isset($files[$merchant_id])) {
@@ -526,7 +523,7 @@ class RefundController extends Controller
             'commentaire_client' => $commentaire_client,
             'commentaire_commercant' => $commentaire_commercant,
 			'customer_name' => $customer_name,
-			'mistral_hours' => $mistral_hours,
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -539,7 +536,6 @@ class RefundController extends Controller
         $mage = $this->container->get('apdc_apdc.magento');
         $session = $request->getSession();
 		$order = $mage->getRefunds($id);
-		$mistral_hours = $mage->getMistralDelivery();
 
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
@@ -616,7 +612,7 @@ class RefundController extends Controller
             'id' => $id,
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
 			'forms' => [$form_submit->createView()],
-			'mistral_hours' => $mistral_hours,
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -681,6 +677,7 @@ class RefundController extends Controller
 			'orders' => $orders,
 			'order'	=> $order,
 			'hipay_refund_form' => $hipay_refund_form->createView(),
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -727,7 +724,8 @@ class RefundController extends Controller
             'id' => $id,
             'refund_full' => $mage->getRefundfull($refund_diff, $refund_shipping_amount),
             'show_close' => $mage->checkdisplaybutton($id, 'close'),
-            'forms' => [$form_submit->createView()],
+			'forms' => [$form_submit->createView()],
+			'mistral_hours' => $mage->getMistralDelivery(),
 
         ]);
     }

@@ -16,8 +16,19 @@
 				<div class="square no-info-delivery inline_block"></div>
 			{% endif %}
 			
-			
-			<div class="square no-info-delivery" style="display:inline-block"></div>
+			{% if m.real_hour_shipping != 0 %}
+				{% if m.real_hour_shipping|date('H:i') < m.slot_start_shipping|date('H:i') %}
+					<div class="square early-delivery inline_block"></div>
+				{% else %}
+					{% if m.real_hour_shipping|date('H:i') > m.slot_end_shipping|date('H:i') %}
+						<div class="square late-delivery inline_block"></div>
+					{% else %}
+						<div class="square on-time-delivery inline_block"></div>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<div class="square no-info-delivery inline_block"></div>
+			{% endif %}
 		</div>
 		{% endif %}
 	{% endfor %}
