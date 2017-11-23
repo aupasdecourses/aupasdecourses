@@ -75,3 +75,7 @@
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
 {% endblock %}
+
+{% block javascript_refund %}
+	<script type="text/javascript" src="{{ path('root') }}js/mistral-delivery.js"></script>
+{% endblock %}
