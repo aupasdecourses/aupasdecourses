@@ -16,10 +16,13 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
             if ($ddate >= date('Y-m-d')) {
                 $dtimeId = Mage::getSingleton('core/session')->getDtimeId();
                 $block = new MW_Ddate_Block_Onepage_Ddate();
+                Mage::log(Mage::getSingleton('core/session'),null,"ddate.log");
                 if (!$block->isEnabled($dtimeId, $ddate)) {
+                    Mage::log($ddate."-".$dtimeId." is not enabled!",null,"ddate.log");
                     $hasError = true;
                 }
             } else {
+                Mage::log("Warning: date ".$ddate." < ".date('Y-m-d'),null,"ddate.log");
                 $hasError = true;
             }
             if ($hasError) {
@@ -47,7 +50,9 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
     protected function _expireAjax()
     {
         $isNotValide = parent::_expireAjax();
-        if (!$isNotValide) {
+        if($isNotValide) {
+            Mage::log("_expireAjax triggered error!",null,"ddate.log");
+        }else {
             $isNotValide = $this->_ddateIsNotAvailable();
         }
 
