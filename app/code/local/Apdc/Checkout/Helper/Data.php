@@ -83,11 +83,18 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function cleanDdate()
     {
-        Mage::getSingleton('core/session')->unsDdate();
-        Mage::getSingleton('core/session')->unsDtime();
-        Mage::getSingleton('core/session')->unsDtimeId();
-        Mage::getSingleton('core/session')->unsDdatei();
-        Mage::getSingleton('core/session')->unsHeaderDdate();
+        $session = Mage::getSingleton('core/session');
+        $session->unsDdate();
+        $session->unsDtime();
+        $session->unsDtimeId();
+        $session->unsDdatei();
+        $session->unsHeaderDdate();
+        if (isset($_SESSION['ddate'])) {
+            unset($_SESSION['ddate']);
+        }
+        if (isset($_SESSION['dtime'])) {
+            unset($_SESSION['dtime']);
+        }
     }
 
     /**

@@ -23,16 +23,7 @@ class Apdc_Checkout_Model_Observer extends Mage_Core_Model_Abstract
 
     public function cleanDdateSessionData()
     {
-        $session = Mage::getSingleton('core/session');
-        $session->unsDdate();
-        $session->unsDtime();
-        $session->unsDdatei();
-        $session->unsHeaderDdate();
-        if (isset($_SESSION['ddate'])) {
-            unset($_SESSION['ddate']);
-        }
-        if (isset($_SESSION['dtime'])) {
-            unset($_SESSION['dtime']);
-        }
+        Mage::helper('apdc_checkout')->cleanDdate();
+        Mage::log("cleanDdateSessionData",null,"ddate.log");
     }
 }
