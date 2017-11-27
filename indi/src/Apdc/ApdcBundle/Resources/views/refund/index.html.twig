@@ -186,6 +186,12 @@
 			}
 		});
 
+		var nb_orders = {{ orders|length }};
+		if (nb_orders > 20) {
+			document.getElementById("form_submit").disabled = true;
+			document.getElementById("form_submit").title = "Vous ne pouvez verifier que 20 commandes maximum";
+		}
+
 	</script>
 
 {% endblock %}
