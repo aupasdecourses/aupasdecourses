@@ -190,4 +190,85 @@ class Mistral
 
 		return $results;
 	}
+
+	/**
+	 * FONCTIONS POUR PROCESS CODE COULEURS HORAIRES ENLEVEMENTS LIVRAISONS MISTRAL
+	 */
+
+	public function constructMistralDeliveryResults($orders) 
+	{
+		$neighborhood = $this->getApdcNeighborhood();
+		$results = [];
+
+		foreach ($neighborhood as $neigh) {
+			foreach ($orders as $order_id => $order) {
+				if ($neigh['store_id'] == $order['store_id']) {
+					$results[$order_id] = [
+						'partner_ref'			=> $neigh['partner_ref'],
+						'merchant_id'			=> [],
+						'real_hour_picking'		=> '',
+						'slot_start_picking'	=> '',
+						'slot_end_picking'		=> '',
+						'real_hour_shipping'	=> '',
+						'slot_start_shipping'	=> '',
+						'slot_end_shipping'		=> '',
+					];
+
+					foreach ($order['products'] as $product) {
+						$results[$order_id]['merchant_id'][] = $product['commercant_id'];
+					}
+
+					$results[$order_id]['merchant_id'] = array_unique($results[$order_id]['merchant_id']);
+				}
+			}		
+		}
+		
+		return $results;
+	}
+
+	public function cleanTempMistralDeliveryData($temp)
+	{
+		foreach ($temp as $order_id => $tmp) {
+			foreach ($tmp as $merch_id => $mistral_result) {
+				if (is_numeric($merch_id)) {
+					if (isset($mistral_result['Message'])) {
+						unset($temp[$order_id]); // Si commande inconnue
+					}
+					if ($mistral_result['StatusCode'] == 'EA' || $mistral_result['StatusCode'] == 'EEC') {
+						unset($temp[$order_id][$merch_id]); // Si en acheminement ou en enlevement
+					}
+				}
+			}
+
+			if (empty($temp[$order_id])) {
+				unset($temp[$order_id]); // Si manque infos Mistral
+			}
+		}	
+
+		return $temp;
+	}
+
+	public function storeMistralDeliveryResults($results, $temp)
+	{
+		foreach ($results as $order_id => $result) {
+			foreach ($temp as $o_id => $tmp) {
+				foreach ($tmp as $merch_id => $res) {
+					if ($order_id == $o_id) {
+						$results[$order_id]['real_hour_picking']	= $res['Pick']['RealHour'];
+						$results[$order_id]['slot_start_picking']	= $res['Pick']['SlotStart'];
+						$results[$order_id]['slot_end_picking']		= $res['Pick']['SlotEnd'];
+						$results[$order_id]['real_hour_shipping']	= $res['Delivery']['RealHour'];
+						$results[$order_id]['slot_start_shipping']	= $res['Delivery']['SlotStart'];
+						$results[$order_id]['slot_end_shipping']	= $res['Delivery']['SlotEnd'];
+
+					}
+				}
+			}	
+
+			unset($results[$order_id]['partner_ref'], $results[$order_id]['merchant_id']);
+		}
+
+		return $results;	
+	}
+
 }
