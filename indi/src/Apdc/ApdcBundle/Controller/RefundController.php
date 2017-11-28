@@ -332,8 +332,6 @@ class RefundController extends Controller
         }
 
         // MISTRAL AUTO UPLOAD
-        $neighborhood = $mistral->getApdcNeighborhood();
-
         $mistral_data = array('message' => 'Upload via Mistral');
         $mistral_form = $this->createFormBuilder($mistral_data)
             ->add('Mistral tickets upload', SubmitType::class, array(
@@ -344,33 +342,11 @@ class RefundController extends Controller
         $mistral_form->handleRequest($request);
 
         if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
-            $results = array(
-                'order_id' => $id,
-                'order_mid' => $order[-1]['order']['mid'],
-                'ticket_com' => '',
-                'partner_ref' => '',
-            );
 
-            // Construct results[]
-            foreach ($order as $merchant_id => $merchant) {
-                if (is_numeric($merchant_id) && $merchant_id != -1) {
-                    foreach ($neighborhood as $neigh) {
-                        if ($neigh['store_id'] == $merchant['merchant']['store_id']) {
-                            $results['partner_ref'] = $neigh['partner_ref'];
-                            $results[$merchant_id] = '';
-                        }
-                    }
-                }
-            }
+			// 1 - Construct results[]
+			$results = $mistral->constructMistralImgsResults($order, $id);	
 
-            foreach ($results as $merchant_id => $result) {
-                if (is_numeric($merchant_id)) {
-                    $results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}";
-                }
-            }
-            $results['ticket_com'] = substr($results['ticket_com'], 1);
-
-            // Store Mistral images in tmp[]	
+            // 2 - Store Mistral images in temp[]	
             $temp = [];
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
@@ -382,33 +358,20 @@ class RefundController extends Controller
                         return $this->redirectToRoute('refundUpload', ['id' => $id]);
                     }
                 }
-            }
+			}
 
-            // Store images in results[]
-            foreach ($temp as $merchant_id => $data) {
-                if ($data['AsPicture'] == true) {
-                    foreach ($data['Pictures'] as $type => $content) {
-                        if ($content['MoveTypeCode'] == 'E') {
-                            $results[$merchant_id]['base64_string'] = $content['ImageBase64'];
-                            $results[$merchant_id]['image_type'] = substr($content['ImageType'], 6);
-                        } else {
-                            unset($results[$merchant_id]); // Si ticket == signature du commercant
-                        }
-                    }
-                } else {
-                    unset($results[$merchant_id]); // Si pas de ticket du commercant
-                }
-            }
+            // 3 - Store images in results[]
+			$results = $mistral->storeMistralImgsResults($temp, $results);
 
-            $diff = array_diff_assoc($temp, $results);
-
-            // Convert base64 into real img, add imgs into media/attachments & update DBB
+            // 4 - Convert base64 into real img, add imgs into media/attachments & update DBB
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
                     $mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $merchant_id);
                 }
             }
 
+            $diff = array_diff_assoc($temp, $results);
+			
 			if (!empty($diff)) {
 				$intersect = array_intersect_assoc($order, $diff);
                 foreach ($intersect as $merchant_id => $merchant) {

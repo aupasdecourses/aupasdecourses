@@ -133,4 +133,61 @@ class Mistral
 
 		}
 	}	
+
+	/**
+	 *	FONCTIONS POUR PROCESS AUTO UPLOAD TICKET REMBOURSEMENT MISTRAL
+	 */
+
+	public function constructMistralImgsResults($order, $id)
+	{
+		$neighborhood = $this->getApdcNeighborhood();
+
+		$results = [
+			'order_id' => $id,
+			'order_mid' => $order[-1]['order']['mid'],
+			'ticket_com' => '',
+			'partner_ref' => '',
+		];		
+
+		foreach ($order as $merchant_id => $merchant) {
+			if (is_numeric($merchant_id) && $merchant_id != -1) {
+				foreach ($neighborhood as $neigh) {
+					if ($neigh['store_id'] == $merchant['merchant']['store_id']) {
+						$results['partner_ref'] = $neigh['partner_ref'];
+						$results[$merchant_id] = '';
+					}
+				}
+			}
+		}
+
+		foreach ($results as $merchant_id => $result) {
+			if (is_numeric($merchant_id)) {
+				$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}";
+			}
+		}
+		$results['ticket_com'] = substr($results['ticket_com'], 1);
+
+		return $results;
+	}	
+
+	
+	public function storeMistralImgsResults($temp, $results)
+	{
+		foreach ($temp as $merchant_id => $data) {
+			if ($data['AsPicture'] == true) {
+				foreach ($data['Pictures'] as $type => $content) {
+					if ($content['MoveTypeCode'] == 'E') {
+						$results[$merchant_id]['base64_string'] = $content['ImageBase64'];
+						$results[$merchant_id]['image_type'] = substr($content['ImageType'], 6);
+					} else {
+						unset($results[$merchant_id]); // Si ticket == signature du commercant
+					}
+				}
+			} else {
+				unset($results[$merchant_id]); // Si 0 ticket commercant
+			}
+		}
+
+		return $results;
+	}
 }
