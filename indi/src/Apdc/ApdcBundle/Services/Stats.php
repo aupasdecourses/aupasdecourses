@@ -31,6 +31,8 @@ class Stats
 	 */
 	public function getCustomerStatData()
 	{
+		set_time_limit(0);
+
 		$data = [];
 		$orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
 			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
@@ -74,6 +76,8 @@ class Stats
 				]);
 		}
 
+		unset($orders);
+
 		return $data;
 	}
 
@@ -82,6 +86,8 @@ class Stats
 	 **/
 	public function stats_clients()
 	{
+		set_time_limit(0);
+
 		$data = $this->getCustomerStatData();	
 
 		//Add customer who never ordered
@@ -110,6 +116,8 @@ class Stats
 				]);
 			}
 	 	}
+
+	 	unset($customers);
 	 
 		return $data;
 	}
