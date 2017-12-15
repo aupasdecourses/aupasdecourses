@@ -10,15 +10,21 @@ class MW_Ddate_Model_Dtime extends Mage_Core_Model_Abstract
         $this->_init('ddate/dtime');
     }
 
-    public function getStartTimeOfFirstSlot($ddateTime)
+    public function getStartTimeOfFirstSlot($ddateTime,$debug=false)
     {
 
+        if($debug){Mage::log("ddateTime ".date("d/m/Y",$ddateTime),null,'ddate.log');}
+        if($debug){Mage::log("startTimeOfFirstSlot ".$this->startTimeOfFirstSlot,null,'ddate.log');}
         if (is_null($this->startTimeOfFirstSlot)) {
             $startTime = 24;
             $day = strtolower(date('D',$ddateTime));
             $storeid=Mage::app()->getStore()->getStoreId();
             $dtimes=Mage::helper("ddate")->getDtime($storeid);
             $dtimes ->addFieldToFilter('status',1 );
+            if($debug){Mage::log("Calculate startTimeOfFirstSlot (because NULL) ",null,'ddate.log');}
+            if($debug){Mage::log("-> ddateTime (see above)",null,'ddate.log');}
+            if($debug){Mage::log("-> day ".$day,null,'ddate.log');}
+            if($debug){Mage::log("-> STOREID ".$storeid,null,'ddate.log');}
             foreach ($dtimes as $dtime) {
                 if($dtime[$day]){
                     preg_match_all('/(\d+):/', $dtime['interval'], $matchesarray, PREG_SET_ORDER);
@@ -28,6 +34,7 @@ class MW_Ddate_Model_Dtime extends Mage_Core_Model_Abstract
                 }
             }
             $this->startTimeOfFirstSlot = $startTime;
+            if($debug){Mage::log("startTimeOfFirstSlot calculated ".$this->startTimeOfFirstSlot,null,'ddate.log');}
         }
 
         return $this->startTimeOfFirstSlot;

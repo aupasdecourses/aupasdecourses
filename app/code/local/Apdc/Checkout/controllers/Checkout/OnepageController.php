@@ -16,8 +16,13 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
             if ($ddate >= date('Y-m-d')) {
                 $dtimeId = Mage::getSingleton('core/session')->getDtimeId();
                 $block = new MW_Ddate_Block_Onepage_Ddate();
-                Mage::log(Mage::getSingleton('core/session'),null,"ddate.log");
-                if (!$block->isEnabled($dtimeId, $ddate)) {
+                Mage::log("New _ddateIsNotAvailable",null,"ddate.log");
+                Mage::log(Mage::getSingleton('core/session')->getData()['last_url'],null,"ddate.log");
+                Mage::log(Mage::getSingleton('core/session')->getData()['visitor_data'],null,"ddate.log");
+                Mage::log(Mage::getSingleton('core/session')->getData()['ddate'],null,"ddate.log");
+                Mage::log(Mage::getSingleton('core/session')->getData()['dtime'],null,"ddate.log");
+                Mage::log(Mage::getSingleton('core/session')->getData()['dtime_id'],null,"ddate.log");
+                if (!$block->isEnabled($dtimeId, $ddate,true)) {
                     Mage::log($ddate."-".$dtimeId." is not enabled!",null,"ddate.log");
                     $hasError = true;
                 }
@@ -47,17 +52,17 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         }
     }
 
-    protected function _expireAjax()
-    {
-        $isNotValide = parent::_expireAjax();
-        if($isNotValide) {
-            Mage::log("_expireAjax triggered error!",null,"ddate.log");
-        }else {
-            $isNotValide = $this->_ddateIsNotAvailable();
-        }
+    // protected function _expireAjax()
+    // {
+    //     $isNotValide = parent::_expireAjax();
+    //     if($isNotValide) {
+    //         Mage::log("_expireAjax triggered error!",null,"ddate.log");
+    //     }else {
+    //         $isNotValide = $this->_ddateIsNotAvailable();
+    //     }
 
-        return $isNotValide;
-    }
+    //     return $isNotValide;
+    // }
 
     /**
      * Billing & Shipping Steps save action.
@@ -67,6 +72,7 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         if ($this->_expireAjax()) {
             return;
         }
+
         if ($this->getRequest()->isPost()) {
             $billingData = $this->getRequest()->getPost('billing', array());
             $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
@@ -302,6 +308,9 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
             if ($this->_expireAjax()) {
                 return;
             }
+            if ($this->_ddateIsNotAvailable()) {
+                return;
+            }
             if ($this->getRequest()->isPost()) {
                 $data = $this->getRequest()->getPost('payment', array());
 
@@ -332,6 +341,9 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
             }
         } else {
             if ($this->_expireAjax()) {
+                return;
+            }
+            if ($this->_ddateIsNotAvailable()) {
                 return;
             }
             try {

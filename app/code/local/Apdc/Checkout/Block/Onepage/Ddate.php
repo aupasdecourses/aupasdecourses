@@ -38,6 +38,7 @@ class Apdc_Checkout_Block_Onepage_Ddate extends MW_Ddate_Block_Onepage_Ddate
         $day = 0;
         if ($withUnaivalableDays) {
             for ($day = 0; $day < 7; $day++) {
+                Mage::log("=> getAvailableDaysAndSlots launch!",null,"ddate.log");
                 $strDate = date('Y-m-d', strtotime('+' . $day . ' day', $currentTime));
                 $date_FR = Mage::app()->getLocale()->date(strtotime('+' . $day . ' day', $currentTimeGMT));
                 $hasSlot = false;
