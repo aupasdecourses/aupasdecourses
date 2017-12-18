@@ -27,5 +27,22 @@
 {% endblock %}
 
 {% block javascript_refund %}
-	<script type="text/javascript" src="{{ path('root') }}js/mistral-delivery.js"></script>
+	<script type="text/javascript">
+
+		var picks = document.getElementsByClassName("pick");
+		var ships = document.getElementsByClassName("ship");
+
+		[].forEach.call(picks, function(picking) {
+			picking.onclick = function() {
+				alert(picking.parentElement.children["real-hour-pick"].innerHTML + "\n\n" + picking.parentElement.children["slot-hour-pick"].innerHTML);
+			}
+		});
+
+		[].forEach.call(ships, function(shipping) {
+			shipping.onclick = function() {
+				alert(shipping.parentElement.children["real-hour-ship"].innerHTML + "\n\n" + shipping.parentElement.children["slot-hour-ship"].innerHTML);
+			}
+		});
+
+	</script>
 {% endblock %}
