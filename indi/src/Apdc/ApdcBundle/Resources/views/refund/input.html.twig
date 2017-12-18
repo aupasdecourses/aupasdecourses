@@ -16,8 +16,9 @@
 	</div>
 	{{ form_start(form) }}
 	<div class="row">
-		<div class="col-sm-12">
-			<h1>#{{ id ~ " / " ~ customer_name }}<small> Saisie des tickets</small></h1>
+		<div class="row">
+			<div class="col-md-11"><h1>#{{ id ~ " / " ~ customer_name }}<small> Saisie des tickets</small></h1></div>
+			<div class="col-md-1">{% include 'ApdcApdcBundle::tool/mistral_delivery.html.twig' %}</div>
 		</div>
 	</div>
 <div class="row">
@@ -133,6 +134,8 @@
 	<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/jquery-scrolltofixed-min.js"></script>
+	<script type="text/javascript" src="{{ path('root') }}js/mistral-delivery.js"></script>
+
 	<!-- ScrollToFixed for refund input tickets : refund/input.twig -->
 	<script type="text/javascript">
 		$(document).ready(function() {

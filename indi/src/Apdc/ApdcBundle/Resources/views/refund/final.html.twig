@@ -12,6 +12,9 @@
 
 	{% set customer_name = order[-1]["order"]["first_name"] ~ " " ~ order[-1]["order"]["last_name"] %}
 
+	{% set frais_livr = order[-1]["order"]["refund_shipping_amount"] %}
+	{% set total_refund = frais_livr + refund_diff %}
+
 	<div class="row">
 		{% if psp_reference != 0 %}
 			{% include 'ApdcApdcBundle::refund/adyen.html.twig' %}
@@ -21,4 +24,8 @@
 	</div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block javascript_refund %}
+	<script type="text/javascript" src="{{ path('root') }}js/mistral-delivery.js"></script>
 {% endblock %}
