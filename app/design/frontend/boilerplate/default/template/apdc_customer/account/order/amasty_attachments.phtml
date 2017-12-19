@@ -25,6 +25,10 @@ if($field->getCustomerVisibility()=="view"):
                 <?php foreach ($val as $img): ?>
                         <li>
                             <?php if($img<>""):
+                                $test=explode(".",$img);
+                                if(count($test)==1){
+                                    $img.=".jpeg";
+                                }
                                 $url_src=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'attachments/'.$img;
                                 ?>
                                 <a href="<?= $url_src?>" data-lightbox="tickets">

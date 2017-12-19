@@ -162,7 +162,8 @@ class Mistral
 
 		foreach ($results as $merchant_id => $result) {
 			if (is_numeric($merchant_id)) {
-				$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}";
+				//on devrait utiliser le type d'image automatiquement mais cette fonction a été codée dans une focnction lancée après ... A refactoriser!!!
+				$results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}.jpeg";
 			}
 		}
 		$results['ticket_com'] = substr($results['ticket_com'], 1);
