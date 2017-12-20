@@ -115,8 +115,16 @@
                     <?php echo $this->helper('checkout')->formatPrice($rowPrice); ?>
                 </div>
                 <div class="unit-price">
-                    <?php $unitPrice = $this->helper('checkout')->getPriceInclTax($_item); ?>
-                    <?php echo $this->helper('checkout')->formatPrice($unitPrice) ?>
+                    <!-- <?php $unitPrice = $this->helper('checkout')->getPriceInclTax($_item); ?>
+                    <?php echo $this->helper('checkout')->formatPrice($unitPrice) ?> -->
+                    <?php 
+                        $prix_kilo = $_item->getData('prix_kilo_site');
+                        $prix_kilo_format = substr($_item->getData('prix_kilo_site'),0,14);
+                        if(strlen($prix_kilo)>=14){
+                            $prix_kilo_format.=".";
+                        }
+                        echo $prix_kilo_format;
+                    ?>
                 </div>
 
             <?php endif; //Can apply MSRP ?>
@@ -126,14 +134,14 @@
             <?php if ($isVisibleProduct): ?>
                 <?php if ($availablility['is_available_for_sale']) : ?>
                 <div>
-                <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Edit item') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
+                <a href="<?php echo $this->getConfigureUrl() ?>" data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => $this->getFormKey())); ?>" title="<?php echo $this->__('Options ou commentaires') ?>" data-item-id="<?php echo $_item->getId(); ?>" class="btn-edit show-item-popup">
                     <i class="fa fa-pencil"></i>
                 </a>
                 </div>
                 <?php endif; ?>
                 <?php if (!$this->isOnCheckoutPage()): ?>
                     <div>
-                    <a href="<?php echo $this->helper('apdccart')->getAjaxDeleteUrl($_item) ?>" title="<?php echo $this->__('Remove This Item') ?>"
+                    <a href="<?php echo $this->helper('apdccart')->getAjaxDeleteUrl($_item) ?>" title="<?php echo $this->__('Supprimer l\'article') ?>"
                        data-confirm="<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>"
                        class="remove" id="btn-minicart-remove-<?php echo $_item->getId(); ?>" data-item-id="<?php echo $_item->getId(); ?>" data-product-id="<?php echo $_item->getProductId(); ?>">
                         <i class="fa fa-trash"></i>

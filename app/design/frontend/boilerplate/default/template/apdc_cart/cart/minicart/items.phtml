@@ -94,16 +94,37 @@ $countItems = count($commercants);
         <div class="mini-cart-bottom">
             <hr>
             <div class="block-content">
-                <p class="subtotal">
+                <div class="subtotal">
                     <?php if ($this->canApplyMsrp()): ?>
                         <span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></span>
                     <?php else: ?>
-                        <span class="label"><?php echo $this->__('Cart Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <span class="label"><?php echo $this->__('Total des produits:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
                         <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
                             <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
                         <?php endif; ?>
+                        <div class="estimate_shipping">
+                            <?php
+                                $_subtotal=$this->getSubtotal();
+                                if($_subtotal < 45) {
+                                    $estimate_shipping = Mage::helper('checkout')->formatPrice(9);
+                                    $message = "Bénéficier de la livraison à 6€ pour ".round(45-$_subtotal,0)."€ d'achat en plus";
+                                }elseif($_subtotal < 90){
+                                    $estimate_shipping = Mage::helper('checkout')->formatPrice(6);
+                                    $message = "Bénéficier de la livraison à 3€ pour ".round(90-$_subtotal,0)."€ d'achat en plus";
+                                }elseif($_subtotal < 150){
+                                    $estimate_shipping = Mage::helper('checkout')->formatPrice(3);
+                                    $message = "Bénéficier de la livraison GRATUITE pour ".round(150-$_subtotal,0)."€ d'achat en plus";
+                                }else{
+                                    $estimate_shipping = "OFFERTS";
+                                }
+                            ?>
+                            <span class="value"><?php echo $this->__('+ Frais de livraison: ') ?><?php echo $estimate_shipping ?></span>
+                            <?php if(isset($message)):?>
+                                <span class="msg"><a href="https://www.aupasdecourses.com/faq/prix-codes-promos/" target="blank"><?php echo $this->__($message) ?></span></a>
+                            <?php endif;?>
+                        </div>
                     <?php endif; ?>
-                </p>
+                </div>
             </div>
 
 

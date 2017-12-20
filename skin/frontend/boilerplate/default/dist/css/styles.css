@@ -12000,7 +12000,7 @@ header .top-nav li a a:visited {
 }
 
 .header-minicart #header-cart .minicart-items {
-  margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 .header-minicart #header-cart .block-subtitle {
@@ -12071,7 +12071,7 @@ header .top-nav li a a:visited {
 
 .header-minicart #header-cart .mini-cart-bottom hr {
   width: 90%;
-  margin: 5px auto 10px;
+  margin: 0 auto;
 }
 
 .header-minicart #header-cart .mini-cart-bottom .block-content {
@@ -12080,7 +12080,7 @@ header .top-nav li a a:visited {
 
 .header-minicart #header-cart .mini-cart-bottom .subtotal {
   margin-bottom: 0;
-  padding: 10px 5px;
+  padding: 0 5px 5px 5px;
   text-align: center;
   background-color: #f9f9f9;
 }
@@ -12096,6 +12096,27 @@ header .top-nav li a a:visited {
   color: #3ab64b;
 }
 
+.header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .value {
+  font-size: .8rem;
+  display: block;
+  text-transform: none;
+}
+
+.header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .value .price {
+  font-size: inherit;
+  color: #1e555a;
+}
+
+.header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .msg {
+  font-size: .7rem;
+  text-transform: none;
+}
+
+.header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .msg .price {
+  font-size: .8rem;
+  color: #1e555a;
+}
+
 .header-minicart #header-cart .mini-cart-bottom .checkout-types {
   margin: 0;
   padding: 0;
@@ -12104,7 +12125,8 @@ header .top-nav li a a:visited {
 }
 
 .header-minicart #header-cart .mini-cart-bottom .checkout-types .checkout-button {
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 
 .header-minicart #header-cart .minicart-wrapper {
