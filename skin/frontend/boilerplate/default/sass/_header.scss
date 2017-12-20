@@ -201,6 +201,7 @@ header{
     }
 }
 .header-account-container{
+    padding-right:10px;
     position: relative;
     a{
         span{
@@ -425,6 +426,9 @@ header{
                             font-size: inherit;
                             color: $color-second-green;
                         }
+                        &.empty{
+                            font-size:0.7rem;
+                        }
                     }
                     .msg{
                         font-size: 0.7rem;
@@ -450,12 +454,16 @@ header{
         .minicart-wrapper {
             height: 100%;
             overflow: auto;
-            padding: 55px 10px 145px;
+            padding: 50px 10px 145px;
             width: 100%;
             p.empty {
               margin: 5px 0 0;
               color: #df280a;
               font-size: 13px;
+              text-align:center;
+              &.main{
+                color: $color-main-grey;
+              }
             }
             &.loading {
               position:relative;
@@ -721,7 +729,7 @@ header{
 }
 
 .header-delivery-container{
-    margin-right: 10px;
+    margin-right: 0px;
     .skip-links{
         .label{
             padding: 0;
@@ -888,14 +896,6 @@ header{
   }
 }
 
-.header-delivery-container{
-    margin-right: 10px;
-    .skip-links{
-        .label{
-            padding: 0;
-        }
-    }
-}
 #header-delivery{
     position: absolute;
     top: 60px;

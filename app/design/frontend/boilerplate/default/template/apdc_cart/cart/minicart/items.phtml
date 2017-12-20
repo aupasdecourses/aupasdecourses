@@ -144,6 +144,29 @@ $countItems = count($commercants);
 
     <?php else: ?>
         <p class="empty"><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+        <p class="empty main"><?php echo $this->__('Découvrez le large choix de vos commerçants en utilisant le menu en haut de page.') ?></p>
+        <div class="mini-cart-bottom" style="padding-bottom: 5px;">
+            <hr>
+            <div class="block-content">
+                <div class="subtotal">
+                    <?php if ($this->canApplyMsrp()): ?>
+                        <span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></span>
+                    <?php else: ?>
+                        <span class="label"><?php echo $this->__('Total des produits:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+                            <br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+                        <?php endif; ?>
+                        <div class="estimate_shipping">
+                            <span class="value empty" style="text-decoration: underline;"><?php echo $this->__('Rappel des frais de livraison') ?></span>
+                            <span class="value empty"><?php echo $this->__('9€ pour des achats inférieurs à 45€.') ?></span>
+                            <span class="value empty"><?php echo $this->__('6€ pour des achats entre 45 et 90€.') ?></span>
+                            <span class="value empty"><?php echo $this->__('3€ pour des achats entre 90 et 150€.') ?></span>
+                            <span class="value empty"><?php echo $this->__('OFFERTE pour des achats supérieur à 150€.') ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
 
     <?php endif ?>
 </div>

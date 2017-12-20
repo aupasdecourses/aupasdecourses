@@ -11862,6 +11862,7 @@ header .top-nav li a a:visited {
 
 .header-account-container {
   position: relative;
+  padding-right: 10px;
 }
 
 .header-account-container a span i {
@@ -12107,6 +12108,10 @@ header .top-nav li a a:visited {
   color: #1e555a;
 }
 
+.header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .value.empty {
+  font-size: .7rem;
+}
+
 .header-minicart #header-cart .mini-cart-bottom .subtotal .estimate_shipping .msg {
   font-size: .7rem;
   text-transform: none;
@@ -12133,13 +12138,18 @@ header .top-nav li a a:visited {
   overflow: auto;
   width: 100%;
   height: 100%;
-  padding: 55px 10px 145px;
+  padding: 50px 10px 145px;
 }
 
 .header-minicart #header-cart .minicart-wrapper p.empty {
   font-size: 13px;
   margin: 5px 0 0;
+  text-align: center;
   color: #df280a;
+}
+
+.header-minicart #header-cart .minicart-wrapper p.empty.main {
+  color: rgba(0, 0, 0, .84);
 }
 
 .header-minicart #header-cart .minicart-wrapper.loading {
@@ -12437,7 +12447,7 @@ header .top-nav li a a:visited {
 }
 
 .header-delivery-container {
-  margin-right: 10px;
+  margin-right: 0;
 }
 
 .header-delivery-container .skip-links .label {
@@ -12655,14 +12665,6 @@ header .top-nav li a a:visited {
   width: 530px;
 }
 
-.header-delivery-container {
-  margin-right: 10px;
-}
-
-.header-delivery-container .skip-links .label {
-  padding: 0;
-}
-
 #header-delivery {
   position: absolute;
   z-index: 100;
@@ -12798,6 +12800,12 @@ header .top-nav li a a:visited {
   top: 50%;
   left: 0;
   margin-top: -6px;
+}
+
+.minicart-message.show {
+  font-size: .7rem;
+  margin-bottom: 3px;
+  padding: 5px 0;
 }
 
 .minicart-message#minicart-error-message {
@@ -18106,4 +18114,8 @@ h1.account-title {
 
 .edge .block-subscribe {
   margin-top: 130px;
+}
+
+#netreviewsWidgetNum11421widget02av {
+  display: none;
 }
