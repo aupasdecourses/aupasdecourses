@@ -5,6 +5,7 @@
             <version>0.6.7</version>
         </Apdc_Commercant>
     </modules>
+
     <global>
         <blocks>
             <apdc_commercant>
@@ -57,6 +58,17 @@
             </apdc_commercant_setup>
         </resources>
     </global>
+    <frontend>
+        <routers>
+            <apdc_commercant>
+                <use>standard</use>
+                <args>
+                  <module>Apdc_Commercant</module>
+                  <frontName>shop</frontName>
+                </args>
+            </apdc_commercant>
+        </routers>
+    </frontend>
     <admin>
         <routers>
             <adminhtml>
