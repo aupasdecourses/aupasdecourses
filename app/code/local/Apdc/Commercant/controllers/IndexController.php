@@ -2,7 +2,7 @@
 
 class Apdc_Commercant_IndexController extends Mage_Core_Controller_Front_Action
 {
-	public function listshopsAction(){
+	protected function _list(){
 		$result=array();
 		$_shops = Mage::getModel('apdc_commercant/shop')->getCollection()
                      ->addFieldToSelect('id_shop')
@@ -28,7 +28,20 @@ class Apdc_Commercant_IndexController extends Mage_Core_Controller_Front_Action
         	}
 			$result[$_shop->getName()]=$temp;
 		}
+		return $result;
+	}
 
+	public function jsonlistAction(){
+		$result=$this->_list();
 		echo json_encode($result);
+	}
+
+	public function rawlistAction(){
+		$result=$this->_list();
+		foreach($result as $urls){
+			foreach($urls as $url){
+				echo $url."</br>";
+			}
+		}
 	}
 }
