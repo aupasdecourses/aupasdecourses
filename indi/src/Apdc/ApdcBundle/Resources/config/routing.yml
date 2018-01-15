@@ -64,32 +64,32 @@ shippingAll:
 refundIndex:
   path:   /refund/{id}/{from}/{to}
   defaults:   { _controller: ApdcApdcBundle:Refund:index, id: null, from: null, to: null}
-  requirements: { id: "^-?[0-9]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
+  requirements: { id: "^-?[0-9-]+", from: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null", to: "[0-9]{4}-[0-9]{2}-[0-9]{2}|null"}
 
 refundUpload:
   path: /refund/{id}/upload/
   defaults: { _controller: ApdcApdcBundle:Refund:refundUpload}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 refundInput:
   path: /refund/{id}/input/
   defaults: { _controller: ApdcApdcBundle:Refund:refundInput}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 refundDigest:
   path: /refund/{id}/digest/
   defaults: { _controller: ApdcApdcBundle:Refund:refundDigest}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 refundFinal:
   path: /refund/{id}/final/
   defaults: { _controller: ApdcApdcBundle:Refund:refundFinal}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 refundClosure:
   path: /refund/{id}/closure/
   defaults: { _controller: ApdcApdcBundle:Refund:refundClosure}
-  requirements: { id:"[0-9]+" }
+  requirements: { id:"[0-9-]+" }
 
 refundPostClosureIndex:
   path: /refund/postclosure/index
