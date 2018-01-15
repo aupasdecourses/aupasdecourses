@@ -153,7 +153,7 @@ trait Order
         foreach ($options as $option) {
             $prod_data['comment'] .= $option['label'].': '.$option['value'].' | ';
         }
-        $prod_data['comment'] .= $product->getData('item_comment');
+        $prod_data['comment'] .= html_entity_decode($product->getData('item_comment'));
 
         $prod_data['nom_commercant'] = $this->_attributeArraysLabels['commercant'][$prod_data['commercant_id']];
 
