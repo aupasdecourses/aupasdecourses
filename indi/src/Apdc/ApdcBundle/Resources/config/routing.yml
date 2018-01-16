@@ -166,6 +166,10 @@ margin:
   path: /stat/margin/
   defaults: { _controller: ApdcApdcBundle:Stat:margin }
 
+productEvolution:
+  path: /stat/productEvolution/
+  defaults: { _controller: ApdcApdcBundle:Stat:productEvolution }
+
 mapMerchants:
     path: /map/merchants/
     defaults: { _controller: ApdcApdcBundle:Map:merchants}

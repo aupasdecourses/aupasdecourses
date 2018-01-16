@@ -104,4 +104,35 @@ class StatController extends Controller
 			'margin' => $margin,
 		]);
 	}
+
+	public function productEvolutionAction(Request $request)
+    {   
+        if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
+            return $this->redirectToRoute('root');
+        }
+    
+        $stats = $this->container->get('apdc_apdc.stats');
+
+        $json_products = []; 
+        $cpt = 0;
+        if (isset($_GET['sku'])) {
+            $sku = $_GET['sku'];
+            $products = $stats->getProductEvolutionBySku($sku);
+    
+            foreach ($products as $product) {
+                $json_products[$cpt] = [ 
+                    'sku'           => $product->getSku(),
+                    'prixPublic'    => $product->getPrixPublic(),
+                    'createdOn'     => $product->getCreatedOn()->format('d/m/Y H:i:s'),
+                ];
+            $cpt++; 
+            }
+        }
+
+        return $this->render('ApdcApdcBundle::stat/productEvolution.html.twig', [
+            'products'          => $products,
+            'sku'               => $sku,
+            'json_products'     => json_encode($json_products),
+        ]);
+    } 
 }

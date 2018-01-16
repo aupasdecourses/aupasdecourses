@@ -2,15 +2,19 @@
 
 namespace Apdc\ApdcBundle\Services;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 include_once '../../app/Mage.php';
 
 define('FLOAT_NUMBER', 2);
 
 class Stats
 {
+	private $em;
 
-	public function __construct()
+	public function __construct(ObjectManager $em)
 	{
+		$this->em = $em;
 		\Mage::app();
 	}
 
@@ -622,7 +626,10 @@ class Stats
 		sort($result);
 		$json_data = json_encode($result);
 		return $json_data;
+	}
 
-
+	public function getProductEvolutionBySku($sku)
+	{
+		return $this->em->getRepository('AppBundle:ProductHistory')->findBySku($sku);
 	}
 }
