@@ -65,32 +65,7 @@
 
 	var filesList = [];
 	var files_url = window.location.origin + '/media/import/';
-
-	/*
-	 * Get uploaded files & push them in filesList[]
-	 */
-	document.getElementById('fileupload').addEventListener("change", getFilesName, false);
-	function getFilesName() {
-		for (var i = 0; i < this.files.length; i++) {
-			filesList.push(this.files[i].name.replace(/\.[^/.]+$/, ".jpg"));
-		}
-	}
-
-	/*
-	 * Display <a href> links to /media/ folder to download optimized pictures
-	 */
-	document.getElementById('button_optimiser').addEventListener("click", handleFiles, false);
-	function handleFiles() {
-		for (var i = 0; i < filesList.length; i++) {
-			var files_links = document.createElement('a');
-			files_links.href = files_url + filesList[i];
-			files_links.innerHTML = filesList[i];
-			files_links.download = filesList[i];
-
-			document.getElementById('files_processed').appendChild(files_links);
-			document.getElementById('files_processed').appendChild(document.createElement('br'));
-		}
-	}
+	var files_processed = document.getElementById('files_processed');
 
 	function init_msg(action){
 		//diplay loading and erase message
@@ -120,6 +95,21 @@
 					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
 					$('#button_'+action).prop('disabled', false);
 				}
+
+				/*
+	 			* Display <a href> links to /media/ folder to download optimized pictures
+	 			*/
+				for (var i = 0; i < filesList.length; i++) {
+			
+					var files_links = document.createElement('a');
+					files_links.href = files_url + filesList[i];
+					files_links.innerHTML = filesList[i];
+					files_links.download = filesList[i];
+
+					files_processed.appendChild(files_links);
+					files_processed.appendChild(document.createElement('br'));
+				}
+
 			},
 			error: function(msg) {
 				alert(msg);
@@ -134,7 +124,13 @@
 			done: function (e,data) {
 				$.each(data.result.files, function(index, file){
 					$('<p/>').text(file.name).appendTo($('#file_uploaded'));
+					filesList.push(file.name.replace(/\.[^/.]+$/, ".jpg"));
 				});
+
+				while (files_processed.firstChild) {
+					files_processed.removeChild(files_processed.firstChild);
+				}
+
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
