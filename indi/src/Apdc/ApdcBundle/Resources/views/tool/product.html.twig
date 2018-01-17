@@ -34,7 +34,9 @@
 			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
 			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
 			<span class="ajax-msg" style="font-weight:bold;"></span>
-		</div><hr>
+		</div>
+		<div id="files_processed"></div>
+		<hr>
 	</div>
 
 	<div class="col-sm-12 paragraph">
@@ -60,6 +62,36 @@
 <script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
 <script type="text/javascript">
+
+	var filesList = [];
+	var files_url = window.location.origin + '/media/import/';
+
+	/*
+	 * Get uploaded files & push them in filesList[]
+	 */
+	document.getElementById('fileupload').addEventListener("change", getFilesName, false);
+	function getFilesName() {
+		for (var i = 0; i < this.files.length; i++) {
+			filesList.push(this.files[i].name.replace(/\.[^/.]+$/, ".jpg"));
+		}
+	}
+
+	/*
+	 * Display <a href> links to /media/ folder to download optimized pictures
+	 */
+	document.getElementById('button_optimiser').addEventListener("click", handleFiles, false);
+	function handleFiles() {
+		for (var i = 0; i < filesList.length; i++) {
+			var files_links = document.createElement('a');
+			files_links.href = files_url + filesList[i];
+			files_links.innerHTML = filesList[i];
+			files_links.download = filesList[i];
+
+			document.getElementById('files_processed').appendChild(files_links);
+			document.getElementById('files_processed').appendChild(document.createElement('br'));
+		}
+	}
+
 	function init_msg(action){
 		//diplay loading and erase message
 		$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
