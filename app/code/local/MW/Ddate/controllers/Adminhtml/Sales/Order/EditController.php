@@ -41,8 +41,10 @@ class MW_Ddate_Adminhtml_Sales_Order_EditController extends Mage_Adminhtml_Sales
                         'increment_id' => $order->getIncrementId(),
                         'ddate_id' => $deliveryDateStore->getDdateId(),
                         'ddate_comment' => $deliveryDateStore->getDdateComment(),
-                        'order_status' => $order->getStatus()
+                        'order_status' => $order->getStatus(),
+                        'sales_order_id' => $order->getId(),
                     );
+
                     $deliveryDateStoreModel = Mage::getModel('ddate/ddate_store');
                     $deliveryDateStoreModel->saveDdateStore($dDateStoreOfNewOrder);
 

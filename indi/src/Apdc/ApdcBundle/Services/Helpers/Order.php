@@ -11,9 +11,7 @@ trait Order
         $orders = \Mage::getModel('sales/order')->getCollection();
         $orders->getSelect()->join(
             'mwddate_store',
-            // 'main_table.entity_id=mwddate_store.sales_order_id',
-            // Commandes avec tirets (ex 2017XXX-1 )
-            'main_table.increment_id=mwddate_store.increment_id',
+            'main_table.entity_id=mwddate_store.sales_order_id',
             array(
                 'mwddate_store.ddate_id',
             )

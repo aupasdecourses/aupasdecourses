@@ -16,7 +16,7 @@ class MW_Ddate_Model_Ddate_Store extends Mage_Core_Model_Abstract
     public function saveDdateStore($data)
     {
     	$resource = Mage::getSingleton('core/resource');
-    	$sql = "INSERT INTO {$resource->getTableName('ddate/ddate_store')} (increment_id, ddate_id, ddate_comment, order_status) VALUES('{$data['increment_id']}', '{$data['ddate_id']}', '{$data['ddate_comment']}', '{$data['order_status']}')";
+    	$sql = "INSERT INTO {$resource->getTableName('ddate/ddate_store')} (increment_id, ddate_id, ddate_comment, order_status, sales_order_id) VALUES('{$data['increment_id']}', '{$data['ddate_id']}', '{$data['ddate_comment']}', '{$data['order_status']}', '{$data['sales_order_id']}')";
 		$connection = Mage::getModel('core/resource')->getConnection('core_write');
  		$connection->query($sql);
     }
