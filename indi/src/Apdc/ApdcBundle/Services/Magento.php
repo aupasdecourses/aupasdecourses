@@ -438,9 +438,9 @@ class Magento
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
                 $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
                 $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
-                $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
+                $rsl[-1]['merchant']['refund_diff'] += intval($prod_data['refund_diff']);
                 $rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
-                $rsl[-1]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
+                $rsl[-1]['merchant']['refund_diff_commercant'] += intval($prod_data['refund_diff_commercant']);
             }
         }
 
