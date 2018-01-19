@@ -418,10 +418,11 @@ class Magento
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
-                $prod_data['refund_prix'] = $product->getData('refund_prix');
-                $prod_data['refund_diff'] = $product->getData('refund_diff');
-                $prod_data['refund_prix_commercant'] = $product->getData('refund_prix_commercant');
-                $prod_data['refund_diff_commercant'] = $product->getData('refund_diff_commercant');
+                $prod_data['refund_prix'] = floatval($product->getData('refund_prix'));
+                $prod_data['refund_diff'] = floatval($product->getData('refund_diff'));
+                $prod_data['refund_prix_commercant'] = floatval($product->getData('refund_prix_commercant'));
+                $prod_data['refund_diff_commercant'] = floatval($product->getData('refund_diff_commercant'));
+
                 if (!isset($rsl[$prod_data['commercant_id']]['merchant'])) {
                     $rsl[$prod_data['commercant_id']]['merchant'] = $merchants[$orderHeader['store_id']][$prod_data['commercant_id']];
                     $rsl[$prod_data['commercant_id']]['merchant']['total'] = 0.0;
@@ -436,13 +437,20 @@ class Magento
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff'] += $prod_data['refund_diff'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
                 $rsl[$prod_data['commercant_id']]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
-                $rsl[-1]['merchant']['total'] += $prod_data['prix_total'];
-                $rsl[-1]['merchant']['refund_total'] += $prod_data['refund_prix'];
-                $rsl[-1]['merchant']['refund_diff'] += $prod_data['refund_diff'];
-                $rsl[-1]['merchant']['refund_total_commercant'] += $prod_data['refund_prix_commercant'];
-                $rsl[-1]['merchant']['refund_diff_commercant'] += $prod_data['refund_diff_commercant'];
+
+                $rsl[-1]['merchant']['total'] += floatval($prod_data['prix_total']);
+                $rsl[-1]['merchant']['refund_total'] += floatval($prod_data['refund_prix']);
+                $rsl[-1]['merchant']['refund_diff'] += floatval($prod_data['refund_diff']);
+                $rsl[-1]['merchant']['refund_total_commercant'] += floatval($prod_data['refund_prix_commercant']);
+                $rsl[-1]['merchant']['refund_diff_commercant'] += floatval($prod_data['refund_diff_commercant']);
             }
         }
+
+        $rsl[-1]['merchant']['total'] = round($rsl[-1]['merchant']['total'], 2);
+        $rsl[-1]['merchant']['refund_total'] = round($rsl[-1]['merchant']['refund_total'], 2);
+        $rsl[-1]['merchant']['refund_diff'] = round($rsl[-1]['merchant']['refund_diff'], 2);
+        $rsl[-1]['merchant']['refund_total_commercant'] = round($rsl[-1]['merchant']['refund_total_commercant'], 2);
+        $rsl[-1]['merchant']['refund_diff_commercant'] = round($rsl[-1]['merchant']['refund_diff_commercant'], 2);
 
         return $rsl;
     }
