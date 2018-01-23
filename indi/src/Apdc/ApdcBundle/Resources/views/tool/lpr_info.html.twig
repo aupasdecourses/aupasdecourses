@@ -1,13 +1,27 @@
-<div class="alert alert-info" role="alert">
-	<h4>Standard La Petite Reine ( Parking Louvre)</h4>
-	<p><a href="tel:0142965944">01 42 96 59 44</a></p>
-	</br>
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
-	<h4>Agents de quai</h4>
-	<p><b>Bafode</b>: <a href="tel:0688914455">06 88 91 44 55</a></p>
-	<p><b>Lumbala</b>: <a href="tel:0672319057">06 72 31 90 57</a></p>
-	<br/>
+{% block body %}
 
-	<h4>Coordinateur</h4>
-	<p><b>Jérôme Martinelli</b>: <a href="tel:0142969893">01 42 96 98 93</a> / <a href="tel:0786751509">07 86 75 15 09</a></p>
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-3">
+		<div class="alert alert-info" role="alert">
+			<h4>Standard La Petite Reine ( Parking Louvre)</h4>
+			<p><a href="tel:0142965944">01 42 96 59 44</a></p>
+			</br>
+
+			<h4>Agents de quai</h4>
+			<p><b>Bafode</b>: <a href="tel:0688914455">06 88 91 44 55</a></p>
+			<p><b>Lumbala</b>: <a href="tel:0672319057">06 72 31 90 57</a></p>
+			<br/>
+
+			<h4>Coordinateur</h4>
+			<p><b>Jérôme Martinelli</b>: <a href="tel:0142969893">01 42 96 98 93</a> / <a href="tel:0786751509">07 86 75 15 09</a></p>
+		</div>
+	</div>
+	<div class="col-md-5"></div>
 </div>
+
+{% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}

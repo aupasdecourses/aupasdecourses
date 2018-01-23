@@ -39,4 +39,14 @@ class ToolController extends Controller
 
 		return $this->render('ApdcApdcBundle::tool/category.html.twig');
 	}
+
+	public function contactLPRAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+		$mage = $this->container->get('apdc_apdc.magento');
+
+		return $this->render('ApdcApdcBundle::tool/lpr_info.html.twig');
+	}
 }

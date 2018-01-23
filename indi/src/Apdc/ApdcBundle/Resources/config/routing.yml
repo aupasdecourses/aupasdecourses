@@ -146,6 +146,10 @@ toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
 
+contactLPR:
+  path: /contact/LPR/
+  defaults: { _controller: ApdcApdcBundle:Tool:contactLPR }
+
 statCustomer:
   path: /stat/customer/
   defaults: { _controller: ApdcApdcBundle:Stat:statCustomer}
