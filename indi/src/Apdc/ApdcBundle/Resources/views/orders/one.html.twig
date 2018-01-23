@@ -5,12 +5,9 @@
 
 <div class="container">
 	<h1> Commandes </h1><br/>
-	<div class="row">
-		<div class="col-md-8 flex-column">
-			<div>{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
-			<div>{% include 'ApdcApdcBundle::tool/produit_fragile.html.twig' %}</div>
-		</div>
-		<div class="col-md-4"></div>
+	<div class="space-between">
+		<div>{% include 'ApdcApdcBundle::forms/default.html.twig' %}</div>
+		<div>{% include 'ApdcApdcBundle::tool/produit_fragile.html.twig' %}</div>
 	</div>
 
 	{% for order_id, order in orders %}
