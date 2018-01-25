@@ -110,7 +110,7 @@ class Apdc_Referentiel_Model_Observer
         foreach ($products as $p){
             //Load last item modification if exists
             $tp=Mage::getModel("apdc_referentiel/backupmodif")->getCollection()->addFieldToFilter('product_id', $p->getId())->setOrder('updated_at', 'DSC')->getFirstItem()->getData();
-            
+
             //Transform entity_id in product_id and format array (otherwise troubles!)
             $data_p=$this->formatCurrentData($p->getData());
             if(sizeof($tp)>0){
@@ -119,6 +119,7 @@ class Apdc_Referentiel_Model_Observer
                 unset($diff['entity_id']);
                 unset($diff['updated_at']);
                 if(sizeof($diff)>0){
+
                     $this->saveEntry($data_p);
                 }
             }else{
@@ -127,4 +128,37 @@ class Apdc_Referentiel_Model_Observer
             }
         }
     }
+
+    // public function cronCheckCatalogChanges(){
+
+    //     $attributes=$this->getColumns();
+
+    //     //Get all products with specific columns
+    //     $products = Mage::getModel('catalog/product')->getCollection();
+    //     $products->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns(array('entity_id','sku'));
+    //     foreach ($attributes as $a){
+    //             $products->addAttributeToSelect($a);            
+    //     }
+
+    //     foreach ($products as $p){
+    //         //Load last item modification if exists
+    //         $tp=Mage::getModel("apdc_referentiel/backupmodif")->getCollection()->addFieldToFilter('product_id', $p->getId())->setOrder('updated_at', 'DSC')->getFirstItem()->getData();
+            
+    //         //Transform entity_id in product_id and format array (otherwise troubles!)
+    //         $data_p=$this->formatCurrentData($p->getData());
+    //         if(sizeof($tp)>0){
+    //             //If previous entry, comparison of data
+    //             $diff=array_diff($tp, $data_p);
+    //             unset($diff['entity_id']);
+    //             unset($diff['updated_at']);
+    //             if(sizeof($diff)>0){
+                    
+    //                 $this->saveEntry($data_p);
+    //             }
+    //         }else{
+    //             //If no entry, save current value
+    //             $this->saveEntry($data_p);
+    //         }
+    //     }
+    // }
 }
