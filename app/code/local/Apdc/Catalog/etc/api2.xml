@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+	<api2>
+		<resource_groups>
+			<catalog translate="title" module="api2">
+				<title>Catalogue</title>
+				<sort_order>40</sort_order>
+			</catalog>
+		</resource_groups>
+		<resources>
+			<catalog translate="title" module="api2">
+				<group>catalogue</group>
+				<model>apdc_catalog/api2_product</model>
+				<!-- <working_model>?</working_model> -->
+				<title>Catalogue</title>
+				<sort_order>10</sort_order>
+				<privileges>
+					<guest>
+						<create>1</create>
+						<retrieve>1</retrieve>
+						<update>1</update>
+						<delete>1</delete>
+					</guest>
+				</privileges>
+				<attributes>
+					<!--  -->
+				</attributes>
+				<routes>
+					<route_collection>
+						<route>/produits</route>
+						<action_type>collection</action_type>
+					</route_collection>
+				</routes>
+			</catalog>
+		</resources>
+	</api2>
+</config>
