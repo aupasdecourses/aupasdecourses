@@ -8,7 +8,7 @@ $installer->getConnection()->addColumn(
     $tableName,
     'type_shop',
     [
-        'type' => Varien_Db_Ddl_Table::TYPE_INT,
+        'type' => Varien_Db_Ddl_Table::TYPE_INTEGER,
         'after' => 'enabled',
         'comment' => 'Type de Commerce',
     ]
