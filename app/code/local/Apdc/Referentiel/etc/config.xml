@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Apdc_Referentiel>
-			<version>0.1.5</version>
+			<version>0.1.6</version>
 		</Apdc_Referentiel>
 	</modules>
 	<global>
@@ -20,6 +20,9 @@
 	          <referentiel>
 	            <table>apdc_referentiel</table>
 	          </referentiel>
+	          <produit_base>
+	            <table>apdc_produit_base</table>
+	          </produit_base>
 	        </entities>
 	      </apdc_referentiel_resource>
 	    </models>
