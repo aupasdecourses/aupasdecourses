@@ -5,6 +5,7 @@
             <version>0.7.1</version>
         </Apdc_Commercant>
     </modules>
+
     <global>
         <blocks>
             <apdc_commercant>
@@ -33,6 +34,9 @@
                     <shop_categories>
                         <table>apdc_shop_categories</table>
                     </shop_categories>
+                    <typeshop>
+                        <table>apdc_typeshop</table>
+                    </typeshop>
                     <contact>
                         <table>apdc_commercant_contact</table>
                     </contact>
@@ -60,6 +64,17 @@
             </apdc_commercant_setup>
         </resources>
     </global>
+    <frontend>
+        <routers>
+            <apdc_commercant>
+                <use>standard</use>
+                <args>
+                  <module>Apdc_Commercant</module>
+                  <frontName>shop</frontName>
+                </args>
+            </apdc_commercant>
+        </routers>
+    </frontend>
     <admin>
         <routers>
             <adminhtml>

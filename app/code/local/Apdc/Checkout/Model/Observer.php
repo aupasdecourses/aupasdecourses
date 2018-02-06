@@ -7,7 +7,7 @@ class Apdc_Checkout_Model_Observer extends Mage_Core_Model_Abstract
         $controllerAction = $observer->getEvent()->getControllerAction();
         $response = $controllerAction->getResponse();
         $paymentResponse = Mage::helper('core')->jsonDecode($response->getBody());
-        if (!isset($paymentResponse['error']) || !$paymentResponse['error']) {
+        if ($paymentResponse!=array() && (!isset($paymentResponse['error']) || !$paymentResponse['error'])) {
             $controllerAction->getRequest()->setParam('form_key', Mage::getSingleton('core/session')->getFormKey());
             $controllerAction->getRequest()->setPost('agreement', array_flip(Mage::helper('checkout')->getRequiredAgreementIds()));
             $controllerAction->saveOrderAction();
@@ -23,16 +23,7 @@ class Apdc_Checkout_Model_Observer extends Mage_Core_Model_Abstract
 
     public function cleanDdateSessionData()
     {
-        $session = Mage::getSingleton('core/session');
-        $session->unsDdate();
-        $session->unsDtime();
-        $session->unsDdatei();
-        $session->unsHeaderDdate();
-        if (isset($_SESSION['ddate'])) {
-            unset($_SESSION['ddate']);
-        }
-        if (isset($_SESSION['dtime'])) {
-            unset($_SESSION['dtime']);
-        }
+        Mage::helper('apdc_checkout')->cleanDdate();
+        Mage::log("cleanDdateSessionData",null,"ddate.log");
     }
 }

@@ -36,7 +36,7 @@ class Apdc_Catalog_Model_Source_Product_Availability
                 2 => $this->_helper()->__('Le service n\'est pas disponible ce jour'),
                 3 => $this->_helper()->__('Le commerçant ne peut assurer la livraison ce jour'),
                 4 => $this->_helper()->__('Le commerçant est en congé'),
-                5 => $this->_helper()->__('Le produit n\'est pas dispobible ce jour')
+                5 => $this->_helper()->__('Le produit n\'est pas disponible ce jour')
             ];
         }
         return $this->options;

@@ -470,12 +470,11 @@ class MW_Ddate_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function haveAnySlotAvailable(){
+        Mage::log("=> haveAnySlotAvailable launch!",null,"ddate.log");
         $currentTime = Mage::getSingleton('core/date')->timestamp();
-
+        Mage::log(" -> currentTime ".date("d/m/Y",$currentTime),null,"ddate.log");
         $weeks = Mage::getStoreConfig("ddate/info/weeks") != '' ? Mage::getStoreConfig("ddate/info/weeks") : 4;
-
         $slots = Mage::getResourceModel('ddate/ddate')->getDtime();
-
         $block = new MW_Ddate_Block_Onepage_Ddate();
 
         $haveSlotAvailable = false;
@@ -483,7 +482,10 @@ class MW_Ddate_Helper_Data extends Mage_Core_Helper_Abstract
             foreach ($slots as $slot) {
                 for ($i = 7 * $w; $i < 7 * $w + 7; $i++) {
                     $strDate = date('Y-m-d', strtotime('+' . $i . ' day', $currentTime));
+                    Mage::log(" -> slot ".$slot->getId(),null,"ddate.log");
+                    Mage::log(" -> strDate ".$strDate,null,"ddate.log");
                     $haveSlotAvailable = $block->isEnabled($slot->getId(), $strDate);
+                    Mage::log(" -> haveSlotAvailable ".$haveSlotAvailable,null,"ddate.log");
                     if($haveSlotAvailable){
                         break;
                     }

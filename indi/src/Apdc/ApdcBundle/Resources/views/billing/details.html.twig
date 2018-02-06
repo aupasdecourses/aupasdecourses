@@ -3,11 +3,11 @@
 
 {% block body %}
 <div class="container-fluid">
-	<h1> Facturation INDI </h1>
+	<h1> Liste des commandes facturées par commercants </h1>
 	
 		<div class="row">
 			<div class="page-header col-md-6">
-				<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au {{ date_fin }}</h2>
+				<h2>Facturation du <input type="text" class="form-control" id="datepickerBill" placeholder="Selection Date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndBill" placeholder="Selection Date" value="{{ date_fin }}"><small> (date de livraison commande)</small></h2>
 			</div>
 			<div class="col-md-6">{{ form(formCSV) }}</div>
 		</div>
@@ -56,8 +56,8 @@
 		<tbody>
 			{% for order in bill %}
 				<tr>
-					<td>{{ order.creation_date }}</td>
-					<td>{{ order.delivery_date }}</td>
+					<td>{{ order.creation_date|date('d/m/Y') }}</td>
+					<td>{{ order.delivery_date|date('d/m/Y') }}</td>
 					<td>{{ order.increment_id }}</td>
 					<td>{{ order.id_billing }}</td>
 					<td>{{ order.customer_name }}</td>
@@ -125,10 +125,27 @@
 				dateFormat: 'dd/mm/yy',
 			});
 		});
+
+		$(function() {
+			$( "#datepickerEndBill" ).datepicker({
+				altField: "#datepickerEndBill",
+				closeText: 'Fermer',
+				prevText: 'Précédent',
+				nextText: 'Suivant',
+				currentText: 'Aujourd\'hui',
+				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+				weekHeader: 'Sem.',
+				dateFormat: 'dd/mm/yy',
+			});
+		});
 		
 		$(function(){
-			$("#datepickerBill").change(function(){
-				window.location='{{ path('billingDetails') }}?date_debut='+this.value;
+			$("#datepickerEndBill").change(function(){
+				window.location='{{ path('billingDetails') }}?date_debut='+$("#datepickerBill").val()+'&date_fin='+this.value;
 			});
 		});
 

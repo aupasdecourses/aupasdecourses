@@ -116,7 +116,17 @@ class Apdc_Dataflow_Model_Convert_Parser_Product extends Mage_Catalog_Model_Conv
                 if ($field == 'tax_class_id'||$field == 'produit_fragile'||$field == 'risque_rupture') {
                     $row[$field] = $value;
                 } else if ($field == 'status'){
-                    $row[$field]=((int) $value)?"Activé":'0';
+                    switch($value){
+                        case "1":
+                            $row[$field]=1;
+                            break;
+                        case "0":
+                            $row[$field]=2;
+                            break;
+                        case "2":
+                            $row[$field]=2;
+                            break;
+                    }
                     continue;
                 }else if ($attribute->usesSource()) {
                     $option = $attribute->getSource()->getOptionText($value);

@@ -11,7 +11,7 @@
     <button id="disambiguation-neighborhood" data-disambiguation-view="<?php echo $this->getUrl('customhome/index/ajaxPopupView');?>" data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="button button-green" type="submit" style="display:none;margin:0;">OK</button>
     <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden"/>
     <p class="separator" style="margin: 10px 0;">ou</p>
-    <select name="website-list" style='width:60%;font-size: 1.1rem;color: rgba(0, 0, 0, .62);text-align-last: center;'>
+    <select name="website-list">
         <option selected="true" disabled="disabled">Sélectionnez votre quartier</option>
       <?php foreach($websites as $order => $data):?>
         <option value="<?=$data['website_id']?>"><?=$data['name']?></option>

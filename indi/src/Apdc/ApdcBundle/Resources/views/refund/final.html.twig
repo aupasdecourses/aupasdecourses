@@ -12,6 +12,9 @@
 
 	{% set customer_name = order[-1]["order"]["first_name"] ~ " " ~ order[-1]["order"]["last_name"] %}
 
+	{% set frais_livr = order[-1]["order"]["refund_shipping_amount"] %}
+	{% set total_refund = frais_livr + refund_diff %}
+
 	<div class="row">
 		{% if psp_reference != 0 %}
 			{% include 'ApdcApdcBundle::refund/adyen.html.twig' %}
@@ -21,4 +24,25 @@
 	</div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block javascript_refund %}
+	<script type="text/javascript">
+
+		var picks = document.getElementsByClassName("pick");
+		var ships = document.getElementsByClassName("ship");
+
+		[].forEach.call(picks, function(picking) {
+			picking.onclick = function() {
+				alert(picking.parentElement.children["real-hour-pick"].innerHTML + "\n\n" + picking.parentElement.children["slot-hour-pick"].innerHTML);
+			}
+		});
+
+		[].forEach.call(ships, function(shipping) {
+			shipping.onclick = function() {
+				alert(shipping.parentElement.children["real-hour-ship"].innerHTML + "\n\n" + shipping.parentElement.children["slot-hour-ship"].innerHTML);
+			}
+		});
+
+	</script>
 {% endblock %}

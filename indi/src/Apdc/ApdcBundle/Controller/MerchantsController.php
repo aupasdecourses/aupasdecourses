@@ -69,33 +69,22 @@ class MerchantsController extends Controller
 
 		$merchants = $mage->getMerchantsOrders($id, $from, $to);
 
-
 		/* Generation PDF commercant */
 		$defaultDataPDF = array('message' => 'Send');
 		$formPDF = $this->createFormBuilder($defaultDataPDF)
-				->add("Send", SubmitType::class,array('label'=>'Envoyer PDF','attr'=>array('class'=>'btn btn-lg btn-info')))
+				->add("Send", SubmitType::class, array(
+					'label' => 'Envoyer PDF',
+					'attr' => array(
+						'class' => 'btn btn-lg btn-success',
+						'onclick' => 'return confirm("Confirmer l\'envoi de PDF ?")',
+					)
+				))
 				->getForm();
 		$formPDF->handleRequest($request);
-		$datePDF = date('Y-m-d');
 
 		if ($formPDF->isSubmitted() && $formPDF->isValid()) {
-			foreach ($merchants as $store_name => $mercs) {
-				foreach ($mercs as $merchant_id => $merchant) {
-
-					$pdforder->setOrderTemplate();
-
-					$pdforder->setDate($datePDF);
-					$pdforder->setName($merchant['name']);
-				//	$pdforder->setMails($merchant['mailc']); ///// ATTENTION /////
-
-					foreach ($merchant['orders'] as $order_id => $order) {
-						$pdforder->addOrder($order);
-					}
-			//		$pdforder->save($merchant['name'].'_'.$datePDF); // A sauvegarder autre part que dans indi/web 
-				}
-			}
-
-		//	$pdforder->send();
+			
+			$pdforder->sendPdfByMerchant($merchants);
 
 			$session->getFlashBag()->add('success', 'PDF bien envoyé');
 			return $this->redirectToRoute('merchantsOne', [
@@ -112,7 +101,7 @@ class MerchantsController extends Controller
 				$form_fromtoMerchant->createView(),
 			],
 			'merchants' => $merchants,
-			//'formPDF' 	=> $formPDF->createView(),
+			'formPDF' 	=> $formPDF->createView(),
 		]);
     }
 

@@ -44,6 +44,73 @@ class Apdc_Dispatch_Model_Mail extends Mage_Core_Model_Abstract
         return $mails;
     }
 
+    /** 
+     *  Envoi un PDF par commercant
+     *  Utilisé dans Indi (Pdforder Service & MerchantsOneAction ) 
+     *
+     *  @param $merchant le commercant
+     */
+    public function sendPdfByMerchant($merchant)
+    {   
+        foreach ($merchant as $merchant_stores => $merch) {
+            foreach ($merch as $merchant_id => $m) {
+                $pdf = Mage::getModel('apdcdispatch/mail_pdf', [$m['name'], $this->_c_date]);
+
+                Mage::log(Mage::getStoreConfig('apdcdispatch/general/mode'), null, 'export.log');
+                if (Mage::getStoreConfig('apdcdispatch/general/mode')) {
+                    $mails = [ 
+                        $merch['mail3'],
+                        $merch['mailc'],
+                        $merc['mailp']
+                    ];
+                }else {
+                    $mails = ['pierre@aupasdecourses.com'];
+                }
+
+                /* Ajout de champs a la volée car merchantsOneAction & le PDF n'ont pas exactement la meme syntaxe */
+                foreach ($m['orders'] as $order_id => &$order) {
+                    $m['orders'][$order_id]['increment_id'] = $order_id;
+
+                    foreach ($order['products'] as $o => &$p) {
+                        $order['products'][$o]['name'] = $order['products'][$o]['nom'];
+                        $order['products'][$o]['qty_ordered'] = $order['products'][$o]['quantite'];
+                        $order['products'][$o]['short_description'] = $order['products'][$o]['description'];
+                        $order['products'][$o]['price_incl_tax'] = $order['products'][$o]['prix_unitaire'];
+                        $order['products'][$o]['row_total_incl_tax'] = $order['products'][$o]['prix_total'];
+                        $order['products'][$o]['prix_kilo_site'] = $order['products'][$o]['prix_kilo'];
+                        $order['products'][$o]['item_comment'] = $order['products'][$o]['comment'];
+                    }
+
+                    $pdf->addOrder($order);
+                }
+
+                if ($pdf->getOrdersCount() != 0) {
+                    $attach = $pdf->render();
+
+                    $mail = new Mandrill_Message(Mage::getStoreConfig('mandrill/general/apikey'));
+
+                    $mail->addTo($mails);
+                    $mail->addBcc(Mage::getStoreConfig('trans_email/ident_general/email'));
+                    $mail->setFrom(Mage::getStoreConfig('trans_email/ident_general/email'), "L'équipe d'Au Pas De Courses");
+                    $mail->setSubject("Au Pas De Courses {$pdf->getOrdersCount()} commandes le {$this->_c_date}");
+                    $mail->setBodyHtml(
+                        Mage::getModel('core/email_template')->loadByCode('APDC::Mail envoi commande commerçants')
+                        ->getProcessedTemplate(['commercant' => $m['name'], 'nbecommande' => $pdf->getOrdersCount()])
+                    );
+
+                    $mail->createAttachment($attach, 'application/pdf', Zend_Mime::DISPOSITION_ATTACHMENT, Zend_Mime::ENCODING_BASE64, "{$m['name']} - {$this->_c_date}.pdf");    
+
+    
+                    try {
+                        $mail->send($this->_transport);
+                    } catch (Exception $e) {
+                        Mage::log($e->getMessage(), null, 'send_daily_order.log');
+                    }
+                }
+            }
+        }
+    }  
+
     public function processRequestMail($params,$getByStore=true)
     {
         if($getByStore){

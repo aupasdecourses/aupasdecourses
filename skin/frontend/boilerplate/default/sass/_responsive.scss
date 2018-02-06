@@ -46,6 +46,11 @@
             float:right;
         }
     }
+    section#carroussel-commercants{
+        #carrousel-commercant-home .owl-buttons{
+            display:none;
+        }
+    }
 }
 
 @media screen and (max-width: 1324px){
@@ -481,6 +486,9 @@
         }
         .intro-section{
             margin-top: 120px;
+            h1.subtitle{
+                display:none;
+            }
         }
         #background_video_container{
             background: url(../images/header/7.jpg) no-repeat;
@@ -904,11 +912,6 @@
         }
       }
     }
-    .intro-section{
-        #logo{
-            width: 100%;
-        }
-    }
     #html-body{
         header{
             margin-bottom: 70px;
@@ -928,12 +931,20 @@
                     top: 34%;
                 }
             }
+            #search_neighborhoods {
+              input,select {
+                    width: 100%;
+              }
+            }
+        }
+
+        &#carroussel-commercants .section-header, &#districts .section-header,&#cards .section-header{
+            padding-top:35px;
         }
     }
     .page-title h1{
         font-size: 1.5rem;
     }
-    h2,
     .commercants-block .title-block,
     .block-promos .inner-box h2,
     .block-reduction-apdc h2,

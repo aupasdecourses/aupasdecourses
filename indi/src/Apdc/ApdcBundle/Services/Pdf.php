@@ -187,7 +187,7 @@ trait Pdf
             'email' => \Mage::getStoreConfig('trans_email/ident_general/email')
         ];
 
-        $nameTo = 'truc';
+        $nameTo = 'Partenaires Au Pas De Courses';
         $emailTo = $data['mails'];
         $vars = $data['mail_vars'];
 

@@ -1,6 +1,3 @@
-#model{
-    padding:60px 0;
-}
 section {
     & > .container {
         background-color: #fff;
@@ -29,9 +26,6 @@ section {
                     margin-top: 50px;
                 }
             }
-        }
-        .section-header{
-            padding-top: 30px;
         }
         .section-description {
             margin-bottom: 20px;
@@ -107,15 +101,22 @@ section {
             width:auto;
             display:inline-block;
           }
-
+          input,select{
+            border-color:#3ab64b;
+            width:60%;
+          }
           input {
                 font-size: 1.25rem;
-                width: 60%;
                 padding: 10px 10px;
                 text-align: center;
             &::-webkit-input-placeholder{
                 font-size: 1.125rem;
             }
+          }
+          select{
+            font-size: 1.1rem;
+            color: rgba(0, 0, 0, .62);
+            text-align-last: center;
           }
         }
         #error_neighborhood, #no_neighborhood {

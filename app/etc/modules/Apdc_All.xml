@@ -173,6 +173,10 @@
           <active>true</active>
           <codePool>local</codePool>
         </Apdc_Shipping>
+        <Apdc_Referentiel>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Referentiel>
         <Apdc_Avisverifies>
           <active>true</active>
           <codePool>local</codePool>

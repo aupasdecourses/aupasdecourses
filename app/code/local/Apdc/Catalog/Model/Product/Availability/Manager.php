@@ -133,6 +133,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $availabilities = $this->getAvailabilities();
         $datas = [];
         $errors = [];
+        $custom_errors = [];
         $productDatas = $this->getProductDatas();
         foreach ($this->getAllDays() as $time) {
             $day = date('w', $time);
@@ -149,6 +150,9 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                                 $key = $childData['website_id'] . '_' . $childData['commercant_id'];
                                 $available = $availabilities[$day][$key];
                                 if ($available['status'] > 1) {
+                                    if (!isset($custom_errors[$product['entity_id']])) {
+                                        $custom_errors[$product['entity_id']] = "Produit enfant indisponible: ".$childId;
+                                    }
                                     break;
                                 }
                             }
@@ -161,6 +165,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                     if (!isset($availabilities[$day][$key])) {
                         if (!isset($errors[$productId . $key])) {
                             $errors[$productId . $key] = $product['entity_id'] . ' / website : ' . $product['website_id'] . ' / commercant ; ' . $product['commercant_id'];
+                            $custom_errors[$product['entity_id']]= "Erreur au niveau du commerçant (a priori).";
                         }
                         continue;
                     } else if ($availabilities[$day][$key]['status'] == -1) {
@@ -178,6 +183,20 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                             $available['status'] = 5;
                         }
                     }
+
+                    //disable all products with price at 0 (autres check peuvent être implémenté ici)
+                    if($product['price']==0){
+                        $available['status'] = 5;
+                        if (!isset($custom_errors[$product['entity_id']])) {
+                            $custom_errors[$product['entity_id']] = "Prix nul";
+                        }
+                    }
+                    if($product['marge_arriere']==""){
+                        if (!isset($custom_errors[$product['entity_id']])) {
+                            $custom_errors[$product['entity_id']] = "Marge arrière non renseignée!";
+                        }
+                    }
+
                 }
                 $datas[] = [
                     'product_id' => $product['entity_id'],
@@ -206,6 +225,14 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 Mage::getSingleton('adminhtml/session')->addWarning($warning);
             }
         }
+        if (!empty($custom_errors)) {
+            foreach ($custom_errors as $id => $error) {
+                $error = 'Le produit '.$id.' a généré l\'erreur suivante: '. $error;
+                Mage::getSingleton('adminhtml/session')->addError($error);
+            }
+            Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($custom_errors);
+        }
+
     }
 
     /**
@@ -244,6 +271,20 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $productCollection->joinAttribute(
             'availability_days',
             'catalog_product/availability_days',
+            'entity_id',
+            null,
+            'left'
+        );
+        $productCollection->joinAttribute(
+            'price',
+            'catalog_product/price',
+            'entity_id',
+            null,
+            'left'
+        );
+        $productCollection->joinAttribute(
+            'marge_arriere',
+            'catalog_product/marge_arriere',
             'entity_id',
             null,
             'left'

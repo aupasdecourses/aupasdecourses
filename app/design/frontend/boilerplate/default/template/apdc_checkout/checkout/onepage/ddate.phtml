@@ -4,7 +4,7 @@
 	<div id="co-ddate-form">
 		<h3><?php echo $this->__('Choisissez votre créneau de livraison');?></h3>
         <?php if (!$ddate) : ?>
-            <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Vous n\'avez pas encore sélectionné votre créneau de liraison.'); ?></span></li></ul></li></ul>
+            <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Vous n\'avez pas encore sélectionné votre créneau de livraison.'); ?></span></li></ul></li></ul>
         <?php elseif ($ddate < $currentDate) : ?>
             <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Le créneau que vous aviez sélectionné n\'est plus disponible. Merci de choisir un nouveau créneau.'); ?></span></li></ul></li></ul>
         <?php endif; ?>

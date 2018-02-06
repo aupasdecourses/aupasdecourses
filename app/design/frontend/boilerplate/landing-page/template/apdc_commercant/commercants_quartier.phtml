@@ -1,5 +1,5 @@
 <?php
-	$shops = $this->getListShops("all",true);
+	$shops = $this->getListShops("all",true,6);
 	$nbShops = $shops['count'];
 ?>
 <div id="commercants-block" class="row hp-section commercants-block">
@@ -10,7 +10,7 @@
 					<?php
 						foreach ($shops['row1'] as $shop) {
 							?>
-								<div class="commercant-info-img item">
+								<div class="commercant-img-info item" title="<?= $shop['name'];?>" onclick="location.href = '<?= $shop['url'];?>';">
 									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
 										<div>
 											<h3 class="product-name"><?= $shop['name'];?></h3>
@@ -18,9 +18,16 @@
 										</div>
 									</div>
 									<div class="commercant-img">
-										<a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
-											<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
-										</a>
+										<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
+										<?php if($shop['new']):?>
+											<ul class="commercant-labels">
+												<li>
+													<div class="label-new">
+														<img src="<?= $this->getSkinUrl('images/labels/new.png');?>" width="100%" alt="Nouveau commerçant!" title="Nouveau commerçant!" />
+													</div>
+												</li>
+											</ul>
+										<?php endif;?>
 									</div>
 								</div>
 							<?php
@@ -31,11 +38,18 @@
 					<?php
 						foreach ($shops['row2'] as $shop) {
 							?>	
-								<div class="commercant-img-info item">
+								<div class="commercant-img-info item" title="<?= $shop['name'];?>" onclick="location.href = '<?= $shop['url'];?>';">
 									<div class="commercant-img">
-										<a class="product-image" href="<?= $shop['url'];?>" title="<?= $shop['name'];?>">
-											<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
-										</a>
+										<img src="<?= $shop['src'];?>" width="100%" alt="<?= $shop['name'];?>" title="<?= $shop['name'];?>" />
+										<?php if($shop['new']):?>
+											<ul class="commercant-labels">
+												<li>
+													<div class="label-new">
+														<img src="<?= $this->getSkinUrl('images/labels/new.png');?>" width="100%" alt="Nouveau commerçant!" title="Nouveau commerçant!" />
+													</div>
+												</li>
+											</ul>
+										<?php endif;?>
 									</div>
 									<div class="commercant-info" style="background-color:<?php echo $shop['color']; ?>;">
 										<div>

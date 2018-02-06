@@ -275,15 +275,23 @@ Minicart.prototype = {
     },
 
     hideMessage: function() {
-        $j(this.selectors.error).fadeOut('slow');
-        $j(this.selectors.success).fadeOut('slow');
+        $j(this.selectors.error).fadeOut('slow', function(){
+            $j(this).removeClass('show');
+        });
+        $j(this.selectors.success).fadeOut('slow', function(){
+            $j(this).removeClass('show');
+        });
     },
 
     showError: function(message) {
-        $j(this.selectors.error).text(message).fadeIn('slow');
+        $j(this.selectors.error).text(message).addClass('show', function(){
+            $j(this).fadeIn('slow');
+        });
     },
 
     showSuccess: function(message) {
-        $j(this.selectors.success).text(message).fadeIn('slow');
+        $j(this.selectors.success).text(message).addClass('show', function(){
+            $j(this).fadeIn('slow');
+        });
     }
 };

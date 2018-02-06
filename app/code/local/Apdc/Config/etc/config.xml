@@ -39,5 +39,10 @@
                 </rewrite>
             </core>  
         </models>
+        <helpers>
+            <apdcconfig>
+                    <class>Apdc_Config_Helper</class>
+            </apdcconfig>
+        </helpers>
     </global>
 </config>

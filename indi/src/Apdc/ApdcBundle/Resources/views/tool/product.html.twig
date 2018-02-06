@@ -34,7 +34,9 @@
 			<span class="ajax-success" style="display:none; color:green;"><i class="fa fa-check account-connected"></i></span>
 			<span class="ajax-error" style="display:none; color:red;"><i class="fa fa-exclamation-circle"></i></span>
 			<span class="ajax-msg" style="font-weight:bold;"></span>
-		</div><hr>
+		</div>
+		<div id="files_processed"></div>
+		<hr>
 	</div>
 
 	<div class="col-sm-12 paragraph">
@@ -60,6 +62,11 @@
 <script type="text/javascript" src="{{ path('root') }}js/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="{{ path('root') }}js/jquery.fileupload.js"></script>
 <script type="text/javascript">
+
+	var filesList = [];
+	var files_url = window.location.origin + '/media/import/';
+	var files_processed = document.getElementById('files_processed');
+
 	function init_msg(action){
 		//diplay loading and erase message
 		$('#ajax-wait-'+action).find('img.ajax-modal').css({'display':'inline'});
@@ -88,6 +95,21 @@
 					$('#ajax-wait-'+action).find('span.ajax-msg').css({'display':'inline','color':'red'}).html(msg);
 					$('#button_'+action).prop('disabled', false);
 				}
+
+				/*
+	 			* Display <a href> links to /media/ folder to download optimized pictures
+	 			*/
+				for (var i = 0; i < filesList.length; i++) {
+			
+					var files_links = document.createElement('a');
+					files_links.href = files_url + filesList[i];
+					files_links.innerHTML = filesList[i];
+					files_links.download = filesList[i];
+
+					files_processed.appendChild(files_links);
+					files_processed.appendChild(document.createElement('br'));
+				}
+
 			},
 			error: function(msg) {
 				alert(msg);
@@ -102,7 +124,13 @@
 			done: function (e,data) {
 				$.each(data.result.files, function(index, file){
 					$('<p/>').text(file.name).appendTo($('#file_uploaded'));
+					filesList.push(file.name.replace(/\.[^/.]+$/, ".jpg"));
 				});
+
+				while (files_processed.firstChild) {
+					files_processed.removeChild(files_processed.firstChild);
+				}
+
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);

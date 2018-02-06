@@ -72,6 +72,11 @@
         left: 0;
         margin-top: -6px;
     }
+    &.show{
+    font-size:0.7rem;
+        padding:5px 0;
+        margin-bottom:3px;
+    }
     &#minicart-error-message{
         color: $color-black;
         border-left: 5px solid $c-danger;

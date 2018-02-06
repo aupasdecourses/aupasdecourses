@@ -83,11 +83,18 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function cleanDdate()
     {
-        Mage::getSingleton('core/session')->unsDdate();
-        Mage::getSingleton('core/session')->unsDtime();
-        Mage::getSingleton('core/session')->unsDtimeId();
-        Mage::getSingleton('core/session')->unsDdatei();
-        Mage::getSingleton('core/session')->unsHeaderDdate();
+        $session = Mage::getSingleton('core/session');
+        $session->unsDdate();
+        $session->unsDtime();
+        $session->unsDtimeId();
+        $session->unsDdatei();
+        $session->unsHeaderDdate();
+        if (isset($_SESSION['ddate'])) {
+            unset($_SESSION['ddate']);
+        }
+        if (isset($_SESSION['dtime'])) {
+            unset($_SESSION['dtime']);
+        }
     }
 
     /**
@@ -197,6 +204,7 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $commercants = Mage::helper('apdc_commercant')->getShops("store");
         $datas = [];
+        $check = false;
         foreach ($commercants as $name => $id) {
             $shopInfo = Mage::helper('apdc_commercant')->getInfoShopByCommercantId($id);
             $datas[$name] = [
@@ -214,11 +222,21 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
             $datas[$name]['unavailability'] = $unavailability;
             if (isset($shopInfo['is_closed']) && !empty($shopInfo['is_closed'])) {
                 $datas[$name]['is_closed'] = $shopInfo['is_closed'];
+                if($shopInfo['is_closed']<>null){
+                    $check = true;
+                }
             }
             if (isset($shopInfo['next_closed_this_week']) && !empty($shopInfo['next_closed_this_week'])) {
                 $datas[$name]['next_closed_this_week'] = $shopInfo['next_closed_this_week'];
+                if($shopInfo['next_closed_this_week']<>null){
+                    $check = true;
+                }
             }
+            if($unavailability<>array()){
+                $check = true;
+            }
+
         }
-        return $datas;
+        return array("check"=>$check,'data'=>$datas);
     }
 }

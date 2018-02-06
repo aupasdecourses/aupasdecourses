@@ -1,0 +1,43 @@
+<div class="alert alert-info" style="padding-top:3px; padding-bottom:2px; margin-left:10px; margin-top: 30px; margin-bottom:0;">
+	{% for m in mistral_hours %}
+		{% if m.order_id == id %}
+		<div class="row">
+			{% if m.real_hour_picking != 0 %}
+
+				<span class="display_none" id="real-hour-pick">{{ " Enlevé à " ~ m.real_hour_picking|date('H:i') }}</span>
+				<span class="display_none" id="slot-hour-pick">{{ " Creneau d'enlevement : " ~ m.slot_start_picking|date('H:i') ~ " - " ~ m.slot_end_picking|date('H:i') }}</span>
+
+				{% if m.real_hour_picking|date('H:i') < m.slot_start_picking|date('H:i') %}
+					<div class="square early-delivery pick inline_block"></div>
+				{% else %}
+					{% if m.real_hour_picking|date('H:i') > m.slot_end_picking|date('H:i') %}
+						<div class="square late-delivery pick inline_block"></div>
+					{% else %}
+						<div class="square pick on-time-delivery"></div>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<div class="square no-info-delivery inline_block"></div>
+			{% endif %}
+			
+			{% if m.real_hour_shipping != 0 %}
+
+				<span class="display_none" id="real-hour-ship">{{ " Livré à " ~ m.real_hour_shipping|date('H:i') }}</span>
+				<span class="display_none" id="slot-hour-ship">{{ " Creneau de livraison : " ~ m.slot_start_shipping|date('H:i') ~ " - " ~ m.slot_end_shipping|date('H:i') }}</span>
+
+				{% if m.real_hour_shipping|date('H:i') < m.slot_start_shipping|date('H:i') %}
+					<div class="square early-delivery ship inline_block"></div>
+				{% else %}
+					{% if m.real_hour_shipping|date('H:i') > m.slot_end_shipping|date('H:i') %}
+						<div class="square late-delivery ship inline_block"></div>
+					{% else %}
+						<div class="square on-time-delivery ship inline_block"></div>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<div class="square no-info-delivery inline_block"></div>
+			{% endif %}
+		</div>
+		{% endif %}
+	{% endfor %}
+</div>

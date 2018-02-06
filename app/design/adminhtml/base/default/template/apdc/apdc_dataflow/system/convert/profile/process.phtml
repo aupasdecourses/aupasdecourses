@@ -72,7 +72,11 @@
             <?php echo $this->__("Finished profile execution.");?>
             </li>
             <li>
-                <a href="https://docs.google.com/spreadsheets/d/1Fwbc87dXCyvvkk7wWLknoCqIGl8MpNF8FVlJElelO80/">Ouvrir le template de modification en masse pour cet export</a>
+                <?php 
+                    $key=Mage::getStoreConfig('magmi/magmiconfig/met_key');
+                    $url="https://docs.google.com/spreadsheets/d/".$key;
+                ?>
+                <a href="<?= $url?>">Ouvrir le template de modification en masse pour cet export</a>
             </li>
             </ul>
             <?php if ($batchId = $this->getBatchModel()->getId()):?>

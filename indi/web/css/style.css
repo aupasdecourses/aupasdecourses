@@ -266,12 +266,14 @@ div#pageNumero {
  */
 
 input#datepickerBill,
+input#datepickerEndBill,
 input#datepickerLoyalty,
 input#datepickerEndLoyalty,
 input#datepickerVoucher,
 input#datepickerEndVoucher,
 input#datepickerNote,
-input#datepickerAccountingCustomers
+input#datepickerAccountingCustomers,
+input#datepickerEndAccountingCustomers
 {
     display: inline;
 
@@ -305,6 +307,35 @@ input#datepickerAccountingCustomers
 	border: 1px solid black;
 }
 
+/* Code couleur picking / shipping Mistral */
+.square {
+	width: 20px;
+	height: 20px;
+	margin: 3px;
+	border: 1px solid black;
+}
+
+.early-delivery {
+	background: rgb(255, 153, 0);
+}
+
+.on-time-delivery {
+	background: rgb(51, 204, 51);
+}
+
+.late-delivery {
+	background: rgb(255, 0, 0);
+}
+
+.no-info-delivery {
+	background: rgb(0, 0, 0);
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between;
+}
+
 .flex-start {
 	display:flex;
 	align-content: flex-start;
@@ -313,4 +344,12 @@ input#datepickerAccountingCustomers
 .flex-column {
 	display: flex;
 	flex-direction: column;
+}
+
+.display_none {
+	display: none;
+}
+
+.inline_block {
+	display: inline-block;
 }

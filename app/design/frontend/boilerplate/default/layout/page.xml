@@ -74,7 +74,7 @@
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
-				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
+				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.2.js</file></action>
 				<!-- IMPORTANT -->
 				
 				<action method="addItem"><type>skin_css</type><file>css/apdc_catalog/product-options.css</file></action>
@@ -160,6 +160,7 @@
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml">
 				<block type="newsletter/subscribe" template="newsletter/subscribe.phtml" name="newsletter-subscribe"/>
 				<block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
+                <block type="core/template" name="footer_link" template="page/html/footer_link.phtml"/>
                 <block type="page/html_wrapper" name="bottom.container" as="bottomContainer" translate="label">
                     <label>Page Footer</label>
                     <action method="setElementClass"><value>bottom-container</value></action>

@@ -7,6 +7,7 @@
             <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
             <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="liste_commercant_all"/>
             <block type="core/template" name="reassurance" template="apdc_home/reassurance.phtml"/>
+            <block type="core/template" name="footer_link" template="page/html/footer_link.phtml"/>
             <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
         </reference>
 
@@ -36,12 +37,10 @@
 			<action method="addItem"><type>skin_js</type><file>dist/js/script.js</file></action>
 			
 			<!-- JQUERY -->
-			<action method="addJs"><script>prototype/prototype.js</script></action>
-            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-3.2.1.min.js</script></action>
 			<action method="addJs"><script>lib/jquery/noconflict.js</script></action>
-            <!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
-                <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.js</file></action>
-                <!-- IMPORTANT -->  
+            <action method="addJs"><script>prototype/prototype.js</script></action>
+            <action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.2.js</file></action>
 			<!-- =========================
 				 END SCRIPTS   
 			============================== -->

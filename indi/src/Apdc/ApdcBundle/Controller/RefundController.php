@@ -23,6 +23,8 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+		$mistral = $this->container->get('apdc_apdc.mistral');
+		$session = $request->getSession();
 
         $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto);
@@ -50,12 +52,68 @@ class RefundController extends Controller
 
 		$orders = $mage->getOrders($from, $to, -1, $id);
 
+		// MISTRAL RETARDS DE LIVRAISON
+		$mistral_late_orders_data = array('message' => 'Retards de picking/shipping');
+		$mistral_late_orders_form = $this->createFormBuilder($mistral_late_orders_data)
+			->add('submit', SubmitType::class, [
+				'label'	=> 'Verifier les retards',
+				'attr'	=> [
+					'class'	=> 'btn btn-lg btn-info',
+				],
+			])
+			->getForm();
+		$mistral_late_orders_form->handleRequest($request);
+
+		if ($mistral_late_orders_form->isSubmitted() && $mistral_late_orders_form->isValid()) {
+
+			// 1 - Construct results
+			$results = $mistral->constructMistralDeliveryResults($orders);	
+			
+			// 2 - Store Mistral data in temp[]
+			$temp = [];
+			foreach ($results as $order_id => $result) {
+				foreach ($result['merchant_id'] as $k => $merch_id) {
+					$temp[$order_id][$merch_id] = $mistral->getOrderWarehouse($result['partner_ref'], $order_id, $merch_id);
+				}
+			}	
+		
+			// 3 - Clean up tmp[]
+			$temp = $mistral->cleanTempMistralDeliveryData($temp);
+
+			// 4 - Store Mistral delivery hours in results[]
+			$results = $mistral->storeMistralDeliveryResults($results, $temp);
+			unset($temp);	
+
+
+			// 5 - Update DDB with Mistral delivery hours
+			foreach ($results as $order_id => $data) {
+				$mage->updateEntryToMistralDelivery(
+					['order_id' => $order_id],
+					['real_hour_picking'	=> date('H:i', strtotime($data['real_hour_picking'])), 
+					'slot_start_picking'	=> date('H:i', strtotime($data['slot_start_picking'])), 
+					'slot_end_picking'		=> date('H:i', strtotime($data['slot_end_picking'])),
+					'real_hour_shipping'	=> date('H:i', strtotime($data['real_hour_shipping'])),
+					'slot_start_shipping'	=> date('H:i', strtotime($data['slot_start_shipping'])),
+					'slot_end_shipping'		=> date('H:i', strtotime($data['slot_end_shipping']))
+				]);
+			}
+
+			$session->getFlashBag()->add('success', 'Statuts Mistral mis a jour');
+			return $this->redirectToRoute('refundIndex', [
+				'id' => $id, 
+				'from' => $from, 
+				'to' => $to
+			]);
+		}
+
 		return $this->render('ApdcApdcBundle::refund/index.html.twig', [
 			'forms' => [
 				$form_fromto->createView(),
 				$form_id->createView()
 			],
 			'orders' => $orders,
+			'mistral_late_orders_form'	=> $mistral_late_orders_form->createView(),
+			'mistral_hours'	=> $mage->getMistralDelivery(),
         ]);
     }
 
@@ -221,8 +279,6 @@ class RefundController extends Controller
         }
 
         // MISTRAL AUTO UPLOAD
-        $neighborhood = $mistral->getApdcNeighborhood();
-
         $mistral_data = array('message' => 'Upload via Mistral');
         $mistral_form = $this->createFormBuilder($mistral_data)
             ->add('Mistral tickets upload', SubmitType::class, array(
@@ -233,33 +289,11 @@ class RefundController extends Controller
         $mistral_form->handleRequest($request);
 
         if ($mistral_form->isSubmitted() && $mistral_form->isValid()) {
-            $results = array(
-                'order_id' => $id,
-                'order_mid' => $order[-1]['order']['mid'],
-                'ticket_com' => '',
-                'partner_ref' => '',
-            );
 
-            // Construct results[]
-            foreach ($order as $merchant_id => $merchant) {
-                if (is_numeric($merchant_id) && $merchant_id != -1) {
-                    foreach ($neighborhood as $neigh) {
-                        if ($neigh['store_id'] == $merchant['merchant']['store_id']) {
-                            $results['partner_ref'] = $neigh['partner_ref'];
-                            $results[$merchant_id] = '';
-                        }
-                    }
-                }
-            }
+			// 1 - Construct results[]
+			$results = $mistral->constructMistralImgsResults($order, $id);	
 
-            foreach ($results as $merchant_id => $result) {
-                if (is_numeric($merchant_id)) {
-                    $results['ticket_com'] .= ";{$results['order_id']}/{$results['order_id']}-{$merchant_id}";
-                }
-            }
-            $results['ticket_com'] = substr($results['ticket_com'], 1);
-
-            // Store Mistral images in tmp[]	
+            // 2 - Store Mistral images in temp[]	
             $temp = [];
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
@@ -271,33 +305,20 @@ class RefundController extends Controller
                         return $this->redirectToRoute('refundUpload', ['id' => $id]);
                     }
                 }
-            }
+			}
 
-            // Store images in results[]
-            foreach ($temp as $merchant_id => $data) {
-                if ($data['AsPicture'] == true) {
-                    foreach ($data['Pictures'] as $type => $content) {
-                        if ($content['MoveTypeCode'] == 'E') {
-                            $results[$merchant_id]['base64_string'] = $content['ImageBase64'];
-                            $results[$merchant_id]['image_type'] = substr($content['ImageType'], 6);
-                        } else {
-                            unset($results[$merchant_id]); // Si ticket == signature du commercant
-                        }
-                    }
-                } else {
-                    unset($results[$merchant_id]); // Si pas de ticket du commercant
-                }
-            }
+            // 3 - Store images in results[]
+			$results = $mistral->storeMistralImgsResults($temp, $results);
 
-            $diff = array_diff_assoc($temp, $results);
-
-            // Convert base64 into real img, add imgs into media/attachments & update DBB
+            // 4 - Convert base64 into real img, add imgs into media/attachments & update DBB
             foreach ($results as $merchant_id => $result) {
                 if (is_numeric($merchant_id)) {
                     $mistral->convert_base64_to_img($result['base64_string'], $result['image_type'], $results['order_id'], $merchant_id);
                 }
             }
 
+            $diff = array_diff_assoc($temp, $results);
+			
 			if (!empty($diff)) {
 				$intersect = array_intersect_assoc($order, $diff);
                 foreach ($intersect as $merchant_id => $merchant) {
@@ -321,7 +342,8 @@ class RefundController extends Controller
             'forms' => [$form_upload->createView()],
             'order' => $order,
             'id' => $id,
-            'mistral_form' => $mistral_form->createView(),
+			'mistral_form' => $mistral_form->createView(),
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -410,7 +432,8 @@ class RefundController extends Controller
             'refund_shipping' => $mage->checkRefundShipping($order_mid),
             'commentaire_client' => $commentaire_client,
             'commentaire_commercant' => $commentaire_commercant,
-            'customer_name' => $customer_name,
+			'customer_name' => $customer_name,
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -422,7 +445,7 @@ class RefundController extends Controller
 
         $mage = $this->container->get('apdc_apdc.magento');
         $session = $request->getSession();
-        $order = $mage->getRefunds($id);
+		$order = $mage->getRefunds($id);
 
         $total = $order[-1]['merchant']['total'];
         $refund_total = $order[-1]['merchant']['refund_total'];
@@ -498,7 +521,8 @@ class RefundController extends Controller
             'order' => $order,
             'id' => $id,
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
-            'forms' => [$form_submit->createView()],
+			'forms' => [$form_submit->createView()],
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -563,6 +587,7 @@ class RefundController extends Controller
 			'orders' => $orders,
 			'order'	=> $order,
 			'hipay_refund_form' => $hipay_refund_form->createView(),
+			'mistral_hours' => $mage->getMistralDelivery(),
         ]);
     }
 
@@ -609,7 +634,8 @@ class RefundController extends Controller
             'id' => $id,
             'refund_full' => $mage->getRefundfull($refund_diff, $refund_shipping_amount),
             'show_close' => $mage->checkdisplaybutton($id, 'close'),
-            'forms' => [$form_submit->createView()],
+			'forms' => [$form_submit->createView()],
+			'mistral_hours' => $mage->getMistralDelivery(),
 
         ]);
     }

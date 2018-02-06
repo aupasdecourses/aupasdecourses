@@ -151,7 +151,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
     protected function cleansemicolons($array)
     {
         foreach ($array as $key => $value) {
-            $array[$key] = str_replace(';', '', $value);
+            $array[$key] = str_replace(array("\n\r", "\n", "\r",";"), '', $value);
         }
 
         return $array;
@@ -368,9 +368,9 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
     protected function _processRequestFtp($params)
     {
         $currentTime = Mage::getSingleton('core/date')->timestamp();
-        $c_time = date('His', strtotime($currentTime));
-        $fileName = str_replace('-', '', $params['c_date'])."_APDC_CDE_{$c_time}.csv";
-        $tmpFileName = $this->_path.'tmp.csv';
+        $c_time = date('His', $currentTime);
+        $fileName = str_replace('-', '', $params['c_date'])."_APDC_CDE_".$c_time.".csv";
+        $tmpFileName = $this->_path.str_replace('-', '', $params['c_date'])."_APDC_CDE_".$c_time.".csv";
         $out = $this->formatFtpMistral($params['orders']);
 
         if ($out != '') {
@@ -387,6 +387,7 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                         $this->pasv(false);
                         $this->login($this->_login, $this->_pwd);
                         $this->put("IN/{$fileName}", $tmpFileName);
+                        Mage::log('Model Export - sent file - '.$fileName, null, 'export.log');
                         Mage::log('Model Export - processRequestFtp - request done', null, 'export.log');
                     }
                 }

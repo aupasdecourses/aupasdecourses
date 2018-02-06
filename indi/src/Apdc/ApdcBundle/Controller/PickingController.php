@@ -50,9 +50,23 @@ class PickingController extends Controller
 
 		$form_from->get('from')->setData($from);
 
+		$stores = $mage->getOrdersByStoreByMerchants(-1, $from);
+
+		// Display only stores which have orders
+		foreach ($stores as $store => $merchants) {
+			foreach ($merchants as $merchant_id => $merchant) {
+				if (empty($stores[$store][$merchant_id]['orders'])) {
+					unset($stores[$store][$merchant_id]);
+				}
+			}
+			if (empty($stores[$store])) {
+				unset($stores[$store]);
+			}
+		}
+
 		return $this->render('ApdcApdcBundle::picking/all.html.twig', [
 				'forms'		=> [ $form_from->createView() ],
-				'stores'	=> $mage->getOrdersByStoreByMerchants(-1, $from)
+				'stores'	=> $stores
 		]);
     }
 }

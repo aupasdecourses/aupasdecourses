@@ -3,10 +3,10 @@
 
 {% block body %}
 	<div class="container-fluid">
-		<h1> Liste au mois des commandes par clients </h1><br>
+		<h1> Liste des commandes facturées par clients</h1><br>
 		<div class="row">
 			<div class="col-md-6">
-				<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut }}"> au {{ date_fin|date('d/m/Y') }}</h2>
+				<h2>Commandes du <input type="text" class="form-control" id="datepickerAccountingCustomers" placeholder="Selectionner Date" value="{{ date_debut|date('d/m/Y') }}"> au <input type="text" class="form-control" id="datepickerEndAccountingCustomers" placeholder="Selectionner Date" value="{{ date_fin|date('d/m/Y') }}"><small> (date d'émission de la facture client)</small></h2>
 			</div>
 			<div class="col-md-6">{{ form(formCSV) }}</div>
 		</div>
@@ -76,9 +76,27 @@
 			});
 		});
 		
+		$(function() {
+			$( "#datepickerEndAccountingCustomers" ).datepicker({
+				altField: "#datepickerEndAccountingCustomers",
+				closeText: 'Fermer',
+				prevText: 'Précédent',
+				nextText: 'Suivant',
+				currentText: 'Aujourd\'hui',
+				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+				dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+				dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+				dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+				weekHeader: 'Sem.',
+				dateFormat: 'dd/mm/yy',
+			});
+		});
+
+
 		$(function(){
-			$("#datepickerAccountingCustomers").change(function(){
-				window.location='{{ path('accountingCustomersOrders') }}?date_debut='+this.value;
+			$("#datepickerEndAccountingCustomers").change(function(){
+				window.location='{{ path('accountingCustomersOrders') }}?date_debut='+$("#datepickerAccountingCustomers").val()+'&date_fin='+this.value;
 			});
 		});
 

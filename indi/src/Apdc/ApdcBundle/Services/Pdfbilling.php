@@ -288,7 +288,12 @@ class Pdfbilling
             unset($row['id']);
             unset($row['shop_id']);
             unset($row['shop']);
-            unset($row['sum_due_HT']);
+			unset($row['sum_due_HT']);
+
+			// Avoid page settings bug on creation_date
+			unset($row['id_attribut_commercant'], $row['sum_commission_TVA'], $row['sum_shipping_HT'], $row['sum_shipping_TVA'], $row['sum_shipping_TTC']);
+			
+
             $data_d[$id] = $row;
         }
 

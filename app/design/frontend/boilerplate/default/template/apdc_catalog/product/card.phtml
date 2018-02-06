@@ -2,8 +2,8 @@
 	$product = $this->getProduct();
 	$productUrl = $product->getProductUrl();
 	$strippedName = $this->stripTags($product->getName(), null, true);
-    if (strlen($strippedName) > 35) {
-        $strippedName = substr($strippedName, 0, 47) . '...';
+    if (strlen($strippedName) > 36) {
+        $strippedName = substr($strippedName, 0, 36) . '...';
     }
 	$imageLabel = $this->stripTags($this->getImageLabel($product, 'small_image'), null, true);
 	if ($product->getConfigureMode() == true && $product->getCartItemId() && $product->getCartItemId() > 0) {

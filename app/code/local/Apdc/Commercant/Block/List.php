@@ -20,7 +20,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         return $new;
     }
 
-    public function getListShops($filter = 'store', $random = false)
+    public function getListShops($filter = 'store', $random = false,$limit=0)
     {
         $row1 = array();
         $row2 = array();
@@ -42,6 +42,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             $shops->getSelect()->order('rand()');
         }
 
+        if($limit>0){
+            $shops->getSelect()->limit($limit);
+        }
+
         $nbShops = count($shops);
 
         foreach ($shops as $shop) {
@@ -56,10 +60,10 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                         $path = Mage::getModel('catalog/category')->load($id)->getPath();
                         $rootcat = explode('/', $path)[1];
                         if (!empty($rootcat) && isset($rootcat[1])) {
-                        if ($rootcat[1] == $storerootid) {
-                            break;
+                            if ($rootcat == $storerootid) {
+                                break;
+                            }
                         }
-                    }
                     }
                 } else {
                     $current_cat = $shop['category_ids'][0];
