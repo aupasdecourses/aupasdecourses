@@ -63,6 +63,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                             $commercants['bundle']['items'] = array();
                             $commercants['bundle']['color'] = $color;
                             $commercants['bundle']['minimum_order'] = $minimumOrder;
+                            $commercants['bundle']['items_subtotal'] = 0;
                         }
                         $commercants['bundle']['items'][] = $item;
                     } else if (isset($parentCommercantId[$item->getItemId()])) {
