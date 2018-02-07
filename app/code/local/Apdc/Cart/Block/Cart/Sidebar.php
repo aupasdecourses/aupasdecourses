@@ -249,7 +249,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
             ) {
                 $minimumOrder[$id]['is_valid'] = false;
                 $minimumOrder[$id]['offset'] = $commercant['minimum_order'] - $commercant['items_subtotal'];
-                $quote->addErrorInfo('error', 'apdc_cart_sidebar', 1, $this->__('Le minimum de commande n\'est pas atteind pour certains commerçants. Veuillez vérifier votre commande.'));
+                $quote->addErrorInfo('error', 'apdc_cart_sidebar', 1, $this->__('Le minimum de commande n\'est pas atteint pour certains commerçants. Veuillez vérifier votre commande.'));
                 $quote->setHasError(true);
             }
         }
