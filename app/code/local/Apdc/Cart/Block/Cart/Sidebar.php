@@ -47,6 +47,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
         $items = array();
         foreach ($itemsCollection as $item) {
 			$color = '#3ab64b';
+            $minimumOrder = 0;
             if ($item->getParentItemId() && $item->getCommercant()) {
                 if (!isset($parentCommercantId[$item->getParentItemId()])) {
                     $parentCommercantId[$item->getParentItemId()] = $item->getCommercant();
@@ -61,6 +62,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                             $commercants['bundle']['name'] = $this->__('Paniers & Plateaux');
                             $commercants['bundle']['items'] = array();
                             $commercants['bundle']['color'] = $color;
+                            $commercants['bundle']['minimum_order'] = $minimumOrder;
                         }
                         $commercants['bundle']['items'][] = $item;
                     } else if (isset($parentCommercantId[$item->getItemId()])) {
@@ -72,15 +74,23 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                     $name = $product->setCommercant($commercant);
 					$shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_attribut_commercant', $commercant)->getFirstItem();
 					if($shop) {
-						$category = Mage::getModel('catalog/category')->load($shop['id_category'][0]);
-						if($category && $category->getParentCategory()) {
-							$color = $category->getParentCategory()->getData('menu_bg_color');
-						}
+                        $idCategory = $shop->getIdCategory();
+                        if (!empty($idCategory)) {
+						    $category = Mage::getModel('catalog/category')->load($idCategory[0]);
+                            if($category && $category->getParentCategory()) {
+                                $color = $category->getParentCategory()->getData('menu_bg_color');
+                            }
+                        }
+                        $minimumOrder = ($shop->getMinimumOrder() ? $shop->getMinimumOrder() : 0);
+
 					}
                     $commercants[$commercant]['name'] = $product->getAttributeText('commercant');
                     $commercants[$commercant]['items'] = array();
+                    $commercants[$commercant]['items_subtotal'] = 0;
 					$commercants[$commercant]['color'] = $color;
+					$commercants[$commercant]['minimum_order'] = $minimumOrder;
                 }
+                $commercants[$item->getCommercant()]['items_subtotal'] += $item->getRowTotal();
                 $commercants[$item->getCommercant()]['items'][] = $item;
             }
         }
@@ -213,5 +223,36 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
             $this->_quote = Mage::getSingleton('checkout/cart')->getQuote();
         }
         return parent::getQuote();
+    }
+
+    /**
+     * checkMinimumOrder
+     * 
+     * @param array $commercantItems commercantItems 
+     * 
+     * @return array
+     */
+    public function checkMinimumOrder($commercantItems)
+    {
+        $minimumOrder = [];
+        $quote = $this->getQuote();
+        foreach ($commercantItems as $id => $commercant) {
+            $minimumOrder[$id] = [
+                'is_valid' => true,
+                'minimum_order' => $commercant['minimum_order'],
+                'items_subtotal' => $commercant['items_subtotal'],
+                'offset' => 0
+            ];
+            if ($commercant['minimum_order'] &&
+                $commercant['minimum_order'] > 0 &&
+                $commercant['items_subtotal'] < $commercant['minimum_order']
+            ) {
+                $minimumOrder[$id]['is_valid'] = false;
+                $minimumOrder[$id]['offset'] = $commercant['minimum_order'] - $commercant['items_subtotal'];
+                $quote->addErrorInfo('error', 'apdc_cart_sidebar', 1, $this->__('Le minimum de commande n\'est pas atteind pour certains commerçants. Veuillez vérifier votre commande.'));
+                $quote->setHasError(true);
+            }
+        }
+        return $minimumOrder;
     }
 }

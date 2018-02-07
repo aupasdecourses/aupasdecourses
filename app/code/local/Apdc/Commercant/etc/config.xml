@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.7.1</version>
+            <version>0.7.2</version>
         </Apdc_Commercant>
     </modules>
 
@@ -48,6 +48,12 @@
                     </bankInfo>
                 </entities>
             </apdc_commercant_resource>
+            <sales>
+              <rewrite>
+                <quote>Apdc_Commercant_Model_Rewrite_Magento_Sales_Quote</quote>
+              </rewrite>
+            </sales>
+
         </models>
         <resources>
             <apdc_commercant_setup>
