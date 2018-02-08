@@ -97,6 +97,13 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
             'disabled' => $isElementDisabled,
         ]);
+        $fieldset->addField('minimum_order', 'text', [
+            'name' => 'minimum_order',
+            'label' => $this->__('Montant minimum'),
+            'required' => false,
+            'disabled' => $isElementDisabled,
+            'note' => $this->__('Permet d\'indiquer le montant minimum de commande pour pouvoir commander chez ce commerçant')
+        ]);
 
         $fieldset = $form->addFieldset(
             'finance',

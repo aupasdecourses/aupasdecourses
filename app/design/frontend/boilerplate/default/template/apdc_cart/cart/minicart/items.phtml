@@ -37,11 +37,12 @@ if(empty($_cartQty)) {
     $_cartQty = 0;
 }
 $apdcAccordion = $this->getApdcCartAccordion();
+$commercants = $this->getItemsByCommercant();
+$minimumOrder = $this->checkMinimumOrder($commercants);
 $cartMessages = $this->getMessages();
 if ($cartMessages) {
     $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
 }
-$commercants = $this->getItemsByCommercant();
 $countItems = count($commercants);
 ?>
 
@@ -78,6 +79,17 @@ $countItems = count($commercants);
                                 <i class="fa fa-angle-up"></i>
                             </span>
                         </div>
+                        <?php if (!$minimumOrder[$id]['is_valid']) : ?>
+                            <ul class="messages">
+                                <li class="error-msg">
+                                    <ul>
+                                        <li>
+                                            <span><?php echo $this->__('Plus que %s pour pouvoir valider votre commande.', Mage::helper('core')->currency($minimumOrder[$id]['offset'], true, false)); ?></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
                         <ul class="commercant-product-list">
                         <?php foreach ($commercant['items'] as $item): ?>
                             <?php echo $this->getItemHtml($item) ?>
