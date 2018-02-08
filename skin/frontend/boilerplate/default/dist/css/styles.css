@@ -12754,6 +12754,12 @@ header .top-nav li a a:visited {
   border-left: 6px solid #df280a;
 }
 
+.messages .error-msg li {
+  font-size: .7rem;
+  margin-bottom: 3px;
+  padding: 5px 0 5px 10px;
+}
+
 .messages .notice-msg li {
   color: #000;
   border-left: 5px solid #fce414;
