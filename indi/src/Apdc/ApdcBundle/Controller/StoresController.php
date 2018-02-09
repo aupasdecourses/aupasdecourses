@@ -53,11 +53,25 @@ class StoresController extends Controller
 		$form_fromto->get('from')->setData($from);
 		$form_fromto->get('to')->setData($to);
 
+		$stores = $mage->getOrdersByStoreByMerchants(-1, $from, $to);
+
+		// Display only stores which have orders
+		foreach ($stores as $store => $merchants) {
+			foreach ($merchants as $merchant_id => $merchant) {
+				if (empty($stores[$store][$merchant_id]['orders'])) {
+					unset($stores[$store][$merchant_id]);
+				}
+			}
+			if (empty($stores[$store])) {
+				unset($stores[$store]);
+			}
+		}
+
 		return $this->render('ApdcApdcBundle::stores/all.html.twig', [
 			'forms' => [
 				$form_fromto->createView(),
 			],
-			'stores' 		=> $mage->getOrdersByStoreByMerchants(-1, $from, $to),
+			'stores' 		=> $stores,
 			'shop_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_shop/edit/id_shop/',
 			'manager_url'	=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/commercant_contact/edit/id_contact/',
 
