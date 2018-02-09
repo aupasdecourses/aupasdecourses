@@ -37,9 +37,6 @@
 
         <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
           <block type="catalog/product_list" name="category.view.content" as="product_list" template="apdc_catalog/category/view-content.phtml">
-            <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
-              <block type="page/html_pager" name="product_list_toolbar_pager" as="product_list_toolbar_pager"/>
-            </block>
             <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
 
             <block type="core/text_list" name="col_filters" as="col_filters">
@@ -54,6 +51,10 @@
                 <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
                 <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
               </block>
+            </block>
+
+            <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+              <block type="page/html_pager" name="product_list_toolbar_pager" as="product_list_toolbar_pager"/>
             </block>
           </block>
         </block>
@@ -120,7 +121,6 @@
     <!-- Category (Not Anchor) => 'Mon Primeur' -->
     <catalog_category_default>
         <label>Catalog Category (Non-Anchor)</label>
-
         <update handle="apdc_catalog_product_list" />
 
     </catalog_category_default>
@@ -128,6 +128,7 @@
     <catalog_category_layered translate="label">
         <label>Catalog Category (Anchor)</label>
         <update handle="apdc_catalog_product_list" />
+        <update handle="page_two_columns_left" />
 
     </catalog_category_layered>
 

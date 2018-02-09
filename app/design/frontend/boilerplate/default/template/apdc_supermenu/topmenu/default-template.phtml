@@ -32,12 +32,7 @@ if ($shop->getShopUrl() || $shop->getAllProductsLink()) {
 
 $html .= '<li class="template-line">';
 $html .= '<ul>';
-$cpt = 0;
 foreach ($children as $child) {
-    if ($cpt > 0 && $cpt % 4 == 0) {
-        $html .= '</ul>';
-        $html .= '<ul>';
-    }
 
     $this->initChild($child, $menuTree);
 
@@ -84,7 +79,6 @@ foreach ($children as $child) {
     $counter = $menuTree->getCounter();
     $counter++;
     $menuTree->setCounter($counter);
-    $cpt++;
 }
 $html .= '</ul>';
 $html .= '</li>';

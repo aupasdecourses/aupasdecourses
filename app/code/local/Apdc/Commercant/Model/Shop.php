@@ -148,7 +148,7 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
                 $categories->addFieldToFilter('path', ['in' => $subPath]);
 
                 if ($categories->count()) {
-                    $this->shopMainCategory = $categories->getFirstItem();
+                    $this->shopMainCategory = Mage::getModel('catalog/category')->load($categories->getFirstItem()->getId());
                 }
             }
         }

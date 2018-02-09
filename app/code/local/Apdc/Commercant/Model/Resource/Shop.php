@@ -146,9 +146,16 @@ class Apdc_Commercant_Model_Resource_Shop extends Mage_Core_Model_Resource_Db_Ab
     {
         $adapter = $this->_getReadAdapter();
 
+        $categorySelect = $adapter->select()
+            ->from($this->getTable('catalog/category'))
+            ->where('entity_id = ?', (int)$categoryId);
+        $category = $adapter->fetchAll($categorySelect);
+        $categoryIds = explode('/', $category[0]['path']);
+
+
         $select  = $adapter->select()
             ->from($this->getTable('apdc_commercant/shop_categories'), 'shop_id')
-            ->where('category_id = ?',(int)$categoryId);
+            ->where('category_id in(?)', $categoryIds);
 
         $shopIds = $adapter->fetchCol($select);
         return reset($shopIds);

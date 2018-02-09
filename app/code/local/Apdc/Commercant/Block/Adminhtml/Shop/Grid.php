@@ -38,10 +38,10 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Grid extends Mage_Adminhtml_Block_Wid
             'index' => 'code',
         ]);
 
-        $this->addColumn('type_shop', [
+        $this->addColumn('shop_type', [
             'header' => $this->__('Type Magasin'),
-            'index' => 'type_shop',
-            'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Typeshop',
+            'index' => 'shop_type',
+            //'renderer'  => 'Apdc_Commercant_Block_Adminhtml_Shop_Renderer_Typeshop',
         ]);
 
         $this->addColumn('name', [
