@@ -74,8 +74,10 @@ $countItems = count($commercants);
                             <span class="title"><?php echo $commercant['name']; ?></span>
                             <span class="actions" style="color:<?php echo $commercant['color']; ?>;">
                                 <?php $confirm = $this->__('Êtes vous sûr de vouloir supprimer tous les produits du commercant %s ?', $commercant['name']); ?>
+                                <?php if (isset($minimumOrder[$id])) : ?>
+                                    <span class="commercant-subtotal"><?php echo Mage::helper('core')->currency($minimumOrder[$id]['items_subtotal'], true, false); ?></span>
+                                <?php endif; ?>
                                 <span data-ajax-url="<?php echo $this->helper('apdccart')->getAjaxEmptyCartUrl() ?>" class="badge empty-cart" data-confirm="<?php echo $confirm; ?>" data-commercant-id="<?php echo $id; ?>"><i class="fa fa-trash"></i></span>
-                                <span class="badge count"><i><?php echo count($commercant['items']); ?></i></span>
                                 <i class="fa fa-angle-up"></i>
                             </span>
                         </div>

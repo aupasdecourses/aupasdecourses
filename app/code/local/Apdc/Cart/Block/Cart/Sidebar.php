@@ -65,6 +65,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
                             $commercants['bundle']['minimum_order'] = $minimumOrder;
                             $commercants['bundle']['items_subtotal'] = 0;
                         }
+                        $commercants['bundle']['items_subtotal'] += $item->getRowTotalInclTax();
                         $commercants['bundle']['items'][] = $item;
                     } else if (isset($parentCommercantId[$item->getItemId()])) {
                         $commercant = $parentCommercantId[$item->getItemId()];
@@ -91,7 +92,7 @@ class Apdc_Cart_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Sidebar
 					$commercants[$commercant]['color'] = $color;
 					$commercants[$commercant]['minimum_order'] = $minimumOrder;
                 }
-                $commercants[$item->getCommercant()]['items_subtotal'] += $item->getRowTotal();
+                $commercants[$item->getCommercant()]['items_subtotal'] += $item->getRowTotalInclTax();
                 $commercants[$item->getCommercant()]['items'][] = $item;
             }
         }

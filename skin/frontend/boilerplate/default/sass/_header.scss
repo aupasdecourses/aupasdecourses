@@ -522,6 +522,14 @@ header{
               .count {
                 cursor:default;
               }
+              .commercant-subtotal {
+                height:20px;
+                line-height:23px;
+                color:white;
+                display:inline-block;
+                margin-right:8px;
+                font-size:0.75rem;
+              }
               .badge {
                 margin-right:10px;
                 display:block;
@@ -546,13 +554,14 @@ header{
                 color:white;
                 font-size:20px;
                 vertical-align:middle;
-
-                transform: translateY(-50%) rotateZ(0);
-                transition: transform 0.3s ease;
+                margin-top:-13px;
+                transform: rotateZ(0);
+                transition: margin 0.3s ease, transform 0.3s ease;
               }
             }
             &.closed .actions i.fa-angle-up {
-                transform: translateY(-50%) rotateZ(180deg);
+                margin-top:-8px;
+                transform: rotateZ(180deg);
             }
         }
         .commercant-product-list {

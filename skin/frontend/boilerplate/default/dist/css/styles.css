@@ -12222,6 +12222,15 @@ header .top-nav li a a:visited {
   cursor: default;
 }
 
+.header-minicart #header-cart .mini-commercant-name .actions .commercant-subtotal {
+  font-size: .75rem;
+  line-height: 23px;
+  display: inline-block;
+  height: 20px;
+  margin-right: 8px;
+  color: white;
+}
+
 .header-minicart #header-cart .mini-commercant-name .actions .badge {
   position: relative;
   display: block;
@@ -12246,14 +12255,16 @@ header .top-nav li a a:visited {
 .header-minicart #header-cart .mini-commercant-name .actions i.fa-angle-up {
   font-size: 20px;
   clear: left;
-  transition: transform .3s ease;
-  transform: translateY(-50%) rotateZ(0);
+  margin-top: -13px;
+  transition: margin .3s ease, transform .3s ease;
+  transform: rotateZ(0);
   vertical-align: middle;
   color: white;
 }
 
 .header-minicart #header-cart .mini-commercant-name.closed .actions i.fa-angle-up {
-  transform: translateY(-50%) rotateZ(180deg);
+  margin-top: -8px;
+  transform: rotateZ(180deg);
 }
 
 .header-minicart #header-cart .commercant-product-list {
