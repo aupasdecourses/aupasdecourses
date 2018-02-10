@@ -14,14 +14,14 @@ if ($shop->getShopUrl() || $shop->getAllProductsLink()) {
     if ($shop->getShopUrl()) {
         $html .= '<li class="level2 first template-column">';
         $html .=    '<a href="' . $shop->getShopUrl() . '" class="">';
-        $html .=        '<span class="cat-name">' . $this->__('En savoir plus sur %s', $shop->getName()) . '</span>';
+        $html .=        '<span class="cat-name common-links-name">' . $this->__('En savoir plus sur %s', $shop->getName()) . '</span>';
         $html .=    '</a>';
         $html .= '</li>';
     }
     if ($shop->getAllProductsLink()) {
         $html .= '<li class="level2 last template-column">';
         $html .=    '<a href="' . $shop->getAllProductsLink() . '" class="">';
-        $html .=        '<span class="cat-name">' . $this->__('Tous les produits de %s', $shop->getName()) . '</span>';
+        $html .=        '<span class="cat-name common-links-name">' . $this->__('Tous les produits de %s', $shop->getName()) . '</span>';
         $html .=    '</a>';
         $html .= '</li>';
     }

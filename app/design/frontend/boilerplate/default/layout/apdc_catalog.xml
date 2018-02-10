@@ -105,12 +105,6 @@
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_configurable.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_custom_options.js</file></action>
         </reference>
-
-        <!-- VERIFIER LEXISTANCE DE CE BLOCK -->
-        <reference name="reassurance">
-          <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-carroussel"/>
-        </reference>
-
         <reference name="right">
             <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
             </block>

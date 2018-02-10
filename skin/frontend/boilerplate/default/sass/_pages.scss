@@ -353,8 +353,9 @@ section {
     background: url('../images/bg-3.jpg') no-repeat;
     background-size: cover;
     background-position-y: 50%;
-    height: 450px;
+    height: 300px;
     display: flex;
+    flex-direction: column;
     margin-left: -15px;
     margin-right: -15px;
     -webkit-justify-content: center;
@@ -364,16 +365,14 @@ section {
     -ms-flex-align: center;
     align-items: center;
     h1{
-        color: #fff;
-        font-size: 2rem;
-        max-width: 800px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        border: 6px solid;
-        border-color: #fff;
-        background-color: $color-main-green;
-        text-transform: none;
+        background-color: $color-dark-blue;
+        border: 8px solid $color-main-green;
+        font-weight: 700;
+        box-sizing: border-box;
+        height: 100px;
+        width: 300px;
+        color: white;
+        font-size: 2.5rem;
         margin-top: 0;
         text-align: center;
         display: flex;
@@ -381,6 +380,11 @@ section {
         span{
             margin: auto;
         }
+    }
+    .tagline{
+        color:white;
+        font-size:2rem;
+        font-weight: 700;
     }
 }
 
@@ -1162,7 +1166,7 @@ section {
 
 .breadcrumbs{
     text-align: center;
-    padding: 20px 0;
+    padding: 10px 0;
     ul{
         margin: 0;
         padding: 0;

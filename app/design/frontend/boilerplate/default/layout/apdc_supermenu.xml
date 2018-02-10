@@ -2,7 +2,6 @@
 <layout version="0.1.0">
   <default>
     <reference name="head">
-      <action method="addItem"><type>skin_css</type><name>css/apdc_supermenu/supermenu.css</name><params/></action>
       <action method="addItem"><type>skin_js</type><name>js/apdc_supermenu/supermenu.js</name><params/></action>
     </reference>
     <remove name="top.menu" />
