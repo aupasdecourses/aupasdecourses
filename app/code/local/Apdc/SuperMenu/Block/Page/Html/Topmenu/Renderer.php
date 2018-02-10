@@ -23,7 +23,6 @@
 class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Block_Page_Html_Topmenu
 {
     protected $_templateFile;
-    protected $allowedTemplates = null;
 
     /**
      * Renders block html
@@ -65,14 +64,10 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         if (!$this->getTemplate() || is_null($menuTree) || is_null($childrenWrapClass)) {
             throw new Exception("Top-menu renderer isn't fully configured.");
         }
-        $menuTemplate = $menuTree->getMenuTemplate();
         $includeFilePath = null;
         $templateName = null;
-        if ($menuTree->getMenuTemplate() && in_array($menuTree->getMenuTemplate(), $this->getAllowedTemplates())) {
-            $templateName = $menuTree->getMenuTemplate();
-        } else if($menuTree->getMenuTemplate() && $menuTree->getLevel() == 1) {
-            $allowedTemplates = $this->getAllowedTemplates();
-            $templateName = $allowedTemplates[0];
+        if ($menuTree->getLevel() == 1) {
+            $templateName = 'default-template';
         }
 
         if (!is_null($templateName)) {
@@ -308,10 +303,10 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             return false;
         }
      
-        $imageResized =  $baseDirMedia . 'product' . DS . 'cache' . DS . 'cat_resized' . DS . $image;
+        $imageResized =  $baseDirMedia . 'product' . DS . 'cache' . DS . 'cat_resized' . DS . $width.$height . DS . $image;
         if (!file_exists($imageResized) && file_exists($imageUrl) || file_exists($imageUrl) && filemtime($imageUrl) > filemtime($imageResized)) {
-            if (!file_exists($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized')) {
-                mkdir($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized', 0777, true);
+            if (!file_exists($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized' . DS . $width.$height)) {
+                mkdir($baseDirMedia . 'product' .DS . 'cache' . DS . 'cat_resized' . DS . $width.$height, 0777, true);
             }
             $imageObj = new Varien_Image($imageUrl);
             $imageObj->constrainOnly(true);
@@ -323,7 +318,7 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         }
      
         if(file_exists($imageResized)){
-            return Mage::getBaseUrl('media' ) . 'catalog/product/cache/cat_resized/' . $image;
+            return Mage::getBaseUrl('media' ) . 'catalog/product/cache/cat_resized/' . $width.$height . DS . $image;
         } else if (preg_match('/^wysiwyg\//', $image) || preg_match('/^catalog\/category\//', $image)) {
             return Mage::getBaseUrl('media') . $image;
         } else {
@@ -380,19 +375,14 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
     }
 
     /**
-     * getAllowedTemplates 
+     * getShopByCategoryId 
      * 
-     * @return array
+     * @param int $categoryId categoryId 
+     * 
+     * @return Apdc_Commercant_Model_Shop
      */
-    protected function getAllowedTemplates()
+    public function getShopByCategoryId($categoryId)
     {
-        if (is_null($this->allowedTemplates)) {
-            $this->allowedTemplates = array_keys(
-                Mage::getModel('apdc_supermenu/adminhtml_system_config_source_template')
-                ->getAllOptions()
-            );
-            array_shift($this->allowedTemplates);
-        }
-        return $this->allowedTemplates;
+        return Mage::getModel('apdc_commercant/shop')->loadByCategoryId($categoryId);
     }
 }

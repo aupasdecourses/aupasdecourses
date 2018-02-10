@@ -33,21 +33,29 @@
               <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
             </block>
           </block>
-          <!--<block type="apdc_catalog/category_categorycommercant" name="commercant-categories" template="apdc_commercant/commercantcat.phtml" />-->
         </block>
+
         <block type="catalog/category_view" name="category.products" template="apdc_catalog/category/view.phtml">
-          <block type="catalog/product_list" name="product_list" template="apdc_catalog/product/list.phtml">
+          <block type="catalog/product_list" name="category.view.content" as="product_list" template="apdc_catalog/category/view-content.phtml">
+            <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+
+            <block type="core/text_list" name="col_filters" as="col_filters">
+              <block type="apdc_catalog/category_shop_menu" name="menu_sub_categories" before="-" template="apdc_catalog/category/menu.phtml" />
+            </block>
+
+            <block type="catalog/product_list" name="product_list" template="apdc_catalog/product/list.phtml">
+              <block type="apdc_catalog/product_list_card" name="category.view.card-product" as="card-product" template="apdc_catalog/product/card.phtml">
+                <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
+                <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
+                <block type="core/text_list" name="product_list.name.after2" as="name.after2" />
+                <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
+                <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
+              </block>
+            </block>
+
             <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
               <block type="page/html_pager" name="product_list_toolbar_pager" as="product_list_toolbar_pager"/>
             </block>
-            <block type="apdc_catalog/product_list_card" name="category.view.card-product" as="card-product" template="apdc_catalog/product/card.phtml">
-              <action method="addPriceBlockType"><type>bundle</type><block>bundle/catalog_product_price</block><template>bundle/catalog/product/price.phtml</template></action>
-              <block type="core/template" name="product_actions" template="apdc_catalog/product/list/actions.phtml" />
-              <block type="core/text_list" name="product_list.name.after2" as="name.after2" />
-              <block type="apdc_catalog/product_availability_message" name="product_availability_message" template="apdc_catalog/product/availability/message.phtml" />
-              <block type="apdc_catalog/product_list_productLabels" name="product_labels" template="apdc_catalog/product/list/product-labels.phtml" />
-            </block>
-            <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
           </block>
         </block>
       </reference>
@@ -84,7 +92,6 @@
     <catalog_category_view>
         <remove name="right"/>
         <remove name="left"/>
-        <remove name="left_first"/>
 
         <reference name="head">
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_product_popup.js</file></action>
@@ -99,6 +106,11 @@
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_custom_options.js</file></action>
         </reference>
 
+        <!-- VERIFIER LEXISTANCE DE CE BLOCK -->
+        <reference name="reassurance">
+          <block type="apdc_commercant/list" template="apdc_commercant/commercants_quartier.phtml" name="commercants-carroussel"/>
+        </reference>
+
         <reference name="right">
             <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">
             </block>
@@ -109,15 +121,14 @@
     <!-- Category (Not Anchor) => 'Mon Primeur' -->
     <catalog_category_default>
         <label>Catalog Category (Non-Anchor)</label>
-
         <update handle="apdc_catalog_product_list" />
 
     </catalog_category_default>
 
     <catalog_category_layered translate="label">
         <label>Catalog Category (Anchor)</label>
-
         <update handle="apdc_catalog_product_list" />
+        <update handle="page_two_columns_left" />
 
     </catalog_category_layered>
 

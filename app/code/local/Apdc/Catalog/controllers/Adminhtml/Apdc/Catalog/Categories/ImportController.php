@@ -116,7 +116,6 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ImportController extends Ma
                     'landing_page' => $line[17],
                     'menu_bg_color' => $line[18],
                     'menu_text_color' => $line[19],
-                    'menu_template' => $line[20],
                     'menu_main_static_block' => $line[21],
                     'menu_static_block1' => $line[22],
                 ];

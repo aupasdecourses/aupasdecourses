@@ -53,7 +53,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
 
     public function downloadAction()
     {
-        $idCategories = $this->getRequest()->getPost('id_category', null);
+        $idCategories = $this->getRequest()->getPost('category_ids', null);
         try {
             if ($filepath = $this->generateCsv()) {
                 return $this->_prepareDownloadResponse(
@@ -68,7 +68,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
             $this->_getSession()->addError($this->getHelper()->__('Aucune catégorie ne correspond à votre sélection'));
         } catch (Exception $e) {
             Mage::logException($e);
-            $this->_getSession()->setFormData(['id_category' => $idCategories]);
+            $this->_getSession()->setFormData(['category_ids' => $idCategories]);
             $this->_getSession()->addError($this->getHelper()->__('Impossible de mettre à jour les catégories (veuillez vérifier les logs)'));
         }
         return $this->_redirect('*/*/');
@@ -81,7 +81,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
      */
     protected function generateCsv()
     {
-        $idCategories = $this->getRequest()->getPost('id_category', null);
+        $idCategories = $this->getRequest()->getPost('category_ids', null);
         if ($idCategories) {
             $allCats = $this->getAllChildrens();
         } else {
@@ -117,7 +117,6 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
                         'landing_page'=>$category->getLandingPage(),
                         'menu_bg_color'=>$category->getMenuBgColor(),
                         'menu_text_color'=>$category->getMenuTextColor(),
-                        'menu_template'=>$category->getMenuTemplate(),
                         'menu_main_static_block'=>$category->getMenuMainStaticBlock(),
                         'menu_static_block1'=>$category->getMenuStaticBlock1(),
                         'product_count'=>$category->getProductCount(),
@@ -149,7 +148,7 @@ class Apdc_Catalog_Adminhtml_Apdc_Catalog_Categories_ExportController extends Ma
      */
     protected function getAllChildrens()
     {
-        $idCategories = $this->getRequest()->getPost('id_category', null);
+        $idCategories = $this->getRequest()->getPost('category_ids', null);
         if ($idCategories) {
             $idCategories = explode(',', trim($idCategories));
         }

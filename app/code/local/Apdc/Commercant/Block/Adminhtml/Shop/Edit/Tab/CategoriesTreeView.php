@@ -31,8 +31,8 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_CategoriesTreeView extends A
     {
         if (is_null($this->_categoryIds)){
             $this->_categoryIds = [];
-            if ($this->getShop()->getIdCategory()) {
-                $this->_categoryIds = $this->getShop()->getIdCategory();
+            if ($this->getShop()->getCategoryIds()) {
+                $this->_categoryIds = $this->getShop()->getCategoryIds();
             }
         }
         return $this->_categoryIds;

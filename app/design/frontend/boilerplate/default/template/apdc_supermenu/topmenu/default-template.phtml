@@ -3,15 +3,35 @@
 /** @var Varien_Data_Tree_Node $menuTree */
 
 $html = '';
-$nbCategoryColumns = 4;
 $children = $menuTree->getChildren();
 $menuTree->setCounter(1);
-if ($menuTree->getMenuMainStaticBlock()) {
-    $html .= '<li class="template-column block-static-menu">';
-    $html .= $this->getStaticBlockHtml($menuTree->getMenuMainStaticBlock());
+
+$shop = $this->getShopByCategoryId(str_replace('category-node-', '', $menuTree->getId()));
+
+if ($shop->getShopUrl() || $shop->getAllProductsLink()) {
+    $html .= '<li class="template-line common-links">';
+    $html .= '<ul>';
+    if ($shop->getShopUrl()) {
+        $html .= '<li class="level2 first template-column">';
+        $html .=    '<a href="' . $shop->getShopUrl() . '" class="">';
+        $html .=        '<span class="cat-name">' . $this->__('En savoir plus sur %s', $shop->getName()) . '</span>';
+        $html .=    '</a>';
+        $html .= '</li>';
+    }
+    if ($shop->getAllProductsLink()) {
+        $html .= '<li class="level2 last template-column">';
+        $html .=    '<a href="' . $shop->getAllProductsLink() . '" class="">';
+        $html .=        '<span class="cat-name">' . $this->__('Tous les produits de %s', $shop->getName()) . '</span>';
+        $html .=    '</a>';
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
     $html .= '</li>';
+    $html .= '<li class="template-line separator"></li>';
 }
-$cpt = 1;
+
+$html .= '<li class="template-line">';
+$html .= '<ul>';
 foreach ($children as $child) {
 
     $this->initChild($child, $menuTree);
@@ -20,10 +40,12 @@ foreach ($children as $child) {
 
     if ($child->getIsClickable()) {
         $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="'. $child->getLinkClasses() .'">';
+        $html .= '<div class="cat-thumbnail">';
         if ($child->getThumbnail()) {
-            $thumbnail = $this->getResizedImage($child->getThumbnail(), 50,50);
-            $html .= '<div class="cat-thumbnail"><img src="' . $thumbnail . '"/></div>';
+            $thumbnail = $this->getResizedImage($child->getThumbnail(), 100,100);
+            $html .= '<img src="' . $thumbnail . '"/>';
         }
+        $html .= '</div>';
         $html .= '<span class="cat-name">'.$this->escapeHtml($this->__($child->getName())).'</span>';
         if ($child->hasChildren()) {
             $html .= '<div class="deploy-menu-button"><i class="fa fa-caret-down"></i></div>';
@@ -57,10 +79,8 @@ foreach ($children as $child) {
     $counter = $menuTree->getCounter();
     $counter++;
     $menuTree->setCounter($counter);
-    $cpt++;
-    if ($cpt > $nbCategoryColumns) {
-        break;
-    }
 }
+$html .= '</ul>';
+$html .= '</li>';
 
 return $html;

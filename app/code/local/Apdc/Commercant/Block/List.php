@@ -50,12 +50,12 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
 
         foreach ($shops as $shop) {
             $shop = $shop->getData();
-            if ($shop['id_category']) {
-                sort($shop['id_category']);
+            if ($shop['category_ids']) {
+                sort($shop['category_ids']);
 
                 //Récupération de l'id catégorie correspondant au magasin
                 if ($filter == 'store') {
-                    foreach ($shop['id_category'] as $id) {
+                    foreach ($shop['category_ids'] as $id) {
                         $current_cat = $id;
                         $path = Mage::getModel('catalog/category')->load($id)->getPath();
                         $rootcat = explode('/', $path)[1];
@@ -66,7 +66,7 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
                         }
                     }
                 } else {
-                    $current_cat = $shop['id_category'][0];
+                    $current_cat = $shop['category_ids'][0];
                 }
 
                 $category = Mage::getModel('catalog/category')->setStoreId(0)->load($current_cat);

@@ -78,7 +78,7 @@ class Apdc_Catalog_Block_Shop_Availability extends Mage_Core_Block_Template
             if (isset($path[3])) {
                 $comcatid = $path[3];
 
-                $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldtoFilter('id_category',array("finset"=>$comcatid))->getFirstItem();
+                $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addCategoryFilter($comcatid)->getFirstItem();
                 if ($shop && $shop->getId()) {
                     return $shop->getId();
                 }

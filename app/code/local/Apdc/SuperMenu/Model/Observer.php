@@ -32,7 +32,6 @@ class Apdc_SuperMenu_Model_Observer
         $select = $observer->getEvent()->getSelect();
         $select->columns('menu_bg_color');
         $select->columns('menu_text_color');
-        $select->columns('menu_template');
         $select->columns('menu_main_static_block');
         $select->columns('menu_static_block1');
         $select->columns('thumbnail');
@@ -85,7 +84,6 @@ class Apdc_SuperMenu_Model_Observer
                 'is_active' => $this->_isActiveMenuCategory($category),
                 'menu_bg_color' => $category->getMenuBgColor(),
                 'menu_text_color' => $category->getMenuTextColor(),
-                'menu_template' => $category->getMenuTemplate(),
                 'menu_main_static_block' => $category->getMenuMainStaticBlock(),
                 'menu_static_block1' => $category->getMenuStaticBlock1(),
                 'thumbnail' => $category->getThumbnail(),

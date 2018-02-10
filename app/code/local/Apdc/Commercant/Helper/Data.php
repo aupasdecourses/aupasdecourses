@@ -94,13 +94,13 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
     //Voir si on ne peut pas refactoriser les fonctions utilisant getCategoriesArray avec cette fonction
     public function getCategoriesCommercant(){
-        $cats=Mage::getModel('apdc_commercant/shop')->getCollection()->load()->toArray(array('id_category'));
-        $result=array();
+        $cats = Mage::getModel('apdc_commercant/shop')->getCollection()->load();
+        $result = array();
         foreach($cats as $cat){
-            $result=array_merge($result,$cat['id_category']);
+            $result = array_merge($result, $cat->getCategoryIds());
         }
 
-        $cats=Mage::getModel('catalog/category')
+        $cats = Mage::getModel('catalog/category')
             ->getCollection()
             ->setOrder('name')
             ->addAttributeToSelect('name')
@@ -109,30 +109,6 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return $cats;
     }
 	
-    protected function getDataByCurrentCategory()
-    {
-        $shop = null;
-        $categoryShop = null;
-
-        $current_cat = Mage::registry('current_category');
-        $categoriesParent = $current_cat->getParentCategories();
-        foreach($categoriesParent as $categoryParent) {
-            if($categoryParent->getLevel() == 3) {
-                $categoryShop = $categoryParent;
-                break;
-            }
-        }
-        if ($categoryShop) {
-            $categoryShop = Mage::getModel('catalog/category')->load($categoryShop->getId());
-            $shop = Mage::getSingleton('apdc_commercant/shop')->getCollection()->addFieldToFilter('id_category', array('finset' =>$categoryShop->getId()))->getFirstItem();
-        }
-
-        return [
-            'shop' => $shop,
-            'categoryShop' => $categoryShop
-        ];
-    }
-
     public function getInfoShopByCommercantId($productCommercantId)
     {
         if (!isset($this->shopIdByCommercantId[$productCommercantId])) {
@@ -148,11 +124,9 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getInfoShop($shopId = null)
     {
         $shop = null;
-        $categoryShop = null;
 		if($shopId == null) {
-            $dataShop = $this->getDataByCurrentCategory();
-            $shop = $dataShop['shop'];
-            $categoryShop = $dataShop['categoryShop'];
+            $currentCat = Mage::registry('current_category');
+            $shop = Mage::getModel('apdc_commercant/shop')->loadByCategoryId($currentCat->getId());
             $shopId = ($shop && $shop->getId() ? $shop->getId() : null);
 		}
 
@@ -162,18 +136,12 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
 
         if (!isset($this->infoShops[$shopId])) {
             $this->infoShops[$shopId] = [];
-            if (!($shop && $shop->getId()) && is_null($categoryShop)) {
+            if (!($shop && $shop->getId())) {
                 $shop = Mage::getModel('apdc_commercant/shop')->load($shopId);
-                if ($shop && $shop->getId()) {
-                    $idCategory = $shop->getIdCategory();
-                    if (!empty($idCategory)) {
-                        $categoryShop = Mage::getModel('catalog/category')->load($idCategory[0]);
-                    }
-                }
             }
 
-            if ($shop && $shop->getId() && $categoryShop && $categoryShop->getId()) {
-                $this->infoShops[$shopId] = $this->populateShopInfo($shop, $categoryShop);
+            if ($shop && $shop->getId()) {
+                $this->infoShops[$shopId] = $this->populateShopInfo($shop);
             }
         }
 
@@ -187,15 +155,19 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->infoShops[$shopId];
     }
 
-    protected function populateShopInfo($shop, $categoryShop)
+    protected function populateShopInfo($shop)
     {
         $shopInfo = $shop->getData();
+        $shopInfo['model'] = $shop;
         $shopInfo['availability'] = [];
         $shopInfo['adresse'] = $shop->getStreet() . ' ' . $shop->getPostcode() . ' ' . $shop->getCity();
         $shopInfo['url_adresse'] = 'https://www.google.fr/maps/place/' . str_replace(' ', '+', $shopInfo['adresse']);
-        $shopInfo['description'] = $categoryShop->getDescription();
-        $shopInfo['image'] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
-        $shopInfo['thumbnail_image'] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+        $categoryShop = $shop->getShopMainCategory();
+        if ($categoryShop && $categoryShop->getId()) {
+            $shopInfo['description'] = $categoryShop->getDescription();
+            $shopInfo['image'] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
+            $shopInfo['thumbnail_image'] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+        }
         $stores=$this->getStoresArray();
         $rootId=explode("/",$categoryShop->getPath())[1];
         $shopInfo['url'] = Mage::getUrl($categoryShop->getUrlPath(), array('_store'=>$stores[$rootId]['code']));

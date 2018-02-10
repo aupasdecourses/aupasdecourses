@@ -2,7 +2,7 @@
 
 <layout version="0.1.0">
 <!--
-Category default layout
+Category layered navigation layout
 -->
 
     <!--<catalog_category_default translate="label">

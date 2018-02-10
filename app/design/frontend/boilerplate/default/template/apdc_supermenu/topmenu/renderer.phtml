@@ -64,13 +64,12 @@ foreach ($children as $child) {
     if ($child->hasChildren() && !($child->getLevel()==0 && $child->getIsClickable())) {
         if ($child->getLevel() == 0) {
             $html .= '<div class="' . $child->getSubMenuClasses() . '">';
-            $html .= '<div class="close-menu fa fa-close"></div>';
-            $html .= '<ul>';
+            $html .= '<ul style="' . $child->getLinkStyle() . '">';
             $html .=     $this->render($child, '');
             $html .= '</ul>';
             $html .= '</div>';
         } else {
-            $html .= '<ul class="' . $child->getSubMenuClasses() . '">';
+            $html .= '<ul class="' . $child->getSubMenuClasses() . '" data-id="' . $menuTree->getId() . '">';
             $html .=     $this->render($child, '');
             $html .= '</ul>';
         }

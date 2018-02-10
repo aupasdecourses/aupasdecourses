@@ -116,7 +116,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Categories
      */
     protected function setDefaultCategoryValues(Apdc_Commercant_Model_Shop $model)
     {
-        $categoryIds = $model->getIdCategory();
+        $categoryIds = $model->getCategoryIds();
         if (!empty($categoryIds)) {
             $category = Mage::getModel('catalog/category')->load($categoryIds[0]);
             if ($category && $category->getId()) {

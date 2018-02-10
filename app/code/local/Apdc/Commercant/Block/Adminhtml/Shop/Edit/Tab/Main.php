@@ -58,16 +58,6 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'disabled' => $isElementDisabled
         ]);
 
-        $typeshops=Mage::getModel('apdc_commercant/typeshop')->getCollection()->toOptionArray();
-        array_unshift($typeshops, ['value' => '', 'label' => '']);
-        $fieldset->addField('type_shop', 'select', [
-            'name' => 'type_shop',
-            'label' => $this->__('Type Commercant'),
-            'required' => true,
-            'values' => $typeshops,
-            'disabled' => $isElementDisabled
-        ]);
-
         $fieldset->addField('name', 'text', [
             'name' => 'name',
             'label' => $this->__('Nom'),
@@ -88,6 +78,18 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'required' => false,
             'disabled' => $isElementDisabled
         ]);
+
+        $shopTypes = Mage::getSingleton('apdc_commercant/source_shop_types')->toOptionArray();
+        $fieldset->addField(
+            'shop_type',
+            'select',
+            [
+                'name' => 'shop_type',
+                'label' => $this->__('Type de commerce'),
+                'required' => true,
+                'values' => $shopTypes
+            ]
+        );
 
         $fieldset->addField('blacklist', 'select', [
             'name' => 'blacklist',

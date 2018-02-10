@@ -1,7 +1,7 @@
 <?php
 	$currentCat = Mage::registry('current_category');
 	$collection = $this->getSelectionById($currentCat->getId());
-    $shop_info = $this->getData('shop_info');
+    $shop_info = ($this->getData('shop_info') ? $this->getData('shop_info') : Mage::helper('apdc_commercant')->getInfoShop());
 ?>
 <?php if($collection->count() > 0) :?>
 <div class="row apdc_home_selection">

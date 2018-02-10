@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Commercant>
-            <version>0.7.2</version>
+            <version>0.7.4</version>
         </Apdc_Commercant>
     </modules>
 
@@ -31,6 +31,9 @@
                     <shop>
                         <table>apdc_shop</table>
                     </shop>
+                    <shop_categories>
+                        <table>apdc_shop_categories</table>
+                    </shop_categories>
                     <typeshop>
                         <table>apdc_typeshop</table>
                     </typeshop>
