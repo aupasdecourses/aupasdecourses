@@ -21,6 +21,13 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
         return ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
     }
 
+    public function setLocaleFR(){
+        $locale = Mage::getStoreConfig('general/locale/code');
+        if($locale=='fr_FR'){
+          return setLocale(LC_TIME,$locale.'.utf8');
+        }
+    }
+
     public function getWeekDays($short=true)
     {
         $weekDays = [];
@@ -212,8 +219,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $today = new DateTime();
             $nextWeek = new DateTime();
             $nextWeek->add(new DateInterval('P7D'));
-            $locale = Mage::getStoreConfig('general/locale/code');
-            setLocale(LC_TIME, $locale);
+            $this->setLocaleFR();
             foreach ($shopInfo['closing_periods'] as $period) {
                 $start = new DateTime($period['start']);
                 $end = new DateTime($period['end']);
@@ -272,8 +278,7 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
             if (isset($start) && isset($end)) {
-                $locale = Mage::getStoreConfig('general/locale/code');
-                setLocale(LC_TIME, $locale);
+                $this->setLocaleFR();
                 if ($start == $end) {
                     $start = new DateTime($start);
                     $messageInfo = $this->__('Fermé le %s', ucwords(strftime('%e %B', $start->getTimestamp())));

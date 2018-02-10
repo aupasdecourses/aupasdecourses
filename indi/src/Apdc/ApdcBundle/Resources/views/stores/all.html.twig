@@ -23,7 +23,7 @@
 								{% if max_nb_commandes_quartier == 0 %}
 									{% set commandes_msg %}<div></div>{% endset %}
 								{% else %}
-									{% set commandes_msg %}<div style="color:red">{{ max_nb_commandes_quartier ~ " commande(s) "}}</div>{% endset %}
+									{% set commandes_msg %}<div>{{ max_nb_commandes_quartier ~ " commande(s) "}}</div>{% endset %}
 								{% endif %}
 							{% endfor %}
 							<h2><a href="#{{ store|replace({' ': '_'}) }}" data-toggle="collapse">{{ store }}<h4>{{ commandes_msg }}</h4></a></h2>
@@ -49,17 +49,26 @@
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>
-												<td style="width:40%">
-													<a href="#{{ order_id ~ "-" ~ com_id }}" data-toggle="collapse">
-														<label>{{ order_id ~" "~ order.first_name ~" "~ order.last_name }}</label>
-													</a>
-												</td>
-												<td style="width:30%">
-													<label>{{"Nombre d'articles : " ~ order.total_quantite }}</label>
-												</td>
-												<td style="width:30%">
-													<label>{{"Total : " ~ order.total_prix ~ "€"}}</label>
-												</td>
+												{% if date(order.delivery_date)>=date() %}
+													{% if order.status|lower == 'complete' or order.status|lower == 'closed' %}
+														<td style="width:10%;color:red">À ne pas livrer</td>
+													{% else %}
+														<td style="width:10%">À livrer</td>
+													{% endif %}
+													<td style="width:30%">
+												{% else%}
+													<td style="width:40%">
+												{% endif %}
+														<a href="#{{ order_id ~ "-" ~ com_id }}" data-toggle="collapse">
+															<label>{{ order_id ~" "~ order.first_name ~" "~ order.last_name }}</label>
+														</a>
+													</td>
+													<td style="width:30%">
+														<label>{{"Nombre d'articles : " ~ order.total_quantite }}</label>
+													</td>
+													<td style="width:30%">
+														<label>{{"Total : " ~ order.total_prix ~ "€"}}</label>
+													</td>
 											</tr>
 											<tr>
 												<td colspan="3">
