@@ -15,11 +15,47 @@
 }*/
 
 @media screen and (max-width: 1316px){
-    #my-account-menu{
-        margin-left: 10px;
-        span{
-            display: none;
+    .page-header-container{
+      .skip-links{
+        padding:0;
+        .skip-container-header-search{
+          text-align: center;
+          position: relative;
+          z-index: 1;
+          form{
+            &.show-input{
+              margin: 9px 30px 0 -270px;
+            }
+          }
+          .search-button{
+            margin: 0 0 0 -45px;
+          }
         }
+        .label{
+          display: none;
+        }
+        i{
+        font-size: 24px;
+        margin: 0 10px;
+        }
+        .header-delivery-container{
+          margin-right: 0;
+        }
+        .skip-help{
+          margin-right: 0px;
+        }
+      }
+    }
+    .header-minicart{
+        .skip-link{
+            i.cart-icon {
+                background-size: 24px 22px;
+            }
+        }
+    }
+    .header-minicart a.skip-link .count, .header-neighborhood-container > a .count {
+      left: 28px;
+      top: -12px;
     }
     .block-progress{
         dl > div{
@@ -31,6 +67,12 @@
                 display: none;
             }
         }
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1316px){
+    .header-minicart{
+        margin-right:30px;
     }
 }
 
@@ -302,7 +344,6 @@
     }
     #topmenu {
       position:fixed;
-      z-index:100;
     }
     #checkout-shipping-method-load{
         dl{
@@ -407,7 +448,7 @@
                     display: block;
                     margin-right: 0;
                     &.level0 >a{
-                        height:60px;
+                        height:50px;
                         align-items: center;
                         display: flex;
                         justify-content: center;
@@ -439,8 +480,9 @@
         #storename{
             margin-right: 0px;
             margin-bottom:5px;
+            margin-top:5px;
             height:auto;
-            max-width: 200px;
+            width: 150px;
             a{
                 padding-bottom:9px;
             }
@@ -528,7 +570,9 @@
             position:static;
         }
     }
-    
+    .catalog-category-view .commercant-collapse{
+        padding: 0 20px 0;
+    }
 }
 
 @media screen and (max-width: 1130px){
@@ -569,51 +613,6 @@
 @media screen and (max-width: 992px){
     .container{
         width: auto;
-    }
-    .page-header-container{
-      .skip-links{
-        padding:0;
-        .skip-container-header-search{
-          text-align: center;
-          position: relative;
-          z-index: 1;
-          form{
-            &.show-input{
-              margin: 9px 30px 0 -270px;
-            }
-            margin-top: 2px;
-          }
-        }
-        .label{
-          display: none;
-        }
-        .link-header-right{
-          position: relative;
-          z-index: 1;
-          i{
-            font-size: 24px;
-            margin: 0 10px;
-          }
-        }
-        .header-delivery-container{
-          margin-right: 0;
-        }
-        .skip-help{
-          margin-right: 0px;
-        }
-      }
-    }
-    .header-minicart{
-      .skip-link{
-        i.cart-icon {
-          background: url(../images/icon-minicart.png) no-repeat;
-          background-position: 0px 10px;
-          background-size: 21px 18px;
-        }
-      }
-    }
-    .header-minicart a.skip-link .count, .header-neighborhood-container > a .count {
-      left: 25px;
     }
     #product-quick-view_popup-container{
         width: 100%;
@@ -729,6 +728,29 @@
                 .deli_time{
                     width: 120px;
                 }
+            }
+        }
+    }
+
+    .catalog-category-view{
+        .category_view_content {
+            .category_left_menu {
+                width: 40%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 15px;
+            }
+        }
+        .commercant-collapse .commercant-info{
+            .commercant-name{
+                font-size:14px;
+                h1{
+                    font-size:30px;
+                }
+            }
+            .photo-commercant {
+                width: 55px;
+                height: 55px;
             }
         }
     }
@@ -917,6 +939,11 @@
         }
       }
     }
+    .catalog-category-view .commercant-collapse .collapse-wrapper .commercant-img img{
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media screen and (max-width: 740px){
@@ -1087,14 +1114,12 @@
         }
       }
     }
-    .header-minicart{
-      .skip-link{
-        i.cart-icon {
-          background: url(../images/icon-minicart.png) no-repeat;
-          background-position: 0px 5px;
-          background-size: 21px 18px;
-        }
-      }
+    .header-minicart .skip-link i.cart-icon{
+        background-position: 0 5px;
+        background-size: 21px 18px;
+    }
+    i.cart-icon {
+      background-position: 0px 5px;
     }
     .header-minicart a.skip-link .count, .header-neighborhood-container > a .count {
       left: 23px;
@@ -1123,19 +1148,21 @@
     #supermenu .template-column {
         width: 50%;
     }
+    .catalog-category-view .category_view_content .category_left_menu{
+        width:100%;
+    }
 }
 
 @media screen and (max-width: 460px){
     .page-header-container{
+      padding-right:60px;
       .skip-links{
         .link-header-right{
           display: flex;
           flex: 0 1 auto;
           flex-wrap: wrap;
-          .skip-container{
-            margin-top: 0px;
-            flex-grow:1;
-            width:30%;
+          .skip-help{
+              display: none;
           }
         }
         .header-minicart{
@@ -1169,38 +1196,6 @@
         }
     }
     .checkout-onepage-index {
-      .logo a img {
-        max-width:80px;
-      }
-      .page-header-container {
-        .skip-links {
-          position:relative;
-          height:100%;
-          .block-progress {
-            position:absolute;
-            bottom:5px;
-            left:35px;
-            width:auto;
-            dl > div {
-              margin:0;
-              dt {
-                padding:3px 10px;
-              }
-            }
-          }
-          .link-header-right {
-            display:block;
-            position:absolute;
-            top:5px;
-            right:0px;
-            width:auto;
-            .skip-container {
-              width:auto;
-              vertical-align:top;
-            }
-          }
-        }
-      }
     }
     #html-body{
         header{

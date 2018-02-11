@@ -50,7 +50,7 @@
         }
         .category_left_menu {
             box-shadow: 1px 5px 20px 1px rgba(0, 0, 0, .16);
-            padding: 20px 0px 10px 15px;
+            padding: 10px 10px 10px 10px;
             font-size: 0.90rem;
             ul {
                 list-style:none;
@@ -140,12 +140,12 @@
             }
             .open-collapse{
                 display: inline-block;
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
                 border-radius: 50%;
                 border: 3px solid #ddd;
                 text-align: center;
-                line-height: 59px;
+                line-height: 40px;
                 cursor: pointer;
                 margin-top: 10px;
                 &.open{

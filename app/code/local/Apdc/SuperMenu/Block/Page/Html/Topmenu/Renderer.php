@@ -367,9 +367,9 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
     {
         $classes = '';
         if ($item->getShowInNavigation() == 2) {
-            $classes = 'hidden-xs';
+            $classes = 'visible-lg';
         } else if ($item->getShowInNavigation() == 3) {
-            $classes = 'visible-xs';
+            $classes = 'hidden-lg';
         }
         return $classes;
     }
