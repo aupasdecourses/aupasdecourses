@@ -17,9 +17,6 @@ ul.nav a {
 		color:rgba(0,0,0,0.87);
 	}
 	ul{
-		/*&.level1>li {
-			display:table-cell;
-		}*/
 		&.level2{
 			margin-bottom: 15px;
   			padding-left: 30px;
@@ -77,9 +74,11 @@ ul.nav a {
 			}
 		}
 	}
-	div.level0>ul:not(.menu-template-content){
-	    list-style-type: none;
-	    padding-left: 0px !important;
+	div{
+		&.level0>ul:not(.menu-template-content){
+		    list-style-type: none;
+		    padding-left: 0px !important;
+	    }
 	}
 	#storename{
 		height: 50px;
@@ -179,9 +178,8 @@ ul.nav a {
         }
         .cat-thumbnail img {
             position: relative;
-            max-width: 100px;
-            max-height: 100px;
-            height: 100px;
+            height: 40px;
+    		width: 40px;
         }
         .cat-name {
             font-size: 0.95rem;
@@ -209,7 +207,6 @@ ul.nav a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    display:inline-block;
 }
 
 /* ============================================ *
