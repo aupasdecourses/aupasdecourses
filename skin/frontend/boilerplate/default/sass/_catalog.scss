@@ -48,6 +48,12 @@
         .title-block{
             margin-bottom: 15px;
         }
+        .col-md-3 .is_sticky {
+          position:fixed;
+          top:0;
+          transition:transform 0.2s ease;
+          padding-top:20px;
+        }
         .category_left_menu {
             box-shadow: 1px 5px 20px 1px rgba(0, 0, 0, .16);
             padding: 10px 10px 10px 10px;

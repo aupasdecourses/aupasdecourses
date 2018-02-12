@@ -15602,6 +15602,13 @@ footer .social-list .btn-social-icon {
   margin-bottom: 15px;
 }
 
+.catalog-category-view .category_view_content .col-md-3 .is_sticky {
+  position: fixed;
+  top: 0;
+  padding-top: 20px;
+  transition: transform .2s ease;
+}
+
 .catalog-category-view .category_view_content .category_left_menu {
   font-size: .90rem;
   padding: 10px 10px 10px 10px;
