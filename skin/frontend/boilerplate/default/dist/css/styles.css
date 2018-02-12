@@ -15594,6 +15594,7 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .category_view_content {
+  z-index: 1;
   padding-bottom: 10px;
   background-color: white;
 }
@@ -15604,9 +15605,11 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .category_view_content .col-md-3 .is_sticky {
   position: fixed;
+  z-index: 1;
   top: 0;
   padding-top: 20px;
   transition: transform .2s ease;
+  background-color: white;
 }
 
 .catalog-category-view .category_view_content .category_left_menu {
@@ -16202,6 +16205,7 @@ footer .social-list .btn-social-icon {
 }
 
 .toolbar-bottom .limiter {
+  float: right;
   margin-top: -10px;
 }
 

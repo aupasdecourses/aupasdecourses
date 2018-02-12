@@ -41,14 +41,18 @@
     }
   }
 }
+
 .catalog-category-view{
     .category_view_content {
         background-color:white;
         padding-bottom:10px;
+        z-index:1;
         .title-block{
             margin-bottom: 15px;
         }
         .col-md-3 .is_sticky {
+          background-color:white;
+          z-index:1;
           position:fixed;
           top:0;
           transition:transform 0.2s ease;
@@ -583,6 +587,7 @@
     }
     .limiter{
         margin-top: -10px;
+        float:right;
     }
     .amount{
         color: #333;
