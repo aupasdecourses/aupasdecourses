@@ -108,6 +108,17 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
             return $directOutput;
         }
     }
+
+    public function initColors(Varien_Data_Tree_Node &$child)
+    {
+        if (!$child->getMenuBgColor() && $this->getCurrentMenuTree()->getMenuBgColor()) {
+            $child->setMenuBgColor($this->getCurrentMenuTree()->getMenuBgColor());
+        }
+        if (!$child->getMenuTextColor() && $this->getCurrentMenuTree()->getMenuTextColor()) {
+            $child->setMenuTextColor($this->getCurrentMenuTree()->getMenuTextColor());
+        }
+    }
+
     /**
      * initLinkStyle 
      * 
@@ -223,6 +234,7 @@ class Apdc_SuperMenu_Block_Page_Html_Topmenu_Renderer extends Apdc_SuperMenu_Blo
         $this->initLinkClasses($child);
         $this->initSubMenuClasses($child);
         $this->initLinkStyle($child);
+        $this->initColors($child);
 
         return $child;
     }

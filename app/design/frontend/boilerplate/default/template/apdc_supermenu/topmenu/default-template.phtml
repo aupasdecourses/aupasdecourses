@@ -27,7 +27,7 @@ if ($shop->getShopUrl() || $shop->getAllProductsLink()) {
     }
     $html .= '</ul>';
     $html .= '</li>';
-    $html .= '<li class="template-line separator"></li>';
+    $html .= '<li class="template-line separator" ' . ($menuTree->getMenuBgColor() ? 'style="border-color:' . $menuTree->getMenuBgColor() . ';"' : '') . '></li>';
 }
 
 $html .= '<li class="template-line">';
