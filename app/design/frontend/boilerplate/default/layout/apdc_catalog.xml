@@ -110,6 +110,7 @@
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_optionsPrices.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_configurable.js</file></action>
           <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/apdc_custom_options.js</file></action>
+          <action method="addItem"><type>skin_js</type><file>js/apdc_catalog/category_left_menu.js</file></action>
         </reference>
         <reference name="right">
             <block type="reports/product_viewed" name="right.reports.product.viewed" template="reports/product_viewed.phtml">

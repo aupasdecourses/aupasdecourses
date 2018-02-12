@@ -1,6 +1,11 @@
 <?php foreach ($this->getAllCats() as $category) : ?>
     <li class="<?php echo $this->getClasses($category); ?>">
-        <a href="<?php echo $category->getUrl(); ?>" title="<?php echo $category->getName(); ?>"><?php echo $category->getName(); ?></a>
+        <a href="<?php echo $category->getUrl(); ?>" title="<?php echo $category->getName(); ?>">
+            <?php echo $category->getName(); ?>
+            <?php if ($category->hasChildren()) : ?>
+                <span class="toggle-link"><i class="fa fa-angle-down"></i></span>
+            <?php endif; ?>
+        </a>
         <?php if ($subcats = $category->getChildren()): ?>
             <ul class="sub-cat-list">
                 <?php echo $this->getTreeCategories($category->getId(), true); ?>

@@ -735,10 +735,60 @@
     .catalog-category-view{
         .category_view_content {
             .category_left_menu {
-                width: 40%;
+                width: 100%;
                 margin-left: auto;
                 margin-right: auto;
                 margin-bottom: 15px;
+                max-height:40px;
+                transition:max-height 0.3s ease;
+                overflow:hidden;
+                font-size: 1.05rem;
+                h4 {
+                  position:relative;
+                  margin-top:0;
+                  .toggle-mobile-menu {
+                    cursor:pointer;
+                    position:absolute;
+                    right:0;
+                    top:50%;
+                    transform:translate(0, -50%);
+                    display:inline-block;
+                    width:40px;
+                    text-align:right;
+                    i.fa {
+                      height:25px;
+                      width:25px;
+                      line-height:25px;
+                      text-align:center;
+                      border-radius:50%;
+                      background-color:white;
+                      border:1px solid $color-main-green;
+                      color:$color-main-green;
+                      font-size:24px;
+                      transform:rotateZ(0);
+                      transition:transform 0.2s ease;
+                    }
+                  }
+                }
+                &.open {
+                  h4 {
+                    .toggle-mobile-menu {
+                      i.fa {
+                          transform:rotateZ(180deg);
+                      }
+                    }
+                  }
+                }
+                ul {
+                  li {
+                    max-height:23px;
+                  }
+                  &.sub-cat-list{
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                  }
+                }
+
             }
         }
         .commercant-collapse .commercant-info{

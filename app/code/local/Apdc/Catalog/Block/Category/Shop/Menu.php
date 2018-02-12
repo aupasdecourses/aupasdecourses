@@ -121,6 +121,9 @@ class Apdc_Catalog_Block_Category_Shop_Menu extends Mage_Core_Block_Template
         }
         if (preg_match('#^' . preg_quote($category->getPath(), '/') . '#', $this->getCurrentCategory()->getPath())) {
             $classes[] = 'active';
+            if ($category->hasChildren()) {
+                $classes[] = 'open';
+            }
         }
         if ($category->hasChildren()) {
             $classes[] = 'parent';

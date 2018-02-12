@@ -15608,6 +15608,10 @@ footer .social-list .btn-social-icon {
   box-shadow: 1px 5px 20px 1px rgba(0, 0, 0, .16);
 }
 
+.catalog-category-view .category_view_content .category_left_menu .toggle-mobile-menu {
+  display: none;
+}
+
 .catalog-category-view .category_view_content .category_left_menu ul {
   padding-left: 10px;
   list-style: none;
@@ -15615,9 +15619,14 @@ footer .social-list .btn-social-icon {
 
 .catalog-category-view .category_view_content .category_left_menu ul li {
   font-weight: normal;
+  overflow: hidden;
+  max-height: 20px;
+  transition: max-height .3s ease;
 }
 
 .catalog-category-view .category_view_content .category_left_menu ul li a {
+  position: relative;
+  display: block;
   color: rgba(0, 0, 0, .84);
 }
 
@@ -15625,11 +15634,32 @@ footer .social-list .btn-social-icon {
   text-decoration: underline;
 }
 
+.catalog-category-view .category_view_content .category_left_menu ul li span.toggle-link {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: inline-block;
+  width: 30px;
+  cursor: pointer;
+  transform: translate(0, -50%);
+  text-align: right;
+}
+
+.catalog-category-view .category_view_content .category_left_menu ul li i.fa {
+  font-size: 24px;
+  transition: transform .2s ease;
+  transform: rotateZ(0);
+}
+
+.catalog-category-view .category_view_content .category_left_menu ul li.open i.fa {
+  transform: rotateZ(180deg);
+}
+
 .catalog-category-view .category_view_content .category_left_menu ul li.active {
   font-weight: bold;
 }
 
-.catalog-category-view .category_view_content .category_left_menu ul li.active:before {
+.catalog-category-view .category_view_content .category_left_menu ul li.active > a:before {
   content: '>';
 }
 
@@ -18110,10 +18140,57 @@ a.level3:hover {
   }
 
   .catalog-category-view .category_view_content .category_left_menu {
-    width: 40%;
+    font-size: 1.05rem;
+    overflow: hidden;
+    width: 100%;
+    max-height: 40px;
     margin-right: auto;
     margin-bottom: 15px;
     margin-left: auto;
+    transition: max-height .3s ease;
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu h4 {
+    position: relative;
+    margin-top: 0;
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu h4 .toggle-mobile-menu {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: inline-block;
+    width: 40px;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    text-align: right;
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu h4 .toggle-mobile-menu i.fa {
+    font-size: 24px;
+    line-height: 25px;
+    width: 25px;
+    height: 25px;
+    transition: transform .2s ease;
+    transform: rotateZ(0);
+    text-align: center;
+    color: #3ab64b;
+    border: 1px solid #3ab64b;
+    border-radius: 50%;
+    background-color: white;
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu.open h4 .toggle-mobile-menu i.fa {
+    transform: rotateZ(180deg);
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu ul li {
+    max-height: 23px;
+  }
+
+  .catalog-category-view .category_view_content .category_left_menu ul.sub-cat-list {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .catalog-category-view .commercant-collapse .commercant-info .commercant-name {

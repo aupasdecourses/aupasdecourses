@@ -1,5 +1,7 @@
 <?php $menu = $this->getMenuHtml(); ?>
+<?php if ($menu) : ?>
 <div class="category_left_menu">
-<h4>Les rayons</h4>
-<ul><?php echo $menu; ?></ul>
+    <h4><?php echo $this->__('Les rayons'); ?><span class="toggle-mobile-menu"><i class="fa fa-angle-down"></i></span></h4>
+    <ul><?php echo $menu; ?></ul>
 </div>
+<?php endif; ?>

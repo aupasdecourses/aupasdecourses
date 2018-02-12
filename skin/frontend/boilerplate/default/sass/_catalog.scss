@@ -52,20 +52,49 @@
             box-shadow: 1px 5px 20px 1px rgba(0, 0, 0, .16);
             padding: 10px 10px 10px 10px;
             font-size: 0.90rem;
+            .toggle-mobile-menu {
+              display:none;
+            }
             ul {
                 list-style:none;
                 padding-left:10px;
                 li {
                     font-weight:normal;
-                    a{
+                    max-height: 20px;
+                    overflow: hidden;
+                    transition:max-height 0.3s ease;
+
+                    a {
+                        display:block;
+                        position:relative;
                         color:$color-main-grey;
                         &:hover{
                             text-decoration:underline;
                         }
                     }
+                    span.toggle-link {
+                      cursor:pointer;
+                      position:absolute;
+                      right:0;
+                      top:50%;
+                      transform:translate(0, -50%);
+                      display:inline-block;
+                      width:30px;
+                      text-align:right;
+                    }
+                    i.fa {
+                      font-size:24px;
+                      transform:rotateZ(0);
+                      transition:transform 0.2s ease;
+                    }
+                    &.open {
+                      i.fa {
+                          transform:rotateZ(180deg);
+                      }
+                    }
                     &.active {
                         font-weight:bold;
-                        &:before{
+                        > a:before{
                             content: ">";
                         }
                     }
