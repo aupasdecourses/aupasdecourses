@@ -87,15 +87,11 @@ class Magento
         if ($commercantId != -1) {
             $shops->addFieldToFilter('id_attribut_commercant', ['eq' => $commercantId]);
         }
-
-        $cat_array = \Mage::helper('apdc_commercant')->getCategoriesArray();
-        $S = \Mage::helper('apdc_commercant')->getStoresArray();
-
+        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
         foreach ($shops as $shop) {
-            $cats = $shop->getIdCategory();
-            foreach ($cats as $cat) {
-                $storeinfo = $S[explode('/', $cat_array[$cat])[1]];
-
+            $stores=explode(',', $shop->getStores());
+            foreach ($stores as $id) {
+                $storeinfo = $S[$id];
                 $delivery_days = $shop->getDeliveryDays();
                 $closed_periods = $shop->getClosingPeriods();
 
@@ -132,12 +128,10 @@ class Magento
             if ($lhs['active'] < $rhs['active']) {
                 return true;
             }
-
             return false;
         });
         /* Sort associative array in ascending order, according to the VALUE */
         asort($commercants);
-
         return $commercants;
     }
 
@@ -208,7 +202,6 @@ class Magento
         foreach ($commercants as $storeid => $commercant) {
             $rsl[$S[$storeid]['name']] = $commercant;
         }
-
         return $rsl;
     }
 
