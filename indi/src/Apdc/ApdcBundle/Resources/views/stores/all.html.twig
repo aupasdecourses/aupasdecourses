@@ -49,7 +49,7 @@
 									{% for order_id, order in merchant.orders %}
 										<table style="width: 100%">
 											<tr>
-												{% if date(order.delivery_date)>=date() %}
+												{% if date(order.delivery_date)>=(date()|date("Y-m-d")) %}
 													{% if order.status|lower == 'complete' or order.status|lower == 'closed' %}
 														<td style="width:10%;color:red">À ne pas livrer</td>
 													{% else %}

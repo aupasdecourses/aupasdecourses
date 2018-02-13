@@ -39,7 +39,7 @@
 									<tr>
 										<td>{{ order.delivery_time}}</td>
 										<td>
-											{% if date(order.delivery_date)>=date() %}
+											{% if date(order.delivery_date)>=(date()|date("Y-m-d")) %}
 												{% if order.status|lower == 'complete' or order.status|lower == 'closed' %}
 													<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc" style="color:red;">{{ order_id }}</a>
 													<p style="color:red;font-size: 0.85em;">Commande à ne pas livrer</p>
@@ -47,6 +47,8 @@
 													<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a>
 													<p style="font-size: 0.85em;">Commande à livrer</>
 												{% endif %}
+											{% else %}
+												<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a>
 											{% endif %}
 										</td>
 										<td>{{ order.total_prix }}</td>
