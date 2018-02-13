@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+ /**
+ * Layout for elasticsearch features
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile Searchandising Suite to newer
+ * versions in the future.
+ *
+ * @category  Smile
+ * @package   Smile_ElasticSearch
+ * @author    Aurelien FOUCRET <aurelien.foucret@smile.fr>
+ * @copyright 2013 Smile
+ * @license   Apache License Version 2.0
+ */
+ -->
+<layout version="0.1.0">
+    <adminhtml_catalog_product_attribute_edit>
+        <reference name="attribute_edit_js">
+            <action method="setTemplate"><template>smile/elasticsearch/catalog/product/attribute/js.phtml</template></action>
+        </reference>
+    </adminhtml_catalog_product_attribute_edit>
+    
+    <adminhtml_catalog_search_index>
+        <reference name="content">
+            <block type="smile_elasticsearch/adminhtml_synonym_updateButton"/>
+        </reference>
+    </adminhtml_catalog_search_index>
+
+    <adminhtml_catalog_search_edit>
+
+        <reference name="left">
+            <block type="smile_elasticsearch/adminhtml_catalog_search_edit_tabs" name="product_tabs">
+                <action method="addTab">
+                    <name>catalog_search_main_config</name>
+                    <block>smile_elasticsearch/adminhtml_catalog_search_edit_tab_main</block>
+                </action>
+                <action method="addTab">
+                    <name>catalog_search_boost_config</name>
+                    <block>smile_elasticsearch/adminhtml_catalog_search_edit_tab_boost_preview</block>
+                </action>
+            </block>
+        </reference>
+
+        <reference name="content">
+            <action method="unsetChild"><child>catalog_search_edit</child></action>
+            <block type="smile_elasticsearch/adminhtml_catalog_search_edit" name="catalog_search_edit" />
+        </reference>
+
+    </adminhtml_catalog_search_edit>
+
+    <adminhtml_catalog_search_preview>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="smile_elasticsearch/adminhtml_catalog_search_edit_tab_boost_preview" />
+        </block>
+    </adminhtml_catalog_search_preview>
+</layout>
