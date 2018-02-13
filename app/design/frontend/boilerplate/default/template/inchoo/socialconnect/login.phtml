@@ -14,13 +14,13 @@
 <div class="inchoo-socialconnect-login container-fluid">
     <div class="account-login row">
         <?php if($this->_facebookEnabled()): ?>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-sm-6">
             <?php echo $this->getChildHtml('inchoo_socialconnect_facebook_login_button'); ?>
         </div>
         <?php endif; ?>
 
         <?php if($this->_googleEnabled()): ?>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-sm-6">
             <?php echo $this->getChildHtml('inchoo_socialconnect_google_login_button'); ?>
         </div>
         <?php endif; ?>
