@@ -54,104 +54,8 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         );
 
         $this->authorizedBio = ['oui','Oui', 'AB', 'Bio Européen', 'AB,Bio Européen'];
-        $this->authorizeLabels = [
-            'AOC' => 'images/labels/AOC.png',
-            'DOC' => 'images/labels/AOC.png',
-            'DOP' => 'images/labels/AOC.png',
-            'AOP' => 'images/labels/AOC.png',
-            'IGP' => 'images/labels/AOC.png',
-            'Demeter' => 'images/labels/demeter.png',
-            'Label Rouge' => 'images/labels/labelrouge.png',
-            'Bleu blanc coeur' => 'images/labels/bleublanccoeur.png',
-            'Bleu Blanc Coeur' => 'images/labels/bleublanccoeur.png',
-            'Commerce équitable' => 'images/labels/fairtrade.png',
-            'Commerce Equitable' => 'images/labels/fairtrade.png',
-            'Casher' => 'images/labels/casher.png',
-            'Kasher' => 'images/labels/casher.png',
-            'Halal' => 'images/labels/halal.png',
-        ];
-        $this->authorizeOrigine = [
-                "Afrique du Sud" => "",
-                "Algérie" => "",
-                "Allemagne" => "images/labels/countries/europe.png",
-                "Angleterre" => "images/labels/countries/europe.png",
-                "Antilles" => "",
-                "Argentine" => "",
-                "Atlantique " => "",
-                "Atlantique Centre-Est" => "",
-                "Atlantique Nord" => "",
-                "Atlantique Nord-Est" => "",
-                "Australie" => "",
-                "Autriche" => "images/labels/countries/europe.png",
-                "Belgique" => "images/labels/countries/europe.png",
-                "Bénin" => "",
-                "Biélorussie" => "",
-                "Brésil" => "",
-                "Bulgarie" => "images/labels/countries/europe.png",
-                "Cameroun" => "",
-                "Canada" => "",
-                "Chili" => "",
-                "Chine" => "",
-                "Colombie" => "",
-                "Costa Rica" => "",
-                "Côte d'Ivoire" => "",
-                "Crète" => "images/labels/countries/europe.png",
-                "Cuba" => "",
-                "Danemark" => "images/labels/countries/europe.png",
-                "Ecosse" => "images/labels/countries/europe.png",
-                "Egypte" => "",
-                "Equateur" => "",
-                "Espagne" => "images/labels/countries/europe.png",
-                "Ethiopie" => "",
-                "Europe" => "images/labels/countries/europe.png",
-                "France" => "images/labels/countries/france.png",
-                "Ghana" => "",
-                "Grande Bretagne" => "images/labels/countries/europe.png",
-                "Grèce" => "images/labels/countries/europe.png",
-                "Hollande" => "images/labels/countries/europe.png",
-                "Honduras" => "",
-                "Ile Maurice" => "",
-                "Iran" => "",
-                "Irlande" => "images/labels/countries/europe.png",
-                "Islande " => "images/labels/countries/europe.png",
-                "Israël" => "",
-                "Italie " => "images/labels/countries/europe.png",
-                "Japon" => "",
-                "Jordanie" => "",
-                "Kenya" => "",
-                "La Réunion" => "images/labels/countries/france.png",
-                "Lituanie" => "images/labels/countries/europe.png",
-                "Madagascar" => "",
-                "Manche" => "",
-                "Maroc" => "",
-                "Martinique" => "images/labels/countries/france.png",
-                "Méditerranée" => "",
-                "Mer Baltique" => "",
-                "Mexique" => "",
-                "Norvège" => "images/labels/countries/europe.png",
-                "Nouvelle-Zélande" => "",
-                "Océan Indien" => "",
-                "Ouganda" => "",
-                "Pacifique Nord" => "",
-                "Pays-Bas" => "images/labels/countries/europe.png",
-                "Pérou" => "",
-                "Pologne" => "images/labels/countries/europe.png",
-                "Portugal" => "images/labels/countries/europe.png",
-                "République Dominicaine" => "",
-                "République Tchèque" => "images/labels/countries/europe.png",
-                "Réunion" => "images/labels/countries/france.png",
-                "Russie" => "",
-                "Sardaigne" => "images/labels/countries/europe.png",
-                "Sénégal" => "",
-                "Sicile" => "images/labels/countries/europe.png",
-                "Suisse" => "images/labels/countries/europe.png",
-                "Togo" => "",
-                "Tunisie" => "",
-                "Turquie" => "",
-                "Uruguay" => "",
-                "Venezuela" => "",
-                "Vietnam" => "",
-        ];
+        $this->authorizeLabels = Mage::helper('apdc_catalog/product_labels')->getAuthorizeLabels();
+        $this->authorizeOrigine = Mage::helper('apdc_catalog/product_labels')->getAuthorizeOrigine();
     }
 
     
@@ -190,7 +94,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($days <= $this->maxNewDays) {
             $labelNew = array(
                  'text' => 'Nouveau Produit',
-                 'icon' => $this->getSkinUrl('images/labels/new.png'),
+                 'icon' => $this->getSkinUrl(Mage::helper('apdc_catalog/product_labels')->getLabelNew()),
              );
         }
 
@@ -232,7 +136,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             if ($attributeValue <> false && in_array($attributeValue, $this->authorizedBio)) {
                 $labelBio = array(
                      'text' => 'Produit Biologique',
-                     'icon' => $this->getSkinUrl('images/labels/bio.png'),
+                     'icon' =>  $this->getSkinUrl(Mage::helper('apdc_catalog/product_labels')->getLabelBio()),
                  );
             }
 
@@ -277,21 +181,25 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
      */
     protected function populateSaison()
     {
-        if ($saison = $this->getProduct()->getData('saisonnalite')) {
-            $timestamp = Mage::getSingleton('core/date')->timestamp();
-            $currentmonth_name = date('M', $timestamp);
-            $currentmonth = date('m', $timestamp);
-            $test = $this->months[$currentmonth];
+        Mage::helper('apdc_commercant')->setLocaleFR();
+        $saison=Mage::helper('apdc_referentiel/product')->getSaisonnalite($this->getProduct());
+        if($saison){
+            if (preg_match("/^[123456789OND]+$/", $saison)) {
+                $timestamp = Mage::getSingleton('core/date')->timestamp();
+                $currentmonth_name = date('M', $timestamp);
+                $currentmonth = date('n', $timestamp);
+                $test = $this->months[$currentmonth];
 
-            if (in_array($test, str_split($saison))) {
-                $labelSaison = array(
-                     'text' => 'Produit de saison',
-                     'icon' => $this->getSkinUrl('images/labels/saison.png'),
-                 );
-            }
+                if (in_array($test, str_split($saison))) {
+                    $labelSaison = array(
+                         'text' => 'Produit de saison',
+                         'icon' => $this->getSkinUrl(Mage::helper('apdc_catalog/product_labels')->getLabelSaison()),
+                     );
+                }
 
-            if (!empty($labelSaison)) {
-                $this->allProductLabels[] = $labelSaison;
+                if (!empty($labelSaison)) {
+                    $this->allProductLabels[] = $labelSaison;
+                }
             }
         }
     }
@@ -304,7 +212,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
         if ($risque_rupture = $this->getProduct()->getData('risque_rupture')) {
             $labelRupture = array(
                  'text' => 'Risque de rupture de stock',
-                 'icon' => $this->getSkinUrl('images/labels/rutpure.png'),
+                 'icon' => $this->getSkinUrl(Mage::helper('apdc_catalog/product_labels')->getLabelRupture()),
              );
         }
 

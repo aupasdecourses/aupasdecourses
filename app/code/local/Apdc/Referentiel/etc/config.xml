@@ -6,6 +6,11 @@
 		</Apdc_Referentiel>
 	</modules>
 	<global>
+		<helpers>
+	      <apdc_referentiel>
+	        <class>Apdc_Referentiel_Helper</class>
+	      </apdc_referentiel>
+	    </helpers>
 		<models>
 	      <apdc_referentiel>
 	        <class>Apdc_Referentiel_Model</class>

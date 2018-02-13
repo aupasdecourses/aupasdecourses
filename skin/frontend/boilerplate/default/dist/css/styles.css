@@ -15688,6 +15688,19 @@ footer .social-list .btn-social-icon {
   padding-left: 20px;
 }
 
+.catalog-category-view .category_view_content .category_left_menu.labels_product_legend {
+  margin-top: 10px;
+}
+
+.catalog-category-view .category_view_content .category_left_menu.labels_product_legend ul li {
+  max-height: 100%;
+  padding: 2px 0;
+}
+
+.catalog-category-view .category_view_content .category_left_menu.labels_product_legend ul li span {
+  padding-left: 10px;
+}
+
 .catalog-category-view .main-container {
   padding-bottom: 0;
   background: none;
@@ -18204,6 +18217,10 @@ a.level3:hover {
     line-height: 1.5rem;
   }
 
+  .catalog-category-view .category_view_content .category_left_menu.labels_product_legend {
+    display: none;
+  }
+
   .catalog-category-view .commercant-collapse .commercant-info .commercant-name {
     font-size: 14px;
   }
@@ -18420,7 +18437,7 @@ a.level3:hover {
 
   .catalog-category-view .commercant-collapse .commercant-info .commercant-name,
     .catalog-category-view .commercant-collapse .commercant-info .photo-commercant {
-    display: inline-block;
+    display: inline-blockFrédéc;
     margin: 0 auto 10px;
     text-align: center;
   }

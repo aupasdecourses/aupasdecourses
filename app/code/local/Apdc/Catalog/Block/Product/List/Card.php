@@ -32,6 +32,14 @@ class Apdc_Catalog_Block_Product_List_Card extends Mage_Catalog_Block_Product_Ab
         return Mage::helper('apdc_catalog/product_availability')->getAvailability($this->getProduct());
     }
 
+    public function getSaisonnalite(){
+        return Mage::helper('apdc_referentiel/product')->getSaisonnalite($this->getProduct());
+    }
+
+    public function getPoidsUnit(){
+        return Mage::helper('apdc_referentiel/product')->getPoidsUnit($this->getProduct());
+    }
+
     public function isCategoryPage(){
     	return Mage::registry('current_category');
 
