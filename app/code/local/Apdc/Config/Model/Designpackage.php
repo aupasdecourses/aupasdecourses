@@ -12,7 +12,7 @@ class Apdc_Config_Model_Designpackage extends Mage_Core_Model_Design_Package
      */
     public function getMergedJsUrl($files)
     {
-        $targetFilename = md5(implode(',', $files))."-".date('Y-m-d').'.js';
+        $targetFilename = md5(implode(',', $files).rand()*10000)."-".date('Y-m-d').'.js';
         $targetDir = $this->_initMergerDir('js');
         if (!$targetDir) {
             return '';
@@ -48,7 +48,7 @@ class Apdc_Config_Model_Designpackage extends Mage_Core_Model_Design_Package
         }
 
         // merge into target file
-        $targetFilename = md5(implode(',', $files) . "|{$hostname}|{$port}") ."-".date('Y-m-d').'.css';
+        $targetFilename = md5(implode(',', $files).rand()*10000) ."-".date('Y-m-d').'.css';
         $mergeFilesResult = $this->_mergeFiles(
             $files, $targetDir . DS . $targetFilename,
             false,
