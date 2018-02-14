@@ -14269,9 +14269,9 @@ section .section-description {
 }
 
 .searchresults {
-  margin-bottom: 110px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background: #fff;
 }
 
@@ -14330,7 +14330,7 @@ section .section-description {
 .searchresults .apdc-products-grid {
   overflow: hidden;
   width: calc(100% + 6px);
-  margin: 20px 0;
+  margin: 5px 0;
   padding: 3px 3px;
 }
 
@@ -15723,6 +15723,7 @@ footer .social-list .btn-social-icon {
 }
 
 .catalog-category-view .commercant-collapse {
+  font-size: .875rem;
   max-width: 1600px;
   padding: 20px 20px 0;
 }
@@ -15848,6 +15849,11 @@ footer .social-list .btn-social-icon {
 .catalog-category-view .commercant-collapse .collapse-wrapper .commercant-img img {
   width: 100%;
   height: auto;
+}
+
+.catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant {
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 .catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant h2 {
@@ -17421,10 +17427,6 @@ a.level3:hover {
     text-align: center;
   }
 
-  .page-header-container .skip-links .skip-container-header-search form.show-input {
-    margin: 9px 30px 0 -270px;
-  }
-
   .page-header-container .skip-links .skip-container-header-search .search-button {
     margin: 0 0 0 -45px;
   }
@@ -17466,6 +17468,10 @@ a.level3:hover {
 
   .block-progress dl > div dt:before {
     display: none;
+  }
+
+  .catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant {
+    max-height: 350px;
   }
 }
 
@@ -17710,6 +17716,10 @@ a.level3:hover {
     margin-top: 48px;
   }
 
+  .searchresults_title {
+    margin-top: 78px;
+  }
+
   .commercants-block .products-grid .commercant-item .commercant-info-img,
     .commercants-block .products-grid .commercant-item .commercant-img-info {
     float: none;
@@ -17790,20 +17800,6 @@ a.level3:hover {
 
   #checkout-review-table .crop {
     display: none;
-  }
-
-  .searchresults .title-block > div {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  .searchresults .title-block h3 {
-    margin-top: 5px;
-    text-align: center;
-  }
-
-  .searchresults .delivery-days {
-    padding: 0;
   }
 
   a.level2:link,
@@ -18026,6 +18022,10 @@ a.level3:hover {
   .catalog-category-view .commercant-collapse {
     padding: 0 20px 0;
   }
+
+  .catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant {
+    max-height: 250px;
+  }
 }
 
 @media screen and (max-width: 1130px) {
@@ -18247,6 +18247,10 @@ a.level3:hover {
   .button.button-social.button-fb {
     float: right;
   }
+
+  .search-autocomplete {
+    left: 0 !important;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -18412,9 +18416,12 @@ a.level3:hover {
 
   .page-header-container .skip-container-header-search form.show-input {
     visibility: visible;
+    width: 100vw;
+    padding: 5px 0 10px 0;
     transition-delay: 0s;
-    transform: translateX(0);
+    transform: translateX(3%);
     opacity: 1;
+    background: white;
   }
 
   .catalog-category-view .commercant-collapse .collapse-wrapper .commercant-img img {
@@ -18429,6 +18436,10 @@ a.level3:hover {
 
   .button.button-social {
     display: block;
+  }
+
+  .search-autocomplete {
+    left: 25px !important;
   }
 }
 
@@ -18956,4 +18967,63 @@ a.level3:hover {
 
 #netreviewsWidgetNum11421widget02av {
   display: none;
+}
+
+/* ============================================ *
+ * Search - Auto Suggest
+ * ============================================ */
+.search-autocomplete {
+  position: relative !important;
+  z-index: 200;
+  top: 5px !important;
+  overflow: visible !important;
+}
+
+.search-autocomplete ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-left: 0;
+  border-radius: 2px;
+  background-color: #fff;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+.search-autocomplete ul li {
+  font-size: 12px;
+  padding: 4px 6px;
+  cursor: pointer;
+  text-align: left;
+  color: #393;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.search-autocomplete ul li.selected {
+  color: white !important;
+  background-color: #3ab64b;
+}
+
+.search-autocomplete ul li .amount {
+  font-weight: bold;
+  float: right;
+}
+
+.search-autocomplete ul li:last-child {
+  border-bottom: none;
+}
+
+.search-autocomplete:before {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  display: block;
+  width: 0;
+  height: 0;
+  content: '';
+  border-top: none;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #393;
+  border-left: 7px solid transparent;
 }

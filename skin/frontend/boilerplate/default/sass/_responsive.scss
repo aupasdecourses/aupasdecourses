@@ -22,11 +22,6 @@
           text-align: center;
           position: relative;
           z-index: 1;
-          form{
-            &.show-input{
-              margin: 9px 30px 0 -270px;
-            }
-          }
           .search-button{
             margin: 0 0 0 -45px;
           }
@@ -67,6 +62,9 @@
                 display: none;
             }
         }
+    }
+    .catalog-category-view .commercant-collapse .collapse-wrapper .desc-commercant{
+        max-height: 350px;
     }
 }
 
@@ -289,6 +287,9 @@
     .page-title{
         margin-top:48px;
     }
+    .searchresults_title{
+        margin-top:78px;
+    }
     .commercants-block{
         .products-grid{
             .commercant-item{
@@ -376,23 +377,6 @@
             display: none;
         }
     }
-
-    .searchresults{
-        .title-block{
-            & > div{
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            h3{
-                margin-top: 5px;
-                text-align: center;
-            }
-        }
-        .delivery-days{
-            padding: 0;
-        }
-    }
-
     a.level2:link,
     a.level2:visited {
         margin-bottom: 0px;
@@ -572,6 +556,9 @@
     }
     .catalog-category-view .commercant-collapse{
         padding: 0 20px 0;
+        .collapse-wrapper .desc-commercant{
+            max-height: 250px;
+        }
     }
 }
 
@@ -825,7 +812,9 @@
     .button.button-social.button-fb{
         float:right;
     }
-
+    .search-autocomplete {
+        left: 0px !important;
+    }
 }
 
 @media screen and (max-width: 767px){
@@ -983,8 +972,11 @@
           margin:0!important;
           visibility:hidden;
           &.show-input {
+            width: 100vw;
+            background: white;
+            padding: 5px 0 10px 0;
             transition-delay:0s;
-            transform:translateX(0);
+            transform:translateX(3%);
             opacity:1;
             visibility:visible;
           }
@@ -1001,6 +993,9 @@
     }
     .button.button-social{
         display: block;
+    }
+    .search-autocomplete {
+        left: 25px !important;
     }
 }
 

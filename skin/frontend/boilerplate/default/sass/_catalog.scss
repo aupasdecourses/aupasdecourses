@@ -154,6 +154,7 @@
     .commercant-collapse{
         padding: 20px 20px 0;
         max-width: 1600px;
+        font-size: 0.875rem;
         .commercant-info{
             padding-bottom: 20px;
             .commercant-name{
@@ -206,7 +207,7 @@
                 }
             }
 					
-						.shop-availability {
+			.shop-availability {
                 background-color:$color-dark-orange;
                 margin-top:10px;
                 border-radius:3px;
@@ -265,6 +266,8 @@
                 }
             }
             .desc-commercant{
+                max-height: 400px;
+                overflow-y: auto;
                 h2{
                     font-size: 1.125rem;
                     font-weight: 700;
