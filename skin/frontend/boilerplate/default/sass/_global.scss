@@ -68,7 +68,7 @@ a{
     padding: 10px 20px;
     margin: 20px auto;
     color: #fff;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
     border: none;
     font-size: 1.125rem;
     font-weight: 700;
@@ -204,7 +204,7 @@ input[type=checkbox] + label{
         display:inline-block;
         vertical-align:middle;
         cursor:pointer;
-        border-radius:7px;
+        /*border-radius:7px;*/
         border:1px solid #ccc;
         background-color:#fafafa;
         -webkit-touch-callout: none;
@@ -249,7 +249,7 @@ input[type=checkbox]:checked + label:before {
         color: $color-main-grey;
         font-size: 0.875rem;
         padding: 10px;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         border: 1px solid #eee;
         background-color: #f6f6f6;
         width: auto;

@@ -6,7 +6,7 @@ h1.account-title{
 }
 .my-account{
     background-color: #fff;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     max-width: 1300px;
     margin: 40px auto 0;
     padding: 40px;
@@ -17,15 +17,15 @@ h1.account-title{
             li{
                 &:first-child{
                     a{
-                        -webkit-border-radius: 5px 5px 0 0;
-                        border-radius: 5px 5px 0 0;
+                        /*-webkit-border-radius: 5px 5px 0 0;*/
+                        /*border-radius: 5px 5px 0 0;*/
                     }
                 }
                 &:last-child{
                     a{
                         border: 0;
-                        -webkit-border-radius: 0 0 5px 5px;
-                        border-radius: 0 0 5px 5px;
+                        /*-webkit-border-radius: 0 0 5px 5px;*/
+                        /*border-radius: 0 0 5px 5px;*/
                     }
                 }
                 &.current, &:hover{
@@ -120,7 +120,7 @@ h1.account-title{
                 padding: 25px 35px;
                 margin: 30px 0;
                 border: 4px solid $color-main-green;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
             }
             #sponsorship-share{
                 p, ul, li{
@@ -196,7 +196,7 @@ h1.account-title{
                 color: $color-main-grey;
                 font-size: 0.875rem;
                 padding: 10px;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
                 border: 1px solid #eee;
                 background-color: #f6f6f6;
                 width: 100%;
@@ -307,7 +307,7 @@ h1.account-title{
     }
     .newsletter-wrapper{
         border: 1px solid #eee;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         padding: 20px;
         margin-top: 20px;
         h4{
@@ -384,7 +384,7 @@ h1.account-title{
                 color: $color-main-grey;
                 font-size: 0.875rem;
                 padding: 10px;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
                 border: 1px solid #eee;
                 background-color: #f6f6f6;
                 width: 100%;

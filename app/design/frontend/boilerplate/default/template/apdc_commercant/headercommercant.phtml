@@ -14,10 +14,8 @@
                         <i class="fa fa-map-marker"></i> <?= $shop_info['adresse'];?>
                     </div>
                 </div>
-                <div class="col-xs-10 col-sm-5 col-md-4 text-right">
-                    <?php echo $this->getChildHtml('apdc_catalog_shop_availability'); ?>
-                </div>
-                <div class="col-xs-2 col-sm-1 text-right text-center">
+                <?php echo $this->getChildHtml('apdc_catalog_shop_availability'); ?>
+                <div class="col-xs-12 col-sm-1 text-right text-center">
                     <div class="open-collapse">
                         <i class="fa fa-angle-down"></i>
                     </div>
@@ -44,6 +42,33 @@
                 <div class="col-lg-3 col-md-3 col-sm-4 commercant-opening">
                     <h2>Horaires de la boutique</h2>
                     <div><?= $shop_info['timetable']?></div>
+                    <?php if (!empty($shop_info)) : ?>
+                    <?php $header = ''; ?>
+                    <?php $body = ''; ?>
+                    <div class="delivery_days">
+                        <h3 class="delivery_days_title"><?php echo $this->__('Livraison possible le'); ?></h3>
+                        <?php foreach(Mage::helper('apdc_commercant')->getWeekDays() as $weekDay): ?>
+                            <?php if (is_null($weekDay['value']) || !in_array($weekDay['value'], $shop_info['delivery_days'])) : ?>
+                                <?php $classHeader = 'no'; ?>
+                                <?php $body .= '<td><i class="fa fa-close"></i></td>'; ?>
+                            <?php else : ?>
+                                <?php $classHeader = 'yes'; ?>
+                                <?php $body .= '<td><i class="fa fa-check"></i></td>'; ?>
+                            <?php endif; ?>
+                            <?php $header .= '<th class="' . $classHeader . '">' . $weekDay['label'] . '</th>'; ?> 
+                        <?php endforeach; ?>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr><?php echo $header; ?></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><?php echo $body; ?></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 </div>
                 <div class="col-md-4 col-sm-4 commercant-img">
                     <img class="img-responsive" src="<?= $shop_info["image"] ?>">

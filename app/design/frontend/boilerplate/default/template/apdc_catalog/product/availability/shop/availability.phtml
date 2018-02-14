@@ -3,32 +3,9 @@ $shopInfo = $this->getShopInfo();
 $shopMessage = $this->getShopMessage();
 ?>
 <?php if (!empty($shopInfo)) : ?>
-    <?php $header = ''; ?>
-    <?php $body = ''; ?>
-    <div class="delivery_days">
-        <h3 class="delivery_days_title"><?php echo $this->__('Livraison possible le'); ?></h3>
-        <?php foreach($this->getWeekDays() as $weekDay): ?>
-            <?php if (is_null($weekDay['value']) || !in_array($weekDay['value'], $shopInfo['delivery_days'])) : ?>
-                <?php $classHeader = 'no'; ?>
-                <?php $body .= '<td><i class="fa fa-close"></i></td>'; ?>
-            <?php else : ?>
-                <?php $classHeader = 'yes'; ?>
-                <?php $body .= '<td><i class="fa fa-check"></i></td>'; ?>
-            <?php endif; ?>
-            <?php $header .= '<th class="' . $classHeader . '">' . $weekDay['label'] . '</th>'; ?> 
-        <?php endforeach; ?>
-        <div>
-            <table>
-                <thead>
-                    <tr><?php echo $header; ?></tr>
-                </thead>
-                <tbody>
-                    <tr><?php echo $body; ?></tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="col-xs-12 col-sm-5 col-md-4 text-right">
+        <?php if ($shopMessage != '') : ?>
+            <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $shopMessage; ?></span></li></ul></li></ul>
+        <?php endif; ?>
     </div>
-    <?php if ($shopMessage != '') : ?>
-        <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $shopMessage; ?></span></li></ul></li></ul>
-    <?php endif; ?>
 <?php endif; ?>

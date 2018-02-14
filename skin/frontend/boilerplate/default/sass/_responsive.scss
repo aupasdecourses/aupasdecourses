@@ -278,11 +278,14 @@
         margin-top: -10px;
         padding-left: 0;
     }
+    .hipay_redirect_infobox_content .page-title {
+        margin-top: 60px;
+    }
 }
 
 @media screen and (max-width: 1200px){
     .main-container {
-      margin-top:80px;
+      margin-top:60px;
     }
     .page-title{
         margin-top:48px;
@@ -555,10 +558,13 @@
         }
     }
     .catalog-category-view .commercant-collapse{
-        padding: 0 20px 0;
+        padding: 20px 20px 0;
         .collapse-wrapper .desc-commercant{
             max-height: 250px;
         }
+    }
+    .hipay_redirect_infobox_content .page-title {
+        margin-top: 0px;
     }
 }
 
@@ -1016,7 +1022,7 @@
             .commercant-info{
                 .commercant-name,
                 .photo-commercant{
-                    display: inline-blockFrédéc;
+                    display: block;
                     margin: 0 auto 10px;
                     text-align: center;
                 }
@@ -1034,6 +1040,9 @@
                 }
             }
         }
+    }
+    .hipay_redirect_infobox_content .page-title h1{
+        width:90%;
     }
 }
 
