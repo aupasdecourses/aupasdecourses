@@ -15540,6 +15540,17 @@ footer .social-list .btn-social-icon {
   color: #3ab64b;
 }
 
+.hipay_redirect_infobox_content .page-title {
+  height: 200px;
+  margin-top: 60px;
+}
+
+.hipay_redirect_infobox_content .page-title h1 {
+  font-size: 1.8rem;
+  width: 600px;
+  text-transform: none;
+}
+
 .delivery_days {
   margin-top: 5px;
 }

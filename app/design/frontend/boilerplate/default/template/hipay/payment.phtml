@@ -37,85 +37,26 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  The BSD License
  */ 
 ?>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600" />
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700" />
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Courgette" />
-<style type="text/css">
-
-body {
-	text-align:center !important;
-	font-family: Raleway, "Helvetica Neue", Verdana, Arial, sans-serif;
-    color: #222;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.main_message{
-	font-weight: bold;
-	font-size:20px;
-}
-
-.subtitle{
-	font-style:italic;
-}
-
-.logo{
-	display: block;
-    height: 50px;
-    margin-left: -90px;
-    position: absolute;
-    top: 50px;
-    left: 50%;
-}
-
-.logo img{
-	width: 180px;
-}
-
-#storename{
-	color: rgb(51, 153, 51);
-    font-family: "Open Sans", Montserrat, Raleway, Verdana;
-    font-size: 16px;
-    font-weight: 600;
-    left: 100px;
-    position: relative;
-    text-align: center;
-    top: -65px;
-}
-
-.hipay_centered_content {
-	width:620px; 
-	margin:0px auto; 
-	text-align:left;
-}
-
-.hipay_redirect_infobox_content {
-	margin-top: 155px;
-	text-align: center;
-}
-
-.hipay_redirect_infobox_content span {
-	color: #666666;
-	font-size: 16px;
-	font-weight: bold;
-}
-
-.show_loader_image {
-	background:url("<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/himediapayments/hipay/loader.gif") no-repeat scroll transparent;
-	padding-left: 25px;
-}
-
-</style>
+<script>
+	$j('a').click(function(e) {
+	    e.preventDefault();
+	    //do other stuff when a click happens
+	});
+</script>
 <div class="hipay_centered_content">
-	<div class="logo">
-        <img src="<?php echo Mage::getBaseUrl();?>../skin/frontend/rwd/commis/images/logo-green.png" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
-        <div id="storename"><?php echo Mage::app()->getStore()->getName();?></div>
-    </div>
 	<div class="hipay_redirect_infobox_content">
-		<p class="main_message"><span <?php if(!empty($paymentUrl)) { ?>class="show_loader_image"<?php }; ?>></span> Un instant s'il vous plaît.</p>
-		<p>Vous allez être redirigé vers la page de paiement de notre partenaire</p>
-		<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/himediapayments/hipay/hipay_wallet_mg_logo.jpg" />
-		<p class="subtitle">Merci de ne pas fermer cette page et de ne pas revenir en arrière.</p>
+		<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
+		<?php $image = ($neighborhood->getImageBanner() ? $neighborhood->getImageBanner() : $neighborhood->getImage()); ?>
+		<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($image); ?>
+		<div class="page-title" style="background-image: url('<?php echo $imageUrl; ?>');">
+		    <h1><span><span <?php if(!empty($paymentUrl)) { ?>class="show_loader_image"<?php }; ?>></span> Un instant s'il vous plaît ...</span></h1>
+		</div>
+		<div class="main_redirect">
+			<p class="main_message"></p>
+			<p>Vous allez être redirigé vers la page de paiement de notre partenaire</p>
+			<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/base/default/images/himediapayments/hipay/hipay_wallet_mg_logo.jpg" />
+			<p class="subtitle">Merci de ne pas fermer cette page et de ne pas revenir en arrière.</p>
+		</div>
 	</div>
 </div>
 
