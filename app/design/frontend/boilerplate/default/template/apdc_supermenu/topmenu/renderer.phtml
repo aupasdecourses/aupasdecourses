@@ -42,8 +42,12 @@ foreach ($children as $child) {
     if($child->getLevel() <= 1) {
         if($child->getLevel()==0 && $child->getIsClickable()){
             $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" >';
-        }else{
+        }elseif($child->getLevel()==0 && !$child->getIsClickable()){
             $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+        }elseif($child->getLevel()==1 && $child->getIsClickable()){
+            $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+        }elseif($child->getLevel()==1 && !$child->getIsClickable()){
+            $html .= '<a style="' . $child->getLinkStyle() . '" href="'. $child->getUrl() .'" class="' . $child->getLinkClasses() . '" >';
         }
         if ($child->getLevel() == 1 && $child->getThumbnail()) {
             $thumbnail = $this->getResizedImage($child->getThumbnail(), 50, 50);
