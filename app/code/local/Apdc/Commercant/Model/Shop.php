@@ -135,21 +135,10 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
     public function getShopMainCategory()
     {
         if (is_null($this->shopMainCategory)) {
-            $this->shopMainCategory = false;
-            
-            if ($shopTypeCategory = $this->getShopTypeCategory()) {
-                $path = $shopTypeCategory->getPath();
-                $subPath = [];
-                foreach ($this->getCategoryIds() as $catId) {
-                    $subPath[] = $path . '/' . $catId;
-                }
-                $categories = Mage::getModel('catalog/category')->getCategories($shopTypeCategory->getId(), 3, true, true, false);
-                $categories->addFieldToFilter('level', 3);
-                $categories->addFieldToFilter('path', ['in' => $subPath]);
-
-                if ($categories->count()) {
-                    $this->shopMainCategory = Mage::getModel('catalog/category')->load($categories->getFirstItem()->getId());
-                }
+            if(isset($this->getCategoryIds()[0])){
+                $this->shopMainCategory = Mage::getModel('catalog/category')->load($this->getCategoryIds()[0]);
+            }else{
+                $this->shopMainCategory = false;
             }
         }
         return $this->shopMainCategory;
