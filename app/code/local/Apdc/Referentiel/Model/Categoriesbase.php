@@ -25,6 +25,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         $ics=$this->_getImageRef();
         $url="";
         $change="";
+        $change2="";
         if($pk->getThumbnail()==NULL){
             if(isset($ics[$pk->getName()])){
                 $rand=rand(0,sizeof($ics[$pk->getName()])-1);
@@ -50,7 +51,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
                 $url=$ics['Default'][0];
                 $pk->setImage($url);
                 $pk->setThumbnail($url);
-                $change.="Warning - no base image for: ".$pk->getId()." / ".$pk->getName().". Use default instead.\n";
+                $change2.="Warning - no base image for: ".$pk->getId()." / ".$pk->getName().". Use default instead.\n";
             }
         }elseif($pk->getThumbnail()==$ics['Default'][0]){
             if(isset($ics[$pk->getName()])){
@@ -60,13 +61,14 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
                 $pk->setThumbnail($url);
                 $change.="Image changed for cat: ".$pk->getId()." / ".$pk->getName()."\n";
             }else{
-                $change.="Warning - no base image for: ".$pk->getId()." / ".$pk->getName().". Keep default instead.\n";
+                $change2.="Warning - no base image for: ".$pk->getId()." / ".$pk->getName().". Keep default instead.\n";
             }
         }
         if($change<>""){
             $pk->save();
             echo $change;
         }
+        echo $change2;
     }
 
     public function setinfocat($pk){
