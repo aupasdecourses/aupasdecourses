@@ -76,6 +76,9 @@ class Apdc_SuperMenu_Model_Observer
                 $menuBlock->addModelTags($categoryModel);
             }
 
+            if($categoryModel->getProductCollection()->count()<2){
+                continue;
+            }
             $tree = $parentCategoryNode->getTree();
             $categoryData = array(
                 'name' => $category->getName(),
