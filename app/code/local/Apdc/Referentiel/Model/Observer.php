@@ -130,8 +130,10 @@ class Apdc_Referentiel_Model_Observer
     }
 
     public function fixCats($observer){
-        $cat=$observer->getEvent()->getCategory()->getId();
-        Mage::getModel('apdc_referentiel/categoriesbase')->fixCats(Mage::getModel('catalog/category')->load($cat));
+        if(Mage::getSingleton('admin/session', array('name' => 'adminhtml'))->isLoggedIn()){
+            $cat=$observer->getEvent()->getCategory()->getId();
+            Mage::getModel('apdc_referentiel/categoriesbase')->fixCats(Mage::getModel('catalog/category')->load($cat));
+        }
     }
 
 }
