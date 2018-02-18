@@ -35,8 +35,11 @@ class Pmainguet_CleanCatInfo extends Mage_Shell_Abstract
     }
 
     public function fixCats(){
-        $this->setimagecats();
-        $this->setinfocats();
+        $ids=$this->_getCats(1,6);
+        foreach ($ids as $id) {
+            $cat=Mage::getModel('catalog/category')->load($id);
+            $cat->save();
+        }
     }
 
     // Implement abstract function Mage_Shell_Abstract::run();
