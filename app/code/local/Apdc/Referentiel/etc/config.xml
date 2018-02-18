@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Apdc_Referentiel>
-			<version>0.1.7</version>
+			<version>0.1.9</version>
 		</Apdc_Referentiel>
 	</modules>
 	<global>
@@ -25,9 +25,12 @@
 	          <referentiel>
 	            <table>apdc_referentiel</table>
 	          </referentiel>
-	          <produit_base>
+	          <produitbase>
 	            <table>apdc_produit_base</table>
-	          </produit_base>
+	          </produitbase>
+	          <categoriesbase>
+	            <table>apdc_categories_base</table>
+	          </categoriesbase>
 	        </entities>
 	      </apdc_referentiel_resource>
 	    </models>
@@ -42,8 +45,8 @@
 	        </connection>
 	      </apdc_referentiel_setup>
 	    </resources>
-	    <!-- <events>
-	      <catalog_product_save_after>
+	    <events>
+	      <!--<catalog_product_save_after>
 	        <observers>
 	          <apdc_referentiel>
 	            <type>singleton</type>
@@ -51,10 +54,18 @@
 	            <method>saveChanges</method>
 	          </apdc_referentiel>
 	        </observers>
-	      </catalog_product_save_after>
-	    </events> -->
+	      </catalog_product_save_after>-->
+	        <catalog_category_save_after>
+                <observers>
+                    <apdc_referentiel>
+                    	<class>apdc_referentiel/observer</class>
+	            		<method>fixCats</method>
+	            	</apdc_referentiel>
+	            </observers>
+	        </catalog_category_save_after>
+	    </events>
 	</global>
-  	<frontend>
+  	<!-- <frontend>
      <routers>
         <apdc_referentiel>
             <use>standard</use>
@@ -64,7 +75,7 @@
             </args>
         </apdc_referentiel>
 	    </routers>
-	  </frontend>
+	  </frontend> -->
 	  <crontab>
 	    <jobs>
 	      <apdc_referentiel_check_changes>
@@ -75,6 +86,14 @@
 	          <model>apdc_referentiel/observer::cronCheckCatalogChanges</model>
 	        </run>
 	      </apdc_referentiel_check_changes>
+	      <apdc_referentiel_fix_cats>
+	        <schedule>
+	          <cron_expr>10 1 * * *</cron_expr>
+	       </schedule>
+	        <run>
+	          <model>apdc_referentiel/observer::fixCats</model>
+	        </run>
+	      </apdc_referentiel_fix_cats>
 	    </jobs>
 	  </crontab>
 </config>
