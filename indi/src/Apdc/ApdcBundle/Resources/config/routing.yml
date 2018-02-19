@@ -154,6 +154,10 @@ statCustomer:
   path: /stat/customer/
   defaults: { _controller: ApdcApdcBundle:Stat:statCustomer}
 
+statCustomerNoOrder:
+  path: /stat/customer_no_order/
+  defaults: { _controller: ApdcApdcBundle:Stat:statCustomerNoOrder }
+
 loyaltyCustomer:
   path: /stat/loyalty/
   defaults: { _controller: ApdcApdcBundle:Stat:loyaltyCustomer}

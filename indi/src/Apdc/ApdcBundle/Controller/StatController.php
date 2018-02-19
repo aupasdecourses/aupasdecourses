@@ -24,6 +24,19 @@ class StatController extends Controller
 	
 	}
 
+	public function statCustomerNoOrderAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		return $this->render('ApdcApdcBundle::stat/statCustomerNoOrder.html.twig', [
+			'stat'				=> $stats->getCustomerNoOrderStatData(),
+		]);
+	}
+
 	public function loyaltyCustomerAction(Request $request)
 	{
 		if (!$this->isGranted('ROLE_INDI_COMMUNICATION')) {

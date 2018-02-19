@@ -5,7 +5,7 @@
 
 <div class="container-fluid">
 	<div class="page-header">
-		<h2>Stats Clients avec commande</h2>
+		<h2>Stats Clients avec aucune commande</h2>
 	</div>
 	<div id="filter"><label>Selectionnez le client : &nbsp;</label></div>
 
@@ -16,44 +16,27 @@
 			<tr>
 				<th>Nom Client</th>
 				<th class="float">Nbe Commande</th>
-				<th class="float">Panier Moyen</th>
-				<th class="float">Panier Max</th>
-				<th>Ecart type</th>
 				<th>Inscription</th>
-				<th>Dernière commande</th>
 				<th class="sort">Code Postal</th>
 				<th>Email</th>
 				<th>Téléphone</th>
-				<th>Commentaire</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for content in stat %}
-			{% if content != 'Mail Client' %}
 			<tr>
-				<td><a href={{ customer_url ~ content['id_client'] }} target="_blank">{{ content['nom_client'] }}</a></td>
+				<td>{{ content['nom_client'] }}</a></td>
 				<td>{{ content['nb_commande'] }}</td>
-				<td>{{ content['panier_moyen'] }}</td>
-				<td>{{ content['panier_max'] }}</td>
-				<td>{{ content['ecart_type'] }}</td>
 				<td>{{ content['inscription'] }}</td>
-				<td>{{ content['derniere_commande'] }}</td>
 				<td>{{ content['code_postal'] }}</td>
-				<td><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></td>
-				<td><a href="tel:{{ content['telephone'] }}">{{ content['telephone'] }}</td>
-				<td>{{ content['commentaires'] }}</td>
+				<td>{{ content['email'] }}</td>
+				<td>{{ content['telephone'] }}</td>
 			</tr>
-			{% endif %}
 			{% endfor %}
 		</tbody>
 		<tfoot>
 			<tr>
 				<th>Total</th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
