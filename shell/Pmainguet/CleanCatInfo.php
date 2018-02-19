@@ -4,51 +4,92 @@ require_once '../abstract.php';
 
 class Pmainguet_CleanCatInfo extends Mage_Shell_Abstract
 {
-
-    private function _getCats($s,$f){
-        $storeId = 0;
-        Mage::app()->setCurrentStore($storeId);
-        $category = Mage::getModel( 'catalog/category' )->getCollection()
-            ->addAttributeToSelect(array('name','image','thumbnail','is_clickable','is_active','show_in_navigation','show_age_popup','display_mode','meta_title'))
-            ->addAttributeToFilter('level',array('gt'=>$s))
-            ->addAttributeToFilter('level',array('lt'=>$f));
-        return $category;
+    
+    public function eraseerrorcats($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(1,6,$store);
+        foreach ($cats as $cat) {
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->eraseerrorcat($cat);
+        }
+        echo "eraseerrorcats Done!\n";
     }
 
-    public function setimagecats(){
-        $cats=$this->_getCats(2,5);
+    public function setimagecats($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(2,5,$store);
         foreach ($cats as $cat) {
-            Mage::getModel('apdc_referentiel/categoriesbase')->setimagecat($cat);
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->setimagecat($cat);
         }
         echo "setimagecats Done!\n";
     }
 
-    public function setinfocats(){;
-        $cats=$this->_getCats(1,6);
+    public function setinfocats($store=null){;
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(1,6,$store);
         foreach ($cats as $cat) {
-            Mage::getModel('apdc_referentiel/categoriesbase')->setinfocat($cat);
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->setinfocat($cat);
         }
         echo "setinfocats Done!\n";
     }
 
-    public function fixCats(){
-        $cats=$this->_getCats(1,6);
+    public function setsmallcats($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(2,6,$store);
         foreach ($cats as $cat) {
-            $cat->save();
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->setsmallcat($cat);
         }
+        echo "setsmallcats Done!\n";
+    }
+
+    public function disableshops($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(2,4,$store);
+        foreach ($cats as $cat) {
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->disableshop($cat);
+        }
+        echo "disableshops Done!\n";
+    }
+
+    public function deactivatesubcats($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(1,6,$store);
+        foreach ($cats as $cat) {
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->deactivatesubcat($cat);
+        }
+        echo "deactivatesubcats Done!\n";
+    }
+
+    public function sortcats($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(1,6,$store);
+        foreach ($cats as $cat) {
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->sortcat($cat);
+        }
+        echo "sortcats Done!\n";
+    }
+
+    public function shellfixCats($store=null){
+        $this->eraseerrorcats($store);
+        $this->setimagecats($store);
+        $this->setinfocats($store);
+        $this->setsmallcats($store); 
+        $this->disableshops($store);
+        $this->deactivatesubcats($store);
+        $this->sortcats($store);
     }
 
     // Implement abstract function Mage_Shell_Abstract::run();
     public function run()
     {
-        $steps = ['setimagecats','setinfocats'];
+        $steps = ['eraseerrorcats','setimagecats','setinfocats','setsmallcats','disableshops','deactivatesubcats','sortcats'];
         //get argument passed to shell script
         $step = $this->getArg('step');
-        $id = $this->getArg('id');
-        if (in_array($step, $steps) && isset($id)) {
-            $this->$step($id);
+        $store = $this->getArg('store');
+        if (in_array($step, $steps)) {
+            if(isset($store)){
+                $this->$step($store);    
+            }else{
+                $this->$step();
+            }
         }elseif($step==null){
-            $this->fixCats();
+            if(isset($store)){
+                $this->shellfixCats($store);    
+            }else{
+                $this->shellfixCats();
+            }
         }else {
             echo "STEP MUST BE ONE OF THESE:\n";
             foreach ($steps as $s) {

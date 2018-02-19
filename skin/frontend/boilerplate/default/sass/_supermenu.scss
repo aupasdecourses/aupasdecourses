@@ -202,10 +202,11 @@ ul.nav a {
 }
 
 .template-column .cat-thumbnail{
-    width: 20%;
     overflow: hidden;
     width: 40px;
     height: 40px;
+    min-width:40px;
+    min-height:40px;
     border-radius: 50%;
 }
 
@@ -236,7 +237,7 @@ a.level2:visited {
     margin: 0 auto;
     text-align: center;
     display: block;
-    line-height: 22px;
+    line-height: 18px;
 }
 
 .item-main-block {

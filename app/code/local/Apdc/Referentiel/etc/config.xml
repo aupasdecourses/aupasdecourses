@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Apdc_Referentiel>
-			<version>0.1.9</version>
+			<version>0.2.0</version>
 		</Apdc_Referentiel>
 	</modules>
 	<global>
@@ -31,6 +31,9 @@
 	          <categoriesbase>
 	            <table>apdc_categories_base</table>
 	          </categoriesbase>
+	          <categoriesposition>
+	            <table>apdc_categories_position</table>
+	          </categoriesposition>
 	        </entities>
 	      </apdc_referentiel_resource>
 	    </models>
@@ -91,7 +94,7 @@
 	          <cron_expr>10 1 * * *</cron_expr>
 	       </schedule>
 	        <run>
-	          <model>apdc_referentiel/observer::fixCats</model>
+	          <model>apdc_referentiel/observer::cronFixCats</model>
 	        </run>
 	      </apdc_referentiel_fix_cats>
 	    </jobs>

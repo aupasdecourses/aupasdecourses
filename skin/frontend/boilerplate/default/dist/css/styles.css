@@ -11360,6 +11360,10 @@ a:hover {
   color: #1e555a;
 }
 
+li {
+  display: block;
+}
+
 ::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */
   color: rgba(0, 0, 0, .54);
@@ -17369,9 +17373,10 @@ ul.nav a {
 
 .template-column .cat-thumbnail {
   overflow: hidden;
-  width: 20%;
   width: 40px;
+  min-width: 40px;
   height: 40px;
+  min-height: 40px;
   border-radius: 50%;
 }
 
@@ -17397,7 +17402,7 @@ a.level2:visited {
   font-family: 'Open Sans';
   font-size: 15px;
   font-weight: 700;
-  line-height: 22px;
+  line-height: 18px;
   display: block;
   margin: 0 auto;
   text-align: center;
@@ -18019,10 +18024,6 @@ a.level3:hover {
   #supermenu ul.level1 li.separator,
     #supermenu ul.level1 li.common-links {
     display: none;
-  }
-
-  #supermenu ul.level1 li > a {
-    background-color: #fff;
   }
 
   #supermenu ul.level1 ul.level2 {

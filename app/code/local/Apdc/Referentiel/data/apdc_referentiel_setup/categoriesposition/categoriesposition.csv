@@ -1,0 +1,138 @@
+Jus & Sodas,Boissons,Tout le Bio,Bio,10
+Vins & Alcool,Boissons,Tout le Bio,Bio,20
+Gâteaux & Pâtisseries,Boulanger,Tout le Bio,Bio,30
+Pains & Baguettes,Boulanger,Tout le Bio,Bio,10
+Viennoiseries,Boulanger,Tout le Bio,Bio,20
+Crémerie,Fromagerie,Tout le Bio,Bio,20
+Fromagerie,Fromagerie,Tout le Bio,Bio,10
+Epicerie de la Mer,Poissonnerie,Tout le Bio,Bio,30
+"Huîtres, Coquillages & Crustacés",Poissonnerie,Tout le Bio,Bio,20
+Poissons,Poissonnerie,Tout le Bio,Bio,10
+Fruits,Primeur,Tout le Bio,Bio,10
+Légumes,Primeur,Tout le Bio,Bio,20
+Herbes & Aromates,Primeur,Tout le Bio,Bio,20
+Foie gras,Charcuterie,Toute la Boucherie,Boucherie,50
+Jambons,Charcuterie,Toute la Boucherie,Boucherie,10
+"Lardons, Emincés & Bacon",Charcuterie,Toute la Boucherie,Boucherie,40
+Rillettes & Pâtés,Charcuterie,Toute la Boucherie,Boucherie,30
+Saucissons & saucisses,Charcuterie,Toute la Boucherie,Boucherie,20
+Charcuterie Italienne,Charcuterie,Toute la Boucherie,Boucherie,50
+Boeuf,Viande,Toute la Boucherie,Boucherie,20
+Porc,Viande,Toute la Boucherie,Boucherie,30
+"Poulet, Dinde & Volaille",Viande,Toute la Boucherie,Boucherie,10
+"Veau, Agneau & Lapin",Viande,Toute la Boucherie,Boucherie,40
+Viandes Hachée & Farces,Viande,Toute la Boucherie,Boucherie,50
+Champagnes & Pétillants,Vins & Champagnes,Tous les alcools,Caviste,40
+Vins Blancs,Vins & Champagnes,Tous les alcools,Caviste,20
+Vins Rosés,Vins & Champagnes,Tous les alcools,Caviste,30
+Vins Rouges,Vins & Champagnes,Tous les alcools,Caviste,10
+Légumes en Bocaux,Bocaux & Conserves,Toute l'Epicerie Salée,Epicerie,10
+Plats préparés,Bocaux & Conserves,Toute l'Epicerie Salée,Epicerie,20
+Crèmes & Beurre,Crémerie,Toute la Fromagerie,Fromager,10
+Lait & Oeufs,Crémerie,Toute la Fromagerie,Fromager,20
+Yaourts & Desserts,Crémerie,Toute la Fromagerie,Fromager,30
+"Camemberts, bries &  crémeux",Fromages,Toute la Fromagerie,Fromager,10
+Chèvre & Brebis,Fromages,Toute la Fromagerie,Fromager,40
+"Mozzarellas, Fetas & Parmesan",Fromages,Toute la Fromagerie,Fromager,35
+"Emmentals, Comté, Terroir",Fromages,Toute la Fromagerie,Fromager,20
+Roqueforts & Bleus,Fromages,Toute la Fromagerie,Fromager,30
+Spécialités,Fromages,Toute la Fromagerie,Fromager,50
+Agrumes,Fruit,Tous les Fruits & Légumes,Primeur,10
+Bananes & Fruits Exotiques,Fruit,Tous les Fruits & Légumes,Primeur,30
+"Fraises, Framboises, Cerises, Myrtilles & Rhubarbe",Fruit,Tous les Fruits & Légumes,Primeur,50
+"Melons, Pastèques",Fruit,Tous les Fruits & Légumes,Primeur,60
+"Pêches, Abricots, Nectarines, Prunes",Fruit,Tous les Fruits & Légumes,Primeur,70
+Pommes & Poires,Fruit,Tous les Fruits & Légumes,Primeur,20
+Raisins,Fruit,Tous les Fruits & Légumes,Primeur,40
+"Ails, Oignons & Échalotes",Légume,Tous les Fruits & Légumes,Primeur,100
+"Carottes, Navets, Poireaux & Betteraves",Légume,Tous les Fruits & Légumes,Primeur,30
+Champignons,Légume,Tous les Fruits & Légumes,Primeur,40
+"Choux, Céleris & Blettes",Légume,Tous les Fruits & Légumes,Primeur,50
+"Concombres, Avocats",Légume,Tous les Fruits & Légumes,Primeur,60
+"Courges, Topinambours & Panais",Légume,Tous les Fruits & Légumes,Primeur,70
+"Courgettes, Aubergines & Poivrons",Légume,Tous les Fruits & Légumes,Primeur,80
+"Haricots, Asperges, Artichauts, Fenouil, Radis",Légume,Tous les Fruits & Légumes,Primeur,90
+Pommes de terre,Légume,Tous les Fruits & Légumes,Primeur,20
+Salades & Endives,Légume,Tous les Fruits & Légumes,Primeur,110
+Tomates,Légume,Tous les Fruits & Légumes,Primeur,10
+Boissons,Tout le Bio,Bio,,80
+Boulanger,Tout le Bio,Bio,,50
+Epicerie Salée,Tout le Bio,Bio,,60
+Epicerie Sucrée,Tout le Bio,Bio,,70
+Fromagerie,Tout le Bio,Bio,,30
+Poissonnerie,Tout le Bio,Bio,,7
+Caviste,Tout le Bio,Bio,,40
+Boucherie,Tout le Bio,Bio,,20
+Primeur,Tout le Bio,Bio,,10
+Charcuterie,Toute la Boucherie,Boucherie,,20
+Grillades,Toute la Boucherie,Boucherie,,30
+Plateaux de charcuterie,Toute la Boucherie,Boucherie,,50
+Rôtisserie,Toute la Boucherie,Boucherie,,40
+Viande,Toute la Boucherie,Boucherie,,10
+Gâteaux & Pâtisseries,Toute la Boulangerie Patisserie,Boulanger,,30
+Pains & Baguettes,Toute la Boulangerie Patisserie,Boulanger,,10
+Viennoiseries,Toute la Boulangerie Patisserie,Boulanger,,20
+Bières & Cidres,Tous les alcools,Caviste,,20
+Spiritueux,Tous les alcools,Caviste,,30
+Vins & Champagnes,Tous les alcools,Caviste,,10
+Tous les vins & alcools,Caviste,,,0
+Vins & Boissons,Caviste,,,0
+Bocaux & Conserves,Toute l'Epicerie Salée,Epicerie,,40
+Huiles & Vinaigres,Toute l'Epicerie Salée,Epicerie,,30
+Légumes Secs & Graines,Toute l'Epicerie Salée,Epicerie,,10
+"Pâtes, Riz & Céréales",Toute l'Epicerie Salée,Epicerie,,20
+Sauces & Condiments,Toute l'Epicerie Salée,Epicerie,,50
+"Sel, Poivre & Epices",Toute l'Epicerie Salée,Epicerie,,60
+Olives & Biscuits Apéritifs,Toute l'Epicerie Salée,Epicerie,,25
+Soupes & Veloutés,Toute l'Epicerie Salée,Epicerie,,70
+"Biscuits, Céréales & Muesli",Toute l'Epicerie Sucrée,Epicerie,,70
+"Café, Thé & Infusions",Toute l'Epicerie Sucrée,Epicerie,,10
+Chocolat & Bonbons,Toute l'Epicerie Sucrée,Epicerie,,10
+"Confitures, Miel & Pâtes à Tartiner",Toute l'Epicerie Sucrée,Epicerie,,20
+Fruits Secs,Toute l'Epicerie Sucrée,Epicerie,,60
+Jus de Fruits & Limonades,Toute l'Epicerie Sucrée,Epicerie,,30
+"Sucres, Farines & Levures",Toute l'Epicerie Sucrée,Epicerie,,50
+Crémerie,Toute la Fromagerie,Fromager,,20
+Fromages,Toute la Fromagerie,Fromager,,10
+Raclette & Tartiflette,Toute la Fromagerie,Fromager,,30
+Plateaux de fromages,Toute la Fromagerie,Fromager,,40
+Crustacés,Toute la Poissonnerie,Poissonnier,,30
+Epicerie de la Mer,Toute la Poissonnerie,Poissonnier,,50
+Huîtres & Coquillages,Toute la Poissonnerie,Poissonnier,,20
+Plateaux de Fruits de Mer,Toute la Poissonnerie,Poissonnier,,40
+Poissons,Toute la Poissonnerie,Poissonnier,,10
+Fruit,Tous les Fruits & Légumes,Primeur,,20
+Herbes & Aromates,Tous les Fruits & Légumes,Primeur,,30
+Légume,Tous les Fruits & Légumes,Primeur,,10
+Paniers de Fruits & Légumes,Tous les Fruits & Légumes,Primeur,,40
+Prêt à l'emploi,Tous les Fruits & Légumes,Primeur,,50
+Desserts,Tous les Plats Traiteurs,Traiteur,,30
+Entrées,Tous les Plats Traiteurs,Traiteur,,10
+Plats,Tous les Plats Traiteurs,Traiteur,,20
+Bio,,,,10
+Boucherie,,,,20
+Boulanger,,,,30
+Caviste,,,,40
+Envies,,,,50
+Epicerie,,,,60
+Fromager,,,,70
+Poissonnier,,,,80
+Primeur,,,,90
+Traiteur,,,,100
+Apéro,,,,11
+Pack Jus,,,,50
+Brunch,,,,20
+Paniers,,,,10
+Plateau de fruits de mer,,,,40
+Raclette & Tartiflette,,,,30
+Tous les alcools,,,,0
+Tous les Fruits & Légumes,,,,0
+Tous les Plats Traiteurs,,,,0
+Tout le Bio,,,,0
+Toute l'Epicerie,,,,0
+Toute l'Epicerie Salée,Toute l'Epicerie,,,10
+Toute l'Epicerie Sucrée,Toute l'Epicerie,,,20
+Toute la Boucherie,,,,0
+Toute la Boulangerie Patisserie,,,,0
+Toute la Fromagerie,,,,0
+Toute la Poissonnerie,,,,0

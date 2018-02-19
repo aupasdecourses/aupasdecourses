@@ -136,4 +136,12 @@ class Apdc_Referentiel_Model_Observer
         }
     }
 
+    public function cronFixCats(){
+        $model=Mage::getModel('apdc_referentiel/categoriesbase');
+        $cats=$model->getCats(2,6);
+        foreach ($cats as $cat) {
+            $model->fixCats($cat);
+        }
+    }
+
 }
