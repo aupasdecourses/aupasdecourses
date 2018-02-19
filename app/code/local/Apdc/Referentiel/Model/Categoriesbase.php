@@ -58,8 +58,8 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         return $category;
     }
     public function eraseerrorcat($pk){
-        //$forbidden=['#VALUE!'];
-        $forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté'];
+        $forbidden=['#VALUE!'];
+        //$forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté'];
         if(in_array($pk->getName(), $forbidden)){
             $pk->delete();
             echo "Delete Forbidden Cat: ".$pk->getId()." / ".$pk->getName()."\n";
@@ -127,10 +127,10 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
         }
         //A désactiver en temps normal
-        if($pk->getShowInNavigation()!=1){
-            $pk->setShowInNavigation(1);
-            $change.="Fix issue with ShowInNavigation for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
-        }
+        // if($pk->getShowInNavigation()!=1){
+        //     $pk->setShowInNavigation(1);
+        //     $change.="Fix issue with ShowInNavigation for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
+        // }
         if($pk->getLevel()==2 && $pk->getName()=="Caviste"){
             if($pk->getShowAgePopup()==0){
                 $pk->setShowAgePopup(1);
