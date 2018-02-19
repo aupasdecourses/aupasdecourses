@@ -34,6 +34,7 @@ class StatController extends Controller
 
 		return $this->render('ApdcApdcBundle::stat/statCustomerNoOrder.html.twig', [
 			'stat'				=> $stats->getCustomerNoOrderStatData(),
+			'customer_url'		=> \Mage::getBaseUrl().'../index.php/admin/petitcommisadmin/customer/edit/id/'
 		]);
 	}
 

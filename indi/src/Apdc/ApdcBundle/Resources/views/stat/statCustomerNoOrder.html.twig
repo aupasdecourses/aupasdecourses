@@ -19,31 +19,19 @@
 				<th>Inscription</th>
 				<th class="sort">Code Postal</th>
 				<th>Email</th>
-				<th>Téléphone</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for content in stat %}
 			<tr>
-				<td>{{ content['nom_client'] }}</a></td>
+				<td><a href={{ customer_url ~ content['id_client'] }} target="_blank">{{ content['nom_client'] }}</a></td>
 				<td>{{ content['nb_commande'] }}</td>
 				<td>{{ content['inscription'] }}</td>
 				<td>{{ content['code_postal'] }}</td>
-				<td>{{ content['email'] }}</td>
-				<td>{{ content['telephone'] }}</td>
+				<td><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>
-		<tfoot>
-			<tr>
-				<th>Total</th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</tfoot>
 	</table>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
@@ -78,29 +66,6 @@ $(document).ready(function() {
 				column.data().unique().sort().each( function ( d, j ) {
 					select.append( '<option value="'+d+'">'+d+'</option>' )
 				} );
-			});
-		},
-		"footerCallback": function ( row, data, start, end, display ) {
-			var api = this.api(), data;
-
-			// Remove the formatting to get integer data for summation
-			var intVal = function ( i ) {
-				return typeof i === 'string' ?
-					i.replace(/[\$,]/g, '')*1 :
-					typeof i === 'number' ?
-					i : 0;
-			};
-			this.api().columns(['.float']).every(function (){
-				var index = this.index();
-				pageTotal = api
-					.column( index, { page: 'current'} )
-					.data()
-					.reduce( function (a, b) {
-						return intVal(a) + intVal(b);
-					}, 0 );
-				pageTotal=pageTotal.toFixed(2);
-				// Update footer
-				$( api.column( index ).footer() ).html(pageTotal);
 			});
 		}
 	} );

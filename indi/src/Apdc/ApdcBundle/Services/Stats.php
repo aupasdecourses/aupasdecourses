@@ -103,7 +103,6 @@ class Stats
 		$customers->groupByAttribute('entity_id')->getSelect()->having('last_order_date IS NULL');
 
 		foreach ($customers as $customer) {
-			dump($customer->getName());
 			array_push($data, [
 				'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
 				'id_client'			=> $customer->getCustomerId(),
@@ -111,7 +110,6 @@ class Stats
 				'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
 				'code_postal'		=> $customer->getCreatedIn(),
 				'email'				=> $customer->getEmail(),
-				'telephone'			=> '',
 			]);
 		}
 
