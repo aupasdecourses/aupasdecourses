@@ -58,8 +58,8 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         return $category;
     }
     public function eraseerrorcat($pk){
-        //$forbidden=['#VALUE!'];
-        $forbidden=['Cavavin','Les Bonnes Crèmes','Paris Terroirs','Paris Terroirs 5e','Les Papilles Gourmandes','Les Boucheries Francis','Paris Terroirs','La Mère-Mimosa','Paris Terroirs','Scübe'];
+        $forbidden=['#VALUE!','Tous les produits','Tous Les Produits'];
+        //$forbidden=['Cavavin','Les Bonnes Crèmes','Paris Terroirs','Paris Terroirs 5e','Les Papilles Gourmandes','Les Boucheries Francis','Paris Terroirs','La Mère-Mimosa','Paris Terroirs','Scübe'];
         //$forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté','Tous les produits','Tous Les Produits'];
         if(in_array($pk->getName(), $forbidden)){
             $pk->delete();
