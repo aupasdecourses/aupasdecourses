@@ -58,8 +58,8 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         return $category;
     }
     public function eraseerrorcat($pk){
-        $forbidden=['#VALUE!'];
-        //$forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté'];
+        //$forbidden=['#VALUE!'];
+        $forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté','Tous les produits','Tous Les Produits'];
         if(in_array($pk->getName(), $forbidden)){
             $pk->delete();
             echo "Delete Forbidden Cat: ".$pk->getId()." / ".$pk->getName()."\n";
@@ -161,7 +161,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
     }
 
     public function setsmallcat($pk){
-        if($pk->getLevel()<=3){
+        if($pk->getLevel()<=2){
             return;
         }else{
             $count=$pk->getProductCollection()->count();
