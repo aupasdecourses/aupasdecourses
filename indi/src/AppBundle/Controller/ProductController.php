@@ -88,7 +88,7 @@ class ProductController extends AbstractController
 
 
                 $websiteids = explode(",",$shop->getStores());
-                $category=explode(",",$shop->getCategory());
+                //$category=explode(",",$shop->getCategory());
 
                 $request->request->add([
                     'sku'               => $sku,
