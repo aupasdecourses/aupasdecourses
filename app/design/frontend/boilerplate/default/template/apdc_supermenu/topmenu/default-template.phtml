@@ -5,15 +5,14 @@
 $html = '';
 $children = $menuTree->getChildren();
 $menuTree->setCounter(1);
-
-$shop = $this->getShopByCategoryId(str_replace('category-node-', '', $menuTree->getId()));
-
-if ($shop->getShopUrl() || $shop->getAllProductsLink()) {
+$catid=str_replace('category-node-', '', $menuTree->getId());
+$shop = $this->getShopByCategoryId($catid);
+if ($shop->getShopUrl($catid) || $shop->getAllProductsLink()) {
     $html .= '<li class="template-line common-links">';
     $html .= '<ul>';
-    if ($shop->getShopUrl()) {
+    if ($shop->getShopUrl($catid)) {
         $html .= '<li class="level2 first template-column">';
-        $html .=    '<a href="' . $shop->getShopUrl() . '" class="">';
+        $html .=    '<a href="' . $shop->getShopUrl($catid) . '" class="">';
         $html .=        '<span class="cat-name common-links-name">' . $this->__('En savoir plus sur %s', $shop->getName()) . '</span>';
         $html .=    '</a>';
         $html .= '</li>';
