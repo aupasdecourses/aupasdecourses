@@ -71,6 +71,7 @@ class Pmainguet_CleanCatInfo extends Mage_Shell_Abstract
 
     public function setcorrectchildrennumber(){
         Mage::getSingleton('apdc_referentiel/categoriesbase')->setCorrectChildrenNumber();
+        echo "setcorrectchildrennumber Done!\n";
     }
 
     public function shellfixCats($store=null){
