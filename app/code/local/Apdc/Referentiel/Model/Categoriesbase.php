@@ -53,6 +53,18 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         return $result;
     }
 
+    private function _setData($cat,$att,$value,$save=false){
+        if($cat->getData($att)<>$value){
+            $cat->setData($att,$value);
+            if($save){
+                $cat->save();
+            }
+            return "Fix ".$att." for Level ".$cat->getLevel()." cat: ".$cat->getId()." / ".$cat->getName()." (new value = ".$value.")\n";
+        }else{
+            return false;
+        }
+    }
+
     public function getCats($s=null,$f=null,$store=null){
         $storeId = 0;
         Mage::app()->setCurrentStore($storeId);
@@ -150,10 +162,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
         }
         //A désactiver en temps normal
-        // if($pk->getShowInNavigation()!=1){
-        //     $pk->setShowInNavigation(1);
-        //     $change.="Fix issue with ShowInNavigation for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
-        // }
+        //     $change.=$this->_setData($pk,'show_in_navigation',1);
         if($pk->getLevel()==2 && $pk->getName()=="Caviste"){
             if($pk->getShowAgePopup()==0){
                 $pk->setShowAgePopup(1);
@@ -161,17 +170,10 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             }
             $subcats = $pk->getChildrenCategories();
             foreach($subcats as $subCat){
-                if($subCat->setShowAgePopup()==0){
-                  $subCat->setShowAgePopup(0);
-                  $subCat->save();
-                  $change.="Fix issue with ShowAgePopup for cat: ".$subCat->getId()." / ".$subCat->getName()."\n";
-                }
+                $change.=$this->_setData($subCat,'show_age_popup',0,true);
             }
         }
-        if($pk->getDisplayMode()<>"PRODUCTS"){
-            $pk->setDisplayMode("PRODUCTS");
-            $change.="Fix issue with DisplayMode for cat: ".$pk->getId()." / ".$pk->getName()."\n";
-        }
+        $change.=$this->_setData($pk,'display_mode',"PRODUCTS");
         if($pk->getMetaTitle()=="" || $pk->getMetaTitle()==null){
             $parent_name=$pk->getParentCategory()->getName(); 
             $pk->setMetaTitle($parent_name." - ".$pk->getName());
@@ -251,28 +253,20 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         if($pk->getLevel()<=2){
             return;
         }elseif($pk->getLevel()==3){
-            var_dump(in_array(explode(" ",$pk->getName())[0],$this->_maincats_l3));
             if(in_array(explode(" ",$pk->getName())[0],$this->_maincats_l3)){
-                $pk->setPosition(0);
-                $pk->save();
-                echo "Order Cats: ".$pk->getId()." / ".$pk->getName()."\n";
+                echo $this->_setData($pk,'position',0,true);
                 return false;
             }else{
-                if($pk->getPosition()<>$counter_l3){
-                    $pk->setPosition($counter_l3);
-                    $pk->save();
+                $result=$this->_setData($pk,'position',$counter_l3,true);
+                if($result){
                     $counter+=10;
-                    echo "Order Cats: ".$pk->getId()." / ".$pk->getName()."\n";
+                    echo $result;
                 }
+                return false;
             }
         }else{
             if(isset($ics[$pk->getName()])){
-                if($pk->getPosition()<>$ics[$pk->getName()][0]){
-                    $pk->setPosition($ics[$pk->getName()][0]);
-                    $pk->save();
-                    echo "Order Cats: ".$pk->getId()." / ".$pk->getName()."\n";
-                    return false;
-                }
+                echo $this->_setData($pk,'position',$ics[$pk->getName()][0],true);
             }
         }
     }
@@ -280,19 +274,12 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
     public function fixlevel2($pk){
         $change="";
         if($pk->getLevel()==2){
-            $col=$this->_bgcolors_l1[$pk->getName()];
             if($pk->getIsActive()==0 && $pk->hasChildren()){
                 $pk->setIsActive(1);
                 $change.="Fix activation for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
             }
-            if($pk->getMenuBgColor()<>$col){
-                $pk->setMenuBgColor($col);
-                $change.="Fix bg color for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
-            }
-            if($pk->getMenuTextColor()<>$this->_textcolor_l1){
-                $pk->setMenuTextColor($this->_textcolor_l1);
-                $change.="Fix text color for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
-            }
+            $change.=$this->_setData($pk,'menu_bg_color',$this->_bgcolors_l1[$pk->getName()]);
+            $change.=$this->_setData($pk,'menu_text_color',$this->_textcolor_l1);
         }
         if($change<>""){
             $pk->save();
