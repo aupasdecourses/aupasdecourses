@@ -3,13 +3,26 @@
 class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
 {
 
-    private $_limitsmall;
+    private $_limitsmall=1;
+    private $_textcolor_l1 = '#ffffff';
+    private $_bgcolors_l1 = [
+        'Boucher' => '#f3606f',
+        'Boulanger' => '#f57320',
+        'Caviste' => '#c62753',
+        'Primeur' => '#3ab64b',
+        'Fromager' => '#faae37',
+        'Poissonnier' => '#5496d7',
+        'Epicerie' => '#2f4da8',
+        'Traiteur' => '#272b32',
+        'Bio' => '#00595E',
+        'Envies' => '#800040',
+    ];
+    private $_maincats_l3=['Tous','Tout','Toute'];
 
     public function _construct()
     {
         parent::_construct();
         $this->_init('apdc_referentiel/categoriesbase');
-        $this->_limitsmall=1;
     }
 
     private function _getImageRef(){
@@ -44,7 +57,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         $storeId = 0;
         Mage::app()->setCurrentStore($storeId);
         $category = Mage::getModel( 'catalog/category' )->getCollection()
-                ->addAttributeToSelect(array('store_id','name','image','thumbnail','is_clickable','is_active','show_in_navigation','show_age_popup','display_mode','meta_title'));
+                ->addAttributeToSelect(array('store_id','name','image','thumbnail','is_clickable','is_active','show_in_navigation','show_age_popup','display_mode','meta_title','menu_bg_color','menu_text_color'));
         if($store<>null){
             $rootId = Mage::app()->getStore($store)->getRootCategoryId();
             $category->addFieldToFilter('path', array('like'=> "1/$rootId/%"));
@@ -234,8 +247,24 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
 
     public function sortcat($pk){
         $ics=$this->_getPositionRef();
-        if($pk->getLevel()<=3){
+        $counter_l3=10;
+        if($pk->getLevel()<=2){
             return;
+        }elseif($pk->getLevel()==3){
+            var_dump(in_array(explode(" ",$pk->getName())[0],$this->_maincats_l3));
+            if(in_array(explode(" ",$pk->getName())[0],$this->_maincats_l3)){
+                $pk->setPosition(0);
+                $pk->save();
+                echo "Order Cats: ".$pk->getId()." / ".$pk->getName()."\n";
+                return false;
+            }else{
+                if($pk->getPosition()<>$counter_l3){
+                    $pk->setPosition($counter_l3);
+                    $pk->save();
+                    $counter+=10;
+                    echo "Order Cats: ".$pk->getId()." / ".$pk->getName()."\n";
+                }
+            }
         }else{
             if(isset($ics[$pk->getName()])){
                 if($pk->getPosition()<>$ics[$pk->getName()][0]){
@@ -248,6 +277,42 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         }
     }
 
+    public function fixlevel2($pk){
+        $change="";
+        if($pk->getLevel()==2){
+            $col=$this->_bgcolors_l1[$pk->getName()];
+            if($pk->getIsActive()==0 && $pk->hasChildren()){
+                $pk->setIsActive(1);
+                $change.="Fix activation for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
+            if($pk->getMenuBgColor()<>$col){
+                $pk->setMenuBgColor($col);
+                $change.="Fix bg color for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
+            if($pk->getMenuTextColor()<>$this->_textcolor_l1){
+                $pk->setMenuTextColor($this->_textcolor_l1);
+                $change.="Fix text color for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
+        }
+        if($change<>""){
+            $pk->save();
+            echo $change;
+        }
+    }
+
+    public function setcorrectchildrennumber(){
+        $resource = Mage::getSingleton('core/resource');
+        $writeConnection = $resource->getConnection('core_write');
+        $readConnection = $resource->getConnection('core_read');
+        $table = $resource->getTableName('catalog/category');
+        $query_read = "SELECT p.entity_id, p.children_count, COUNT(c.entity_id) AS correct_children_count, COUNT(c.entity_id) - p.children_count AS child_diff FROM catalog_category_entity p LEFT JOIN catalog_category_entity c ON c.path LIKE CONCAT(p.path,'/%') WHERE 1 GROUP BY p.entity_id HAVING correct_children_count != p.children_count";
+        $query_write = "UPDATE catalog_category_entity c SET children_count = (SELECT COUNT(*) FROM (SELECT * FROM catalog_category_entity) cc WHERE cc.path LIKE CONCAT(c.path, '/%') AND cc.path NOT LIKE CONCAT(c.path, '/%/%'));";
+        $result=$readConnection->fetchAll($query_read);
+        if((int) $result[0]['children_count']<0){
+            $writeConnection->exec($query_write);
+        }
+    }
+
     public function fixCats($cat){
         //$this->eraseerrorcat($cat);
     	$this->setimagecat($cat);
@@ -255,7 +320,9 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         $this->setsmallcat($cat);
         $this->disableshop($cat);
         $this->deactivatesubcat($cat);
-        //$this->sortcat($cat);
+        $this->sortcat($cat);
+        $this->fixlevel2($cat);
+        $this->setcorrectchildrennumber();
     }
 
 }

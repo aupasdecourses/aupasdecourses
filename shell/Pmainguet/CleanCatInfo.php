@@ -61,6 +61,18 @@ class Pmainguet_CleanCatInfo extends Mage_Shell_Abstract
         echo "sortcats Done!\n";
     }
 
+    public function fixlevel2s($store=null){
+        $cats= Mage::getSingleton('apdc_referentiel/categoriesbase')->getCats(1,3,$store);
+        foreach ($cats as $cat) {
+            Mage::getSingleton('apdc_referentiel/categoriesbase')->fixLevel2($cat);
+        }
+        echo "fixLevel2s Done!\n";
+    }
+
+    public function setcorrectchildrennumber(){
+        Mage::getSingleton('apdc_referentiel/categoriesbase')->setCorrectChildrenNumber();
+    }
+
     public function shellfixCats($store=null){
         $this->eraseerrorcats($store);
         $this->setimagecats($store);
@@ -69,12 +81,14 @@ class Pmainguet_CleanCatInfo extends Mage_Shell_Abstract
         $this->disableshops($store);
         $this->deactivatesubcats($store);
         $this->sortcats($store);
+        $this->fixlevel2s($store);
+        $this->setcorrectchildrennumber();
     }
 
     // Implement abstract function Mage_Shell_Abstract::run();
     public function run()
     {
-        $steps = ['eraseerrorcats','setimagecats','setinfocats','setsmallcats','disableshops','deactivatesubcats','sortcats'];
+        $steps = ['eraseerrorcats','setimagecats','setinfocats','setsmallcats','disableshops','deactivatesubcats','sortcats','fixlevel2s','setcorrectchildrennumber'];
         //get argument passed to shell script
         $step = $this->getArg('step');
         $store = $this->getArg('store');
