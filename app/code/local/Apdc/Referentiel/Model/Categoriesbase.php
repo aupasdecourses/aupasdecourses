@@ -123,7 +123,16 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             $pk->setIsClickable(0);
             $change.="Fix issue with IsClickable for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
         }
-        if($pk->getLevel()>2 && $pk->getIsActive()==1 && $pk->getIsClickable()==0){
+        if($pk->getLevel()==3){
+            if(!$pk->hasChildren() && $pk->getIsClickable()==1){
+                $pk->setIsClickable(0);
+                $change.="Fix issue with IsClickable for Level 3 with no children: ".$pk->getId()." / ".$pk->getName()."\n";
+            }elseif($pk->hasChildren() && $pk->getIsClickable()==0){
+                $pk->setIsClickable(1);
+                $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
+        }
+        if($pk->getLevel()>3 && $pk->getIsActive()==1 && $pk->getIsClickable()==0){
             $pk->setIsClickable(1);
             $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
         }

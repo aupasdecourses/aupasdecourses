@@ -77,8 +77,14 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
     {
         if (is_null($this->shopUrl)) {
             $this->shopUrl = '';
+            Mage::log($this->getShopMainCategory($catid),null,"menu.log");
             if ($shopMainCategory = $this->getShopMainCategory($catid)) {
-                $this->shopUrl = $shopMainCategory->getUrl();
+
+                if($shopMainCategory){
+                    $this->shopUrl = $shopMainCategory->getUrl();
+                }else{
+                    $this->shopUrl=false;
+                }
             }
         }
         return $this->shopUrl;
@@ -95,12 +101,16 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
             $this->allProductLinks = '';
             
             if ($shopMainCategory = $this->getShopMainCategory()) {
-                $children = $shopMainCategory->getChildrenCategories();
-                foreach ($children as $childCat) {
-                    if ($childCat->getName() == 'Tous les produits') {
-                        $this->allProductLinks = $childCat->getUrl();
-                        break;
+                if($shopMainCategory){
+                    $children = $shopMainCategory->getChildrenCategories();
+                    foreach ($children as $childCat) {
+                        if ($childCat->getName() == 'Tous les produits') {
+                            $this->allProductLinks = $childCat->getUrl();
+                            break;
+                        }
                     }
+                }else{
+                    $this->allProductLinks = false;           
                 }
             }
         }
@@ -136,7 +146,13 @@ class Apdc_Commercant_Model_Shop extends Mage_Core_Model_Abstract
     {
         if (is_null($this->shopMainCategory)) {
             if($catid<>null){
-                $this->shopMainCategory = Mage::getModel('catalog/category')->load($catid);
+                //$this->shopMainCategory = Mage::getModel('catalog/category')->load($catid);
+                $shop = Mage::getModel('apdc_commercant/shop')->getCollection()->addCategoryFilter($catid)->getFirstItem();
+                if($shop->getData()<>array()){
+                    $this->shopMainCategory = Mage::getModel('catalog/category')->load($catid);
+                }else{
+                    $this->shopMainCategory = false;
+                }
             }
             elseif(isset($this->getCategoryIds()[0])){
                 $this->shopMainCategory = Mage::getModel('catalog/category')->load($this->getCategoryIds()[0]);
