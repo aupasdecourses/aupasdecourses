@@ -249,6 +249,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
 
     public function sortcat($pk){
         $ics=$this->_getPositionRef();
+        //pas vraiment fonctionnel, à tester en mettant en propriété de l'objet appelé en tant que singleton
         $counter_l3=10;
         if($pk->getLevel()<=2){
             return;
@@ -300,16 +301,11 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         }
     }
 
+    //Launch via Observer at every category save (when making change in admin)
     public function fixCats($cat){
-        //$this->eraseerrorcat($cat);
     	$this->setimagecat($cat);
     	$this->setinfocat($cat);
         $this->setsmallcat($cat);
-        $this->disableshop($cat);
-        $this->deactivatesubcat($cat);
-        $this->sortcat($cat);
-        $this->fixlevel2($cat);
-        $this->setcorrectchildrennumber();
     }
 
 }
