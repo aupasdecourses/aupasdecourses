@@ -152,12 +152,16 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             }
         }
         if($pk->getLevel()==3){
-            if(!$pk->hasChildren() && $pk->getIsClickable()==1){
-                $pk->setIsClickable(0);
-                $change.="Fix issue with IsClickable for Level 3 with no children: ".$pk->getId()." / ".$pk->getName()."\n";
-            }elseif($pk->hasChildren() && $pk->getIsClickable()==0){
-                $pk->setIsClickable(1);
-                $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            if($pk->getParentCategory()->getName()=="Envies"){
+               $change.=$this->_setData($pk,'is_clickable',0); 
+            }else{
+                if(!$pk->hasChildren() && $pk->getIsClickable()==1){
+                    $pk->setIsClickable(0);
+                    $change.="Fix issue with IsClickable for Level 3 with no children: ".$pk->getId()." / ".$pk->getName()."\n";
+                }elseif($pk->hasChildren() && $pk->getIsClickable()==0){
+                    $pk->setIsClickable(1);
+                    $change.="Fix issue with IsClickable for activated cat: ".$pk->getId()." / ".$pk->getName()."\n";
+                }
             }
         }
         if($pk->getLevel()>3 && $pk->getIsActive()==1 && $pk->getIsClickable()==0){
@@ -203,7 +207,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
                 $pk->save();
                 echo "Deactivate Small Cats: ".$pk->getId()." / ".$pk->getName()."\n";
                 return false;
-            }elseif($count>$this->_limitsmall && $pk->getIsActive()==0 && $pk->getParentCategory()->getIsActive()==1){
+            }elseif($count>$this->_limitsmall && $pk->getIsActive()==0 && $pk->getParentCategory()->getIsActive()==1 && $pk->getParentCategory()->getName()<>"Envies"){
                 $pk->setIsActive(1);
                 $pk->save();
                 echo "Activate Cats: ".$pk->getId()." / ".$pk->getName()."\n";
@@ -233,6 +237,8 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
                 //     echo "Activate Main Shop Cat for enabled shops: ".$pk->getId()." / ".$pk->getName()."\n";
                 //     return;
                 // }
+            }else{
+                echo $this->_setData($pk,'is_active',1,true); 
             }
         }
     }
