@@ -313,11 +313,41 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         }
     }
 
-    //Launch via Observer at every category save (when making change in admin)
+    public function clearcache(){
+        Mage::app('admin')->setUseSessionInUrl(false);
+        Mage::getConfig()->init();
+        $types = Mage::app()->getCacheInstance()->getTypes();
+        try {
+            echo "Cleaning data cache... \n";
+            flush();
+            foreach ($types as $type => $data) {
+                echo "Removing $type ... ";
+                echo Mage::app()->getCacheInstance()->clean($data["tags"]) ? "Cache cleared!" : "There is some error!";
+                echo "\n";
+            }
+        } catch (exception $e) {
+            die("[ERROR:" . $e->getMessage() . "]");
+        }
+        try {
+            echo "Cleaning stored cache... ";
+            flush();
+            echo Mage::app()->getCacheInstance()->clean() ? "Cache cleared!" : "There is some error!";
+            echo "\n\n";
+        } catch (exception $e) {
+            die("[ERROR:" . $e->getMessage() . "]");
+        }
+    }
+
     public function fixCats($cat){
-    	$this->setimagecat($cat);
-    	$this->setinfocat($cat);
-        $this->setsmallcat($cat);
+    	$this->eraseerrorcat($store);
+        $this->setimagecat($store);
+        $this->setinfocat($store);
+        $this->setsmallcat($store); 
+        $this->disableshop($store);
+        $this->deactivatesubcat($store);
+        $this->sortcat($store);
+        $this->fixlevel2($store);
+        $this->setcorrectchildrennumber();
     }
 
 }
