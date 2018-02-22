@@ -320,19 +320,20 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         try {
             echo "Cleaning data cache... \n";
             flush();
-            foreach ($types as $type => $data) {
-                echo "Removing $type ... ";
-                echo Mage::app()->getCacheInstance()->clean($data["tags"]) ? "Cache cleared!" : "There is some error!";
-                echo "\n";
-            }
+            Mage::app()->cleanCache();
+            // foreach ($types as $type => $data) {
+            //     echo "Removing $type ... ";
+            //     echo Mage::app()->getCacheInstance()->clean($data["tags"]) ? "Cache cleared!" : "There is some error!";
+            //     echo "\n";
+            // }
         } catch (exception $e) {
             die("[ERROR:" . $e->getMessage() . "]");
         }
         try {
-            echo "Cleaning stored cache... ";
             flush();
-            echo Mage::app()->getCacheInstance()->clean() ? "Cache cleared!" : "There is some error!";
-            echo "\n\n";
+            Mage::getModel('catalog/product_image')->clearCache();
+            // echo Mage::app()->getCacheInstance()->clean() ? "Cache cleared!" : "There is some error!";
+            // echo "\n\n";
         } catch (exception $e) {
             die("[ERROR:" . $e->getMessage() . "]");
         }
