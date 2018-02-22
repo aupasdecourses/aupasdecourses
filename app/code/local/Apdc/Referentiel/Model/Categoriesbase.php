@@ -144,9 +144,12 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
     public function setinfocat($pk){
         $url="";
         $change="";
-        if($pk->getLevel()==2 && $pk->getIsClickable()==1){
-            $pk->setIsClickable(0);
-            $change.="Fix issue with IsClickable for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+        if($pk->getLevel()==2){
+            echo $this->_setData($pk,'name',trim($pk->getName()),true);
+            if($pk->getIsClickable()==1){
+                $pk->setIsClickable(0);
+                $change.="Fix issue with IsClickable for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
         }
         if($pk->getLevel()==3){
             if(!$pk->hasChildren() && $pk->getIsClickable()==1){
@@ -278,6 +281,9 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
             if($pk->getIsActive()==0 && $pk->hasChildren()){
                 $pk->setIsActive(1);
                 $change.="Fix activation for Level 2 cat: ".$pk->getId()." / ".$pk->getName()."\n";
+            }
+            if(!isset($this->_bgcolors_l1[$pk->getName()])){
+                echo "WARNING ".$pk->getName()." DOESN'T EXIST IN THE TABLE OF LEVEL 2 CATS !!!!";
             }
             $change.=$this->_setData($pk,'menu_bg_color',$this->_bgcolors_l1[$pk->getName()]);
             $change.=$this->_setData($pk,'menu_text_color',$this->_textcolor_l1);
