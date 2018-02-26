@@ -184,5 +184,9 @@
               <Netreviews_Pla/>
           </depends> 
         </Apdc_Avisverifies>
+        <Apdc_Partner>
+          <active>true</active>
+          <codePool>local</codePool>
+        </Apdc_Partner>
     </modules>
 </config>

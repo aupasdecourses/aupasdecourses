@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  design
+ * @package   Apdc_Partner
+ * @copyright Copyright (c) 2016 GardenMedia Studio VN
+ */
+-->
+<layout>
+    <adminhtml_partner_index_index>
+        <reference name="content">
+            <block type="apdc_partner/adminhtml_partner" name="partner" />
+        </reference>
+    </adminhtml_partner_index_index>
+
+    <adminhtml_partner_index_new>
+        <reference name="content">
+            <block type="apdc_partner/adminhtml_partner_edit" name="partner_edit" />
+        </reference>
+        <reference name="left">
+            <block type="apdc_partner/adminhtml_partner_edit_tabs" name="partner_edit_tabs">
+                <block type="apdc_partner/adminhtml_partner_edit_tab_main" name="partner_edit_tabs_main" />
+                <action method="addTab"><name>main_section</name><block>partner_edit_tabs_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_partner_index_new>
+    <adminhtml_partner_index_edit>
+        <reference name="content">
+            <block type="apdc_partner/adminhtml_partner_edit" name="partner_edit" />
+        </reference>
+        <reference name="left">
+            <block type="apdc_partner/adminhtml_partner_edit_tabs" name="partner_edit_tabs">
+                <block type="apdc_partner/adminhtml_partner_edit_tab_main" name="partner_edit_tabs_main" />
+                <action method="addTab"><name>main_section</name><block>partner_edit_tabs_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_partner_index_edit>
+    
+</layout>
