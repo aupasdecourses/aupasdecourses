@@ -1,7 +1,19 @@
-<?php $menu = $this->getMenuHtml(); ?>
+<?php
+	$menu = $this->getMenuHtml();
+	$labels = Mage::helper('apdc_catalog/product_labels')->getImageLabels();
+?>
 <?php if ($menu) : ?>
 <div class="category_left_menu">
     <h4><?php echo $this->__('Les rayons'); ?><span class="toggle-mobile-menu"><i class="fa fa-angle-down"></i></span></h4>
     <ul><?php echo $menu; ?></ul>
 </div>
 <?php endif; ?>
+
+<div class="category_left_menu labels_product_legend">
+    <h4><?php echo $this->__('Les labels'); ?><span class="toggle-mobile-menu"><i class="fa fa-angle-down"></i></span></h4>
+    <ul>
+    	<?php foreach($labels as $l => $v):?>    		
+    	<li><img src="<?php echo $this->getSkinUrl($v);?>"><span><?php echo $l ?></span></li>
+    <?php endforeach ?>
+    </ul>
+</div>

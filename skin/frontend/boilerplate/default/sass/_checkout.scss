@@ -21,7 +21,7 @@
     }
     .fieldset{
         background-color: #fff;
-        border-radius: 10px;
+        /*border-radius: 10px;*/
         padding: 15px 70px;
     }
 }
@@ -31,7 +31,7 @@
 #checkout-step-payment,
 #checkout-step-checkcart{
     background-color: #fff;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     padding: 40px 70px;
     max-width: 1200px;
     margin: 0 auto 20px;
@@ -60,7 +60,7 @@
         color: $color-main-grey;
         font-size: 0.875rem;
         padding: 10px 30px 10px 10px;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         border: 1px solid #d6d6d6;
         background-color: #f6f6f6;
         width: 100%;
@@ -131,7 +131,7 @@
                 color: $color-main-grey;
                 font-weight: normal;
                 background-color: #eee;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
                 &:before{
                     content: "";
                     display: block;
@@ -211,7 +211,7 @@
             }
             &.ddate_day_active{
                 background-color: $color-main-green;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
                 padding: 5px;
                 color: #fff;
                 border: none;
@@ -255,7 +255,7 @@
             border: 2px solid $color-main-green;
             display: inline-block;
             padding:0;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
             font-size: 14px;
             text-align: center;
             vertical-align: middle;
@@ -387,7 +387,7 @@
         position: relative;
         background-color: #fafafa;
         border: 1px solid #eee;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         padding: 10px 0;
         margin: 0;
         &.active{
@@ -425,7 +425,7 @@
             z-index: 1;
             cursor: pointer;
             outline: none;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
             opacity: 0;
         }
     }
@@ -641,7 +641,7 @@
         color: $color-main-grey;
         font-size: 0.875rem;
         padding: 10px 30px 10px 10px;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         border: 1px solid #eee;
         background-color: #f6f6f6;
         outline: none;
@@ -830,7 +830,7 @@
 .response-payment{
     max-width: 1200px;
     margin: 60px auto;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     background-color: #fff;
     padding: 30px;
     text-align: center;
@@ -876,5 +876,33 @@
         color: $color-main-green;
         margin-top: 0;
         margin-bottom: 50px;
+    }
+}
+
+.hipay_redirect_infobox_content{
+    .page-title{
+        height:200px;
+        h1{
+            width:600px;
+            text-transform:none;
+            font-size: 1.8rem;
+        }
+    }
+}
+
+.main_redirect{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align:center;
+    padding: 20px;
+    margin: 20px auto;
+    font-size: 20rem;
+    p{
+        font-size: 1rem;
+    }
+    img{
+        max-width:90%;
     }
 }

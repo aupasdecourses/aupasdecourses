@@ -1,0 +1,54 @@
+/* ============================================ *
+ * Search - Auto Suggest
+ * ============================================ */
+.search-autocomplete {
+  overflow: visible !important;
+  position: relative !important;
+  top: 5px !important;
+  z-index: 200;  
+  ul {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    left: 0;
+    padding-left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    li {
+      border-bottom: 1px solid #f4f4f4;
+      color: #339933;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px 6px;
+      text-align: left;
+      &.selected {
+        background-color: $color-main-green;
+        color: white !important;
+      }
+      .amount {
+        float: right;
+        font-weight: bold;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: block;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-bottom: 7px solid #339933;
+    border-top: none;
+    left: 50%;
+    top: -7px;
+  }
+}

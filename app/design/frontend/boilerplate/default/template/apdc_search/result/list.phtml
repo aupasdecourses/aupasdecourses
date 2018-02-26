@@ -19,13 +19,6 @@
                             </div>
                             <h3><?php echo $this->getCommercantName($products[0]); ?></h3>
                         </div>
-                        <div class="col-lg-6 col-md-12 text-right delivery-days">
-                            <?php $availability = $this->getChild('apdc_catalog_shop_availability'); ?>
-                            <?php if ($availability) : ?>
-                                <?php echo $availability->setShopInfo($shop_info)
-                                        ->toHtml(); ?>
-                            <?php endif; ?>
-                        </div>
                     </div>
                     <?php endif; ?>
                     <ul class="owl-carousel apdc-products-grid row">
@@ -58,7 +51,20 @@
                     items:1,
                     nav:true
                 },
+
                 420:{
+                    items:2,
+                    nav:true
+                },
+                620:{
+                    items:3,
+                    nav:true
+                },
+                920:{
+                    items:4,
+                    nav:true
+                },
+                1200:{
                     items:5,
                     nav:true
                 },

@@ -6,7 +6,6 @@
 		<reference name="header">
 			<action method="unsetChild"><name>topMenu</name></action>
 			<action method="unsetChild"><name>topContainer</name></action>
-			<action method="setData"><name>isCheckout</name><value>1</value></action>
 			<action method="unsetChild"><name>header.delivery</name></action>
 			<remove name="top.search"/>
 			<remove name="top.container"/>
@@ -80,6 +79,9 @@
                 <action method='setTemplate'><template>apdc_checkout/checkout/onepage/progress.phtml</template></action>
             </reference>
         </checkout_onepage_progress>
+        <reference name="footer_link">
+            <action method="setData"><name>isCheckout</name><value>1</value></action>
+        </reference>
     </checkout_onepage_index>
     <!-- Affichage spécial pour la livraison en triporteur (AJAX) -->
     <checkout_onepage_shippingmethod>
@@ -133,6 +135,23 @@
 	
     <!-- HiPay Redirect -->
     <hipay_mapi_payment>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="header">
+            <action method="unsetChild"><name>topMenu</name></action>
+            <action method="setData"><name>isRedirectPayment</name><value>1</value></action>
+            <action method="unsetChild"><name>topContainer</name></action>
+            <action method="unsetChild"><name>header.delivery</name></action>
+            <action method="unsetChild"><name>neighborhood_header</name></action>
+            <remove name="top.search"/>
+            <remove name="top.container"/>
+            <remove name="header.delivery"/>
+            <remove name="neighborhood_header"/>
+        </reference>
+        <reference name="footer_link">
+            <action method="setData"><name>isRedirectPayment</name><value>1</value></action>
+        </reference>
         <reference name="hipaypayment.redirect">
             <action method="setTemplate"><template>hipay/payment.phtml</template></action>
         </reference>

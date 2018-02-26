@@ -355,6 +355,7 @@ header{
         }
         .minicart-items{
             /*margin-top: 10px;*/
+            margin-bottom:160px;
         }
         .block-subtitle{
             color: $color-second-green;
@@ -471,8 +472,8 @@ header{
         }
         .minicart-wrapper {
             height: 100%;
-            overflow: auto;
-            padding: 50px 10px 145px;
+            overflow: scroll;
+            padding: 50px 10px 0px;
             width: 100%;
             p.empty {
               margin: 5px 0 0;

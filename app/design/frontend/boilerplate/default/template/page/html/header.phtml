@@ -1,4 +1,5 @@
 <?php $isCheckout = ((!$this->getData('isCheckout') && $this->getData('isCheckout') != 1) ? false : true); ?>
+<?php $isRedirectPayment = ((!$this->getData('isRedirectPayment') && $this->getData('isRedirectPayment') != 1) ? false : true); ?>
 <?php 
     if($isCheckout){
         $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();
@@ -22,6 +23,10 @@
                     $middle='logo col-xs-2';
                     $right='skip-links col-xs-5';
                 }
+            }else if($isRedirectPayment){
+                $left='col-xs-3 col-sm-5';
+                $middle='logo col-xs-8 col-sm-2';
+                $right='col-xs-1';
             }else{
                 $left='skip-links col-xs-3 col-sm-5 left-links';
                 $middle='logo col-xs-4 col-sm-2';
@@ -31,10 +36,10 @@
 
         <div class="<?php echo $left?>">
             <?php echo $this->getChildHtml('neighborhood_header'); ?>
-            <?php if (!$isCheckout) : ?>
+            <?php if (!$isCheckout && !$isRedirectPayment) : ?>
                 <?php echo $this->getChildHtml('topSearch') ?>
             <?php endif; ?>            
-            <?php if (!$isCheckout) : ?>
+            <?php if (!$isCheckout && !$isRedirectPayment) : ?>
                 <div class="skip-container toggle-search-container">
                     <a href="#" id="toggle-search" title="<?php echo $this->quoteEscape($this->__('Search')) ?>" class="visible-xs skip-link"><i class="fa fa-search"></i></a>
                 </div>
@@ -47,58 +52,60 @@
         </div>
          <div class="<?php echo $right?>">
             <div class="link-header-right">
-                <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
-                <div class="skip-help skip-container">
-                    <a id="dLabel" href="<?php echo Mage::getBaseUrl().'../faq';?>" class="skip-help">
-                        <i class="fa fa-info-circle"></i>
-                        <span class="label">Aide</span>
-                    </a>
-                </div>                
-                <?php if (!$isCheckout){ ?>
-                    <div class="header-delivery-container skip-container">
-                        <a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
-                            <i class="fa fa-list-ul"></i>
-                            <?php if ($headerDdate = Mage::helper('apdc_checkout')->getHeaderDdate()) : ?>
-                                <span class="label"><?php echo $headerDdate; ?> <i class="fa fa-angle-down"></i></span>
-                            <?php else : ?>
-                                <span class="label"><?php echo $this->__('Créneaux') ?></span>
-                                <?php if (Mage::getSingleton('core/session')->getNeedToSelectDeliveryDays()) : ?>
-                                    <script type="text/javascript">
-                                        jQuery(document).ready(function() {
-                                            jQuery(document).trigger('checkDeliveryDays', [{need_to_select_delivery_days: true}]);
-                                        });
-                                    </script>
+                <?php if(!$isRedirectPayment):?>
+                    <?php $session = Mage::getSingleton('customer/session', array('name'=>'frontend')); ?>
+                    <div class="skip-help skip-container">
+                        <a id="dLabel" href="<?php echo Mage::getBaseUrl().'../faq';?>" class="skip-help">
+                            <i class="fa fa-info-circle"></i>
+                            <span class="label">Aide</span>
+                        </a>
+                    </div>                
+                    <?php if (!$isCheckout){ ?>
+                        <div class="header-delivery-container skip-container">
+                            <a href="#" data-url="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" title="Livraison" id="header-delivery-link">
+                                <i class="fa fa-list-ul"></i>
+                                <?php if ($headerDdate = Mage::helper('apdc_checkout')->getHeaderDdate()) : ?>
+                                    <span class="label"><?php echo $headerDdate; ?> <i class="fa fa-angle-down"></i></span>
+                                <?php else : ?>
+                                    <span class="label"><?php echo $this->__('Créneaux') ?></span>
+                                    <?php if (Mage::getSingleton('core/session')->getNeedToSelectDeliveryDays()) : ?>
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function() {
+                                                jQuery(document).trigger('checkDeliveryDays', [{need_to_select_delivery_days: true}]);
+                                            });
+                                        </script>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                        </a>
-                    </div>
-                <?php } ?>
-                <div class="header-account-container skip-container">
-                    <?php if($this->helper('customer')->isLoggedIn()) : ?>
-                        <a href="#" id="my-account-menu" title="Mon Compte">
-                            <i class="fa fa-user account-connected"></i>
-                            <span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
-                        </a>
-                    <?php else : ?>
-                        <a href="#" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
-                        <a style="display:none;" href="#" id="choose-my-district" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a>
-                    <?php endif; ?>
-                    <div class="block block-login" id="login-form-header_popup">
-                        <div class="apdc-popup-content">
-                            <?php if($this->helper('customer')->isLoggedIn()) : ?>
-                                <?php echo $this->getChildHtml('topLinks') ?>
-                            <?php else : ?>
-                                <?php echo $this->getChildHtml('customer_login') ?>
-                            <?php endif; ?>
+                            </a>
+                        </div>
+                    <?php } ?>
+                    <div class="header-account-container skip-container">
+                        <?php if($this->helper('customer')->isLoggedIn()) : ?>
+                            <a href="#" id="my-account-menu" title="Mon Compte">
+                                <i class="fa fa-user account-connected"></i>
+                                <span class="label">Bonjour <?php echo $this->helper('customer')->getCustomer()->getFirstname(); ?> <i class="fa fa-angle-down"></i></span>
+                            </a>
+                        <?php else : ?>
+                            <a href="#" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion"><i class="fa fa-user"></i> <span class="label">Connexion</span></a>
+                            <a style="display:none;" href="#" id="choose-my-district" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a>
+                        <?php endif; ?>
+                        <div class="block block-login" id="login-form-header_popup">
+                            <div class="apdc-popup-content">
+                                <?php if($this->helper('customer')->isLoggedIn()) : ?>
+                                    <?php echo $this->getChildHtml('topLinks') ?>
+                                <?php else : ?>
+                                    <?php echo $this->getChildHtml('customer_login') ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Cart -->
-                <?php if (!$isCheckout){ ?>
-                    <div class="header-minicart skip-container">
-                        <?php echo $this->getChildHtml('minicart_head'); ?>
-                    </div>
-                <?php } ?>
+                    <!-- Cart -->
+                    <?php if (!$isCheckout){ ?>
+                        <div class="header-minicart skip-container">
+                            <?php echo $this->getChildHtml('minicart_head'); ?>
+                        </div>
+                    <?php } ?>
+                <?php endif;?>
             </div>
         </div>
     </div>

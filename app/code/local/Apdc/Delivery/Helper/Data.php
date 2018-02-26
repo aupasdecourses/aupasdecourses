@@ -38,24 +38,16 @@ class Apdc_Delivery_Helper_Data extends Mage_Core_Helper_Abstract
 	public function liste_commercant_id($type="attcomid")
 	{
 	    $return = [];
-
 	    //with Apdc_Commercant module
 	    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
 	    $shops->addFieldToFilter("flag_magmi",1);
-        $shops->getSelect()->join('catalog_category_entity', 'main_table.id_category=catalog_category_entity.entity_id', array('catalog_category_entity.path'));
-        $shops->addFilterToMap('path', 'catalog_category_entity.path');
         foreach ($shops as $shop) {
-            $rootCategoryId = explode('/', $shop->getPath())[1];
-            $rootCategoryName=Mage::getSingleton('catalog/category')->load($rootCategoryId)->getName();
-            if($type=="catid"){
-            	$return[$rootCategoryName][$shop->getIdCategory()] = $shop->getName();
-            } else {
-            	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();
-            }
+        	$stores=$shop->getStores();
+    		$rootCategoryId=Mage::app()->getStore($id)->getRootCategoryId();
+        	$rootCategoryName=Mage::getSingleton('catalog/category')->load($rootCategoryId)->getName();
+        	$return[$rootCategoryName][$shop->getIdAttributCommercant()] = $shop->getName();  
         }
-
 	    arsort($return);
-
 	    return $return;
 	}
 

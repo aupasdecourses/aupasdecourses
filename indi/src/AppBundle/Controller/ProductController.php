@@ -88,7 +88,7 @@ class ProductController extends AbstractController
 
 
                 $websiteids = explode(",",$shop->getStores());
-                $category=explode(",",$shop->getCategory());
+                //$category=explode(",",$shop->getCategory());
 
                 $request->request->add([
                     'sku'               => $sku,
@@ -106,7 +106,7 @@ class ProductController extends AbstractController
                     'attribute_set_id'  => '4',
                     'type_id'           => 'simple',
                     'website_ids'       => $websiteids,
-                    'category_ids'       => $category,
+                    //'category_ids'       => $category,
                 ]);
             }
         );
@@ -150,7 +150,7 @@ class ProductController extends AbstractController
                     .'Bio : '.($entity['produit_biologique'] ? 'Oui' : 'Non').PHP_EOL
                     .'Notes du commerçant : '.$entity['notes_com'].PHP_EOL
                     .'Ids quartier : '.$entity['website_ids'].PHP_EOL
-                    .'Ids Category : '.$entity['category_ids'].PHP_EOL
+                    // .'Ids Category : '.$entity['category_ids'].PHP_EOL
                 ;
 
                 $from = $this->getParameter('from_email');

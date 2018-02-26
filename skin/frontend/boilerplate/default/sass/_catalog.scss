@@ -7,10 +7,10 @@
   }
   h3.delivery_days_title {
     font-size: 1rem;
-    display:block;
-    text-align:right;
     font-weight: 700;
-    margin: 0 15px 5px 0;
+    display: block;
+    margin: 20px 15px 5px 0;
+    text-align: left;
     letter-spacing: normal;
     text-transform: none;
     color: $color-second-green;
@@ -41,14 +41,18 @@
     }
   }
 }
+
 .catalog-category-view{
     .category_view_content {
         background-color:white;
         padding-bottom:10px;
+        z-index:1;
         .title-block{
             margin-bottom: 15px;
         }
         .col-md-3 .is_sticky {
+          background-color:white;
+          z-index:1;
           position:fixed;
           top:0;
           transition:transform 0.2s ease;
@@ -118,6 +122,16 @@
             &> ul ul {
               padding-left:20px;
             }
+            &.labels_product_legend{
+                margin-top: 10px;
+                ul li{
+                    max-height:100%;
+                    padding:2px 0;
+                    span{
+                        padding-left:10px;
+                    }
+                }
+            }
         }
     }
     .main-container{
@@ -140,6 +154,7 @@
     .commercant-collapse{
         padding: 20px 20px 0;
         max-width: 1600px;
+        font-size: 0.875rem;
         .commercant-info{
             padding-bottom: 20px;
             .commercant-name{
@@ -192,10 +207,10 @@
                 }
             }
 					
-						.shop-availability {
+			.shop-availability {
                 background-color:$color-dark-orange;
                 margin-top:10px;
-                border-radius:3px;
+                /*border-radius:3px;*/
                 box-shadow:1px 1px 10px -1px rgba(0, 0, 0, 0.51);
                 .shop-availability-container {
                   margin:0 auto;
@@ -251,6 +266,8 @@
                 }
             }
             .desc-commercant{
+                max-height: 400px;
+                overflow-y: auto;
                 h2{
                     font-size: 1.125rem;
                     font-weight: 700;
@@ -337,14 +354,14 @@
                             }
                             form{
                                 z-index: 1000;
-                                overflow: auto;
+                                /*overflow: auto;*/
                             }
                         }
                         form{
                             max-height: 470px;
                             &::-webkit-scrollbar-track{
                                 -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-                                border-radius: 10px;
+                                /*border-radius: 10px;*/
                                 background-color: #F5F5F5;
                             }
                             &::-webkit-scrollbar{
@@ -354,7 +371,7 @@
                                 position: relative;
                             }
                             &::-webkit-scrollbar-thumb{
-                                border-radius: 10px;
+                                /*border-radius: 10px;*/
                                 -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.3);
                                 background-color: #999;
                             }
@@ -381,7 +398,7 @@
                                     color: $color-main-grey;
                                     font-size: 0.875rem;
                                     padding: 10px;
-                                    border-radius: 5px;
+                                    /*border-radius: 5px;*/
                                     border: 1px solid #eee;
                                     background-color: #f6f6f6;
                                     width: 100%;
@@ -471,7 +488,7 @@
                             color: $color-main-grey;
                             font-size: 0.875rem;
                             padding: 10px;
-                            border-radius: 5px;
+                            /*border-radius: 5px;*/
                             border: 1px solid #eee;
                             background-color: #f6f6f6;
                             width: 100%;
@@ -583,6 +600,7 @@
     }
     .limiter{
         margin-top: -10px;
+        float:right;
     }
     .amount{
         color: #333;
@@ -591,7 +609,7 @@
         color: $color-main-grey;
         font-size: 0.875rem;
         padding: 10px 30px 10px 10px;
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         border: 1px solid #eee;
         background-color: #f6f6f6;
         width: auto;
@@ -719,7 +737,7 @@
                 height: 100px;
                 box-shadow: none;
                 border: 1px solid #d6d6d6;
-                border-radius: 4px;
+                /*border-radius: 4px;*/
                 background-color: #FAFAFA;
                 padding: 6px 12px;
                 resize: none;
@@ -814,7 +832,7 @@
             select{
                 color: $color-main-grey;
                 font-size: 0.875rem;
-                border-radius: 5px;
+                /*border-radius: 5px;*/
                 border: 1px solid #eee;
                 background-color: #f6f6f6;
                 width: auto;

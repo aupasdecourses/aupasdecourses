@@ -41,7 +41,9 @@
 			   data-ajax-product-popup="<?php echo $this->getUrl('catalog/product/ajaxQuickView', array('form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>">
 				<h3 class="product-name"><?php echo $strippedName; ?></h3>
 			</a>
-			<p class="product-portion"><?php echo $product->getData('short_description'); ?></p>
+			<p class="product-portion"><?php echo $product->getData('short_description'); ?>
+				<?php echo $this->getPoidsUnit();?>
+			</p>
 			<p class="product-commercant-name">
 				<?php echo Mage::getResourceSingleton('catalog/product')
 						->getAttribute('commercant')

@@ -76,15 +76,6 @@ class Shop
     private $stores;
 
     /**
-     * category
-     *
-     * @var string
-     *
-     * @ORM\Column(name="id_category", type="string", length=255)
-     */
-    private $category;
-
-    /**
      * Get id
      *
      * @return integer
@@ -236,30 +227,6 @@ class Shop
     public function getStores()
     {
         return $this->stores;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     *
-     * @return Shop
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 
 }
