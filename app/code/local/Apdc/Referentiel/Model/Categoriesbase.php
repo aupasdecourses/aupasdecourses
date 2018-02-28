@@ -260,7 +260,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         $ics=$this->_getPositionRef();
         //pas vraiment fonctionnel, à tester en mettant en propriété de l'objet appelé en tant que singleton
         $counter_l3=10;
-        if($pk->getLevel()<=2){
+        if($pk->getLevel()<=1){
             return;
         }elseif($pk->getLevel()==3){
             if(in_array(explode(" ",$pk->getName())[0],$this->_maincats_l3)){
