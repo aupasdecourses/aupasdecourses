@@ -114,7 +114,7 @@ class Apdc_Catalog_Block_Product_List_ProductLabels extends Mage_Core_Block_Temp
             if (!is_array($attributeValue)&&$attributeValue <> false && array_key_exists($attributeValue, $this->authorizeOrigine)&&$this->authorizeOrigine[$attributeValue]<>"") {
                 $productOrigine = array(
                     'text' => "Origine: ".$attributeValue,
-                    'icon' => $this->getSkinUrl($this->authorizeOrigine[$attributeValue]),
+                    'icon' => $this->getSkinUrl('images/labels/countries/'.$this->authorizeOrigine[$attributeValue]),
                 );
             }
 
