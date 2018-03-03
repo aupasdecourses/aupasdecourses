@@ -81,32 +81,63 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
 		}
 	}
 
+	//List products by commrçant
+	public function listIdsByShop($shop_attribute)
+	{
+		if(is_int((int) $shop_attribute)){
+			$products=Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*');
+			$products->addAttributeToFilter('commercant',$shop_attribute);
+			return $products;
+		}else{
+			return false;
+		}
+	}
+
 	public function listIdsVerbatim(){
 		$this->listIds(1,1);
 	}
 
 	//Clean products options from a list of ids
-	public function cleanIds()
+	public function cleanIds($shop_attribute)
 	{
-		 $total_count=count($this->_idstoclean);
-		 $iter=1;
-		 foreach ($this->_idstoclean as $id => $data){
-		 	$product = Mage::getModel("catalog/product")->load($id);
-		 	echo "Processing ".$product->getName().PHP_EOL;
-		 	if($product->getOptions() != array()){
-		 		foreach ($product->getOptions() as $opt)
-		 		{
-		 			$opt->delete();
-		 		}
-		 	$product->setHasOptions(0);
-		 	$product->setRequiredOptions(0);
-		 	$product->save();
-		 	echo $iter." of ".$total_count.": Options removed for ".$product->getName()."\n";
-		 	$iter++;
-		 	} else {
-		 		echo "NO OPTIONS FOR ".$product->getName()."\n";
-		 	}
-		 }
+		 if(isset($shop_attribute)){
+		 	$products=$this->listIdsByShop($shop_attribute);
+		 	foreach ($products as $p){
+			 	echo "Processing ".$p->getName().PHP_EOL;
+			 	if($p->getData('has_options')== 1){
+			 		foreach ($p->getProductOptionsCollection() as $opt)
+			 		{
+			 			$opt->delete();
+			 		}
+			 		$p->setHasOptions(0);
+			 		$p->setRequiredOptions(0);
+			 		$p->save();
+			 	echo "Options removed for ".$p->getName()."\n";
+			 	} else {
+			 		echo "NO OPTIONS FOR ".$p->getName()."\n";
+			 	}
+			 }
+		 }else{
+			 $total_count=count($this->_idstoclean);
+			 $iter=1;
+			 foreach ($this->_idstoclean as $id => $data){
+			 	$product = Mage::getModel("catalog/product")->load($id);
+			 	echo "Processing ".$product->getName().PHP_EOL;
+			 	if($product->getOptions() != array()){
+			 		foreach ($product->getOptions() as $opt)
+			 		{
+			 			$opt->delete();
+			 		}
+			 	$product->setHasOptions(0);
+			 	$product->setRequiredOptions(0);
+			 	$product->save();
+			 	echo $iter." of ".$total_count.": Options removed for ".$product->getName()."\n";
+			 	$iter++;
+			 	} else {
+			 		echo "NO OPTIONS FOR ".$product->getName()."\n";
+			 	}
+			 }
+		}
 	}
 
 	//List and clean products with badoptions
@@ -126,8 +157,13 @@ class Pmainguet_CustomOptions extends Mage_Shell_Abstract{
         $steps = ['listIds','cleanIds','listandcleanIds','listIdsVerbatim'];
         //get argument passed to shell script
         $step = $this->getArg('step');
+        $shop_attribute = $this->getArg('shop');
         if (in_array($step, $steps)) {
-            $this->$step();
+            if(isset($shop_attribute) && $step=='cleanIds'){
+            	$this->$step($shop_attribute);
+            }else{
+            	$this->$step();
+            }
         } else {
             echo "STEP MUST BE ONE OF THESE:".PHP_EOL;
             foreach ($steps as $s) {
