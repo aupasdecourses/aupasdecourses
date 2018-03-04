@@ -116,3 +116,8 @@ tags
 #ignore indi/web
 /indi/web
 go-pear.phar
+composer.json
+vendor
+composer.lock
+.vscode/launch.json
+.vscode/settings.json
