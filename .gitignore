@@ -123,3 +123,6 @@ composer.lock
 .vscode/settings.json
 vendor
 .gitignore
+configphpcs.php
+php-cs-fixer-tmp.phar
+configphpcs.php
