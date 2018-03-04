@@ -345,7 +345,13 @@ class Stats
         );
         $shops->addFilterToMap('lat', 'geocode.lat');
         $shops->addFilterToMap('lon', 'geocode.lon');
-        $shops->addFieldToFilter('lat', array('null'=>''));
+        $shops->addFieldToFilter(
+            array('lat','lat'),
+            array(
+                array('null'=>''),
+                array('eq'=>0)
+            )
+        );
         return $shops->load();
     }
 

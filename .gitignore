@@ -116,7 +116,7 @@ tags
 #ignore indi/web
 /indi/web
 go-pear.phar
-composer.jsonV
+composer.json
 vendor
 composer.lock
 .vscode/launch.json
