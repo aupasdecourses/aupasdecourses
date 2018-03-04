@@ -30,18 +30,18 @@ var greenMarker = L.AwesomeMarkers.icon({
 /* affiche infos sur pop up commercant */
 function setMarker(data) {
   var markers = [];
-  $.each(data, function(i, d) {
-    if (d.lat !== "" && d.lon !== "" && d.lat !== null && d.lon !== null) {
-      if (d.addr.substring(0, 3) == "750") {
-        var marker = L.marker([d.lat, d.lon], {
+  $.each(data, function(i, d) {    
+    if (d.lat !== "" && d.long !== "" && d.lat !== null && d.long !== null) {
+      if (d.postcode.substring(0, 3) == "750") {
+        var marker = L.marker([d.lat, d.long], {
           icon: redMarker
         });
       } else {
-        var marker = L.marker([d.lat, d.lon], {
+        var marker = L.marker([d.lat, d.long], {
           icon: greenMarker
         });
       }
-      marker.bindPopup('<div>' + d.nom_commercant + '</div><div>' + d.addr + '</div><div>' + d.ville + '</div><div>' + d.telephone + '</div><div>Horaires ouvertures : ' + d.timetable + '</div>');
+      marker.bindPopup('<div>' + d.name + '</div><div>' + d.street + '</div><div>' + d.city + '</div><div>Horaires ouvertures : ' + d.timetable + '</div>');
       markers.push(marker);
     }
   });
@@ -61,6 +61,7 @@ var city = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 data = JSON.parse(JSON.stringify(json_data_for_shops));
 var lieu = setMarker(data);
+
 
 //Map Bounds
 var group = new L.featureGroup(lieu);

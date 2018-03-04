@@ -121,3 +121,5 @@ vendor
 composer.lock
 .vscode/launch.json
 .vscode/settings.json
+vendor
+.gitignore
