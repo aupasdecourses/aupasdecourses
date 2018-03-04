@@ -3,8 +3,7 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-
-	{% if comparaisonMerchants == true %}
+	{% if needgeocode == 1 %}
 	<div>
 		{{ form_start(form_new_merchants) }}
 		{{ form_widget(form_new_merchants) }}
@@ -30,7 +29,7 @@
 {% block javascript_mapShops %}
 	<script type="text/javascript">	
 		var google_key= '{{ google_key }}';
-		var json_data_for_shops = {{ json_data_for_shops|raw }};
+		var json_data_for_shops = {{ shops|raw }};
 	</script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>

@@ -60,7 +60,9 @@ var city = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 data = JSON.parse(JSON.stringify(json_data_for_shops));
+console.log(data);
 var lieu = setMarker(data);
+
 
 //Map Bounds
 var group = new L.featureGroup(lieu);
