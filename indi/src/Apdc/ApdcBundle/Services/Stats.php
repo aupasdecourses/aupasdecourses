@@ -285,7 +285,7 @@ class Stats
     public function getNewShopData()
     {
         $data = [];
-        $merchants = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        $merchants = $this->getUngeocodeMerchants();
         foreach ($merchants as $merchant) {
             array_push($data, [
                 'address'			=> $merchant->getStreet(), // peut potentiellement etre modifié pour respecter la syntaxe de l'encodage géographique
@@ -329,7 +329,7 @@ class Stats
         );
         $shops->addFilterToMap('lat','geocode.lat');
         $shops->addFilterToMap('lon', 'geocode.lon');
-        return $shops->load();
+		return json_encode($shops->load()->toArray());
     }
 
     //Filter getMerchantsStatData() for null or 0 lat/long

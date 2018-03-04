@@ -56,7 +56,7 @@ class MapController extends Controller
         return $this->render(
             'ApdcApdcBundle::map/merchants.html.twig',
             [
-                'shops' => json_encode($shops->toArray()),
+                'shops' => $shops,
                 'form_new_merchants' => $form_new_merchants->createView(),
                 'needgeocode' => (count($nongeocodeshops)>0)?1:0,
                 'google_key' => $google_key,
