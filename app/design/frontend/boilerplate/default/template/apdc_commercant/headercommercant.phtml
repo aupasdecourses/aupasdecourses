@@ -86,7 +86,7 @@
     <?php echo $this->getLayout()->getBlock("breadcrumbs")->toHtml(); ?>
 	<?php
 		$currentcat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
-		if($currentcat->getLevel()== 3){
+		if($currentcat->getLevel()== 3 && $this->getChild("blockselection")){
 			$this->getChild("blockselection")->setData("shop_info", $shop_info);
 			echo $this->getChildHtml('blockselection', false);
 		}

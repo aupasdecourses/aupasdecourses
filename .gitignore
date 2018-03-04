@@ -115,3 +115,4 @@ tags
 
 #ignore indi/web
 /indi/web
+go-pear.phar
