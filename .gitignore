@@ -116,7 +116,7 @@ tags
 #ignore indi/web
 /indi/web
 go-pear.phar
-composer.json
+composer.jsonV
 vendor
 composer.lock
 .vscode/launch.json
@@ -126,3 +126,4 @@ vendor
 configphpcs.php
 php-cs-fixer-tmp.phar
 configphpcs.php
+composer.json
