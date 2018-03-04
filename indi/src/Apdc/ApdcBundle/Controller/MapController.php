@@ -9,19 +9,17 @@ class MapController extends Controller
 {
     public function merchantsAction(Request $request)
     {
-		   
-		if(!$this->isGranted('ROLE_INDI_DISPATCH')) {
-			return $this->redirectToRoute('root');
-		}
+        if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
+            return $this->redirectToRoute('root');
+        }
 
-		$session = $request->getSession();
+        $session = $request->getSession();
 
         $stats = $this->container->get('apdc_apdc.stats');
         $mage = $this->container->get('apdc_apdc.magento');
 
-        $comparaisonMerchants = $stats->compareMerchants();
-
-        $json_data_for_merchants = $stats->getMerchantsStatData();
+        $shops=$stats->getMerchantsStatData();
+        $nongeocodeshops = $stats->getUngeocodeMerchants();
 
         $entity_submit_new_merchants = new \Apdc\ApdcBundle\Entity\Model();
         $form_new_merchants = $this->createFormBuilder($entity_submit_new_merchants);
@@ -33,22 +31,21 @@ class MapController extends Controller
 
             try {
                 foreach ($new_merchants_to_add as $content) {
+                    $mage->updateEntryToGeocode(
+                        ['id_shop'  => $content['id_shop']],
+                        ['address'  => $content['address'],
+                                'postcode'  => $content['postcode'],
+                                'city'  => $content['city'],
+                                'lat'   => $content['lat'],
+                                'long'  => $content['long'],
+                                'former_address'    => $content['former_address'],
+                                'whoami'    => 'SHOP',
+                            ]
+                    );
+                }
 
-							$mage->updateEntryToGeocode(
-								['id_shop'			=> $content['id_shop']],
-								['address'			=> $content['address'],
-								'postcode'			=> $content['postcode'],
-								'city'				=> $content['city'],
-								'lat'				=> $content['lat'],
-								'long'				=> $content['long'],
-								'former_address'	=> $content['former_address'],
-								'whoami'			=> 'SHOP',
-							]);
-						}
-
-            $session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
-            return $this->redirectToRoute('mapMerchants');
-
+                $session->getFlashBag()->add('success', 'MAJ commercants sur la carte effectuée');
+                return $this->redirectToRoute('mapMerchants');
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des commercants sur la carte');
             }
@@ -56,14 +53,16 @@ class MapController extends Controller
 
         $google_key = \Mage::getStoreConfig('api_key/google/google_nav');
 
-        return $this->render('ApdcApdcBundle::map/merchants.html.twig',
+        return $this->render(
+            'ApdcApdcBundle::map/merchants.html.twig',
             [
-                'json_data_for_shops' => $json_data_for_merchants,
+                'shops' => json_encode($shops->toArray()),
                 'form_new_merchants' => $form_new_merchants->createView(),
-                'comparaisonMerchants' => $comparaisonMerchants,
+                'needgeocode' => (count($nongeocodeshops)>0)?1:0,
                 'google_key' => $google_key,
                 'url_google_maps' => 'https://maps.googleapis.com/maps/api/js?key='.$google_key.'&v=3&sensor=false',
-            ]);
+            ]
+        );
     }
 
     public function customersAction(Request $request)
@@ -91,21 +90,20 @@ class MapController extends Controller
 
             try {
                 foreach ($new_customers_to_add as $content) {
-
-							$mage->updateEntryToGeocode(
-								['id_customer' => $content['id_customer']],
-								['address' => $content['address'],
-								'postcode' => $content['postcode'],
-								'city' => $content['city'],
-								'lat' => $content['lat'],
-								'long' => $content['long'],
-								'former_address' => $content['former_address'],
-								'whoami' => 'CUSTOMER',
-							]);
-						}
+                    $mage->updateEntryToGeocode(
+                                ['id_customer' => $content['id_customer']],
+                                ['address' => $content['address'],
+                                'postcode' => $content['postcode'],
+                                'city' => $content['city'],
+                                'lat' => $content['lat'],
+                                'long' => $content['long'],
+                                'former_address' => $content['former_address'],
+                                'whoami' => 'CUSTOMER',
+                            ]
+                            );
+                }
                 $session->getFlashBag()->add('success', 'MAJ clients sur la carte effectuée');
-				return $this->redirectToRoute('mapCustomers');
-
+                return $this->redirectToRoute('mapCustomers');
             } catch (Exception $e) {
                 $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la MAJ des clients sur la carte');
             }
@@ -113,13 +111,15 @@ class MapController extends Controller
 
         $google_key = \Mage::getStoreConfig('api_key/google/google_nav');
 
-        return $this->render('ApdcApdcBundle::map/customers.html.twig',
+        return $this->render(
+            'ApdcApdcBundle::map/customers.html.twig',
             [
                 'json_data_for_customers' => $json_data_for_customers,
                 'form_new_customers' => $form_new_customers->createView(),
                 'comparaisonCustomers' => $comparaisonCustomers,
                 'google_key' => $google_key,
                 'url_google_maps' => 'https://maps.googleapis.com/maps/api/js?key='.$google_key.'&v=3&sensor=false',
-        ]);
+        ]
+        );
     }
 }
