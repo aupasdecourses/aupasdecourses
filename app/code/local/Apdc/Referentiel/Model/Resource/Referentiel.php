@@ -11,4 +11,11 @@ class Apdc_Referentiel_Model_Resource_Referentiel extends Mage_Core_Model_Resour
     {
         $this->_init('apdc_referentiel/referentiel', 'entity_id');
     }
+
+    public function getFields()
+    {
+        $fields = $this->_getWriteAdapter()->describeTable($this->getMainTable());
+        return array_keys($fields);
+    }
+
 }
