@@ -418,7 +418,6 @@ class Stats
         $orders->getSelect()->joinLeft('mwddate_store', 'main_table.entity_id = mwddate_store.sales_order_id', array('mwddate_store.ddate_id'));
         $orders->getSelect()->joinLeft('mwddate', 'mwddate_store.ddate_id = mwddate.ddate_id', array('ddate' => 'mwddate.ddate'));
         $orders->addFilterToMap('ddate', 'mwddate.ddate');
->>>>>>> 85748200c9f271684f2ee732cb662f92c14042b6
         $orders->addAttributeToFilter('ddate', array(
                 'from' => $debut,
                 'to' => $fin,
