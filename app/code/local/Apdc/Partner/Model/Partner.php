@@ -49,7 +49,6 @@ class Apdc_Partner_Model_Partner extends Mage_Core_Model_Abstract
         $result = false;
         try {
             $this->loadByPartnerKey($partnerKey);
-            print_r($signature);
             if (Mage::getModel('apdc_partner/authentication')->checkSignature($this, $signature)) {
                 $result = true;
                 if ($this->getIsActive() != '1') {

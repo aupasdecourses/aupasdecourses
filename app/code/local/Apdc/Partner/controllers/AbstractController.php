@@ -36,7 +36,6 @@ abstract class Apdc_Partner_AbstractController extends Mage_Core_Controller_Fron
             }
         } catch (Exception $e) {
             Mage::logException($e);
-            die($e->getMessage());
             return $this->norouteAction();
         }
     }

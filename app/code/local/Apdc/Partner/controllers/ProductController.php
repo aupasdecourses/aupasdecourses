@@ -32,7 +32,7 @@ class Apdc_Partner_ProductController extends Apdc_Partner_AbstractController
      */
     public function listAction()
     {
-        parent::mainAction();
+        return parent::mainAction();
     }
 
     protected function execute(Apdc_Partner_Model_Partner $partner)
