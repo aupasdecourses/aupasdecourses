@@ -30,10 +30,10 @@ class Apdc_Catalog_Block_Category_Shop_Menu extends Mage_Core_Block_Template
      */
     public function getMenuHtml()
     {
-        $commercantCategoryId = $this->getCommercantCategoryId();
+        $category = $this->getCurrentRootCategory();
         $catlistHtml = '';
-        if ($commercantCategoryId) {
-            $catlistHtml = $this->getTreeCategories($commercantCategoryId, false);
+        if ($category && $category->getId() && $category->getLevel() == 3) {
+            $catlistHtml = $this->getTreeCategories($category->getId(), false);
         }
         return $catlistHtml;
     }
@@ -68,17 +68,17 @@ class Apdc_Catalog_Block_Category_Shop_Menu extends Mage_Core_Block_Template
     }
 
     /**
-     * getCommercantCategoryId 
+     * getCurrentRootCategory
      * 
-     * @return int
+     * @return Mage_Catalog_Model_Category
      */
-    protected function getCommercantCategoryId()
+    protected function getCurrentRootCategory()
     {
-        $infoShop = Mage::helper('apdc_commercant')->getInfoShop();
-        if (!empty($infoShop)) {
-            return $infoShop['model']->getRootCategoryId();
+        $category = Mage::registry('current_category');
+        while ($category->getLevel() > 3) {
+            $category = $category->getParentCategory();
         }
-        return null;
+        return $category;
     }
 
     /**
