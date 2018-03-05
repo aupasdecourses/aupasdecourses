@@ -46,6 +46,7 @@ class Apdc_Partner_CartController extends Apdc_Partner_AbstractController
                 throw new \Exception('Unable to find postcode');
             }
             $cart = Mage::getModel('apdc_partner/data_cart')
+                ->setPartner($partner)
                 ->setCartData($post)
                 ->createCart();
         } catch (Exception $e) {

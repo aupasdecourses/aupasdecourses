@@ -31,9 +31,9 @@ class Apdc_Partner_Model_Authentication extends Mage_Core_Model_Abstract
      */
     public function validateRequest($request)
     {
-        if (!$request->getHeader('Authorization')) {
+        if (!$request->isPost()) {
             return false;
-        } else if (!$request->isPost()) {
+        } else if (!$request->getHeader('Authorization')) {
             return false;
         }
         return true;
@@ -54,7 +54,7 @@ class Apdc_Partner_Model_Authentication extends Mage_Core_Model_Abstract
         if (hash_equals($partnerSignature, base64_decode($signature))) {
             return true;
         }
-        return false;
+        Mage::throwException('Authorization has failed');
     }
 
 }

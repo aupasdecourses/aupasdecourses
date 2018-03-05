@@ -34,6 +34,9 @@ abstract class Apdc_Partner_AbstractController extends Mage_Core_Controller_Fron
             if ($partner->login($post['key'], $this->getSignature())) {
                 $this->execute($partner);
             }
+        } catch (Mage_Core_Exception $e) {
+            Mage::logException($e);
+            echo json_encode(['error' => '401', 'message' => $e->getMessage()]);
         } catch (Exception $e) {
             Mage::logException($e);
             return $this->norouteAction();

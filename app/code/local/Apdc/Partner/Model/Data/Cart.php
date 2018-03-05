@@ -20,7 +20,7 @@
  * @license  All right reserved to Garden Media Studio VN Company Limited
  * @link     http://www.garden-media.fr
  */
-class Apdc_Partner_Model_Data_Cart extends Mage_Core_Model_Abstract
+class Apdc_Partner_Model_Data_Cart extends Apdc_Partner_Model_Data
 {
     protected $cartData = [];
 
@@ -79,6 +79,7 @@ class Apdc_Partner_Model_Data_Cart extends Mage_Core_Model_Abstract
     protected function addProductsToCart()
     {
         $data = $this->getCartData();
+        $partner = $this->getPartner();
         $quote = $this->initQuote();
 
         foreach ($data['products'] as $productId => $qty) {
@@ -103,6 +104,11 @@ class Apdc_Partner_Model_Data_Cart extends Mage_Core_Model_Abstract
                 $quote->addProduct($product, $requestInfo);
             }
         }
+        foreach ($quote->getAllItems() as $item) {
+            $item->setApdcPartnerId($partner->getId());
+        }
+        $quote->setApdcPartnerRequest(serialize($data));
+        $quote->setApdcPartnerId($partner->getId());
         $quote->getShippingAddress();
         $quote->getBillingAddress();
         $quote->collectTotals();

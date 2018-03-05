@@ -3,7 +3,7 @@
 
   <modules>
     <Apdc_Partner>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
     </Apdc_Partner>
   </modules>
 
@@ -43,6 +43,43 @@
         </connection>
       </apdc_partner_setup>
     </resources>
+
+    <fieldsets>
+      <sales_convert_quote>                           
+        <apdc_partner_id>
+          <to_order>*</to_order>
+        </apdc_partner_id>
+
+        <apdc_partner_request>
+          <to_order>*</to_order>
+        </apdc_partner_request>
+      </sales_convert_quote>
+
+      <sales_convert_order>                                              
+        <apdc_partner_id>
+          <to_quote>*</to_quote>
+          <to_invoice>*</to_invoice>
+        </apdc_partner_id>
+
+        <apdc_partner_request>
+          <to_quote>*</to_quote>
+          <to_invoice>*</to_invoice>
+        </apdc_partner_request>
+      </sales_convert_order>
+
+      <sales_convert_quote_item>
+        <apdc_partner_id>
+          <to_order_item>*</to_order_item>
+        </apdc_partner_id>
+      </sales_convert_quote_item>
+
+      <sales_convert_order_item>
+        <apdc_partner_id>
+          <to_quote_item>*</to_quote_item>
+        </apdc_partner_id>
+      </sales_convert_order_item>
+    </fieldsets>
+
   </global>
 
   <frontend>
