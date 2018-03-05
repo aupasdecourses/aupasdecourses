@@ -103,4 +103,17 @@
       </adminhtml>
     </routers>
   </admin>
+
+  <crontab>
+    <jobs>
+      <apdc_partner_generate_product_list>
+        <schedule>
+          <cron_expr>0 * * * *</cron_expr> <!-- Every day at 1:00am -->
+        </schedule>
+        <run>
+          <model>apdc_partner/cron::generateProductExport</model>
+        </run>
+      </apdc_partner_generate_product_list>
+    </jobs>
+  </crontab>
 </config>

@@ -43,4 +43,44 @@ class Apdc_Partner_Model_Partner extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('apdc_partner/partner');
     }
+
+    public function login($partnerKey, $signature)
+    {
+        $result = false;
+        try {
+            $this->loadByPartnerKey($partnerKey);
+            print_r($signature);
+            if (Mage::getModel('apdc_partner/authentication')->checkSignature($this, $signature)) {
+                $result = true;
+                if ($this->getIsActive() != '1') {
+                    Mage::throwException(Mage::helper('adminhtml')->__('This account is inactive.'));
+                }
+            }
+        }
+        catch (Mage_Core_Exception $e) {
+            $this->unsetData();
+            throw $e;
+        }
+
+        if (!$result) {
+            $this->unsetData();
+        }
+        return $result;
+    }
+
+    public function loadByPartnerKey($partnerKey)
+    {
+        $this->setData($this->getResource()->loadByPartnerKey($partnerKey));
+        return $this;
+    }
+
+    /**
+     * getProductList 
+     * 
+     * @return string (json)
+     */
+    public function getProductList()
+    {
+        return Mage::getModel('apdc_partner/data_products')->getList();
+    }
 }

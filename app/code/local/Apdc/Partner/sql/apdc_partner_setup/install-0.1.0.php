@@ -51,22 +51,22 @@ $table = $installer->getConnection()
         'Partner Email'
     )
     ->addColumn(
-        'key',
+        'partner_key',
         Varien_Db_Ddl_Table::TYPE_TEXT,
         255,
         array(
             'nullable' => false
         ),
-        'Partner Email'
+        'Partner Key'
     )
     ->addColumn(
-        'secret',
+        'partner_secret',
         Varien_Db_Ddl_Table::TYPE_TEXT,
         255,
         array(
             'nullable' => false
         ),
-        'Partner Email'
+        'Partner Secret'
     );
 
 $installer->getConnection()->createTable($table);

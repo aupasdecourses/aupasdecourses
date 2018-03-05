@@ -80,10 +80,10 @@ class Apdc_Partner_Block_Adminhtml_Partner_Edit_Tab_Main
             )
         );
         $fieldset->addField(
-            'key',
+            'partner_key',
             'text',
             array(
-                'name' => 'key',
+                'name' => 'partner_key',
                 'label' => $this->_helper()->__('Clé du partenaire'),
                 'title' => $this->_helper()->__('Clé du partenaire'),
                 'required' => true,
@@ -91,10 +91,10 @@ class Apdc_Partner_Block_Adminhtml_Partner_Edit_Tab_Main
             )
         );
         $fieldset->addField(
-            'secret',
+            'partner_secret',
             'text',
             array(
-                'name' => 'secret',
+                'name' => 'partner_secret',
                 'label' => $this->_helper()->__('Secret du partenaire'),
                 'title' => $this->_helper()->__('Secret du partenaire'),
                 'required' => true,

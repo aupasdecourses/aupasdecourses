@@ -64,8 +64,9 @@ class Apdc_Partner_Adminhtml_Partner_IndexController extends Mage_Adminhtml_Cont
         } else {
             /** @var $helper Mage_Oauth_Helper_Data */
             $helper = Mage::helper('oauth');
-            $model->setKey($helper->generateConsumerKey());
-            $model->setSecret($helper->generateConsumerSecret());
+            $model->setIsActive(true);
+            $model->setPartnerKey($helper->generateConsumerKey());
+            $model->setPartnerSecret($helper->generateConsumerSecret());
             $this->_setFormData($model->getData());
         }
 
@@ -180,16 +181,16 @@ class Apdc_Partner_Adminhtml_Partner_IndexController extends Mage_Adminhtml_Cont
         } else {
             $dataForm = $this->_getFormData();
             if ($dataForm) {
-                $data['key']    = $dataForm['key'];
-                $data['secret'] = $dataForm['secret'];
+                $data['partner_key']    = $dataForm['partner_key'];
+                $data['partner_secret'] = $dataForm['partner_secret'];
             } else {
                 // If an admin was started create a new consumer and at this moment he has been edited an existing
                 // consumer, we save the new consumer with a new key-secret pair
                 /** @var $helper Mage_Oauth_Helper_Data */
                 $helper = Mage::helper('oauth');
 
-                $data['key']    = $helper->generateConsumerKey();
-                $data['secret'] = $helper->generateConsumerSecret();
+                $data['partner_key']    = $helper->generateConsumerKey();
+                $data['partner_secret'] = $helper->generateConsumerSecret();
             }
         }
 
@@ -259,14 +260,14 @@ class Apdc_Partner_Adminhtml_Partner_IndexController extends Mage_Adminhtml_Cont
 
     /**
      * Unset unused data from request
-     * Skip getting "key" and "secret" because its generated from server side only
+     * Skip getting "partner_key" and "partner_secret" because its generated from server side only
      *
      * @param array $data
      * @return array
      */
     protected function _filter(array $data)
     {
-        foreach (array('id', 'back', 'form_key', 'key', 'secret') as $field) {
+        foreach (array('id', 'back', 'form_key', 'partner_key', 'partner_secret') as $field) {
             if (isset($data[$field])) {
                 unset($data[$field]);
             }

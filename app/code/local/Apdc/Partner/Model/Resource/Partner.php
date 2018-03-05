@@ -31,4 +31,25 @@ class Apdc_Partner_Model_Resource_Partner extends Mage_Core_Model_Resource_Db_Ab
     {
         $this->_init('apdc_partner/partner', 'entity_id');
     }
+
+    /**
+     * loadByParnterKey 
+     * 
+     * @param string $partnerKey : partner key 
+     * 
+     * @return false | array
+     */
+    public function loadByPartnerKey($partnerKey)
+    {
+        $adapter = $this->_getReadAdapter();
+
+        $select = $adapter->select()
+                    ->from($this->getMainTable())
+                    ->where('partner_key=:partner_key');
+
+        $binds = [
+            'partner_key' => $partnerKey
+        ];
+        return $adapter->fetchRow($select, $binds);
+    }
 }
