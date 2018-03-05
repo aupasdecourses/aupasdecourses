@@ -26,7 +26,7 @@ class Stats
 	}
 
 	/**
-	 *	Fonction mère pour les stats clients + le mapping client
+	 *	Fonction pour les stats des clients avec des commandes + le mapping client
 	 *	Jointure entre sales_order / address / customer_entity et geocode
 	 */
 	public function getCustomerStatData()
@@ -81,41 +81,37 @@ class Stats
 		return $data;
 	}
 
-	/** Fonction fille pour les stats clients
-	 *	Permet l'ajout de nouveaux users, en + des fonctionnalités existantes de la fonction mère
-	 **/
-	public function stats_clients()
+	/**
+	 * Fonction pour les stats des clients avec 0 commande
+	 */
+	public function getCustomerNoOrderStatData()
 	{
 		set_time_limit(0);
 
-		$data = $this->getCustomerStatData();	
+		$data = [];
 
 		//Add customer who never ordered
-		$customers = \Mage::getModel('customer/customer')
-			->getCollection()
-			->addAttributeToSelect('*');
+		$customers = \Mage::getModel('customer/customer')->getCollection()->addAttributeToSelect('*');
+		$customers->getSelect()->joinLeft(
+			array('order' => \Mage::getSingleton('core/resource')->getTableName('sales/order')),
+			'order.customer_id = e.entity_id',
+			array(
+				'last_order_date'	=> 'MAX(order.created_at)',	
+			)
+		);
+
+		$customers->groupByAttribute('entity_id')->getSelect()->having('last_order_date IS NULL');
+
 		foreach ($customers as $customer) {
-			$key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
-			if ($key == false) {
-				array_push($data, [
-					'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-					'id_client'			=> $customer->getCustomerId(),
-					'nb_commande'		=> 0,
-					'panier_moyen'		=> 0,
-					'panier_max'		=> 0,
-					'ecart_type'		=> 0,
-					'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-					'derniere_commande'	=> 'NA',
-					'rue'				=> '',
-					'addr'				=> '',
-					'code_postal'		=> $customer->getCreatedIn(),
-					'ville'				=> '',
-					'email'				=> $customer->getEmail(),
-					'telephone'			=> '',
-					'commentaires'		=> '',
-				]);
-			}
-	 	}
+			array_push($data, [
+				'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+				'id_client'			=> $customer->getCustomerId(),
+				'nb_commande'		=> 0,
+				'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+				'code_postal'		=> $customer->getCreatedIn(),
+				'email'				=> $customer->getEmail(),
+			]);
+		}
 
 	 	unset($customers);
 	 
