@@ -6,7 +6,6 @@
     var $container = $('.category_view_content');
     var $sidebar = $(this);
     var filterLastScroll = $(document).scrollTop();
-    var containerTop = parseFloat($container.offset().top) + parseInt($container.css('margin-top'), 10);
     var sidebarHeight = $sidebar.outerHeight(true);
     var $toolbar = $container.find('.toolbar .pager');
     var originTransition = null;
@@ -15,6 +14,7 @@
     var stickySidebar = function () {
       if ($(window).width() >= minWidth) {
         var scroll = $(document).scrollTop();
+        var containerTop = parseFloat($container.offset().top) + parseInt($container.css('margin-top'), 10);
         var offset = Math.max(0, (scroll - containerTop));
         if (offset > 0) {
           if ($sidebar.find('> .is_sticky').length === 0) {
