@@ -208,11 +208,25 @@ class Stats
 
     private function geocodeAdress($adress)
     {
-        $data	= [];
+
         $adress = urlencode(htmlentities($adress));
-        $query	= 'http://nominatim.openstreetmap.org/search?format=json&street='.$adress.'&city=Paris&country=France&countrycodes=fr';
-        $string = file_get_contents($query);
-        $json	= json_decode($string, true);
+        $query	= 'https://nominatim.openstreetmap.org/search?format=json&street='.$adress.'&city=Paris&country=France&countrycodes=fr';
+
+        $curl = new \Varien_Http_Adapter_Curl();
+        $curl->setConfig(['timeout' => 15]);
+        $curl->write(
+            \Zend_Http_Client::GET, 
+            $query,
+            '1.1',
+            [   'Content-Type: application/json', 
+                'Accept: application/json',
+                'User-Agent:' . $_SERVER['HTTP_USER_AGENT']
+            ]
+        );
+        $response = \Zend_Http_Response::extractBody($curl->read());
+        $curl->close();
+        
+        $json	= json_decode($response, true);
 
         return $json;
     }
