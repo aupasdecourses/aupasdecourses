@@ -332,7 +332,7 @@ class Stats
     {
         $shops = \Mage::getModel('apdc_commercant/shop')->getCollection()
         ->addFieldToFilter('enabled', 1)
-        ->addFieldToSelect(array('id_shop','enabled','name','street','postcode','city','code','category_thumbnail','stores', 'phone', 'timetable'));
+        ->addFieldToSelect(array('id_shop','enabled','name','street','postcode','city','code','category_thumbnail','stores', 'phone', 'timetable', 'shop_type'));
         $shops->getSelect()->joinLeft(
             array('geocode' => \Mage::getModel('pmainguet_delivery/geocode_customers')->getResource()->getTable('pmainguet_delivery/geocode_customers')),
             "main_table.id_shop = geocode.id_shop",

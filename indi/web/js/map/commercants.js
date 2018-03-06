@@ -15,32 +15,111 @@ function getjson(url) {
   return data;
 }
 
-var redMarker = L.AwesomeMarkers.icon({
-  icon: 'user',
-  prefix: 'fa',
-  markerColor: 'red',
-});
-
+// primeur
 var greenMarker = L.AwesomeMarkers.icon({
   icon: 'user',
   prefix: 'fa',
   markerColor: 'green',
 });
 
+// boucher
+var redMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'red',
+});
+
+// fromager
+var darkgreenMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'darkgreen',
+});
+
+// caviste
+var darkRedMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'darkred',
+});
+
+// poissonnier
+var blueMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'blue',
+});
+
+// boulanger
+var orangeMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'orange',
+});
+
+// epicerie
+var purpleMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'purple',
+});
+
+// default
+var defaultMarker = L.AwesomeMarkers.icon({
+  icon: 'user',
+  prefix: 'fa',
+  markerColor: 'cadetblue',
+});
+
+
+
 /* affiche infos sur pop up commercant */
 function setMarker(data) {
   var markers = [];
   $.each(data, function(i, d) {    
     if (d.lat !== "" && d.long !== "" && d.lat !== null && d.long !== null) {
-      // if (d.postcode.substring(0, 3) == "750") {
-      //   var marker = L.marker([d.lat, d.long], {
-      //     icon: redMarker
-      //   });
-      // } else {
-        var marker = L.marker([d.lat, d.long], {
-          icon: greenMarker
-        });
-      // }
+        
+          switch(d.shop_type) {
+            case 'Primeur': 
+              var marker = L.marker([d.lat, d.long], {
+                icon: greenMarker
+              });
+              break;
+            case 'Boucher':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: redMarker
+            });
+              break;
+            case 'Fromager':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: darkgreenMarker
+            });
+              break;
+            case 'Caviste':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: darkRedMarker
+            });
+              break;
+            case 'Poissonnier':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: blueMarker
+            });
+              break;
+            case 'Boulanger':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: orangeMarker
+            });
+              break;
+            case 'Epicerie':
+              var marker = L.marker([d.lat, d.long], { 
+                icon: purpleMarker
+            });
+              break;
+            default:
+              var marker = L.marker([d.lat, d.long], { 
+                icon: defaultMarker
+            });
+          }
       marker.bindPopup(
         '<div>' + d.name + '</div><div>' 
         + d.street + ' ( ' + d.city + ' ) </div><div>'
