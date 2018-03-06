@@ -43,17 +43,17 @@
         Validation.add('validate-sponsor-code',"<?php echo $this->__('Sponsor Code is not valid'); ?>",function(v){
             var value = v.trim();
             document.getElementById('sponsor_code').value = value;
-            if (value !== '') {
-                var length = parseInt("<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_length'); ?>");
-                var start = "<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>";
-                var startReg = new RegExp("^<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>", "i");
-                console.log(value.replace(start, '').replace(/-/g, '').length === length);
-                if (value.replace(start, '').replace(/-/g, '').length === length && startReg.test(value)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+            // if (value !== '') {
+            //     var length = parseInt("<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_length'); ?>");
+            //     var start = "<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>";
+            //     var startReg = new RegExp("^<?php echo Mage::getStoreConfig('gm_sponsorship/sponsor/code_prefix'); ?>", "i");
+            //     console.log(value.replace(start, '').replace(/-/g, '').length === length);
+            //     if (value.replace(start, '').replace(/-/g, '').length === length && startReg.test(value)) {
+            //         return true;
+            //     } else {
+            //         return false;
+            //     }
+            // }
             return true;
         });
         jQuery('#sponsor_code').on('change blur', function() {
