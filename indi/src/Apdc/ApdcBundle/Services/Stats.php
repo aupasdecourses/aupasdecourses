@@ -225,7 +225,7 @@ class Stats
         );
         $response = \Zend_Http_Response::extractBody($curl->read());
         $curl->close();
-        
+
         $json	= json_decode($response, true);
 
         return $json;
@@ -332,7 +332,7 @@ class Stats
     {
         $shops = \Mage::getModel('apdc_commercant/shop')->getCollection()
         ->addFieldToFilter('enabled', 1)
-        ->addFieldToSelect(array('id_shop','enabled','name','street','postcode','city','code','category_thumbnail','stores'));
+        ->addFieldToSelect(array('id_shop','enabled','name','street','postcode','city','code','category_thumbnail','stores', 'phone', 'timetable'));
         $shops->getSelect()->joinLeft(
             array('geocode' => \Mage::getModel('pmainguet_delivery/geocode_customers')->getResource()->getTable('pmainguet_delivery/geocode_customers')),
             "main_table.id_shop = geocode.id_shop",
@@ -340,7 +340,15 @@ class Stats
         );
         $shops->addFilterToMap('lat','geocode.lat');
         $shops->addFilterToMap('lon', 'geocode.lon');
-		return json_encode($shops->load()->toArray());
+
+        $shops_array = $shops->load()->toArray();
+        foreach ($shops_array as &$shop) {
+            foreach ($shop['timetable'] as &$t) {
+                $t = "<br> -> " . $t;
+            }
+        }
+
+		return json_encode($shops_array);
     }
 
     //Filter getMerchantsStatData() for null or 0 lat/long

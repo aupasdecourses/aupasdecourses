@@ -32,16 +32,22 @@ function setMarker(data) {
   var markers = [];
   $.each(data, function(i, d) {    
     if (d.lat !== "" && d.long !== "" && d.lat !== null && d.long !== null) {
-      if (d.postcode.substring(0, 3) == "750") {
-        var marker = L.marker([d.lat, d.long], {
-          icon: redMarker
-        });
-      } else {
+      // if (d.postcode.substring(0, 3) == "750") {
+      //   var marker = L.marker([d.lat, d.long], {
+      //     icon: redMarker
+      //   });
+      // } else {
         var marker = L.marker([d.lat, d.long], {
           icon: greenMarker
         });
-      }
-      marker.bindPopup('<div>' + d.name + '</div><div>' + d.street + '</div><div>' + d.city + '</div><div>Horaires ouvertures : ' + d.timetable + '</div>');
+      // }
+      marker.bindPopup(
+        '<div>' + d.name + '</div><div>' 
+        + d.street + ' ( ' + d.city + ' ) </div><div>'
+        + d.phone + '</div><div>'
+        + 'Horaires ouvertures : ' + d.timetable 
+        + '</div>'
+      );
       markers.push(marker);
     }
   });
