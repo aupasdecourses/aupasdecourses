@@ -8,118 +8,115 @@ define('FLOAT_NUMBER', 2);
 
 class Stats
 {
-    public function __construct()
-    {
-        \Mage::app();
-    }
+
+	public function __construct()
+	{
+		\Mage::app();
+	}
 
 
-    private function array_columns($array, $column_name)
-    {
-        return array_map(
-            function ($element) use ($column_name) {
-                return $element[$column_name];
-            },
-            $array
-        );
-    }
+	private function array_columns($array, $column_name)
+	{
+		return array_map(
+			function ($element) use ($column_name) {
+				return $element[$column_name];
+			},
+			$array
+		);
+	}
 
-    /**
-     *	Fonction mère pour les stats clients + le mapping client
-     *	Jointure entre sales_order / address / customer_entity et geocode
-     */
-    public function getCustomerStatData()
-    {
-        set_time_limit(0);
+	/**
+	 *	Fonction pour les stats des clients avec des commandes + le mapping client
+	 *	Jointure entre sales_order / address / customer_entity et geocode
+	 */
+	public function getCustomerStatData()
+	{
+		set_time_limit(0);
 
-        $data = [];
-        $orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
-            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
-            ->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
+		$data = [];
+		$orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
+			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
 
-        $orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
-        $orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
-        $orders->getSelect()->joinLeft('geocode', 'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
-        $orders->getSelect()->joinLeft('amasty_amorderattach_order_field', "main_table.entity_id = amasty_amorderattach_order_field.order_id", array('commentaires_commande'=>'amasty_amorderattach_order_field.commentaires_commande','commentaires_fraislivraison'=>'amasty_amorderattach_order_field.commentaires_fraislivraison'));
+		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
+		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
+		$orders->getSelect()->joinLeft('geocode' ,'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
+		$orders->getSelect()->joinLeft('amasty_amorderattach_order_field',"main_table.entity_id = amasty_amorderattach_order_field.order_id",array('commentaires_commande'=>'amasty_amorderattach_order_field.commentaires_commande','commentaires_fraislivraison'=>'amasty_amorderattach_order_field.commentaires_fraislivraison'));
 
-        $orders->addAttributeToFilter('address_type', 'shipping');
-        $orders->getSelect()->columns('COUNT(DISTINCT main_table.entity_id) AS nb_order')
-            ->columns('GROUP_CONCAT(DISTINCT IF(commentaires_fraislivraison>"" OR commentaires_commande>"",CONCAT(main_table.increment_id, ": " ,commentaires_commande, " - ",commentaires_fraislivraison),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
-            ->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
-            ->columns('MAX(main_table.created_at) AS last_order')
-            ->group('customer_id');
+		$orders->addAttributeToFilter('address_type', 'shipping');
+		$orders->getSelect()->columns('COUNT(DISTINCT main_table.entity_id) AS nb_order')
+			->columns('GROUP_CONCAT(DISTINCT IF(commentaires_fraislivraison>"" OR commentaires_commande>"",CONCAT(main_table.increment_id, ": " ,commentaires_commande, " - ",commentaires_fraislivraison),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
+			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
+			->columns('MAX(main_table.created_at) AS last_order')
+			->group('customer_id');
 
-        foreach ($orders as $order) {
-            $total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
+		foreach ($orders as $order) {
+			$total_order=round($order->getAmountTotal(), FLOAT_NUMBER, PHP_ROUND_HALF_UP);
 
-            array_push($data, [
-                    'nom_client'		=> $order->getCustomerName(),
-                    'id_client'			=> $order->getCustomerId(),
-                    'nb_commande'		=> $order->getNbOrder(),
-                    //'Total'			=> $order->getAmountTotal(),
-                    'panier_moyen'		=> round($order->getAverageOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-                    'panier_max'		=> round($order->getMaxOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-                    'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
-                    'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
-                    'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
-                    'rue'				=> $order->getStreet()[0],
-                    'addr'				=> $order->getAddress(), // from geocode
-                    'code_postal'		=> $order->getPostcode(),
-                    'ville'				=> $order->getCity(),
-                    //'Créé dans'		=> $order->getCreatedIn(),
-                    'email'				=> $order->getCustomerEmail(),
-                    'telephone'			=> $order->getTelephone(),
-                    'lat'				=> $order->getData('lat'),
-                    'lon'				=> $order->getData('long'),
-                    'commentaires'		=> $order->getCommentaires(),
-                ]);
-        }
+			array_push($data, [
+					'nom_client'		=> $order->getCustomerName(),
+					'id_client'			=> $order->getCustomerId(),
+					'nb_commande'		=> $order->getNbOrder(),
+					//'Total'			=> $order->getAmountTotal(),
+					'panier_moyen'		=> round($order->getAverageOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'panier_max'		=> round($order->getMaxOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'ecart_type'		=> round($order->getStdDevOrders(), FLOAT_NUMBER, PHP_ROUND_HALF_UP),
+					'inscription'		=> \Mage::helper('core')->formatDate($order->getData('customer_created_at'), 'short', false),
+					'derniere_commande'	=> date('d/m/Y', strtotime($order->getLastOrder())),
+					'rue'				=> $order->getStreet()[0], 
+					'addr'				=> $order->getAddress(), // from geocode
+					'code_postal'		=> $order->getPostcode(),
+					'ville'				=> $order->getCity(),
+					//'Créé dans'		=> $order->getCreatedIn(),
+					'email'				=> $order->getCustomerEmail(),
+					'telephone'			=> $order->getTelephone(),
+					'lat'				=> $order->getData('lat'),
+					'lon'				=> $order->getData('long'),
+					'commentaires'		=> $order->getCommentaires(),
+				]);
+		}
 
-        unset($orders);
+		unset($orders);
 
-        return $data;
-    }
+		return $data;
+	}
 
-    /** Fonction fille pour les stats clients
-     *	Permet l'ajout de nouveaux users, en + des fonctionnalités existantes de la fonction mère
-     **/
-    public function stats_clients()
-    {
-        set_time_limit(0);
+	/**
+	 * Fonction pour les stats des clients avec 0 commande
+	 */
+	public function getCustomerNoOrderStatData()
+	{
+		set_time_limit(0);
 
-        $data = $this->getCustomerStatData();
+		$data = [];
 
-        //Add customer who never ordered
-        $customers = \Mage::getModel('customer/customer')
-            ->getCollection()
-            ->addAttributeToSelect('*');
-        foreach ($customers as $customer) {
-            $key = array_search($customer->getEmail(), $this->array_columns($data, 'Mail client'));
-            if ($key == false) {
-                array_push($data, [
-                    'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
-                    'id_client'			=> $customer->getCustomerId(),
-                    'nb_commande'		=> 0,
-                    'panier_moyen'		=> 0,
-                    'panier_max'		=> 0,
-                    'ecart_type'		=> 0,
-                    'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
-                    'derniere_commande'	=> 'NA',
-                    'rue'				=> '',
-                    'addr'				=> '',
-                    'code_postal'		=> $customer->getCreatedIn(),
-                    'ville'				=> '',
-                    'email'				=> $customer->getEmail(),
-                    'telephone'			=> '',
-                    'commentaires'		=> '',
-                ]);
-            }
-        }
+		//Add customer who never ordered
+		$customers = \Mage::getModel('customer/customer')->getCollection()->addAttributeToSelect('*');
+		$customers->getSelect()->joinLeft(
+			array('order' => \Mage::getSingleton('core/resource')->getTableName('sales/order')),
+			'order.customer_id = e.entity_id',
+			array(
+				'last_order_date'	=> 'MAX(order.created_at)',	
+			)
+		);
 
-        unset($customers);
-     
-        return $data;
-    }
+		$customers->groupByAttribute('entity_id')->getSelect()->having('last_order_date IS NULL');
+
+		foreach ($customers as $customer) {
+			array_push($data, [
+				'nom_client'		=> $customer->getFirstname().' '.$customer->getLastname(),
+				'id_client'			=> $customer->getCustomerId(),
+				'nb_commande'		=> 0,
+				'inscription'		=> \Mage::helper('core')->formatDate($customer->getCreatedAt(), 'short', false),
+				'code_postal'		=> $customer->getCreatedIn(),
+				'email'				=> $customer->getEmail(),
+			]);
+		}
+
+	 	unset($customers);
+	 
+		return $data;
+	}
 
     /**	Fonction fille pour le mapping client
      *	Convertit simplement la data de la fonction mère en tableau json
