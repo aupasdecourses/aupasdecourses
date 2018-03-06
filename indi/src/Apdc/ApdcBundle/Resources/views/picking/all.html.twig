@@ -43,6 +43,9 @@
 														{% if order.status|lower == 'complete' or order.status|lower == 'closed' %}
 															<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc" style='color:red;'>{{ order_id }}</a>
 															<p style="color:red;font-size: 0.85em;">Commande à ne pas récupérer</p>
+														{% elseif order.shipping_method == 'flatrate_flatrate' %}
+															<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc" style='color:red;'>{{ order_id }}</a>
+															<p style="color:red;font-size: 0.85em;">Commande traitée par Star'Dom</p>
 														{% else %}
 															<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a>
 															<p style="font-size: 0.85em;">Commande à récupérer</>

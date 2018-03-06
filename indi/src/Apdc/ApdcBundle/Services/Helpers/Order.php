@@ -120,6 +120,7 @@ trait Order
         $orderHeader['delivery_date'] = $order->getData('ddate');
         $orderHeader['delivery_time'] = $order->getData('dtime');
         $orderHeader['equivalent_replacement'] = $order->getData('produit_equivalent');
+        $orderHeader['shipping_method'] = $order->getData('shipping_method');
         $orderHeader['total_quantite'] = 0;
         $orderHeader['total_prix'] = 0.0;
         $orderHeader['products'] = [];
