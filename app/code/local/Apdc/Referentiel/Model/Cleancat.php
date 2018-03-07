@@ -51,7 +51,7 @@ class Apdc_Referentiel_Model_Cleancat extends Mage_Core_Model_Abstract
     public function eraseerrorcat()
     {
         if (in_array($this->_cat->getName(), Mage::getSingleton('apdc_referentiel/categoriesbase')->forbidden)) {
-            $this->delete();
+            $this->_cat->delete();
             echo 'Delete Forbidden Cat: ' . $this->_cat->getId() . ' / ' . $this->_cat->getName() . "\n";
             $this->_isdeleted=true;
             return true;
@@ -71,35 +71,37 @@ class Apdc_Referentiel_Model_Cleancat extends Mage_Core_Model_Abstract
     {
         $ics = Mage::getModel('apdc_referentiel/categoriesbase')->getCollection()->getImageRef();
         $url = '';
-        if ($this->_cat->getThumbnail() == null) {
-            if (isset($ics[$this->_cat->getName()])) {
-                $rand = rand(0, sizeof($ics[$this->_cat->getName()]) - 1);
-                $url = $ics[$this->_cat->getName()][$rand];
-                $this->_setData('image',$url);
-                $this->_setData('thumbnail', $url);
-            } elseif ($this->_cat->getLevel() == 3) {
-                $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
-                $shops->addFieldToFilter('name', $this->_cat->getName());
-                $i = $shops->getFirstItem();
-                $img = $i->getData('category_image');
-                if ($img <> null && $img <> '') {
-                    $this->setData('image',$img);
+        if ($this->_cat->getLevel() > 2 && $this->_cat->getLevel()<5) {
+            if ($this->_cat->getThumbnail() == null) {
+                if (isset($ics[$this->_cat->getName()])) {
+                    $rand = rand(0, sizeof($ics[$this->_cat->getName()]) - 1);
+                    $url = $ics[$this->_cat->getName()][$rand];
+                    $this->_setData('image', $url);
+                    $this->_setData('thumbnail', $url);
+                } elseif ($this->_cat->getLevel() == 3) {
+                    $shops = Mage::getModel('apdc_commercant/shop')->getCollection();
+                    $shops->addFieldToFilter('name', $this->_cat->getName());
+                    $i = $shops->getFirstItem();
+                    $img = $i->getData('category_image');
+                    if ($img <> null && $img <> '') {
+                        $this->setData('image', $img);
+                    }
+                    $th = $i->getData('category_thumbnail');
+                    if ($th <> null && $th <> '') {
+                        $this->_setData('thumbnail', $th);
+                    }
+                } else {
+                    $url = $ics['Default'][0];
+                    $this->_setData('image', $url);
+                    $this->_setData('thumbnail', $url);
                 }
-                $th = $i->getData('category_thumbnail');
-                if ($th <> null && $th <> '') {
-                    $this->_setData('thumbnail',$th);
+            } elseif ($this->_cat->getThumbnail() == $ics['Default'][0]) {
+                if (isset($ics[$this->_cat->getName()])) {
+                    $rand = rand(0, sizeof($ics[$this->_cat->getName()]) - 1);
+                    $url = $ics[$this->_cat->getName()][$rand];
+                    $this->setData('image', $url);
+                    $this->setData('thumbnail', $url);
                 }
-            } else {
-                $url = $ics['Default'][0];
-                $this->_setData('image',$url);
-                $this->_setData('thumbnail',$url);
-            }
-        } elseif ($this->_cat->getThumbnail() == $ics['Default'][0]) {
-            if (isset($ics[$this->_cat->getName()])) {
-                $rand = rand(0, sizeof($ics[$this->_cat->getName()]) - 1);
-                $url = $ics[$this->_cat->getName()][$rand];
-                $this->setData('image',$url);
-                $this->setData('thumbnail',$url);
             }
         }
     }
@@ -155,7 +157,7 @@ class Apdc_Referentiel_Model_Cleancat extends Mage_Core_Model_Abstract
         } else {
             $count = $this->_cat->getProductCollection()->count();
             if ($count == 0) {
-                $this->delete();
+                $this->_cat->delete();
                 echo 'Delete Cat with 0 products: ' . $this->_cat->getId() . ' / ' . $this->_cat->getName() . "\n";
                 $this->_isdeleted = true;
                 return true;
