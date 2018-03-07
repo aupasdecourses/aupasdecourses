@@ -146,7 +146,7 @@ class Apdc_Referentiel_Model_Cleancat extends Mage_Core_Model_Abstract
         $this->_setData('display_mode', 'PRODUCTS');
         if ($this->_cat->getMetaTitle() == '' || $this->_cat->getMetaTitle() == null) {
             $parent_name = $this->_cat->getParentCategory()->getName();
-            $this->_setData('metaTitle',$parent_name . ' - ' . $this->_cat->getName());
+            $this->_setData('meta_title',$parent_name . ' - ' . $this->_cat->getName());
         }
     }
 
