@@ -353,3 +353,9 @@ input#datepickerEndAccountingCustomers
 .inline_block {
 	display: inline-block;
 }
+
+input#inputSku {
+    display: inline;
+    width: 150px;
+    vertical-align: top;
+}
