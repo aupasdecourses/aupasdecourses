@@ -48,25 +48,6 @@
 	        </connection>
 	      </apdc_referentiel_setup>
 	    </resources>
-	    <events>
-	      <!--<catalog_product_save_after>
-	        <observers>
-	          <apdc_referentiel>
-	            <type>singleton</type>
-	            <class>apdc_referentiel/observer</class>
-	            <method>saveChanges</method>
-	          </apdc_referentiel>
-	        </observers>
-	      </catalog_product_save_after>-->
-	        <catalog_category_save_after>
-                <observers>
-                    <apdc_referentiel>
-                    	<class>apdc_referentiel/observer</class>
-	            		<method>fixCats</method>
-	            	</apdc_referentiel>
-	            </observers>
-	        </catalog_category_save_after>
-	    </events>
 	</global>
   	<!-- <frontend>
      <routers>

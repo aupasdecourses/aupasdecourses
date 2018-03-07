@@ -129,21 +129,11 @@ class Apdc_Referentiel_Model_Observer
         }
     }
 
-    //Launch via Observer at every category save (when making change in admin)
-    public function fixCats($observer){
-        if(Mage::getSingleton('admin/session', array('name' => 'adminhtml'))->isLoggedIn()){
-            $cat=$observer->getEvent()->getCategory()->getId();
-            Mage::getSingleton('apdc_referentiel/categoriesbase')->setimagecat(Mage::getModel('catalog/category')->load($cat));
-            Mage::getSingleton('apdc_referentiel/categoriesbase')->setinfocat(Mage::getModel('catalog/category')->load($cat));
-            Mage::getSingleton('apdc_referentiel/categoriesbase')->setsmallcat(Mage::getModel('catalog/category')->load($cat));
-        }
-    }
-
     //Launch via cron
     public function cronFixCats(){
-        $cats=$model->getCats(1,6);
+        $cats=Mage::helper('apdc_referentiel')->getCats(1, 6);
         foreach ($cats as $cat) {
-            Mage::getSingleton('apdc_referentiel/categoriesbase')->fixCats($cat);
+            Mage::getModel('apdc_referentiel/cleancat')->process($cat);
         }
     }
 
