@@ -273,7 +273,10 @@ input#datepickerVoucher,
 input#datepickerEndVoucher,
 input#datepickerNote,
 input#datepickerAccountingCustomers,
-input#datepickerEndAccountingCustomers
+input#datepickerEndAccountingCustomers,
+input#datepickerProductEvolution,
+input#datepickerEndProductEvolution,
+input#skuProductEvolution
 {
     display: inline;
 

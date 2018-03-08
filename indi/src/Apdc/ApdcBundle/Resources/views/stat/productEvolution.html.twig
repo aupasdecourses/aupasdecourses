@@ -5,22 +5,18 @@
 
 <div class="container-fluid">
     <div class="page-header">
-        {% set product_name = '' %}
-        {% for product in products %}
-            {% if product.sku == sku %}
-                {% set product_name = product.name %}
-            {% endif %}
-        {% endfor %}
-        <div style="display:flex; justify-content:space-between">
-            <div><h2>Evolution des prix pour "{{ product_name }}"</h2></div>
-            <div><h4>Entrez un SKU : <input type="text" class="form-control" id="inputSku" placeholder="XXX00-XXX-0000" value="{{ sku }}"></h4></div>
-        </div>
+        <h2>Evolution des produits du <input type="text" class="form-control" id="datepickerProductEvolution" placeholder="Cliquez pour selectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndProductEvolution" placeholder="Cliquez ici pour selectionner la date" value="{{ date_fin }}"> avec le sku <input type="text" class="form-control" id="skuProductEvolution" placeholder="Cliquez pour selectionner le sku" value="{{ sku }}"></h2>
     </div>
+
+ 
+
     <div id="graph"></div>
+
 </div>
 
 {% endblock %}
 {% block css_product_evolution %}
+
     <style>
         .axis { font: 14px sans-serif; }
 
@@ -30,26 +26,60 @@
             stroke-width: 2px;
         }
     </style>
+
 {% endblock %}
 {% block javascript_product_evolution %}
     <script type="text/javascript" src="//d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
     
-    $(function() {
-        $("#inputSku").change(function() {
-            window.location='{{ path('productEvolution') }}?sku='+this.value;
+        $(function() {
+            $( "#datepickerProductEvolution" ).datepicker({
+                altField: "#datepickerProductEvolution",
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                currentText: 'Aujourd\'hui',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                weekHeader: 'Sem.',
+                dateFormat: 'dd/mm/yy',
+            });
+            $( "#datepickerEndProductEvolution" ).datepicker({
+                altField: "#datepickerEndProductEvolution",
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                currentText: 'Aujourd\'hui',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                weekHeader: 'Sem.',
+                dateFormat: 'dd/mm/yy',
+            });
         });
-    });
-
     
+        $(function(){
+            $("#skuProductEvolution").change(function(){
+                window.location='{{ path('productEvolution') }}?date_debut='+$("#datepickerProductEvolution").val()+'&date_fin='+$("#datepickerEndProductEvolution").val()+'&sku='+this.value;
+            });
+        });
 
-    // set the dimensions and margins of the graph
+    </script>
+
+    <script type="text/javascript">
+
+        // set the dimensions and margins of the graph
     var margin = {top: 30, right: 60, bottom: 200, left: 30},
         width = 1800 - margin.left - margin.right,
         height = 800 - margin.top - margin.bottom;
 
     // parse the date / time
-    var parseTime = d3.timeParse("%d/%m/%Y %H:%M:%S");
+    var parseTime = d3.timeParse("%d/%m/%Y %H");
 
     // set the ranges
     var x = d3.scaleTime().range([0, width]);
@@ -100,7 +130,7 @@
         .attr("class", "axis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%d/%m/%Y %H:%M")))
+        .tickFormat(d3.timeFormat("%d/%m/%Y %H")))
         .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
@@ -113,4 +143,5 @@
         .call(d3.axisLeft(y));
 
     </script>
+
 {% endblock %}
