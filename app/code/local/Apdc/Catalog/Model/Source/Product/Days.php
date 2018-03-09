@@ -40,7 +40,7 @@ class Apdc_Catalog_Model_Source_Product_Days extends Mage_Eav_Model_Entity_Attri
      * 
      * @return array
      */
-    public function getAllOptions()
+    public function getAllOptions($withEmpty = true, $defaultValues = false)
     {
         if (!$this->_options) {
             $this->_options = [
