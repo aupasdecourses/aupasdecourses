@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<adminhtml>
+  <menu>
+    <system>
+      <children>
+        <apdc_partner>
+          <title>Partners</title>
+          <sort_order>15</sort_order>
+          <action>adminhtml/partner_index/index</action>
+        </apdc_partner>
+      </children>
+    </system>
+  </menu>
+  <acl>
+    <resources>
+      <admin>
+        <children>
+          <system module="apdc_partner">
+            <title>Partners</title>
+            <sort_order>1</sort_order>
+            <children>
+              <apdc_partner translate="title" module="apdc_partner">
+                <title>Partner</title>
+                <children>
+                  <edit translate="title" module="apdc_partner">
+                    <title>Edit Partner</title>
+                    <sort_order>100</sort_order>
+                  </edit>
+                  <delete translate="title" module="apdc_partner">
+                    <title>Delete Partner</title>
+                    <sort_order>100</sort_order>
+                  </delete>
+                </children>
+              </apdc_partner>
+            </children>
+          </system>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+</adminhtml>
+
