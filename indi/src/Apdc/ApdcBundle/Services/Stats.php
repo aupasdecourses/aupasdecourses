@@ -2,15 +2,19 @@
 
 namespace Apdc\ApdcBundle\Services;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 include_once '../../app/Mage.php';
 
 define('FLOAT_NUMBER', 2);
 
 class Stats
 {
+	private $em;
 
-	public function __construct()
+	public function __construct(ObjectManager $em)
 	{
+		$this->em = $em;
 		\Mage::app();
 	}
 
@@ -615,5 +619,47 @@ class Stats
         sort($result);
         $json_data = json_encode($result);
         return $json_data;
+    }
+
+	public function getProductEvolutionByDateAndSku($date_debut, $date_fin, $sku)
+	{
+        $date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
+        $date_fin = date('Y-m-d H:i:s', strtotime('+1 day', strtotime('-1 second', strtotime(str_replace('/', '-', $date_fin)))));
+
+        $resource = \Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $tableName = $resource->getTableName('indi_product_history');
+
+        $query = 'SELECT * FROM ' . $tableName . ' WHERE createdOn BETWEEN "' . $date_debut . '" AND "' . $date_fin .'" AND sku= "' . $sku . '"';
+
+        $results = $readConnection->fetchAll($query);
+        return $results;
+	}
+
+    public function cleanUpProductEvolutionByDateAndSku($date_debut, $date_fin, $sku)
+    {
+        $products = $this->getProductEvolutionByDateAndSku($date_debut, $date_fin, $sku);
+
+        $cleanProducts = [];
+        foreach ($products as $product) {
+
+            $createdOn = date('d/m/Y H', strtotime(str_replace('-', '/', $product['createdOn'])));
+
+            $cleanProducts[$createdOn] = [
+                'sku'           => $product['sku'],
+                'prixPublic'    => $product['prix_public'],
+                'createdOn'     => $createdOn,
+            ];
+        }
+
+        $cpt = 0;
+        foreach ($cleanProducts as $key => $value) {
+            $cleanProducts[$cpt] = $value;
+            unset($cleanProducts[$key]);
+            $cpt++;
+        }
+
+        // dump(array_values($cleanProducts));die();
+        return array_values($cleanProducts);
     }
 }
