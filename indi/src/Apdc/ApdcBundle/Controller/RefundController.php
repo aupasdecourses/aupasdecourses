@@ -374,6 +374,7 @@ class RefundController extends Controller
         $order_mid = $order[-1]['order']['mid'];
         $input_status = $order[-1]['order']['input'];
         $customer_name = $order[-1]['order']['first_name'].' '.$order[-1]['order']['last_name'];
+        $order_status = $order[-1]['order']['status'];
         unset($order[-1]);
 
         $entity_input = new \Apdc\ApdcBundle\Entity\Input();
@@ -434,6 +435,7 @@ class RefundController extends Controller
             'commentaire_commercant' => $commentaire_commercant,
 			'customer_name' => $customer_name,
 			'mistral_hours' => $mage->getMistralDelivery(),
+            'order_status'  => $order_status,
         ]);
     }
 
