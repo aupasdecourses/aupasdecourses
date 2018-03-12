@@ -52,6 +52,8 @@
 												{% if date(order.delivery_date)>=(date()|date("Y-m-d")) %}
 													{% if order.status|lower == 'complete' or order.status|lower == 'closed' %}
 														<td style="width:10%;color:red">À ne pas livrer</td>
+													{% elseif order.shipping_method == 'flatrate_flatrate' %}
+														<td style="width:10%;color:red">Commande traitée par Star'Dom</td>
 													{% else %}
 														<td style="width:10%">À livrer</td>
 													{% endif %}
