@@ -507,6 +507,28 @@ class RefundController extends Controller
                             'refund' => 'no_refund',
                         ]);
                     }
+
+                    foreach ($order as $o) {     
+                        if ($o['merchant']['refund_diff_commercant'] < 0) {
+                            // Exces produit
+                            $excess = $o['merchant']['refund_diff_commercant'];
+                            $lack = 0;
+                        } else {
+                            // Manque produit
+                            $excess = 0;
+                            $lack = $o['merchant']['refund_diff_commercant'];
+                        }
+
+                        $mage->updateEntryToRefundPricevariation(
+                            ['merchant_id' => $o['merchant']['shop_id']], [
+                                'order_id'          => $id,
+                                'merchant'          => $o['merchant']['name'],
+                                'merchant_excess'   => $excess,
+                                'merchant_lack'     => $lack,
+                            ]
+                        );
+                    }
+
                 } catch (\Exception $e) {
                     $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
                 }

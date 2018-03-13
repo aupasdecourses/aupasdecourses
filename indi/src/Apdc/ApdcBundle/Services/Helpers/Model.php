@@ -103,6 +103,34 @@ trait Model
         }
     }
 
+    public function addEntryToRefundPricevariation(array $data)
+    {
+        $this->addEntryToModel(
+            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_pricevariation')),
+            $data
+        );
+    }
+
+    public function updateEntryToRefundPricevariation(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/refund_pricevariation');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
     public function addEntryToBillingDetails(array $data)
     {
         $this->addEntryToModel(
