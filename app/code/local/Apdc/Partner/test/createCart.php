@@ -1,6 +1,6 @@
 <?php 
-$key = 'e6607e00e283344614586a755e97d065';
-$secret = 'f67740ba2c25c7ed695da47817df3879';
+$key = '9f67bed68611abc5608a743626ff52ca';
+$secret = 'cb84186afe6e3fb37801511bf21fbc3a';
 $email = 'mysthr21@gmail.com';
 $data = $key . $secret . date('Y-m-d');
 $signature = base64_encode(hash_hmac('sha256', $data, $email, true));
