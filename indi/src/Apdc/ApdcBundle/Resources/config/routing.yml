@@ -178,6 +178,10 @@ productEvolution:
   path: /stat/productEvolution/
   defaults: { _controller: ApdcApdcBundle:Stat:productEvolution }
 
+statMerchantProduct:
+  path: /stat/merchant_product/
+  defaults: { _controller: ApdcApdcBundle:Stat:merchantProduct }
+
 mapMerchants:
     path: /map/merchants/
     defaults: { _controller: ApdcApdcBundle:Map:merchants}

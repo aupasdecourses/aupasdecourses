@@ -10,6 +10,8 @@ define('FLOAT_NUMBER', 2);
 
 class Stats
 {
+    use Helpers\Order;
+
 	private $em;
 
 	public function __construct(ObjectManager $em)
@@ -659,7 +661,46 @@ class Stats
             $cpt++;
         }
 
-        // dump(array_values($cleanProducts));die();
         return array_values($cleanProducts);
+    }
+
+    public function getMerchantProductPriceVariation($date_debut, $date_fin)
+    {
+        $date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
+        $date_fin = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_fin)));
+
+        $results = [];
+        $cpt = 0;
+
+        $orders = \Mage::getModel('sales/order')->getCollection();
+        $orders->addFieldToFilter('updated_at', ['from' => $date_debut, 'to' => $date_fin]);
+
+        foreach ($orders as $order) {
+
+            $refunds = \Mage::getModel('pmainguet_delivery/refund_order')->getCollection();
+            $refunds->addFieldToFilter('main_table.order_id', ['eq' => $order->getIncrementId()]);
+
+            foreach ($refunds as $refund) {
+
+                $results[$cpt] = [
+                    'merchant'      => $refund->getData('commercant'),
+                    'increment_id'  => $order->getIncrementId(),
+                    'created_at'    => $order->getCreatedAt(),
+                    'excess'        => 0.0,
+                    'lack'          => 0.0,
+                ];
+
+                if ((float) $refund->getData('del_amount_refunded') < 0) {
+                    $results[$cpt]['excess'] += $refund->getData('del_amount_refunded');
+                }  
+                if ((float) $refund->getData('del_amount_refunded') > 0) {
+                    $results[$cpt]['lack'] += $refund->getData('del_amount_refunded'); 
+                }
+            }
+
+            $cpt++;
+        }
+
+        return $results;
     }
 }
