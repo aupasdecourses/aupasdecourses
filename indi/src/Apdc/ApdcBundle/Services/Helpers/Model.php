@@ -105,10 +105,13 @@ trait Model
 
     public function addEntryToRefundPricevariation(array $data)
     {
-        $this->addEntryToModel(
-            \Mage::getModel(\Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/refund_pricevariation')),
-            $data
-        );
+        $model = \Mage::getModel('pmainguet_delivery/refund_pricevariation');
+
+        try {
+            $model->setData($data)->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function updateEntryToRefundPricevariation(array $filters, array $updatedFields)

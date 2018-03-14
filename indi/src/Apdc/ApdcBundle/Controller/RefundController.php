@@ -508,26 +508,27 @@ class RefundController extends Controller
                         ]);
                     }
 
-                    foreach ($order as $o) {     
+                    foreach ($order as $o) {  
+                        $excess = 0;
+                        $lack = 0;
+
                         if ($o['merchant']['refund_diff_commercant'] < 0) {
                             // Exces produit
                             $excess = $o['merchant']['refund_diff_commercant'];
-                            $lack = 0;
-                        } else {
+                        }
+                        if ($o['merchant']['refund_diff_commercant'] > 0) {
                             // Manque produit
-                            $excess = 0;
                             $lack = $o['merchant']['refund_diff_commercant'];
                         }
 
-                        $mage->updateEntryToRefundPricevariation(
-                            ['merchant_id' => $o['merchant']['shop_id']], [
-                                'order_id'          => $id,
-                                'merchant'          => $o['merchant']['name'],
-                                'merchant_excess'   => $excess,
-                                'merchant_lack'     => $lack,
-                                'created_at'        => date('Y-m-d H:i:s'),
-                            ]
-                        );
+                        $mage->addEntryToRefundPricevariation([ 
+                            'order_id'          => $id,
+                            'merchant'          => $o['merchant']['name'],
+                            'merchant_id'       => $o['merchant']['shop_id'],
+                            'merchant_excess'   => $excess,
+                            'merchant_lack'     => $lack,
+                            'created_at'        => date('Y-m-d H:i:s'),
+                        ]);
                     }
 
                 } catch (\Exception $e) {
