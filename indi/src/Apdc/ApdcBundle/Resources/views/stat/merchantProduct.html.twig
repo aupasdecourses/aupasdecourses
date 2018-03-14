@@ -22,7 +22,7 @@
 		</thead>
 		<tbody>
 			{% for price in prices %}
-			<tr>{{ dump(price)}}
+			<tr>
 				<td>{{ price.merchant_name }}</td>
 				<td><a href="{{ path('refundDigest', {'id': price.order_id}) }}" target="__blank">{{ price.order_id }}</a></td>
 				<td>{{ price.created_at|date('d/m/Y H:i') }}</td>
