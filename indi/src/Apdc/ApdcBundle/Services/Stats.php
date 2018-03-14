@@ -673,6 +673,7 @@ class Stats
         $cpt = 0;
 
         $orders = \Mage::getModel('pmainguet_delivery/refund_pricevariation')->getCollection();
+        $orders->addFieldToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
 
         foreach ($orders as $order) {
             $res[$cpt] = [

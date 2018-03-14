@@ -10,6 +10,14 @@
 
 	<div id="filter"><label>Selectionnez le commercant : &nbsp;</label></div>
 
+	{% set maxValue = 0.0 %}
+	{% set minValue = 0.0 %}
+
+	{% for price in prices %}
+		{% set maxValue = max(price.lack, maxValue) %}
+		{% set minValue = min(price.excess, minValue) %}
+	{% endfor %}
+
 	<table class="table table-striped" id="priceVariationTable">
 		<thead>
 			<tr>
@@ -26,8 +34,16 @@
 				<td>{{ price.merchant_name }}</td>
 				<td><a href="{{ path('refundDigest', {'id': price.order_id}) }}" target="__blank">{{ price.order_id }}</a></td>
 				<td>{{ price.created_at|date('d/m/Y H:i') }}</td>
-				<td>{{ price.lack }}</td>
-				<td>{{ price.excess }}</td>
+				{% if maxValue == price.lack %}
+					<td style="color: red;">{{ price.lack }}</td>
+				{% else %}
+					<td>{{ price.lack }}</td>
+				{% endif %}
+				{% if minValue == price.excess %}
+					<td style="color: red;">{{ price.excess }}</td>
+				{% else %}
+					<td>{{ price.excess }}</td>
+				{% endif %}
 			</tr>
 			{% endfor %}
 		</tbody>
