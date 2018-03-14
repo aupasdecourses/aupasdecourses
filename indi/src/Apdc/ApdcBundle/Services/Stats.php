@@ -677,12 +677,11 @@ class Stats
         foreach ($orders as $order) {
             $res[$cpt] = [
                 'order_id'      => $order->getData('order_id'),
-                'created_at'    => '',
+                'created_at'    => $order->getData('created_at'),
                 'merchant_id'   => $order->getData('merchant_id'),
                 'merchant_name' => $order->getData('merchant'),
                 'excess'        => $order->getData('merchant_excess'),
                 'lack'          => $order->getData('merchant_lack'),
-                'comment'       => '',
             ];
 
             $cpt++;
