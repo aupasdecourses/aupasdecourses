@@ -525,6 +525,7 @@ class RefundController extends Controller
                                 'merchant'          => $o['merchant']['name'],
                                 'merchant_excess'   => $excess,
                                 'merchant_lack'     => $lack,
+                                'created_at'        => date('Y-m-d H:i:s'),
                             ]
                         );
                     }

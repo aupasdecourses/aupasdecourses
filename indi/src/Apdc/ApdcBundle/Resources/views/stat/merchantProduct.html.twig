@@ -15,7 +15,7 @@
 			<tr>
 				<th class="sort">Commercant</th>
 				<th>N° de commande</th>
-				<th>Date</th>
+				<th>Date de creation</th>
 				<th class="float">Manque</th>
 				<th class="float">Exces</th>
 			</tr>
@@ -23,9 +23,9 @@
 		<tbody>
 			{% for price in prices %}
 			<tr>
-				<td>{{ price.merchant }}</td>
-				<td>{{ price.increment_id }}</td>
-				<td>{{ price.created_at }}</td>
+				<td>{{ price.merchant_name }}</td>
+				<td><a href="{{ path('refundDigest', {'id': price.order_id}) }}" target="__blank">{{ price.order_id }}</a></td>
+				<td>{{ price.created_at|date('d/m/Y') }}</td>
 				<td>{{ price.lack }}</td>
 				<td>{{ price.excess }}</td>
 			</tr>

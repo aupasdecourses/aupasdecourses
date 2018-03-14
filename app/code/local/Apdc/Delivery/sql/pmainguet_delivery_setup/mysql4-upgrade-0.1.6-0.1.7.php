@@ -34,7 +34,11 @@ $table = $installer->getConnection()
 		'nullable' 	=> true,
 		'default' 	=> '0.00',
 		'comment'	=> 'Manque commercant',
-	]);
+	])
+	->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_TEXT, null, [
+		'comment'	=> 'Date de creation'
+	])
+	;
 
 $installer->getConnection()->createTable($table);
 
