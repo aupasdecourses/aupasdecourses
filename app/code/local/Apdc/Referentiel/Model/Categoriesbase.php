@@ -17,7 +17,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
         'Envies' => '#800040',
     ];
     public $maincats_l3 = ['Tous', 'Tout', 'Toute'];
-    public $forbidden = ['#VALUE!', 'Tous les produits', 'Tous Les Produits'];
+    public $forbidden = ['#VALUE!', 'Tous les produits', 'Tous Les Produits','Au Verger du Hameau'];
         //$forbidden=['Cavavin','Les Bonnes Crèmes','Paris Terroirs','Paris Terroirs 5e','Les Papilles Gourmandes','Les Boucheries Francis','Paris Terroirs','La Mère-Mimosa','Paris Terroirs','Scübe'];
         //$forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté','Tous les produits','Tous Les Produits'];
 
