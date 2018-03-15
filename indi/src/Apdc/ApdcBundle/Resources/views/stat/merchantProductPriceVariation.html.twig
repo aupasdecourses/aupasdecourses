@@ -23,7 +23,8 @@
 			<tr>
 				<th class="sort">Commercant</th>
 				<th>N° de commande</th>
-				<th>Date de creation</th>
+				<th>Prise de commande</th>
+				<th>Livraison</th>
 				<th class="float">Manque</th>
 				<th class="float">Exces</th>
 			</tr>
@@ -33,7 +34,8 @@
 			<tr>
 				<td>{{ price.merchant_name }}</td>
 				<td><a href="{{ path('refundDigest', {'id': price.order_id}) }}" target="__blank">{{ price.order_id }}</a></td>
-				<td>{{ price.created_at|date('d/m/Y H:i') }}</td>
+				<td>{{ price.order_date|date('d/m/Y') }}</td>
+				<td>{{ price.delivery_date|date('d/m/Y') }}</td>
 				{% if maxValue == price.lack %}
 					<td style="color: red;">{{ price.lack }}</td>
 				{% else %}
@@ -49,6 +51,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -103,7 +106,7 @@ $(function() {
 
 $(function(){
 	$("#datepickerEndPriceVariation").change(function(){
-		window.location='{{ path('statMerchantProduct') }}?date_debut='+$("#datepickerPriceVariation").val()+'&date_fin='+this.value;
+		window.location='{{ path('statMerchantProductPriceVariation') }}?date_debut='+$("#datepickerPriceVariation").val()+'&date_fin='+this.value;
 	});
 });
 
@@ -111,7 +114,7 @@ $(document).ready(function() {
 	var table=$('#priceVariationTable').DataTable({
 		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
 		"pageLength": -1,
-		"order": [[ 0, 'asc' ]],
+		"order": [[ 1, 'dsc' ]],
 		initComplete: function () {
 			this.api().columns(['.sort']).every(function () {
 				var column = this;

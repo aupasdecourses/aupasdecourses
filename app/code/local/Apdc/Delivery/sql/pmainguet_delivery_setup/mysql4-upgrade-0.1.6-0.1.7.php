@@ -35,8 +35,11 @@ $table = $installer->getConnection()
 		'default' 	=> '0.00',
 		'comment'	=> 'Manque commercant',
 	])
-	->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_TEXT, null, [
-		'comment'	=> 'Date de creation'
+	->addColumn('order_date', Varien_Db_Ddl_Table::TYPE_TEXT, null, [
+		'comment'	=> 'Date de creation de commande'
+	])
+	->addColumn('delivery_date', Varien_Db_Ddl_Table::TYPE_TEXT, null, [
+		'comment'	=> 'Date de livraison de commande (pour factu)'
 	])
 	;
 

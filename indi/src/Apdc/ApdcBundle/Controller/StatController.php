@@ -144,7 +144,7 @@ class StatController extends Controller
         ]);
     }
 
-    public function merchantProductAction()
+    public function merchantProductPriceVariationAction()
     {
     	$stats = $this->container->get('apdc_apdc.stats');
 
@@ -155,7 +155,7 @@ class StatController extends Controller
             $prices = $stats->getMerchantProductPriceVariation($date_debut, $date_fin);
         }
 
-    	return $this->render('ApdcApdcBundle::stat/merchantProduct.html.twig', [
+    	return $this->render('ApdcApdcBundle::stat/merchantProductPriceVariation.html.twig', [
     		'prices'		=> $prices,
     		'date_debut'	=> $date_debut,
     		'date_fin'		=> $date_fin,

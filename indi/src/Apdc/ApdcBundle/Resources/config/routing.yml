@@ -178,9 +178,9 @@ productEvolution:
   path: /stat/productEvolution/
   defaults: { _controller: ApdcApdcBundle:Stat:productEvolution }
 
-statMerchantProduct:
-  path: /stat/merchant_product/
-  defaults: { _controller: ApdcApdcBundle:Stat:merchantProduct }
+statMerchantProductPriceVariation:
+  path: /stat/merchant_product_price_variation/
+  defaults: { _controller: ApdcApdcBundle:Stat:merchantProductPriceVariation }
 
 mapMerchants:
     path: /map/merchants/

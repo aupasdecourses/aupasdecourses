@@ -455,6 +455,8 @@ class RefundController extends Controller
         $refund_shipping_amount = $order[-1]['order']['refund_shipping_amount'];
         $order_mid = $order[-1]['order']['mid'];
         $order_header = $order[-1]['order'];
+        $order_date = $order[-1]['order']['order_date'];
+        $delivery_date = $order[-1]['order']['delivery_date'];
         unset($order[-1]);
 
         $refund_full = $mage->getRefundfull($refund_diff, $refund_shipping_amount);
@@ -527,7 +529,8 @@ class RefundController extends Controller
                             'merchant_id'       => $o['merchant']['shop_id'],
                             'merchant_excess'   => $excess,
                             'merchant_lack'     => $lack,
-                            'created_at'        => date('Y-m-d H:i:s'),
+                            'order_date'        => $order_date,
+                            'delivery_date'     => $delivery_date,
                         ]);
                     }
 

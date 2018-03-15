@@ -666,19 +666,20 @@ class Stats
 
     public function getMerchantProductPriceVariation($date_debut, $date_fin)
     {
-        $date_debut = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_debut)));
-        $date_fin = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date_fin)));
+        $date_debut = date('Y-m-d', strtotime(str_replace('/', '-', $date_debut)));
+        $date_fin = date('Y-m-d', strtotime(str_replace('/', '-', $date_fin)));
         
         $res = [];
         $cpt = 0;
 
         $orders = \Mage::getModel('pmainguet_delivery/refund_pricevariation')->getCollection();
-        $orders->addFieldToFilter('created_at', array('from' => $date_debut, 'to' => $date_fin));
+        $orders->addFieldToFilter('delivery_date', array('from' => $date_debut, 'to' => $date_fin));
 
         foreach ($orders as $order) {
             $res[$cpt] = [
                 'order_id'      => $order->getData('order_id'),
-                'created_at'    => $order->getData('created_at'),
+                'order_date'    => $order->getData('order_date'),
+                'delivery_date' => $order->getData('delivery_date'),
                 'merchant_id'   => $order->getData('merchant_id'),
                 'merchant_name' => $order->getData('merchant'),
                 'excess'        => $order->getData('merchant_excess'),
