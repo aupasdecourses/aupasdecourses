@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.1.6</version>
+            <version>0.1.7</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
@@ -68,6 +68,9 @@
                     <refund_items>
                         <table>refund_items</table>
                     </refund_items>
+                    <refund_pricevariation>
+                        <table>refund_pricevariation</table>
+                    </refund_pricevariation>
                     <indi_billingdetails>
                         <table>indi_billing_details</table>
                     </indi_billingdetails>

@@ -276,7 +276,9 @@ input#datepickerAccountingCustomers,
 input#datepickerEndAccountingCustomers,
 input#datepickerProductEvolution,
 input#datepickerEndProductEvolution,
-input#skuProductEvolution
+input#skuProductEvolution,
+input#datepickerPriceVariation,
+input#datepickerEndPriceVariation
 {
     display: inline;
 
