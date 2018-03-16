@@ -49,7 +49,9 @@ class Apdc_Partner_Model_Authentication extends Mage_Core_Model_Abstract
      */
     public function checkSignature($partner, $signature)
     {
-        $data = $partner->getPartnerKey() . $partner->getPartnerSecret() . date('Y-m-d');
+        $tz = 'Europe/Paris';
+        $dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+        $data = $partner->getPartnerKey() . $partner->getPartnerSecret() . $dt->format('Y-m-d');
         $partnerSignature = hash_hmac('sha256', $data, $partner->getEmail(), true);
         if (hash_equals($partnerSignature, base64_decode($signature))) {
             return true;

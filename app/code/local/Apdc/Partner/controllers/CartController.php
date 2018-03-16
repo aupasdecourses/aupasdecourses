@@ -49,11 +49,17 @@ class Apdc_Partner_CartController extends Apdc_Partner_AbstractController
                 ->setPartner($partner)
                 ->setCartData($post)
                 ->createCart();
+
+            // emulate store to get the redirectUrl
+            $appEmulation = Mage::getSingleton('core/app_emulation');
+            $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($cart->getStoreId());
+            echo json_encode(['quote_id' => $cart->getId(), 'redirect_url' => $this->getRedirectUrl($cart->getId())]);
+            $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo json_encode(['message' => $e->getMessage(), 'error' => 500]);
+            exit(1);
         }
 
-        echo json_encode(['quote_id' => $cart->getId(), 'redirect_url' => $this->getRedirectUrl($cart->getId())]);
         return;
     }
 

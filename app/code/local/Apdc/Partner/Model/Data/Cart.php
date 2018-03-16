@@ -33,6 +33,9 @@ class Apdc_Partner_Model_Data_Cart extends Apdc_Partner_Model_Data
      */
     public function setCartData($data)
     {
+        if (!is_array($data['products'])) {
+            $data['products'] = json_decode($data['products'], true);
+        }
         $this->cartData = $data;
         return $this;
     }
@@ -57,6 +60,7 @@ class Apdc_Partner_Model_Data_Cart extends Apdc_Partner_Model_Data
         $appEmulation = Mage::getSingleton('core/app_emulation');
         $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($this->getStoreId());
 
+        $this->createPartnerProducts();
         $quote = $this->addProductsToCart();
 
         $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
@@ -82,11 +86,11 @@ class Apdc_Partner_Model_Data_Cart extends Apdc_Partner_Model_Data
         $partner = $this->getPartner();
         $quote = $this->initQuote();
 
-        foreach ($data['products'] as $productId => $qty) {
-            $product = Mage::getModel('catalog/product')->load($productId);
+        foreach ($data['products'] as $prodData) {
+            $product = Mage::getModel('catalog/product')->load($prodData['product_id']);
             if ($product && $product->getId()) {
                 $params = [
-                    'qty' => $qty
+                    'qty' => $prodData['qty']
                 ];
                 if ($product->getHasOptions()) {
                     foreach ($product->getOptions() as $option) {
@@ -138,5 +142,53 @@ class Apdc_Partner_Model_Data_Cart extends Apdc_Partner_Model_Data
         $session->replaceQuote($quote);
         Mage::getSingleton('customer/session')->setCartWasUpdated(true); 
         $quote->collectTotals()->save();
+    }
+
+    protected function createPartnerProducts()
+    {
+        $data = $this->getCartData();
+        foreach ($data['products'] as $key => $prod) {
+            if ($prod['type'] != 'apdc') {
+                $prodData = $prod['product_data'];
+                $dataModel = $this->getDataModel($prod['type']);
+                $dataModel->setData($prodData);
+                $dataModel->setPostcode($data['postcode']);
+                $dataModel->checkSku();
+                $product = Mage::getModel('catalog/product');
+                $productId = $product->getIdBySku($dataModel->getSku());
+                if ($productId) {
+                    $storeId = Mage::app()->getStore()->getId();
+                    Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
+                    $product = $product->load($productId);
+                    if ($product->getPrice() != $dataModel->getPrice()) {
+                        $product->setPrice($dataModel->getPrice())
+                            ->setPrixKiloSite($dataModel->getPrice() . '€/' . $dataModel->getUnitePrix())
+                            ->setPrixPublic($dataModel->getPrice())
+                            ->save();
+
+                    }
+                    Mage::app()->setCurrentStore($storeId);
+                    $data['products'][$key]['product_id'] = $product->getId();
+                    continue;
+                }
+                $product = $dataModel->getProduct();
+                $product->save();
+                Mage::getModel('apdc_catalog/product_availability_manager')->generateProductsAvailabilities([$product->getId()]);
+                $data['products'][$key]['product_id'] = $product->getId();
+            }
+        }
+        $this->setCartData($data);
+    }
+
+    /**
+     * getDataModel
+     * 
+     * @param string $type type 
+     * 
+     * @return Apdc_Partner_Model_Partner_Abstract
+     */
+    protected function getDataModel($type)
+    {
+        return Mage::getSingleton('apdc_partner/partner_' . $type);
     }
 }
