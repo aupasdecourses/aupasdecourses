@@ -1,6 +1,12 @@
 <?php 
 $key = 'e6607e00e283344614586a755e97d065';
 $secret = 'f67740ba2c25c7ed695da47817df3879';
+$email = 'mysthr21@gmail.com';
+$tz = 'Europe/Paris';
+$dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+$data = $key . $secret . $dt->format('Y-m-d');
+$signature = base64_encode(hash_hmac('sha256', $data, $email, true));
+
 $postData = array(
     'key' => $key,
     //'from' => '2018-03-12 00:00:00', // optionnal format : Y-m-d H:i:s
@@ -9,10 +15,6 @@ $postData = array(
     //'quote_ids' => '8285',
     'from' => date('Y-m-d') . ' 00:00:00'
 );
-$email = 'mysthr21@gmail.com';
-$data = $key . $secret . date('Y-m-d');
-$signature = base64_encode(hash_hmac('sha256', $data, $email, true));
-
 $header = [
     'Authorization: Bearer ' . $signature
 ];
