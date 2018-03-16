@@ -112,7 +112,7 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
                 'price' => $prod->getPrice(),
                 'produit_biologique' => $this->getAttributeValue('produit_biologique', $prod->getProduitBiologique()),
                 'commercant' => $this->getAttributeValue('commercant', $prod->getCommercant()),
-                'image' => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $prod->getImage(),
+                'image' => ($prod->getImage() ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $prod->getImage() : ''),
                 'quartier' => $this->getQuartiers(explode(',', $prod->getWebsiteIds())),
                 'postcodes' => $this->getPostcodes(explode(',', $prod->getWebsiteIds())),
                 'shop_postcode' => $prod->getShopPostcode()
