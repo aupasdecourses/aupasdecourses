@@ -71,6 +71,13 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'required' => true,
             'disabled' => $isElementDisabled
         ]);
+        $fieldset->addField('external_id', 'text', [
+            'name' => 'external_id',
+            'label' => $this->__('External Id'),
+            'note' => $this->__('Id partenaire ou autre identification propre au magasin'),
+            'required' => false,
+            'disabled' => $isElementDisabled
+        ]);
 
         $fieldset->addField('website', 'text', [
             'name' => 'website',
