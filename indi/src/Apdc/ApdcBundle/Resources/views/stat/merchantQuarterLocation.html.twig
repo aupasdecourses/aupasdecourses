@@ -1,0 +1,38 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container-fluid">
+	<div class="page-header"><h2>Localisation des commercants par quartiers</h2></div>
+
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Commercant</th>
+				<th>Catégorie</th>
+				{% for store_id, store_name in location["stores"] %}
+					<th>{{ store_id }}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for merchant_id, merchant in location["merchants"] %}
+			<tr>
+				<td>{{ merchant.name }}</td>
+				<td>{{ merchant.shop_type }}</td>
+				{% for store_id, store_name in location["stores"] %}
+					<td>
+						{% for store in merchant['stores'] %}
+							{% if store == store_id %}X{% endif %}
+						{% endfor %}
+					</td>
+				{% endfor %}	
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+
+{% endblock %}

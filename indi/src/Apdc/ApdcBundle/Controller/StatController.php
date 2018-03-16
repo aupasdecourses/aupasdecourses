@@ -160,5 +160,16 @@ class StatController extends Controller
     		'date_debut'	=> $date_debut,
     		'date_fin'		=> $date_fin,
     	]);
+    }
+
+    public function merchantQuarterLocationAction()
+    {
+    	$stats = $this->container->get('apdc_apdc.stats');
+
+    	$location = $stats->getMerchantQuarterLocation();
+
+    	return $this->render('ApdcApdcBundle::stat/merchantQuarterLocation.html.twig', [
+    		'location'	=> $location,
+    	]);
     } 
 }

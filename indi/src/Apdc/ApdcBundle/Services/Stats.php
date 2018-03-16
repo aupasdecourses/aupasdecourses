@@ -691,4 +691,40 @@ class Stats
 
         return $res;
     }
+
+    public function getMerchantQuarterLocation()
+    {
+        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
+        
+        $tmp = [];
+        foreach ($shops as $shop) {
+            $stores = explode(',', $shop->getStores());
+            foreach ($stores as $id) {
+                $storeinfo = $S[$id];
+                if (!isset($tmp[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')])) {
+                    $tmp[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
+                        'id'        => $shop->getData('id_attribut_commercant'),
+                        'name'      => $shop->getName(),
+                        'shop_type' => $shop->getShopType(),
+                        'store'     => $storeinfo['name'],
+                        'store_id'  => $storeinfo['store_id'],         
+                    ];
+                }
+            }
+        }
+
+        foreach ($tmp as $store_id => $shops) {
+            foreach ($shops as $shop_id => $shop) {
+                $results["stores"][$store_id] = $shop['store'];
+                $results["merchants"][$shop_id]['name'] = $shop['name'];
+                $results["merchants"][$shop_id]['shop_type'] = $shop['shop_type'];
+                $results["merchants"][$shop_id]['stores'][] = $shop['store_id'];
+            }
+        }
+
+        asort($results['stores'], SORT_NATURAL);
+
+        return $results;
+    }
 }
