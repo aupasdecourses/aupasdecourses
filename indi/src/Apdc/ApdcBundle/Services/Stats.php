@@ -645,11 +645,11 @@ class Stats
         $cleanProducts = [];
         foreach ($products as $product) {
 
-            $createdOn = date('d/m/Y H', strtotime(str_replace('-', '/', $product['createdOn'])));
+            $createdOn = date('Y-m-d', strtotime($product['createdOn']));
 
             $cleanProducts[$createdOn] = [
                 $product['sku'] => $product['prix_public'],
-                'createdOn'     => $createdOn,
+                'date'     => $createdOn,
             ];
         }
 
