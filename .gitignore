@@ -114,7 +114,6 @@ tags
 /apdc.sublime*
 
 #ignore indi/web
-/indi/web
 go-pear.phar
 composer.json
 vendor
