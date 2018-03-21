@@ -20,10 +20,12 @@
 					<li class="dropdown">	
 						<a class="dropdown-toggle" data-toggle="dropdown"href="">Dispatch APDC<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('ordersIndex')}}">Toutes les commandes</a></li>
-							<li><a href="{{ path ('merchantsIndex')}}">Commandes par magasins</a></li>
-							<li><a href="{{ path ('storesIndex')}}">Commandes par quartiers</a></li>
-							<li><a href="{{ path ('contactLPR' )}}">Coordonnées LPR</a></li>
+							<li class="dropdown-header">Commandes</li>
+								<li><a href="{{ path ('ordersIndex')}}">Toutes les commandes</a></li>
+								<li><a href="{{ path ('merchantsIndex')}}">Commandes par magasins</a></li>
+								<li><a href="{{ path ('storesIndex')}}">Commandes par quartiers</a></li>
+							<li class="dropdown-header">Coordonnées</li>
+								<li><a href="{{ path ('contactLPR' )}}">Coordonnées LPR</a></li>
 						</ul>
 					</li>
 					{% endif %} {# end role gestion #}
@@ -31,10 +33,12 @@
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Dispatch LPR<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('storesIndex')}}">Commandes par quartiers</a></li>
-							<li><a href="{{ path ('pickingIndex')}}">Liste des enlèvements</a></li>
-							<li><a href="{{ path ('shippingIndex')}}">Liste des livraisons</a></li>
-							<li><a href="{{ path ('mapMerchants')}}">Localisation Commercants</a></li>
+							<li class="dropdown-header">Commandes</li>
+								<li><a href="{{ path ('storesIndex')}}">Commandes par quartiers</a></li>
+								<li><a href="{{ path ('pickingIndex')}}">Liste des enlèvements</a></li>
+								<li><a href="{{ path ('shippingIndex')}}">Liste des livraisons</a></li>
+							<li class="dropdown-header">Géolocalisation</li>
+								<li><a href="{{ path ('mapMerchants')}}">Géolocalisation des commercants</a></li>
 						</ul>
 					</li>
 					{% endif %} {# end role dispatch #}
@@ -43,19 +47,20 @@
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Traitement post-livraison<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('refundIndex')}}">Saisie Tickets</a></li>
-							<li><a href="{{ path ('refundPostClosureIndex')}}">Remboursement post-cloture</a></li>
+							<li><a href="{{ path ('refundIndex')}}">Saisie des tickets</a></li>
+							{# <li><a href="{{ path ('refundPostClosureIndex')}}">Remboursement post-cloture</a></li> #} {# ADYEN #}
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Facturation<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('billingIndex') }}">Voir En-Cours</a></li>
-							<li><a href="{{ path ('margin') }}">Tableau des commissions</a></li>
-							<li><a href="{{ path ('billingVerif') }}">Calcul facturation mensuelles</a></li>
-							<li><a href="{{ path ('billingDetails') }}">Voir Commandes Facturées</a></li>
-							<li><a href="{{ path ('billingSummary') }}">Voir Factures Commerçant</a></li>
-							<li><a href="{{ path ('billingPayoutHistory') }}">Historique des virements commercants</a></li>
+							<li class="dropdown-header">Traitement</li>
+								<li><a href="{{ path ('billingVerif') }}">Calcul facturation mensuelles</a></li>
+								<li><a href="{{ path ('billingSummary') }}">Voir Factures Commerçant</a></li>
+							<li class="dropdown-header">Historique</li>
+								<li><a href="{{ path ('billingIndex') }}">Voir En-Cours</a></li>
+								<li><a href="{{ path ('billingDetails') }}">Voir Commandes Facturées</a></li>
+							{# <li><a href="{{ path ('billingPayoutHistory') }}">Historique des virements commercants</a></li> #} {# ADYEN #}
 						</ul>
 					</li>
 					{% endif %} {# end role gestion #}
@@ -64,33 +69,41 @@
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Infos Clients<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path ('statCustomer') }}">Statistiques clients avec commande</a></li>
-							<li><a href="{{ path ('statCustomerNoOrder') }}">Statistiques clients sans commande</a></li>
-							<li><a href="{{ path ('loyaltyCustomer')}}">Listes des commandes</a></li>
-							<li><a href="{{ path ('statVoucher') }}">Statistiques des coupons</a></li>
+							<li class="dropdown-header">Commandes</li>
+								<li><a href="{{ path ('statCustomer') }}">Statistiques clients avec commande</a></li>
+								<li><a href="{{ path ('statCustomerNoOrder') }}">Statistiques clients sans commande</a></li>
+								<li><a href="{{ path ('loyaltyCustomer')}}">Listes des commandes</a></li>
+							<li class="dropdown-header">Coupons</li>
+								<li><a href="{{ path ('statVoucher') }}">Statistiques des coupons</a></li>
 							<!-- <li><a href="{{ path ('noteOrder') }}">Notes Commande</a></li> -->
-							<li><a href="{{ path ('mapCustomers') }}">Localisation Clients</a></li>
-							<li><a href="{{ path ('productEvolution') }}">Evolution des prix des produits</a></li>
+							<li class="dropdown-header">Geolocalisation</li>
+							<li><a href="{{ path ('mapCustomers') }}">Géolocalisation des clients</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Infos Commercants<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ path('statMerchantProductPriceVariation') }}">Manques & Exces des produits</a></li>
-							<li><a href="{{ path('merchantQuarterLocation') }}">Localisation des commercants par quartiers</a></li>
+							<li class="dropdown-header">Commissions</li>
+								<li><a href="{{ path ('margin') }}">Tableau des commissions</a></li>
+							<li class="dropdown-header">Produits</li>
+								<li><a href="{{ path('statMerchantProductPriceVariation') }}">Manques & Exces des produits</a></li>
+								<li><a href="{{ path ('productEvolution') }}">Graphique d'évolution des prix produits</a></li>
+							<li class="dropdown-header">Localisation</li>
+								<li><a href="{{ path('merchantQuarterLocation') }}">Localisation des commercants par quartiers</a></li>
+								<li><a href="{{ path ('mapMerchants')}}">Géolocalisation des commercants</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="">Outils<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 						 	<li class="dropdown-header">Traitement photos</li>
-							<li><a href="{{ path ('toolProduct') }}">Photos Produits</a></li>
-							<li><a href="{{ path ('toolMerchant') }}">Photos Magasins</a></li>
-							<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
+								<li><a href="{{ path ('toolProduct') }}">Photos Produits</a></li>
+								<li><a href="{{ path ('toolMerchant') }}">Photos Magasins</a></li>
+								<li><a href="{{ path ('toolCategory') }}">Photos Catégories</a></li>
 							<li class="dropdown-header">Outils externes</li>
-							<li><a href="http://mistral.stars-services.com" target="_blank">Accès Mistral (TRACEO)</a></li>
-							<li><a href="https://mandrillapp.com/" target="_blank">Accès Mandrill (MAILS)</a></li>
-							<li><a href="https://dashboard.tawk.to/" target="_blank">Accès Tawk.to (CHAT)</a></li>
+								<li><a href="http://mistral.stars-services.com" target="_blank">Accès Mistral (TRACEO)</a></li>
+								<li><a href="https://mandrillapp.com/" target="_blank">Accès Mandrill (MAILS)</a></li>
+								<li><a href="https://dashboard.tawk.to/" target="_blank">Accès Tawk.to (CHAT)</a></li>
 						</ul>
 					</li>
 					{% endif %} {# end role communication #}

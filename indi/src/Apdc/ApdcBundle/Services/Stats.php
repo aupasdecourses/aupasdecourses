@@ -694,6 +694,7 @@ class Stats
     public function getMerchantQuarterLocation()
     {
         $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        $shops->addFieldToFilter('enabled', ['eq' => 1]);
         $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
         
         $tmp = [];
