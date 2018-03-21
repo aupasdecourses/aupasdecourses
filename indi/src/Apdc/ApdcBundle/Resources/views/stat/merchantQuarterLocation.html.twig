@@ -1,0 +1,105 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+{% use 'ApdcApdcBundle::menu/default.html.twig' %}
+
+{% block body %}
+
+<div class="container-fluid">
+	<div class="page-header"><h2>Localisation des commercants par quartiers</h2></div>
+
+	<div id="filter"><label>Filtrer par commercant / type : &nbsp;</label></div>
+
+	<table class="table table-bordered table-striped" id="merchantQuarterLocationTable">
+		<thead>
+			<tr>
+				<th class="sort">Commercant</th>
+				<th class="sort">Type</th>
+				{% for store_id, store_name in location["stores"] %}
+					<th>{{ store_name }}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for merchant_id, merchant in location["merchants"] %}
+			<tr>
+				<td>{{ merchant.name }}</td>
+				<td>{{ merchant.shop_type }}</td>
+				{% for store_id, store_name in location["stores"] %}
+					<td>
+						{% for store in merchant['stores'] %}
+							{% if store == store_id %}X{% endif %}
+						{% endfor %}
+					</td>
+				{% endfor %}	
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+
+{% endblock %}
+
+{% block css_merchant_quarter_location %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+
+{% block javascript_merchant_quarter_location %}
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	var table=$('#merchantQuarterLocationTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 0, 'asc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+
+</script>
+
+{% endblock %}
