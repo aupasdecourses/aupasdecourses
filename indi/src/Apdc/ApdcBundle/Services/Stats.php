@@ -47,11 +47,11 @@ class Stats
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
 		$orders->getSelect()->joinLeft('geocode' ,'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
-		$orders->getSelect()->joinLeft('amasty_amorderattach_order_field',"main_table.entity_id = amasty_amorderattach_order_field.order_id",array('commentaires_commande'=>'amasty_amorderattach_order_field.commentaires_commande','commentaires_fraislivraison'=>'amasty_amorderattach_order_field.commentaires_fraislivraison'));
+		$orders->getSelect()->joinLeft('amasty_amorderattach_order_field',"main_table.entity_id = amasty_amorderattach_order_field.order_id",array('commentaires_fraislivraison'=>'amasty_amorderattach_order_field.commentaires_fraislivraison'));
 
 		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(DISTINCT main_table.entity_id) AS nb_order')
-			->columns('GROUP_CONCAT(DISTINCT IF(commentaires_fraislivraison>"" OR commentaires_commande>"",CONCAT(main_table.increment_id, ": " ,commentaires_commande, " - ",commentaires_fraislivraison),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
+			->columns('GROUP_CONCAT(DISTINCT IF(commentaires_fraislivraison>"",CONCAT(main_table.increment_id, ": " , " - ",commentaires_fraislivraison),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
 			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
@@ -391,7 +391,6 @@ class Stats
     {
         $attachments					= \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
         $commentaires_ticket			= '|*COM. TICKET*|'."\n".$attachments->getData('commentaires_ticket')."\n";
-        $commentaires_interne			= '|*COM. INTERNE*|'."\n".$attachments->getData('commentaires_commande')."\n";
         $commentaires_fraislivraison	= '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
         $comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
 
