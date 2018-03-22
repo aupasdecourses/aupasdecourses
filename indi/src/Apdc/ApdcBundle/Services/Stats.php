@@ -726,4 +726,13 @@ class Stats
 
         return $results;
     }
+
+    public function getCommentsHistory()
+    {
+        $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
+
+        dump($comments);
+
+        return null;
+    }
 }

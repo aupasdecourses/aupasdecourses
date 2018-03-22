@@ -146,6 +146,10 @@ toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
 
+toolCommentsHistory:
+  path: /tool/comments_history/
+  defaults: { _controller: ApdcApdcBundle:Tool:commentsHistory }
+
 contactLPR:
   path: /contact/LPR/
   defaults: { _controller: ApdcApdcBundle:Tool:contactLPR }

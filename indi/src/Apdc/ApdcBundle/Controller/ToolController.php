@@ -49,4 +49,17 @@ class ToolController extends Controller
 
 		return $this->render('ApdcApdcBundle::tool/lpr_info.html.twig');
 	}
+
+	public function commentsHistoryAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+
+		$comments = $stats->getCommentsHistory();
+		
+		return $this->render('ApdcApdcBundle::tool/comments_history.html.twig');	
+	}
 }
