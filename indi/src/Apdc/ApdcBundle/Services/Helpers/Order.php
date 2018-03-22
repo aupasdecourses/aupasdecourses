@@ -58,7 +58,7 @@ trait Order
                 'refund' => 'attachment.refund',
                 'refund_shipping' => 'attachment.refund_shipping',
                 'closure' => 'attachment.closure',
-                'commentaire_commercant' => 'attachment.commentaires_ticket',
+                'commentaire_commercant' => 'attachment.commentaires_commercant',
                 'commentaire_client' => 'attachment.commentaires_fraislivraison',
             )
         );

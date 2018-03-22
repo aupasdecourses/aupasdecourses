@@ -415,7 +415,7 @@ class RefundController extends Controller
                     ['refund_shipping' => $_POST['form']['refund_shipping'],
                     'input' => 'done',
                     'commentaires_fraislivraison' => $_POST['form']['commentaire_client'],
-                    'commentaires_ticket' => $_POST['form']['commentaire_commercant'], ]
+                    'commentaires_commercant' => $_POST['form']['commentaire_commercant'], ]
                 );
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 

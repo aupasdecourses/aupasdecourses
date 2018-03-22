@@ -24,9 +24,9 @@ class Billing
     private function getOrderAttachments($order)
     {
         $attachments = \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
-        $commentaires_ticket = '|*COM. TICKET*|'."\n".$attachments->getData('commentaires_ticket')."\n";
+        $commentaires_commercant = '|*COM. COMMERCANT*|'."\n".$attachments->getData('commentaires_commercant')."\n";
         $commentaires_fraislivraison = '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
-        $comments = $remboursement_client.$commentaires_ticket.$commentaires_fraislivraison;
+        $comments = $remboursement_client.$commentaires_commercant.$commentaires_fraislivraison;
 
         return $comments;
     }
