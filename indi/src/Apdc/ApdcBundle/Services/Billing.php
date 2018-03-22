@@ -25,8 +25,8 @@ class Billing
     {
         $attachments = \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
         $commentaires_commercant = '|*COM. COMMERCANT*|'."\n".$attachments->getData('commentaires_commercant')."\n";
-        $commentaires_fraislivraison = '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
-        $comments = $remboursement_client.$commentaires_commercant.$commentaires_fraislivraison;
+        $commentaires_client = '|*COM. CLIENT*|'."\n".$attachments->getData('commentaires_client');
+        $comments = $remboursement_client.$commentaires_commercant.$commentaires_client;
 
         return $comments;
     }

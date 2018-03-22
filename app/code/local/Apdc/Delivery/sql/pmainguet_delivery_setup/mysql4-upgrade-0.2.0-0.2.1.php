@@ -9,4 +9,11 @@ $this->getConnection()->changeColumn(
 	['type' => Varien_Db_Ddl_Table::TYPE_TEXT]
 );
 
+$this->getConnection()->changeColumn(
+	$this->getTable('amorderattach/order_field'),
+	'commentaires_fraislivraison',
+	'commentaires_client',
+	['type' => Varien_Db_Ddl_Table::TYPE_TEXT]
+);
+
 $this->endSetup();
