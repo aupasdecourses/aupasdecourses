@@ -731,8 +731,23 @@ class Stats
     {
         $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
 
-        dump($comments);
+        // dump($comments);
 
         return null;
+    }
+
+    public function getCommentsType()
+    {
+        $types = \Mage::getModel('pmainguet_delivery/indi_commenttype')->getCollection();
+        $res = [];
+
+        foreach ($types as $t) {
+            array_push($res, [
+                'type'      => $t['type'],
+                'label'     => $t['label'],
+            ]);
+        }
+
+        return $res;
     }
 }

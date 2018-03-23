@@ -59,7 +59,19 @@ class ToolController extends Controller
 		$stats = $this->container->get('apdc_apdc.stats');
 
 		$comments = $stats->getCommentsHistory();
+		$types = $stats->getCommentsType();
+
+		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
+		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
+
+		$form_comment->handleRequest($request);
+
+		if ($form_comment->isSubmitted() && $form_comment->isValid()) {
+			// TODO
+		}		
 		
-		return $this->render('ApdcApdcBundle::tool/comments_history.html.twig');	
+		return $this->render('ApdcApdcBundle::tool/comments_history.html.twig', [
+			'form_comment'	=> $form_comment->createView(),
+		]);	
 	}
 }
