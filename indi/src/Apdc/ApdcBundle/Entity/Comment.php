@@ -4,14 +4,11 @@ namespace Apdc\ApdcBundle\Entity;
 
 class Comment
 {
-	private $id;
 
 	private $type;
-
-	public function getId()
-	{
-		return $this->id;
-	}
+	private $text;
+	private $order_id;
+	private $merchant_id;
 
 	public function getType()
 	{
@@ -21,5 +18,35 @@ class Comment
 	public function setType($type)
 	{
 		$this->type = $type;
+	}
+
+	public function getText()
+	{
+		return $this->text;
+	}
+
+	public function setText($text)
+	{
+		$this->text = $text;
+	}
+
+	public function getOrderId()
+	{
+		return $this->order_id;
+	}
+
+	public function setOrderId($order_id)
+	{
+		$this->order_id = $order_id;
+	}
+
+	public function getMerchantId()
+	{
+		return $this->merchant_id;
+	}
+
+	public function setMerchantId($merchant_id)
+	{
+		$this->merchant_id = $merchant_id;
 	}
 }

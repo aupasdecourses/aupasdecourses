@@ -67,7 +67,18 @@ class ToolController extends Controller
 		$form_comment->handleRequest($request);
 
 		if ($form_comment->isSubmitted() && $form_comment->isValid()) {
-			// TODO
+			$data = $form_comment->getData();
+
+			$stats->addEntryToCommentHistory([
+				'created_at' 	=> date('Y-m-d H:i:s'),
+				'author'		=> $this->getUser()->getUsername(),
+				'comment_type'	=> $data->getType(),
+				'comment_text'	=> $data->getText(),
+				'order_id'		=> $data->getOrderId(),
+				'merchant_id'	=> $data->getMerchantId(),
+			]);
+
+			return $this->redirectToRoute('toolCommentsHistory');
 		}		
 		
 		return $this->render('ApdcApdcBundle::tool/comments_history.html.twig', [

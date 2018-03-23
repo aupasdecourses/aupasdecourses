@@ -11,6 +11,7 @@ define('FLOAT_NUMBER', 2);
 class Stats
 {
     use Helpers\Order;
+    use Helpers\Model;
 
 	private $em;
 
