@@ -57,32 +57,46 @@ class ToolController extends Controller
 		}
 
 		$stats = $this->container->get('apdc_apdc.stats');
-
 		$comments = $stats->getCommentsHistory();
-		$types = $stats->getCommentsType();
+		
+		return $this->render('ApdcApdcBundle::tool/comments/history.html.twig');	
+	}
+
+	public function commentsFormAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
 
 		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
 		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
-
 		$form_comment->handleRequest($request);
 
-		if ($form_comment->isSubmitted() && $form_comment->isValid()) {
-			$data = $form_comment->getData();
-
-			$stats->addEntryToCommentHistory([
-				'created_at' 	=> date('Y-m-d H:i:s'),
-				'author'		=> $this->getUser()->getUsername(),
-				'comment_type'	=> $data->getType(),
-				'comment_text'	=> $data->getText(),
-				'order_id'		=> $data->getOrderId(),
-				'merchant_id'	=> $data->getMerchantId(),
-			]);
-
-			return $this->redirectToRoute('toolCommentsHistory');
-		}		
-		
-		return $this->render('ApdcApdcBundle::tool/comments_history.html.twig', [
+		return $this->render('ApdcApdcBundle::tool/comments/form.html.twig', [
 			'form_comment'	=> $form_comment->createView(),
-		]);	
+		]);		
+	}
+
+	public function commentsProcessAction(Request $request)
+	{
+		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
+			return $this->redirectToRoute('root');
+		}
+
+		$stats = $this->container->get('apdc_apdc.stats');
+		$form = $request->query->get('comment');
+		$session = $request->getSession();
+
+		$stats->addEntryToCommentHistory([
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'author'		=> $this->getUser()->getUsername(),
+			'comment_type'	=> $form['type'],
+			'comment_text'	=> $form['text'],
+			'order_id'		=> $form['order_id'],
+			'merchant_id'	=> $form['merchant_id'],
+		]);
+
+		$session->getFlashBag()->add('success', 'Commentaire bien crée');
+		return $this->redirect($request->headers->get('referer'));
 	}
 }

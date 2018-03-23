@@ -730,7 +730,7 @@ class Stats
 
     public function getCommentsHistory()
     {
-        $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
+        $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory')->getCollection();
 
         // dump($comments);
 

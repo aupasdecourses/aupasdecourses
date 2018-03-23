@@ -1,0 +1,17 @@
+{% extends 'ApdcApdcBundle::base.html.twig' %}
+
+{% block body %}
+	
+	<div class="container modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title">Creer un commentaire</h1>
+			</div>
+			<div class="modal-body">
+				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
+				{{ form_end(form_comment) }}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

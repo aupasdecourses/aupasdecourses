@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +27,7 @@ class Comment extends AbstractType
 		$choices = array_merge(['Type' => 'default'], $choices);
 
 		$builder->add('type', ChoiceType::class, [
-			'label'		=> false,
+			'label'		=> 'Type de commentaire',
 			'attr'		=> [
 				'class'		=> 'form-control'
 			],
@@ -35,7 +36,7 @@ class Comment extends AbstractType
 
 		$builder->add('order_id', TextType::class, [
 			'required'	=> true,
-			'label'		=> false,
+			'label'		=> '# Commande',
 			'attr'		=> [
 				'class'			=> 'form-control',
 				'placeholder'	=> '# Commande',
@@ -52,16 +53,16 @@ class Comment extends AbstractType
 		$merchants = array_merge(['Commercant' => -1], $merchants);
 		
 		$builder->add('merchant_id', ChoiceType::class, [
-			'label'		=> false,
+			'label'		=> 'Commercant',
 			'attr'		=> [
 				'class'		=> 'form-control'
 			],
 			'choices'	=> $merchants,
 		]);
 
-		$builder->add('text', TextType::class, [
+		$builder->add('text', TextareaType::class, [
 			'required'	=> true,
-			'label'		=> false,
+			'label'		=> 'Commentaire',
 			'attr'		=> [
 				'class'			=> 'form-control',
 				'placeholder'	=> 'Commentaire',
@@ -74,7 +75,6 @@ class Comment extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'attr'			=> ['class' => 'inline'],
 			'data_class'	=> 'Apdc\ApdcBundle\Entity\Comment'
 		]);
 	}
