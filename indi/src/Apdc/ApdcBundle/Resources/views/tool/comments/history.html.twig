@@ -14,7 +14,95 @@
 		{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request} )) }}
 	</div>
 
+	<div id="filter"><label>Filtrer par type / commercant : &nbsp;</label></div>
+
+	<table class="table table-striped" id="commentsHistoryTable">
+		<thead>
+			<tr>
+				<th class="sort">Type de commentaire</th>
+				<th>Commande</th>
+				<th class="sort">Commercant</th>
+				<th>Commentaire</th>
+				<th>Crée le</th>
+				<th>Auteur</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for comment in comments %}
+			<tr>
+				<td>{{ comment.comment_label }}</td>
+				<td>{{ comment.order_id }}</td>
+				<td>{{ comment.merchant_name }}</td>
+				<td>{{ comment.comment_text }}</td>
+				<td>{{ comment.created_at|date('d/m/Y H:i') }}</td>
+				<td>{{ comment.author }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 </div>
 
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+{% block css_comments_history %}
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css" type="text/css" />
+{% endblock %}
+{% block javascript_comments_history %}
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script type="text/javascript">
+
+$(document).ready(function() {
+	var table=$('#commentsHistoryTable').DataTable({
+		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
+		"pageLength": -1,
+		"order": [[ 1, 'dsc' ]],
+		initComplete: function () {
+			this.api().columns(['.sort']).every(function () {
+				var column = this;
+				var select = $('<select><option value=""></option></select>')
+					.appendTo( $('#filter') )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+						column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+					} );
+
+				column.data().unique().sort().each( function ( d, j ) {
+					select.append( '<option value="'+d+'">'+d+'</option>' )
+				} );
+			});
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+					i.replace(/[\$,]/g, '')*1 :
+					typeof i === 'number' ?
+					i : 0;
+			};
+			this.api().columns(['.float']).every(function (){
+				var index = this.index();
+				pageTotal = api
+					.column( index, { page: 'current'} )
+					.data()
+					.reduce( function (a, b) {
+						return intVal(a) + intVal(b);
+					}, 0 );
+				pageTotal=pageTotal.toFixed(2);
+				// Update footer
+				$( api.column( index ).footer() ).html(pageTotal);
+			});
+		}
+	} );
+});
+
+</script>
 {% endblock %}

@@ -731,10 +731,27 @@ class Stats
     public function getCommentsHistory()
     {
         $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory')->getCollection();
+        $comments->getSelect()->joinLeft(['commenttype' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_commenttype')], 'commenttype.type = main_table.comment_type', ['comment_label' => 'commenttype.label']);
+        $comments->getSelect()->joinLeft(['apdcshop' => \Mage::getSingleton('core/resource')->getTableName('apdc_commercant/shop')], 'apdcshop.id_attribut_commercant = main_table.merchant_id', ['merchant_name' => 'apdcshop.name']);
 
-        // dump($comments);
+        $res = [];
 
-        return null;
+        foreach ($comments as $comment) {
+            array_push($res, [
+                'created_at'    => $comment->getData('created_at'),
+                'updated_at'    => $comment->getData('updated_at'),
+                'author'        => $comment->getData('author'),
+                'comment_type'  => $comment->getData('comment_type'),
+                'comment_label' => $comment->getData('comment_label'),
+                'comment_text'  => $comment->getData('comment_text'),
+                'order_id'      => $comment->getData('order_id'),
+                'merchant_id'   => $comment->getData('merchant_id'),
+                'merchant_name' => $comment->getData('merchant_name'),
+            ]);
+        }
+        
+
+        return $res;
     }
 
     public function getCommentsType()
@@ -744,8 +761,8 @@ class Stats
 
         foreach ($types as $t) {
             array_push($res, [
-                'type'      => $t['type'],
-                'label'     => $t['label'],
+                'type'      => $t->getData('type'),
+                'label'     => $t->getData('label'),
             ]);
         }
 

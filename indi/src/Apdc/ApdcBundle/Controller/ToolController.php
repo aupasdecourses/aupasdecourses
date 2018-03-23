@@ -59,7 +59,9 @@ class ToolController extends Controller
 		$stats = $this->container->get('apdc_apdc.stats');
 		$comments = $stats->getCommentsHistory();
 		
-		return $this->render('ApdcApdcBundle::tool/comments/history.html.twig');	
+		return $this->render('ApdcApdcBundle::tool/comments/history.html.twig', [
+			'comments'	=> $comments,
+		]);	
 	}
 
 	public function commentsFormAction(Request $request)
