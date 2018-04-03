@@ -370,3 +370,7 @@ input#inputSku {
     width: 150px;
     vertical-align: top;
 }
+
+.dropdown:hover .dropdown-menu {
+    display: inline;
+}
