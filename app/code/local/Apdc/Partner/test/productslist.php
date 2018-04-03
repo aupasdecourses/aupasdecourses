@@ -1,21 +1,21 @@
 <?php 
-$key = 'e6607e00e283344614586a755e97d065';
-$secret = 'f67740ba2c25c7ed695da47817df3879';
-$email = 'mysthr21@gmail.com';
+$key = 'd90e49032622e93040bca7c3e6815b7f';
+$secret = 'eaa49a6c5ae296fadf5b7f833e384854';
+$email = 'contact@aupasdecourses.com';
 $tz = 'Europe/Paris';
-$dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+$dt = new DateTime('now', new DateTimeZone($tz)); //first argument "must" be a string
 $data = $key . $secret . $dt->format('Y-m-d');
 $signature = base64_encode(hash_hmac('sha256', $data, $email, true));
 
-$postData = array(
+$postData = [
     'key' => $key
-);
+];
 $header = [
     'Authorization: Bearer ' . $signature
 ];
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL,"http://dev.aupasdecourses.local/accueil/partner/product/list");
+curl_setopt($ch, CURLOPT_URL, 'https://dev.aupasdecourse.com/accueil/partner/product/list');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
