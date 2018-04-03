@@ -10,6 +10,8 @@ define('FLOAT_NUMBER', 2);
 
 class Stats
 {
+    use Helpers\Order;
+
 	private $em;
 
 	public function __construct(ObjectManager $em)
@@ -643,12 +645,11 @@ class Stats
         $cleanProducts = [];
         foreach ($products as $product) {
 
-            $createdOn = date('d/m/Y H', strtotime(str_replace('-', '/', $product['createdOn'])));
+            $createdOn = date('Y-m-d', strtotime($product['createdOn']));
 
             $cleanProducts[$createdOn] = [
-                'sku'           => $product['sku'],
-                'prixPublic'    => $product['prix_public'],
-                'createdOn'     => $createdOn,
+                $product['sku'] => $product['prix_public'],
+                'date'     => $createdOn,
             ];
         }
 
@@ -659,7 +660,71 @@ class Stats
             $cpt++;
         }
 
-        // dump(array_values($cleanProducts));die();
         return array_values($cleanProducts);
+    }
+
+    public function getMerchantProductPriceVariation($date_debut, $date_fin)
+    {
+        $date_debut = date('Y-m-d', strtotime(str_replace('/', '-', $date_debut)));
+        $date_fin = date('Y-m-d', strtotime(str_replace('/', '-', $date_fin)));
+        
+        $res = [];
+        $cpt = 0;
+
+        $orders = \Mage::getModel('pmainguet_delivery/refund_pricevariation')->getCollection();
+        $orders->addFieldToFilter('delivery_date', array('from' => $date_debut, 'to' => $date_fin));
+
+        foreach ($orders as $order) {
+            $res[$cpt] = [
+                'order_id'      => $order->getData('order_id'),
+                'order_date'    => $order->getData('order_date'),
+                'delivery_date' => $order->getData('delivery_date'),
+                'merchant_id'   => $order->getData('merchant_id'),
+                'merchant_name' => $order->getData('merchant'),
+                'excess'        => $order->getData('merchant_excess'),
+                'lack'          => $order->getData('merchant_lack'),
+            ];
+
+            $cpt++;
+        }
+
+        return $res;
+    }
+
+    public function getMerchantQuarterLocation()
+    {
+        $shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+        $shops->addFieldToFilter('enabled', ['eq' => 1]);
+        $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
+        
+        $tmp = [];
+        foreach ($shops as $shop) {
+            $stores = explode(',', $shop->getStores());
+            foreach ($stores as $id) {
+                $storeinfo = $S[$id];
+                if (!isset($tmp[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')])) {
+                    $tmp[$storeinfo['store_id']][$shop->getData('id_attribut_commercant')] = [
+                        'id'        => $shop->getData('id_attribut_commercant'),
+                        'name'      => $shop->getName(),
+                        'shop_type' => $shop->getShopType(),
+                        'store'     => $storeinfo['name'],
+                        'store_id'  => $storeinfo['store_id'],         
+                    ];
+                }
+            }
+        }
+
+        foreach ($tmp as $store_id => $shops) {
+            foreach ($shops as $shop_id => $shop) {
+                $results["stores"][$store_id] = $shop['store'];
+                $results["merchants"][$shop_id]['name'] = $shop['name'];
+                $results["merchants"][$shop_id]['shop_type'] = $shop['shop_type'];
+                $results["merchants"][$shop_id]['stores'][] = $shop['store_id'];
+            }
+        }
+
+        asort($results['stores'], SORT_NATURAL);
+
+        return $results;
     }
 }

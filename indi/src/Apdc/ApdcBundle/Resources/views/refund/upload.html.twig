@@ -50,8 +50,6 @@
 	<script type="text/javascript" src="{{ path('root') }}js/digest-gallery.js"></script>
 	<script type="text/javascript" src="{{ path('root') }}js/input-ticket.js"></script>
 
-	<script type="text/javascript" src="{{ path('root') }}js/mistral-delivery.js"></script>
-
 	<script type="text/javascript">
 
 		var successfull = document.getElementsByClassName("form-control success");
@@ -67,6 +65,19 @@
 		});
 
 	</script>
+
+	<script type="text/javascript">
+		
+		var order_status = '{{ order[-1]['order']['status'] }}';
+		if (order_status == "Complete") {
+			document.getElementById("form_Mistral tickets upload").disabled = true;
+			document.getElementById("form_Mistral tickets upload").title = "La commande a le statut 'Complete' ";
+			document.getElementById("form_Upload").disabled = true;
+			document.getElementById("form_Upload").title = "La commande a le statut 'Complete' ";
+		}
+
+	</script>
+
 
 	<script type="text/javascript">
 

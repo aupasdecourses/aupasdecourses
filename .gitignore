@@ -75,7 +75,7 @@ tags
 /delivery/uploads/files/
 
 #ignore robots.txt#
-/robots.txt
+#/robots.txt
 
 #ignore magmi temp files #
 /magmi/conf/magmi.ini

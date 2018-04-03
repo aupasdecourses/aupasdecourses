@@ -17,19 +17,12 @@
 {% endblock %}
 {% block css_product_evolution %}
 
-    <style>
-        .axis { font: 14px sans-serif; }
-
-        .line {
-            fill: none;
-            stroke: steelblue;
-            stroke-width: 2px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ path('root') }}css/stat/productEvolution.css">
 
 {% endblock %}
 {% block javascript_product_evolution %}
-    <script type="text/javascript" src="//d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3.v3.js"></script>
+
     <script type="text/javascript">
     
         $(function() {
@@ -70,78 +63,9 @@
         });
 
     </script>
-
     <script type="text/javascript">
-
-        // set the dimensions and margins of the graph
-    var margin = {top: 30, right: 60, bottom: 200, left: 30},
-        width = 1800 - margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom;
-
-    // parse the date / time
-    var parseTime = d3.timeParse("%d/%m/%Y %H");
-
-    // set the ranges
-    var x = d3.scaleTime().range([0, width]);
-    var y = d3.scaleLinear().range([height, 0]);
-
-    // define the line
-    var valueline = d3.line()
-        .x(function(d) { return x(d.createdOn); })
-        .y(function(d) { return y(d.prixPublic); });
-
-    // add the svg canvas
-    var svg = d3.select("#graph").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // Get the data
-    var json_data = {{ json_products|raw }};
-    data = JSON.parse(JSON.stringify(json_data));
-
-    // format the data
-    data.forEach(function(d) {
-        d.createdOn = parseTime(d.createdOn);
-        d.prixPublic = +d.prixPublic;
-    });
-
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.createdOn; }));
-    y.domain([0, d3.max(data, function(d) { return d.prixPublic; })]);
-
-    // Add the valueline path.
-    svg.append("path")
-        .data([data])
-        .attr("class", "line")
-        .attr("d", valueline);
-
-    // Add the scatterplot
-    svg.selectAll("dot")
-        .data(data)
-        .enter().append("circle")
-        .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d.createdOn); })
-        .attr("cy", function(d) { return y(d.prixPublic); });
-
-    // Add the X Axis
-     svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x)
-        .tickFormat(d3.timeFormat("%d/%m/%Y %H")))
-        .selectAll("text")  
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
-
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(y));
-
+        var json_data = {{ json_products|raw }};
     </script>
+    <script type="text/javascript" src="{{ path('root') }}js/stat/productEvolution.js"></script>
 
 {% endblock %}

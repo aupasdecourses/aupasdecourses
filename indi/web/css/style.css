@@ -276,12 +276,20 @@ input#datepickerAccountingCustomers,
 input#datepickerEndAccountingCustomers,
 input#datepickerProductEvolution,
 input#datepickerEndProductEvolution,
-input#skuProductEvolution
+input#datepickerPriceVariation,
+input#datepickerEndPriceVariation
 {
     display: inline;
 
     width: 100px;
 
+    vertical-align: top;
+}
+
+input#skuProductEvolution
+{
+    display: inline;
+    width: 200px;
     vertical-align: top;
 }
 

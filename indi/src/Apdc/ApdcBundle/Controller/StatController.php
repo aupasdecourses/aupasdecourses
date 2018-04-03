@@ -142,5 +142,34 @@ class StatController extends Controller
             'sku'				=> $sku,
             'json_products'		=> json_encode($products),
         ]);
+    }
+
+    public function merchantProductPriceVariationAction()
+    {
+    	$stats = $this->container->get('apdc_apdc.stats');
+
+    	if (isset($_GET['date_debut'])) {
+            $date_debut = $_GET['date_debut'];
+            $date_fin	= $_GET['date_fin'];
+
+            $prices = $stats->getMerchantProductPriceVariation($date_debut, $date_fin);
+        }
+
+    	return $this->render('ApdcApdcBundle::stat/merchantProductPriceVariation.html.twig', [
+    		'prices'		=> $prices,
+    		'date_debut'	=> $date_debut,
+    		'date_fin'		=> $date_fin,
+    	]);
+    }
+
+    public function merchantQuarterLocationAction()
+    {
+    	$stats = $this->container->get('apdc_apdc.stats');
+
+    	$location = $stats->getMerchantQuarterLocation();
+
+    	return $this->render('ApdcApdcBundle::stat/merchantQuarterLocation.html.twig', [
+    		'location'	=> $location,
+    	]);
     } 
 }

@@ -18,7 +18,7 @@ class Apdc_Referentiel_Model_Categoriesbase extends Mage_Core_Model_Abstract
     ];
     public $maincats_l3 = ['Tous', 'Tout', 'Toute'];
     public $forbidden = ['#VALUE!', 'Tous les produits', 'Tous Les Produits'];
-        //$forbidden=['Cavavin','Les Bonnes Crèmes','Paris Terroirs','Paris Terroirs 5e','Les Papilles Gourmandes','Les Boucheries Francis','Paris Terroirs','La Mère-Mimosa','Paris Terroirs','Scübe'];
+        //$forbidden=['Cavavin','Les Bonnes Crèmes','Paris Terroirs','Paris Terroirs 5e','Les Papilles Gourmandes','Les Boucheries Francis','Paris Terroirs','La Mère-Mimosa','Paris Terroirs','Scübe','Au Verger du Hameau'];
         //$forbidden=['#VALUE!','Detox\'','Noël','Menus','Evènements','Spécial été','Spécial Eté','Tous les produits','Tous Les Produits'];
 
     public function _construct()

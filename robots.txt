@@ -1,0 +1,82 @@
+# Website Sitemap
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris1e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris2e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris3e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris4e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris5e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris6e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris7e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris8e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris9e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_saintmartin/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris11e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris12e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris13e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris14e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_commerce/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris16e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris16esud/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris18e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris19e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_paris20e/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/sitemap/sitemap_levalloisperret/sitemap.xml
+Sitemap: https://www.aupasdecourses.com/blog/sitemap.xml
+
+# Google Image Crawler Setup
+User-agent: Googlebot-Image
+Disallow:
+
+# Crawlers Setup
+User-agent: *
+
+# Directories
+Disallow: /404/
+Disallow: /app/
+Disallow: /downloader/
+Disallow: /errors/
+#Disallow: /js/
+#Disallow: /lib/
+#Disallow: /media/
+Disallow: /shell/
+Disallow: /skin/
+Disallow: /var/
+Disallow: /delivery/
+Disallow: /indi/
+Disallow: /magmi/
+Disallow: /vendor/
+
+# Paths (clean URLs)
+Disallow: /index.php/
+Disallow: /catalog/product_compare/
+Disallow: /catalog/category/view/
+Disallow: /catalog/product/view/
+Disallow: /catalogsearch/
+Disallow: /control/
+Disallow: /contacts/
+Disallow: /customer/
+Disallow: /customize/
+Disallow: /newsletter/
+Disallow: /poll/
+Disallow: /review/
+Disallow: /sendfriend/
+Disallow: /tag/
+Disallow: /wishlist/
+Disallow: /catalog/product/gallery/
+#Disallow: /checkout/
+
+# Files
+Disallow: /cron.php
+Disallow: /cron.sh
+Disallow: /error_log
+Disallow: /install.php
+Disallow: /LICENSE.html
+Disallow: /LICENSE.txt
+Disallow: /LICENSE_AFL.txt
+Disallow: /STATUS.txt
+
+# Paths (no clean URLs)
+#Disallow: /*.js$
+#Disallow: /*.css$
+Disallow: /*.php$
+Disallow: /*?SID=
