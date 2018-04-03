@@ -3,7 +3,7 @@
 
   <modules>
     <Apdc_Partner>
-      <version>0.2.0</version>
+      <version>0.2.1</version>
     </Apdc_Partner>
   </modules>
 
@@ -76,6 +76,7 @@
       <sales_convert_order_item>
         <apdc_partner_id>
           <to_quote_item>*</to_quote_item>
+          <to_invoice_item>*</to_invoice_item>
         </apdc_partner_id>
       </sales_convert_order_item>
     </fieldsets>

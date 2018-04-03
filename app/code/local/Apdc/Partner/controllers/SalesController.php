@@ -1,5 +1,8 @@
 <?php
 
+
+require_once(Mage::getModuleDir('controllers','Apdc_Partner').DS.'AbstractController.php');
+
 /**
  * This file is part of the GardenMedia Mission Project 
  * 
@@ -9,21 +12,18 @@
  * @license  All right reserved to Garden Media Studio VN Company Limited
  * @link     http://www.garden-media.fr
  */
-
-require_once(Mage::getModuleDir('controllers','Apdc_Partner').DS.'AbstractController.php');
-
 /**
- * Apdc_Partner_ProductController 
+ * Apdc_Partner_SalesController 
  * 
  * @category Apdc
  * @package  Partner
- * @uses     Mage
- * @uses     Mage_Core_Controller_Front_Action
+ * @uses     Apdc
+ * @uses     Apdc_Partner_AbstractController
  * @author   Erwan INYZANT <erwan@garden-media.fr> 
  * @license  All right reserved to Garden Media Studio VN Company Limited
  * @link     http://www.garden-media.fr
  */
-class Apdc_Partner_ProductController extends Apdc_Partner_AbstractController
+class Apdc_Partner_SalesController extends Apdc_Partner_AbstractController
 {
     /**
      * listAction 
@@ -38,11 +38,17 @@ class Apdc_Partner_ProductController extends Apdc_Partner_AbstractController
     protected function execute(Apdc_Partner_Model_Partner $partner)
     {
         try {
-            echo $partner->getProductList();
+            $post = $this->getRequest()->getPost();
+            $sales = Mage::getModel('apdc_partner/data_sales')
+                ->setPartner($partner)
+                ->setSalesData($post);
+
+            echo $sales->getList();
         } catch (Exception $e) {
             echo json_encode(['message' => $e->getMessage(), 'error' => 500]);
             exit(1);
         }
+
         return;
     }
 }
