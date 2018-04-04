@@ -14,7 +14,7 @@
 	<div class="col-xs-2">
 		<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default right">Suivant >></a>
 	</div>
-	{{ form_start(form) }}
+	
 	<div class="row">
 		<div class="row">
 			<div class="col-md-11"><h1>#{{ id ~ " / " ~ customer_name }}<small> Saisie des tickets</small></h1></div>
@@ -24,22 +24,16 @@
 <div class="row">
 		<div class="row">
 			<hr>
-			<div class="col-md-4">
+			
+			<div style="float:right;"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
+			<div id="createCommentModal" class="modal fade">
+				{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request, 'order_id': id} )) }}
+			</div>
+
+			{{ form_start(form) }}
+			<div>
 				<label class="checkbox-inline"><input type="checkbox" name="form[refund_shipping]" {% if refund_shipping %} checked="checked"{% endif %} value="true">Rembourser les frais de livraison ?</label>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="commentaire_client">Commentaires Client</label>
-					<textarea rows="3" cols="30" name="form[commentaire_client]">{{ commentaire_client }}</textarea>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="commentaire_commercant">Commentaires Commercant</label>
-					<textarea rows="3" cols="30" name="form[commentaire_commercant]">{{ commentaire_commercant }}</textarea>
-				</div>
-			</div>
-			<hr>
 		</div>
 		{% for merchant_id, merchant_part in order %}
 			<h2>{{merchant_part.merchant.name}}</h2>

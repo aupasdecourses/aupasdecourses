@@ -64,7 +64,7 @@ class ToolController extends Controller
 		]);	
 	}
 
-	public function commentsFormAction(Request $request)
+	public function commentsFormAction(Request $request, $order_id = null)
 	{
 		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
@@ -76,6 +76,7 @@ class ToolController extends Controller
 
 		return $this->render('ApdcApdcBundle::tool/comments/form.html.twig', [
 			'form_comment'	=> $form_comment->createView(),
+			'order_id'		=> $order_id,
 		]);		
 	}
 
@@ -89,16 +90,18 @@ class ToolController extends Controller
 		$form = $request->query->get('comment');
 		$session = $request->getSession();
 
+		$order_id = $form['order_id'];
+
 		$stats->addEntryToCommentHistory([
 			'created_at' 	=> date('Y-m-d H:i:s'),
 			'author'		=> $this->getUser()->getUsername(),
 			'comment_type'	=> $form['type'],
 			'comment_text'	=> $form['text'],
-			'order_id'		=> $form['order_id'],
+			'order_id'		=> $order_id,
 			'merchant_id'	=> $form['merchant_id'],
 		]);
 
-		$session->getFlashBag()->add('success', 'Commentaire bien crée');
+		$session->getFlashBag()->add('success', 'Commentaire bien crée pour la commande ' . $order_id);
 		return $this->redirect($request->headers->get('referer'));
 	}
 }

@@ -368,8 +368,6 @@ class RefundController extends Controller
         }
         ksort($order);
 
-        $commentaire_client = $order[-1]['order']['commentaire_client'];
-        $commentaire_commercant = $order[-1]['order']['commentaire_commercant'];
         $total = $order[-1]['merchant']['total'];
         $order_mid = $order[-1]['order']['mid'];
         $input_status = $order[-1]['order']['input'];
@@ -413,9 +411,7 @@ class RefundController extends Controller
                 $mage->updateEntryToOrderField(
                     ['order_id' => $order_mid],
                     ['refund_shipping' => $_POST['form']['refund_shipping'],
-                    'input' => 'done',
-                    'commentaires_client' => $_POST['form']['commentaire_client'],
-                    'commentaires_commercant' => $_POST['form']['commentaire_commercant'], ]
+                    'input' => 'done',]
                 );
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 
@@ -431,8 +427,6 @@ class RefundController extends Controller
             'total' => $total,
             'id' => $id,
             'refund_shipping' => $mage->checkRefundShipping($order_mid),
-            'commentaire_client' => $commentaire_client,
-            'commentaire_commercant' => $commentaire_commercant,
 			'customer_name' => $customer_name,
 			'mistral_hours' => $mage->getMistralDelivery(),
             'order_status'  => $order_status,

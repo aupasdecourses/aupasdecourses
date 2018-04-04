@@ -1,7 +1,7 @@
 {% extends 'ApdcApdcBundle::base.html.twig' %}
 
 {% block body %}
-	
+
 	<div class="container modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -9,6 +9,12 @@
 			</div>
 			<div class="modal-body">
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
+				
+				<p>
+					<h4><b># Commande</b></h4>
+					{{ form_widget(form_comment.order_id, {'attr': {'value': order_id } }) }}
+				</p>
+
 				{{ form_end(form_comment) }}
 			</div>
 		</div>
