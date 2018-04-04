@@ -15,10 +15,10 @@ $orders->getSelect()->joinLeft(['amasty_order_field' => 'amasty_amorderattach_or
         
 $orders->addFieldToFilter(['commentaires_commercant', 'commentaires_client'], [['neq' => ''], ['neq' => '']]);
 
-$res = [];
+$tmp = [];
 // 1 - Create huge array[] containing all comments of the database
 foreach ($orders as $order) {
-    array_push($res, [
+    array_push($tmp, [
         'created_at'                => $order->getCreatedAt(),
         'commentaires_commercant'   => $order->getData('commentaires_commercant'),
         'commentaires_client'       => $order->getData('commentaires_client'),
@@ -26,59 +26,21 @@ foreach ($orders as $order) {
     ]);
 }
 
-// 2 - Fix when comment merchant AND customer for the same order
-foreach ($res as $r) {
-    if (!empty($r['commentaires_commercant']) && (!empty($r['commentaires_client']))) {
-        $tmp[] = [
-            'created_at'    => $r['created_at'],
-            'updated_at'    => '',
-            'author'        => 'Au Pas De Courses',
-            'comment_type'  => 'type_comment_commercant_non_visible',
-            'comment_text'  => $r['commentaires_commercant'],
-            'order_id'      => $r['order_id'],
-            'merchant_id'   => -1,
-        ];
-
-        $res[] = [
-            'created_at'    => $r['created_at'],
-            'updated_at'    => '',
-            'author'        => 'Au Pas De Courses',
-            'comment_type'  => 'type_comment_client_non_visible',
-            'comment_text'  => $r['commentaires_client'],
-            'order_id'      => $r['order_id'],
-            'merchant_id'   => -1,
-        ];
-    }
+$res = [];
+// 2 - Clean up & store in res[]
+foreach ($tmp as $t) {
+    $res[] = [
+        'created_at'    => $t['created_at'],
+        'updated_at'    => '',
+        'author'        => 'Au Pas De Courses',
+        'comment_type'  => 'mixed_non_visible',
+        'comment_text'  => $t['commentaires_commercant'] . " <br/> " . $t['commentaires_client'],
+        'order_id'      => $t['order_id'],
+        'merchant_id'   => -1,
+    ];
 }
 
-foreach ($res as $k => &$v) {
-    if (!empty($v['commentaires_commercant']) && (!empty($v['commentaires_client']))) {
-        unset($res[$k]);
-    }
-}
-
-// 3 - Clean up
-foreach ($res as &$r) {
-    if (count($r) == 4) {
-        $r['updated_at']    = '';
-        $r['author']        = 'Au Pas De Courses';
-        $r['merchant_id']   = -1;
-                
-        if (empty($r['commentaires_client'])) {
-            $r['comment_type'] = 'type_comment_commercant_non_visible';
-            $r['comment_text'] = $r['commentaires_commercant'];
-        }
-                
-        if (empty($r['commentaires_commercant'])) {
-            $r['comment_type'] = 'type_comment_client_non_visible';
-            $r['comment_text'] = $r['commentaires_client'];
-        }
-
-        unset($r['commentaires_commercant'], $r['commentaires_client']);
-    }
-}
-
-// 4 - Fill indi_commenthistory only if empty table. Prevents from spamming mysqlupgrade
+// 3 - Fill indi_commenthistory only if empty table. Prevents from spamming mysqlupgrade
 $model = Mage::getModel('pmainguet_delivery/indi_commenthistory');
 
 if ($model->getCollection()->getSize() === 0) {
@@ -92,6 +54,28 @@ if ($model->getCollection()->getSize() === 0) {
                 'comment_text'  => $r['comment_text'],
                 'order_id'      => $r['order_id'],
                 'merchant_id'   => $r['merchant_id'],
+            ])->save();
+        }
+    } catch (\Exception $e) {
+        echo $e->getMessage();
+    }
+}
+
+// 4 - Also add comment_types
+$type_model = Mage::getModel('pmainguet_delivery/indi_commenttype');
+
+$types = [
+    0 => ['type' => 'merchant_non_visible', 'label' => 'Commentaire commercant interne'],
+    1 => ['type' => 'customer_non_visible', 'label' => 'Commentaire client interne'],
+    2 => ['type' => 'mixed_non_visible',    'label' => 'Commentaire mix interne'],
+];
+
+if ($type_model->getCollection()->getSize() === 0) {
+    try {
+        foreach ($types as $t) {
+            $type_model->setData([
+                'type'      => $t['type'],
+                'label'     => $t['label'],
             ])->save();
         }
     } catch (\Exception $e) {

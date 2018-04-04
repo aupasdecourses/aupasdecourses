@@ -39,7 +39,7 @@
 				{% endif %}
 				<td>{{ comment.created_at|date('d/m/Y H:i') }}</td>
 				<td>{{ comment.author }}</td>
-				<td>{{ comment.comment_text }}</td>
+				<td>{{ comment.comment_text|raw }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
