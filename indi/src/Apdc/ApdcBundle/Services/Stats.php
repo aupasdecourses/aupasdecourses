@@ -728,11 +728,13 @@ class Stats
         return $results;
     }
 
-    public function getCommentsHistory()
+    public function getCommentsHistory($order_id_min = 0, $order_id_max = 9999999999)
     {
         $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory')->getCollection();
         $comments->getSelect()->joinLeft(['commenttype' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_commenttype')], 'commenttype.type = main_table.comment_type', ['comment_label' => 'commenttype.label']);
         $comments->getSelect()->joinLeft(['apdcshop' => \Mage::getSingleton('core/resource')->getTableName('apdc_commercant/shop')], 'apdcshop.id_attribut_commercant = main_table.merchant_id', ['merchant_name' => 'apdcshop.name']);
+
+        $comments->addFieldToFilter('order_id', ['from' => $order_id_min, 'to' => $order_id_max]);
 
         $res = [];
 

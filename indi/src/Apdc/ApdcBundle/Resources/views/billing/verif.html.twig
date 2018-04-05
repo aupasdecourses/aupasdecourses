@@ -2,7 +2,7 @@
 {% use 'ApdcApdcBundle::menu/default.html.twig' %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid">
 	{% if verif %}
 		{% if verif.verif_noentry == 0 %}
 			<span style="float:right;"><a href="{{ path('billingSummary') }}?date_debut={{ date_debut }}">Aller à la liste des commandes du mois</a></span>
@@ -143,6 +143,7 @@
 					      <th>Total Produits</th>
 					      <th>Sum Items</th>
 					      <th>Diff</th>
+					      <th>Commentaire</th>
 					    </tr>
 					</thead>
 					{% for row in details %}
@@ -155,6 +156,16 @@
 						<td>{{row.total_produit}}</td>
 						<td>{{row.sum_items}}</td>
 						<td>{{row.diff}}</td>
+						<td style="border-left: 1px solid black;">
+						{% for c in comments %}
+							{% if row.increment_id == c.order_id %}
+								<li>
+									{{ c.comment_text|raw }}
+									<small>{{ c.author ~ " ( " ~ c.created_at|date('d/m/Y') ~ " ) " }}</small>
+								</li>
+							{% endif %}
+						{% endfor %}
+						</td>
 					</tr>
 					{% endfor %}
 				</table>
