@@ -104,7 +104,7 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
         //$cpt = 0;
         $attributes = $this->getAttributesLabel();
         $neighborhoods = $this->getNeighborhoods();
-        $productData = [];
+        $productsData = [];
         foreach ($products as $prod) {
             $productsData[] = [
                 'entity_id' => $prod->getId(),
