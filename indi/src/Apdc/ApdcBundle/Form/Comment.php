@@ -24,9 +24,10 @@ class Comment extends AbstractType
 		foreach ($stats->getCommentsType() as $t) {
 			$choices[$t['label']] = $t['type'];
 		}
-		$choices = array_merge(['Default' => 'default'], $choices);
+		$choices = array_merge(['Selectionner un type' => ''], $choices);
 
 		$builder->add('type', ChoiceType::class, [
+			'required'	=> true,
 			'label'		=> 'Type de commentaire',
 			'attr'		=> [
 				'class'		=> 'form-control'
@@ -51,8 +52,10 @@ class Comment extends AbstractType
 		}
 		ksort($merchants);
 		$merchants = array_merge(['All' => -1], $merchants);
+		$merchants = array_merge(['Selectionner un commercant' => ''], $merchants);
 		
 		$builder->add('merchant_id', ChoiceType::class, [
+			'required'	=> true,
 			'label'		=> 'Commercant',
 			'attr'		=> [
 				'class'		=> 'form-control'
