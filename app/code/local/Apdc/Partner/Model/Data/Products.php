@@ -72,54 +72,59 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
      */
     protected function getProductsData()
     {
-        $products = Mage::getModel('catalog/product')->getCollection()
-            ->addFieldToFilter('type_id', 'simple')
-            ->addFieldToFilter('status', 1)
-            ->addAttributeToSelect(['name','commercant','short_description','weight','price','produit_biologique','poids_portion', 'unite_prix', 'image']);
-        $commercantAttribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product','commercant');
-
-        $products->getSelect()->join(
-            ['website' => $products->getTable('catalog/product_website')],
-            'website.product_id = e.entity_id',
-            ['website_ids' => 'GROUP_CONCAT(website.website_id)']
-        );
-
-        $products->getSelect()
-            -> join( array('at_commercant' => $commercantAttribute->getBackendTable()),
-                'e.entity_id = at_commercant.entity_id',
-                array())
-                ->where('at_commercant.attribute_id = ?', $commercantAttribute->getId());
-
-        $products->getSelect()->join(
-            ['shop' => $products->getTable('apdc_shop')],
-            'shop.id_attribut_commercant = at_commercant.value',
-            ['shop_postcode' => 'postcode']
-        );
-
-        $products->getSelect()->group('e.entity_id');
-
-
-
-        $products->load();
-        //$cpt = 0;
-        $attributes = $this->getAttributesLabel();
-        $neighborhoods = $this->getNeighborhoods();
         $productsData = [];
-        foreach ($products as $prod) {
-            $productsData[] = [
-                'entity_id' => $prod->getId(),
-                'sku' => $prod->getSku(),
-                'name' => $prod->getName(),
-                'poids_portion' => $prod->getPoidsPortion(),
-                'unite_prix' => $prod->getUnitePrix(),
-                'price' => $prod->getPrice(),
-                'produit_biologique' => $this->getAttributeValue('produit_biologique', $prod->getProduitBiologique()),
-                'commercant' => $this->getAttributeValue('commercant', $prod->getCommercant()),
-                'image' => ($prod->getImage() ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $prod->getImage() : ''),
-                'quartier' => $this->getQuartiers(explode(',', $prod->getWebsiteIds())),
-                'postcodes' => $this->getPostcodes(explode(',', $prod->getWebsiteIds())),
-                'shop_postcode' => $prod->getShopPostcode()
-            ];
+        try {
+            $products = Mage::getModel('catalog/product')->getCollection()
+                ->addFieldToFilter('type_id', 'simple')
+                ->addFieldToFilter('status', 1)
+                ->addAttributeToSelect(['name','commercant','short_description','weight','price','produit_biologique','poids_portion', 'unite_prix', 'image']);
+            $commercantAttribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product','commercant');
+
+            $products->getSelect()->join(
+                ['website' => $products->getTable('catalog/product_website')],
+                'website.product_id = e.entity_id',
+                ['website_ids' => 'GROUP_CONCAT(website.website_id)']
+            );
+
+            $products->getSelect()
+                -> join( array('at_commercant' => $commercantAttribute->getBackendTable()),
+                    'e.entity_id = at_commercant.entity_id',
+                    array())
+                    ->where('at_commercant.attribute_id = ?', $commercantAttribute->getId());
+
+            $products->getSelect()->join(
+                ['shop' => $products->getTable('apdc_shop')],
+                'shop.id_attribut_commercant = at_commercant.value',
+                ['shop_postcode' => 'postcode']
+            );
+
+            $products->getSelect()->group('e.entity_id');
+
+
+
+            $products->load();
+            //$cpt = 0;
+            $attributes = $this->getAttributesLabel();
+            $neighborhoods = $this->getNeighborhoods();
+            foreach ($products as $prod) {
+                $productsData[] = [
+                    'entity_id' => $prod->getId(),
+                    'sku' => $prod->getSku(),
+                    'name' => $prod->getName(),
+                    'poids_portion' => $prod->getPoidsPortion(),
+                    'unite_prix' => $prod->getUnitePrix(),
+                    'price' => $prod->getPrice(),
+                    'produit_biologique' => $this->getAttributeValue('produit_biologique', $prod->getProduitBiologique()),
+                    'commercant' => $this->getAttributeValue('commercant', $prod->getCommercant()),
+                    'image' => ($prod->getImage() ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $prod->getImage() : ''),
+                    'quartier' => $this->getQuartiers(explode(',', $prod->getWebsiteIds())),
+                    'postcodes' => $this->getPostcodes(explode(',', $prod->getWebsiteIds())),
+                    'shop_postcode' => $prod->getShopPostcode()
+                ];
+            }
+        } catch (Exception $e) {
+            Mage::logException($e);
+            Mage::throwException($e);
         }
         return $productsData;
     }
