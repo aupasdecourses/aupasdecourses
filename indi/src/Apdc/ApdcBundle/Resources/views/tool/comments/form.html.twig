@@ -10,10 +10,12 @@
 			<div class="modal-body">
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
 				
+				{% if order_id is not null %}
 				<p>
 					<h4><b># Commande</b></h4>
 					{{ form_widget(form_comment.order_id, {'attr': {'value': order_id } }) }}
 				</p>
+				{% endif %}
 
 				{{ form_end(form_comment) }}
 			</div>

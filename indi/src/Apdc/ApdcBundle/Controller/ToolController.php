@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ToolController extends Controller
 {
@@ -64,7 +65,7 @@ class ToolController extends Controller
 		]);	
 	}
 
-	public function commentsFormAction(Request $request, $order_id = null)
+	public function commentsFormAction(Request $request, $order_id = null, $merchants_comment_choice = null)
 	{
 		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
@@ -72,11 +73,23 @@ class ToolController extends Controller
 
 		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
 		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
+		
+		// Override merchant_id choicetype
+		if (!is_null($merchants_comment_choice)) {
+			$form_comment->add('merchant_id', ChoiceType::class, [
+				'label' => 'Commercant',
+				'attr'	=> [
+					'class'	=> 'form-control'
+				],
+				'choices' => $merchants_comment_choice,
+			]);
+		}
+
 		$form_comment->handleRequest($request);
 
 		return $this->render('ApdcApdcBundle::tool/comments/form.html.twig', [
-			'form_comment'	=> $form_comment->createView(),
-			'order_id'		=> $order_id,
+			'form_comment'				=> $form_comment->createView(),
+			'order_id'					=> $order_id,
 		]);		
 	}
 

@@ -421,6 +421,12 @@ class RefundController extends Controller
             }
         }
 
+        $merchants_comment_choice = [];
+        foreach ($order as $id_attribut_com => $o) {
+            $merchants_comment_choice[$o['merchant']['name']] = $id_attribut_com;
+        }
+        $merchants_comment_choice = array_merge(['All' => -1], $merchants_comment_choice);
+
         return $this->render('ApdcApdcBundle::refund/input.html.twig', [
             'form' => $form_input->createView(),
             'order' => $order,
@@ -430,6 +436,7 @@ class RefundController extends Controller
 			'customer_name' => $customer_name,
 			'mistral_hours' => $mage->getMistralDelivery(),
             'order_status'  => $order_status,
+            'merchants_comment_choice' => $merchants_comment_choice,
         ]);
     }
 
