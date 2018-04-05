@@ -376,10 +376,15 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             $this->shops = [];
             $collection = $this->getProductCollection();
             $collection->getSelect()->reset(Zend_Db_Select::COLUMNS);
+
+            if (Mage::app()->getStore()->getId() == $collection->getDefaultStoreId()) {
+                $on = 'shop.id_attribut_commercant = at_commercant_id.value';
+            } else {
+                $on = 'shop.id_attribut_commercant = (IF(at_commercant_id.value IS NOT NULL, at_commercant_id.value, at_commercant_id_default.value))';
+            }
             $collection->getSelect()->join(
                 ['shop' => $this->getResource()->getTableName('apdc_commercant/shop')],
-                'shop.id_attribut_commercant = at_commercant_id.value',
-                // 'shop.id_attribut_commercant = (IF(at_commercant_id.value IS NOT NULL, at_commercant_id.value, at_commercant_id_default.value))',
+                $on,
                 [
                     'shop.id_shop',
                     'shop.id_attribut_commercant',

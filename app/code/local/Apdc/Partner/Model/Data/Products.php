@@ -59,6 +59,9 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
     protected function getProductsFile()
     {
         $fileName = Mage::getBaseDir() . DS . 'media' . DS . 'products.json';
+        if (!file_exists($fileName)) {
+            throw new Exception('Products file is not generated');
+        }
         return file_get_contents($fileName);
     }
 
