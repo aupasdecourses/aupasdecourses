@@ -23,3 +23,22 @@
 	</div>
 
 {% endblock %}
+{% block javascript_comments_form %}
+	<script type="text/javascript">
+
+		var comment_type = document.getElementById("comment_type");
+		var comment_merchant_id = document.getElementById("comment_merchant_id");
+
+		comment_type.addEventListener('click', function (e) {
+			if (comment_type.value == "customer_non_visible") {
+				comment_merchant_id.value = "-1";
+				comment_merchant_id.style.display = "none";
+				comment_merchant_id.previousSibling.style.display = "none";
+			} else {
+				comment_merchant_id.style.display = "block";
+				comment_merchant_id.previousSibling.style.display = "block";
+			}
+		});
+
+	</script>
+{% endblock %}
