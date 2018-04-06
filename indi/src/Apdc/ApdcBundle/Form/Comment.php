@@ -33,6 +33,15 @@ class Comment extends AbstractType
 				'class'		=> 'form-control'
 			],
 			'choices'	=> $choices,
+			'group_by'	=> function($key, $value, $index) {
+				if (strpos($key, "not_visible") !== false) {
+					return 'Commentaires internes';
+				}
+				// TODO
+				// if (strpos($key, "is_visible") !== false) {
+				// 	return 'Commentaires visibles';
+				// }
+			},
 		]);
 
 		$builder->add('order_id', TextType::class, [
@@ -52,7 +61,7 @@ class Comment extends AbstractType
 		}
 		ksort($merchants);
 		$merchants = array_merge(['Aucun commercant' => 0], $merchants);
-		$merchants = array_merge(['All' => -1], $merchants);
+		$merchants = array_merge(['Tous les commercants' => -1], $merchants);
 		$merchants = array_merge(['Selectionner un commercant' => ''], $merchants);
 		
 		$builder->add('merchant_id', ChoiceType::class, [

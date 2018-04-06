@@ -33,7 +33,7 @@ foreach ($tmp as $t) {
         'created_at'    => $t['created_at'],
         'updated_at'    => '',
         'author'        => 'Au Pas De Courses',
-        'comment_type'  => 'mixed_non_visible',
+        'comment_type'  => 'mixed_not_visible',
         'comment_text'  => $t['commentaires_commercant'] . " <br/> " . $t['commentaires_client'],
         'order_id'      => $t['order_id'],
         'merchant_id'   => -1,
@@ -65,9 +65,9 @@ if ($model->getCollection()->getSize() === 0) {
 $type_model = Mage::getModel('pmainguet_delivery/indi_commenttype');
 
 $types = [
-    0 => ['type' => 'merchant_non_visible', 'label' => 'Commentaire commercant interne'],
-    1 => ['type' => 'customer_non_visible', 'label' => 'Commentaire client interne'],
-    2 => ['type' => 'mixed_non_visible',    'label' => 'Commentaire mixte interne'],
+    0 => ['type' => 'merchant_not_visible', 'label' => 'Commentaire commercant interne'],
+    1 => ['type' => 'customer_not_visible', 'label' => 'Commentaire client interne'],
+    2 => ['type' => 'mixed_not_visible',    'label' => 'Commentaire mixte interne'],
 ];
 
 if ($type_model->getCollection()->getSize() === 0) {
