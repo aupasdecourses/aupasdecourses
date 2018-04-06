@@ -5,8 +5,8 @@
 
 <div class="container-fluid">
 
-	<div class="space-between">
-		<h1>Tableau historique commentaires</h1>
+	<div class="space-between page-header">
+		<h2>Liste des commentaires internes du <input type="text" class="form-control" id="datepickerCommentsHistory" placeholder="Cliquez pour selectionner la date" value="{{ date_debut }}"> au <input type="text" class="form-control" id="datepickerEndCommentsHistory" placeholder="Cliquez pour selectionner la date" value="{{ date_fin }}"></h2>
 		<div><button type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
 	</div>
 
@@ -31,7 +31,7 @@
 			{% for comment in comments %}
 			<tr>
 				<td>{{ comment.comment_label }}</td>
-				<td>{{ comment.order_id }}</td>
+				<td><a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a></td>
 				{% if comment.merchant_id == -1 %}
 					<td>All</td>
 				{% elseif comment.merchant_id == 0 %}
@@ -59,6 +59,44 @@
 
 	<script type="text/javascript">
 
+$(function() {
+	$( "#datepickerCommentsHistory" ).datepicker({
+		altField: "#datepickerCommentsHistory",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+	$( "#datepickerEndCommentsHistory" ).datepicker({
+		altField: "#datepickerEndCommentsHistory",
+		closeText: 'Fermer',
+		prevText: 'Précédent',
+		nextText: 'Suivant',
+		currentText: 'Aujourd\'hui',
+		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		weekHeader: 'Sem.',
+		dateFormat: 'dd/mm/yy',
+	});
+});
+
+$(function(){
+	$("#datepickerEndCommentsHistory").change(function(){
+		window.location='{{ path('toolCommentsHistory') }}?date_debut='+$("#datepickerCommentsHistory").val()+'&date_fin='+this.value;
+	});
+});
+
+
 $(document).ready(function() {
 	var table=$('#commentsHistoryTable').DataTable({
 		"lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ],
@@ -82,6 +120,12 @@ $(document).ready(function() {
 				column.data().unique().sort().each( function ( d, j ) {
 					select.append( '<option value="'+d+'">'+d+'</option>' )
 				} );
+
+				// Array.prototype.forEach.call(select[0], function(e) {
+				// 	if (e.value == "Aucun commercant") {
+				// 		e.remove();
+				// 	}
+				// });
 			});
 		},
 		"footerCallback": function ( row, data, start, end, display ) {

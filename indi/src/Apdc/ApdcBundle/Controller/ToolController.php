@@ -58,10 +58,17 @@ class ToolController extends Controller
 		}
 
 		$stats = $this->container->get('apdc_apdc.stats');
-		$comments = $stats->getCommentsHistory();
-		
+
+		if (isset($_GET['date_debut'])) {
+			$date_debut = $_GET['date_debut'];
+			$date_fin	= $_GET['date_fin'];	
+			$comments = $stats->getCommentsHistory(0, 9999999999, $date_debut, $date_fin);
+		}
+
 		return $this->render('ApdcApdcBundle::tool/comments/history.html.twig', [
-			'comments'	=> $comments,
+			'comments'		=> $comments,
+			'date_debut'	=> $date_debut,
+			'date_fin'		=> $date_fin,
 		]);	
 	}
 
