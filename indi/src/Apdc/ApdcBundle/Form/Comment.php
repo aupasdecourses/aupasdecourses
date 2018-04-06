@@ -51,6 +51,7 @@ class Comment extends AbstractType
 			}
 		}
 		ksort($merchants);
+		$merchants = array_merge(['Aucun commercant' => 0], $merchants);
 		$merchants = array_merge(['All' => -1], $merchants);
 		$merchants = array_merge(['Selectionner un commercant' => ''], $merchants);
 		

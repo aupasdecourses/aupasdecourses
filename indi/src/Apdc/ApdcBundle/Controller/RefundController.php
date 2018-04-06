@@ -425,6 +425,7 @@ class RefundController extends Controller
         foreach ($order as $id_attribut_com => $o) {
             $merchants_comment_choice[$o['merchant']['name']] = $id_attribut_com;
         }
+        $merchants_comment_choice = array_merge(['Aucun commercant' => 0], $merchants_comment_choice);
         $merchants_comment_choice = array_merge(['All' => -1], $merchants_comment_choice);
         $merchants_comment_choice = array_merge(['Selectionner un commercant' => ''], $merchants_comment_choice);
 

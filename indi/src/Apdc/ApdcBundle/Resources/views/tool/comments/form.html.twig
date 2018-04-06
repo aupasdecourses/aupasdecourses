@@ -29,9 +29,13 @@
 		var comment_type = document.getElementById("comment_type");
 		var comment_merchant_id = document.getElementById("comment_merchant_id");
 
+		// Hide "Aucun commercant" choice
+		comment_merchant_id[2].style.display = "none";
+
+		// Hide merchant choice type if customer comment type
 		comment_type.addEventListener('click', function (e) {
 			if (comment_type.value == "customer_non_visible") {
-				comment_merchant_id.value = "-1";
+				comment_merchant_id.value = "0";
 				comment_merchant_id.style.display = "none";
 				comment_merchant_id.previousSibling.style.display = "none";
 			} else {

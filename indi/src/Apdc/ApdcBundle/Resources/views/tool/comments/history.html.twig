@@ -34,6 +34,8 @@
 				<td>{{ comment.order_id }}</td>
 				{% if comment.merchant_id == -1 %}
 					<td>All</td>
+				{% elseif comment.merchant_id == 0 %}
+					<td>Aucun commercant</td>
 				{% else %}
 					<td>{{ comment.merchant_name }}</td>
 				{% endif %}

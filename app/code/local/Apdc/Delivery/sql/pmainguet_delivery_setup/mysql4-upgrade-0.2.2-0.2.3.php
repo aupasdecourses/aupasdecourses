@@ -67,7 +67,7 @@ $type_model = Mage::getModel('pmainguet_delivery/indi_commenttype');
 $types = [
     0 => ['type' => 'merchant_non_visible', 'label' => 'Commentaire commercant interne'],
     1 => ['type' => 'customer_non_visible', 'label' => 'Commentaire client interne'],
-    2 => ['type' => 'mixed_non_visible',    'label' => 'Commentaire mix interne'],
+    2 => ['type' => 'mixed_non_visible',    'label' => 'Commentaire mixte interne'],
 ];
 
 if ($type_model->getCollection()->getSize() === 0) {
