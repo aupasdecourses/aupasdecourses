@@ -7,6 +7,9 @@
 			<div class="modal-header">
 				<h1 class="modal-title">Creer un commentaire</h1>
 			</div>
+
+			<div id="warningVisibleComment" class="modal-body"></div>
+
 			<div class="modal-body">
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
 				
@@ -28,19 +31,31 @@
 
 		var comment_type = document.getElementById("comment_type");
 		var comment_merchant_id = document.getElementById("comment_merchant_id");
+		var warning_visible_comment = document.getElementById('warningVisibleComment');
 
 		// Hide "Aucun commercant" choice
 		comment_merchant_id[2].style.display = "none";
 
 		// Hide merchant choice type if customer comment type
 		comment_type.addEventListener('click', function (e) {
-			if (comment_type.value == "customer_not_visible") {
+			if (comment_type.value == "customer_not_visible" || comment_type.value == "customer_is_visible") {
 				comment_merchant_id.value = "0";
 				comment_merchant_id.style.display = "none";
 				comment_merchant_id.previousSibling.style.display = "none";
 			} else {
 				comment_merchant_id.style.display = "block";
 				comment_merchant_id.previousSibling.style.display = "block";
+			}
+		});
+
+		// Display warning if choosing comment type visible by customer in his email
+		comment_type.addEventListener('click', function (e) {
+			if (comment_type.value == "customer_is_visible") {
+				warning_visible_comment.classList.add("alert", "alert-danger");
+				warning_visible_comment.innerHTML = 'Attention ! Ce commentaire sera visible par le client dans l\'email du traitement de commande';
+			} else {
+				warning_visible_comment.classList.remove("alert", "alert-danger");
+				warning_visible_comment.innerHTML = '';
 			}
 		});
 
