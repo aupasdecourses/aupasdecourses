@@ -62,6 +62,14 @@
 					</td>
 				</tr>
 			</table>
+			{% if refund_visible_comment is not empty %}
+			<table class="table">
+				<tr>
+					<th>Commentaire visible par le client</th>
+					<td>{{ refund_visible_comment }}</td>
+				</tr>
+			</table>
+			{% endif %}
 		</div>
 	</div>
 	{% for form in forms %}
@@ -76,6 +84,9 @@
 			</div>
 		{{ form_end(form) }}
 	{% endfor %}
+
+	<hr/>
+
 	{% for merchant_id, merchant_part in order %}
 		<h2>{{merchant_part.merchant.name}}</h2>
 		<div class="row flex-input">

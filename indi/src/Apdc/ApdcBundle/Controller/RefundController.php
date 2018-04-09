@@ -450,6 +450,8 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+        $stats = $this->container->get('apdc_apdc.stats');
+        $commentsHistory = $stats->getCommentsHistory($id, $id);
         $session = $request->getSession();
 		$order = $mage->getRefunds($id);
 
@@ -474,6 +476,13 @@ class RefundController extends Controller
             }
         }
         ksort($order);
+
+        $refund_visible_comment = '';
+        foreach ($commentsHistory as $history) {
+            if ($history['comment_type'] == 'customer_is_visible') {
+                $refund_visible_comment = $history['comment_text'];
+            }
+        }
 
         $entity_submit = new \Apdc\ApdcBundle\Entity\Model();
         $form_submit = $this->createFormBuilder($entity_submit);
@@ -556,6 +565,7 @@ class RefundController extends Controller
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
 			'forms' => [$form_submit->createView()],
 			'mistral_hours' => $mage->getMistralDelivery(),
+            'refund_visible_comment' => $refund_visible_comment,
         ]);
     }
 
