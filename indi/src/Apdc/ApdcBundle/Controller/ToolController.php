@@ -78,17 +78,48 @@ class ToolController extends Controller
 			return $this->redirectToRoute('root');
 		}
 
+		$stats = $this->container->get('apdc_apdc.stats');
+
 		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
 		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
-		
-		// Override merchant_id choicetype
+
+		// Override default merchant_id choicetype
 		if (!is_null($merchants_comment_choice)) {
 			$form_comment->add('merchant_id', ChoiceType::class, [
-				'label' => 'Commercant',
-				'attr'	=> [
-					'class'	=> 'form-control'
+				'required'	=> true,
+				'label' 	=> 'Commercant',
+				'attr'		=> [
+					'class'		=> 'form-control'
 				],
-				'choices' => $merchants_comment_choice,
+				'choices' 	=> $merchants_comment_choice,
+			]);
+		}
+
+		// Override default type choicetype
+		if (is_null($order_id)) {
+			$types_comment_choice = [];
+			foreach ($stats->getCommentsType() as $t) {
+				$types_comment_choice[$t['label']] = $t['type'];
+			}
+			unset($types_comment_choice['Commentaire visible par le client']);
+
+			$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
+
+			$form_comment->add('type', ChoiceType::class, [
+				'required'	=> true,
+				'label'		=> 'Type de commentaire',
+				'attr'		=> [
+					'class'		=> 'form-control'
+				],
+				'choices'	=> $types_comment_choice,
+				'group_by'	=> function($key, $value, $index) {
+					if (strpos($key, "not_visible") !== false) {
+						return 'Commentaires internes';
+					}
+					if (strpos($key, "is_visible") !== false) {
+						return 'Commentaires visibles';
+					}
+				},
 			]);
 		}
 

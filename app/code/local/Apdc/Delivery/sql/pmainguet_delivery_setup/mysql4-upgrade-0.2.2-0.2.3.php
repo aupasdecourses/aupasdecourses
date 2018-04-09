@@ -68,6 +68,7 @@ $types = [
     0 => ['type' => 'merchant_not_visible', 'label' => 'Commentaire commercant interne'],
     1 => ['type' => 'customer_not_visible', 'label' => 'Commentaire client interne'],
     2 => ['type' => 'mixed_not_visible',    'label' => 'Commentaire mixte interne'],
+    3 => ['type' => 'customer_is_visible',  'label' => 'Commentaire visible par le client'],
 ];
 
 if ($type_model->getCollection()->getSize() === 0) {

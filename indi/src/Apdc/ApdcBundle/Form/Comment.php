@@ -37,10 +37,9 @@ class Comment extends AbstractType
 				if (strpos($key, "not_visible") !== false) {
 					return 'Commentaires internes';
 				}
-				// TODO
-				// if (strpos($key, "is_visible") !== false) {
-				// 	return 'Commentaires visibles';
-				// }
+				if (strpos($key, "is_visible") !== false) {
+					return 'Commentaires visibles';
+				}
 			},
 		]);
 

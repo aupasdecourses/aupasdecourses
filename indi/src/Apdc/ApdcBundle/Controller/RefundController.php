@@ -421,6 +421,7 @@ class RefundController extends Controller
             }
         }
 
+        // Override default Comment form
         $merchants_comment_choice = [];
         foreach ($order as $id_attribut_com => $o) {
             $merchants_comment_choice[$o['merchant']['name']] = $id_attribut_com;
