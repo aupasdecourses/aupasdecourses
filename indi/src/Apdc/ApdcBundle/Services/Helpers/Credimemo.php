@@ -336,7 +336,7 @@ trait Credimemo
      *
      * @return bool
      **/
-    public function sendCreditMemoMail($orderId, $comment, $refund_diff, $refund_shipping_amount)
+    public function sendCreditMemoMail($orderId, $comment, $refund_diff, $refund_shipping_amount, $refund_customer_visible_comment)
     {
         $templateplus = 'delivery_emailcreditplus_template';
         $templatemoins = 'delivery_emailcreditmoins_template';
@@ -373,6 +373,7 @@ trait Credimemo
             'refund_diff' => $refund_diff,
             'refund_shipping' => $refund_shipping_amount,
             'refund_full' => $refund_full,
+            'refund_customer_visible_comment' => $refund_customer_visible_comment,
         );
 
         $emailTemplate = \Mage::getSingleton('core/email_template');

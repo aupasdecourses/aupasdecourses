@@ -477,10 +477,10 @@ class RefundController extends Controller
         }
         ksort($order);
 
-        $refund_visible_comment = '';
+        $refund_customer_visible_comment = '';
         foreach ($commentsHistory as $history) {
             if ($history['comment_type'] == 'customer_is_visible') {
-                $refund_visible_comment = $history['comment_text'];
+                $refund_customer_visible_comment = $history['comment_text'];
             }
         }
 
@@ -506,7 +506,7 @@ class RefundController extends Controller
                     if ($refund_shipping_amount != 0) {
                         $mage->processcreditshipping($id, $refund_shipping_amount);
                     }
-                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment, $refund_diff, $refund_shipping_amount);
+                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment, $refund_diff, $refund_shipping_amount, $refund_customer_visible_comment);
 
                     if ($mail_creditmemo) {
                         $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
@@ -565,7 +565,7 @@ class RefundController extends Controller
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
 			'forms' => [$form_submit->createView()],
 			'mistral_hours' => $mage->getMistralDelivery(),
-            'refund_visible_comment' => $refund_visible_comment,
+            'refund_customer_visible_comment' => $refund_customer_visible_comment,
         ]);
     }
 
