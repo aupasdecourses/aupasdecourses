@@ -484,6 +484,27 @@ class RefundController extends Controller
             }
         }
 
+        $editRefundCommentForm = $this->createFormBuilder(['message' => 'Modifier commentaire client visible'])
+            ->add('Edit Customer Refund Comment', SubmitType::class, array(
+                'label' => 'Modifier',
+                'attr' => array(
+                    'class' => 'btn btn-info',
+                    'style' => 'margin-top: -130px'
+                    ),
+            ))
+            ->getForm();
+        $editRefundCommentForm->handleRequest($request);
+        if ($editRefundCommentForm->isSubmitted() && $editRefundCommentForm->isValid()) {
+            $mage->updateEntryToCommentHistory(
+                ['order_id' => $id, 'comment_type' => 'customer_is_visible'],
+                ['comment_text' => $_POST['refund_customer_visible_comment']]
+            );
+
+            $session->getFlashBag()->add('success', 'Commentaire visible par le client bien mis à jour');
+            return $this->redirectToRoute('refundDigest', ['id' => $id]);
+        }
+
+
         $entity_submit = new \Apdc\ApdcBundle\Entity\Model();
         $form_submit = $this->createFormBuilder($entity_submit);
         $form_submit->setAction($this->generateUrl('refundDigest', array('id' => $id)));
@@ -566,6 +587,7 @@ class RefundController extends Controller
 			'forms' => [$form_submit->createView()],
 			'mistral_hours' => $mage->getMistralDelivery(),
             'refund_customer_visible_comment' => $refund_customer_visible_comment,
+            'editRefundCommentForm' => $editRefundCommentForm->createView(),
         ]);
     }
 
