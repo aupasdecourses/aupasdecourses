@@ -485,7 +485,7 @@ class RefundController extends Controller
         }
 
         $editRefundCommentForm = $this->createFormBuilder(['message' => 'Modifier commentaire client visible'])
-            ->add('Edit Customer Refund Comment', SubmitType::class, array(
+            ->add('edit_customer_refund_comment', SubmitType::class, array(
                 'label' => 'Modifier',
                 'attr' => array(
                     'class' => 'btn btn-info',

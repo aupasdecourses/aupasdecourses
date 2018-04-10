@@ -25,7 +25,7 @@
 		<div class="row">
 			<hr>
 			
-			<div style="float:right;"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
+			<div style="float:right;"><button id="createCommentButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
 			<div id="createCommentModal" class="modal fade">
 				{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request, 'order_id': id, 'merchants_comment_choice': merchants_comment_choice} )) }}
 			</div>
@@ -169,7 +169,9 @@
 		var order_status = '{{ order_status }}';
 		if (order_status == 'Complete') {
 			document.getElementById('save_input_data').disabled = true;
-			document.getElementById('save_input_data').title = "La commande a le status 'Complete' "; 
+			document.getElementById('save_input_data').title = "La commande a le status 'Complete' ";
+			document.getElementById('createCommentButton').disabled = true;
+			document.getElementById('createCommentButton').title = "La commande a le status 'Complete' "; 
 		}
 
 	</script>

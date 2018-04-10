@@ -203,4 +203,15 @@
 
 	</script>
 
+	<script type="text/javascript">
+
+		var show_creditmemo = {{ show_creditmemo ? 'true' : 'false '}};
+		if (show_creditmemo == false) {
+			document.getElementById('form_edit_customer_refund_comment').disabled = true;
+			document.getElementById('form_edit_customer_refund_comment').title = "L'email client a déjà été envoyé ";
+		}
+
+
+	</script>
+
 {% endblock %}
