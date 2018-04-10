@@ -495,10 +495,17 @@ class RefundController extends Controller
             ->getForm();
         $editRefundCommentForm->handleRequest($request);
         if ($editRefundCommentForm->isSubmitted() && $editRefundCommentForm->isValid()) {
-            $mage->updateEntryToCommentHistory(
-                ['order_id' => $id, 'comment_type' => 'customer_is_visible'],
-                ['comment_text' => $_POST['refund_customer_visible_comment']]
-            );
+
+            if (strlen($_POST['refund_customer_visible_comment']) == 0) {
+                $mage->removeEntryFromCommentHistory(
+                    ['order_id' => $id, 'comment_type' => 'customer_is_visible']
+                );
+            } else {
+                $mage->updateEntryToCommentHistory(
+                    ['order_id' => $id, 'comment_type' => 'customer_is_visible'],
+                    ['comment_text' => $_POST['refund_customer_visible_comment']]
+                );
+            }
 
             $session->getFlashBag()->add('success', 'Commentaire visible par le client bien mis à jour');
             return $this->redirectToRoute('refundDigest', ['id' => $id]);
