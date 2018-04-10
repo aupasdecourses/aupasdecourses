@@ -123,11 +123,22 @@ class ToolController extends Controller
 			]);
 		}
 
+		$already_visible_customer_comment = 0;
+		if (!is_null($order_id)) {
+			$commentsHistory = $stats->getCommentsHistory($order_id, $order_id);
+        	foreach ($commentsHistory as $history) {
+            	if (strpos($history['comment_type'], "customer_is_visible") !== false) {
+                	$already_visible_customer_comment = 1;
+            	}
+        	}
+		}
+
 		$form_comment->handleRequest($request);
 
 		return $this->render('ApdcApdcBundle::tool/comments/form.html.twig', [
-			'form_comment'				=> $form_comment->createView(),
-			'order_id'					=> $order_id,
+			'form_comment'						=> $form_comment->createView(),
+			'order_id'							=> $order_id,
+			'already_visible_customer_comment'	=> $already_visible_customer_comment,
 		]);		
 	}
 

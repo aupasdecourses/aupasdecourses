@@ -59,5 +59,15 @@
 			}
 		});
 
+		// Hide visible customer comment if already visible customer comment
+		var already_visible_customer_comment = '{{ already_visible_customer_comment }}';
+		if (already_visible_customer_comment == 1) {
+			for (var i = 0; i < comment_type.children.length; i++) {
+				if (comment_type.children[i].label == "Commentaires visibles") {
+					comment_type.children[i].style.display = "none";
+				}
+			}
+		}
+
 	</script>
 {% endblock %}
