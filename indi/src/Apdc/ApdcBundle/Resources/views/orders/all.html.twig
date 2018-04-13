@@ -12,163 +12,108 @@
 		</div>	
 	</div>
 	<div class="row">
-		<table style="width:100%;margin-bottom:0px;" class="table">
-			<tr>
-				<td style="width:10%">
-					<label># Commande</label>
-				</td>
-				<td style="width:15%">
-					<label>Nom client</label>
-				</td>
-				<td style="width:17%">
-					<label>Prise de commande</label>
-				</td>
-				<td style="width:14%">
-					<label>Date de livraison</label>
-				</td>
-				<td style="width:10%">
-					<label>Créneau</label>
-				</td>
-				<td style="width:9%">
-					<label>Nombre d'articles</label>
-				</td>
-				<td style="width:10%">
-					<label>Total</label>
-				</td>
-				<td style="width:15%">
-					<label>Quartier</label>
-				</td>
-			</tr>
+		<table class="table" data-pagination="true" data-toggle="table">
+			<thead>
+				<tr>
+					<th># Commande</th>
+					<th>Nom client</th>
+					<th>Prise de commande</th>
+					<th>Date de livraison</th>
+					<th>Créneau</th>
+					<th>Nombre d'articles</th>
+					<th>Total</th>
+					<th>Quartier</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for order_id, order in orders %}
+				<tr>
+					<td><a href="#{{ order_id }}" data-toggle="collapse">{{ order_id }}</a></td>
+					<td><a href="#{{ order_id }}" data-toggle="collapse">{{ order.first_name ~" "~ order.last_name }}</a></td>
+					<td>{{ order.order_date }}</td>
+					<td>{{ order.delivery_date }}</td>
+					<td>{{ order.delivery_time }}</td>
+					<td>{{ order.total_quantite }}</td>
+					<td>{{ order.total_prix ~ "€" }}</td>
+					<td>{{ order.store }}</td>
+				</tr>
+				<tr>
+					<td colspan="8" style="padding:0px;">
+						<div id="{{ order_id }}" class="order collapse">
+							<table class="table">
+								<tr>
+									<td style="width: 50%">
+										<table class="table">
+											<tr><td><b>Commande N°</b></td><td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td></tr>
+											<tr><td><b>Statut</b></td><td>{{ order.status }}</td></tr>
+											<tr><td><b>Client</b></td><td>{{ order.first_name ~" "~ order.last_name }}</td></tr>
+											<tr><td><b>Prise de Commande</b></td><td>{{ order.order_date }}</td></tr>
+											<tr><td><b>Date de Livraison</b></td><td>{{ order.delivery_date }}</td></tr>
+											<tr><td><b>Creneau de Livraison</b></td><td>{{ order.delivery_time }}</td></tr>
+											<tr><td><b>Remplacement équivalent</b></td><td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td></tr>
+										</table>
+									</td>
+									<td>
+										<table class="table">
+											<tr><td><b>Adresse de Livraison</b></td><td><a href="https://www.google.com/maps?q={{order.address}}" target="_blanc">{{ order.address }}</a></td></tr>
+											<tr><td><b>Telephone</b></td><td>{{ order.phone }}</td></tr>
+											<tr><td><b>Batiment & Etage</b></td><td>Bat: {{ order.batiment }}, Etage: {{ order.etage }}</td></tr>
+											<tr><td><b>Codes porte</b></td><td>Code Porte 1: {{ order.codeporte1 }}, Code Porte 2: Code Porte 1: {{ order.codeporte2 }}</td></tr>
+											<tr><td><b>Infos Complémentaires</b></td><td>{{ order.info }}</td></tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table class="table table-striped">
+								<tr>
+									<th>Commercant</th>
+									<th>Produit</th>
+									<th>Quantite</th>
+									<th>Description</th>
+									<th>Prix</th>
+									<th>Total</th>
+									<th>Commentaire</th>
+								</tr>
+								{% for product in order.products | sortbyfield('nom_commercant') %}
+								{% if product.produit_fragile == 1 %}<tr style="background-color:rgba(255, 165, 0, 0.7)">{% else %}<tr>{% endif %}
+									<td>{{ product.nom_commercant }}</td>
+									<td>{{ product.nom }}</td>
+									<td>{{ product.quantite }}</td>
+									<td>{{ product.description }}</td>
+									<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
+									<td>{{ product.prix_total }}</td>
+									<td>{{ product.comment }}</td>
+								</tr>
+								{% endfor %}
+								<tr>
+									<td><b>TOTAL</b></td>
+									<td></td>
+									<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+									<td colspan="2"><b>{{ order.total_prix }}</b></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>			
+			{% endfor %}
+			</tbody>
 		</table>
-		{% for order_id, order in orders %}
-		<table style="width:100%;margin-bottom:0px;" class="table">
-			<tr>
-				<td style="width:10%">
-					<a href="#{{ order_id }}" data-toggle="collapse">{{ order_id }}</a>
-				</td>
-				<td style="width:15%">
-					<a href="#{{ order_id }}" data-toggle="collapse">{{ order.first_name ~" "~ order.last_name }}</a>
-				</td>
-				<td style="width:17%">
-					{{ order.order_date }}
-				</td>
-				<td style="width:14%">
-					{{ order.delivery_date }}
-				</td>
-				<td style="width:10%">
-					{{ order.delivery_time }}
-				</td>
-				<td style="width:9%">
-					{{ order.total_quantite }}
-				</td>
-				<td style="width:10%">
-					{{ order.total_prix ~ "€" }}
-				</td>
-				<td style="width:15%">
-					{{ order.store }}
-				</td>
-			</tr>
-			<tr >
-				<td colspan="8" style="padding:0px;">
-					<div id="{{ order_id }}" class="order collapse">
-						<table class="table">
-							<tr>
-								<td style="width: 50%">
-									<table class="table">
-										<tr>
-											<td><b>Commande N°</b></td>
-											<td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td>
-										</tr>
-										<tr>
-											<td><b>Statut</b></td>
-											<td>{{ order.status }}</td>
-										</tr>
-										<tr>
-											<td><b>Client</b></td>
-											<td>{{ order.first_name ~" "~ order.last_name }}</td>
-										</tr>
-										<tr>
-											<td><b>Prise de Commande</b></td>
-											<td>{{ order.order_date }}</td>
-										</tr>
-										<tr>
-											<td><b>Date de Livraison</b></td>
-											<td>{{ order.delivery_date }}</td>
-										</tr>
-										<tr>
-											<td><b>Creneau de Livraison</b></td>
-											<td>{{ order.delivery_time }}</td>
-										</tr>
-										<tr>
-											<td><b>Remplacement équivalent</b></td>
-											<td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td>
-										</tr>
-									</table>
-								</td>
-								<td>
-									<table class="table">
-										<tr>
-											<td><b>Adresse de Livraison</b></td>
-											<td><a href="https://www.google.com/maps?q={{order.address}}" target="_blanc">{{ order.address }}</a></td>
-										</tr>
-										<tr>
-											<td><b>Telephone</b></td>
-											<td>{{ order.phone }}</td>
-										</tr>
-										<tr>
-											<td><b>Batiment & Etage</b></td>
-											<td>Bat: {{ order.batiment }}, Etage: {{ order.etage }}</td>
-										</tr>
-										<tr>
-											<td><b>Codes porte</b></td>
-											<td>Code Porte 1: {{ order.codeporte1 }}, Code Porte 2: Code Porte 1: {{ order.codeporte2 }}</td>
-										</tr>
-										<tr>
-											<td><b>Infos Complémentaires</b></td>
-											<td>{{ order.info }}</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-						<table class="table table-striped">
-							<tr>
-								<th>Commercant</th>
-								<th>Produit</th>
-								<th>Quantite</th>
-								<th>Description</th>
-								<th>Prix</th>
-								<th>Total</th>
-								<th>Commentaire</th>
-							</tr>
-							{% for product in order.products | sortbyfield('nom_commercant') %}
-						{% if product.produit_fragile == 1 %}
-							<tr style="background-color:rgba(255, 165, 0, 0.7)">
-						{% else %}
-							<tr>
-						{% endif %}
-								<td>{{ product.nom_commercant }}</td>
-								<td>{{ product.nom }}</td>
-								<td>{{ product.quantite }}</td>
-								<td>{{ product.description }}</td>
-								<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
-								<td>{{ product.prix_total }}</td>
-								<td>{{ product.comment }}</td>
-							</tr>
-							{% endfor %}
-							<tr>
-								<td><b>TOTAL</b></td>
-								<td></td>
-								<td colspan="3"><b>{{ order.total_quantite }}</b></td>
-								<td colspan="2"><b>{{ order.total_prix }}</b></td>
-							</tr>
-						</table>
-					</div>
-				</td>
-			</tr>
-		</table>
-		{% endfor %}
 	</div>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block css_orders_all %}
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+{% endblock %}
+
+{% block javascript_orders_all %}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+	<script type="text/javascript">
+
+		
+
+	</script>
+
 {% endblock %}
