@@ -12,7 +12,7 @@
 		</div>	
 	</div>
 	<div class="row">
-		<table class="table" data-pagination="true" data-toggle="table">
+		<table class="table" id="ordersAllTable">
 			<thead>
 				<tr>
 					<th># Commande</th>
@@ -37,62 +37,60 @@
 					<td>{{ order.total_prix ~ "€" }}</td>
 					<td>{{ order.store }}</td>
 				</tr>
-				<tr>
-					<td colspan="8" style="padding:0px;">
-						<div id="{{ order_id }}" class="order collapse">
-							<table class="table">
-								<tr>
-									<td style="width: 50%">
-										<table class="table">
-											<tr><td><b>Commande N°</b></td><td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td></tr>
-											<tr><td><b>Statut</b></td><td>{{ order.status }}</td></tr>
-											<tr><td><b>Client</b></td><td>{{ order.first_name ~" "~ order.last_name }}</td></tr>
-											<tr><td><b>Prise de Commande</b></td><td>{{ order.order_date }}</td></tr>
-											<tr><td><b>Date de Livraison</b></td><td>{{ order.delivery_date }}</td></tr>
-											<tr><td><b>Creneau de Livraison</b></td><td>{{ order.delivery_time }}</td></tr>
-											<tr><td><b>Remplacement équivalent</b></td><td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td></tr>
-										</table>
-									</td>
-									<td>
-										<table class="table">
-											<tr><td><b>Adresse de Livraison</b></td><td><a href="https://www.google.com/maps?q={{order.address}}" target="_blanc">{{ order.address }}</a></td></tr>
-											<tr><td><b>Telephone</b></td><td>{{ order.phone }}</td></tr>
-											<tr><td><b>Batiment & Etage</b></td><td>Bat: {{ order.batiment }}, Etage: {{ order.etage }}</td></tr>
-											<tr><td><b>Codes porte</b></td><td>Code Porte 1: {{ order.codeporte1 }}, Code Porte 2: Code Porte 1: {{ order.codeporte2 }}</td></tr>
-											<tr><td><b>Infos Complémentaires</b></td><td>{{ order.info }}</td></tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-							<table class="table table-striped">
-								<tr>
-									<th>Commercant</th>
-									<th>Produit</th>
-									<th>Quantite</th>
-									<th>Description</th>
-									<th>Prix</th>
-									<th>Total</th>
-									<th>Commentaire</th>
-								</tr>
-								{% for product in order.products | sortbyfield('nom_commercant') %}
-								{% if product.produit_fragile == 1 %}<tr style="background-color:rgba(255, 165, 0, 0.7)">{% else %}<tr>{% endif %}
-									<td>{{ product.nom_commercant }}</td>
-									<td>{{ product.nom }}</td>
-									<td>{{ product.quantite }}</td>
-									<td>{{ product.description }}</td>
-									<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
-									<td>{{ product.prix_total }}</td>
-									<td>{{ product.comment }}</td>
-								</tr>
-								{% endfor %}
-								<tr>
-									<td><b>TOTAL</b></td>
-									<td></td>
-									<td colspan="3"><b>{{ order.total_quantite }}</b></td>
-									<td colspan="2"><b>{{ order.total_prix }}</b></td>
-								</tr>
-							</table>
-						</div>
+				<tr id="{{ order_id }}" class="order collapse">
+					<td colspan="8">
+						<table class="table">
+							<tr>
+								<td style="width: 50%">
+									<table class="table">
+										<tr><td><b>Commande N°</b></td><td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td></tr>
+										<tr><td><b>Statut</b></td><td>{{ order.status }}</td></tr>
+										<tr><td><b>Client</b></td><td>{{ order.first_name ~" "~ order.last_name }}</td></tr>
+										<tr><td><b>Prise de Commande</b></td><td>{{ order.order_date }}</td></tr>
+										<tr><td><b>Date de Livraison</b></td><td>{{ order.delivery_date }}</td></tr>
+										<tr><td><b>Creneau de Livraison</b></td><td>{{ order.delivery_time }}</td></tr>
+										<tr><td><b>Remplacement équivalent</b></td><td>{{ (order.equivalent_replacement == 1) ? "oui" : "non" }}</td></tr>
+									</table>
+								</td>
+								<td>
+									<table class="table">
+										<tr><td><b>Adresse de Livraison</b></td><td><a href="https://www.google.com/maps?q={{order.address}}" target="_blanc">{{ order.address }}</a></td></tr>
+										<tr><td><b>Telephone</b></td><td>{{ order.phone }}</td></tr>
+										<tr><td><b>Batiment & Etage</b></td><td>Bat: {{ order.batiment }}, Etage: {{ order.etage }}</td></tr>
+										<tr><td><b>Codes porte</b></td><td>Code Porte 1: {{ order.codeporte1 }}, Code Porte 2: Code Porte 1: {{ order.codeporte2 }}</td></tr>
+										<tr><td><b>Infos Complémentaires</b></td><td>{{ order.info }}</td></tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<table class="table table-striped">
+							<tr>
+								<th>Commercant</th>
+								<th>Produit</th>
+								<th>Quantite</th>
+								<th>Description</th>
+								<th>Prix</th>
+								<th>Total</th>
+								<th>Commentaire</th>
+							</tr>
+							{% for product in order.products | sortbyfield('nom_commercant') %}
+							{% if product.produit_fragile == 1 %}<tr style="background-color:rgba(255, 165, 0, 0.7)">{% else %}<tr>{% endif %}
+								<td>{{ product.nom_commercant }}</td>
+								<td>{{ product.nom }}</td>
+								<td>{{ product.quantite }}</td>
+								<td>{{ product.description }}</td>
+								<td>{{ product.prix_unitaire ~"€ (" ~ product.prix_kilo ~")"}}</td>
+								<td>{{ product.prix_total }}</td>
+								<td>{{ product.comment }}</td>
+							</tr>
+							{% endfor %}
+							<tr>
+								<td><b>TOTAL</b></td>
+								<td></td>
+								<td colspan="3"><b>{{ order.total_quantite }}</b></td>
+								<td colspan="2"><b>{{ order.total_prix }}</b></td>
+							</tr>
+						</table>	
 					</td>
 				</tr>			
 			{% endfor %}
@@ -108,11 +106,31 @@
 {% endblock %}
 
 {% block javascript_orders_all %}
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script> 
 
 	<script type="text/javascript">
 
-		
+		$('#ordersAllTable').bootstrapTable({
+			pagination: true,
+			pageSize: 20, // which is 10
+			pageList: [20, 40, 100, 200, "All"], // which are 10, 20, 50, 100
+
+			// Translation
+			formatRecordsPerPage: function(pageNumber) {
+				
+            	return pageNumber + " lignes par page";
+            },
+
+            // Translation + Override default config bcz of collapse bug
+			formatShowingRows: function (pageFrom, pageTo, totalRows) {
+				var realPageFrom = 1;
+				if (pageFrom != 1) {
+					realPageFrom = (pageFrom / 2) + 0.5;
+				}
+
+        		return 'Affichage des lignes ' + realPageFrom + ' à ' + (pageTo / 2) + ' sur ' + ( totalRows / 2) + ' au total';
+    		}
+		});
 
 	</script>
 
