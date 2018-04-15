@@ -47,6 +47,18 @@ trait Model
         }
     }
 
+    private function removeEntryFromModel($model, array $filters)
+    {
+        $entry = $model->getCollection();
+        foreach ($filters as $k => $v) {
+            $entry->addFieldToFilter($k, $v);
+        }
+        if (($id = $entry->getFirstItem()->getId()) != null) {
+            $model->load($id);
+            $model->delete();
+        }
+    }
+
     public function addEntryToOrderField(array $data)
     {
         $this->addEntryToModel(
@@ -131,6 +143,51 @@ trait Model
                 $filters,
                 $updatedFields
             );
+        }
+    }
+
+    public function addEntryToCommentHistory(array $data)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
+
+        try {
+            $model->setData($data)->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function updateEntryToCommentHistory(array $filters, array $updatedFields)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            $this->updateEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        } else {
+            $this->addEntryToModel(
+                $model,
+                $filters,
+                $updatedFields
+            );
+        }
+    }
+
+    public function removeEntryFromCommentHistory(array $filters)
+    {
+        $model = \Mage::getModel('pmainguet_delivery/indi_commenthistory');
+        $check = $this->checkEntryToModel($model, $filters);
+
+        if ($check) {
+            try {
+                $this->removeEntryFromModel($model, $filters);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 

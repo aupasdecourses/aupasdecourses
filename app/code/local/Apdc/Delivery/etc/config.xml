@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Apdc_Delivery>
-            <version>0.1.8</version>
+            <version>0.2.3</version>
         </Apdc_Delivery>
     </modules>
     <frontend>
@@ -83,6 +83,12 @@
 					<indi_mistraldelivery>
 						<table>indi_mistraldelivery</table>
 					</indi_mistraldelivery>
+                    <indi_commenthistory>
+                        <table>indi_commenthistory</table>
+                    </indi_commenthistory>
+                    <indi_commenttype>
+                        <table>indi_commenttype</table>
+                    </indi_commenttype>
                 </entities>
             </delivery_resource>
             <adyen>

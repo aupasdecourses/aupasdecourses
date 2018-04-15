@@ -187,15 +187,13 @@ class Apdc_Delivery_IndexController extends Mage_Core_Controller_Front_Action {
 	      break;
 	    case 'comment':
 	      $commentremboursement=$params['commentremboursement'];
-	      $commentcommande=$params['commentcommande'];
 	      $commentticket=$params['commentticket'];
 	      $commentfraislivraison=$params['commentfraislivraison'];
-	      if ($field->getData('commentaires_commande')!="" || $field->getData('remboursements')!="" || $field->getData('commentaires_ticket')!="" || $field->getData('commentaires_fraislivraison')!="") {
+	      if ($field->getData('remboursements')!="" || $field->getData('commentaires_commercant')!="" || $field->getData('commentaires_client')!="") {
 	        if ($params['supcomments']!="false"){
 	          $field->setData('remboursements',$commentremboursement);
-	          $field->setData('commentaires_commande',$commentcommande);
-	          $field->setData('commentaires_ticket',$commentticket);
-	          $field->setData('commentaires_fraislivraison',$commentfraislivraison);
+	          $field->setData('commentaires_commercant',$commentticket);
+	          $field->setData('commentaires_client',$commentfraislivraison);
 	          $field->save(); 
 	          echo true;                
 	        }else{
@@ -203,9 +201,8 @@ class Apdc_Delivery_IndexController extends Mage_Core_Controller_Front_Action {
 	        }
 	      } else {
 	        $field->setData('remboursements',$commentremboursement);
-	          $field->setData('commentaires_commande',$commentcommande);
-	          $field->setData('commentaires_ticket',$commentticket);
-	          $field->setData('commentaires_fraislivraison',$commentfraislivraison);
+	          $field->setData('commentaires_commercant',$commentticket);
+	          $field->setData('commentaires_client',$commentfraislivraison);
 	          $field->save(); 
 	        echo true;                
 	      } 

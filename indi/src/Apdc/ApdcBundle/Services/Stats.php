@@ -11,6 +11,7 @@ define('FLOAT_NUMBER', 2);
 class Stats
 {
     use Helpers\Order;
+    use Helpers\Model;
 
 	private $em;
 
@@ -47,11 +48,11 @@ class Stats
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
 		$orders->getSelect()->joinLeft('customer_entity', 'sales_flat_order_address.customer_id = customer_entity.entity_id', array('customer_created_at'=> 'customer_entity.created_at'));
 		$orders->getSelect()->joinLeft('geocode' ,'sales_flat_order_address.street = geocode.former_address', array('address','lat', 'long'));
-		$orders->getSelect()->joinLeft('amasty_amorderattach_order_field',"main_table.entity_id = amasty_amorderattach_order_field.order_id",array('commentaires_commande'=>'amasty_amorderattach_order_field.commentaires_commande','commentaires_fraislivraison'=>'amasty_amorderattach_order_field.commentaires_fraislivraison'));
+		$orders->getSelect()->joinLeft('amasty_amorderattach_order_field',"main_table.entity_id = amasty_amorderattach_order_field.order_id",array('commentaires_client'=>'amasty_amorderattach_order_field.commentaires_client'));
 
 		$orders->addAttributeToFilter('address_type', 'shipping');
 		$orders->getSelect()->columns('COUNT(DISTINCT main_table.entity_id) AS nb_order')
-			->columns('GROUP_CONCAT(DISTINCT IF(commentaires_fraislivraison>"" OR commentaires_commande>"",CONCAT(main_table.increment_id, ": " ,commentaires_commande, " - ",commentaires_fraislivraison),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
+			->columns('GROUP_CONCAT(DISTINCT IF(commentaires_client>"",CONCAT(main_table.increment_id, ": " , " - ",commentaires_client),"") ORDER BY main_table.entity_id ASC SEPARATOR " // ") AS commentaires')
 			->columns('SUM(base_grand_total) AS amount_total, AVG(base_grand_total) AS average_orders, STDDEV(base_grand_total) AS std_dev_orders, MAX(base_grand_total) AS max_orders')
 			->columns('MAX(main_table.created_at) AS last_order')
 			->group('customer_id');
@@ -390,10 +391,9 @@ class Stats
     private function getOrderAttachments($order)
     {
         $attachments					= \Mage::getModel('amorderattach/order_field')->load($order->getId(), 'order_id');
-        $commentaires_ticket			= '|*COM. TICKET*|'."\n".$attachments->getData('commentaires_ticket')."\n";
-        $commentaires_interne			= '|*COM. INTERNE*|'."\n".$attachments->getData('commentaires_commande')."\n";
-        $commentaires_fraislivraison	= '|*COM. FRAISLIV*|'."\n".$attachments->getData('commentaires_fraislivraison');
-        $comments = $remboursement_client.$commentaires_ticket.$commentaires_interne.$commentaires_fraislivraison;
+        $commentaires_commercant		= '|*COM. COMMERCANT*|'."\n".$attachments->getData('commentaires_commercant')."\n";
+        $commentaires_client	        = '|*COM. CLIENT*|'."\n".$attachments->getData('commentaires_client');
+        $comments = $remboursement_client.$commentaires_commercant.$commentaires_interne.$commentaires_client;
 
         return $comments;
     }
@@ -726,5 +726,53 @@ class Stats
         asort($results['stores'], SORT_NATURAL);
 
         return $results;
+    }
+
+    public function getCommentsHistory($order_id_min = 0, $order_id_max = 9999999999, $date_debut = '01/01/0000', $date_fin = '31/12/9999')
+    {
+        $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory')->getCollection();
+        $comments->getSelect()->joinLeft(['commenttype' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_commenttype')], 'commenttype.type = main_table.comment_type', ['comment_label' => 'commenttype.label']);
+        $comments->getSelect()->joinLeft(['apdcshop' => \Mage::getSingleton('core/resource')->getTableName('apdc_commercant/shop')], 'apdcshop.id_attribut_commercant = main_table.merchant_id', ['merchant_name' => 'apdcshop.name']);
+
+        $comments->addFieldToFilter('order_id', ['from' => $order_id_min, 'to' => $order_id_max]);
+
+        $date_debut = date('Y-m-d', strtotime(str_replace('/', '-', $date_debut)));
+        $date_fin = date('Y-m-d', strtotime(str_replace('/', '-', $date_fin)));
+
+        $comments->addFieldToFilter('created_at', ['from' => $date_debut, 'to' => $date_fin]);
+
+        $res = [];
+
+        foreach ($comments as $comment) {
+            array_push($res, [
+                'created_at'    => $comment->getData('created_at'),
+                'updated_at'    => $comment->getData('updated_at'),
+                'author'        => $comment->getData('author'),
+                'comment_type'  => $comment->getData('comment_type'),
+                'comment_label' => $comment->getData('comment_label'),
+                'comment_text'  => $comment->getData('comment_text'),
+                'order_id'      => $comment->getData('order_id'),
+                'merchant_id'   => $comment->getData('merchant_id'),
+                'merchant_name' => $comment->getData('merchant_name'),
+            ]);
+        }
+        
+
+        return $res;
+    }
+
+    public function getCommentsType()
+    {
+        $types = \Mage::getModel('pmainguet_delivery/indi_commenttype')->getCollection();
+        $res = [];
+
+        foreach ($types as $t) {
+            array_push($res, [
+                'type'      => $t->getData('type'),
+                'label'     => $t->getData('label'),
+            ]);
+        }
+
+        return $res;
     }
 }

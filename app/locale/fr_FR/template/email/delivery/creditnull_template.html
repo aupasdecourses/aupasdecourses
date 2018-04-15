@@ -10,6 +10,7 @@
 "var store_code":"Store Code",
 "var id":"Order Id",
 "var base_url":"Base Url",
+"var refund_customer_visible_comment":"Refund customer comment",
 @-->
 
 <body style="color:#333;font-size:14px ; background:#F6F6F6;font-family:Raleway ,Verdana, Arial, Helvetica, sans-serif;height:100%;">
@@ -33,6 +34,10 @@
                                 <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de rembourser directement sur votre carte bancaire.</p>
                                 {{/if}}
                                  <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
+                                 {{if refund_customer_visible_comment}}
+                                <p>Enfin, après traitement de votre commande, nous souhaitions vous dire que :</p>
+                                <p>{{var refund_customer_visible_comment}}</p>
+                                {{/if}}
                             </td>
                         </tr>
                         <tr>

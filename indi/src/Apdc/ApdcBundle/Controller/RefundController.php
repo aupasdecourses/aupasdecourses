@@ -368,8 +368,6 @@ class RefundController extends Controller
         }
         ksort($order);
 
-        $commentaire_client = $order[-1]['order']['commentaire_client'];
-        $commentaire_commercant = $order[-1]['order']['commentaire_commercant'];
         $total = $order[-1]['merchant']['total'];
         $order_mid = $order[-1]['order']['mid'];
         $input_status = $order[-1]['order']['input'];
@@ -413,9 +411,7 @@ class RefundController extends Controller
                 $mage->updateEntryToOrderField(
                     ['order_id' => $order_mid],
                     ['refund_shipping' => $_POST['form']['refund_shipping'],
-                    'input' => 'done',
-                    'commentaires_fraislivraison' => $_POST['form']['commentaire_client'],
-                    'commentaires_ticket' => $_POST['form']['commentaire_commercant'], ]
+                    'input' => 'done',]
                 );
                 $session->getFlashBag()->add('success', 'Information enregistrée avec succès');
 
@@ -425,17 +421,25 @@ class RefundController extends Controller
             }
         }
 
+        // Override default Comment form
+        $merchants_comment_choice = [];
+        foreach ($order as $id_attribut_com => $o) {
+            $merchants_comment_choice[$o['merchant']['name']] = $id_attribut_com;
+        }
+        $merchants_comment_choice = array_merge(['Aucun commercant' => 0], $merchants_comment_choice);
+        $merchants_comment_choice = array_merge(['Tous les commercants' => -1], $merchants_comment_choice);
+        $merchants_comment_choice = array_merge(['Selectionner un commercant' => ''], $merchants_comment_choice);
+
         return $this->render('ApdcApdcBundle::refund/input.html.twig', [
             'form' => $form_input->createView(),
             'order' => $order,
             'total' => $total,
             'id' => $id,
             'refund_shipping' => $mage->checkRefundShipping($order_mid),
-            'commentaire_client' => $commentaire_client,
-            'commentaire_commercant' => $commentaire_commercant,
 			'customer_name' => $customer_name,
 			'mistral_hours' => $mage->getMistralDelivery(),
             'order_status'  => $order_status,
+            'merchants_comment_choice' => $merchants_comment_choice,
         ]);
     }
 
@@ -446,6 +450,8 @@ class RefundController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+        $stats = $this->container->get('apdc_apdc.stats');
+        $commentsHistory = $stats->getCommentsHistory($id, $id);
         $session = $request->getSession();
 		$order = $mage->getRefunds($id);
 
@@ -471,71 +477,107 @@ class RefundController extends Controller
         }
         ksort($order);
 
+        $refund_customer_visible_comment = '';
+        foreach ($commentsHistory as $history) {
+            if ($history['comment_type'] == 'customer_is_visible') {
+                $refund_customer_visible_comment = $history['comment_text'];
+            }
+        }
+
         $entity_submit = new \Apdc\ApdcBundle\Entity\Model();
         $form_submit = $this->createFormBuilder($entity_submit);
         $form_submit->setAction($this->generateUrl('refundDigest', array('id' => $id)));
         $form_submit = $form_submit->getForm();
 
+        $editRefundCommentForm = $this->createFormBuilder(['message' => 'Modifier commentaire client visible'])
+            ->add('edit_customer_refund_comment', SubmitType::class, array(
+                'label' => 'Modifier',
+                'attr' => array(
+                    'class' => 'btn btn-info',
+                    'style' => 'margin-top: -130px'
+                    ),
+            ))->getForm();
+
         if ($request->isMethod('POST')) {
+
             $form_submit->handleRequest($request);
-            if (!is_null($_POST['creditmemo'])) {
-                try {
-                    //create invoice
-                    $invoice = $mage->createinvoice($id);
-                    if ($invoice) {
-                        $session->getFlashBag()->add('success', 'Facture créée.');
-                    } else {
-                        $session->getFlashBag()->add('warning', 'Facture non créée/déjà existante.');
-                    }
+            $editRefundCommentForm->handleRequest($request);
 
-                    //process credit
-                    $comment = $mage->processcreditAction($id, $order);
-                    if ($refund_shipping_amount != 0) {
-                        $mage->processcreditshipping($id, $refund_shipping_amount);
-                    }
-                    $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment, $refund_diff, $refund_shipping_amount);
+            if ($request->request->has('refund_customer_visible_comment')) {
+                if (strlen($_POST['refund_customer_visible_comment']) == 0) {
+                    $mage->removeEntryFromCommentHistory(
+                        ['order_id' => $id, 'comment_type' => 'customer_is_visible']
+                    );
+                } else {
+                    $mage->updateEntryToCommentHistory(
+                        ['order_id' => $id, 'comment_type' => 'customer_is_visible'],
+                        ['comment_text' => $_POST['refund_customer_visible_comment']]
+                    );
+                }
 
-                    if ($mail_creditmemo) {
-                        $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
-                    } else {
-                        $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
-                    }
-
-                    if ($refund_full != 0) {
-                        $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
-                    } else {
-                        $mage->updateEntryToOrderField(['order_id' => $order_mid], [
-                            'digest' => 'done',
-                            'refund' => 'no_refund',
-                        ]);
-                    }
-
-                    foreach ($order as $o) {  
-                        $excess = 0;
-                        $lack = 0;
-
-                        if ($o['merchant']['refund_diff_commercant'] < 0) {
-                            // Exces produit
-                            $excess = $o['merchant']['refund_diff_commercant'];
-                        }
-                        if ($o['merchant']['refund_diff_commercant'] > 0) {
-                            // Manque produit
-                            $lack = $o['merchant']['refund_diff_commercant'];
+                $session->getFlashBag()->add('success', 'Commentaire visible par le client bien mis à jour');
+                return $this->redirectToRoute('refundDigest', ['id' => $id]);
+                
+            } else if ($request->request->has('creditmemo')) {
+                if (!is_null($_POST['creditmemo'])) {
+                    try {
+                        //create invoice
+                        $invoice = $mage->createinvoice($id);
+                        if ($invoice) {
+                            $session->getFlashBag()->add('success', 'Facture créée.');
+                        } else {
+                            $session->getFlashBag()->add('warning', 'Facture non créée/déjà existante.');
                         }
 
-                        $mage->addEntryToRefundPricevariation([ 
-                            'order_id'          => $id,
-                            'merchant'          => $o['merchant']['name'],
-                            'merchant_id'       => $o['merchant']['shop_id'],
-                            'merchant_excess'   => $excess,
-                            'merchant_lack'     => $lack,
-                            'order_date'        => $order_date,
-                            'delivery_date'     => $delivery_date,
-                        ]);
-                    }
+                        //process credit
+                        $comment = $mage->processcreditAction($id, $order);
+                        if ($refund_shipping_amount != 0) {
+                            $mage->processcreditshipping($id, $refund_shipping_amount);
+                        }
+                        $mail_creditmemo = $mage->sendCreditMemoMail($id, $comment, $refund_diff, $refund_shipping_amount, $refund_customer_visible_comment);
 
-                } catch (\Exception $e) {
-                    $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
+                        if ($mail_creditmemo) {
+                            $session->getFlashBag()->add('success', 'Mail de remboursement & cloture envoyé avec succès!');
+                        } else {
+                            $session->getFlashBag()->add('error', 'Erreur lors de l\'envoi du mail de remboursement et cloture.');
+                        }
+
+                        if ($refund_full != 0) {
+                            $mage->updateEntryToOrderField(['order_id' => $order_mid], ['digest' => 'done']);
+                        } else {
+                            $mage->updateEntryToOrderField(['order_id' => $order_mid], [
+                                'digest' => 'done',
+                                'refund' => 'no_refund',
+                            ]);
+                        }
+
+                        foreach ($order as $o) {  
+                            $excess = 0;
+                            $lack = 0;
+
+                            if ($o['merchant']['refund_diff_commercant'] < 0) {
+                                // Exces produit
+                                $excess = $o['merchant']['refund_diff_commercant'];
+                            }
+                           if ($o['merchant']['refund_diff_commercant'] > 0) {
+                                // Manque produit
+                                $lack = $o['merchant']['refund_diff_commercant'];
+                           }
+
+                            $mage->addEntryToRefundPricevariation([ 
+                                'order_id'          => $id,
+                                'merchant'          => $o['merchant']['name'],
+                                'merchant_id'       => $o['merchant']['shop_id'],
+                                'merchant_excess'   => $excess,
+                                'merchant_lack'     => $lack,
+                                'order_date'        => $order_date,
+                                'delivery_date'     => $delivery_date,
+                            ]);
+                        }
+
+                    } catch (\Exception $e) {
+                        $session->getFlashBag()->add('error', 'Magento: '.$e->getMessage());
+                    }
                 }
             }
         }
@@ -552,6 +594,8 @@ class RefundController extends Controller
             'show_creditmemo' => $mage->checkdisplaybutton($id, 'creditmemo'),
 			'forms' => [$form_submit->createView()],
 			'mistral_hours' => $mage->getMistralDelivery(),
+            'refund_customer_visible_comment' => $refund_customer_visible_comment,
+            'editRefundCommentForm' => $editRefundCommentForm->createView(),
         ]);
     }
 

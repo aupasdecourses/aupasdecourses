@@ -146,6 +146,18 @@ toolCategory:
   path: /tool/category/
   defaults: { _controller: ApdcApdcBundle:Tool:category}
 
+toolCommentsHistory:
+  path: /tool/comments/history/
+  defaults: { _controller: ApdcApdcBundle:Tool:commentsHistory }
+
+toolCommentsForm:
+  path: /tool/comments/form/
+  defaults: { _controller: ApdcApdcBundle:Tool:commentsForm }
+
+toolCommentsProcess:
+  path: /tool/comments/process/
+  defaults: { _controller: ApdcApdcBundle:Tool:commentsProcess }
+
 contactLPR:
   path: /contact/LPR/
   defaults: { _controller: ApdcApdcBundle:Tool:contactLPR }

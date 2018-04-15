@@ -63,6 +63,7 @@ class BillingController extends Controller
 
         $factu = $this->container->get('apdc_apdc.billing');
         $mage = $this->container->get('apdc_apdc.magento');
+        $stats = $this->container->get('apdc_apdc.stats');
         $session = $request->getSession();
 
         if (isset($_GET['date_debut'])) {
@@ -131,6 +132,7 @@ class BillingController extends Controller
             'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
+            'comments' => $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']),
         ]);
     }
 

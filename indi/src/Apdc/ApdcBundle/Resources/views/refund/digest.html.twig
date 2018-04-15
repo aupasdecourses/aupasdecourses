@@ -62,6 +62,16 @@
 					</td>
 				</tr>
 			</table>
+			{% if refund_customer_visible_comment is not empty %}
+				{{ form_start(editRefundCommentForm) }}
+				<table class="table">
+					<tr>
+						<th>Commentaire visible par le client</th>
+						<td><textarea rows="5" cols="110" name="refund_customer_visible_comment">{{ refund_customer_visible_comment }}</textarea></td>
+					</tr>
+				</table>
+				{{ form_end(editRefundCommentForm) }}
+			{% endif %}
 		</div>
 	</div>
 	{% for form in forms %}
@@ -76,6 +86,9 @@
 			</div>
 		{{ form_end(form) }}
 	{% endfor %}
+
+	<hr/>
+
 	{% for merchant_id, merchant_part in order %}
 		<h2>{{merchant_part.merchant.name}}</h2>
 		<div class="row flex-input">
@@ -187,6 +200,17 @@
 				alert(shipping.parentElement.children["real-hour-ship"].innerHTML + "\n\n" + shipping.parentElement.children["slot-hour-ship"].innerHTML);
 			}
 		});
+
+	</script>
+
+	<script type="text/javascript">
+
+		var show_creditmemo = {{ show_creditmemo ? 'true' : 'false '}};
+		if (show_creditmemo == false) {
+			document.getElementById('form_edit_customer_refund_comment').disabled = true;
+			document.getElementById('form_edit_customer_refund_comment').title = "L'email client a déjà été envoyé ";
+		}
+
 
 	</script>
 

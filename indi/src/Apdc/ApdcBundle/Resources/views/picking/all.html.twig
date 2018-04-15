@@ -20,6 +20,7 @@
 						<div id="{{ store|replace({' ': "_"}) }}" class="store collapse">
 							<table class="table">
 								<tr>
+									<th>Horaires</th>
 									<th>Commercant</th>
 									<th>Adresse</th>
 									<th>Telephone</th>
@@ -29,6 +30,7 @@
 
 								{% for com_id, commercant in commercants %}
 									<tr>
+										<td style="width: 20%">{{ commercant.timetable|raw }}</td>
 										<td> {{ commercant.name }}
 										{% if commercant.warning_days != ""%}
 										</br><span style="color:red;">{{ commercant.warning_days }}</span></td>
@@ -48,7 +50,7 @@
 															<p style="color:red;font-size: 0.85em;">Commande traitée par Star'Dom</p>
 														{% else %}
 															<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a>
-															<p style="font-size: 0.85em;">Commande à récupérer</>
+															<p style="font-size: 0.85em;">Commande à récupérer</p>
 														{% endif %}
 													{% else %}
 														<a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a>
