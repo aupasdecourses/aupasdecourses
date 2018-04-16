@@ -167,10 +167,10 @@ class Apdc_Commercant_Helper_Data extends Mage_Core_Helper_Abstract
             $shopInfo['description'] = $categoryShop->getDescription();
             $shopInfo['image'] = Mage::helper('apdc_catalog/category')->getImageUrl($categoryShop);
             $shopInfo['thumbnail_image'] = Mage::helper('apdc_catalog/category')->getThumbnailImageUrl($categoryShop);
+            $stores=$this->getStoresArray();
+            $rootId=explode("/",$categoryShop->getPath())[1];
+            $shopInfo['url'] = Mage::getUrl($categoryShop->getUrlPath(), array('_store'=>$stores[$rootId]['code']));
         }
-        $stores=$this->getStoresArray();
-        $rootId=explode("/",$categoryShop->getPath())[1];
-        $shopInfo['url'] = Mage::getUrl($categoryShop->getUrlPath(), array('_store'=>$stores[$rootId]['code']));
 
         $html = '';
         $days = $this->getShortDays();//["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
