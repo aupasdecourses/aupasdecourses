@@ -76,6 +76,18 @@ class OrdersController extends Controller
         }
 
         $mage = $this->container->get('apdc_apdc.magento');
+        $paginator = $this->get('knp_paginator');
+
+        $maxOrdersPerPage = 10;
+        if (isset($_GET['maxOrdersPerPage'])) {
+            $maxOrdersPerPage = $_GET['maxOrdersPerPage'];
+        }
+
+        $pagination = $paginator->paginate(
+            $mage->getOrders($from, $to),
+            $request->query->getInt('page', 1),
+            $maxOrdersPerPage
+        );
 
         $entity_fromto = new \Apdc\ApdcBundle\Entity\FromTo();
         $form_fromto = $this->createForm(\Apdc\ApdcBundle\Form\FromTo::class, $entity_fromto, [
@@ -94,7 +106,10 @@ class OrdersController extends Controller
                 $form_fromto->createView(),
                 $form_id->createView(),
             ],
-            'orders' => $mage->getOrders($from, $to),
+            'orders' => $pagination,
+            'from' => $form_fromto->get('from')->getData(),
+            'to' => $form_fromto->get('to')->getData(),
+            'maxOrdersPerPage' => $maxOrdersPerPage, 
         ]);
     }
 }

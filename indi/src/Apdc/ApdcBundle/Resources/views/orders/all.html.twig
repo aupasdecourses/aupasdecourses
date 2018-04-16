@@ -11,6 +11,18 @@
 			<div>{% include 'ApdcApdcBundle::tool/produit_fragile.html.twig' %}</div>
 		</div>	
 	</div>
+
+	<div class="navigation space-between">
+		<div>{{ knp_pagination_render(orders) }}</div>
+		<div style="margin-top:20px;"><select id="maxOrdersPerPage" class="selectpicker">
+			<option selected>Commandes par page</option>
+			<option>10</option>
+			<option>20</option>
+			<option>50</option>
+			<option>100</option>
+		</select></div>
+	</div>
+
 	<div class="row">
 		<table class="table">
 			<thead>
@@ -26,10 +38,10 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% for order_id, order in orders %}
+			{% for id, order in orders %}
 				<tr>
-					<td><a href="#{{ order_id }}" data-toggle="collapse">{{ order_id }}</a></td>
-					<td><a href="#{{ order_id }}" data-toggle="collapse">{{ order.first_name ~" "~ order.last_name }}</a></td>
+					<td><a href="#{{ order.id }}" data-toggle="collapse">{{ order.id }}</a></td>
+					<td><a href="#{{ order.id }}" data-toggle="collapse">{{ order.first_name ~" "~ order.last_name }}</a></td>
 					<td>{{ order.order_date }}</td>
 					<td>{{ order.delivery_date }}</td>
 					<td>{{ order.delivery_time }}</td>
@@ -37,13 +49,13 @@
 					<td>{{ order.total_prix ~ "€" }}</td>
 					<td>{{ order.store }}</td>
 				</tr>
-				<tr id="{{ order_id }}" class="order collapse">
+				<tr id="{{ order.id }}" class="order collapse">
 					<td colspan="8" style="padding:0px;">
 						<table class="table">
 							<tr>
 								<td style="width: 50%">
 									<table class="table">
-										<tr><td><b>Commande N°</b></td><td><a href="{{path('ordersOne', {id: order_id})}}" target="_blanc">{{ order_id }}</a></td></tr>
+										<tr><td><b>Commande N°</b></td><td><a href="{{path('ordersOne', {id: order.id})}}" target="_blanc">{{ order.id }}</a></td></tr>
 										<tr><td><b>Statut</b></td><td>{{ order.status }}</td></tr>
 										<tr><td><b>Client</b></td><td>{{ order.first_name ~" "~ order.last_name }}</td></tr>
 										<tr><td><b>Prise de Commande</b></td><td>{{ order.order_date }}</td></tr>
@@ -99,4 +111,30 @@
 	</div>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
+{% endblock %}
+
+{% block css_orders_all %}
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+{% endblock %}
+
+{% block javascript_orders_all %}
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+	<script type="text/javascript">
+
+		$('#maxOrdersPerPage').change(function() {
+			var from 	= '{{ from }}';
+			var to 		= '{{ to }}';
+			var url 	= '{{ path('ordersAll', {'from': from, 'to': to, 'maxOrdersPerPage':'_itemNum'}) }}';
+			var item 	= $('#maxOrdersPerPage').find(":selected").text();
+
+			window.location.href = url.replace('_itemNum', item);
+		});
+
+		var maxOrdersPerPage = '{{ maxOrdersPerPage }}';
+		console.log(maxOrdersPerPage);
+
+	</script>
+
 {% endblock %}
