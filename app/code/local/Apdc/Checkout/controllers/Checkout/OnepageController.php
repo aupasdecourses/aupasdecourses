@@ -285,8 +285,11 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
         $ddatei = $this->getRequest()->getPost('ddatei', '');
         $url = $this->getRequest()->getPost('url', Mage::getBaseUrl());
         Mage::helper('apdc_checkout')->saveDdate($date, $dtime, $ddatei);
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array('redirect' => $url)));
-        return;
+        $result = [
+            'redirect' => $url,
+            'header_date' => Mage::helper('apdc_checkout')->getHeaderDdate()
+        ];
+        return $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 	
 

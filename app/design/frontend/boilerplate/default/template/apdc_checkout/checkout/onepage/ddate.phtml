@@ -1,7 +1,7 @@
 <?php $ddate = Mage::getSingleton('core/session')->getDdate(); ?>
 <?php $currentDate = date('Y-m-d'); ?>
 <div id="apdc-child">
-	<div id="co-ddate-form">
+	<div id="co-ddate-form" class="co-ddate-form">
 		<h3><?php echo $this->__('Choisissez votre créneau de livraison');?></h3>
         <?php if (!$ddate) : ?>
             <ul class="messages"><li class="notice-msg"><ul><li><span><?php echo $this->__('Vous n\'avez pas encore sélectionné votre créneau de livraison.'); ?></span></li></ul></li></ul>

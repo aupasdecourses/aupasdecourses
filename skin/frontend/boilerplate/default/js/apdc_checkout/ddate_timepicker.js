@@ -3,7 +3,7 @@ var Apdc_DdateTimePicker = function(options) {
     'saveUrl': '',
     'redirectUrl':'',
     'daysAndSlots' : {},
-    'container': '#co-ddate-form .delivery'
+    'container': '.co-ddate-form .delivery'
   };
   var apdc_ddateTimePicker = {
     options: {},
@@ -13,24 +13,34 @@ var Apdc_DdateTimePicker = function(options) {
     init: function(options) {
       this.options = jQuery.extend(defaults, options);
       this.isInPopup = (jQuery(this.options.container).parents('.apdc-popup').length > 0);
+      if (this.isInPopup) {
+        this.options.container = '.apdc-popup ' + this.options.container;
+      } if (jQuery(this.options.container).parents('#co-shipping-method-form').length > 0) {
+        this.options.container = '#co-shipping-method-form ' + this.options.container;
+      }
+
       this.initPreselected();
       this.initActions();
     },
 
     initActions: function() {
       var self = this;
-      jQuery(this.options.container).find('.select-days li.available').on('click', function() {
+      jQuery(this.options.container).find('.select-days li.available').off('click').on('click', function() {
         jQuery('input[name="ddate[dtime]"]').val('');
         self.currentDate = jQuery(this).data('date');
         self.currentTime = null;
         self.currentTimeId = null;
         self.refreshCurrentDate();
       });
-      jQuery(document).on('click', this.options.container + ' .select-time li', function() {
-        self.currentTimeId = jQuery(this).data('time-id');
-        self.currentTime = jQuery(this).data('time');
-        self.refreshCurrentTime();
-      });
+      jQuery(document)
+        .off('click', this.options.container + ' .select-time li')
+        .on('click', this.options.container + ' .select-time li',
+          function() {
+            self.currentTimeId = jQuery(this).data('time-id');
+            self.currentTime = jQuery(this).data('time');
+            self.refreshCurrentTime();
+          }
+        );
     },
     initPreselected: function() {
       if (typeof (this.options.currentDate) !== 'undefined' &&
@@ -107,6 +117,13 @@ var Apdc_DdateTimePicker = function(options) {
         success : function(data) {
           if (self.isInPopup) {
             window.location.reload();
+          } else if (data.header_date) {
+            var icon = jQuery('header .header-delivery-container .label .fa');
+            if (icon.length) {
+              icon.wrap('<span class="icon-wrapped"></span>');
+              data.header_date += ' ' + jQuery('header .header-delivery-container .icon-wrapped').html();
+            }
+            jQuery('header .header-delivery-container .label').html(data.header_date);
           }
         }
       });
