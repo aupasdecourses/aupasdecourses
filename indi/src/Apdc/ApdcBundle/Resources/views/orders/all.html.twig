@@ -12,7 +12,7 @@
 		</div>	
 	</div>
 	<div class="row">
-		<table class="table" id="ordersAllTable">
+		<table class="table">
 			<thead>
 				<tr>
 					<th># Commande</th>
@@ -38,7 +38,7 @@
 					<td>{{ order.store }}</td>
 				</tr>
 				<tr id="{{ order_id }}" class="order collapse">
-					<td colspan="8">
+					<td colspan="8" style="padding:0px;">
 						<table class="table">
 							<tr>
 								<td style="width: 50%">
@@ -99,39 +99,4 @@
 	</div>
 </div>
 {% include 'ApdcApdcBundle::menu/footer.html.twig' %}
-{% endblock %}
-
-{% block css_orders_all %}
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
-{% endblock %}
-
-{% block javascript_orders_all %}
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script> 
-
-	<script type="text/javascript">
-
-		$('#ordersAllTable').bootstrapTable({
-			pagination: true,
-			pageSize: 20, // which is 10
-			pageList: [20, 40, 100, 200, "All"], // which are 10, 20, 50, 100
-
-			// Translation
-			formatRecordsPerPage: function(pageNumber) {
-				
-            	return pageNumber + " lignes par page";
-            },
-
-            // Translation + Override default config bcz of collapse bug
-			formatShowingRows: function (pageFrom, pageTo, totalRows) {
-				var realPageFrom = 1;
-				if (pageFrom != 1) {
-					realPageFrom = (pageFrom / 2) + 0.5;
-				}
-
-        		return 'Affichage des lignes ' + realPageFrom + ' à ' + (pageTo / 2) + ' sur ' + ( totalRows / 2) + ' au total';
-    		}
-		});
-
-	</script>
-
 {% endblock %}
