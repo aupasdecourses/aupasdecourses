@@ -46,7 +46,8 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_Main
             'label' => $this->__('Activé'),
             'required' => false,
             'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toOptionArray(),
-            'disabled' => $isElementDisabled
+            'disabled' => $isElementDisabled,
+            'value' => 0
         ]);
         $commercants = Mage::getModel('apdc_commercant/commercant')->getCollection()->toOptionArray();
         array_unshift($commercants, ['value' => '', 'label' => '']);
