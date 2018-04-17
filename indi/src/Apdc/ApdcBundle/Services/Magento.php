@@ -185,6 +185,18 @@ class Magento
                 $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
             }
 
+            // !!!!
+            // Voir pour meilleures jointures
+            $products->getSelect()->joinLeft(['backup_modif' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/backupmodif')],
+                'backup_modif.product_id = main_table.product_id', [
+                'code_ref_apdc' => 'backup_modif.code_ref_apdc',
+            ])->group('product_id');
+            $products->getSelect()->joinLeft(['referentiel' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/referentiel')],
+                'referentiel.code_ref_apdc = backup_modif.code_ref_apdc', [
+                'produit_fragile_referentiel' => 'referentiel.produit_fragile',
+            ]);
+            // !!!!
+
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
