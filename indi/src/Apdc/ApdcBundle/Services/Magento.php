@@ -202,6 +202,19 @@ class Magento
         foreach ($commercants as $storeid => $commercant) {
             $rsl[$S[$storeid]['name']] = $commercant;
         }
+
+        // Display only stores which have orders
+        foreach ($rsl as $store => $merchants) {
+            foreach ($merchants as $merchant_id => $merchant) {
+                if (empty($rsl[$store][$merchant_id]['orders'])) {
+                    unset($rsl[$store][$merchant_id]);
+                }
+            }
+            if (empty($rsl[$store])) {
+                unset($rsl[$store]);
+            }
+        }
+
         return $rsl;
     }
 
