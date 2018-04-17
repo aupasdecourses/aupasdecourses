@@ -114,6 +114,22 @@
                     </apdc_checkout>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <sales_order_place_after>
+                <observers>
+                    <apdc_checkout>
+                        <class>apdc_checkout/observer</class>
+                        <method>cleanDdateSessionData</method>
+                    </apdc_checkout>
+                </observers>
+            </sales_order_place_after>
+            <customer_logout>
+                <observers>
+                    <apdc_checkout>
+                        <class>apdc_checkout/observer</class>
+                        <method>cleanDdateSessionData</method>
+                    </apdc_checkout>
+                </observers>
+            </customer_logout>
 	      </events>
         <sales>
             <quote>
