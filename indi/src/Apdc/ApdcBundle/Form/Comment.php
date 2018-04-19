@@ -48,7 +48,7 @@ class Comment extends AbstractType
 			'label'		=> '# Commande',
 			'attr'		=> [
 				'class'			=> 'form-control',
-				'placeholder'	=> '# Commande',
+				'placeholder'	=> 'Exemple : 2018000123',
 			]
 		]);
 
@@ -72,12 +72,23 @@ class Comment extends AbstractType
 			'choices'	=> $merchants,
 		]);
 
+		// Si le commentaire concerne aussi une deuxieme commande
+		$builder->add('associated_order_id', TextType::class, [
+			'required'	=> true,
+			'label'		=> '# Commande associée',
+			'attr'		=> [
+				'class'			=> 'form-control',
+				'placeholder'	=> 'Exemple : 2018000321',
+			]
+		]);
+
 		$builder->add('text', TextareaType::class, [
 			'required'	=> true,
 			'label'		=> 'Commentaire',
 			'attr'		=> [
 				'class'			=> 'form-control',
 				'placeholder'	=> 'Commentaire',
+				'rows'			=> '8'
 			]
 		]);
 
