@@ -753,6 +753,7 @@ class Stats
                 'comment_label'         => $comment->getData('comment_label'),
                 'comment_text'          => $comment->getData('comment_text'),
                 'order_id'              => $comment->getData('order_id'),
+                'associated_order_id'   => $comment->getData('associated_order_id'),
                 'merchant_id'           => $comment->getData('merchant_id'),
                 'merchant_name'         => $comment->getData('merchant_name'),
                 'customer_firstname'    => $comment->getData('customer_firstname'),

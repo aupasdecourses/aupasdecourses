@@ -19,30 +19,30 @@
 	<table class="table table-striped" id="commentsHistoryTable">
 		<thead>
 			<tr>
-				<th class="sort" style="width:10%">Type de commentaire</th>
-				<th style="width:6%">Commande</th>
-				<th class="sort" style="width:10%">Client</th>
-				<th class="sort" style="width:10%">Commercant</th>
-				<th style="width:7%">Crée le</th>
-				<th style="width:7%">Auteur</th>
+				<th class="sort">Type de commentaire</th>
+				<th>Commande</th>
+				<th>Autre commande concernée</th>
+				<th class="sort">Client</th>
+				<th class="sort">Commercant</th>
+				<th>Auteur & Date</th>
 				<th style="width:50%">Commentaire</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for comment in comments %}
 			<tr>
-				<td style="width:10%">{{ comment.comment_label }}</td>
-				<td style="width:6%"><a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a></td>
-				<td style="width:10%">{{ comment.customer_firstname ~ " " ~ comment.customer_lastname }}</td>
-				{% if comment.merchant_id == -1 %}
-					<td style="width:10%">All</td>
-				{% elseif comment.merchant_id == 0 %}
-					<td style="width:10%">Aucun commercant</td>
-				{% else %}
-					<td style="width:10%">{{ comment.merchant_name }}</td>
-				{% endif %}
-				<td style="width:7%">{{ comment.created_at|date('d/m/Y H:i') }}</td>
-				<td style="width:7%">{{ comment.author }}</td>
+				<td>{{ comment.comment_label }}</td>
+				<td><a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a></td>
+				<td>
+					{% if comment.associated_order_id == 0 %}Aucune{% else %}{{ comment.associated_order_id }}{% endif %}
+				</td>					
+				<td>{{ comment.customer_firstname ~ " " ~ comment.customer_lastname }}</td>
+				<td>
+					{% if comment.merchant_id == -1 %}All
+					{% elseif comment.merchant_id == 0 %}Aucun commercant
+					{% else %}{{ comment.merchant_name }}{% endif %}
+				</td>
+				<td>{{ comment.author ~ " - " ~ comment.created_at|date('d/m/Y H:i') }}</td>
 				<td style="width:50%">{{ comment.comment_text|raw }}</td>
 			</tr>
 			{% endfor %}

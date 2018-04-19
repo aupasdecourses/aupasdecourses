@@ -100,15 +100,18 @@
 
 		// Only display associated_order if checkbox is checked
 		comment_associated_order_id.style.display = "none";
+		comment_associated_order_id.value = "0";
 		associated_order_id_label.style.display = "none";
 
 		function toggleCheckbox(checkbox)
 		{
 			if (checkbox.checked) {
 				comment_associated_order_id.style.display = "block";
+				comment_associated_order_id.value = "";
 				associated_order_id_label.style.display = "block";
 			} else {
 				comment_associated_order_id.style.display = "none";
+				comment_associated_order_id.value = "0";
 				associated_order_id_label.style.display = "none";
 			}
 		}
