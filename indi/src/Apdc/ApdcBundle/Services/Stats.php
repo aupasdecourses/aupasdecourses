@@ -733,27 +733,30 @@ class Stats
         $comments = \Mage::getModel('pmainguet_delivery/indi_commenthistory')->getCollection();
         $comments->getSelect()->joinLeft(['commenttype' => \Mage::getSingleton('core/resource')->getTableName('pmainguet_delivery/indi_commenttype')], 'commenttype.type = main_table.comment_type', ['comment_label' => 'commenttype.label']);
         $comments->getSelect()->joinLeft(['apdcshop' => \Mage::getSingleton('core/resource')->getTableName('apdc_commercant/shop')], 'apdcshop.id_attribut_commercant = main_table.merchant_id', ['merchant_name' => 'apdcshop.name']);
+        $comments->getSelect()->joinLeft(['sales_order' => \Mage::getSingleton('core/resource')->getTableName('sales/order')], 'sales_order.increment_id = main_table.order_id', ['customer_firstname' => 'sales_order.customer_firstname', 'customer_lastname' => 'sales_order.customer_lastname']);
 
         $comments->addFieldToFilter('order_id', ['from' => $order_id_min, 'to' => $order_id_max]);
 
         $date_debut = date('Y-m-d', strtotime(str_replace('/', '-', $date_debut)));
         $date_fin = date('Y-m-d', strtotime(str_replace('/', '-', $date_fin)));
 
-        $comments->addFieldToFilter('created_at', ['from' => $date_debut, 'to' => $date_fin]);
+        $comments->addFieldToFilter('main_table.created_at', ['from' => $date_debut, 'to' => $date_fin]);
 
         $res = [];
 
         foreach ($comments as $comment) {
             array_push($res, [
-                'created_at'    => $comment->getData('created_at'),
-                'updated_at'    => $comment->getData('updated_at'),
-                'author'        => $comment->getData('author'),
-                'comment_type'  => $comment->getData('comment_type'),
-                'comment_label' => $comment->getData('comment_label'),
-                'comment_text'  => $comment->getData('comment_text'),
-                'order_id'      => $comment->getData('order_id'),
-                'merchant_id'   => $comment->getData('merchant_id'),
-                'merchant_name' => $comment->getData('merchant_name'),
+                'created_at'            => $comment->getData('created_at'),
+                'updated_at'            => $comment->getData('updated_at'),
+                'author'                => $comment->getData('author'),
+                'comment_type'          => $comment->getData('comment_type'),
+                'comment_label'         => $comment->getData('comment_label'),
+                'comment_text'          => $comment->getData('comment_text'),
+                'order_id'              => $comment->getData('order_id'),
+                'merchant_id'           => $comment->getData('merchant_id'),
+                'merchant_name'         => $comment->getData('merchant_name'),
+                'customer_firstname'    => $comment->getData('customer_firstname'),
+                'customer_lastname'     => $comment->getData('customer_lastname'),
             ]);
         }
         
