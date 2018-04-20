@@ -263,7 +263,14 @@ trait Credimemo
                     $merchant_concat[] = $product['refund_com'];
                 }
                 $merchant_concat = implode(' - ', $merchant_concat);
-                $order_concat[$merchant_id] = "Ecart de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+
+                if ($data['merchant']['refund_diff'] < 0.0) {
+                    $order_concat[$merchant_id] = "Excès de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+                }
+                if ($data['merchant']['refund_diff'] > 0.0) {
+                    $order_concat[$merchant_id] = "Manque de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+                }
+
                 $creditmemo_data = [
                     'merchant' => "{$data['merchant']['name']}",
                     'comment' => $order_concat[$merchant_id],
