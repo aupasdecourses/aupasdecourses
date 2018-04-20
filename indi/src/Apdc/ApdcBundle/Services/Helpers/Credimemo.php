@@ -2,6 +2,8 @@
 
 namespace Apdc\ApdcBundle\Services\Helpers;
 
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+
 trait Credimemo
 {
     /**
@@ -184,7 +186,7 @@ trait Credimemo
         $order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
 
         if (!$this->canCreditmemo($order)) {
-            return;
+            throw new NotAcceptableHttpException('Cannot create credit memo', null, 403);
         }
 
         $creditmemo = $this->prepareCreditmemo($order, $data);
