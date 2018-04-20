@@ -265,7 +265,7 @@ trait Credimemo
                 $merchant_concat = implode(' - ', $merchant_concat);
 
                 if ($data['merchant']['refund_diff'] < 0.0) {
-                    $order_concat[$merchant_id] = "Excès de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+                    $order_concat[$merchant_id] = "Excès de " . substr($data['merchant']['refund_diff'], 1) . "€ pour {$data['merchant']['name']}.";
                 }
                 if ($data['merchant']['refund_diff'] > 0.0) {
                     $order_concat[$merchant_id] = "Manque de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
@@ -353,6 +353,7 @@ trait Credimemo
             $templateId = $templateplus;
         } elseif ($refund_diff < 0) {
             $templateId = $templatemoins;
+            $refund_diff = (float) substr($refund_diff, 1);
         } elseif ($refund_diff == 0) {
             $templateId = $templatenull;
         }
