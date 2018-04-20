@@ -46,7 +46,7 @@ class Magento
             $day_warning = 'Attention! Magasin fermé le '.implode(',', $warning_days).'.';
         }
 
-        return $day_warning.' '.$period_warning;
+        return isset($day_warning, $period_warning) ? $day_warning.' '.$period_warning : null;
     }
 
     //Récupère toutes les commandes
@@ -125,9 +125,12 @@ class Magento
             }
         }
         uasort($commercants, function ($lhs, $rhs) {
-            if ($lhs['active'] < $rhs['active']) {
-                return true;
+            if (isset($lhs['active']) && isset($rhs['active'])) {
+                if ($lhs['active'] < $rhs['active']) {
+                    return true;
+                }
             }
+
             return false;
         });
         /* Sort associative array in ascending order, according to the VALUE */
@@ -350,7 +353,7 @@ class Magento
             }
 
             foreach ($products as $product) {
-                $prod_data = $this->ProductParsing($product, $orderId);
+                $prod_data = $this->ProductParsing($product, $order_id);
                 if (!isset($commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
                     $commercants[$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }
