@@ -189,7 +189,7 @@ class Magento
             }
 
             foreach ($products as $product) {
-                $prod_data = $this->ProductParsing($product, $orderId);
+                $prod_data = $this->ProductParsing($product, $order_id);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
                     $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }
@@ -280,7 +280,7 @@ class Magento
                      ->addFieldToFilter('commercant', ['eq' => $commercantId]);
             $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
             foreach ($products as $product) {
-                $prod_data = $this->ProductParsing($product, $orderId);
+                $prod_data = $this->ProductParsing($product, $order_id);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
                     $commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']] = $orderHeader;
                 }

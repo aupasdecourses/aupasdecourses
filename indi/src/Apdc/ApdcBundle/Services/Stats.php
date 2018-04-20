@@ -2,8 +2,6 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-use Doctrine\Common\Persistence\ObjectManager;
-
 include_once '../../app/Mage.php';
 
 define('FLOAT_NUMBER', 2);
@@ -15,9 +13,8 @@ class Stats
 
 	private $em;
 
-	public function __construct(ObjectManager $em)
+	public function __construct()
 	{
-		$this->em = $em;
 		\Mage::app();
 	}
 
@@ -41,8 +38,7 @@ class Stats
 		set_time_limit(0);
 
 		$data = [];
-		$orders = \Mage::getModel('sales/order')->getCollection()//->setOrder('entity_id', 'DESC')
-			->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
+		$orders = \Mage::getModel('sales/order')->getCollection()
 			->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
 
 		$orders->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('postcode', 'street', 'city', 'telephone'));
@@ -263,7 +259,6 @@ class Stats
     public function compareCustomers()
     {
         $orderIds = \Mage::getModel('sales/order')->getCollection()
-            ->addFieldToFilter('status', array('nin' => $GLOBALS['ORDER_STATUS_NODISPLAY']))
             ->addAttributeToFilter('status', array('in' => array(\Mage_Sales_Model_Order::STATE_COMPLETE, \Mage_Sales_Model_Order::STATE_CLOSED)));
         $orderIds->getSelect()->joinLeft('sales_flat_order_address', 'main_table.entity_id = sales_flat_order_address.parent_id', array('customer_id'));
         $orderIds->getSelect()->group('sales_flat_order_address.customer_id');
