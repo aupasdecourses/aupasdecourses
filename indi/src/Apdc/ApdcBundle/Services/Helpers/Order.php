@@ -148,6 +148,7 @@ trait Order
             'commercant_id' => $product->getCommercant(),
             'refund_comment' => $product->getRefundComment(),
             'produit_fragile' => $product->getProduitFragile(),
+            'produit_fragile_referentiel' => $product->getData('produit_fragile_referentiel'),
             ];
         $prod_data['comment'] = '';
         $options = $product->getProductOptions()['options'];
