@@ -1,10 +1,16 @@
-jQuery(document).ready(function() {
     function AddressBar(options) {
         this.root = options.root;
         this.zipcodes = options.zipcodes;
         this.zipcode = '';
         this.ajaxUrl = '';
         this.init();
+        this.is_in_popup = (jQuery(this.root).parents('.apdc-popup').length > 0);
+        this.popup = null;
+        if (this.is_in_popup) {
+          var popupId = jQuery(this.root).parents('.apdc-popup').attr('id');
+          this.popup = window[popupId];
+          GoogleApiLandingpage();
+        }
     }
 
     AddressBar.prototype.init = function() {
@@ -14,14 +20,22 @@ jQuery(document).ready(function() {
     };
 
     AddressBar.prototype.showLoading = function() {
-      this.addMessage("<p style='margin-top:15px;'>Veuillez patienter ...</p>");
+      if (this.is_in_popup) {
+        this.popup.showLoading();
+      } else {
+        this.addMessage("<p style='margin-top:15px;'>Veuillez patienter ...</p>");
+      }
       $j(this.root + ' button').attr( "disabled", true );
       $j(this.root + ' input').attr( "disabled", true );
       $j(this.root + ' select').attr( "disabled", true );
     };
 
     AddressBar.prototype.hideLoading = function() {
-      this.clearMessage();
+      if (this.is_in_popup) {
+        this.popup.hideLoading();
+      } else {
+        this.clearMessage();
+      }
       $j(this.root + ' button').attr( "disabled", false );
       $j(this.root + ' input').attr( "disabled", false );
       $j(this.root + ' select').attr( "disabled", false );
@@ -68,57 +82,7 @@ jQuery(document).ready(function() {
         }
     };
 
-    //Popup in case several choices for quartier
-
-    var disambiguationPopup = [];
-
-    if (typeof(apdcDisambiguationPopup) === 'undefined') {
-      apdcDisambiguationPopup = new ApdcPopup({
-          id: 'disambiguation-neighborhood'
-      });
-    }
-
-    function updateNeighborhood(zipcodes){
-        $j('#' + apdcDisambiguationPopup.id + ' .apdc-popup-content li.neighborhood_list').each(function(i,elt){
-            var $elt = $j(elt);
-            zipcodes.each(function(e,i){
-                if(parseInt($elt.attr('id'))==e.website_id){
-                    $elt.show();
-                }
-            });
-        }); 
-    };
-
-    function showDisambiguationForm(elt,handle,zipcodes) {
-        apdcDisambiguationPopup.showLoading();
-        var ajaxUrl = $j(elt).data('disambiguation-view');
-        var data = new FormData();
-        data.append('isAjax', 1);
-        data.append('handle', handle);
-        $j.ajax({
-            url: ajaxUrl,
-            data: data,
-            processData: false,
-            contentType: false,
-            type: 'POST'
-
-        })
-        .done(function(response) {
-            if (response.status === 'SUCCESS') {
-                disambiguationPopup[handle] = response.html;
-                apdcDisambiguationPopup.updateContent(response.html);
-                updateNeighborhood(zipcodes);
-
-            } else if (response.status === 'ERROR') {
-                var message = '<ul class="messages"><li class="notice-msg"><ul><li><span>' + response.message + '</span></li></ul></li></ul>';
-                apdcDisambiguationPopup.updateContent(message);
-            }
-            apdcDisambiguationPopup.initPopupHeight();
-        })
-        .fail(function() {
-            console.log('failed');
-        });
-    }
+jQuery(document).ready(function() {
 
     $j('#GoogleAutoCompleteInput').on('keydown',function(e){  
         $e=$j(this);
@@ -136,28 +100,26 @@ jQuery(document).ready(function() {
             lpAddressBar.showLoading();
             if(lpAddressBar.checkZipcode()){
                 website_ids = lpAddressBar.getData('website_id');
-                if(!(website_ids instanceof Array)){
-                    $j.ajax( {
-                        url : lpAddressBar.ajaxUrl,
-                        dataType : 'json',
-                        type : 'post',
-                        data : {
-                            isAjax:1,
-                            medium:'zipcode',
-                            zipcode:lpAddressBar.zipcode,
-                            website:website_ids,
-                            name:lpAddressBar.getData('name'),
-                        },
-                        success: function(data) {
-                          if(data.redirect) {
-                            window.location = data.redirectURL;
-                          }
-                        },
-                    });
-                }else{
-                    showDisambiguationForm(this,'apdc_disambiguation_neighborhood',website_ids);
-                    lpAddressBar.hideLoading();
+                if (website_ids instanceof Array) {
+                  website_ids = website_ids[0].website_id;
                 }
+                $j.ajax( {
+                    url : lpAddressBar.ajaxUrl,
+                    dataType : 'json',
+                    type : 'post',
+                    data : {
+                        isAjax:1,
+                        medium:'zipcode',
+                        zipcode:lpAddressBar.zipcode,
+                        website:website_ids,
+                        name:lpAddressBar.getData('name'),
+                    },
+                    success: function(data) {
+                      if(data.redirect) {
+                        window.location = data.redirectURL;
+                      }
+                    },
+                });
             }else if (lpAddressBar.zipcode==""||lpAddressBar.zipcode.length!=5||isNaN(parseInt(lpAddressBar.zipcode))){
                 message="<p style='margin-top:15px;'>Désolé, mais nous n\'avons pas reconnu votre adresse, merci de bien vouloir réessayer.</p>";
                 lpAddressBar.hideLoading();

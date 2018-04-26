@@ -35,3 +35,5 @@
 		window.attachEvent("onload", downloadJSAtOnload);
 	else window.onload = downloadJSAtOnload;
 </script>
+<?php $key = Mage::getStoreConfig('api_key/google/google_nav'); ?>
+<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=<?= $key ?>&libraries=places&callback=GoogleApiLandingpage'></script>

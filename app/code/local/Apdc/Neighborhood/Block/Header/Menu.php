@@ -22,34 +22,16 @@
  */
 class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
 {
-    protected $visitingNeighborhood = null;
-
     /**
-     * getNeighborhoods 
-     * get all active Neighborhoods
+     * getLastCustomerNeighborhood
      * 
-     * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
+     * @return Mage_Core_Model_Store | null
      */
-    public function getNeighborhoods()
-    {
-        $collection = Mage::getModel('apdc_neighborhood/neighborhood')
-            ->getCollection()
-            ->addFieldToFilter('is_active', 1);
-        $collection->getSelect()->order('sort_order ASC');
-
-        return $collection;
-    }
-
-    /**
-     * getCurrentNeighborhood 
-     * 
-     * @return Apdc_Neighborhood_Model_Neighborhood | null
-     */
-    public function getCurrentNeighborhood()
+    public function getLastCustomerNeighborhood()
     {
         if ($this->getCustomer()) {
             if ($this->getCustomer()->getCustomerNeighborhood()) {
-                return Mage::getModel('apdc_neighborhood/neighborhood')->load($this->getCustomer()->getCustomerNeighborhood());
+                return Mage::app()->getStore($this->getCustomer()->getCustomerNeighborhood());
             }
         }
         return null;
@@ -69,80 +51,13 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     }
 
     /**
-     * getInformationsType 
-     * 
-     * @return string | null
-     */
-    public function getInformationsType()
-    {
-        $currentNeighborhood = $this->getCurrentNeighborhood();
-        $currentWebsiteId = Mage::app()->getWebsite()->getId();
-        if ($this->getCustomer() && !$currentNeighborhood) {
-            if ($this->getSession()->getNeighborhoodIUnderstood() === true) {
-                return 'no_neighborhood';
-            } else {
-                return 'new_neighborhood';
-            }
-        } else if (
-            $this->getCustomer() && $currentNeighborhood &&
-            $currentNeighborhood->getWebsiteId() != $currentWebsiteId
-        ) {
-            return 'not_same_website';
-        }
-
-        return null;
-    }
-
-    /**
      * getSaveUrl 
      * 
-     * @param Apdc_Neighborhood_Model_Neighborhood $neighborhood neighborhood 
-     * 
      * @return string
      */
-    public function getSaveUrl(Apdc_Neighborhood_Model_Neighborhood $neighborhood)
+    public function getSaveUrl()
     {
-        return $this->getUrl('apdc_neighborhood/index/save', array('id' => $neighborhood->getId()));
-    }
-
-    /**
-     * getSaveVisitUrl 
-     * 
-     * @return string | null
-     */
-    public function getSaveVisitUrl()
-    {
-        if ($this->getSession()->getNeighborhoodVisiting()) {
-            return $this->getSaveUrl($this->getSession()->getNeighborhoodVisiting());
-        }
-        return null;
-    }
-
-    /**
-     * getVisitingNeighborhood 
-     * 
-     * @return Apdc_Neighborhood_Model_Neighborhood
-     */
-    public function getVisitingNeighborhood()
-    {
-        if (is_null($this->visitingNeighborhood)) {
-            $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood');
-            if ($this->getSession()->getNeighborhoodVisiting()) {
-                $neighborhood = $this->getSession()->getNeighborhoodVisiting();
-            }
-            $this->visitingNeighborhood = $neighborhood;
-        }
-        return $this->visitingNeighborhood;
-    }
-
-    /**
-     * getNeighborhoodIUnderstoodUrl 
-     * 
-     * @return string
-     */
-    public function getNeighborhoodIUnderstoodUrl()
-    {
-        return $this->getUrl('apdc_neighborhood/index/ajaxIUnderstood');
+        return $this->getUrl('apdc_neighborhood/index/save');
     }
 
     /**
@@ -153,5 +68,15 @@ class Apdc_Neighborhood_Block_Header_Menu extends Mage_Core_Block_Template
     public function getSession()
     {
         return Mage::getSingleton('customer/session');
+    }
+
+    /**
+     * getCurrentNeighborhood 
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getCurrentNeighborhood()
+    {
+        return Mage::helper('apdc_neighborhood')->getCurrentNeighborhood();
     }
 }

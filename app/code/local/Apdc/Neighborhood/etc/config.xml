@@ -81,15 +81,15 @@
       </modules>
     </translate>
     <events>
-      <controller_action_predispatch>
+      <customer_logout>
         <observers>
           <apdc_neighborhood>
             <type>singleton</type>
             <class>apdc_neighborhood/observer</class>
-            <method>setNeighborhoodVisiting</method>
+            <method>cleanCustomerSessionNeighborhood</method>
           </apdc_neighborhood>
         </observers>
-      </controller_action_predispatch>
+      </customer_logout>
     </events>
   </frontend>
 

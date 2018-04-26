@@ -18,7 +18,7 @@
                             </div>
                         </a>
                     <?php else : ?>
-                        <a class="need_change_neighbordhood button button-green" href="<?php echo $this->getReorderUrl($order, $this->getNeighborhood($order)->getId()); ?>" data-neighborhood-name="<?php echo $this->getNeighborhoodName($order); ?>" id="reorder-<?php echo $order->getId(); ?>">Recommander</a>
+                        <a class="need_change_neighbordhood button button-green" href="<?php echo $this->getReorderUrl($order, $order->getStoreId()); ?>" data-neighborhood-name="<?php echo $this->getNeighborhoodName($order); ?>" id="reorder-<?php echo $order->getId(); ?>">Recommander</a>
                     <?php endif; ?>
 				</article>
 			<?php } ?>

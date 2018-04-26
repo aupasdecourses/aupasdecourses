@@ -1,90 +1,57 @@
-<?php $neighborhoods = $this->getNeighborhoods();?>
-<?php $currentNeighborhood = $this->getCurrentNeighborhood(); ?>
-<?php $informationType = $this->getInformationsType(); ?>
-<ul id="header-neighborhood" class="block block-neighborhood" aria-labelledby="my_neighborhood_menu">
-    <?php if ($informationType) : ?>
-        <li class="neighborhood_informations apdc-popup-content">
-            <?php if ($informationType == 'new_neighborhood'): ?>
-                <div class="neighborhood_informations_title"><?php echo $this->__('New!'); ?></div>
-                <p><?php echo $this->__('You can now switch between neighborhoods. So it\'s easier if you move or want to delivery at work or to your friends.'); ?></p>
-                <div class="neighborhood_ok">
-                    <button id="neighborhood_ok" class="button button-green"><span><?php echo $this->__('I Understood'); ?></span></button>
-                </div>
-
-            <?php elseif ($informationType == 'no_neighborhood') : ?>
-                <div class="neighborhood_informations_title"><?php echo $this->__('Warning!'); ?></div>
-                <p><?php echo $this->__('You have not set your neighborhood yet. Please choose your neighborhood by clicking on %s icon within the list or choose the current neighborhood clicking the button below.', '<i class="fa fa-save"></i>'); ?></p>
-                <div class="neighborhood_ok">
-                    <a href="<?php echo $this->getSaveVisitUrl(); ?>" class="button button-green"><i class="fa fa-save"></i> <?php echo $this->__('Choose %s', $this->getVisitingNeighborhood()->getName()); ?></a>
-                </div>
-            <?php elseif ($informationType == 'not_same_website') : ?>
-                <div class="neighborhood_informations_title"><?php echo Mage::helper('apdc_neighborhood')->UserName(); ?></div>
-                <p>
-                    <?php echo $this->__('%s n\'est pas votre quartier par défaut. Voulez vous changer cela ?',$this->getVisitingNeighborhood()->getName()); ?>
-                    <div class="neighborhood_ok">
-                        <a href="<?php echo $this->getSaveVisitUrl(); ?>" class="button button-green"><i class="fa fa-save"></i> <?php echo $this->__('Switch to %s', $this->getVisitingNeighborhood()->getName()); ?></a>
-                    </div>
-                </p>
-            <?php endif; ?>
-        </li>
-    <?php endif; ?>
-    <?php if ($currentNeighborhood && $currentNeighborhood->getId()) :  ?>
-        <h3 class="neighborhood_title">
-            <?php echo $this->__('Your Neighborhood'); ?>
-        </h3>
-        <?php if ($this->getVisitingNeighborhood() && $this->getVisitingNeighborhood()->getId() != $currentNeighborhood->getId()): ?>
-            <li class="neighborhood_list selected">
-                <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($currentNeighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-                <a href="<?php echo $currentNeighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>">
-                    <img src="<?php echo $imageUrl; ?>" title="<?php echo $currentNeighborhood->getName(); ?>" width="50" height="50" />
-                    <p>
-                        <span><?php echo $currentNeighborhood->getName(); ?></span>
-                        <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', $currentNeighborhood->getPostcodes())); ?></i>
-                    </p>
-                </a>
-            </li>
-        <?php else : ?>
-            <li class="neighborhood_list selected">
-                <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($currentNeighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-                <img src="<?php echo $imageUrl; ?>" title="<?php echo $currentNeighborhood->getName(); ?>" width="50" height="50" />
-                <p>
-                    <span><?php echo $currentNeighborhood->getName(); ?></span>
-                    <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', $currentNeighborhood->getPostcodes())); ?></i>
-                </p>
-            </li>
-        <?php endif; ?>
-    <?php endif; ?>
-
+<?php
+$neighborhood = $this->getSession()->getNeighborhood();
+$customerDefaultPostcode = '';
+if (!$neighborhood) {
+    $customerDefaultPostcode = Mage::helper('apdc_neighborhood')->getCustomerDefaultPostcode();
+}
+?>
+<div id="header-neighborhood" class="block block-neighborhood" aria-labelledby="my_neighborhood_menu">
     <h3 class="neighborhood_title">
-        <?php if ($informationType && ($informationType == 'no_neighborhood' || $informationType == 'new_neighborhood')) : ?>
-            <?php echo $this->__('Choose Your Neighborhood'); ?>
+        <?php if ($neighborhood && $neighborhood->getId()) : ?>
+            <?php echo $this->__('Vous souhaitez changer de d\'adresse de livraison ?'); ?>
         <?php else : ?>
-            <?php echo $this->__('Choose Another Neighborhood'); ?>
+            <?php echo $this->__('Choisir une adresse de livraison'); ?>
         <?php endif; ?>
     </h3>
-    <?php foreach ($neighborhoods as $neighborhood) : ?>
-        <?php if ($currentNeighborhood && $currentNeighborhood->getId() == $neighborhood->getId()) : ?>
-            <?php continue; ?>
-        <?php endif; ?>
-        <li class="neighborhood_list choose">
-            <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-            <a href="<?php echo $neighborhood->getStoreUrl(); ?>" title="<?php echo $this->__('Visit this neighborhood'); ?>">
-                <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="50" height="50" />
-                <p>
-                    <span><?php echo $neighborhood->getName(); ?></span>
-                    <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', unserialize($neighborhood->getPostcodes()))); ?></i>
-                </p>
-            </a>
-            <?php if ($informationType == 'no_neighborhood') :?>
-                <?php if ($this->getSession()->isLoggedIn()) : ?>
-                    <ul class="neighborhood_actions">
-                        <li><a href="<?php echo $this->getSaveUrl($neighborhood); ?>" title="<?php echo $this->__('Set % as my new neighborhood',$neighborhood->getName()); ?>"><i class="fa fa-save"></i></a></li>
-                    </ul>
+    <div class="neighborhood_choose" id="search_neighborhoods">
+<!--
+        <form action="<?php echo $this->getSaveUrl(); ?>" method="post" id="neighborhood-choose-form" class="apdc-form">
+            <div class="form-group">
+                <?php if (!$neighborhood && $customerDefaultPostcode) : ?>
+                    <p><?php echo $this->__('Merci de confirmer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
+                <?php else : ?>
+                    <p><?php echo $this->__('Merci d\'indiquer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
                 <?php endif; ?>
-            <?php endif ?>
-        </li>
-    <?php endforeach; ?>
-</ul>
-<script type="text/javascript">
-    var neighborhoodIUnderstoodUrl = '<?php echo $this->getNeighborhoodIUnderstoodUrl(); ?>';
-</script>
+            </div>
+            <div class="form-group">
+                <input type="text" name="postcode" value="<?php echo $this->escapeHtml($customerDefaultPostcode) ?>" id="postcode" class="input-text required-entry" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Code postal')) ?>" placeholder="Votre code postal" />
+            </div>
+            <div class="form-group">
+                <button type="button" title="<?php echo $this->__('Annuler'); ?>" class="button button-white pull-left"><span><span><?php echo $this->__('Annuler'); ?></span></span></button>
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Valider')); ?>" class="button button-green pull-right"><span><span><?php echo $this->__('Valider'); ?></span></span></button>
+            </div>
+        </form>
+-->
+        <?php if (!$neighborhood && $customerDefaultPostcode) : ?>
+            <p><?php echo $this->__('Merci de confirmer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
+        <?php else : ?>
+            <p><?php echo $this->__('Merci d\'indiquer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
+        <?php endif; ?>
+        <?php echo $this->getChildHtml('address-bar');?>
+    </div>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('neighborhood-choose-form', true);
+        $j('#neighborhood-choose-form').on('submit', function (e) {
+          apdcNeighborhoodPopup.showLoading()
+          try {
+                tagmanager_event('validationInscription',{});
+            } catch(e) {
+                console.log(e);
+            }
+         });
+    //]]>
+    </script>    
+
+</div>

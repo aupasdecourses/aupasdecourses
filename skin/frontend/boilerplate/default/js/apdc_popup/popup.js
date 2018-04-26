@@ -29,6 +29,8 @@ ApdcPopup.prototype.cloneDefaultTemplate = function() {
   newTemplateHtml = newTemplateHtml.replace(new RegExp('_apdc_popup_default_template_id_', 'g'), this.id);
   jQuery('body').append(newTemplateHtml);
 
+  window[self.id] = self;
+
   window.setTimeout(function() {
     self.initActions();
     if (!self.populateTemplate) {

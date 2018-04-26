@@ -24,10 +24,11 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
-<?php $image = ($neighborhood->getImageBanner() ? $neighborhood->getImageBanner() : $neighborhood->getImage()); ?>
-<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($image); ?>
-<div class="page-title" style="background-image: url('<?php echo $imageUrl; ?>');">
-    <h1><span><?php echo $neighborhood->getName();?></span></h1>
+<?php
+
+?>
+<?php $imageUrl = Mage::helper('apdc_neighborhood')->getNeighborhoodImageUrl();?>
+<div class="page-title"<?php echo ($imageUrl ? ' style="background-image: url(\'' . $imageUrl . '\');"' : ''); ?>>
+    <h1><span><?php echo Mage::app()->getStore()->getName();?></span></h1>
     <div class="tagline">Mon quartier, mes commerçants!</div>
 </div>

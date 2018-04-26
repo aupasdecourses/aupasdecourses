@@ -24,6 +24,5 @@ class Apdc_Checkout_Model_Observer extends Mage_Core_Model_Abstract
     public function cleanDdateSessionData()
     {
         Mage::helper('apdc_checkout')->cleanDdate();
-        Mage::log("cleanDdateSessionData",null,"ddate.log");
     }
 }

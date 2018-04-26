@@ -30,16 +30,16 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
      */
-    public function getNeighborhoodsByWebsiteId($websiteId, $isActive=null)
-    {
-        $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()
-            ->addFieldToFilter('website_id', $websiteId);
-        if ($isActive === true) {
-            $neighborhoods->addFieldToFilter('is_active', 1);
-        }
-        $neighborhoods->getSelect()->order('sort_order ASC');
-        return $neighborhoods;
-    }
+    //public function getNeighborhoodsByWebsiteId($websiteId, $isActive=null)
+    //{
+    //$neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()
+    //->addFieldToFilter('website_id', $websiteId);
+    //if ($isActive === true) {
+    //$neighborhoods->addFieldToFilter('is_active', 1);
+    //}
+    //$neighborhoods->getSelect()->order('sort_order ASC');
+    //return $neighborhoods;
+    //}
 
     /**
      * getAllNeighborhoods 
@@ -48,42 +48,42 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
      */
-    public function getAllNeighborhoods($isActive=true)
-    {
-        $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
-        if ($isActive === true) {
-            $neighborhoods->addFieldToFilter('is_active', 1);
-        }
-        $neighborhoods->getSelect()->order('sort_order ASC');
-        return $neighborhoods;
-    }
+    //public function getAllNeighborhoods($isActive=true)
+    //{
+    //$neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
+    //if ($isActive === true) {
+    //$neighborhoods->addFieldToFilter('is_active', 1);
+    //}
+    //$neighborhoods->getSelect()->order('sort_order ASC');
+    //return $neighborhoods;
+    //}
 
     /**
      * getNeighborhoodVisiting 
      * 
      * @return Apdc_Neighborhood_Model_Neighborhood
      */
-    public function getNeighborhoodVisiting()
-    {
-        $neighborhood = Mage::getSingleton('customer/session')->getNeighborhoodVisiting();
-        if (!$neighborhood) {
-            $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood');
-        }
-        return $neighborhood;
-    }
+    //public function getNeighborhoodVisiting()
+    //{
+    //$neighborhood = Mage::getSingleton('customer/session')->getNeighborhoodVisiting();
+    //if (!$neighborhood) {
+    //$neighborhood = Mage::getModel('apdc_neighborhood/neighborhood');
+    //}
+    //return $neighborhood;
+    //}
 
     /**
      * getCustomerNeighborhood 
      * 
      * @return void
      */
-    public function getCustomerNeighborhood()
-    {
-        if ($this->getCustomer()) {
-            return $this->getCustomer()->getNeighborhoodUrl();
-        }
-        return $this->getNeighborhoodVisiting()->getStoreUrl();
-    }
+    //public function getCustomerNeighborhood()
+    //{
+    //if ($this->getCustomer()) {
+    //return $this->getCustomer()->getNeighborhoodUrl();
+    //}
+    //return $this->getNeighborhoodVisiting()->getStoreUrl();
+    //}
 
     /**
      * getCustomerNeighborhoodStoreId 
@@ -92,15 +92,15 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      * @return int
      */
-    public function getCustomerNeighborhoodStoreId($customer)
-    {
-        if ($customer->getCustomerNeighborhood()) {
-            $websiteId = Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getWebsiteId();
-        } else {
-            $websiteId = $customer->getWebsiteId();
-        }
-        return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
-    }
+    //public function getCustomerNeighborhoodStoreId($customer)
+    //{
+    //if ($customer->getCustomerNeighborhood()) {
+    //$websiteId = Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getWebsiteId();
+    //} else {
+    //$websiteId = $customer->getWebsiteId();
+    //}
+    //return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
+    //}
 
     /**
      * getCustomerNeighborhoodStore 
@@ -109,11 +109,11 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      * @return Mage_Core_Model_Store
      */
-    public function getCustomerNeighborhoodStore($customer)
-    {
-        $storeId = $this->getCustomerNeighborhoodStoreId($customer);
-        return Mage::getModel('core/store')->load($storeId);
-    }
+    //public function getCustomerNeighborhoodStore($customer)
+    //{
+    //$storeId = $this->getCustomerNeighborhoodStoreId($customer);
+    //return Mage::getModel('core/store')->load($storeId);
+    //}
 
 
     /**
@@ -124,30 +124,29 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      * @return Apdc_Neighborhood_Model_Neighborhood | null
      */
-    public function getNeighborhoodByPostcode($postcode, $isActive=null)
+    public function getNeighborhoodByPostcode($postcode)
     {
-        $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
-        if ($isActive === true) {
-            $neighborhoods->addFieldToFilter('is_active', 1);
-        }
-        foreach ($neighborhoods as $neighborhood) {
-            if (in_array($postcode, unserialize($neighborhood->getPostcodes()))) {
-                return $neighborhood;
+        $allZipCodes = $this->getAllZipCode();
+        if (isset($allZipCodes[$postcode]) && !empty($allZipCodes[$postcode])) {
+            $websiteId = $allZipCodes[$postcode][0]['website_id'];
+            $website = Mage::app()->getWebsite($websiteId);
+            if ($website) {
+                return $website->getDefaultStore();
             }
         }
         return null;
     }
 
-    public function UserName()
-    {
-        if (Mage::isInstalled() && $this->getCustomer()) {
-            $name =  "Bonjour " . $this->getCustomer()->getFirstname()."!";
-        } else {
-            $name = "Bonjour!";
-        }
+    //public function UserName()
+    //{
+    //if (Mage::isInstalled() && $this->getCustomer()) {
+    //$name =  "Bonjour " . $this->getCustomer()->getFirstname()."!";
+    //} else {
+    //$name = "Bonjour!";
+    //}
 
-        return $name;
-    }
+    //return $name;
+    //}
 
     /**
      * sendChangeNeighborhoodAdminNotification 
@@ -186,41 +185,80 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
-    public function getAllZipCode($json=false){
-        $data=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1)->toArray(array('postcodes','website_id','name'))['items'];
-        $result=array();
-        foreach($data as $row){
-            $tmp_zip=unserialize($row['postcodes']);
-            foreach($tmp_zip as $zipcode){
-                if(!array_key_exists($zipcode,$result)){
-                    $result[(int)$zipcode]=array(
-                        0 =>
-                        array('name'=>$row['name'],'website_id'=>$row['website_id'])
-                    );
-                }else{
-                    array_push($result[(int)$zipcode],array('name'=>$row['name'],'website_id'=>$row['website_id']));
+    /**
+     * getAllZipCode 
+     * 
+     * @return array
+     */
+    public function getAllZipCode()
+    {
+        $allZipCodes = [];
+        $shippingRestrictions = Mage::getModel('amshiprestriction/rule')->getCollection()
+            ->addFieldToFilter('is_active', 1);
+
+        $stores = Mage::app()->getStores();
+        foreach ($shippingRestrictions as $shipRestriction) {
+            $shipStores = explode(',', trim($shipRestriction->getStores(), ','));
+            if (count($shipStores) == 1) {
+                $storeId = reset($shipStores);
+                if (isset($stores[$storeId])) {
+                    $conditions = unserialize($shipRestriction->getConditionsSerialized());
+                    if (isset($conditions['conditions'])) {
+                        foreach ($conditions['conditions'] as $condition) {
+                            if (
+                                $condition['type'] == 'amshiprestriction/rule_condition_address' &&
+                                isset($condition['attribute']) &&
+                                $condition['attribute'] == 'postcode'
+                            ) {
+                                if (!isset($allZipCodes[$condition['value']])) {
+                                    $allZipCodes[$condition['value']] = [];
+                                }
+                                $allZipCodes[$condition['value']][] = [
+                                    'name' => $stores[$storeId]->getName(),
+                                    'website_id' => $stores[$storeId]->getWebsiteId()
+                                ];
+                            }
+
+                        }
+                    }
                 }
             }
         }
 
-        asort($result);
-
-        return $result;
+        asort($allZipCodes);
+        return $allZipCodes;
     }
 
-    public function getAllWebsites(){
-        $data=Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()->addFieldToFilter('is_active', 1);
-        $result=array();
-        foreach($data as $d){
-            if($d->getWebsiteId()<>2){
-                $result[$d->getSortOrder()]=array('website_id'=>$d->getWebsiteId(),'name'=>$d->getName());
+    /**
+     * getAllWebsites 
+     * 
+     * @return 
+     */
+    public function getAllWebsites()
+    {
+        $allWebsites = [];
+        $shippingRestrictions = Mage::getModel('amshiprestriction/rule')->getCollection()
+            ->addFieldToFilter('is_active', 1);
+
+        $stores = Mage::app()->getStores();
+        foreach ($shippingRestrictions as $shipRestriction) {
+            $shipStores = explode(',', trim($shipRestriction->getStores(), ','));
+            if (count($shipStores) == 1) {
+                $storeId = reset($shipStores);
+                if (isset($stores[$storeId]) && $stores[$storeId]->getWebsiteId() != 2) {
+                    $allWebsites[$stores[$storeId]->getName()] = [
+                        'name' => $stores[$storeId]->getName(),
+                        'website_id' => $stores[$storeId]->getWebsiteId()
+                    ];
+                }
             }
         }
 
-        ksort($result);
+        ksort($allWebsites, SORT_NATURAL);
 
-        return $result;
+        return $allWebsites;
     }
+
 
     /**
      * getCurrentNeighborhood 
@@ -229,11 +267,9 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCurrentNeighborhood()
     {
-        $neighborhood = $this->getNeighborhoodVisiting();
+        $neighborhood = Mage::getSingleton('customer/session')->getNeighborhood();
         if ($neighborhood && $neighborhood->getId()) {
             return $neighborhood;
-        } elseif ($this->getCustomer() && $this->getCustomer()->getCustomerNeighborhood()) {
-            return Mage::getModel('apdc_neighborhood/neighborhood')->load($this->getCustomer()->getCustomerNeighborhood());
         }
         return null;
     }
@@ -249,5 +285,64 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
             return Mage::getSingleton('customer/session')->getCustomer();
         }
         return null;
+    }
+
+    /**
+     * getNeighborhoodImageUrl 
+     * 
+     * @return string
+     */
+    public function getNeighborhoodImageUrl()
+    {
+        $imageUrl = '';
+
+        $storeCode = Mage::app()->getStore()->getCode();
+        $path = 'wysiwyg' . DS . 'neighborhood' . DS . $storeCode . '.jpg';
+        if (file_exists(Mage::getBaseDir('media') . DS . $path)) {
+            $imageUrl = Mage::getBaseUrl('media') . $path;
+        }
+
+        return $imageUrl;
+    }
+
+    /**
+     * getCustomerDefaultPostcode 
+     * 
+     * @param Mage_Customer_Model_Customer|null $customer customer 
+     * 
+     * @return string
+     */
+    public function getCustomerDefaultPostcode($customer=null)
+    {
+        $defaultPostcode = '';
+        if ($this->getCustomer()) {
+            $address = $this->getCustomer()->getPrimaryShippingAddress();
+            if (!$address) {
+                $address = $this->getCustomer()->getPrimaryBillingAddress();
+            }
+            if (!$address) {
+                $address = $this->getCustomer()->getAddressesCollection()->getFirstItem();
+            }
+            if ($address) {
+                $defaultPostcode = $address->getPostcode();
+            }
+        }
+        return $defaultPostcode;
+    }
+
+    /**
+     * setNeighborhood
+     * 
+     * @param Mage_Core_Model_Store $neighborhood neighborhood
+     * 
+     * @return void
+     */
+    public function setNeighborhood($neighborhood)
+    {
+        Mage::getSingleton('customer/session')->setNeighborhood($neighborhood);
+        if ($this->getCustomer()) {
+            $this->getCustomer()->setCustomerNeighborhood($neighborhood->getId());
+        }
+        return $this;
     }
 }

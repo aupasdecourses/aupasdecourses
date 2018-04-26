@@ -2,8 +2,7 @@
 <?php $isRedirectPayment = ((!$this->getData('isRedirectPayment') && $this->getData('isRedirectPayment') != 1) ? false : true); ?>
 <?php 
     if($isCheckout){
-        $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();
-        $url_logo = $neighborhood->getStoreUrl();
+        $url_logo = Mage::app()->getStore()->getUrl();
     }else{
         $url_logo= Mage::getUrl('../');
     }

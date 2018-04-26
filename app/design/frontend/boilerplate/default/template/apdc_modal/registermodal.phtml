@@ -14,6 +14,7 @@
             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
             <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+            <input type="hidden" name="customer_neighborhood" value="<?php echo Mage::getSingleton('customer/session')->getNeighborhood() ? Mage::getSingleton('customer/session')->getNeighborhood()->getId() : Mage::app()->getStore()->getId(); ?>" />
             <ul class="form-list">
                 <li class="fields">
                     <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
@@ -23,23 +24,6 @@
                         <label for="email_address" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
                         <div class="input-box">
                             <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email_address" value="<?php echo $this->escapeHtml($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
-                        </div>
-                    </div>
-                </li>
-                <li class="fields">
-                    <div class="field">
-                        <label for="customer_neighborhood" class="required"><em>*</em><?php echo $this->__('Neighborhood') ?></label>
-                        <div class="input-box">
-                            <select name="customer_neighborhood" id="customer_neighborhood" class="validate-select required-entry">
-                                <?php $neighborhoods = Mage::helper('apdc_neighborhood')->getAllNeighborhoods(); ?>
-                                <?php $neighborhoodVisiting = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting(); ?>
-                                <?php $currentNeighborHood = ($this->getFormData()->getCustomerNeighborhood() ? $this->getFormData()->getCustomerNeighborhood() : $neighborhoodVisiting->getId()); ?>
-                                <option value=""><?php echo $this->__('-- Please select your neighborhood --'); ?></option>
-                                <?php foreach ($neighborhoods as $neighborhood) : ?>
-                                    <?php $selected = ($neighborhood->getId() == $currentNeighborHood ? 'selected="selected"' : ''); ?>
-                                    <option value="<?php echo $neighborhood->getId(); ?>" <?php echo $selected; ?>><?php echo $neighborhood->getName(); ?></option>
-                                <?php endforeach; ?>
-                            </select>
                         </div>
                     </div>
                 </li>

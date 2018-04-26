@@ -54,16 +54,20 @@ class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 		$response=array();
 
 		if(isset($data['isAjax'])&&$data['isAjax']==1){
-			if ($data['medium']=='zipcode'&&isset($data['zipcode'])) {
-				$url=Mage::app()->getStore($data['website'])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
-				$response['status']=1;
-				$response['redirect']=1;
-				$response['redirectURL']=$url;
-			}elseif($data['medium']=='select'){
-                $url=Mage::app()->getStore($data['website'])->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
-                $response['status']=1;
-                $response['redirect']=1;
-                $response['redirectURL']=$url;
+			if ($data['medium'] == 'zipcode' && isset($data['zipcode'])) {
+                $store = Mage::app()->getWebsite($data['website'])->getDefaultStore();
+                Mage::helper('apdc_neighborhood')->setNeighborhood($store);
+                $url = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
+				$response['status'] = 1;
+				$response['redirect'] = 1;
+				$response['redirectURL'] = $url;
+			} elseif ($data['medium'] == 'select'){
+                $store = Mage::app()->getWebsite($data['website'])->getDefaultStore();
+                Mage::helper('apdc_neighborhood')->setNeighborhood($store);
+                $url = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
+                $response['status'] = 1;
+                $response['redirect'] = 1;
+                $response['redirectURL'] = $url;
 			}
 		}
 

@@ -73,25 +73,7 @@ class Apdc_Sales_Block_Order_Abstract extends Mage_Core_Block_Template
      */
     public function getNeighborhoodName($order)
     {
-        $neighborhood = $this->getNeighborhood($order);
-        return $neighborhood->getName();
-    }
-
-    /**
-     * getNeighborhood 
-     * 
-     * @param Mage_Sales_Model_Order $order order 
-     * 
-     * @return Apdc_Neighborhood_Model_Neighborhood
-     */
-    public function getNeighborhood($order)
-    {
-        $websiteId = $this->getWebsiteIdByStoreId($order->getStoreId());
-        if (!isset($this->neighborhoods[$websiteId])) {
-            $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId($websiteId);
-            $this->neighborhoods[$websiteId] = $neighborhoods->getFirstItem();
-        }
-        return $this->neighborhoods[$websiteId];
+        return Mage::app()->getStore($order->getStoreId())->getName();
     }
 
     /**
@@ -118,9 +100,8 @@ class Apdc_Sales_Block_Order_Abstract extends Mage_Core_Block_Template
      */
     public function isSameNeighborhoodAsCurrent($order)
     {
-        if (Mage::helper('apdc_neighborhood')->getCurrentNeighborhood() && 
-            $this->getNeighborhood($order)->getId() == Mage::helper('apdc_neighborhood')->getCurrentNeighborhood()->getId()
-        ) {
+        $currentNeighborhood = Mage::helper('apdc_neighborhood')->getCurrentNeighborhood();
+        if ($currentNeighborhood && $order->getStoreId() == $currentNeighborhood->getId()) {
             return true;
         }
         return false;

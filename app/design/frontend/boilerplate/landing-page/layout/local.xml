@@ -53,7 +53,6 @@
             <action method="addItem"><type>skin_js</type><file>js/apdc_popup/popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>js/apdc_popup/login-popup.js</file></action>
             <action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
-            <action method="addItem"><type>skin_js</type><file>js/apdc_neighborhood/search.js</file></action>
             <action method="addItem"><type>skin_js</type><file>js/apdc_customer/capitalize-name.js</file></action>
 
 
@@ -83,6 +82,7 @@
             <block type="core/template" name="facebook_app_id" template="inchoo/socialconnect/facebook/appid.phtml" />
             <block type="core/template" name="google_app_id" template="inchoo/socialconnect/google/appid.phtml" />
 
+            <action method="addJs"><file>GoogleApi/GoogleApi.js</file></action>
 
             <!-- =========================
              STYLESHEETS   
@@ -92,9 +92,6 @@
                 <action method="addItem"><rel>skin_css</rel><href>css/owl.carousel.min.css</href></action>
                 <action method="addItem"><rel>skin_css</rel><href>css/owl.theme.default.min.css</href></action>
                 <!-- IMPORTANT -->
-        </reference>
-        <reference name="footer">
-            <block type="core/template" name="footer_js" template="page/html/footer_js.phtml"/>
         </reference>
         <remove name="global_notices"/>
         <remove name="top.links"/>

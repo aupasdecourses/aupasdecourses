@@ -3,47 +3,73 @@ var autocomplete_billing;
 var autocomplete_shipping;
 var autocomplete_landingpage;
 
-function getPlaceKey(place, key) {
-	for (var obj in place.address_components) {
-		for (var t in place.address_components[obj].types) {
-			if (place.address_components[obj].types[t] == key) {
-				return place.address_components[obj].short_name;
-			}
-		}
-	}
-	return 'not found';
+// this function is call as callback of gmaps (see template page/html/footer_js.phtml)
+function GmapsLoaded()
+{
+  jQuery(document).trigger('GmapsLoaded');
 }
 
 function GoogleApiCustomerEdit() {
     autocomplete_addr_edit = new google.maps.places.Autocomplete((document.getElementById('street_1')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_addr_edit.addListener('place_changed', function() {
-        var place_shipping = autocomplete_addr_edit.getPlace();
-        jQuery('#street_1').val(place_shipping.address_components[0]['long_name'] + ' ' + place_shipping.address_components[1]['long_name']);
-        jQuery('#city').val(place_shipping.address_components[2]['long_name']);
-        jQuery('#zip').val(place_shipping.address_components[6]['long_name']);
-        jQuery('#country').val(place_shipping.address_components[5]['short_name']);
+        var place = autocomplete_addr_edit.getPlace();
+        jQuery('#street_1').val(GA_GetData(place, 'street_number') + ' ' + GA_GetData(place, 'route'));
+        jQuery('#city').val(GA_GetData(place, 'locality'));
+        jQuery('#zip').val(GA_GetData(place, 'postal_code'));
+        jQuery('#country').val(GA_GetData(place, 'country'));
     });
+}
+
+/**
+ * GA_GetData 
+ * 
+ * @param object place 
+ * @param string type : postal_code, country, locality (city), street_number, route, administrative_area_level_2 (region)
+ * 
+ * @return void
+ */
+function GA_GetData(place, type) {
+  var types = [];
+  for (var i=0; i < place.address_components.length; ++i) {
+    types = place.address_components[i].types;
+    for (var j = 0; j < types.length; ++j) {
+      if (types[j] == type) {
+        if (type == 'country') {
+          return place.address_components[i].short_name;
+        }
+        return place.address_components[i].long_name;
+      }
+    }
+  }
+  return '';
 }
 
 function GoogleApiCustomcheck() {
     autocomplete_billing = new google.maps.places.Autocomplete((document.getElementById('billing:street1')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_billing.addListener('place_changed', function() {
-        var place_billing = autocomplete_billing.getPlace();
-        jQuery('#billing\\:street1').val(place_billing.address_components[0]['long_name'] + ' ' + place_billing.address_components[1]['long_name']);
-        jQuery('#billing\\:city').val(place_billing.address_components[2]['long_name']);
-        jQuery('#billing\\:postcode').val(place_billing.address_components[6]['long_name']);
-        jQuery('#billing\\:country').val(place_billing.address_components[5]['long_name']);
-        jQuery("#billing\\:region_id").val(place_billing.address_components[4]['long_name']);;
+        var place = autocomplete_billing.getPlace();
+
+        jQuery('#billing\\:street1').val(GA_GetData(place, 'street_number') + ' ' + GA_GetData(place, 'route'));
+        jQuery('#billing\\:city').val(GA_GetData(place, 'locality'));
+        jQuery('#billing\\:postcode').val(GA_GetData(place, 'postal_code'));
+        jQuery('#billing\\:country').val(GA_GetData(place, 'country'));
+        var region = GA_GetData(place, 'administrative_area_level_2');
+        jQuery("#billing\\:region_id option").filter(function() {
+          return jQuery(this).text() == region;
+        }).prop('selected', true);
     });
 
     autocomplete_shipping = new google.maps.places.Autocomplete((document.getElementById('shipping:street1')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_shipping.addListener('place_changed', function() {
-        var place_shipping = autocomplete_shipping.getPlace();
-        jQuery('#shipping\\:street1').val(place_shipping.address_components[0]['long_name'] + ' ' + place_shipping.address_components[1]['long_name']);
-        jQuery('#shipping\\:city').val(place_shipping.address_components[2]['long_name']);
-        jQuery('#shipping\\:postcode').val(place_shipping.address_components[6]['long_name']);
-        jQuery('#shipping\\:country').val(place_shipping.address_components[5]['long_name']);
-        jQuery("#shipping\\:region_id").val(place_shipping.address_components[4]['long_name']);
+        var place = autocomplete_shipping.getPlace();
+        jQuery('#shipping\\:street1').val(GA_GetData(place, 'street_number') + ' ' + GA_GetData(place, 'route'));
+        jQuery('#shipping\\:city').val(GA_GetData(place, 'locality'));
+        jQuery('#shipping\\:postcode').val(GA_GetData(place, 'postal_code'));
+        jQuery('#shipping\\:country').val(GA_GetData(place, 'country'));
+        var region = GA_GetData(place, 'administrative_area_level_2');
+        jQuery("#shipping\\:region_id option").filter(function() {
+          return jQuery(this).text() == region;
+        }).prop('selected', true);
     });
 }
 
@@ -52,11 +78,7 @@ function GoogleApiLandingpage() {
     autocomplete_landingpage.addListener('place_changed', function(){
         $j('#GoogleAutoCompleteInput').siblings('button').show();
         var place = autocomplete_landingpage.getPlace();
-        var zipcode = getPlaceKey(place, 'postal_code');
-        if (zipcode != 'not found') {
-            $j('#GoogleAutoCompleteZipcode').val(zipcode);
-        } else {
-            $j('#GoogleAutoCompleteZipcode').val('');
-        }
+        var zipcode = GA_GetData(place, 'postal_code');
+        $j('#GoogleAutoCompleteZipcode').val(zipcode);
     });
 }

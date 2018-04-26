@@ -72,6 +72,7 @@
 				
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/newsletter-popup.js</file></action>
 				<action method="addItem"><type>skin_js</type><file>js/apdc_popup/apdc_quickview.js</file></action>
+        <action method="addJs"><file>GoogleApi/GoogleApi.js</file></action>
 				
 				<!-- IMPORTANT : le depot NPM de OWL Carousel n'est pas à jour -->
 				<action method="addItem"><type>skin_js</type><file>js/owl.carousel.min.2.js</file></action>
@@ -177,6 +178,7 @@
             <block type="core/text_list" name="before_body_end" as="before_body_end" translate="label">
                 <label>Page Bottom</label>
                 <block type="page/html_cookieNotice" name="global_cookie_notice" as ="global_cookie_notice" template="page/html/cookienotice.phtml" before="-" />
+                <block type="core/template" name="footer_js" template="page/html/footer_js.phtml" />
             </block>
         </block>
 

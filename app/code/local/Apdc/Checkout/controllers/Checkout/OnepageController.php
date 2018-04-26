@@ -16,18 +16,10 @@ class Apdc_Checkout_Checkout_OnepageController extends MW_Ddate_Checkout_Onepage
             if ($ddate >= date('Y-m-d')) {
                 $dtimeId = Mage::getSingleton('core/session')->getDtimeId();
                 $block = new MW_Ddate_Block_Onepage_Ddate();
-                Mage::log("New _ddateIsNotAvailable",null,"ddate.log");
-                Mage::log(Mage::getSingleton('core/session')->getData()['last_url'],null,"ddate.log");
-                Mage::log(Mage::getSingleton('core/session')->getData()['visitor_data'],null,"ddate.log");
-                Mage::log(Mage::getSingleton('core/session')->getData()['ddate'],null,"ddate.log");
-                Mage::log(Mage::getSingleton('core/session')->getData()['dtime'],null,"ddate.log");
-                Mage::log(Mage::getSingleton('core/session')->getData()['dtime_id'],null,"ddate.log");
                 if (!$block->isEnabled($dtimeId, $ddate,true)) {
-                    Mage::log($ddate."-".$dtimeId." is not enabled!",null,"ddate.log");
                     $hasError = true;
                 }
             } else {
-                Mage::log("Warning: date ".$ddate." < ".date('Y-m-d'),null,"ddate.log");
                 $hasError = true;
             }
             if ($hasError) {

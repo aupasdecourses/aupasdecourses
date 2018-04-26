@@ -23,10 +23,11 @@ class Apdc_Sales_OrderController  extends Mage_Sales_OrderController {
     public function reorderAction()
     {
         if ($this->getRequest()->getParam('neighborhood_id')) {
-            $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load($this->getRequest()->getParam('neighborhood_id'));
+            $neighborhood = Mage::app()->getStore($this->getRequest()->getParam('neighborhood_id'));
             if ($neighborhood && $neighborhood->getId()) {
+                Mage::helper('apdc_neighborhood')->setNeighborhood($neighborhood);
                 $appEmulation = Mage::getSingleton('core/app_emulation');
-                $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($neighborhood->getStore()->getId());
+                $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($neighborhood->getId());
                 $url = Mage::getUrl('sales/order/reorder', ['order_id' => $this->getRequest()->getParam('order_id')]);
                 Mage::getSingleton('checkout/session')->addSuccess(Mage::helper('checkout')->__('Vous êtes maintenant sur le quartier %s', $neighborhood->getName()));
                 return $this->_redirectUrl($url);

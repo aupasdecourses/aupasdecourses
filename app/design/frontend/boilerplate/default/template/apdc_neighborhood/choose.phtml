@@ -1,30 +1,27 @@
-<?php $neighborhoods = $this->getNeighborhoods(); ?>
-<ul id="my_neighborhood_choose_links" class="skip-content links">
-    <li class="neighborhood_informations">
-            <div class="neighborhood_informations_title"><?php echo $this->__('Bienvenue sur Au Pas de Courses !'); ?></div>
-            <p><?php echo $this->__('You have not set your neighborhood yet. Please choose one.'); ?></p>
-    </li>
+<?php $customerDefaultPostcode = Mage::helper('apdc_neighborhood')->getCustomerDefaultPostcode(); ?>
+<div class="neighborhood_choose">
+    <form action="<?php echo $this->getSaveUrl(); ?>" method="post" id="neighborhood-choose-form" class="apdc-form">
+        <div class="form-group">
+            <?php if ($customerDefaultPostcode) : ?>
+                <p><?php echo $this->__('Merci de confirmer votre code postal afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
+            <?php else : ?>
+                <p><?php echo $this->__('Merci d\'indiquer votre code postal afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
+            <?php endif; ?>
+        </div>
+        <div class="form-group">
+            <input type="text" name="postcode" value="<?php echo $this->escapeHtml($customerDefaultPostcode) ?>" id="postcode" class="input-text required-entry" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Code postal')) ?>" placeholder="Votre code postal" />
+        </div>
+        <div class="form-group">
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Valider')); ?>" class="button button-green"><span><span><?php echo $this->__('Valider'); ?></span></span></button>
+        </div>
+    </form>
+</div>
 
-    <li class="neighborhood_title">
-        <?php echo $this->__('Choose Your Neighborhood'); ?>
-    </li>
-    <?php foreach ($neighborhoods as $neighborhood) : ?>
-        <li class="neighborhood_list choose">
-            <?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 50, 'height' => 50)); ?>
-            <a href="<?php echo $this->getSaveUrl($neighborhood); ?>" title="<?php echo $this->__('Choose this neighborhood'); ?>">
-                <img src="<?php echo $imageUrl; ?>" title="<?php echo $neighborhood->getName(); ?>" width="50" height="50" />
-                <p>
-                    <span><?php echo $neighborhood->getName(); ?></span>
-                    <i><?php echo $this->__('Available for delivery addresses in %s', implode(', ', unserialize($neighborhood->getPostcodes()))); ?></i>
-                </p>
-            </a>
-        </li>
-    <?php endforeach; ?>
-</ul>
 <script type="text/javascript">
 //<![CDATA[
-    $j('a').on("click", function (e) {
-        $('login-form-popup-loading').show();
+    var dataForm = new VarienForm('neighborhood-choose-form', true);
+    $j('#neighborhood-choose-form').on('submit', function (e) {
+      apdcLoginPopup.showLoading();
       try {
             tagmanager_event('validationInscription',{});
         } catch(e) {

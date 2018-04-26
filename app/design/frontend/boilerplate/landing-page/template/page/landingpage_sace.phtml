@@ -27,8 +27,8 @@
                         <a href="#" class="button button-green" id="account-login" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Connexion">Connexion</a>
                         <a style="display:none;" href="#" id="choose-my-district" class="button button-green" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a>
                     </li>
-                <?php elseif (!$customerSession->getCustomer()->needToChooseNeighborhood()) : ?>
-                    <li><a href="<?php echo Mage::helper('apdc_neighborhood')->getCustomerNeighborhood(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
+                <?php elseif ($customerSession->getNeighborhood() && $customerSession->getNeighborhood()->getId()) : ?>
+                    <li><a href="<?php echo $customerSession->getNeighborhood()->getUrl(); ?>" class="button button-green" role="button" title="Mon Quartier">Mon Quartier</a></li>
                 <?php else : ?>
                     <li><a href="#" id="choose-my-district" class="button button-green" data-login-view="<?php echo $this->getUrl('apdc-customer/account/ajaxPopupView');?>" role="button" title="Mon Quartier">Choisir Mon Quartier</a></li>
                 <?php endif ?>

@@ -2,7 +2,6 @@
 <layout version="0.1.0">
   <default>
     <reference name="head">
-      <action method="addItem"><type>skin_js</type><name>js/apdc_neighborhood/neighborhood.js</name><params/></action>
       <action method="addItem"><type>skin_css</type><name>css/apdc_neighborhood/neighborhood.css</name><params/></action>
 
     </reference>
@@ -16,19 +15,25 @@
 		<reference name="content">
       <block type="apdc_neighborhood/header_menu"
         name="neighborhood_popupcontent"
-        template="apdc_neighborhood/header/popup-content.phtml" />
+        template="apdc_neighborhood/header/popup-content.phtml">
+        <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
+      </block>
     </reference>
   </apdc_neighborhood_view>  
 
   <apdc_popup_index_templateajax>
     <block type="apdc_neighborhood/header_menu"
       name="neighborhood_popup_apdc_popup_child"
-      template="apdc_neighborhood/header/popup-content.phtml" />
+      template="apdc_neighborhood/header/popup-content.phtml">
+      <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
+    </block>
   </apdc_popup_index_templateajax>
 
   <apdc_choose_neighborhood>
     <reference name="content">
-      <block type="apdc_neighborhood/header_menu" name="neighborhood_choose" template="apdc_neighborhood/choose.phtml" />
+      <block type="apdc_neighborhood/header_menu" name="neighborhood_choose" template="apdc_neighborhood/choose.phtml">
+        <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
+      </block>
     </reference>
   </apdc_choose_neighborhood>
 

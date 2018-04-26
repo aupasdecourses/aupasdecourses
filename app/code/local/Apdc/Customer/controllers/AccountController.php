@@ -323,12 +323,6 @@ class Apdc_Customer_AccountController extends Mage_Core_Controller_Front_Action
                         $customer->save();
                         $this->_dispatchRegisterSuccess($customer);
                         $response['redirect'] = $this->_successProcessRegistration($customer);
-                        if ($params['customer_neighborhood']) {
-                            $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$params['customer_neighborhood']);
-                            if ($neighborhood && $neighborhood->getId()) {
-                                $response['redirect'] = $neighborhood->getStoreUrl();
-                            }
-                        }
                         Mage::getSingleton('core/session')->addSuccess('Votre compte a bien été créé. Bienvenue chez Au Pas De Courses !');
                         $response['status'] = 'SUCCESS';
                     } else {

@@ -1,27 +1,32 @@
 <?php
 
+/**
+ * This file is part of the GardenMedia Mission Project 
+ * 
+ * @category Apdc
+ * @package  Neighborhood
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
+/**
+ * Apdc_Neighborhood_Model_Observer 
+ * 
+ * @category Apdc
+ * @package  Neighborhood
+ * @author   Erwan INYZANT <erwan@garden-media.fr> 
+ * @license  All right reserved to Garden Media Studio VN Company Limited
+ * @link     http://www.garden-media.fr
+ */
 class Apdc_Neighborhood_Model_Observer
 {
-
     /**
-     * setNeighborhoodVisiting
-     * set neighborhood in customer session
-     * 
-     * @param Varien_Event_Observer $observer observer 
+     * cleanCustomerSessionNeighborhood
      * 
      * @return void
      */
-    public function setNeighborhoodVisiting(Varien_Event_Observer $observer)
+    public function cleanCustomerSessionNeighborhood()
     {
-        $websiteId = Mage::app()->getWebsite()->getId();
-        $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()
-            ->addFieldToFilter('website_id', $websiteId);
-
-        if ($neighborhoods->count() > 0) {
-            Mage::getSingleton('customer/session')
-                ->setNeighborhoodVisiting($neighborhoods->getFirstItem());
-        } else {
-            Mage::getSingleton('customer/session')->setNeighborhoodVisiting(null);
-        }
+        Mage::getSingleton('customer/session')->unsNeighborhood();
     }
 }

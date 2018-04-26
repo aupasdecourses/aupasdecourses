@@ -32,8 +32,7 @@
  */
 ?>
 <?php $_menu = $this->getHtml('level-top') ?>
-<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
-<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($neighborhood->getImage(), array('width' => 40, 'height' => 40)); ?>
+<?php $store = Mage::app()->getStore();?>
 <?php if($_menu): ?>
     <nav id="supermenu" class="navbar navbar-default">
         <div class="container-fluid">
@@ -48,8 +47,8 @@
             <div class="collapse navbar-collapse" id="main-menu-collapse">
                 <ul class="nav navbar-nav">
                     <li class="level0" id="storename">
-                        <a href="<?php echo $neighborhood->getStoreUrl();?>">
-                            <span><?php echo $neighborhood->getName(); ?></span>
+                        <a href="<?php echo $store->getUrl();?>">
+                            <span><?php echo $store->getName(); ?></span>
                         </a>
                     </li>
                     <?php echo $_menu ?>
