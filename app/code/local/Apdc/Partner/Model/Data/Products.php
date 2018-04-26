@@ -24,6 +24,7 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
 {
     protected $attributesLabel = null;
     protected $neighborhoods = null;
+    protected $taxRates = [];
 
     /**
      * getList 
@@ -77,7 +78,7 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
             $products = Mage::getModel('catalog/product')->getCollection()
                 ->addFieldToFilter('type_id', 'simple')
                 ->addFieldToFilter('status', 1)
-                ->addAttributeToSelect(['name','commercant','short_description','weight','price','produit_biologique','poids_portion', 'unite_prix', 'image']);
+                ->addAttributeToSelect(['name','commercant','short_description','weight','price','produit_biologique','poids_portion', 'unite_prix', 'image', 'tax_class_id']);
             $commercantAttribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product','commercant');
 
             $products->getSelect()->join(
@@ -100,10 +101,7 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
 
             $products->getSelect()->group('e.entity_id');
 
-
-
             $products->load();
-            //$cpt = 0;
             $attributes = $this->getAttributesLabel();
             $neighborhoods = $this->getNeighborhoods();
             foreach ($products as $prod) {
@@ -119,7 +117,9 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
                     'image' => ($prod->getImage() ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $prod->getImage() : ''),
                     'quartier' => $this->getQuartiers(explode(',', $prod->getWebsiteIds())),
                     'postcodes' => $this->getPostcodes(explode(',', $prod->getWebsiteIds())),
-                    'shop_postcode' => $prod->getShopPostcode()
+                    'shop_postcode' => $prod->getShopPostcode(),
+                    'short_description' => $prod->getShortDescription(),
+                    'tax_rate' => $this->getTaxRate($prod->getTaxClassId())
                 ];
             }
         } catch (Exception $e) {
@@ -227,5 +227,17 @@ class Apdc_Partner_Model_Data_Products extends Apdc_Partner_Model_Data
             }
         }
         return $postcodes;
+    }
+
+    protected function getTaxRate($taxClassId)
+    {
+        if (!isset($this->taxRates[$taxClassId])) {
+            $store = Mage::app()->getStore();
+            $taxCalculation = Mage::getModel('tax/calculation');
+            $request = $taxCalculation->getRateRequest(null, null, null, $store);
+            $this->taxRates[$taxClassId] = $taxCalculation->getRate($request->setProductClassId($taxClassId));
+        }
+        return $this->taxRates[$taxClassId];
+
     }
 }
