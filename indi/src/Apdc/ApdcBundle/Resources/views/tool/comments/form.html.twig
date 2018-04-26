@@ -13,12 +13,39 @@
 			<div class="modal-body">
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
 				
+				<div class="form-group">
+					<label for="form_comment_type">Type de commentaire</label>
+					<div id="form_comment_type">{{ form_widget(form_comment.type) }}</div>
+				</div>
+
+				<div class="form-group">
+					<label for="form_comment_order_id"># Commande</label>
 				{% if order_id is not null %}
-				<p>
-					<h4><b># Commande</b></h4>
 					{{ form_widget(form_comment.order_id, {'attr': {'value': order_id } }) }}
-				</p>
+				{% else %}
+					{{ form_widget(form_comment.order_id) }}
 				{% endif %}
+				</div>
+
+				<div class="form-group">
+					<label for="form_comment_merchant_id" id="merchant_id_label">Commercant</label>
+					<div id="form_comment_merchant_id">{{ form_widget(form_comment.merchant_id) }}</div>
+				</div>
+
+				<div class="form-group">
+					<label for="associatedOrderCheckbox">Concerne aussi une deuxième commande ?</label>
+					<input type="checkbox" id="associatedOrderCheckbox" onclick="toggleCheckbox(this);">
+				</div>
+
+				<div class="form-group">
+					<label for="form_comment_associated_order_id" id="associated_order_id_label"># Commande associée</label>
+					<div id="form_comment_associated_order_id">{{ form_widget(form_comment.associated_order_id) }}</div>
+				</div>
+
+				<div class="form-group">
+					<label for="form_comment_text">Commentaire</label>
+					<div id="form_comment_text">{{ form_widget(form_comment.text) }}</div>
+				</div>
 
 				{{ form_end(form_comment) }}
 			</div>
@@ -32,6 +59,8 @@
 		var comment_type = document.getElementById("comment_type");
 		var comment_merchant_id = document.getElementById("comment_merchant_id");
 		var warning_visible_comment = document.getElementById('warningVisibleComment');
+		var comment_associated_order_id = document.getElementById('comment_associated_order_id');
+		var associated_order_id_label = document.getElementById('associated_order_id_label');
 
 		// Hide "Aucun commercant" choice
 		comment_merchant_id[2].style.display = "none";
@@ -41,10 +70,10 @@
 			if (comment_type.value == "customer_not_visible" || comment_type.value == "customer_is_visible") {
 				comment_merchant_id.value = "0";
 				comment_merchant_id.style.display = "none";
-				comment_merchant_id.previousSibling.style.display = "none";
+				document.getElementById('merchant_id_label').style.display = "none";
 			} else {
 				comment_merchant_id.style.display = "block";
-				comment_merchant_id.previousSibling.style.display = "block";
+				document.getElementById('merchant_id_label').style.display = "block";
 			}
 		});
 
@@ -66,6 +95,24 @@
 				if (comment_type.children[i].label == "Commentaires visibles") {
 					comment_type.children[i].style.display = "none";
 				}
+			}
+		}
+
+		// Only display associated_order if checkbox is checked
+		comment_associated_order_id.style.display = "none";
+		comment_associated_order_id.value = "0";
+		associated_order_id_label.style.display = "none";
+
+		function toggleCheckbox(checkbox)
+		{
+			if (checkbox.checked) {
+				comment_associated_order_id.style.display = "block";
+				comment_associated_order_id.value = "";
+				associated_order_id_label.style.display = "block";
+			} else {
+				comment_associated_order_id.style.display = "none";
+				comment_associated_order_id.value = "0";
+				associated_order_id_label.style.display = "none";
 			}
 		}
 

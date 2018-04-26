@@ -2,6 +2,8 @@
 
 namespace Apdc\ApdcBundle\Services\Helpers;
 
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+
 trait Credimemo
 {
     /**
@@ -184,7 +186,7 @@ trait Credimemo
         $order = \Mage::getSingleton('sales/order')->loadbyIncrementid($orderId);
 
         if (!$this->canCreditmemo($order)) {
-            return;
+            throw new NotAcceptableHttpException('Cannot create credit memo', null, 403);
         }
 
         $creditmemo = $this->prepareCreditmemo($order, $data);
@@ -263,7 +265,14 @@ trait Credimemo
                     $merchant_concat[] = $product['refund_com'];
                 }
                 $merchant_concat = implode(' - ', $merchant_concat);
-                $order_concat[$merchant_id] = "Ecart de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+
+                if ($data['merchant']['refund_diff'] < 0.0) {
+                    $order_concat[$merchant_id] = "Excès de " . substr($data['merchant']['refund_diff'], 1) . "€ pour {$data['merchant']['name']}.";
+                }
+                if ($data['merchant']['refund_diff'] > 0.0) {
+                    $order_concat[$merchant_id] = "Manque de {$data['merchant']['refund_diff']}€ pour {$data['merchant']['name']}.";
+                }
+
                 $creditmemo_data = [
                     'merchant' => "{$data['merchant']['name']}",
                     'comment' => $order_concat[$merchant_id],
@@ -346,6 +355,7 @@ trait Credimemo
             $templateId = $templateplus;
         } elseif ($refund_diff < 0) {
             $templateId = $templatemoins;
+            $refund_diff = (float) substr($refund_diff, 1);
         } elseif ($refund_diff == 0) {
             $templateId = $templatenull;
         }

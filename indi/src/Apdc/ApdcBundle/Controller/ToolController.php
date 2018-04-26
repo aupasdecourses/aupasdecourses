@@ -155,12 +155,13 @@ class ToolController extends Controller
 		$order_id = $form['order_id'];
 
 		$stats->addEntryToCommentHistory([
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'author'		=> $this->getUser()->getUsername(),
-			'comment_type'	=> $form['type'],
-			'comment_text'	=> $form['text'],
-			'order_id'		=> $order_id,
-			'merchant_id'	=> $form['merchant_id'],
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'author'				=> $this->getUser()->getUsername(),
+			'comment_type'			=> $form['type'],
+			'comment_text'			=> $form['text'],
+			'order_id'				=> $order_id,
+			'merchant_id'			=> $form['merchant_id'],
+			'associated_order_id'	=> $form['associated_order_id'],
 		]);
 
 		$session->getFlashBag()->add('success', 'Commentaire bien crée pour la commande ' . $order_id);

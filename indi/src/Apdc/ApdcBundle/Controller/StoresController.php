@@ -55,18 +55,6 @@ class StoresController extends Controller
 
 		$stores = $mage->getOrdersByStoreByMerchants(-1, $from, $to);
 
-		// Display only stores which have orders
-		foreach ($stores as $store => $merchants) {
-			foreach ($merchants as $merchant_id => $merchant) {
-				if (empty($stores[$store][$merchant_id]['orders'])) {
-					unset($stores[$store][$merchant_id]);
-				}
-			}
-			if (empty($stores[$store])) {
-				unset($stores[$store]);
-			}
-		}
-
 		return $this->render('ApdcApdcBundle::stores/all.html.twig', [
 			'forms' => [
 				$form_fromto->createView(),

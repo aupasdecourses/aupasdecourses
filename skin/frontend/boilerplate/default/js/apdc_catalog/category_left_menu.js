@@ -66,7 +66,8 @@
     if ($elt.hasClass('open')) {
       var $li = $elt.find('>ul li');
       if ($li.length) {
-        maxheight = $li.length * $li.height();
+        maxheight = $li.length * parseFloat($li.outerHeight(true));
+        maxheight += parseFloat($li.parent('ul').prev('a').outerHeight(true));
         $elt.css('max-height', maxheight + 'px');
       }
     } else {

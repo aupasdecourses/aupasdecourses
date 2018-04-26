@@ -3,7 +3,7 @@ Validation.add('required-entry', "Merci de compléter ce champ!", function(v) {
 });
 
 var accountPopup = [];
-var deliveryPopup = null;
+var deliveryPopup = {};
 var neighborhoodPopup = [];
 var apdcLoginPopup = null;
 var apdcDeliveryPopup = null;
@@ -158,6 +158,7 @@ function initLoginPopup() {
         autoHeightPopup:true,
         getTemplate:true,
         onReady: function(newHtml) {
+          deliveryPopup.delivery_view = newHtml;
           if (apdcDeliveryPopup.isOpen()) {
             apdcDeliveryPopup.updateContent(newHtml);
           }
@@ -178,13 +179,24 @@ function initLoginPopup() {
     });
     jQuery(document).on('checkDeliveryDays', function(event, result) {
       apdcDeliveryPopup.onReady = function(newHtml) {
-        apdcDeliveryPopup.updateContent(newHtml);
+        deliveryPopup.delivery_view = newHtml;
+        if (!apdcDeliveryPopup.isOpen()) {
+          apdcDeliveryPopup.updateContent(newHtml);
+          if (result.need_to_select_delivery_days) {
+            apdcDeliveryPopup.show();
+            apdcDeliveryPopup.initPopupHeight();
+          }
+        }
+      };
+      if (!apdcDeliveryPopup.isLoaded()) {
+        apdcDeliveryPopup.getTemplate();
+      } else if (!apdcDeliveryPopup.isOpen()) {
         if (result.need_to_select_delivery_days) {
+          apdcDeliveryPopup.updateContent(deliveryPopup.delivery_view);
           apdcDeliveryPopup.show();
           apdcDeliveryPopup.initPopupHeight();
         }
-      };
-      apdcDeliveryPopup.getTemplate();
+      }
     });
   }
 
