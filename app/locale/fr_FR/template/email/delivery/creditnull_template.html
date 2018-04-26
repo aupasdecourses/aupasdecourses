@@ -27,29 +27,22 @@
                         <tr>
                             <td valign="top" style="padding-left:20px;padding-right:20px;padding-bottom:5px;">
                                 <h1>Bonjour {{var customer_firstname}},</h1>
-                                <p>Les meilleurs produits de votre quartier sont bien arrivés chez vous et vous avez probablement commencé à les déguster.</p>
+                                <p>Vous avez réceptionné les produits de vos commerçants et nous espérons que vous en êtes satisfaits. N'hésitez pas à nous faire part de vos remarques à <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a>.</p>
                                 <p>De notre côté, nous avons vérifié votre commande <strong>n°{{var order_id}}</strong> et tous vos produits vous ont été livrés comme prévu.</p>
                                 {{if refund_shipping}}
-                                <p>Par ailleurs, nous vous offrons les frais de livraison sur cette commande, d'un montant de {{var refund_shipping}}€.</p>
-                                <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de rembourser directement sur votre carte bancaire.</p>
+                                <p>Nous vous informons également que les frais de livraison de cette commande, d'un montant de {{var refund_shipping}}€, vous ont été remboursés.</p>
+                                <p>Soit un total de <strong>{{var refund_full}}€</strong> que nous venons de recréditer directement sur votre carte bancaire.</p>
                                 {{/if}}
-                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
-                                 {{if refund_customer_visible_comment}}
-                                <p>Enfin, après traitement de votre commande, nous souhaitions vous dire que :</p>
+                                {{if refund_customer_visible_comment}}
+                                <p>Par ailleurs, nous souhaitons vous communiquer les informations suivantes :</p>
                                 <p>{{var refund_customer_visible_comment}}</p>
                                 {{/if}}
+                                 <p>Vous retrouverez l'ensemble des informations de votre commande en <a href="{{var store_code}}/sales/order/view/order_id/{{var id}}/" style="color: #f57320;font-weight: normal;text-decoration: none;">vous connectant à votre compte</a>.</p>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding-left:20px;padding-right:20px;padding-bottom:20px;">
                                 <p style="font-style: italic;margin-top: 20px;">L'&#233;quipe Au Pas De Courses</p>
-                            </td>
-                        </tr>
-                    </table>
-                    <table cellspacing="0" cellpadding="0" border="0" style="padding-top:20px;padding-bottom:10px;width: 600px;background-color:white;line-height:1.2em;" summary="">
-                        <tr>
-                            <td>
-                                <p style="font-size:12px;font-style:italic;text-align:center;">N'h&#233;sitez pas &#224; nous contacter &#224; <a style="color: #f57320;font-weight: normal;text-decoration: none;" href="mailto:contact@aupasdecourses.com">contact@aupasdecourses.com</a> <br/>si vous avez des questions ou pour partager vos bonnes recettes!</p>
                             </td>
                         </tr>
                     </table>

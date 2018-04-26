@@ -65,7 +65,25 @@ class Magento
         $rsl = [];
         foreach ($orders as $order) {
             $orderHeader = $this->OrderHeaderParsing($order);
-            $products = $order->getAllItems();
+            $products = \Mage::getModel('sales/order_item')->getCollection();
+            $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')]);
+            $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
+            if ($commercantId != -1) {
+                $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
+            }
+
+            // !!!!
+            // Voir pour meilleures jointures
+            $products->getSelect()->joinLeft(['backup_modif' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/backupmodif')],
+                'backup_modif.product_id = main_table.product_id', [
+                'code_ref_apdc' => 'backup_modif.code_ref_apdc',
+            ])->group('product_id');
+            $products->getSelect()->joinLeft(['referentiel' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/referentiel')],
+                'referentiel.code_ref_apdc = backup_modif.code_ref_apdc', [
+                'produit_fragile_referentiel' => 'referentiel.produit_fragile',
+            ]);
+            // !!!!
+
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 $orderHeader['products'][] = $prod_data;
@@ -185,6 +203,18 @@ class Magento
                 $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
             }
 
+            // !!!!
+            // Voir pour meilleures jointures
+            $products->getSelect()->joinLeft(['backup_modif' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/backupmodif')],
+                'backup_modif.product_id = main_table.product_id', [
+                'code_ref_apdc' => 'backup_modif.code_ref_apdc',
+            ])->group('product_id');
+            $products->getSelect()->joinLeft(['referentiel' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/referentiel')],
+                'referentiel.code_ref_apdc = backup_modif.code_ref_apdc', [
+                'produit_fragile_referentiel' => 'referentiel.produit_fragile',
+            ]);
+            // !!!!
+
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
@@ -202,6 +232,19 @@ class Magento
         foreach ($commercants as $storeid => $commercant) {
             $rsl[$S[$storeid]['name']] = $commercant;
         }
+
+        // Display only stores which have orders
+        foreach ($rsl as $store => $merchants) {
+            foreach ($merchants as $merchant_id => $merchant) {
+                if (empty($rsl[$store][$merchant_id]['orders'])) {
+                    unset($rsl[$store][$merchant_id]);
+                }
+            }
+            if (empty($rsl[$store])) {
+                unset($rsl[$store]);
+            }
+        }
+
         return $rsl;
     }
 
@@ -274,8 +317,21 @@ class Magento
             $orderHeader = $this->OrderHeaderParsing($order);
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('order_id', ['eq' => $order->getData('entity_id')])
-                     ->addFieldToFilter('commercant', ['eq' => $commercantId]);
+                     ->addFieldToFilter('main_table.commercant', ['eq' => $commercantId]);
             $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
+
+            // !!!!
+            // Voir pour meilleures jointures
+            $products->getSelect()->joinLeft(['backup_modif' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/backupmodif')],
+                'backup_modif.product_id = main_table.product_id', [
+                'code_ref_apdc' => 'backup_modif.code_ref_apdc',
+            ])->group('product_id');
+            $products->getSelect()->joinLeft(['referentiel' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/referentiel')],
+                'referentiel.code_ref_apdc = backup_modif.code_ref_apdc', [
+                'produit_fragile_referentiel' => 'referentiel.produit_fragile',
+            ]);
+            // !!!!
+
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);
                 if (!isset($commercants[$orderHeader['store_id']][$prod_data['commercant_id']]['orders'][$orderHeader['id']])) {
@@ -348,6 +404,18 @@ class Magento
             if ($commercantId != -1) {
                 $products->addFieldToFilter('commercant', ['eq' => $commercantId]);
             }
+
+            // !!!!
+            // Voir pour meilleures jointures
+            $products->getSelect()->joinLeft(['backup_modif' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/backupmodif')],
+                'backup_modif.product_id = main_table.product_id', [
+                'code_ref_apdc' => 'backup_modif.code_ref_apdc',
+            ])->group('product_id');
+            $products->getSelect()->joinLeft(['referentiel' => \Mage::getSingleton('core/resource')->getTableName('apdc_referentiel/referentiel')],
+                'referentiel.code_ref_apdc = backup_modif.code_ref_apdc', [
+                'produit_fragile_referentiel' => 'referentiel.produit_fragile',
+            ]);
+            // !!!!
 
             foreach ($products as $product) {
                 $prod_data = $this->ProductParsing($product, $orderId);

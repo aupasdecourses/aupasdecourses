@@ -137,7 +137,7 @@
 																<th>Commentaire</th>
 															</tr>
 															{% for product in order.products %}
-															{% if product.produit_fragile == 1 %}
+															{% if (product.produit_fragile == 1) or (product.produit_fragile_referentiel == 1) %}
 																<tr style="background-color:rgba(255, 165, 0, 0.7)">
 															{% else %}
 																<tr>

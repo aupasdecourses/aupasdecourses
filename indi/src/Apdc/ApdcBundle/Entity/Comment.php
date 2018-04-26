@@ -9,6 +9,7 @@ class Comment
 	private $text;
 	private $order_id;
 	private $merchant_id;
+	private $associated_order_id;
 
 	public function getType()
 	{
@@ -48,5 +49,15 @@ class Comment
 	public function setMerchantId($merchant_id)
 	{
 		$this->merchant_id = $merchant_id;
+	}
+
+	public function getAssociatedOrderId()
+	{
+		return $this->associated_order_id;
+	}
+
+	public function setAssociatedOrderId($associated_order_id)
+	{
+		$this->associated_order_id = $associated_order_id;
 	}
 }

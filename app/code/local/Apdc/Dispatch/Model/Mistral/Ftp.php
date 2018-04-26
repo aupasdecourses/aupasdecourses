@@ -326,10 +326,10 @@ class Apdc_Dispatch_Model_Mistral_Ftp extends Mage_Core_Model_Abstract
                         if ($code == $this->_methodforcitycourses) {
                             Mage::log("Model Export - format FTP Citycourses order ".$i,null,"export.log");
                             $o['transporter'] = 'STARDOM';
-                            $o['enlevement_debut'] = '11:00';
-                            $o['enlevement_fin'] = '12:00';
-                            $o['livraison_debut'] = '12:00';
-                            $o['livraison_fin'] = '13:00';
+                            $o['enlevement_debut'] = '09:00';
+                            $o['enlevement_fin'] = '10:00';
+                            $o['livraison_debut'] = '10:00';
+                            $o['livraison_fin'] = '11:00';
                             $out .= $this->oe($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;
                             $out .= $this->ol($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;
                             $out .= $this->co($this->_doforcitycourses, $shop['infos'], $o).';0'.PHP_EOL;

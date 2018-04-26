@@ -14,17 +14,18 @@
 		{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request} )) }}
 	</div>
 
-	<div id="filter"><label>Filtrer par type / commercant : &nbsp;</label></div>
+	<div id="filter"><label>Filtrer par type / client / commercant : &nbsp;</label></div>
 
 	<table class="table table-striped" id="commentsHistoryTable">
 		<thead>
 			<tr>
 				<th class="sort">Type de commentaire</th>
 				<th>Commande</th>
+				<th>Autre commande concernée</th>
+				<th class="sort">Client</th>
 				<th class="sort">Commercant</th>
-				<th>Crée le</th>
-				<th>Auteur</th>
-				<th>Commentaire</th>
+				<th>Auteur & Date</th>
+				<th style="width:50%">Commentaire</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,16 +33,17 @@
 			<tr>
 				<td>{{ comment.comment_label }}</td>
 				<td><a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a></td>
-				{% if comment.merchant_id == -1 %}
-					<td>All</td>
-				{% elseif comment.merchant_id == 0 %}
-					<td>Aucun commercant</td>
-				{% else %}
-					<td>{{ comment.merchant_name }}</td>
-				{% endif %}
-				<td>{{ comment.created_at|date('d/m/Y H:i') }}</td>
-				<td>{{ comment.author }}</td>
-				<td>{{ comment.comment_text|raw }}</td>
+				<td>
+					{% if comment.associated_order_id == 0 %}Aucune{% else %}{{ comment.associated_order_id }}{% endif %}
+				</td>					
+				<td>{{ comment.customer_firstname ~ " " ~ comment.customer_lastname }}</td>
+				<td>
+					{% if comment.merchant_id == -1 %}All
+					{% elseif comment.merchant_id == 0 %}Aucun commercant
+					{% else %}{{ comment.merchant_name }}{% endif %}
+				</td>
+				<td>{{ comment.author ~ " - " ~ comment.created_at|date('d/m/Y H:i') }}</td>
+				<td style="width:50%">{{ comment.comment_text|raw }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
