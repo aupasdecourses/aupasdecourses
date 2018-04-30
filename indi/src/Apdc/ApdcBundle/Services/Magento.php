@@ -91,7 +91,8 @@ class Magento
         foreach ($shops as $shop) {
             $stores=explode(',', $shop->getStores());
             foreach ($stores as $id) {
-                $storeinfo = $S[$id];
+                // @ hides php notice
+                $storeinfo = @$S[$id];
                 $delivery_days = $shop->getDeliveryDays();
                 $closed_periods = $shop->getClosingPeriods();
 
