@@ -83,3 +83,11 @@
   left: 50%;
   transform:translate(-50%, -50%);
 }
+
+.apdc-popup #address-bar.has-value #GoogleAutoCompleteInput {
+  width:calc(100% - 70px);
+  float:left;
+}
+.apdc-popup #address-bar.has-value button {
+  padding:8px 20px;
+}

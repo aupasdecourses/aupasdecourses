@@ -23,98 +23,33 @@
 class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
-     * getNeighborhoodsByWebsiteId 
+     * getPostcodeByWebsite 
      * 
-     * @param int          $websiteId : websiteId 
-     * @param boolean|null $isActive  : get only active neighborhoods or not
+     * @param Mage_Core_Model_Website $website website 
      * 
-     * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
+     * @return string
      */
-    //public function getNeighborhoodsByWebsiteId($websiteId, $isActive=null)
-    //{
-    //$neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()
-    //->addFieldToFilter('website_id', $websiteId);
-    //if ($isActive === true) {
-    //$neighborhoods->addFieldToFilter('is_active', 1);
-    //}
-    //$neighborhoods->getSelect()->order('sort_order ASC');
-    //return $neighborhoods;
-    //}
+    public function getNeighborhoodInfosByWebsite($website=null)
+    {
+        $infos = [
+            'postcode' => '',
+            'name' => ''
+        ];
 
-    /**
-     * getAllNeighborhoods 
-     * 
-     * @param boolean $isActive isActive 
-     * 
-     * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
-     */
-    //public function getAllNeighborhoods($isActive=true)
-    //{
-    //$neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
-    //if ($isActive === true) {
-    //$neighborhoods->addFieldToFilter('is_active', 1);
-    //}
-    //$neighborhoods->getSelect()->order('sort_order ASC');
-    //return $neighborhoods;
-    //}
+        if (is_null($website)) {
+            $website = Mage::app()->getWebsite();
+        }
+        $allZipCodes = $this->getAllZipCode();
+        foreach ($allZipCodes as $postcode => $data) {
+            if ($data[0]['website_id'] == $website->getId()) {
+                $infos['postcode'] = $postcode;
+                $infos['name'] = $data[0]['name'];
+                break;
+            }
+        }
+        return $infos;
 
-    /**
-     * getNeighborhoodVisiting 
-     * 
-     * @return Apdc_Neighborhood_Model_Neighborhood
-     */
-    //public function getNeighborhoodVisiting()
-    //{
-    //$neighborhood = Mage::getSingleton('customer/session')->getNeighborhoodVisiting();
-    //if (!$neighborhood) {
-    //$neighborhood = Mage::getModel('apdc_neighborhood/neighborhood');
-    //}
-    //return $neighborhood;
-    //}
-
-    /**
-     * getCustomerNeighborhood 
-     * 
-     * @return void
-     */
-    //public function getCustomerNeighborhood()
-    //{
-    //if ($this->getCustomer()) {
-    //return $this->getCustomer()->getNeighborhoodUrl();
-    //}
-    //return $this->getNeighborhoodVisiting()->getStoreUrl();
-    //}
-
-    /**
-     * getCustomerNeighborhoodStoreId 
-     * 
-     * @param Mage_Customer_Model_Customer $customer customer 
-     * 
-     * @return int
-     */
-    //public function getCustomerNeighborhoodStoreId($customer)
-    //{
-    //if ($customer->getCustomerNeighborhood()) {
-    //$websiteId = Mage::getModel('apdc_neighborhood/neighborhood')->load($customer->getCustomerNeighborhood())->getWebsiteId();
-    //} else {
-    //$websiteId = $customer->getWebsiteId();
-    //}
-    //return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
-    //}
-
-    /**
-     * getCustomerNeighborhoodStore 
-     * 
-     * @param Mage_Customer_Model_Customer $customer customer 
-     * 
-     * @return Mage_Core_Model_Store
-     */
-    //public function getCustomerNeighborhoodStore($customer)
-    //{
-    //$storeId = $this->getCustomerNeighborhoodStoreId($customer);
-    //return Mage::getModel('core/store')->load($storeId);
-    //}
-
+    }
 
     /**
      * getNeighborhoodByPostcode 
@@ -136,17 +71,6 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return null;
     }
-
-    //public function UserName()
-    //{
-    //if (Mage::isInstalled() && $this->getCustomer()) {
-    //$name =  "Bonjour " . $this->getCustomer()->getFirstname()."!";
-    //} else {
-    //$name = "Bonjour!";
-    //}
-
-    //return $name;
-    //}
 
     /**
      * sendChangeNeighborhoodAdminNotification 

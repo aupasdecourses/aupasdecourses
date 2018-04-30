@@ -55,7 +55,7 @@ class Apdc_Home_IndexController extends Mage_Core_Controller_Front_Action
 
 		if(isset($data['isAjax'])&&$data['isAjax']==1){
 			if ($data['medium'] == 'zipcode' && isset($data['zipcode'])) {
-                $store = Mage::app()->getWebsite($data['website'])->getDefaultStore();
+                $store = Mage::helper('apdc_neighborhood')->getNeighborhoodByPostcode($data['zipcode']);
                 Mage::helper('apdc_neighborhood')->setNeighborhood($store);
                 $url = $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK);
 				$response['status'] = 1;

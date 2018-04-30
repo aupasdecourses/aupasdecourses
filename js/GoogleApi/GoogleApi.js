@@ -76,9 +76,13 @@ function GoogleApiCustomcheck() {
 function GoogleApiLandingpage() {
     autocomplete_landingpage = new google.maps.places.Autocomplete((document.getElementById('GoogleAutoCompleteInput')),{ types: ['geocode'], componentRestrictions: {country: "fr"}});
     autocomplete_landingpage.addListener('place_changed', function(){
+        $j('#address-bar').addClass('has-value');
         $j('#GoogleAutoCompleteInput').siblings('button').show();
         var place = autocomplete_landingpage.getPlace();
         var zipcode = GA_GetData(place, 'postal_code');
         $j('#GoogleAutoCompleteZipcode').val(zipcode);
     });
+    if ($j('#GoogleAutoCompleteInput').val() !== '') {
+        $j('#GoogleAutoCompleteInput').next('button').show();
+    }
 }

@@ -14,24 +14,6 @@ if (!$neighborhood) {
         <?php endif; ?>
     </h3>
     <div class="neighborhood_choose" id="search_neighborhoods">
-<!--
-        <form action="<?php echo $this->getSaveUrl(); ?>" method="post" id="neighborhood-choose-form" class="apdc-form">
-            <div class="form-group">
-                <?php if (!$neighborhood && $customerDefaultPostcode) : ?>
-                    <p><?php echo $this->__('Merci de confirmer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
-                <?php else : ?>
-                    <p><?php echo $this->__('Merci d\'indiquer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
-                <?php endif; ?>
-            </div>
-            <div class="form-group">
-                <input type="text" name="postcode" value="<?php echo $this->escapeHtml($customerDefaultPostcode) ?>" id="postcode" class="input-text required-entry" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Code postal')) ?>" placeholder="Votre code postal" />
-            </div>
-            <div class="form-group">
-                <button type="button" title="<?php echo $this->__('Annuler'); ?>" class="button button-white pull-left"><span><span><?php echo $this->__('Annuler'); ?></span></span></button>
-                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Valider')); ?>" class="button button-green pull-right"><span><span><?php echo $this->__('Valider'); ?></span></span></button>
-            </div>
-        </form>
--->
         <?php if (!$neighborhood && $customerDefaultPostcode) : ?>
             <p><?php echo $this->__('Merci de confirmer votre adresse afin de nous aider à sélectionner les commerçants proche de chez vous.'); ?></p>
         <?php else : ?>
@@ -39,19 +21,4 @@ if (!$neighborhood) {
         <?php endif; ?>
         <?php echo $this->getChildHtml('address-bar');?>
     </div>
-
-    <script type="text/javascript">
-    //<![CDATA[
-        var dataForm = new VarienForm('neighborhood-choose-form', true);
-        $j('#neighborhood-choose-form').on('submit', function (e) {
-          apdcNeighborhoodPopup.showLoading()
-          try {
-                tagmanager_event('validationInscription',{});
-            } catch(e) {
-                console.log(e);
-            }
-         });
-    //]]>
-    </script>    
-
 </div>

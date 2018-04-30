@@ -2,45 +2,13 @@
 /**
 / @author Pierre Mainguet
 */
+$neighborhoodInfos = Mage::helper('apdc_neighborhood')->getNeighborhoodInfosByWebsite();
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') ?>amasty/amorderattr/payment.js"></script>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') ?>amasty/amorderattr/conditions.js"></script>
-<script type="text/javascript">
-
-    //var h = new Hash();
-    Validation.addAllThese([
-        ['validate-checkboxgroup-required', 'Please select an option.', function(v, elm) {
-            id = elm.id.slice(0, elm.id.lastIndexOf("_"));
-            checkboxGroupChecked = false;
-            $$('input[id^=' + id + ']').each(function(checkbox){
-                if (checkbox.checked || jQuery(checkbox).hasClass('validation-failed'))
-                {
-                    checkboxGroupChecked = true;
-                }
-            });
-            return checkboxGroupChecked;
-        }],
-        
-        ['validate-length', 'Please use the value with length less or equal than 25 characters', function(v) {
-            return v.length <= 25;
-        }],
-        ['validate-zip', 'Merci de spécifier un code postal valide, sans espace, par exemple 75001', function(v) {
-            return Validation.get('IsEmpty').test(v) || /(^\d{5}$)/.test(v);
-            }],
-    ]);
-    function clearHash() {
-        h = new Hash();
-    }
-    $$('#checkoutSteps button').each(function(button){
-        button.observe('click', clearHash);
-    });
-    
-    var amOrderattrConditionObj = new amOrderattrCondition({
-        'shipping_methods': []    });
-    
-    amOrderattrConditionObj.check();
-</script>
 <form id="co-billing-form" action="" class="apdc-form">
+    <input type="hidden" value="<?php echo $neighborhoodInfos['postcode']; ?>" id="neighborhood-postcode" />  
+    <input type="hidden" value="<?php echo $neighborhoodInfos['name']; ?>" id="neighborhood-name" />  
 	<div class="row">
 
 		<div class="col-sm-6">
@@ -93,7 +61,7 @@
 									<div class="field">
 										<label for="shipping:postcode" class="required"><?php echo $this->__('Zip/Postal Code') ?> <em>*</em></label>
 										<div class="input-box">
-											<input maxlength="5" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="shipping[postcode]" id="shipping:postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" onchange="shipping.setSameAsBilling(false);" />
+											<input maxlength="5" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="shipping[postcode]" id="shipping:postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" class="input-text validate-zip validate-shipping-postcode<?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" onchange="shipping.setSameAsBilling(false);" />
 										</div>
 									</div>
 								</li>
@@ -338,6 +306,18 @@
 			</fieldset>
 		</div>
 	</div>
+    <div id="neighborhood-postcode-message" style="display:none;" class="col-xs-12">
+        <?php $msg1 = $this->__('Vous souhaitez passer commande chez des commerçants qui ne peuvent livrer à votre adresse. Merci d\'indiquer une adresse dans le quartier %s (%s).', $neighborhoodInfos['name'], $neighborhoodInfos['postcode']); ?> 
+        <?php $msg2 = $this->__('Si vous préférrez changer d\'adresse, votre panier sera vidé et nous sélectionnerons pour vous les commerçants qui correspondent à votre code postal. <a href="#" id="change-neighborhood">Changer d\'adresse et vider mon panier.</a>'); ?> 
+        <ul class="messages">
+            <li class="notice-msg">
+                <ul>
+                    <li><?php echo $this->escapeHtml($msg1) ?></li>
+                    <li><?php echo $msg2 ?></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     <div class="buttons-set clearfix" id="billing-buttons-container">
         <button type="button" title="<?php echo $this->__('Continue') ?>" class="button button-green pull-right" onclick="billing.save()"><?php echo $this->__('Continue') ?> <i class="fa fa-angle-right"></i></button>
         <div class="please-wait" id="billing-please-wait" style="display:none;">
@@ -346,6 +326,96 @@
     </div>
 </form>
 
+<script type="text/javascript">
+    var postcodesByAddressId = {};
+    <?php 
+    foreach ($this->getCustomer()->getAddresses() as $address) {
+        echo '  postcodesByAddressId[' . $address->getId() . '] = "' . $address->getPostcode() . '";' . "\n";
+    }
+    ?>
+
+    jQuery('#shipping-address-select').addClass('validate-select-shipping-postcode');
+    jQuery('#change-neighborhood').on('click', function() {
+        var postcode = jQuery('shipping\\:postcode').val();
+        if (jQuery('#shipping-address-select').val() !== '') {
+            if (typeof(postcodesByAddressId[jQuery('#shipping-address-select').val()]) !== 'undefined') {
+                postcode = postcodesByAddressId[jQuery('#shipping-address-select').val()];
+            }
+        }
+        lpAddressBar.showLoading();
+        $j.ajax( {
+            url : lpAddressBar.ajaxUrl,
+            dataType : 'json',
+            type : 'post',
+            data : {
+                isAjax:1,
+                medium:'zipcode',
+                zipcode:postcode
+            },
+            success: function(data) {
+              if(data.redirect) {
+                window.location = data.redirectURL;
+              }
+            },
+        });
+    });
+    //var h = new Hash();
+    Validation.addAllThese([
+        ['validate-checkboxgroup-required', 'Please select an option.', function(v, elm) {
+            id = elm.id.slice(0, elm.id.lastIndexOf("_"));
+            checkboxGroupChecked = false;
+            $$('input[id^=' + id + ']').each(function(checkbox){
+                if (checkbox.checked || jQuery(checkbox).hasClass('validation-failed'))
+                {
+                    checkboxGroupChecked = true;
+                }
+            });
+            return checkboxGroupChecked;
+        }],
+        
+        ['validate-length', 'Please use the value with length less or equal than 25 characters', function(v) {
+            return v.length <= 25;
+        }],
+        ['validate-zip', 'Merci de spécifier un code postal valide, sans espace, par exemple 75001', function(v) {
+            return Validation.get('IsEmpty').test(v) || /(^\d{5}$)/.test(v);
+        }],
+        ['validate-shipping-postcode', 'L\'adresse renseignée n\'est pas dans le même quartier. (' + $('neighborhood-name').value + ')', function(v) {
+            return checkNeighborhoodPostcode(v);
+        }],
+        ['validate-select-shipping-postcode', 'L\'adresse renseignée n\'est pas dans le même quartier. (' + $('neighborhood-name').value + ')', function(v) {
+            if (v === '') {
+                return true;
+            } else {
+                if (typeof(postcodesByAddressId[v]) !== 'undefined') {
+                    return checkNeighborhoodPostcode(postcodesByAddressId[v]);
+                }
+                return true;
+            }
+            
+        }]
+    ]);
+    function checkNeighborhoodPostcode(shippingPostcode) {
+        var neighborhoodPostcode = $('neighborhood-postcode').value;
+        if (shippingPostcode === neighborhoodPostcode) {
+            jQuery('#neighborhood-postcode-message').hide();
+            return true;
+        } else {
+            jQuery('#neighborhood-postcode-message').show();
+            return false;
+        }
+    }
+    function clearHash() {
+        h = new Hash();
+    }
+    $$('#checkoutSteps button').each(function(button){
+        button.observe('click', clearHash);
+    });
+    
+    var amOrderattrConditionObj = new amOrderattrCondition({
+        'shipping_methods': []    });
+    
+    amOrderattrConditionObj.check();
+</script>
 <script type="text/javascript">
 //<![CDATA[
     var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');

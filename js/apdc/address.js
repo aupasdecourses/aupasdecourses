@@ -88,6 +88,7 @@ jQuery(document).ready(function() {
         $e=$j(this);
         if($e.val()!=''){
             $e.siblings('button').hide();
+            $e.parents('#address-bar').removeClass('has-value');
         }
     });
 

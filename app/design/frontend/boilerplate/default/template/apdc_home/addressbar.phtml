@@ -3,12 +3,18 @@
         $quartiers = Mage::helper('apdc_neighborhood')->getAllZipCode();
         echo "var zipcodes=".json_encode($quartiers).";";
         $websites = Mage::helper('apdc_neighborhood')->getAllWebsites();
+
+        $neighborhood = Mage::getSingleton('customer/session')->getNeighborhood();
+        $customerDefaultPostcode = '';
+        if (!$neighborhood) {
+            $customerDefaultPostcode = Mage::helper('apdc_neighborhood')->getCustomerDefaultPostcode();
+        }
     ?>
 </script>
-<div id='address-bar' class="input-box apdc-form container-fluid">
-    <input id="GoogleAutoCompleteInput" class='input-text' placeholder='Entrez votre adresse' type='text' name='input_address' autocomplete="off" />
+<div id='address-bar' class="input-box apdc-form container-fluid<?php echo ($customerDefaultPostcode ? ' has-default-value' : ''); ?>">
+    <input id="GoogleAutoCompleteInput" class="input-text" placeholder="Entrez votre adresse" type="text" name="input_address" autocomplete="off" value="<?php echo $customerDefaultPostcode; ?>" />
     <button data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="button button-green" type="submit" style="display:none;margin:0;">OK</button>
-    <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden"/>
+    <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden" value="<?php echo $customerDefaultPostcode; ?>" />
     <p class="separator" style="margin: 10px 0;">ou</p>
     <select name="website-list">
         <option selected="true" disabled="disabled">Sélectionnez votre quartier</option>

@@ -31,7 +31,7 @@
 
   <apdc_choose_neighborhood>
     <reference name="content">
-      <block type="apdc_neighborhood/header_menu" name="neighborhood_choose" template="apdc_neighborhood/choose.phtml">
+      <block type="apdc_neighborhood/header_menu" name="neighborhood_choose" template="apdc_neighborhood/header/popup-content.phtml">
         <block type="core/template" name="address-bar" template="apdc_home/addressbar.phtml"/>
       </block>
     </reference>
