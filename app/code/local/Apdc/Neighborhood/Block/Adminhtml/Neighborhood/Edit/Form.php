@@ -33,8 +33,7 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Form extends Mage_Admi
             array(
                 'id' => 'edit_form',
                 'action' => $this->getUrl('adminhtml/neighborhood_index/save'),
-                'method' => 'post',
-                'enctype' => 'multipart/form-data'
+                'method' => 'post'
             )
         );
         $form->setUseContainer(true);

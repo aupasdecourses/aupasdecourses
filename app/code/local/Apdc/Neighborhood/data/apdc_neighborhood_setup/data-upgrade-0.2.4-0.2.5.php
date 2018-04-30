@@ -24,6 +24,28 @@ $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection
     if (!file_exists($destDir)) {
         mkdir($destDir, 0777, true);
     }
+paris1e
+paris2e
+paris3e
+paris4e
+paris5e
+paris6e
+paris7e
+paris8e
+paris9e
+paris10e
+paris11e
+paris12e
+paris13e
+paris14e
+paris15e
+paris16e
+paris16esud
+paris17e
+paris18e
+paris19e
+paris20e
+levalloisperret
 
     $banners = array(
         'paris2e_banner.jpg',

@@ -49,18 +49,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
             );
         }
         $fieldset->addField(
-            'is_active',
-            'select',
-            array(
-                'name' => 'is_active',
-                'label' => $this->_helper()->__('Is Active'),
-                'title' => $this->_helper()->__('Is Active'),
-                'values' => Mage::getSingleton('adminhtml/system_config_source_enabledisable')->toOptionArray(),
-                'required' => true,
-                'disabled' => $isElementDisabled
-            )
-        );
-        $fieldset->addField(
             'website_id',
             'select',
             array(
@@ -68,18 +56,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
                 'label' => $this->_helper()->__('Website'),
                 'title' => $this->_helper()->__('Website'),
                 'values' => Mage::getSingleton('adminhtml/system_config_source_website')->toOptionArray(),
-                'required' => true,
-                'disabled' => $isElementDisabled
-            )
-        );
-
-        $fieldset->addField(
-            'name',
-            'text',
-            array(
-                'name' => 'name',
-                'label' => $this->_helper()->__('Nom du quartier'),
-                'title' => $this->_helper()->__('Nom du quartier'),
                 'required' => true,
                 'disabled' => $isElementDisabled
             )
@@ -109,55 +85,7 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Edit_Tab_Main
             )
         );
 
-        $fieldset->addField(
-            'postcodes',
-            'text',
-            array(
-                'name' => 'postcodes',
-                'label' => $this->_helper()->__('Code postal'),
-                'title' => $this->_helper()->__('Code postal'),
-                'required' => true,
-                'disabled' => $isElementDisabled,
-                'note' => $this->_helper()->__('Vous pouvez renseigner plusieurs code postaux en les séparants par des virgules (ex : 75015,75003,76010)')
-
-            )
-        );
         
-        $fieldset->addField(
-            'image',
-            'image',
-            array(
-                'name' => 'image',
-                'label' => $this->_helper()->__('Image du quartier'),
-                'title' => $this->_helper()->__('Image du quartier'),
-                'required' => true,
-                'disabled' => $isElementDisabled
-            )
-        );
-
-        $fieldset->addField(
-            'image_banner',
-            'image',
-            array(
-                'name' => 'image_banner',
-                'label' => $this->_helper()->__('Bannière du quartier'),
-                'title' => $this->_helper()->__('Bannière du quartier'),
-                'required' => true,
-                'disabled' => $isElementDisabled
-            )
-        );
-
-        $fieldset->addField(
-            'sort_order',
-            'text',
-            array(
-                'name' => 'sort_order',
-                'label' => $this->_helper()->__('Sort order'),
-                'title' => $this->_helper()->__('Sort order'),
-                'required' => false,
-                'disabled' => $isElementDisabled
-            )
-        );
         if (Mage::getSingleton('adminhtml/session')->getFormData()) {
             $form->setValues(Mage::getSingleton('adminhtml/session')->getFormData());
         } else {

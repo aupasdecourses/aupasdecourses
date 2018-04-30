@@ -31,7 +31,7 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
     {
         parent::__construct();
         $this->setId('neighborhoodGrid');
-        $this->setDefaultSort('sort_order');
+        $this->setDefaultSort('entity_id');
         $this->setDefaultDir('ASC');
         $this->setSaveParametersInSession(true);
     }
@@ -45,12 +45,8 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
     {
         $collection = Mage::getModel('apdc_neighborhood/neighborhood')->getcollection()
             ->addFieldToSelect('entity_id')
-            ->addFieldToSelect('is_active')
-            ->addFieldToSelect('name')
             ->addFieldToSelect('website_id')
-            ->addFieldToSelect('code_do')
-            ->addFieldToSelect('postcodes')
-            ->addFieldToSelect('sort_order');
+            ->addFieldToSelect('code_do');
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -73,24 +69,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
             )
         );
 
-        $this->addColumn(
-            'is_active',
-            array(
-                'header'=> Mage::helper('catalog')->__('Is Active'),
-                'index' => 'is_active',
-                'type' => 'options',
-                'options' => array(0 => $this->_helper()->__('No'), 1 => $this->_helper()->__('Yes'))
-            )
-        );
-
-        $this->addColumn(
-            'name',
-            array(
-                'header'=> Mage::helper('catalog')->__('Name'),
-                'index' => 'name',
-            )
-        );
-
         $this->addColumn('website_id', array(
             'header'    => Mage::helper('customer')->__('Website'),
             'align'     => 'center',
@@ -106,25 +84,6 @@ class Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid extends Mage_Adminhtml
                 'index' => 'code_do',
             )
         );
-        $this->addColumn(
-            'postcodes',
-            array(
-                'header'=> Mage::helper('catalog')->__('Postcodes'),
-                'index' => 'postcodes',
-                'filter' => false,
-                'sortable' => false,
-                'renderer' => 'Apdc_Neighborhood_Block_Adminhtml_Neighborhood_Grid_Renderer_Postcodes'
-            )
-        );
-
-        $this->addColumn(
-            'sort_order',
-            array(
-                'header'=> Mage::helper('catalog')->__('Sort Order'),
-                'index' => 'sort_order',
-            )
-        );
-
 
         return parent::_prepareColumns();
     }
