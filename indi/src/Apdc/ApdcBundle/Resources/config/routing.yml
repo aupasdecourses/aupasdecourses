@@ -91,14 +91,14 @@ refundClosure:
   defaults: { _controller: ApdcApdcBundle:Refund:refundClosure}
   requirements: { id:"[0-9-]+" }
 
-refundPostClosureIndex:
-  path: /refund/postclosure/index
-  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureIndex}
+# refundPostClosureIndex:
+#   path: /refund/postclosure/index
+#   defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureIndex}
 
-refundPostClosureForm:
-  path: /refund/postclosure/{psp}/form
-  defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureForm}
-  requirements: { psp:"[0-9]+" }
+# refundPostClosureForm:
+#   path: /refund/postclosure/{psp}/form
+#   defaults: { _controller: ApdcApdcBundle:Refund:refundPostClosureForm}
+#   requirements: { psp:"[0-9]+" }
 
 billingIndex:
   path: /billing/

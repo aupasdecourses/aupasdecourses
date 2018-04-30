@@ -6,7 +6,6 @@ include_once '../../app/Mage.php';
 
 class Magento
 {
-    //Réutiliser les fonctions de Delivery et de Dispatch pour simplifier code
 
     use Helpers\Credimemo;
     use Helpers\Products;
@@ -14,18 +13,23 @@ class Magento
     use Helpers\Model;
     use Helpers\Media;
 
-    const AUTHORIZED_GROUP = ['Administrators'];
-    const ATTRIBUTE_CODES = array('commercant', 'produit_biologique', 'produit_de_saison', 'tax_class_id');
-    const CLASS_TAX_IDS = array(5 => '5.5%', 9 => '10%', 10 => '20%');
+    const AUTHORIZED_GROUP  = ['Administrators'];
+    const ATTRIBUTE_CODES   = ['commercant', 'produit_biologique', 'produit_de_saison', 'tax_class_id'];
+    const CLASS_TAX_IDS     = [5 => '5.5%', 9 => '10%', 10 => '20%'];
 
     public function __construct()
     {
         \Mage::app();
-        $this->_attributeArraysLabels = $this->getAttributesLabelFromId(self::ATTRIBUTE_CODES);
-        $this->_attributeArraysIds = $this->getAttributesIdFromLabel(self::ATTRIBUTE_CODES);
+        $this->_attributeArraysLabels   = $this->getAttributesLabelFromId(self::ATTRIBUTE_CODES);
+        $this->_attributeArraysIds      = $this->getAttributesIdFromLabel(self::ATTRIBUTE_CODES);
     }
 
-    //Réutiliser les fonctions Magento développée pour les infos de fermeture magasin
+    /**
+     *  Récupère les jours de fermeture magasin
+     *
+     *  @param array[] $delivery_days : Les jours de livraison 
+     *  @param array[] $closed_periods : Les périodes de fermeture 
+     */
     public function getWarningDays($delivery_days, $closed_periods)
     {
         if ($closed_periods != array()) {
@@ -49,8 +53,14 @@ class Magento
         return isset($day_warning, $period_warning) ? $day_warning.' '.$period_warning : null;
     }
 
-    //Récupère toutes les commandes
-
+    /**
+     *  Récupère la liste des commandes 
+     *
+     *  @param string $dfrom : La date de début de livraison
+     *  @param string $dto : La date de fin de livraison
+     *  @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     *  @param int $orderId : Le numero de commande. -1 correspond à tous les numeros de commande
+     */
     public function getOrders($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -78,7 +88,11 @@ class Magento
         return $rsl;
     }
 
-    /**	VUE ECLATEE PAR QUARTIERS ET PAR COMMERCANTS*/
+    /**
+     * Récupère la liste des commercants par quartier
+     *
+     * @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     */
     public function getMerchantsByStore($commercantId = -1)
     {
         $commercants = [];
@@ -89,7 +103,7 @@ class Magento
         }
         $S = \Mage::helper('apdc_commercant')->getStoresArray("storeid");
         foreach ($shops as $shop) {
-            $stores=explode(',', $shop->getStores());
+            $stores = explode(',', $shop->getStores());
             foreach ($stores as $id) {
                 // @ hides php notice
                 $storeinfo = @$S[$id];
@@ -134,12 +148,19 @@ class Magento
 
             return false;
         });
-        /* Sort associative array in ascending order, according to the VALUE */
+
         asort($commercants);
         return $commercants;
     }
 
-    //Récupère la liste des commandes par quartiers
+    /**
+     * Récupère la liste des commandes par quartier
+     *
+     *  @param string $dfrom : La date de début de livraison
+     *  @param string $dto : La date de fin de livraison
+     *  @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     *  @param int $orderId : Le numero de commande. -1 correspond à tous les numeros de commande
+     */
     public function getOrdersByStore($dfrom = null, $dto = null, $commercantId = -1, $orderId = -1)
     {
         if (!isset($dfrom)) {
@@ -167,7 +188,14 @@ class Magento
         return $rsl;
     }
 
-    //Récupère la liste des commandes par quartiers et par commerçant
+    /**
+     * Récupère la liste des commandes par quartier & par commercant
+     *
+     *  @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     *  @param string $dfrom : La date de début de livraison
+     *  @param string $dto : La date de fin de livraison
+     *  @param int $orderId : Le numero de commande. -1 correspond à tous les numeros de commande
+     */
     public function getOrdersByStoreByMerchants($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -209,9 +237,11 @@ class Magento
         return $rsl;
     }
 
-    /*VUE AGGREGEE PAR COMMERCANTS ET PAS DECOMPOSEE PAR QUARTIERS*/
-
-    //  Récupère tous les commerçants
+    /**
+     * Récupère la liste des commercants
+     *
+     * @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     */
     public function getMerchants($commercantId = -1)
     {
         $commercants = [];
@@ -261,7 +291,14 @@ class Magento
         return $commercants;
     }
 
-    //Récupère toutes les commandes d'un commerçant
+    /**
+     * Récupère la liste des commandes d'un commercant
+     *
+     *  @param int $commercantId : L'ID commercant
+     *  @param string $dfrom : La date de début de livraison
+     *  @param string $dto : La date de fin de livraison
+     *  @param int $orderId : Le numero de commande. -1 correspond à tous les numeros de commande
+     */
     public function getMerchantsOrders($commercantId, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -303,7 +340,11 @@ class Magento
         return $rsl;
     }
 
-    //Récupère une commande et l'affiche par commerçant
+    /**
+     * Récupère une commande spécifique & l'affiche par commercants
+     *
+     * @param int $orderId : Le numero de commande
+     */
     public function getOrderByMerchants($orderId)
     {
         $merchants = $this->getMerchantsByStore();
@@ -328,7 +369,14 @@ class Magento
         return $rsl;
     }
 
-    /** Récupère toutes les commandes et les affichent par commerçant (Similaire à getMerchantsOrdersByStore) */
+    /**
+     *  Récupère la liste des commandes par commercant
+     *
+     *  @param int $commercantId : L'ID commercant. -1 correspond à tous les ID commercant
+     *  @param string $dfrom : La date de début de livraison
+     *  @param string $dto : La date de fin de livraison
+     *  @param int $orderId : Le numero de commande. -1 correspond à tous les numeros de commande
+     */
     public function getOrdersByMerchants($commercantId = -1, $dfrom = null, $dto = null, $order_id = -1)
     {
         if (!isset($dfrom)) {
@@ -375,17 +423,15 @@ class Magento
         return $rsl;
     }
 
-    /** ------- **/
-    /** REFUNDS **/
-    /** ------- **/
+    /**
+     *  Récupère une commande spécifique & affiche la liste des informations remboursements par commercant
+     *
+     *  @param int $orderId : Le numero de commande
+     */
     public function getRefunds($orderId)
     {
         $merchants = $this->getMerchantsByStore();
         $orders = $this->OrdersQuery(null, null, -1, $orderId);
-//		$orders->getSelect()->join(['adyen' => \Mage::getSingleton('core/resource')->getTableName('adyen/event_data')], 'adyen.merchant_reference=main_table.increment_id', [
-//			'pspreference' => 'adyen.pspreference'
-//		]);
-//echo \Mage::getSingleton('core/resource')->getTableName('adyen/event_data');
         $rsl = [
             -1 => [
                 'merchant' => [
@@ -401,7 +447,6 @@ class Magento
         foreach ($orders as $order) {
             $orderHeader = $this->OrderHeaderParsing($order);
             $rsl[-1]['order'] = $orderHeader;
-//			$rsl[-1]['order']['pspreference'] = $order->getData('pspreference');
             $products = \Mage::getModel('sales/order_item')->getCollection();
             $products->addFieldToFilter('main_table.order_id', ['eq' => $orderHeader['mid']]);
             $products->addFieldToFilter('main_table.product_type', ['neq' => 'bundle']);
@@ -452,50 +497,48 @@ class Magento
         return $rsl;
     }
 
-    /**	
-     *	Retourne le contenu de la table adyen/order_payment trié par n° de commande.
+    // ADYEN
+    // 
+    // public function getAdyenPaymentByMerchRef()
+    // {
+    //     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+    //     $collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
+
+    //     $ref = [];
+    //     $cpt = 1;
+    //     foreach ($collection as $fields) {
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
+    //         $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
+    //         ++$cpt;
+    //     }
+
+    //     return $ref;
+    // }
+
+    // public function getAdyenPaymentByPsp()
+    // {
+    //     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+    //     $collection->addFieldToFilter('pspreference', ['neq' => null]);
+    //     $ref = [];
+    //     $cpt = 1;
+    //     foreach ($collection as $col) {
+    //         $ref[$cpt]['amount'] = $col->getAmount();
+    //         $ref[$cpt]['total_refunded'] = $col->getData('total_refunded');
+    //         $ref[$cpt]['pspreference'] = $col->getData('pspreference');
+    //         $ref[$cpt]['merchant_reference'] = $col->getData('merchant_reference');
+    //         ++$cpt;
+    //     }
+
+    //     return $ref;
+    // }
+
+    /**
+     * Récupère la liste des marges par commercant
      */
-    public function getAdyenPaymentByMerchRef()
-    {
-        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-        $collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
-
-        $ref = [];
-        $cpt = 1;
-        foreach ($collection as $fields) {
-            $ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
-            $ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
-            $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
-            $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
-            $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
-            $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
-            ++$cpt;
-        }
-
-        return $ref;
-    }
-
-    /**	
-     *	Retourne le contenu de la table adyen/order_payment.
-     */
-    public function getAdyenPaymentByPsp()
-    {
-        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-        $collection->addFieldToFilter('pspreference', ['neq' => null]);
-        $ref = [];
-        $cpt = 1;
-        foreach ($collection as $col) {
-            $ref[$cpt]['amount'] = $col->getAmount();
-            $ref[$cpt]['total_refunded'] = $col->getData('total_refunded');
-            $ref[$cpt]['pspreference'] = $col->getData('pspreference');
-            $ref[$cpt]['merchant_reference'] = $col->getData('merchant_reference');
-            ++$cpt;
-        }
-
-        return $ref;
-    }
-
-    /* Retourne la marge arriere par commercant */
     public function getMargin()
     {
         $data = [];
@@ -521,7 +564,11 @@ class Magento
         return $data;
     }
 
-    /* Affiche les infos relatifs à l'historique de la commande */
+    /**
+     * Récupère la liste des informations relatives à l'historique d'une commande
+     *
+     * @param int $order_id : Le numero de commande
+     */
     public function getOrderHistory($order_id)
     {
         $order = \Mage::getModel('sales/order')->loadByIncrementId($order_id);
@@ -530,11 +577,12 @@ class Magento
         return $history;
     }
 
-    /** ------- **/
-    /** CUSTOMERS **/
-    /** ------- **/
-
-    /** Affiche les commandes par clients */
+    /**
+     * Récupère la liste des commandes par client
+     *
+     * @param string $debut : La date de début de création de commande
+     * @param string $fin : La date de fin de création de commande
+     */
     public function getOrdersByCustomer($debut = null, $fin = null)
     {
         $data = [];
