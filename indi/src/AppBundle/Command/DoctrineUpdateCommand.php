@@ -5,6 +5,7 @@ use Doctrine\Bundle\DoctrineBundle\Command\Proxy\UpdateSchemaDoctrineCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DoctrineUpdateCommand extends UpdateSchemaDoctrineCommand
 {
@@ -23,7 +24,8 @@ class DoctrineUpdateCommand extends UpdateSchemaDoctrineCommand
         InputInterface $input,
         OutputInterface $output,
         SchemaTool $schemaTool,
-        array $metadatas
+        array $metadatas,
+        SymfonyStyle $ui
     ) {
         /** @var $metadata \Doctrine\ORM\Mapping\ClassMetadata */
         $newMetadatas = [];
