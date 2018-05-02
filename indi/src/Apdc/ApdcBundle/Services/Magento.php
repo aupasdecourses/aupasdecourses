@@ -565,44 +565,42 @@ class Magento
         return $rsl;
     }
 
-    // ADYEN
-    // 
-    // public function getAdyenPaymentByMerchRef()
-    // {
-    //     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-    //     $collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
+    public function getAdyenPaymentByMerchRef()
+    {
+        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+        $collection->getSelect()->join('sales_flat_order', 'main_table.merchant_reference=sales_flat_order.increment_id');
 
-    //     $ref = [];
-    //     $cpt = 1;
-    //     foreach ($collection as $fields) {
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
-    //         $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
-    //         ++$cpt;
-    //     }
+        $ref = [];
+        $cpt = 1;
+        foreach ($collection as $fields) {
+            $ref[$fields->getData('merchant_reference')][$cpt]['customer_firstname'] = $fields->getData('customer_firstname');
+            $ref[$fields->getData('merchant_reference')][$cpt]['customer_lastname'] = $fields->getData('customer_lastname');
+            $ref[$fields->getData('merchant_reference')][$cpt]['merchant_reference'] = $fields->getData('merchant_reference');
+            $ref[$fields->getData('merchant_reference')][$cpt]['pspreference'] = $fields->getData('pspreference');
+            $ref[$fields->getData('merchant_reference')][$cpt]['amount'] = $fields->getAmount();
+            $ref[$fields->getData('merchant_reference')][$cpt]['total_refunded'] = $fields->getData('total_refunded');
+            ++$cpt;
+        }
 
-    //     return $ref;
-    // }
+        return $ref;
+    }
 
-    // public function getAdyenPaymentByPsp()
-    // {
-    //     $collection = \Mage::getModel('adyen/order_payment')->getCollection();
-    //     $collection->addFieldToFilter('pspreference', ['neq' => null]);
-    //     $ref = [];
-    //     $cpt = 1;
-    //     foreach ($collection as $col) {
-    //         $ref[$cpt]['amount'] = $col->getAmount();
-    //         $ref[$cpt]['total_refunded'] = $col->getData('total_refunded');
-    //         $ref[$cpt]['pspreference'] = $col->getData('pspreference');
-    //         $ref[$cpt]['merchant_reference'] = $col->getData('merchant_reference');
-    //         ++$cpt;
-    //     }
+    public function getAdyenPaymentByPsp()
+    {
+        $collection = \Mage::getModel('adyen/order_payment')->getCollection();
+        $collection->addFieldToFilter('pspreference', ['neq' => null]);
+        $ref = [];
+        $cpt = 1;
+        foreach ($collection as $col) {
+            $ref[$cpt]['amount'] = $col->getAmount();
+            $ref[$cpt]['total_refunded'] = $col->getData('total_refunded');
+            $ref[$cpt]['pspreference'] = $col->getData('pspreference');
+            $ref[$cpt]['merchant_reference'] = $col->getData('merchant_reference');
+            ++$cpt;
+        }
 
-    //     return $ref;
-    // }
+        return $ref;
+    }
 
     /**
      * Récupère la liste des marges par commercant
