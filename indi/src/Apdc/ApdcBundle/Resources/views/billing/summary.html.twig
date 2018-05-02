@@ -33,7 +33,7 @@
 				<th>Finalisé</th>
 				<th>Réglé</th>
 				<th>Envoyé</th>
-				<th>Virement effectué</th>
+				{# <th>Virement effectué</th> #}
 			</tr>
 			<tr>
 				<th></th>
@@ -54,7 +54,7 @@
 				<th></th>
 				<th></th>
 				<th></th>
-				<th></th>
+				{# <th></th> #}
 			</tr>
 		</thead>
 		<tbody>
@@ -96,13 +96,13 @@
 							<span style="color:green;">Oui
 						{% endif %}
 					</td>
-					<td>
+					{# <td>
 						{% if order.merchant_payout_status == NULL %}
 							<span style="color:red;">Non
 						{% elseif order.merchant_payout_status == "done" %}
 							<span style="color:green;">Oui	
 						{% endif %}
-					</td>
+					</td> #}
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -125,7 +125,7 @@
 				<th></th>
 				<th></th>
 				<th></th>
-				<th></th>
+				{# <th></th> #}
 			</tr>
 		</tfoot>
 	</table>

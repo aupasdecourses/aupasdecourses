@@ -60,7 +60,7 @@
 					<th colspan="2">Frais bancaires</th>
 					<th>Retrait</th>
 					<th style="color:red;">En-cours</th>
-					<th>Lien de virement</th>
+					{# <th>Lien de virement</th> #}
 				</tr>
 				<tr>
 					<th></th>
@@ -78,7 +78,7 @@
 					<th class="float">TTC</th>
 					<th class="float">TTC</th>
 					<th></th>
-					<th></th>
+					{# <th></th> #}
 				</tr>
 			</thead>
 			<tbody>
@@ -107,7 +107,7 @@
 
 						<td style="color:red">{{ summary.sum_payout - sum_payout_regle }}</td>
 						
-						<td>
+						{# <td>
 							{% if bill.summary[0].date_payout is not null %}
 								{% if bill.summary[0].merchant_payout_status == NULL %}
 									{{ form(payout_form) }}
@@ -117,7 +117,7 @@
 							{% else %}
 								<span class="disabled">A faire</span>
 							{% endif %}
-						</td>
+						</td> #}
 
 					</tr>
 					{% endfor %}

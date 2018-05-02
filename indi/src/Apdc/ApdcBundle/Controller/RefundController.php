@@ -713,53 +713,55 @@ class RefundController extends Controller
         ]);
     }
 
-    public function refundPostClosureIndexAction(Request $request)
-    {
-        if (!$this->isGranted('ROLE_INDI_GESTION')) {
-            return $this->redirectToRoute('root');
-        }
+    // ADYEN
+    // 
+    // public function refundPostClosureIndexAction(Request $request)
+    // {
+    //     if (!$this->isGranted('ROLE_INDI_GESTION')) {
+    //         return $this->redirectToRoute('root');
+    //     }
 
-        $mage = $this->container->get('apdc_apdc.magento');
-        $orders = $mage->getAdyenPaymentByMerchRef();
+    //     $mage = $this->container->get('apdc_apdc.magento');
+    //     $orders = $mage->getAdyenPaymentByMerchRef();
 
-        return $this->render('ApdcApdcBundle::refund/post_closure_index.html.twig', [
-            'orders' => $orders,
-        ]);
-    }
+    //     return $this->render('ApdcApdcBundle::refund/post_closure_index.html.twig', [
+    //         'orders' => $orders,
+    //     ]);
+    // }
 
-    public function refundPostClosureFormAction(Request $request, $psp)
-    {
-        if (!$this->isGranted('ROLE_INDI_GESTION')) {
-            return $this->redirectToRoute('root');
-        }
+    // public function refundPostClosureFormAction(Request $request, $psp)
+    // {
+    //     if (!$this->isGranted('ROLE_INDI_GESTION')) {
+    //         return $this->redirectToRoute('root');
+    //     }
 
-        $adyen = $this->container->get('apdc_apdc.adyen');
-        $mage = $this->container->get('apdc_apdc.magento');
+    //     $adyen = $this->container->get('apdc_apdc.adyen');
+    //     $mage = $this->container->get('apdc_apdc.magento');
 
-        $orders = $mage->getAdyenPaymentByPsp();
+    //     $orders = $mage->getAdyenPaymentByPsp();
 
-        $refund = new IndiRefund();
-        $form = $this->createForm(IndiRefundType::class, $refund);
+    //     $refund = new IndiRefund();
+    //     $form = $this->createForm(IndiRefundType::class, $refund);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            try {
-                $value = $form['value']->getData();
-                $originalReference = $form['originalReference']->getData();
+    //     if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+    //         try {
+    //             $value = $form['value']->getData();
+    //             $originalReference = $form['originalReference']->getData();
 
-                $adyen->refund($value, $originalReference);
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+    //             $adyen->refund($value, $originalReference);
+    //         } catch (Exception $e) {
+    //             echo $e->getMessage();
+    //         }
 
-            $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
+    //         $this->get('session')->getFlashBag()->add('notice', 'Remboursement effectué !');
 
-            return $this->redirectToRoute('refundPostClosureIndex');
-        }
+    //         return $this->redirectToRoute('refundPostClosureIndex');
+    //     }
 
-        return $this->render('ApdcApdcBundle::refund/post_closure_form.html.twig', [
-            'form' => $form->createView(),
-            'psp' => $psp,
-            'orders' => $orders,
-        ]);
-    }
+    //     return $this->render('ApdcApdcBundle::refund/post_closure_form.html.twig', [
+    //         'form' => $form->createView(),
+    //         'psp' => $psp,
+    //         'orders' => $orders,
+    //     ]);
+    // }
 }
