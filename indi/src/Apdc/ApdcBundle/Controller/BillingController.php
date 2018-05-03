@@ -132,7 +132,7 @@ class BillingController extends Controller
             'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
-            'comments' => $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']),
+            // 'comments' => $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']),
         ]);
     }
 
