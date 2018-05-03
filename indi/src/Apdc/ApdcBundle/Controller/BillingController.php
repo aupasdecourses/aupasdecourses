@@ -71,6 +71,7 @@ class BillingController extends Controller
             $date_fin = $factu->end_month($date_debut);
             if (!isset($_POST['submit'])) {
                 $verif = $factu->data_facturation_verif($date_debut, $date_fin);
+                $comments = $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']);
             }
         } else {
             $verif = [
@@ -132,7 +133,7 @@ class BillingController extends Controller
             'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
-            // 'comments' => $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']),
+            'comments' => $comments,
         ]);
     }
 
