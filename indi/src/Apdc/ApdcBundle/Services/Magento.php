@@ -2,7 +2,7 @@
 
 namespace Apdc\ApdcBundle\Services;
 
-include_once '../../app/Mage.php';
+include_once(realpath(dirname(__FILE__)) . '/../../../../../app/Mage.php');
 
 class Magento
 {
