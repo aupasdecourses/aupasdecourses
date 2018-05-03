@@ -48,7 +48,8 @@
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^4.0",
 		"squizlabs/php_codesniffer": "2.*",
-        "escapestudios/symfony2-coding-standard": "~2.0"
+        "escapestudios/symfony2-coding-standard": "~2.0",
+        "phpunit/phpunit": "^5"
     },
     "scripts": {
         "symfony-scripts": [
