@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ToolController extends Controller
 {
@@ -85,14 +86,28 @@ class ToolController extends Controller
 
 		// Override default merchant_id choicetype
 		if (!is_null($merchants_comment_choice)) {
-			$form_comment->add('merchant_id', ChoiceType::class, [
-				'required'	=> true,
-				'label' 	=> 'Commercant',
-				'attr'		=> [
-					'class'		=> 'form-control'
-				],
-				'choices' 	=> $merchants_comment_choice,
-			]);
+			// Refund
+			if (is_array($merchants_comment_choice)) {
+				$form_comment->add('merchant_id', ChoiceType::class, [
+					'required'	=> true,
+					'label' 	=> 'Commercant',
+					'attr'		=> [
+						'class'		=> 'form-control'
+					],
+					'choices' 	=> $merchants_comment_choice,
+				]);
+			}
+			// Billing
+			if (is_string($merchants_comment_choice)) {
+				$form_comment->add('merchant_id', TextType::class, [
+					'required'	=> true,
+					'label'		=> 'Commercant',
+					'attr'		=> [
+						'class'		=> 'form-control'
+					],
+					'data'		=> $merchants_comment_choice
+				]);
+			}
 		}
 
 		// Override default type choicetype
