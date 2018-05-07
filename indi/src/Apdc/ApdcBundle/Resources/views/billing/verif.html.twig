@@ -143,7 +143,7 @@
 					      <th>Total Produits</th>
 					      <th>Sum Items</th>
 					      <th>Diff</th>
-					      <th>Commentaire</th>
+					      {# <th>Commentaire</th> #}
 					    </tr>
 					</thead>
 					{% for row in details %}
@@ -156,7 +156,7 @@
 						<td>{{row.total_produit}}</td>
 						<td>{{row.sum_items}}</td>
 						<td>{{row.diff}}</td>
-						<td style="border-left: 1px solid black;">
+						{# <td style="border-left: 1px solid black;">
 						{% for c in comments %}
 							{% if row.increment_id == c.order_id %}
 								<li>
@@ -165,7 +165,7 @@
 								</li>
 							{% endif %}
 						{% endfor %}
-						</td>
+						</td> #}
 					</tr>
 					{% endfor %}
 				</table>

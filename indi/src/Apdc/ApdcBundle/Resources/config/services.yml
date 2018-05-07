@@ -22,7 +22,6 @@ services:
 
     apdc_apdc.stats:
         class: Apdc\ApdcBundle\Services\Stats
-        arguments: [ '@doctrine.orm.entity_manager' ]
 
     apdc_apdc.mistral:
         class: Apdc\ApdcBundle\Services\Mistral

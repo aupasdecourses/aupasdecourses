@@ -151,9 +151,11 @@ trait Order
             'produit_fragile_referentiel' => $product->getData('produit_fragile_referentiel'),
             ];
         $prod_data['comment'] = '';
-        $options = $product->getProductOptions()['options'];
-        foreach ($options as $option) {
-            $prod_data['comment'] .= $option['label'].': '.$option['value'].' | ';
+        $options = isset($product->getProductOptions()['options']) ? $product->getProductOptions()['options'] : null;
+        if (!is_null($options)) {
+            foreach ($options as $option) {
+                $prod_data['comment'] .= $option['label'].': '.$option['value'].' | ';
+            }
         }
         $prod_data['comment'] .= html_entity_decode($product->getData('item_comment'));
 

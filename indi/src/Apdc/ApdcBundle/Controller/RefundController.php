@@ -712,7 +712,7 @@ class RefundController extends Controller
 
         ]);
     }
-
+    
     public function refundPostClosureIndexAction(Request $request)
     {
         if (!$this->isGranted('ROLE_INDI_GESTION')) {
