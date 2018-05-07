@@ -19066,3 +19066,13 @@ a.level3:hover {
   border-bottom: 7px solid #393;
   border-left: 7px solid transparent;
 }
+.apdc-popup .address-bar.has-value .GoogleAutoCompleteInput {
+  width:calc(100% - 67px);
+  float:left;
+}
+.apdc-popup .address-bar.has-value button.button-green {
+  display:inline-block!important;
+}
+.apdc-popup .address-bar button.button-green {
+  height:41px;
+}

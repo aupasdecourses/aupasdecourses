@@ -11,10 +11,10 @@
         }
     ?>
 </script>
-<div id='address-bar' class="input-box apdc-form container-fluid<?php echo ($customerDefaultPostcode ? ' has-default-value' : ''); ?>">
-    <input id="GoogleAutoCompleteInput" class="input-text" placeholder="Entrez votre adresse" type="text" name="input_address" autocomplete="off" value="<?php echo $customerDefaultPostcode; ?>" />
+<div class="address-bar input-box apdc-form container-fluid<?php echo ($customerDefaultPostcode ? ' has-value' : ''); ?>">
+    <input class="GoogleAutoCompleteInput input-text" placeholder="Entrez votre adresse" type="text" name="input_address" autocomplete="off" value="<?php echo $customerDefaultPostcode; ?>" />
     <button data-ajax-url="<?php echo $this->getUrl('customhome/index/redirectAjax'); ?>" class="button button-green" type="submit" style="display:none;margin:0;">OK</button>
-    <input id="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden" value="<?php echo $customerDefaultPostcode; ?>" />
+    <input class="GoogleAutoCompleteZipcode" name="input_zipcode" type="hidden" value="<?php echo $customerDefaultPostcode; ?>" />
     <p class="separator" style="margin: 10px 0;">ou</p>
     <select name="website-list">
         <option selected="true" disabled="disabled">Sélectionnez votre quartier</option>

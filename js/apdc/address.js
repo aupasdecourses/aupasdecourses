@@ -84,17 +84,17 @@
 
 jQuery(document).ready(function() {
 
-    $j('#GoogleAutoCompleteInput').on('keydown',function(e){  
+    $j('.GoogleAutoCompleteInput').on('keydown',function(e){  
         $e=$j(this);
         if($e.val()!=''){
             $e.siblings('button').hide();
-            $e.parents('#address-bar').removeClass('has-value');
+            $e.parents('.address-bar').removeClass('has-value');
         }
     });
 
-    lpAddressBar = new AddressBar({root: '#address-bar',zipcodes: zipcodes});
+    lpAddressBar = new AddressBar({root: '.address-bar',zipcodes: zipcodes});
 
-    $j('#address-bar button[type="submit"]').on('click',function(e){      
+    $j('.address-bar button[type="submit"]').on('click',function(e){      
         e.preventDefault();
         e.stopPropagation();
         if (lpAddressBar) {
@@ -137,7 +137,7 @@ jQuery(document).ready(function() {
 
     });
    
-    $j('#address-bar select[name="website-list"]').on('change',function(e){ 
+    $j('.address-bar select[name="website-list"]').on('change',function(e){ 
         lpAddressBar.showLoading();
         var $elt=$j(this).children('option:selected');
         $j.ajax( {
