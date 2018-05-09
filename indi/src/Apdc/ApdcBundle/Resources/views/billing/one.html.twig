@@ -36,7 +36,7 @@
 		<div class="col-md-4">
 			<div style="float:right;"><button id="createCommentButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
 			<div id="createCommentModal" class="modal fade">
-				{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request, 'merchants_comment_choice': bill.summary[0].id_attribut_commercant} )) }}
+				{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request, 'is_bill_comment': true, 'merchants_comment_choice': bill.summary[0].id_attribut_commercant} )) }}
 			</div>
 		</div>
 		<div class="col-md-2"></div>

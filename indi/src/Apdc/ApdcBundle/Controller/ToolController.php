@@ -73,7 +73,7 @@ class ToolController extends Controller
 		]);	
 	}
 
-	public function commentsFormAction(Request $request, $order_id = null, $merchants_comment_choice = null)
+	public function commentsFormAction(Request $request, $is_refund_comment = false, $is_bill_comment = false, $order_id = null, $merchants_comment_choice = null)
 	{
 		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
@@ -84,34 +84,30 @@ class ToolController extends Controller
 		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
 		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
 
-		// Override default merchant_id choicetype
-		if (!is_null($merchants_comment_choice)) {
-			// Refund
-			if (is_array($merchants_comment_choice)) {
-				$form_comment->add('merchant_id', ChoiceType::class, [
-					'required'	=> true,
-					'label' 	=> 'Commercant',
-					'attr'		=> [
-						'class'		=> 'form-control'
-					],
-					'choices' 	=> $merchants_comment_choice,
-				]);
-			}
-			// Billing
-			if (is_string($merchants_comment_choice)) {
-				$form_comment->add('merchant_id', TextType::class, [
-					'required'	=> true,
-					'label'		=> 'Commercant',
-					'attr'		=> [
-						'class'		=> 'form-control'
-					],
-					'data'		=> $merchants_comment_choice
-				]);
-			}
+		$already_visible_customer_comment = 0;
+
+		// Refund (refund/input.html.twig)
+		if ($is_refund_comment === true) {
+			$form_comment->add('merchant_id', ChoiceType::class, [
+				'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'choices' => $merchants_comment_choice
+			]);
+
+        	foreach ($stats->getCommentsHistory($order_id, $order_id) as $history) {
+            	if (strpos($history['comment_type'], "customer_is_visible") !== false) {
+                	$already_visible_customer_comment = 1;
+            	}
+        	}
 		}
 
-		// Override default type choicetype
-		if (is_null($order_id)) {
+		// Billing (billing/one.html.twig)
+		if ($is_bill_comment === true) {
+			$form_comment->add('merchant_id', TextType::class, [
+				'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'data' => $merchants_comment_choice
+			]);
+		}
+
+		// Default (tool/comments/history.html.twig)
+		if ($is_refund_comment === false && $is_bill_comment === false) {
 			$types_comment_choice = [];
 			foreach ($stats->getCommentsType() as $t) {
 				$types_comment_choice[$t['label']] = $t['type'];
@@ -121,12 +117,7 @@ class ToolController extends Controller
 			$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
 
 			$form_comment->add('type', ChoiceType::class, [
-				'required'	=> true,
-				'label'		=> 'Type de commentaire',
-				'attr'		=> [
-					'class'		=> 'form-control'
-				],
-				'choices'	=> $types_comment_choice,
+				'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
 				'group_by'	=> function($key, $value, $index) {
 					if (strpos($key, "not_visible") !== false) {
 						return 'Commentaires internes';
@@ -136,16 +127,6 @@ class ToolController extends Controller
 					}
 				},
 			]);
-		}
-
-		$already_visible_customer_comment = 0;
-		if (!is_null($order_id)) {
-			$commentsHistory = $stats->getCommentsHistory($order_id, $order_id);
-        	foreach ($commentsHistory as $history) {
-            	if (strpos($history['comment_type'], "customer_is_visible") !== false) {
-                	$already_visible_customer_comment = 1;
-            	}
-        	}
 		}
 
 		$form_comment->handleRequest($request);
