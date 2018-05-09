@@ -14,7 +14,7 @@
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
 				
 				<div class="form-group">
-					<label for="form_comment_type">Type de commentaire</label>
+					<label for="form_comment_type" id="comment_type_label">Type de commentaire</label>
 					<div id="form_comment_type">{{ form_widget(form_comment.type) }}</div>
 				</div>
 
@@ -90,6 +90,9 @@
 				break;
 			// billing/one.html.twig
 			case 'billing_one':
+				// Hide comment_type input text
+				comment_type.style.display = "none";
+				document.getElementById('comment_type_label').style.display = "none";
 				// Hide merchant_id input text
 				comment_merchant_id.style.display = "none";
 				merchant_id_label.style.display = "none";

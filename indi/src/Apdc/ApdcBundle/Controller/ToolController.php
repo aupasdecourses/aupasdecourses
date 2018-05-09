@@ -99,12 +99,16 @@ class ToolController extends Controller
             		}
         		}
 				break;
-			// Override le choix de commercants billing/one.html.twig
+			// Override le choix de commercants & de type de commentaires dans billing/one.html.twig
 			case 'billing_one':
 				$form_comment->add('merchant_id', TextType::class, [
 					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'data' => $merchants_comment_choice
 				]);
-			// Supprime la possibilite de creer un comment visible par le client dans billing/one.html.twig et tool/comments/history.html.twig
+				$form_comment->add('type', TextType::class, [
+					'required' => true, 'label' => 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'data' => 'merchant_bill_not_visible'
+				]);
+				break;
+			// Supprime la possibilite de creer un comment visible par le client dans tool/comments/history.html.twig
 			case 'default':
 				$types_comment_choice = [];
 				foreach ($stats->getCommentsType() as $t) {
@@ -147,19 +151,17 @@ class ToolController extends Controller
 		$form = $request->query->get('comment');
 		$session = $request->getSession();
 
-		$order_id = $form['order_id'];
-
 		$stats->addEntryToCommentHistory([
 			'created_at' 			=> date('Y-m-d H:i:s'),
 			'author'				=> $this->getUser()->getUsername(),
 			'comment_type'			=> $form['type'],
 			'comment_text'			=> $form['text'],
-			'order_id'				=> $order_id,
+			'order_id'				=> $form['order_id'],
 			'merchant_id'			=> $form['merchant_id'],
 			'associated_order_id'	=> $form['associated_order_id'],
 		]);
 
-		$session->getFlashBag()->add('success', 'Commentaire bien crée pour la commande ' . $order_id);
+		$session->getFlashBag()->add('success', 'Commentaire bien crée');
 		return $this->redirect($request->headers->get('referer'));
 	}
 }
