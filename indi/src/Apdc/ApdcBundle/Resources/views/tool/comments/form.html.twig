@@ -19,7 +19,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="form_comment_order_id"># Commande</label>
+					<label for="form_comment_order_id" id="order_id_label"># Commande</label>
 				{% if order_id is not null %}
 					{{ form_widget(form_comment.order_id, {'attr': {'value': order_id } }) }}
 				{% else %}
@@ -33,7 +33,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="associatedOrderCheckbox">Concerne aussi une deuxième commande ?</label>
+					<label for="associatedOrderCheckbox" id="checkbox_label">Concerne aussi une deuxième commande ?</label>
 					<input type="checkbox" id="associatedOrderCheckbox" onclick="toggleCheckbox(this);">
 				</div>
 
@@ -61,9 +61,56 @@
 		var warning_visible_comment = document.getElementById('warningVisibleComment');
 		var comment_associated_order_id = document.getElementById('comment_associated_order_id');
 		var associated_order_id_label = document.getElementById('associated_order_id_label');
+		var comment_order_id = document.getElementById('comment_order_id');
+
+		var comment_view = '{{ comment_view }}';
+
+		switch(comment_view) {
+			// refund/input.html.twig
+			case 'refund_input':
+				// Display warning if choosing comment type visible by customer in his email
+				comment_type.addEventListener('click', function (e) {
+					if (comment_type.value == "customer_is_visible") {
+						warning_visible_comment.classList.add("alert", "alert-danger");
+						warning_visible_comment.innerHTML = 'Attention ! Ce commentaire sera visible par le client dans l\'email du traitement de commande';
+					} else {
+						warning_visible_comment.classList.remove("alert", "alert-danger");
+						warning_visible_comment.innerHTML = '';
+					}
+				});
+				// Hide visible customer comment if already visible customer comment
+				var already_visible_customer_comment = '{{ already_visible_customer_comment }}';
+				if (already_visible_customer_comment == 1) {
+					for (var i = 0; i < comment_type.children.length; i++) {
+						if (comment_type.children[i].label == "Commentaires visibles") {
+							comment_type.children[i].style.display = "none";
+						}
+					}
+				}
+				break;
+			// billing/one.html.twig
+			case 'billing_one':
+				// Hide merchant_id input text
+				comment_merchant_id.style.display = "none";
+				merchant_id_label.style.display = "none";
+				// Hide order_id input text
+				comment_order_id.value = "0";
+				comment_order_id.style.display = "none";
+				document.getElementById('order_id_label').style.display = "none";
+				// Hide associated order_id checkbox
+				document.getElementById('associatedOrderCheckbox').style.display = "none";
+				document.getElementById('checkbox_label').style.display = "none";
+				break;
+			// tool/comments/history.html.twig
+			case 'default':
+				break;
+		}
+
 
 		// Hide "Aucun commercant" choice
-		comment_merchant_id[2].style.display = "none";
+		if (Array.isArray(comment_merchant_id)) {
+			comment_merchant_id[2].style.display = "none";
+		}
 
 		// Hide merchant choice type if customer comment type
 		comment_type.addEventListener('click', function (e) {
@@ -76,27 +123,6 @@
 				document.getElementById('merchant_id_label').style.display = "block";
 			}
 		});
-
-		// Display warning if choosing comment type visible by customer in his email
-		comment_type.addEventListener('click', function (e) {
-			if (comment_type.value == "customer_is_visible") {
-				warning_visible_comment.classList.add("alert", "alert-danger");
-				warning_visible_comment.innerHTML = 'Attention ! Ce commentaire sera visible par le client dans l\'email du traitement de commande';
-			} else {
-				warning_visible_comment.classList.remove("alert", "alert-danger");
-				warning_visible_comment.innerHTML = '';
-			}
-		});
-
-		// Hide visible customer comment if already visible customer comment
-		var already_visible_customer_comment = '{{ already_visible_customer_comment }}';
-		if (already_visible_customer_comment == 1) {
-			for (var i = 0; i < comment_type.children.length; i++) {
-				if (comment_type.children[i].label == "Commentaires visibles") {
-					comment_type.children[i].style.display = "none";
-				}
-			}
-		}
 
 		// Only display associated_order if checkbox is checked
 		comment_associated_order_id.style.display = "none";
