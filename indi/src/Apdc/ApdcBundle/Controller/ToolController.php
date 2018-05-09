@@ -87,10 +87,29 @@ class ToolController extends Controller
 		$already_visible_customer_comment = 0;
 
 		switch ($comment_view) {
-			// Override le choix de commercants dans refund/input.html.twig
+			// Override le choix de commercants & de types de commentaires dans refund/input.html.twig
 			case 'refund_input':
 				$form_comment->add('merchant_id', ChoiceType::class, [
 					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'choices' => $merchants_comment_choice
+				]);
+
+				$types_comment_choice = [];
+				foreach ($stats->getCommentsType() as $t) {
+					$types_comment_choice[$t['label']] = $t['type'];
+				}
+				unset($types_comment_choice['Facturation commercant interne']);
+				$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
+
+				$form_comment->add('type', ChoiceType::class, [
+					'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
+					'group_by'	=> function($key, $value, $index) {
+						if (strpos($key, "not_visible") !== false) {
+							return 'Commentaires internes';
+						}
+						if (strpos($key, "is_visible") !== false) {
+							return 'Commentaires visibles';
+						}
+					},
 				]);
 
         		foreach ($stats->getCommentsHistory($order_id, $order_id) as $history) {
@@ -108,13 +127,13 @@ class ToolController extends Controller
 					'required' => true, 'label' => 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'data' => 'merchant_bill_not_visible'
 				]);
 				break;
-			// Supprime la possibilite de creer un comment visible par le client dans tool/comments/history.html.twig
+			// Override le choix de type de commentaires dans tool/comments/history.html.twig
 			case 'default':
 				$types_comment_choice = [];
 				foreach ($stats->getCommentsType() as $t) {
 					$types_comment_choice[$t['label']] = $t['type'];
 				}
-				unset($types_comment_choice['Commentaire visible par le client']);
+				unset($types_comment_choice['Client visible'], $types_comment_choice['Facturation commercant interne']);
 				$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
 
 				$form_comment->add('type', ChoiceType::class, [
@@ -122,9 +141,6 @@ class ToolController extends Controller
 					'group_by'	=> function($key, $value, $index) {
 						if (strpos($key, "not_visible") !== false) {
 							return 'Commentaires internes';
-						}
-						if (strpos($key, "is_visible") !== false) {
-							return 'Commentaires visibles';
 						}
 					},
 				]);

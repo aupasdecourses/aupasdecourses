@@ -8,9 +8,9 @@
 				<h1 class="modal-title">Creer un commentaire</h1>
 			</div>
 
-			<div id="warningVisibleComment" class="modal-body"></div>
-
 			<div class="modal-body">
+				<p id="warningVisibleComment"></p>
+
 				{{ form_start(form_comment, {'action': path('toolCommentsProcess'), 'method': 'GET'}) }}
 				
 				<div class="form-group">
