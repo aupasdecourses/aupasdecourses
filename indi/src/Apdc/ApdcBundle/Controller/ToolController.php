@@ -73,7 +73,7 @@ class ToolController extends Controller
 		]);	
 	}
 
-	public function commentsFormAction(Request $request, $is_refund_comment = false, $is_bill_comment = false, $order_id = null, $merchants_comment_choice = null)
+	public function commentsFormAction(Request $request, $comment_view = 'default', $order_id = null, $merchants_comment_choice = null)
 	{
 		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
@@ -86,47 +86,45 @@ class ToolController extends Controller
 
 		$already_visible_customer_comment = 0;
 
-		// Refund (refund/input.html.twig)
-		if ($is_refund_comment === true) {
-			$form_comment->add('merchant_id', ChoiceType::class, [
-				'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'choices' => $merchants_comment_choice
-			]);
+		switch ($comment_view) {
+			// Override le choix de commercants dans refund/input.html.twig
+			case 'refund_input':
+				$form_comment->add('merchant_id', ChoiceType::class, [
+					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'choices' => $merchants_comment_choice
+				]);
 
-        	foreach ($stats->getCommentsHistory($order_id, $order_id) as $history) {
-            	if (strpos($history['comment_type'], "customer_is_visible") !== false) {
-                	$already_visible_customer_comment = 1;
-            	}
-        	}
-		}
+        		foreach ($stats->getCommentsHistory($order_id, $order_id) as $history) {
+            		if (strpos($history['comment_type'], "customer_is_visible") !== false) {
+                		$already_visible_customer_comment = 1;
+            		}
+        		}
+				break;
+			// Override le choix de commercants billing/one.html.twig
+			case 'billing_one':
+				$form_comment->add('merchant_id', TextType::class, [
+					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'data' => $merchants_comment_choice
+				]);
+			// Supprime la possibilite de creer un comment visible par le client dans billing/one.html.twig et tool/comments/history.html.twig
+			case 'default':
+				$types_comment_choice = [];
+				foreach ($stats->getCommentsType() as $t) {
+					$types_comment_choice[$t['label']] = $t['type'];
+				}
+				unset($types_comment_choice['Commentaire visible par le client']);
+				$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
 
-		// Billing (billing/one.html.twig)
-		if ($is_bill_comment === true) {
-			$form_comment->add('merchant_id', TextType::class, [
-				'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'data' => $merchants_comment_choice
-			]);
-		}
-
-		// Default (tool/comments/history.html.twig)
-		if ($is_refund_comment === false && $is_bill_comment === false) {
-			$types_comment_choice = [];
-			foreach ($stats->getCommentsType() as $t) {
-				$types_comment_choice[$t['label']] = $t['type'];
-			}
-			unset($types_comment_choice['Commentaire visible par le client']);
-
-			$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
-
-			$form_comment->add('type', ChoiceType::class, [
-				'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
-				'group_by'	=> function($key, $value, $index) {
-					if (strpos($key, "not_visible") !== false) {
-						return 'Commentaires internes';
-					}
-					if (strpos($key, "is_visible") !== false) {
-						return 'Commentaires visibles';
-					}
-				},
-			]);
+				$form_comment->add('type', ChoiceType::class, [
+					'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
+					'group_by'	=> function($key, $value, $index) {
+						if (strpos($key, "not_visible") !== false) {
+							return 'Commentaires internes';
+						}
+						if (strpos($key, "is_visible") !== false) {
+							return 'Commentaires visibles';
+						}
+					},
+				]);
+				break;
 		}
 
 		$form_comment->handleRequest($request);
@@ -135,6 +133,7 @@ class ToolController extends Controller
 			'form_comment'						=> $form_comment->createView(),
 			'order_id'							=> $order_id,
 			'already_visible_customer_comment'	=> $already_visible_customer_comment,
+			'comment_view'						=> $comment_view,
 		]);		
 	}
 
