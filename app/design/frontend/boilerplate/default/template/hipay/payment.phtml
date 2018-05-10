@@ -6,9 +6,7 @@
 </script>
 <div class="hipay_centered_content">
 	<div class="hipay_redirect_infobox_content">
-		<?php $neighborhood = Mage::helper('apdc_neighborhood')->getNeighborhoodVisiting();?>
-		<?php $image = ($neighborhood->getImageBanner() ? $neighborhood->getImageBanner() : $neighborhood->getImage()); ?>
-		<?php $imageUrl = Mage::helper('apdc_neighborhood/media')->getMediaUrl($image); ?>
+		<?php $imageUrl = Mage::helper('apdc_neighborhood')->getNeighborhoodImageUrl();?>
 		<div class="page-title" style="background-image: url('<?php echo $imageUrl; ?>');">
 		    <h1><span><span <?php if(!empty($paymentUrl)) { ?>class="show_loader_image"<?php }; ?>></span> Un instant s'il vous plaît ...</span></h1>
 		</div>

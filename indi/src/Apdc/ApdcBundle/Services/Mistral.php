@@ -103,7 +103,7 @@ class Mistral
 
 		foreach ($neighborhood as $neigh) {
 			array_push($data, [
-				'store_name'	=> $neigh->getData('name'),
+				'store_name'	=> Mage::app()->getWebsite($neigh->getData('website_id'))->getDefaultStore()->getName(),
 				'store_id'		=> $neigh->getData('website_id'),
 				'partner_ref'	=> $neigh->getData('code_do'),
 			]);

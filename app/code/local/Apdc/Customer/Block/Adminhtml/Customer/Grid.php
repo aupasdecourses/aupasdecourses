@@ -19,11 +19,11 @@ class Apdc_Customer_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_C
             ->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left');
 
         $collection->getSelect()->joinLeft(
-            ['neighborhood' => $collection->getTable('apdc_neighborhood')],
-            'neighborhood.entity_id = at_customer_neighborhood.value',
+            ['neighborhood' => $collection->getTable('core/store')],
+            'neighborhood.store_id = at_customer_neighborhood.value',
             [
                 'neighborhood_name' => 'neighborhood.name',
-                'neighborhood_id' => 'neighborhood.entity_id'
+                'neighborhood_id' => 'neighborhood.store_id'
             ]
         );
 
@@ -83,7 +83,7 @@ class Apdc_Customer_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_Block_C
                 'type' => 'options',
                 'options' => Mage::getModel('apdc_neighborhood/source_option_neighborhood')->getOptionArray(false),
                 'filter_condition_callback' => array($this, 'customFilterCallback'),
-                'filter_index' => 'neighborhood.entity_id',
+                'filter_index' => 'neighborhood.store_id',
                 'index' => 'neighborhood_name'
             ]
         );

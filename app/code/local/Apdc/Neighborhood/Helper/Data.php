@@ -269,4 +269,61 @@ class Apdc_Neighborhood_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $this;
     }
+
+    /**
+     * getCustomerNeighborhoodStoreId 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return int
+     * @return string
+     */
+    public function getCustomerNeighborhoodStoreId($customer)
+    {
+        if ($customer->getCustomerNeighborhood()) {
+            $store = Mage::app()->getStore($customer->getCustomerNeighborhood());
+            if ($store && $store->getId()) {
+                return $store->getId();
+            }
+        }
+        $websiteId = $customer->getWebsiteId();
+        return Mage::app()->getWebsite($websiteId)->getDefaultStore()->getId();
+    }
+
+    /**
+     * getCustomerNeighborhoodStore 
+     * 
+     * @param Mage_Customer_Model_Customer $customer customer 
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getCustomerNeighborhoodStore($customer)
+    {
+        if ($customer->getCustomerNeighborhood()) {
+            $store = Mage::app()->getStore($customer->getCustomerNeighborhood());
+            if ($store && $store->getId()) {
+                return $store;
+            }
+        }
+        return Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore();
+    }
+
+    /**
+     * getNeighborhoodsByWebsiteId 
+     * 
+     * @param int          $websiteId : websiteId 
+     * @param boolean|null $isActive  : get only active neighborhoods or not
+     * 
+     * @return Apdc_Neighborhood_Model_Resource_Neighborhood_Collection
+     */
+    public function getNeighborhoodsByWebsiteId($websiteId, $isActive=null)
+    {
+        $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection()
+            ->addFieldToFilter('website_id', $websiteId);
+        if ($isActive === true) {
+            $neighborhoods->addFieldToFilter('is_active', 1);
+        }
+        $neighborhoods->getSelect()->order('sort_order ASC');
+        return $neighborhoods;
+    }
 }

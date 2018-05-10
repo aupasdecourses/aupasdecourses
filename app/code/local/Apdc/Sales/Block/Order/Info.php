@@ -154,14 +154,12 @@ class Apdc_Sales_Block_Order_Info extends Mage_Core_Block_Template
      * 
      * @param Mage_Sales_Model_Order $order order 
      * 
-     * @return Apdc_Neighborhood_Model_Neighborhood
+     * @return Mage_Core_Model_Store
      */
     public function getNeighborhood($order)
     {
-        $websiteId = $this->getWebsiteIdByStoreId($order->getStoreId());
         if (is_null($this->neighborhood)) {
-            $neighborhoods = Mage::helper('apdc_neighborhood')->getNeighborhoodsByWebsiteId($websiteId);
-            $this->neighborhood = $neighborhoods->getFirstItem();
+            $this->neighborhood = Mage::app()->getStore($order->getStoreId());
         }
         return $this->neighborhood;
     }
@@ -176,7 +174,7 @@ class Apdc_Sales_Block_Order_Info extends Mage_Core_Block_Template
     protected function getWebsiteIdByStoreId($storeId)
     {
         if (is_null($this->websiteId)) {
-            $this->websiteId = Mage::getModel('core/store')->load($storeId)->getWebsite()->getId();
+            $this->websiteId = Mage::app()->getStore($storeId)->getWebsite()->getId();
         }
         return $this->websiteId;
     }

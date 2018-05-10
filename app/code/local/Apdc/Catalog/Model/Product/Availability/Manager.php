@@ -72,22 +72,6 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
         $this->addProductAvailabilities();
     }
 
-    public function generateProductsAvailabilitiesByNeighborhood(Apdc_Neighborhood_Model_Neighborhood $neighborhood)
-    {
-        $websiteId = $neighborhood->getWebsiteId();
-        $productIds = [];
-        $products = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addWebsiteFilter($websiteId);
-        $products->getSelect()->reset(Zend_Db_Select::COLUMNS);
-        $products->getSelect()->columns(['entity_id']);
-        $productIds = $products->getColumnValues('entity_id');           
-
-        if (!empty($productIds)) {
-            $this->generateProductsAvailabilities($productIds);
-        }
-    }
-
     public function generateProductsAvailabilitiesByShop(Apdc_Commercant_Model_Shop $shop)
     {
         $productIds = [];
@@ -418,15 +402,15 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
             $collection = $this->getProductCollection();
             $collection->getSelect()->reset(Zend_Db_Select::COLUMNS);
             $collection->getSelect()->join(
-                ['an' => $this->getResource()->getTableName('apdc_neighborhood/neighborhood')],
-                'an.website_id = pw.website_id',
+                ['cs' => $this->getResource()->getTableName('core/store')],
+                'cs.website_id = pw.website_id',
                 [
-                    'an.entity_id',
-                    'an.website_id',
-                    'an.is_active'
+                    'cs.store_id',
+                    'cs.website_id',
+                    'cs.is_active'
                 ]
             );
-            $collection->getSelect()->group('an.entity_id');
+            $collection->getSelect()->group('cs.store_id');
 
             foreach ($collection as $neighborhood) {
                 $id = $neighborhood->getWebsiteId();
@@ -520,7 +504,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                     }
                     $availabilities[$day][$websiteId . '_' . $commercantId] = [
                         'status' => $finalStatus,
-                        'neighborhood_id' => $neighborhood['entity_id'],
+                        'neighborhood_id' => $neighborhood['store_id'],
                         'website_id' => $websiteId,
                         'commercant_id' => $commercantId
                     ];

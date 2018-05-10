@@ -33,18 +33,13 @@ class Apdc_Neighborhood_Model_Source_Option_Neighborhood extends Mage_Eav_Model_
     {
         if (is_null($this->_options)) {
             $this->_options = array();
-            $neighborhoods = Mage::getModel('apdc_neighborhood/neighborhood')->getCollection();
+            $neighborhoods = Mage::getModel('core/store')->getCollection();
+            $neighborhoods->getSelect()->order(['LENGTH(name)', 'name']);
             if ($this->isActive === true) {
                 $neighborhoods->addFieldToFilter('is_active', 1);
             }
-            $neighborhoods->getSelect()->order('sort_order ASC');
             if ($neighborhoods->count() > 0) {
-                foreach ($neighborhoods as $neighborhood) {
-                    $this->_options[] = array(
-                        'label' => $neighborhood->getName(),
-                        'value' => $neighborhood->getId()
-                    );
-                }
+                $this->_options = $neighborhoods->toOptionArray();
             }
         }
         return $this->_options;

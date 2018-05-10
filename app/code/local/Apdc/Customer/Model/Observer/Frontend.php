@@ -38,9 +38,9 @@ class Apdc_Customer_Model_Observer_Frontend
 
             $customer = $session->getCustomer();
             if ($customer->getCustomerNeighborhood() > 0) {
-                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                $neighborhood = Mage::app()->getStore((int)$customer->getCustomerNeighborhood());
                 if ($neighborhood && $neighborhood->getId()) {
-                    $url = $neighborhood->getStoreUrl();
+                    $url = $neighborhood->getBaseUrl();
                 }
             } else {
                 $url = Mage::getBaseUrl();
@@ -70,9 +70,9 @@ class Apdc_Customer_Model_Observer_Frontend
             $customer = $observer->getCustomer();
             $storeUrl = Mage::app()->getWebsite($customer->getWebsiteId())->getDefaultStore()->getBaseUrl();
             if ($customer->getCustomerNeighborhood()) {
-                $neighborhood = Mage::getModel('apdc_neighborhood/neighborhood')->load((int)$customer->getCustomerNeighborhood());
+                $neighborhood = Mage::app()->getStore((int)$customer->getCustomerNeighborhood());
                 if ($neighborhood && $neighborhood->getId()) {
-                    $storeUrl = $neighborhood->getStoreUrl();
+                    $storeUrl = $neighborhood->getBaseUrl();
                 }
             }
         } else {

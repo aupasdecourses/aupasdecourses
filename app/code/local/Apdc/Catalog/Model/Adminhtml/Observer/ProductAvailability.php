@@ -60,25 +60,6 @@ class Apdc_Catalog_Model_Adminhtml_Observer_ProductAvailability
     }
 
     /**
-     * updateProductAvailabilityByNeighborhood 
-     * 
-     * @param Varien_Event_Observer $observer observer 
-     * 
-     * @return void
-     */
-    public function updateProductAvailabilityByNeighborhood(Varien_Event_Observer $observer)
-    {
-        $neighborhood = $observer->getEvent()->getNeighborhood();
-
-        if ($neighborhood && $neighborhood->getId()) {
-            $origData = $neighborhood->getOrigData();
-            if ($origData['is_active'] != $neighborhood->getIsActive()) {
-                Mage::getModel('apdc_catalog/product_availability_manager')->generateProductsAvailabilitiesByNeighborhood($neighborhood);
-            }
-        }
-    }
-
-    /**
      * cronDailyUpdateProductAvailability 
      * 
      * @return void

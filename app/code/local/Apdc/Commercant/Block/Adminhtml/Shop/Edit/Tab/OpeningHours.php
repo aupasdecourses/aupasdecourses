@@ -136,7 +136,7 @@ class Apdc_Commercant_Block_Adminhtml_Shop_Edit_Tab_OpeningHours
     /**
      * _helper 
      * 
-     * @return Apdc_Neighborhood_Helper_Data
+     * @return Apdc_Commercant_Helper_Data
      */
     private function _helper()
     {
