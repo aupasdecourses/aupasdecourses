@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ToolController extends Controller
 {
@@ -72,7 +73,7 @@ class ToolController extends Controller
 		]);	
 	}
 
-	public function commentsFormAction(Request $request, $order_id = null, $merchants_comment_choice = null)
+	public function commentsFormAction(Request $request, $comment_view = 'default', $order_id = null, $merchants_comment_choice = null)
 	{
 		if (!$this->isGranted('ROLE_INDI_DISPATCH')) {
 			return $this->redirectToRoute('root');
@@ -83,54 +84,67 @@ class ToolController extends Controller
 		$entity_comment = new \Apdc\ApdcBundle\Entity\Comment();
 		$form_comment = $this->createForm(\Apdc\ApdcBundle\Form\Comment::class, $entity_comment);
 
-		// Override default merchant_id choicetype
-		if (!is_null($merchants_comment_choice)) {
-			$form_comment->add('merchant_id', ChoiceType::class, [
-				'required'	=> true,
-				'label' 	=> 'Commercant',
-				'attr'		=> [
-					'class'		=> 'form-control'
-				],
-				'choices' 	=> $merchants_comment_choice,
-			]);
-		}
-
-		// Override default type choicetype
-		if (is_null($order_id)) {
-			$types_comment_choice = [];
-			foreach ($stats->getCommentsType() as $t) {
-				$types_comment_choice[$t['label']] = $t['type'];
-			}
-			unset($types_comment_choice['Commentaire visible par le client']);
-
-			$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
-
-			$form_comment->add('type', ChoiceType::class, [
-				'required'	=> true,
-				'label'		=> 'Type de commentaire',
-				'attr'		=> [
-					'class'		=> 'form-control'
-				],
-				'choices'	=> $types_comment_choice,
-				'group_by'	=> function($key, $value, $index) {
-					if (strpos($key, "not_visible") !== false) {
-						return 'Commentaires internes';
-					}
-					if (strpos($key, "is_visible") !== false) {
-						return 'Commentaires visibles';
-					}
-				},
-			]);
-		}
-
 		$already_visible_customer_comment = 0;
-		if (!is_null($order_id)) {
-			$commentsHistory = $stats->getCommentsHistory($order_id, $order_id);
-        	foreach ($commentsHistory as $history) {
-            	if (strpos($history['comment_type'], "customer_is_visible") !== false) {
-                	$already_visible_customer_comment = 1;
-            	}
-        	}
+
+		switch ($comment_view) {
+			// Override le choix de commercants & de types de commentaires dans refund/input.html.twig
+			case 'refund_input':
+				$form_comment->add('merchant_id', ChoiceType::class, [
+					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'choices' => $merchants_comment_choice
+				]);
+
+				$types_comment_choice = [];
+				foreach ($stats->getCommentsType() as $t) {
+					$types_comment_choice[$t['label']] = $t['type'];
+				}
+				unset($types_comment_choice['Facturation commercant interne']);
+				$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
+
+				$form_comment->add('type', ChoiceType::class, [
+					'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
+					'group_by'	=> function($key, $value, $index) {
+						if (strpos($key, "not_visible") !== false) {
+							return 'Commentaires internes';
+						}
+						if (strpos($key, "is_visible") !== false) {
+							return 'Commentaires visibles';
+						}
+					},
+				]);
+
+        		foreach ($stats->getCommentsHistory($order_id, $order_id) as $history) {
+            		if (strpos($history['comment_type'], "customer_is_visible") !== false) {
+                		$already_visible_customer_comment = 1;
+            		}
+        		}
+				break;
+			// Override le choix de commercants & de type de commentaires dans billing/one.html.twig
+			case 'billing_one':
+				$form_comment->add('merchant_id', TextType::class, [
+					'required' => true, 'label' => 'Commercant', 'attr' => ['class' => 'form-control'], 'data' => $merchants_comment_choice
+				]);
+				$form_comment->add('type', TextType::class, [
+					'required' => true, 'label' => 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'data' => 'merchant_bill_not_visible'
+				]);
+				break;
+			// Override le choix de type de commentaires dans tool/comments/history.html.twig
+			case 'default':
+				$types_comment_choice = [];
+				foreach ($stats->getCommentsType() as $t) {
+					$types_comment_choice[$t['label']] = $t['type'];
+				}
+				unset($types_comment_choice['Client visible'], $types_comment_choice['Facturation commercant interne']);
+				$types_comment_choice = array_merge(['Selectionner un type' => ''], $types_comment_choice);
+
+				$form_comment->add('type', ChoiceType::class, [
+					'required' => true, 'label'	=> 'Type de commentaire', 'attr' => ['class' => 'form-control'], 'choices' => $types_comment_choice,
+					'group_by'	=> function($key, $value, $index) {
+						if (strpos($key, "not_visible") !== false) {
+							return 'Commentaires internes';
+						}
+					},
+				]);
+				break;
 		}
 
 		$form_comment->handleRequest($request);
@@ -139,6 +153,7 @@ class ToolController extends Controller
 			'form_comment'						=> $form_comment->createView(),
 			'order_id'							=> $order_id,
 			'already_visible_customer_comment'	=> $already_visible_customer_comment,
+			'comment_view'						=> $comment_view,
 		]);		
 	}
 
@@ -152,19 +167,17 @@ class ToolController extends Controller
 		$form = $request->query->get('comment');
 		$session = $request->getSession();
 
-		$order_id = $form['order_id'];
-
 		$stats->addEntryToCommentHistory([
 			'created_at' 			=> date('Y-m-d H:i:s'),
 			'author'				=> $this->getUser()->getUsername(),
 			'comment_type'			=> $form['type'],
 			'comment_text'			=> $form['text'],
-			'order_id'				=> $order_id,
+			'order_id'				=> $form['order_id'],
 			'merchant_id'			=> $form['merchant_id'],
 			'associated_order_id'	=> $form['associated_order_id'],
 		]);
 
-		$session->getFlashBag()->add('success', 'Commentaire bien crée pour la commande ' . $order_id);
+		$session->getFlashBag()->add('success', 'Commentaire bien crée');
 		return $this->redirect($request->headers->get('referer'));
 	}
 }
