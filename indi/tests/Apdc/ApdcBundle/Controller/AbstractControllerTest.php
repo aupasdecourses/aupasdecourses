@@ -7,17 +7,25 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AbstractControllerTest extends WebTestCase
 {
-	protected $client;
+	// Change in prod
 	private $username = "sturquier";
+
+	protected $client;
+	protected $from;
+	protected $to;
 
 	public function setUp()
 	{
-		$this->client = $this->createAuthorizedClient();
+		$this->client 	= $this->createAuthorizedClient();
+		$this->from 	= "2000-01-01";
+		$this->to 		= "3000-12-31";
 	}
 
 	public function tearDown()
 	{
-		$this->client = null;
+		$this->client 	= null;
+		$this->from 	= null;
+		$this->to 		= null;
 	}
 
 	/**
@@ -27,11 +35,11 @@ class AbstractControllerTest extends WebTestCase
 	 */
 	private function createAuthorizedClient()
 	{
-		$client = static::createClient();
-		$container = $client->getContainer();
-		$session = $container->get('session');
+		$client 	= static::createClient();
+		$container 	= $client->getContainer();
+		$session 	= $container->get('session');
 
-		$userManager = $container->get('fos_user.user_manager');
+		$userManager  = $container->get('fos_user.user_manager');
 		$loginManager = $container->get('fos_user.security.login_manager');
 		$firewallName = $container->getParameter('fos_user.firewall_name');
 
