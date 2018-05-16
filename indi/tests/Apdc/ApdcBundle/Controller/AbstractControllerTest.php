@@ -13,12 +13,14 @@ class AbstractControllerTest extends WebTestCase
 	protected $client;
 	protected $from;
 	protected $to;
+	protected $orderId;
 
 	public function setUp()
 	{
 		$this->client 	= $this->createAuthorizedClient();
 		$this->from 	= "2000-01-01";
 		$this->to 		= "3000-12-31";
+		$this->orderId	= 2018000001;
 	}
 
 	public function tearDown()
@@ -26,6 +28,7 @@ class AbstractControllerTest extends WebTestCase
 		$this->client 	= null;
 		$this->from 	= null;
 		$this->to 		= null;
+		$this->orderId	= null;
 	}
 
 	/**
