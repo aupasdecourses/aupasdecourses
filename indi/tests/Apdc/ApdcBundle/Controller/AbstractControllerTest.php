@@ -5,6 +5,8 @@ namespace Tests\Apdc\ApdcBundle\Controller;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+include_once(realpath(dirname(__FILE__)) . '/../../../../../app/Mage.php');
+
 class AbstractControllerTest extends WebTestCase
 {
 	// Change in prod
@@ -16,32 +18,56 @@ class AbstractControllerTest extends WebTestCase
 	protected $wrongFrom;
 	protected $wrongTo;
 	protected $orderId;
-	protected $merchantId;
+	protected $merchantIds;
+	protected $lightMerchantsIds;
+
+	/**
+	 *	Create array[] containing all id_attribut_commercant
+	 *
+	 * 	@return $merchantIds array[] 
+	 */
+	private function createMerchantIdsTable()
+	{
+		$merchantIds = [0 => -1];
+		$shops = \Mage::getModel('apdc_commercant/shop')->getCollection();
+
+		foreach ($shops as $shop) {
+			array_push($merchantIds, (int) $shop->getData('id_attribut_commercant'));
+		}
+
+		shuffle($merchantIds);
+
+		return $merchantIds;
+	}
 
 	public function setUp()
 	{
-		$this->client 		= $this->createAuthorizedClient();
-		$this->from 		= "2000-01-01";
-		$this->to 			= "3000-12-31";
-		$this->wrongFrom 	= "01-01-2000";
-		$this->wrongTo		= "31-12-3000";
-		$this->orderId		= 2018000001;
-		$this->merchantId	= 7; // Boucherie des Moines
+		\Mage::app();
+
+		$this->client 				= $this->createAuthorizedClient();
+		$this->from 				= "2000-01-01";
+		$this->to 					= "3000-12-31";
+		$this->wrongFrom 			= "01-01-2000";
+		$this->wrongTo				= "31-12-3000";
+		$this->orderId				= 2018000001;
+		$this->merchantIds			= $this->createMerchantIdsTable(); // Too heavy
+		$this->lightMerchantsIds	= array_slice($this->merchantIds, 0, 3); // Better use 3 merchants
 	}
 
 	public function tearDown()
 	{
-		$this->client 		= null;
-		$this->from 		= null;
-		$this->to 			= null;
-		$this->wrongFrom 	= null;
-		$this->wrongTo 		= null;
-		$this->orderId		= null;
-		$this->merchantId	= null;
+		$this->client 				= null;
+		$this->from 				= null;
+		$this->to 					= null;
+		$this->wrongFrom 			= null;
+		$this->wrongTo 				= null;
+		$this->orderId				= null;
+		$this->merchantIds			= null;
+		$this->lightMerchantsIds	= null;
 	}
 
 	/**
-	 * 	Bypass le formulaire de login pour effectuer les tests fonctionnels des controlleurs
+	 * 	Bypass Indi login form to execute controllers functionnals tests
 	 *
 	 * 	@return Client
 	 */
