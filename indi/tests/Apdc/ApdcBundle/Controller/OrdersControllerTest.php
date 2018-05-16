@@ -34,13 +34,10 @@ class OrdersControllerTest extends AbstractControllerTest
 	 */
 	public function testOrdersAllResponseStatus()
 	{
-		$wrongFrom 	= "01-01-2000";
-		$wrongTo 	= "31-12-3000"; 
-
 		$this->client->request('GET', "/orders/$this->from/$this->to");
 		$this->assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 	
-		$this->client->request('GET', "/orders/$wrongFrom/$wrongTo");
+		$this->client->request('GET', "/orders/$this->wrongFrom/$this->wrongTo");
 		$this->assertSame(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
 	}
 

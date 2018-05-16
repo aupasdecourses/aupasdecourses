@@ -13,22 +13,31 @@ class AbstractControllerTest extends WebTestCase
 	protected $client;
 	protected $from;
 	protected $to;
+	protected $wrongFrom;
+	protected $wrongTo;
 	protected $orderId;
+	protected $merchantId;
 
 	public function setUp()
 	{
-		$this->client 	= $this->createAuthorizedClient();
-		$this->from 	= "2000-01-01";
-		$this->to 		= "3000-12-31";
-		$this->orderId	= 2018000001;
+		$this->client 		= $this->createAuthorizedClient();
+		$this->from 		= "2000-01-01";
+		$this->to 			= "3000-12-31";
+		$this->wrongFrom 	= "01-01-2000";
+		$this->wrongTo		= "31-12-3000";
+		$this->orderId		= 2018000001;
+		$this->merchantId	= 7; // Boucherie des Moines
 	}
 
 	public function tearDown()
 	{
-		$this->client 	= null;
-		$this->from 	= null;
-		$this->to 		= null;
-		$this->orderId	= null;
+		$this->client 		= null;
+		$this->from 		= null;
+		$this->to 			= null;
+		$this->wrongFrom 	= null;
+		$this->wrongTo 		= null;
+		$this->orderId		= null;
+		$this->merchantId	= null;
 	}
 
 	/**
