@@ -49,7 +49,7 @@ class AbstractControllerTest extends WebTestCase
 		$this->to 					= "3000-12-31";
 		$this->wrongFrom 			= "01-01-2000";
 		$this->wrongTo				= "31-12-3000";
-		$this->orderId				= 2018000001;
+		$this->orderId				= 2018000173; // Use order_id which exists in prod AND in dev. It can be 2 different customers.
 		$this->merchantIds			= $this->createMerchantIdsTable(); // Too heavy
 		$this->lightMerchantsIds	= array_slice($this->merchantIds, 0, 3); // Better use 3 merchants
 	}
