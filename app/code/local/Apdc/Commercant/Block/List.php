@@ -20,6 +20,15 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
         return $new;
     }
 
+    private function vipOrder($array,$item){
+        if(strpos($item['name'],'Laiterie')!==false){
+            array_unshift($array , $item);
+        }else{
+            $array[] = $item;
+        }
+        return $array;
+    }
+
     public function getListShops($filter = 'store', $random = false,$limit=0)
     {
         $row1 = array();
@@ -106,9 +115,9 @@ class Apdc_Commercant_Block_List extends Mage_Catalog_Block_Product
             ];
 
             if ($i == 1) {
-                $row1[] = $sub;
+                $row1 = $this->vipOrder($row1,$sub);
             } else {
-                $row2[] = $sub;
+                $row2 = $this->vipOrder($row2,$sub);
             }
             if ($i == 2) {
                 $i = 1;
