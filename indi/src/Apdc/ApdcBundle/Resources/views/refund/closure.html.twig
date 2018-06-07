@@ -8,7 +8,7 @@
 	<div class="row">
 		{% if refund_full > 0 %}
 		<div class="col-sm-2">
-			<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default"><< Retour </a>
+			<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default" id="previous_to_final"><< Retour </a>
 		</div>
 		<div class="progress col-sm-8">
 			<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
@@ -17,7 +17,7 @@
 		</div>
 		{% else %}
 		<div class="col-sm-2">
-			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default"><< Retour </a>
+			<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default" id="previous_to_digest"><< Retour </a>
 		</div>
 		<div class="progress col-sm-8">
 			{% if refund_full > 0 %}
@@ -28,7 +28,7 @@
 		</div>
 		{% endif %}
 		<div class="col-sm-2">
-			<a href="{{ path('refundIndex') }}" class="btn btn-default right">Index</a>
+			<a href="{{ path('refundIndex') }}" class="btn btn-default right" id="next_to_index">Index</a>
 		</div>
 	</div>
 

@@ -7,7 +7,7 @@
 {% set customer_name = order_header.first_name ~ " " ~ order_header.last_name %}
 <div class="container">
 	<div class="col-sm-2">
-		<a href="{{ path('refundInput', {id:id}) }}" class="btn btn-default"><< Retour</a>
+		<a href="{{ path('refundInput', {id:id}) }}" class="btn btn-default" id="previous_to_input"><< Retour</a>
 	</div>
 	{% if refund_full > 0 %}
 	<div class="progress col-sm-8">
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default right">Suivant >></a>
+		<a href="{{ path('refundFinal', {id:id}) }}" class="btn btn-default right" id="next_to_final">Suivant >></a>
 	</div>
 	{% else %}
 	<div class="progress col-sm-8">
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right">Cloturer >></a>
+		<a href="{{ path('refundClosure', {id:id}) }}" class="btn btn-default right" id="next_to_closure">Cloturer >></a>
 	</div>	
 	{% endif %}
 	<div class="row">

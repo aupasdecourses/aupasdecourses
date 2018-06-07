@@ -4,7 +4,7 @@
 {% block body %}
 <div class="container">
 	<div class="col-xs-2">
-		<a href="{{ path('refundUpload', {id:id}) }}" class="btn btn-default"><< Retour</a>
+		<a href="{{ path('refundUpload', {id:id}) }}" class="btn btn-default" id="previous_to_upload"><< Retour</a>
 	</div>
 	<div class="progress col-xs-8">
 		<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="col-xs-2">
-		<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default right">Suivant >></a>
+		<a href="{{ path('refundDigest', {id:id}) }}" class="btn btn-default right" id="next_to_digest">Suivant >></a>
 	</div>
 	
 	<div class="row">
