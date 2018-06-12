@@ -34,13 +34,10 @@
 		{% endif %}
 		</div>
 		<div class="col-md-4">
-			{{ form_start(comment_form) }}
-			<div class="form-group" style="display:flex; flex-direction:column;">
-				<label for="merchant_bill_comment">Commentaires commercant</label>
-				<textarea rows="3" cols="50" name="form[merchant_bill_comment]">{{ bill.summary[0].merchant_bill_comment }}</textarea>
+			<div style="float:right;"><button id="createCommentButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#createCommentModal" >Ajouter un commentaire</button></div>
+			<div id="createCommentModal" class="modal fade">
+				{{ render(controller('ApdcApdcBundle:Tool:commentsForm', {'request': app.request, 'comment_view': 'billing_one', 'merchants_comment_choice': bill.summary[0].id_attribut_commercant} )) }}
 			</div>
-			<div style="float:left"><button type="submit" name="submit" value="comment" class="btn btn-success btn-lg">Enregistrer commentaire</button>{{ form_end(comment_form) }}</div>
-			<div><a href="{{ path('billingCommentsHistory', {id_attribut_commercant: bill.summary[0].id_attribut_commercant}) }}" target="_blank"><button type="submit" name="view_merchant_bill_comments" value="view_merchant_bill_comments" class="btn btn-info btn-lg">Historique commentaires</button></a></div>
 		</div>
 		<div class="col-md-2"></div>
 	</div>

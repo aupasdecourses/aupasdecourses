@@ -32,14 +32,20 @@
 			{% for comment in comments %}
 			<tr>
 				<td>{{ comment.comment_label }}</td>
-				<td><a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a></td>
 				<td>
-					{% if comment.associated_order_id == 0 %}Aucune{% else %}{{ comment.associated_order_id }}{% endif %}
+					{% if comment.order_id == 0 %}&#8709;
+					{% else %}<a href="{{ path('ordersOne', {'id': comment.order_id}) }}">{{ comment.order_id }}</a>{% endif %}
+				</td>
+				<td>
+					{% if comment.associated_order_id == 0 %}&#8709;{% else %}{{ comment.associated_order_id }}{% endif %}
 				</td>					
-				<td>{{ comment.customer_firstname ~ " " ~ comment.customer_lastname }}</td>
+				<td>
+					{% if (comment.customer_firstname is null) and (comment.customer_lastname is null) %}&#8709;
+					{% else %}{{ comment.customer_firstname ~ " " ~ comment.customer_lastname }}{% endif %}
+				</td>
 				<td>
 					{% if comment.merchant_id == -1 %}All
-					{% elseif comment.merchant_id == 0 %}Aucun commercant
+					{% elseif comment.merchant_id == 0 %}&#8709;
 					{% else %}{{ comment.merchant_name }}{% endif %}
 				</td>
 				<td>{{ comment.author ~ " - " ~ comment.created_at|date('d/m/Y H:i') }}</td>

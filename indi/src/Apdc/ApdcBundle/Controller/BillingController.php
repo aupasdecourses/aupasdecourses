@@ -71,6 +71,7 @@ class BillingController extends Controller
             $date_fin = $factu->end_month($date_debut);
             if (!isset($_POST['submit'])) {
                 $verif = $factu->data_facturation_verif($date_debut, $date_fin);
+                $comments = $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']);
             }
         } else {
             $verif = [
@@ -132,7 +133,7 @@ class BillingController extends Controller
             'details' => $verif['details'],
             'date_debut' => $date_debut,
             'date_fin' => $date_fin,
-            'comments' => $stats->getCommentsHistory($verif['result']['id_min'], $verif['result']['id_max']),
+            'comments' => $comments,
         ]);
     }
 
@@ -366,11 +367,6 @@ class BillingController extends Controller
 
         $bill = $factu->getOneBilling($id);
         $file_path = $billing_path.$id.'.pdf';
-		
-		// Merchant comment form
-		$data_comment = array('message' => 'Enregistrer commentaire commercant');
-		$comment_form = $this->createFormBuilder($data_comment)->getForm();
-		$comment_form->handleRequest($request);
 
         if (isset($_POST['submit'])) {
             switch ($_POST['submit']) {
@@ -415,15 +411,6 @@ class BillingController extends Controller
                         $session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de la génération du PDF.');
                     }
 					break;
-				case 'comment':
-					try {
-						$mage->updateEntryToBillingSummary(['increment_id' => $id], ['merchant_bill_comment' => $_POST['form']['merchant_bill_comment']]);
-						$session->getFlashBag()->add('success', 'Commentaire commercant bien enregistré');
-						return $this->redirectToRoute('billingOne', ['id' => $id]);
-					} catch (Exception $e) {
-						$session->getFlashBag()->add('error', 'Une erreur s\'est produite lors de l\'enregistrement du commentaire');
-					}
-					break;
             }	
         }
 
@@ -459,7 +446,6 @@ class BillingController extends Controller
             'check_date' => $check_date,
 			'check_file' => $check_file,
 			'payout_form' => $payout_form->createView(),
-			'comment_form'	=> $comment_form->createView(),
         ]);
     }
 	

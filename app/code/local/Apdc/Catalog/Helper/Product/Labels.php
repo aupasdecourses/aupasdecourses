@@ -26,6 +26,9 @@ class Apdc_Catalog_Helper_Product_Labels extends Mage_Core_Helper_Abstract
             'Casher' => 'images/labels/casher.png',
             'Kasher' => 'images/labels/casher.png',
             'Halal' => 'images/labels/halal.png',
+            'Sans Gluten' => 'images/labels/sansgluten.png',
+            'Sans gluten' => 'images/labels/sansgluten.png',
+            'sans gluten' => 'images/labels/sansgluten.png'
         ];
 	}
 
