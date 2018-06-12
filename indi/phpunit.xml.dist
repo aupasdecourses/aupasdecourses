@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Lister les suites ./vendor/bin/phpunit --list-suites  -->
+<!-- Run tous les tests "./vendor/bin/phpunit". Environ 4mn -->
+<!-- Run une suite spécifique "./vendor/bin/phpunit --testsuite name" -->
+
 <phpunit
     colors="true" 
     bootstrap="./app/autoload.php">
     <php>
-        <ini name="error_reporting" value="-1" />
+        <ini name="error_reporting" value="-1"/>
+        <ini name="memory_limit" value="-1"/>
         <server name="KERNEL_DIR" value="./app/"/>
     </php>
     <testsuites>
-        <testsuite name="Indi tests directory">
-            <directory suffix=".php">./tests/</directory>
-            <exclude>./tests/Apdc/ApdcBundle/Controller/AbstractControllerTest.php</exclude>
+        <testsuite name="orders_controllers">
+            <file>./tests/Apdc/ApdcBundle/Controller/MerchantsControllerTest.php</file>
+            <file>./tests/Apdc/ApdcBundle/Controller/OrdersControllerTest.php</file>
+            <file>./tests/Apdc/ApdcBundle/Controller/PickingControllerTest.php</file>
+            <file>./tests/Apdc/ApdcBundle/Controller/ShippingControllerTest.php</file>
+            <file>./tests/Apdc/ApdcBundle/Controller/StoresControllerTest.php</file>
+        </testsuite>
+        <testsuite name="refund_controller">
+            <file>./tests/Apdc/ApdcBundle/Controller/RefundControllerTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
