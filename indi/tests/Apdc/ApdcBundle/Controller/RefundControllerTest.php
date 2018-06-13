@@ -187,4 +187,22 @@ class RefundControllerTest extends AbstractControllerTest
 		}
 	}
 
+	/**
+	 *	Test auto-upload tickets via Mistral button of Apdc\ApdcBundle\Controller\RefundController::refundUploadAction()
+	 */
+	public function testRefundUploadMistralTicket()
+	{
+		$upload_url = "/refund/$this->orderId/upload/";
+		$crawler = $this->client->request('GET', $upload_url);
+
+		$mistral_form = $crawler->selectButton('Upload tickets')->form();
+
+		if ($this->client->submit($mistral_form)) {
+			$this->assertSame(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+			
+			$crawler = $this->client->followRedirect();
+			$this->assertNotNull($crawler->getUri());
+		}
+	}
+
 }
