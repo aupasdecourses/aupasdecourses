@@ -20,6 +20,7 @@ class AbstractControllerTest extends WebTestCase
 	protected $orderId;
 	protected $merchantIds;
 	protected $lightMerchantsIds;
+	protected $billingComId;
 
 	/**
 	 *	Create array[] containing all id_attribut_commercant
@@ -52,6 +53,7 @@ class AbstractControllerTest extends WebTestCase
 		$this->orderId				= 2018000173; // Use order_id which exists in prod AND in dev. It can be 2 different customers.
 		$this->merchantIds			= $this->createMerchantIdsTable(); // Too heavy
 		$this->lightMerchantsIds	= array_slice($this->merchantIds, 0, 3); // Better use 3 merchants
+		$this->billingComId			= "COM-20180174";
 	}
 
 	public function tearDown()
@@ -64,6 +66,7 @@ class AbstractControllerTest extends WebTestCase
 		$this->orderId				= null;
 		$this->merchantIds			= null;
 		$this->lightMerchantsIds	= null;
+		$this->billingComId			= null;
 	}
 
 	/**
