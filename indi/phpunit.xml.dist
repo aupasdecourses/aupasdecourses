@@ -23,5 +23,8 @@
         <testsuite name="refund_controller">
             <file>./tests/Apdc/ApdcBundle/Controller/RefundControllerTest.php</file>
         </testsuite>
+        <testsuite name="billing_controller">
+            <file>./tests/Apdc/ApdcBundle/Controller/BillingControllerTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
