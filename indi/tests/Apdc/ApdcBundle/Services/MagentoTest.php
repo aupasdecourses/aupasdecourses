@@ -48,10 +48,10 @@ class MagentoTest extends TestCase
 			],
 		];
 
-		$this->from 		= "2000-01-01 00:00:00";
-		$this->to 			= "3000-12-31 23:59:59";
-		$this->merchantId	= -1;
-		$this->orderId		= -1;
+		$this->from 		= "2018-05-01 00:00:00";
+		$this->to 			= "2018-05-31 23:59:59";
+		$this->merchantId 	= 72; // Maree 17
+		$this->orderId 		= 2018000173;
 	}
 
 	public function tearDown()
@@ -61,8 +61,87 @@ class MagentoTest extends TestCase
 		unset($this->fakeOrders, $this->from, $this->to, $this->merchantId, $this->orderId);
 	}
 
-	public function testGetOrders()
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getOrders()
+	 */
+	public function testGetOrdersReturnType()
 	{
-		$orders = $this->magento->getOrders();
+		$orders = $this->magento->getOrders($this->from, $this->to);
+		
+		$this->assertInternalType('array', $orders);
+	}
+
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getMerchantsByStore()
+	 */
+	public function testGetMerchantsByStoreReturnType()
+	{
+		$allMerchants 		= $this->magento->getMerchantsByStore();
+		$specificMerchant	= $this->magento->getMerchantsByStore($this->merchantId);
+
+		$this->assertInternalType('array', $allMerchants);
+		$this->assertInternalType('array', $specificMerchant);
+	}
+
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getOrdersByStore()
+	 */
+	public function testGetOrdersByStoreReturnType()
+	{
+		$orders = $this->magento->getOrdersByStore();
+
+		$this->assertInternalType('array', $orders);
+	}
+
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getOrdersByStoreByMerchants()
+	 */
+	public function testGetOrdersByStoreByMerchantsReturnType()
+	{
+		$orders = $this->magento->getOrdersByStoreByMerchants(-1, $this->from, $this->to);
+		
+		$this->assertInternalType('array', $orders);
+	}
+
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getMerchants()
+	 */
+	public function testGetMerchantsReturnType()
+	{
+		$allMerchants 		= $this->magento->getMerchants();
+		$specificMerchant 	= $this->magento->getMerchants($this->merchantId);
+
+		$this->assertInternalType('array', $allMerchants);
+		$this->assertInternalType('array', $specificMerchant);
+	}
+
+	/**
+	 * 	Test return type of Apdc\ApdcBundle\Services\Magento::getMerchantsOrders()
+	 */
+	public function testGetMerchantsOrdersReturnType()
+	{
+		$orders = $this->magento->getMerchantsOrders($this->merchantId);
+		
+		$this->assertInternalType('array', $orders);
+	}
+
+	/**
+	 *	Test return type of Apdc\ApdcBundle\Services\Magento::getOrderByMerchants()
+	 */
+	public function testGetOrderByMerchantsReturnType()
+	{
+		$order = $this->magento->getOrderByMerchants($this->orderId);
+
+		$this->assertInternalType('array', $order);
+	}
+
+	/**
+	 *	Test return type of Apdc\ApdcBundle\Services\Magento::getRefunds()
+	 */
+	public function testGetRefundsReturnType()
+	{
+		$refunds = $this->magento->getRefunds($this->orderId);
+
+		$this->assertInternalType('array', $refunds);
 	}
 }
