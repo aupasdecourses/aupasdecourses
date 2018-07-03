@@ -655,6 +655,21 @@ class Billing
         return $update;
     }
 
+    private function createBillingInterval($debut, $fin)
+    {
+        $debut = new \DateTime(date('m/01/Y', strtotime(str_replace('/', '-', $debut))));
+        $fin = new \DateTime(date('m/01/Y', strtotime(str_replace('/', '-', $fin))));
+
+        $diff_months = $fin->diff($debut)->format('%m');
+
+        $months = [$debut->format('01/m/Y')];
+        for($i = 1; $i <= $diff_months; $i++) {
+            array_push($months, $debut->add(new \DateInterval('P1M'))->format('01/m/Y'));
+        }
+
+        return $months;
+    }
+
     /**
      * [getDataFacturation description].
      *
@@ -678,9 +693,9 @@ class Billing
 	 */
 	public function getDataFactu($model, $debut, $fin)
 	{
-		$billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
+		$months = $this->createBillingInterval($debut, $fin);
 		$model = \Mage::getModel('pmainguet_delivery/'.$model)->getCollection();
-		$return = $model->addFieldToFilter('billing_month', ['from' => $billing_month, 'to' => $fin]);
+		$return = $model->addFieldToFilter('billing_month', ['in' => $months]);
 		$return = $return->toArray();
 
 		return $return['items'];

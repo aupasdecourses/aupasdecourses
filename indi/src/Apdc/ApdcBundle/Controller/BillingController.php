@@ -37,7 +37,7 @@ class BillingController extends Controller
 
                 if ($sum['date_payout'] !== null) {
                     $result[$sum['shop']]['sum_payout_done'] += $sum['sum_payout'];
-                    $result[$sum['shop']]['ongoing_comment'] = '';
+                    $result[$sum['shop']]['ongoing_comment'] .= '';
                 } else {
                     $result[$sum['shop']]['sum_payout_done'] += 0;
                     $result[$sum['shop']]['ongoing_comment'] .= "<p> Le mois {$sum['billing_month']} n'a pas été réglé </p>";
