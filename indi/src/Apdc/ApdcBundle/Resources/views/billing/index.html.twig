@@ -18,11 +18,13 @@
 				<th class="float">Somme due TTC</th>
 				<th class="float">Retrait TTC (prevu)</th>
 				<th class="float">Retrait TTC (regle)</th>
-				<th class="float">En cours (Prevu - Regle)</th>
+				<th class="float">En cours (prevu - regle)</th>
+				<th>Mois non regle(s)</th>
 			</tr>
 		</thead>	
 		<tfoot style="display: table-row-group;">
 			<tr>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -37,21 +39,10 @@
 				<td>{{ order.shop }}</td>
 				<td>{{ order.sum_items }}</td>
 				<td>{{ order.sum_due }}</td>
-
 				<td>{{ order.sum_payout }}</td>
-
-			{% if order.date_payout is not null %}
-
-				{% set sum_payout_regle = order.sum_payout %}
-				<td>{{ sum_payout_regle }}</td>
-
-			{% else %}
-				{% set sum_payout_regle = 0 %}
-				<td>{{ sum_payout_regle }}</td>
-
-			{% endif %}
-
-				<td>{{ order.sum_payout - sum_payout_regle }}</td>
+				<td>{{ order.sum_payout_done }}</td>
+				<td>{{ order.sum_ongoing }}</td>
+				<td style="color:red">{{ order.ongoing_comment|raw }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>

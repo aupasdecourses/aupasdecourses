@@ -29,14 +29,22 @@ class BillingController extends Controller
 
 
             foreach ($summary as $sum) {
-                
-                $result[$sum['shop']]['date_payout'] = $sum['date_payout'];
+
                 $result[$sum['shop']]['shop'] = $sum['shop'];
                 $result[$sum['shop']]['sum_items'] += $sum['sum_items'];
                 $result[$sum['shop']]['sum_due'] += $sum['sum_due'];
                 $result[$sum['shop']]['sum_payout'] += $sum['sum_payout'];
-            }
 
+                if ($sum['date_payout'] !== null) {
+                    $result[$sum['shop']]['sum_payout_done'] += $sum['sum_payout'];
+                    $result[$sum['shop']]['ongoing_comment'] = '';
+                } else {
+                    $result[$sum['shop']]['sum_payout_done'] += 0;
+                    $result[$sum['shop']]['ongoing_comment'] .= "<p> Le mois {$sum['billing_month']} n'a pas été réglé </p>";
+                }
+
+                $result[$sum['shop']]['sum_ongoing'] += ($result[$sum['shop']]['sum_payout'] - $result[$sum['shop']]['sum_payout_done']);
+            }
 
             $debut = date_create(str_replace('/', '-', $date_debut));
             $fin = date_create(str_replace('/', '-', $date_fin));
