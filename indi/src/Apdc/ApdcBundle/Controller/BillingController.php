@@ -43,7 +43,7 @@ class BillingController extends Controller
                     $result[$sum['shop']]['ongoing_comment'] .= "<p> Le mois {$sum['billing_month']} n'a pas été réglé </p>";
                 }
 
-                $result[$sum['shop']]['sum_ongoing'] += ($result[$sum['shop']]['sum_payout'] - $result[$sum['shop']]['sum_payout_done']);
+                $result[$sum['shop']]['sum_ongoing'] = ($result[$sum['shop']]['sum_payout'] - $result[$sum['shop']]['sum_payout_done']);
             }
 
             $debut = date_create(str_replace('/', '-', $date_debut));
