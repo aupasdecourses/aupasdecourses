@@ -19,7 +19,7 @@ class FromTest extends AbstractFormTest
 
 		// Check the creation of the form with valid/invalid data
 		foreach (array_keys($this->data) as $key) {
-			if ($key === 'from') {
+			if ($key === 'from' || $key === 'Search') {
 				$this->assertArrayHasKey($key, $children);
 			} else {
 				$this->assertArrayNotHasKey($key, $children);
