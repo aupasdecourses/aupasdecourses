@@ -26,5 +26,11 @@
         <testsuite name="billing_controller">
             <file>./tests/Apdc/ApdcBundle/Controller/BillingControllerTest.php</file>
         </testsuite>
+        <testsuite name="magento_service">
+            <file>./tests/Apdc/ApdcBundle/Services/MagentoTest.php</file>
+        </testsuite>
+        <testsuite name="from_form">
+            <file>./tests/Apdc/ApdcBundle/Form/FromTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
