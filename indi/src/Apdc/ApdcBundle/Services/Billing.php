@@ -660,7 +660,8 @@ class Billing
         $debut = new \DateTime(date('m/01/Y', strtotime(str_replace('/', '-', $debut))));
         $fin = new \DateTime(date('m/01/Y', strtotime(str_replace('/', '-', $fin))));
 
-        $diff_months = $fin->diff($debut)->format('%m');
+        $diff_years = $fin->diff($debut)->format('%y');
+        $diff_months = ((12 * $diff_years) + $fin->diff($debut)->format('%m'));
 
         $months = [$debut->format('01/m/Y')];
         for($i = 1; $i <= $diff_months; $i++) {
