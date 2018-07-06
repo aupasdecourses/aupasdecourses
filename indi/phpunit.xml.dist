@@ -11,6 +11,7 @@
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>
         <server name="KERNEL_DIR" value="./app/"/>
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1/db_apdc"/>
     </php>
     <testsuites>
         <testsuite name="orders_controllers">
