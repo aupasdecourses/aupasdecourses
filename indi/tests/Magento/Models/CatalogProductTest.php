@@ -1,23 +1,15 @@
 <?php
 
-namespace Tests\Apdc\ApdcBundle\Services\Helpers;
+namespace Tests\Magento\Models;
 
-use Apdc\ApdcBundle\Services\Magento;
-use PHPUnit\Framework\TestCase;
-
-class ModelTest extends TestCase
+class CatalogProductTest extends AbstractModelTest
 {
-	private $magento;
-
-	private $catalogProductClass;
-	private $catalogProductData;
+	private $catalog_product_data;
 
 	public function setUp()
 	{
-		$this->magento = new Magento();
-
-		$this->catalogProductClass = get_class(\Mage::getModel('catalog/product'));
-		$this->catalogProductData = [
+		parent::setUp();
+		$this->catalog_product_data = [
 			[
 				'entity_id' 		=> 12345,
 				'entity_type_id'	=> 4,
@@ -45,20 +37,17 @@ class ModelTest extends TestCase
 
 	public function tearDown()
 	{
-		$this->magento 				= null;
-
-		$this->catalogProductClass 	= null;
-		$this->catalogProductData 	= null;
+		$this->catalog_product_data = null;
 	}
 
 	/**
-	 *	Test mocking catalog/product table
+	 *	Mock catalog/product table
 	 */
 	public function testCatalogProductMock()
 	{
-		$products = $this->createMock($this->catalogProductClass);
+		$products = $this->createMock($this->catalog_product_class);
 		
-		$products->method('getCollection')->willReturn($this->catalogProductData);
+		$products->method('getCollection')->willReturn($this->catalog_product_data);
 
 		foreach ($products->getCollection() as $product) {
 			$this->assertInternalType('int', $product['entity_id']);
