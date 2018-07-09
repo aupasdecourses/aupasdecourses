@@ -36,5 +36,8 @@
             <file>./tests/Apdc/ApdcBundle/Form/FromToMerchantTest.php</file>
             <file>./tests/Apdc/ApdcBundle/Form/OrderIdTest.php</file>
         </testsuite>
+        <testsuite name="magento_models">
+            <file>./tests/Magento/Models/CatalogProductTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
