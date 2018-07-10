@@ -38,6 +38,7 @@
         </testsuite>
         <testsuite name="magento_models">
             <file>./tests/Magento/Models/CatalogProductTest.php</file>
+            <file>./tests/Magento/Models/AmastyOrderFieldTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
