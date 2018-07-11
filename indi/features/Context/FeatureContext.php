@@ -2,6 +2,7 @@
 
 namespace Context;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\MinkContext;
 
@@ -19,5 +20,13 @@ class FeatureContext extends MinkContext implements Context
      */
     public function __construct()
     {
+    }
+
+    /**
+     * @When I fill :arg1 with :arg2
+     */
+    public function iFillWith($arg1, $arg2)
+    {
+        throw new PendingException();
     }
 }
