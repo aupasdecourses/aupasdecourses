@@ -193,8 +193,10 @@ class Apdc_Checkout_Helper_Data extends Mage_Core_Helper_Abstract
         }
         //Unset every missing delivery days
         foreach($days as $day){
-            $result[]=$tmp[$day-1];
-            unset($tmp[$day-1]);
+            if (array_key_exists($day-1, $tmp)) {
+                $result[]=$tmp[$day-1];
+                unset($tmp[$day-1]);
+            }
         }
 
         return array('unavailability'=>$tmp,'availability'=>$result);

@@ -43,6 +43,7 @@ $cartMessages = $this->getMessages();
 if ($cartMessages) {
     $messageBlock = $this->getMessagesBlock()->setMessages($cartMessages);
 }
+$payment_activated = Mage::getStoreConfig('apdc_general/activation/payment');
 $countItems = count($commercants);
 ?>
 
@@ -105,6 +106,7 @@ $countItems = count($commercants);
         <div id="minicart-widgets">
             <?php echo $this->getChildHtml('cart_promotion') ?>
         </div>
+        <?php if($payment_activated) :?>
         <div class="mini-cart-bottom">
             <hr>
             <div class="block-content">
@@ -143,7 +145,7 @@ $countItems = count($commercants);
 
 
             <div class="minicart-actions">
-                <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
+                <?php if($_cartQty && $this->isPossibleOnepageCheckout()):?>
                     <ul class="checkout-types minicart text-center">
                         <?php echo $this->getChildHtml('extra_actions') ?>
                         <li>
@@ -155,6 +157,7 @@ $countItems = count($commercants);
                 <?php endif ?>
             </div>
         </div>
+        <?php endif;?>
 
     <?php else: ?>
         <p class="empty"><?php echo $this->__('You have no items in your shopping cart.') ?></p>
