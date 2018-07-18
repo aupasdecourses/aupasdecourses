@@ -43,7 +43,7 @@ class Apdc_Dispatch_Model_Export extends Apdc_Dispatch_Model_Mistral_Ftp
                         Mage::getModel('apdcdispatch/mistral_ftp')->_processRequestFtp($params);
                     } else {
                         Mage::log('Export via FTP est désactivé', null, 'export.log');
-                        Mage::getModel('apdcadmin/mail')->warnMistralDeactivated();
+                        //Mage::getModel('apdcadmin/mail')->warnMistralDeactivated();
                     }
                     break;
                 case 'api':
