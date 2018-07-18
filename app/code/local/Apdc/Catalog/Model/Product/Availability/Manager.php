@@ -230,7 +230,7 @@ class Apdc_Catalog_Model_Product_Availability_Manager extends Mage_Core_Model_Ab
                 $error = 'Le produit '.$id.' a généré l\'erreur suivante: '. $error;
                 Mage::getSingleton('adminhtml/session')->addError($error);
             }
-            Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($custom_errors);
+            //Mage::getModel('apdcadmin/mail')->warnAvailableProductErrors($custom_errors);
         }
 
     }

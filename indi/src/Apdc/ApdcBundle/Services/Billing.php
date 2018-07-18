@@ -488,13 +488,15 @@ class Billing
         } else {
 
             // 2 - verify that current month > month chosen for billing
-            $current_month = date('01/m/Y', time());
-            $billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
-            if (strtotime($current_month) - strtotime($billing_month) > 0) {
-                $result['verif_mois'] = true;
-            } else {
-                $result['verif_mois'] = false;
-            }
+            // $current_month = date('01/m/Y', time());
+            // $billing_month = date('01/m/Y', strtotime(str_replace('/', '-', $debut)));
+            // if (strtotime($current_month) - strtotime($billing_month) > 0) {
+            //     $result['verif_mois'] = true;
+            // } else {
+            //     $result['verif_mois'] = false;
+            // }
+            //For final month, bypass check
+            $result['verif_mois'] = true;
 
             //get Magento total products & coupons
             $data_magento = $this->data_clients_light($debut, $fin);
